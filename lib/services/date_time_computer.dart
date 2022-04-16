@@ -1,6 +1,14 @@
 import 'package:intl/intl.dart';
 
 class DateTimeComputer {
+
+  /// [wakeUpDateTimeStr] ex:          '15-04-2022 18:15'
+  /// [wakeHourMinuteDurationStr] ex:  '20:30'
+  ///
+  /// can throw [FormatException] in case of invalid params.
+  /// Ex: '31-04-2022 18:15' or '15-04-2022 18.15'
+  ///
+  /// returns [DateTime]
   DateTime computeGoToSleepHour(
       {required String wakeUpDateTimeStr,
       required String wakeHourMinuteDurationStr}) {
@@ -19,7 +27,7 @@ void main() {
   DateTimeComputer dateTimeComputer = DateTimeComputer();
 
   final String wakeUpDateTime = '15-04-2022 18:15';
-  final String  wakeHourMinuteDuration = '20:30';
+  final String wakeHourMinuteDuration = '20:30';
   print(
       '$wakeUpDateTime + $wakeHourMinuteDuration = ${dateTimeComputer.computeGoToSleepHour(wakeUpDateTimeStr: wakeUpDateTime, wakeHourMinuteDurationStr: wakeHourMinuteDuration)}');
   print(dateTimeComputer.computeGoToSleepHour(
