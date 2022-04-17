@@ -1,7 +1,11 @@
 import 'package:intl/intl.dart';
 
 class DateTimeComputer {
-
+  /// According to the passed wake up date/time string and the
+  /// passed awakening hour:minute duration, returns the
+  /// DateTime object which is the addition of the two passed
+  /// parameters.
+  ///
   /// [wakeUpDateTimeStr] ex:          '15-04-2022 18:15'
   /// [wakeHourMinuteDurationStr] ex:  '20:30'
   ///
@@ -12,8 +16,7 @@ class DateTimeComputer {
   DateTime computeGoToSleepHour(
       {required String wakeUpDateTimeStr,
       required String wakeHourMinuteDurationStr}) {
-    final DateTime wakeUpDT =
-        DateFormat('dd-MM-yyyy HH:mm').parseLoose(wakeUpDateTimeStr);
+    final DateTime wakeUpDT = _stringToDateTime(wakeUpDateTimeStr);
 
     final List<String> hhmmLst = wakeHourMinuteDurationStr.split(':');
     final int wakeHours = int.parse(hhmmLst[0]);
@@ -21,15 +24,44 @@ class DateTimeComputer {
 
     return wakeUpDT.add(Duration(hours: wakeHours, minutes: wakeMinutes));
   }
+
+  DateTime _stringToDateTime(String wakeUpDateTimeStr) =>
+      DateFormat('dd-MM-yyyy HH:mm').parseLoose(wakeUpDateTimeStr);
+
+  String computeWakeUpDuration(
+      {required String wakeUpDateTimeStr,
+      required String goToSleepDateTimeStr}) {
+    final DateTime wakeUpDT = _stringToDateTime(wakeUpDateTimeStr);
+    final DateTime goToSleepDT = _stringToDateTime(goToSleepDateTimeStr);
+    final Duration wakeUpDuration = goToSleepDT.difference(wakeUpDT);
+
+    return "${wakeUpDuration.inHours}:${wakeUpDuration.inMinutes.remainder(60)}";
+  }
 }
 
 void main() {
   DateTimeComputer dateTimeComputer = DateTimeComputer();
 
-  final String wakeUpDateTime = '15-04-2022 18:15';
+  final String wakeUpDateTimeStr = '15-04-2022 18:15';
   final String wakeHourMinuteDuration = '20:30';
   print(
-      '$wakeUpDateTime + $wakeHourMinuteDuration = ${dateTimeComputer.computeGoToSleepHour(wakeUpDateTimeStr: wakeUpDateTime, wakeHourMinuteDurationStr: wakeHourMinuteDuration)}');
-  print(dateTimeComputer.computeGoToSleepHour(
-      wakeUpDateTimeStr: '15-4-22 18:15', wakeHourMinuteDurationStr: '20:30'));
+      '$wakeUpDateTimeStr + $wakeHourMinuteDuration = ${dateTimeComputer.computeGoToSleepHour(wakeUpDateTimeStr: wakeUpDateTimeStr, wakeHourMinuteDurationStr: wakeHourMinuteDuration)}');
+  DateTime computeGoToSleepDateTime = dateTimeComputer.computeGoToSleepHour(
+      wakeUpDateTimeStr: '15-4-2022 18:15', wakeHourMinuteDurationStr: '20:30');
+  print(computeGoToSleepDateTime);
+
+  final dateFormatNotLocal = DateFormat("dd-MM-yyyy HH:mm");
+
+  String wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
+      wakeUpDateTimeStr: wakeUpDateTimeStr,
+      goToSleepDateTimeStr:
+          dateFormatNotLocal.format(computeGoToSleepDateTime));
+
+  print('$wakeUpHHmmStr');
+
+  wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
+      wakeUpDateTimeStr: wakeUpDateTimeStr,
+      goToSleepDateTimeStr: '17-4-2022 6:30');
+
+  print('$wakeUpHHmmStr');
 }
