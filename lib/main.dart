@@ -58,7 +58,20 @@ class MyCustomFormState extends State<MyCustomForm> {
         return 'Please enter a valid dd-mm hh:mm wake up date time';
       }
     }
-    
+
+    return null;
+  }
+
+  String? _validateTime(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid hh:mm wake up duration';
+    } else {
+      String? timeStr = DateTimeParser.parseTime(value);
+      if (timeStr == null) {
+        return 'Please enter a valid hh:mm wake up duration';
+      }
+    }
+
     return null;
   }
 
@@ -89,12 +102,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 hintText: 'hh:mm',
                 errorStyle: errorStyleTextStyle,
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty || value.length < 5) {
-                  return 'Please enter a valid hh:mm stay awake duration';
-                }
-                return null;
-              },
+              validator: (value) => _validateTime(value),
             ),
             TextFormField(
               decoration: const InputDecoration(

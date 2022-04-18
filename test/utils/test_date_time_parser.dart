@@ -2,14 +2,6 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const List<String> dateTimeStrLst = [
-    '14-12 13:35',
-    '4-2 3:05',
-    'a4-2 3:05',
-    '14-2 3:u5',
-    '14-2 3:5',
-  ];
-
   group('DateTimeComputer', () {
     test('parseDateTime valid date time string', () {
       List<String?> dateTimeComponentStrLst =
@@ -80,5 +72,48 @@ void main() {
       expect(dayMonth, null);
       expect(hourMinute, null);
     });
+
+    test('parseTime valid time string', () {
+      String? hourMinute = DateTimeParser.parseTime('13:35');
+
+      expect(hourMinute, '13:35');
+    });
+
+    test('parseTime valid time string 1 digit hour', () {
+      String? hourMinute = DateTimeParser.parseTime('3:35');
+
+      expect(hourMinute, '3:35');
+    });
+
+    test('parseTime invalid time string 1 digit hour', () {
+      String? hourMinute = DateTimeParser.parseTime('3:u5');
+
+      expect(hourMinute, null);
+    });
+
+    test('parseTime invalid time string 1 digit minute', () {
+      String? hourMinute = DateTimeParser.parseTime('3:5');
+
+      expect(hourMinute, null);
+    });
+
+    test('parseTime date and time string', () {
+      String? hourMinute = DateTimeParser.parseTime('14-12 13:35');
+
+      expect(hourMinute, null);
+    });
+
+    test('parseTime 1 digit day and month date and time string', () {
+      String? hourMinute = DateTimeParser.parseTime('4-2 13:35');
+
+      expect(hourMinute, null);
+    });
+
+    test('parseTime invalid date and time string', () {
+      String? hourMinute = DateTimeParser.parseTime('a4-2 13:35');
+
+      expect(hourMinute, null);
+    });
+
   });
 }
