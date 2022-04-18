@@ -27,9 +27,19 @@ class DateTimeComputer {
     return wakeUpDT.add(Duration(hours: wakeHours, minutes: wakeMinutes));
   }
 
-  DateTime _stringToDateTime(String wakeUpDateTimeStr) =>
-      DateFormat('dd-MM-yyyy HH:mm').parseLoose(wakeUpDateTimeStr);
+  /// can throw [FormatException] in case of invalid dateTimeStr
+  /// format.
+  DateTime _stringToDateTime(String dateTimeStr) =>
+      DateFormat('dd-MM-yyyy HH:mm').parseLoose(dateTimeStr);
 
+  ///
+  /// can throw [FormatException] in case of invalid params
+  /// format.
+  /// can throw [ArgumentError] in case goToSleepDateTimeStr
+  /// is not after the passed wakeUpDateTimeStr.
+  /// Ex: '31-04-2022 18:15' or '15-04-2022 18.15'
+  ///
+  /// returns [DateTime]
   String computeWakeUpDuration(
       {required String wakeUpDateTimeStr,
       required String goToSleepDateTimeStr}) {
