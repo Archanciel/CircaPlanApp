@@ -1,3 +1,4 @@
+import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -51,7 +52,13 @@ class MyCustomFormState extends State<MyCustomForm> {
   String? _validateDateTime(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a valid dd-mm hh:mm wake up date time';
+    } else {
+      List<String?> dateTimeStrLst = DateTimeParser.parseDateTime(value);
+      if (dateTimeStrLst.contains(null)) {
+        return 'Please enter a valid dd-mm hh:mm wake up date time';
+      }
     }
+    
     return null;
   }
 

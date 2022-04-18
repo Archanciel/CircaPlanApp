@@ -6,8 +6,8 @@ void main() {
     final DateTimeComputer dateTimeComputer = DateTimeComputer();
 
     test('computeGoToSleepHour valid params', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String wakeHourMinuteDuration = '20:30';
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String wakeHourMinuteDuration = '20:30';
       final DateTime goToSleepHour = dateTimeComputer.computeGoToSleepHour(
           wakeUpDateTimeStr: wakeUpDateTime,
           wakeHourMinuteDurationStr: wakeHourMinuteDuration);
@@ -16,8 +16,8 @@ void main() {
     });
 
     test('computeGoToSleepHour invalid wakeUpDateTime value', () {
-      final String wakeUpDateTime = '31-04-2022 18:15';
-      final String wakeHourMinuteDuration = '20:30';
+      const String wakeUpDateTime = '31-04-2022 18:15';
+      const String wakeHourMinuteDuration = '20:30';
 
       expect(
           () => dateTimeComputer.computeGoToSleepHour(
@@ -27,8 +27,8 @@ void main() {
     });
 
     test('computeGoToSleepHour invalid wakeUp date format', () {
-      final String wakeUpDateTime = '30/04/2022 18:15';
-      final String wakeHourMinuteDuration = '20:30';
+      const String wakeUpDateTime = '30/04/2022 18:15';
+      const String wakeHourMinuteDuration = '20:30';
 
       expect(
               () => dateTimeComputer.computeGoToSleepHour(
@@ -38,8 +38,8 @@ void main() {
     });
 
     test('computeGoToSleepHour invalid wakeUp time format', () {
-      final String wakeUpDateTime = '31-04-2022 18-15';
-      final String wakeHourMinuteDuration = '20:30';
+      const String wakeUpDateTime = '31-04-2022 18-15';
+      const String wakeHourMinuteDuration = '20:30';
 
       expect(
               () => dateTimeComputer.computeGoToSleepHour(
@@ -49,8 +49,8 @@ void main() {
     });
 
     test('computeGoToSleepHour invalid wakeHourMinuteDuration format', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String wakeHourMinuteDuration = '20.30';
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String wakeHourMinuteDuration = '20.30';
 
       expect(
               () => dateTimeComputer.computeGoToSleepHour(
@@ -60,8 +60,8 @@ void main() {
     });
 
     test('computeGoToSleepHour valid params duration minutes > 59', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String wakeHourMinuteDuration = '20:61';
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String wakeHourMinuteDuration = '20:61';
       final DateTime goToSleepHour = dateTimeComputer.computeGoToSleepHour(
           wakeUpDateTimeStr: wakeUpDateTime,
           wakeHourMinuteDurationStr: wakeHourMinuteDuration);
@@ -70,8 +70,8 @@ void main() {
     });
 
     test('computeWakeUpDuration valid params', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String goToSleepDateTimeStr = '17-4-2022 8:45';
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String goToSleepDateTimeStr = '17-4-2022 8:45';
       final String goToSleepHour = dateTimeComputer.computeWakeUpDuration(
           wakeUpDateTimeStr: wakeUpDateTime,
           goToSleepDateTimeStr: goToSleepDateTimeStr);
@@ -80,8 +80,8 @@ void main() {
     });
 
     test('computeWakeUpDuration valid params 1 minute duration', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String goToSleepDateTimeStr = '15-04-2022 18:16';
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String goToSleepDateTimeStr = '15-04-2022 18:16';
       final String goToSleepHour = dateTimeComputer.computeWakeUpDuration(
           wakeUpDateTimeStr: wakeUpDateTime,
           goToSleepDateTimeStr: goToSleepDateTimeStr);
@@ -90,8 +90,8 @@ void main() {
     });
 
     test('computeWakeUpDuration valid params minute < 10', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String goToSleepDateTimeStr = '17-4-2022 8:17';
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String goToSleepDateTimeStr = '17-4-2022 8:17';
       final String goToSleepHour = dateTimeComputer.computeWakeUpDuration(
           wakeUpDateTimeStr: wakeUpDateTime,
           goToSleepDateTimeStr: goToSleepDateTimeStr);
@@ -99,15 +99,30 @@ void main() {
       expect(goToSleepHour, '38:02');
     });
 
-    test('computeWakeUpDuration valid params -1 minute duration', () {
-      final String wakeUpDateTime = '15-04-2022 18:15';
-      final String goToSleepDateTimeStr = '15-04-2022 18:14';
+    test('computeWakeUpDuration invalid params goToSleepDateTimeStr before wakeUpDateTime', () {
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String goToSleepDateTimeStr = '15-04-2022 18:14';
 
       expect(
               () => dateTimeComputer.computeWakeUpDuration(
               wakeUpDateTimeStr: wakeUpDateTime,
               goToSleepDateTimeStr: goToSleepDateTimeStr),
-          throwsA(isA<ArgumentError>()));
+          throwsA(predicate((e) =>
+            e is ArgumentError &&
+            e.message == 'goToSleepDateTimeStr 15-04-2022 18:14 must be after wakeUpDateTimeStr 15-04-2022 18:15')));
+    });
+
+    test('computeWakeUpDuration invalid params goToSleepDateTimeStr before wakeUpDateTime', () {
+      const String wakeUpDateTime = '15-04-2022 18:15';
+      const String goToSleepDateTimeStr = '15-04-2022 18:15';
+
+      expect(
+              () => dateTimeComputer.computeWakeUpDuration(
+              wakeUpDateTimeStr: wakeUpDateTime,
+              goToSleepDateTimeStr: goToSleepDateTimeStr),
+          throwsA(predicate((e) =>
+            e is ArgumentError &&
+            e.message == 'goToSleepDateTimeStr 15-04-2022 18:15 must be after wakeUpDateTimeStr 15-04-2022 18:15')));
     });
   });
 }

@@ -11,7 +11,7 @@ class DateTimeParser {
 }
 
 void main() {
-  final List<String> dateTimeStrLst = [
+  const List<String> dateTimeStrLst = [
     '14-12 13:35',
     '4-2 3:05',
     'a4-2 3:05',
