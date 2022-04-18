@@ -44,54 +44,80 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
+    const errorStyleTextStyle = TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                );
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'One',
-              helperText: 'Enter at least 1 char text',
-            ),
-            // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            // The validator receives the text that the user has entered.
-            decoration: const InputDecoration(
-              labelText: 'Two',
-              hintText: 'Enter at least 5 chars text',
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty || value.length < 5) {
-                return 'Please enter text 5 char length or more';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Wake up at',
+                labelStyle: TextStyle(fontSize: 20),
+                hintText: 'dd-mm hh:mm',
+                errorStyle: errorStyleTextStyle,
+              ),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a valid dd-mm hh:mm wake up date time';
                 }
+                return null;
               },
-              child: const Text('Submit'),
             ),
-          ),
-        ],
+            TextFormField(
+              // The validator receives the text that the user has entered.
+              decoration: const InputDecoration(
+                labelText: 'Stay awake',
+                labelStyle: TextStyle(fontSize: 20),
+                hintText: 'hh:mm',
+                errorStyle: errorStyleTextStyle,
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty || value.length < 5) {
+                  return 'Please enter a valid hh:mm stay awake duration';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Go to bed at',
+                labelStyle: TextStyle(fontSize: 20),
+                hintText: 'dd-mm hh:mm',
+                errorStyle: errorStyleTextStyle,
+              ),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a valid dd-mm hh:mm go to bed date time';
+                }
+                return null;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Validate returns true if the form is valid, or false otherwise.
+                  if (_formKey.currentState!.validate()) {
+                    // If the form is valid, display a snackbar. In the real world,
+                    // you'd often call a server or save the information in a database.
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing Data')),
+                    );
+                  }
+                },
+                child: const Text('Submit'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

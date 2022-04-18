@@ -44,11 +44,11 @@ void main() {
 
   final String wakeUpDateTimeStr = '15-04-2022 18:15';
   final String wakeHourMinuteDuration = '20:30';
-  print(
-      '$wakeUpDateTimeStr + $wakeHourMinuteDuration = ${dateTimeComputer.computeGoToSleepHour(wakeUpDateTimeStr: wakeUpDateTimeStr, wakeHourMinuteDurationStr: wakeHourMinuteDuration)}');
   DateTime computeGoToSleepDateTime = dateTimeComputer.computeGoToSleepHour(
-      wakeUpDateTimeStr: '15-4-2022 18:15', wakeHourMinuteDurationStr: '20:30');
-  print(computeGoToSleepDateTime);
+      wakeUpDateTimeStr: wakeUpDateTimeStr,
+      wakeHourMinuteDurationStr: wakeHourMinuteDuration);
+  print(
+      'you waked up on $wakeUpDateTimeStr\nyou will stay awake $wakeHourMinuteDuration H\nyou will go to bed on $computeGoToSleepDateTime');
 
   final dateFormatNotLocal = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -57,14 +57,15 @@ void main() {
       goToSleepDateTimeStr:
           dateFormatNotLocal.format(computeGoToSleepDateTime));
 
-  print('$wakeUpHHmmStr');
+  if (wakeUpHHmmStr != wakeHourMinuteDuration) {
+    print('WARNING: BUG !');
+  }
 
   final String goToSleepDateTimeStr = '17-4-2022 8:45';
   wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
-    wakeUpDateTimeStr: wakeUpDateTimeStr,
-    goToSleepDateTimeStr: goToSleepDateTimeStr
-  );
+      wakeUpDateTimeStr: wakeUpDateTimeStr,
+      goToSleepDateTimeStr: goToSleepDateTimeStr);
 
   print(
-      '\nyou waked up on $wakeUpDateTimeStr\nyou went to bed on $goToSleepDateTimeStr\ntime you stayed awake: $wakeUpHHmmStr');
+      '\nyou waked up on $wakeUpDateTimeStr\nyou went to bed on $goToSleepDateTimeStr\nyou stayed awake: $wakeUpHHmmStr H');
 }
