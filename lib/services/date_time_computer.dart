@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
 class DateTimeComputer {
+  static final NumberFormat _minuteFormatter = NumberFormat('00');
+
   /// According to the passed wake up date/time string and the
   /// passed awakening hour:minute duration, returns the
   /// DateTime object which is the addition of the two passed
@@ -35,7 +37,14 @@ class DateTimeComputer {
     final DateTime goToSleepDT = _stringToDateTime(goToSleepDateTimeStr);
     final Duration wakeUpDuration = goToSleepDT.difference(wakeUpDT);
 
-    return "${wakeUpDuration.inHours}:${wakeUpDuration.inMinutes.remainder(60)}";
+    final int wakeUpDurationMinute = wakeUpDuration.inMinutes.remainder(60);
+
+    if (wakeUpDurationMinute < 1) {
+      throw ArgumentError(
+          'goToSleepDateTimeStr $goToSleepDateTimeStr must be after wakeUpDateTimeStr $wakeUpDateTimeStr');
+    }
+
+    return "${wakeUpDuration.inHours}:${DateTimeComputer._minuteFormatter.format(wakeUpDurationMinute)}";
   }
 }
 
@@ -62,6 +71,7 @@ void main() {
   }
 
   final String goToSleepDateTimeStr = '17-4-2022 8:45';
+
   wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
       wakeUpDateTimeStr: wakeUpDateTimeStr,
       goToSleepDateTimeStr: goToSleepDateTimeStr);
