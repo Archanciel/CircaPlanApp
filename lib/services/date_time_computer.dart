@@ -59,9 +59,12 @@ void main() {
 
   print('$wakeUpHHmmStr');
 
+  final String goToSleepDateTimeStr = '17-4-2022 8:45';
   wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
-      wakeUpDateTimeStr: wakeUpDateTimeStr,
-      goToSleepDateTimeStr: '17-4-2022 6:30');
+    wakeUpDateTimeStr: wakeUpDateTimeStr,
+    goToSleepDateTimeStr: goToSleepDateTimeStr
+  );
 
-  print('$wakeUpHHmmStr');
+  print(
+      '\nyou waked up on $wakeUpDateTimeStr\nyou went to bed on $goToSleepDateTimeStr\ntime you stayed awake: $wakeUpHHmmStr');
 }
