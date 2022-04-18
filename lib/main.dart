@@ -41,14 +41,23 @@ class MyCustomFormState extends State<MyCustomForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
+  static const labelStyleTextStyle = TextStyle(fontSize: 20);
+  static const errorStyleTextStyle = TextStyle(
+    color: Colors.red,
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
+  );
+
+  String? _validateDateTime(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid dd-mm hh:mm wake up date time';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    const errorStyleTextStyle = TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                );
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -58,23 +67,18 @@ class MyCustomFormState extends State<MyCustomForm> {
             TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Wake up at',
-                labelStyle: TextStyle(fontSize: 20),
+                labelStyle: labelStyleTextStyle,
                 hintText: 'dd-mm hh:mm',
                 errorStyle: errorStyleTextStyle,
               ),
               // The validator receives the text that the user has entered.
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a valid dd-mm hh:mm wake up date time';
-                }
-                return null;
-              },
+              validator: (value) => _validateDateTime(value),
             ),
             TextFormField(
               // The validator receives the text that the user has entered.
               decoration: const InputDecoration(
                 labelText: 'Stay awake',
-                labelStyle: TextStyle(fontSize: 20),
+                labelStyle: labelStyleTextStyle,
                 hintText: 'hh:mm',
                 errorStyle: errorStyleTextStyle,
               ),
@@ -88,17 +92,12 @@ class MyCustomFormState extends State<MyCustomForm> {
             TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Go to bed at',
-                labelStyle: TextStyle(fontSize: 20),
+                labelStyle: labelStyleTextStyle,
                 hintText: 'dd-mm hh:mm',
                 errorStyle: errorStyleTextStyle,
               ),
               // The validator receives the text that the user has entered.
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a valid dd-mm hh:mm go to bed date time';
-                }
-                return null;
-              },
+              validator: (value) => _validateDateTime(value),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
