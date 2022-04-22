@@ -40,7 +40,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   //
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static const labelStyleTextStyle = TextStyle(fontSize: 20);
   static const errorStyleTextStyle = TextStyle(
@@ -48,6 +48,11 @@ class MyCustomFormState extends State<MyCustomForm> {
     fontWeight: FontWeight.bold,
     fontSize: 15,
   );
+
+  String? _wakeUpDT;
+  String? _awakeHHmm;
+  String? _goToBedDT;
+  String? _outputText;
 
   String? _validateDateTime(String? value) {
     if (value == null || value.isEmpty) {
@@ -78,59 +83,77 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Wake up at',
-                labelStyle: labelStyleTextStyle,
-                hintText: 'dd-mm hh:mm',
-                errorStyle: errorStyleTextStyle,
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Wake up at',
+                  labelStyle: labelStyleTextStyle,
+                  hintText: 'dd-mm hh:mm',
+                  errorStyle: errorStyleTextStyle,
+                ),
+                // The validator receives the text that the user has entered.
+                validator: (value) => _validateDateTime(value),
+                onSaved: (String? value) => _wakeUpDT = value,
               ),
-              // The validator receives the text that the user has entered.
-              validator: (value) => _validateDateTime(value),
-            ),
-            TextFormField(
-              // The validator receives the text that the user has entered.
-              decoration: const InputDecoration(
-                labelText: 'Stay awake',
-                labelStyle: labelStyleTextStyle,
-                hintText: 'hh:mm',
-                errorStyle: errorStyleTextStyle,
+              TextFormField(
+                // The validator receives the text that the user has entered.
+                decoration: const InputDecoration(
+                  labelText: 'Stay awake',
+                  labelStyle: labelStyleTextStyle,
+                  hintText: 'hh:mm',
+                  errorStyle: errorStyleTextStyle,
+                ),
+                validator: (value) => _validateTime(value),
+                onSaved: (String? value) => _awakeHHmm = value,
               ),
-              validator: (value) => _validateTime(value),
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Go to bed at',
-                labelStyle: labelStyleTextStyle,
-                hintText: 'dd-mm hh:mm',
-                errorStyle: errorStyleTextStyle,
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Go to bed at',
+                  labelStyle: labelStyleTextStyle,
+                  hintText: 'dd-mm hh:mm',
+                  errorStyle: errorStyleTextStyle,
+                ),
+                // The validator receives the text that the user has entered.
+                validator: (value) => _validateDateTime(value),
+                onSaved: (String? value) => _goToBedDT = value,
               ),
-              // The validator receives the text that the user has entered.
-              validator: (value) => _validateDateTime(value),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                },
-                child: const Text('Submit'),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-          ],
+              Container(
+                alignment: Alignment.topRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      _formKey.currentState!.save();
+                      setState(() {
+                        _outputText =
+                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
+                      });
+                      print(
+                          'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                  },
+                  child: const Text('Submit'),
+                ),
+              ),
+              Text(_outputText ?? ''),
+            ],
+          ),
         ),
       ),
     );
