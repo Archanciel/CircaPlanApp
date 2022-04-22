@@ -44,32 +44,13 @@ class MyCustomFormState extends State<MyCustomForm> {
     fontSize: 15,
   );
 
-  String? _wakeUpDT;
-  String? _awakeHHmm;
-  String? _goToBedDT;
+  String? _firstName;
+  String? _lastName;
   String? _outputText;
 
-  String? _validateDateTime(String? value) {
+  String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a valid dd-mm hh:mm wake up date time';
-    } else {
-      List<String?> dateTimeStrLst = DateTimeParser.parseDateTime(value);
-      if (dateTimeStrLst.contains(null)) {
-        return 'Please enter a valid dd-mm hh:mm wake up date time';
-      }
-    }
-
-    return null;
-  }
-
-  String? _validateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid hh:mm wake up duration';
-    } else {
-      String? timeStr = DateTimeParser.parseTime(value);
-      if (timeStr == null) {
-        return 'Please enter a valid hh:mm wake up duration';
-      }
+      return 'Please enter a non empty name';
     }
 
     return null;
@@ -89,36 +70,25 @@ class MyCustomFormState extends State<MyCustomForm> {
             children: [
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Wake up at',
+                  labelText: 'First name',
                   labelStyle: labelStyleTextStyle,
-                  hintText: 'dd-mm hh:mm',
+                  hintText: 'First name',
                   errorStyle: errorStyleTextStyle,
                 ),
                 // The validator receives the text that the user has entered.
-                validator: (value) => _validateDateTime(value),
-                onSaved: (String? value) => _wakeUpDT = value,
-              ),
-              TextFormField(
-                // The validator receives the text that the user has entered.
-                decoration: const InputDecoration(
-                  labelText: 'Stay awake',
-                  labelStyle: labelStyleTextStyle,
-                  hintText: 'hh:mm',
-                  errorStyle: errorStyleTextStyle,
-                ),
-                validator: (value) => _validateTime(value),
-                onSaved: (String? value) => _awakeHHmm = value,
+                validator: (value) => _validateName(value),
+                onSaved: (String? value) => _firstName = value,
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Go to bed at',
+                  labelText: 'Last name',
                   labelStyle: labelStyleTextStyle,
-                  hintText: 'dd-mm hh:mm',
+                  hintText: 'Last name',
                   errorStyle: errorStyleTextStyle,
                 ),
                 // The validator receives the text that the user has entered.
-                validator: (value) => _validateDateTime(value),
-                onSaved: (String? value) => _goToBedDT = value,
+                validator: (value) => _validateName(value),
+                onSaved: (String? value) => _lastName = value,
               ),
               const SizedBox(
                 height: 20,
@@ -133,18 +103,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                       // you'd often call a server or save the information in a database.
                       _formKey.currentState!.save();
                       setState(() {
-                        _outputText =
-                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
+                        _outputText = '$_firstName $_lastName';
                       });
-                      print(
-                          'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
                     }
                   },
                   child: const Text('Submit'),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Text(_outputText ?? ''),
             ],
