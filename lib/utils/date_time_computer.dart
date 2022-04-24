@@ -5,18 +5,48 @@ import 'package:intl/intl.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 class DateTimeComputer {
-  static DateTime? addDurationToDateTime({
-    required DateTime dateTime,
-    required posNegDurationStr,
-  }) {
-    final Duration? posNegDuration =
-        DateTimeParser.parseHHmmDuration(posNegDurationStr);
+  static final String localName = Platform.localeName;
+  static final DateFormat localDateTimeFormat =
+      DateFormat('dd-MM-yyyy HH:mm', localName);
 
-    if (posNegDuration != null) {
-      return dateTime.add(posNegDuration);
+  /// Add the positive or negative durations contained as Strings in the passed
+  /// posNegDurationStrLst to the DateTime specified as String in the passed
+  /// dateTimeStr. The result is returned as DateTime.
+  ///
+  /// Usage examples:
+  /// DateTimeComputer.addDurationsToDateTime('21-4-2022 13:34', ['20:00'])
+  /// DateTimeComputer.addDurationsToDateTime('21-4-2022 13:34', ['0:15', '-8:15'])
+  static DateTime? addDurationsToDateTime({
+    required String dateTimeStr,
+    required List<String> posNegDurationStrLst,
+  }) {
+    DateTime dateTime = localDateTimeFormat.parse(dateTimeStr);
+
+    for (String posNegDurationStr in posNegDurationStrLst) {
+      final Duration? posNegDuration =
+          DateTimeParser.parseHHmmDuration(posNegDurationStr);
+
+      if (posNegDuration != null) {
+        dateTime = dateTime.add(posNegDuration);
+      }
     }
 
-    return null;
+    return dateTime;
+  }
+
+  static Duration dateTimeDifference({
+    required String firstDateTimeStr,
+    required String secondDateTimeStr,
+  }) {
+    final DateTime firstDateTime = localDateTimeFormat.parse(firstDateTimeStr);
+    final DateTime secondDateTime =
+        localDateTimeFormat.parse(secondDateTimeStr);
+
+    if (firstDateTime.isAfter(secondDateTime)) {
+      return firstDateTime.difference(secondDateTime);
+    } else {
+      return secondDateTime.difference(firstDateTime);
+    }
   }
 }
 
@@ -28,34 +58,100 @@ void main() {
   final DateFormat localDateTimeFormatDayName =
       DateFormat("EEEE dd-MM-yyyy HH:mm", localName);
 
-  final DateTime wakeUpHour = localDateTimeFormat.parse('23-4-2022 18:00');
-  final DateTime? goToBedHour = DateTimeComputer.addDurationToDateTime(
-    dateTime: wakeUpHour,
-    posNegDurationStr: '20:00',
+  final DateTime? goToBedHour = DateTimeComputer.addDurationsToDateTime(
+    dateTimeStr: '23-4-2022 18:00',
+    posNegDurationStrLst: ['20:00'],
   );
 
   if (goToBedHour != null) {
     print(
-        '${localDateTimeFormat.format(wakeUpHour)} + 20:00 = ${localDateTimeFormat.format(goToBedHour)}');
+        '23-4-2022 18:00 + 20:00 = ${localDateTimeFormat.format(goToBedHour)}');
   }
 
   print('');
 
-  const List<List<String>> testDataLst = [
-    ['23-4-2022 18:00', '28:00'],
-    ['15-04-2022 18:15', '20:00'],
-    ['16-4-2022 15:30', '-10:30'],
-    ['16-4-2022 15:30', '-8:15'],
+  const List<List<String>> testAddDurationtDateTimeDataLst = [
+    [
+      '23-4-2022 18:00',
+      '20:00',
+      '8:00',
+    ],
+    [
+      '23-4-2022 18:00',
+      '20:00',
+      '3:16',
+    ],
+    [
+      '15-04-2022 18:15',
+      '20:00',
+    ],
+    ['16-4-2022 15:30', '-10:30', '-3:45', '0:15'],
+    [
+      '16-4-2022 15:30',
+      '4:00',
+      '-8:15',
+    ],
+    [
+      '16-4-2022 15:30',
+      '-0:01',
+    ],
+    [
+      '16-4-2022 15:30',
+      '-0:01',
+      '1:5',
+      '-0:02',
+    ],
   ];
 
-  for (List<String> twoParmsLst in testDataLst) {
-    final DateTime dateTimeStart = localDateTimeFormat.parse(twoParmsLst[0]);
-    final String durationStr = twoParmsLst[1];
-    final DateTime? dateTimeEnd = DateTimeComputer.addDurationToDateTime(
-        dateTime: dateTimeStart, posNegDurationStr: durationStr);
+  for (List<String> twoParmsLst in testAddDurationtDateTimeDataLst) {
+    final String dateTimeStartStr = twoParmsLst[0];
+    final List<String> durationStrLst = twoParmsLst.sublist(1);
+    final DateTime? dateTimeEnd = DateTimeComputer.addDurationsToDateTime(
+        dateTimeStr: dateTimeStartStr, posNegDurationStrLst: durationStrLst);
     if (dateTimeEnd != null) {
       print(
-          '${localDateTimeFormat.format(dateTimeStart)} + $durationStr = ${localDateTimeFormat.format(dateTimeEnd)}');
+          '$dateTimeStartStr + $durationStrLst = ${localDateTimeFormat.format(dateTimeEnd)}');
     }
+  }
+
+  print('');
+
+  String firstDTStr = '22-4-2022 21:30';
+  String secondDTStr = '24-4-2022 13:30';
+  Duration dateTimeDifference = DateTimeComputer.dateTimeDifference(
+    firstDateTimeStr: firstDTStr,
+    secondDateTimeStr: secondDTStr,
+  );
+
+  print('diff $firstDTStr $secondDTStr = ${dateTimeDifference.HHmm()}');
+
+  dateTimeDifference = DateTimeComputer.dateTimeDifference(
+    firstDateTimeStr: secondDTStr,
+    secondDateTimeStr: firstDTStr,
+  );
+
+  print('diff $secondDTStr $firstDTStr = ${dateTimeDifference.HHmm()}');
+
+  const List<List<String>> testDateTimeDifferenceDataLst = [
+    ['22-4-2022 21:30', '24-4-2022 13:30'],
+    ['24-4-2022 13:30', '22-4-2022 21:30'],
+    ['24-4-2022 13:30', '24-4-2022 13:30'],
+    ['24-4-2022 13:30', '24-4-2022 13:31'],
+    ['24-4-2022 13:31', '24-4-2022 13:30'],
+    ['23-4-2022 18:00', '24-4-2022 17:16'],
+    ['24-4-2022 17:16', '23-4-2022 18:00'],
+  ];
+
+  print('');
+
+  for (List<String> firstSecDTStr in testDateTimeDifferenceDataLst) {
+    var firstSecDTStrOne = firstSecDTStr[0];
+    var firstSecDTStrTwo = firstSecDTStr[1];
+    dateTimeDifference = DateTimeComputer.dateTimeDifference(
+      firstDateTimeStr: firstSecDTStrOne,
+      secondDateTimeStr: firstSecDTStrTwo,
+    );
+    print(
+        'diff $firstSecDTStrOne $firstSecDTStrTwo = ${dateTimeDifference.HHmm()}');
   }
 }
