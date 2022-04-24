@@ -13,9 +13,16 @@ class DateTimeComputer {
   /// posNegDurationStrLst to the DateTime specified as String in the passed
   /// dateTimeStr. The result is returned as DateTime.
   ///
+  /// In case the passed posNegDurationStrLst contains invalid duration strings
+  /// (for example 2a:00), this duration is ignored, no FormatException is
+  /// thrown.
+  /// 
   /// Usage examples:
   /// DateTimeComputer.addDurationsToDateTime('21-4-2022 13:34', ['20:00'])
   /// DateTimeComputer.addDurationsToDateTime('21-4-2022 13:34', ['0:15', '-8:15'])
+  /// 
+  /// throws FormatException in case the passed dateTimeStr is not conform to
+  ///                        its expected format
   static DateTime? addDurationsToDateTime({
     required String dateTimeStr,
     required List<String> posNegDurationStrLst,
@@ -68,7 +75,7 @@ void main() {
         '23-4-2022 18:00 + 20:00 = ${localDateTimeFormat.format(goToBedHour)}');
   }
 
-  print('');
+  print('\ntest DateTimeComputer.addDurationsToDateTime\n');
 
   // to be implemented in test_date_time_computer:
 
@@ -146,7 +153,7 @@ void main() {
     ['24-4-2022 17:16', '23-4-2022 18:00'],
   ];
 
-  print('');
+  print('\ntest DateTimeComputer.dateTimeDifference\n');
 
   Duration dateTimeDiffDuration;
 
