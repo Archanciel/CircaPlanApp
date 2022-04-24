@@ -53,7 +53,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     if (value == null || value.isEmpty) {
       return 'Please enter a valid dd-mm hh:mm wake up date time';
     } else {
-      List<String?> dateTimeStrLst = DateTimeParser.parseDateTime(value);
+      List<String?> dateTimeStrLst = DateTimeParser.parseDDMMDateTime(value);
       if (dateTimeStrLst.contains(null)) {
         return 'Please enter a valid dd-mm hh:mm wake up date time';
       }
