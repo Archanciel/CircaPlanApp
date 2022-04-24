@@ -2,7 +2,7 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('DateTimeComputer.parseDDMMDateTime()', () {
+  group('DateTimeParser.parseDDMMDateTime()', () {
     test('valid date time string', () {
       final List<String?> dateTimeComponentStrLst =
           DateTimeParser.parseDDMMDateTime('14-12 13:35');
@@ -74,7 +74,7 @@ void main() {
     });
   });
 
-  group('DateTimeComputer.parseTime()', () {
+  group('DateTimeParser.parseTime()', () {
     test('valid format time string', () {
       final String? hourMinute = DateTimeParser.parseTime('13:35');
 
@@ -166,7 +166,7 @@ void main() {
     });
   });
 
-  group('DateTimeComputer.parseHHmmDuration()', () {
+  group('DateTimeParser.parseHHmmDuration()', () {
     test('valid hh:mm format time string', () {
       const String hourMinuteStr = '13:35';
       final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);

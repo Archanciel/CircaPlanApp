@@ -70,6 +70,8 @@ void main() {
 
   print('');
 
+  // to be implemented in test_date_time_computer:
+
   const List<List<String>> testAddDurationtDateTimeDataLst = [
     [
       '23-4-2022 18:00',
@@ -132,6 +134,8 @@ void main() {
 
   print('diff $secondDTStr $firstDTStr = ${dateTimeDifference.HHmm()}');
 
+  // to be implemented in test_date_time_computer:
+
   const List<List<String>> testDateTimeDifferenceDataLst = [
     ['22-4-2022 21:30', '24-4-2022 13:30'],
     ['24-4-2022 13:30', '22-4-2022 21:30'],
@@ -144,14 +148,43 @@ void main() {
 
   print('');
 
+  Duration dateTimeDiffDuration;
+
   for (List<String> firstSecDTStr in testDateTimeDifferenceDataLst) {
     var firstSecDTStrOne = firstSecDTStr[0];
     var firstSecDTStrTwo = firstSecDTStr[1];
-    dateTimeDifference = DateTimeComputer.dateTimeDifference(
+    dateTimeDiffDuration = DateTimeComputer.dateTimeDifference(
       firstDateTimeStr: firstSecDTStrOne,
       secondDateTimeStr: firstSecDTStrTwo,
     );
     print(
-        'diff $firstSecDTStrOne $firstSecDTStrTwo = ${dateTimeDifference.HHmm()}');
+        'diff $firstSecDTStrOne $firstSecDTStrTwo = ${dateTimeDiffDuration.HHmm()}');
   }
+
+  // verifying that adding the difference duration between goToBedDateTimeStr
+  // and wakeUpDateTimeStr to wakeUpDateTimeStr returns goToBedDateTimeStr
+  const String wakeUpDateTimeStr = '23-4-2022 18:00';
+  const String goToBedDateTimeStr = '24-4-2022 17:16';
+  String wakeDurationStr = DateTimeComputer.dateTimeDifference(
+    firstDateTimeStr: wakeUpDateTimeStr,
+    secondDateTimeStr: goToBedDateTimeStr,
+  ).HHmm();
+
+  final DateTime? computedGoToBedDateTimeStr =
+      DateTimeComputer.addDurationsToDateTime(
+          dateTimeStr: wakeUpDateTimeStr,
+          posNegDurationStrLst: [wakeDurationStr]);
+
+  print(
+      '$goToBedDateTimeStr = ${localDateTimeFormat.format(computedGoToBedDateTimeStr!)}');
+
+  print('');
+
+  final String dateTimeNowStr = localDateTimeFormat.format(DateTime.now());
+  String wakeDurationNowStr = DateTimeComputer.dateTimeDifference(
+    firstDateTimeStr: wakeUpDateTimeStr,
+    secondDateTimeStr: dateTimeNowStr,
+  ).HHmm();
+
+  print('$wakeUpDateTimeStr to $dateTimeNowStr = $wakeDurationNowStr');
 }
