@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller4;
 
   late DateFormat _dateTimeFormat;
+  late DateFormat _dateOnlyFormat;
 
   //String _initialValue = '';
   String _valueChanged1 = '';
@@ -61,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final String localName = 'fr_CH';
     Intl.defaultLocale = localName;
     _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+    _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
     _controller1 = TextEditingController(text: _initialValue);
     print(_initialValue);
@@ -165,11 +167,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText((_valueChanged1 != '') ? _dateTimeFormat.format(DateFormat('yyyy-MM-dd HH:mm').parse(_valueChanged1)) : ''),
-              SelectableText(_valueChanged2),
-              SelectableText(_valueChanged3),
+              SelectableText(_reformatDateTimeStr(_valueChanged1)),
+              SelectableText(_reformatDateTimeStr(_valueChanged2)),
+              SelectableText(_reformatDateStr(_valueChanged3)),
               SelectableText(_valueChanged4),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   final loForm = _oFormKey.currentState;
@@ -200,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SelectableText(_valueSaved2),
               SelectableText(_valueSaved3),
               SelectableText(_valueSaved4),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   final loForm = _oFormKey.currentState;
@@ -234,4 +236,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  String _reformatDateTimeStr(String dateTimeStr) => (dateTimeStr != '')
+      ? _dateTimeFormat.format(DateTime.parse(dateTimeStr))
+      : '';
+  String _reformatDateStr(String dateTimeStr) => (dateTimeStr != '')
+      ? _dateOnlyFormat.format(DateTime.parse(dateTimeStr))
+      : '';
 }
