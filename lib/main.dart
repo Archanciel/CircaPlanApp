@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.blue,
         appBar: AppBar(
           backgroundColor: Colors.blue[900],
-          foregroundColor: Colors.yellowAccent,
+          foregroundColor: Colors.yellow[300],
           title: const Text(appTitle),
         ),
         body: const MyCustomForm(),
