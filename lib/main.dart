@@ -144,7 +144,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   Text(
                     'Wake up at',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.yellow[300],
                       fontSize: 20,
                     ),
                   ),
@@ -174,12 +174,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
+              SizedBox(height: 20,),
               Wrap(
                 children: [
                   Text(
                     'Stay awake',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.yellow[300],
                       fontSize: 20,
                     ),
                   ),
@@ -206,12 +207,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
+              SizedBox(height: 20,),
               Wrap(
                 children: [
                   Text(
                     'Go to bed at',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.yellow[300],
                       fontSize: 20,
                     ),
                   ),
@@ -241,6 +243,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
+              SizedBox(height: 20,),
               Container(
                 alignment: Alignment.topRight,
                 child: ElevatedButton(
