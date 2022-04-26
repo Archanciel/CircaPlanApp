@@ -139,27 +139,40 @@ class MyCustomFormState extends State<MyCustomForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DateTimePicker(
-                type: DateTimePickerType.dateTime,
-                dateMask: 'dd-MM-yyyy HH:mm',
-                use24HourFormat: true,
-                controller: _controller2,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2100),
-                icon: Icon(
-                  Icons.event,
-                  color: Colors.white,
-                ),
-                //dateLabelText: 'Date Time',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                onChanged: (val) => setState(() => _valueChanged1 = val),
-                validator: (val) {
-                  setState(() => _valueToValidate1 = val ?? '');
-                  return null;
-                },
-                onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
+              Wrap(
+                children: [
+                  Text(
+                    'Wake up at',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  DateTimePicker(
+                    type: DateTimePickerType.dateTime,
+                    dateMask: 'dd-MM-yyyy HH:mm',
+                    use24HourFormat: true,
+                    controller: _controller2,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    icon: Icon(
+                      Icons.event,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    //dateLabelText: 'Date Time',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    onChanged: (val) => setState(() => _valueChanged1 = val),
+                    validator: (val) {
+                      setState(() => _valueToValidate1 = val ?? '');
+                      return null;
+                    },
+                    onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
+                  ),
+                ],
               ),
               TextFormField(
                 style: TextStyle(

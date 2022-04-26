@@ -109,21 +109,29 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 20,
               ),
-              DateTimePicker(
-                type: DateTimePickerType.dateTime,
-                dateMask: 'dd-MM-yyyy HH:mm',
-                use24HourFormat: true,
-                controller: _controller2,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2100),
-                icon: Icon(Icons.event),
-                dateLabelText: 'Date Time',
-                onChanged: (val) => setState(() => _valueChanged2 = val),
-                validator: (val) {
-                  setState(() => _valueToValidate2 = val ?? '');
-                  return null;
-                },
-                onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
+              Wrap(
+                children: [
+                  Text('Wake up at'),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  DateTimePicker(
+                    type: DateTimePickerType.dateTime,
+                    dateMask: 'dd-MM-yyyy HH:mm',
+                    use24HourFormat: true,
+                    controller: _controller2,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    icon: Icon(Icons.event),
+                    //dateLabelText: 'Date Time',
+                    onChanged: (val) => setState(() => _valueChanged2 = val),
+                    validator: (val) {
+                      setState(() => _valueToValidate2 = val ?? '');
+                      return null;
+                    },
+                    onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 20,
