@@ -1,5 +1,7 @@
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+
+import 'package:circa_plan/utils/date_time_parser.dart';
 
 void main() => runApp(const MyApp());
 
@@ -146,7 +148,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                   child: const Text('Submit'),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Text(
                 _outputText ?? '',
                 style: const TextStyle(
