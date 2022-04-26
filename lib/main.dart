@@ -4,7 +4,6 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(const MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Circadian App';
 
-    return MaterialApp(
+    return const MaterialApp(
       title: appTitle,
       home: MyCustomForm(),
       localizationsDelegates: [
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('fr', 'CH')], //, Locale('pt', 'BR')],
+      supportedLocales: [Locale('fr', 'CH')],
     );
   }
 }
@@ -48,7 +47,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   late TextEditingController _controller2;
   late TextEditingController _controller3;
   late TextEditingController _controller4;
-
 
   late DateFormat _dateTimeFormat;
   late DateFormat _dateOnlyFormat;
@@ -128,29 +126,34 @@ class MyCustomFormState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
-        backgroundColor: Colors.blue,
-        appBar: AppBar(
-          backgroundColor: Colors.blue[900],
-          foregroundColor: Colors.yellow[300],
-          title: const Text('Circadian App'),
-        ),
+      backgroundColor: Colors.blue,
+      appBar: AppBar(
+        backgroundColor: Colors.blue[900],
+        foregroundColor: Colors.yellow[300],
+        title: const Text('Circadian App'),
+      ),
       body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DateTimePicker(
-                type: DateTimePickerType.dateTimeSeparate,
-                dateMask: 'dd MMM yyyy',
+                type: DateTimePickerType.dateTime,
+                dateMask: 'dd-MM-yyyy HH:mm',
                 use24HourFormat: true,
-                controller: _controller1,
+                controller: _controller2,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(2100),
-                icon: Icon(Icons.event),
-                dateLabelText: 'Date',
-                timeLabelText: "Hour",
+                icon: Icon(
+                  Icons.event,
+                  color: Colors.white,
+                ),
+                //dateLabelText: 'Date Time',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
                 onChanged: (val) => setState(() => _valueChanged1 = val),
                 validator: (val) {
                   setState(() => _valueToValidate1 = val ?? '');
