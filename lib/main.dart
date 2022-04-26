@@ -8,12 +8,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Form Validation Demo';
+    const appTitle = 'Circadian App';
 
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
+        backgroundColor: Colors.blue,
         appBar: AppBar(
+          backgroundColor: Colors.blue[900],
+          foregroundColor: Colors.yellowAccent,
           title: const Text(appTitle),
         ),
         body: const MyCustomForm(),
@@ -36,13 +39,6 @@ class MyCustomForm extends StatefulWidget {
 // This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  static const labelStyleTextStyle = TextStyle(fontSize: 20);
-  static const errorStyleTextStyle = TextStyle(
-    color: Colors.red,
-    fontWeight: FontWeight.bold,
-    fontSize: 15,
-  );
 
   String? _wakeUpDT;
   String? _awakeHHmm;
@@ -88,35 +84,39 @@ class MyCustomFormState extends State<MyCustomForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Wake up at',
-                  labelStyle: labelStyleTextStyle,
-                  hintText: 'dd-mm hh:mm',
-                  errorStyle: errorStyleTextStyle,
+                style: TextStyle(
+                  color: Colors.white,
                 ),
+                decoration: MyInputDecoration(
+                  labelText: 'Wake up at',
+                  hintText: 'dd-mm hh:mm',
+                ),
+                keyboardType: TextInputType.datetime,
                 // The validator receives the text that the user has entered.
                 validator: (value) => _validateDateTime(value),
                 onSaved: (String? value) => _wakeUpDT = value,
               ),
               TextFormField(
-                // The validator receives the text that the user has entered.
-                decoration: const InputDecoration(
-                  labelText: 'Stay awake',
-                  labelStyle: labelStyleTextStyle,
-                  hintText: 'hh:mm',
-                  errorStyle: errorStyleTextStyle,
+                style: TextStyle(
+                  color: Colors.white,
                 ),
+                decoration: MyInputDecoration(
+                  labelText: 'Stay awake',
+                  hintText: 'hh:mm',
+                ),
+                keyboardType: TextInputType.datetime,
                 validator: (value) => _validateTime(value),
                 onSaved: (String? value) => _awakeHHmm = value,
               ),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: MyInputDecoration(
                   labelText: 'Go to bed at',
-                  labelStyle: labelStyleTextStyle,
                   hintText: 'dd-mm hh:mm',
-                  errorStyle: errorStyleTextStyle,
                 ),
-                // The validator receives the text that the user has entered.
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+                keyboardType: TextInputType.datetime,
                 validator: (value) => _validateDateTime(value),
                 onSaved: (String? value) => _goToBedDT = value,
               ),
@@ -146,11 +146,57 @@ class MyCustomFormState extends State<MyCustomForm> {
                   child: const Text('Submit'),
                 ),
               ),
-              Text(_outputText ?? ''),
+              const SizedBox(height: 20,),
+              Text(
+                _outputText ?? '',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class MyInputDecoration extends InputDecoration {
+  MyInputDecoration({required String labelText, required String hintText})
+      : super(
+          labelText: labelText,
+          hintText: hintText,
+          labelStyle: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+          hintStyle: const TextStyle(
+            color: Colors.white70,
+          ),
+          errorStyle: const TextStyle(
+            color: Colors.yellow,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.yellow,
+            ),
+          ),
+          errorBorder: const UnderlineInputBorder(
+            borderSide:
+                BorderSide(color: Colors.yellow, style: BorderStyle.solid),
+          ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.yellow,
+            ),
+          ),
+          focusedErrorBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.yellow,
+            ),
+          ),
+        );
 }
