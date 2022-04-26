@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
@@ -52,31 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Intl.defaultLocale = 'pt_BR';
     //_initialValue = DateTime.now().toString();
+    final String localName = 'fr_CH';
+    print(localName);
+    Intl.defaultLocale = localName;
+
     _controller1 = TextEditingController(text: DateTime.now().toString());
+    print(DateTime.now().toString());
+    print(DateTime.now().timeZoneName);
     _controller2 = TextEditingController(text: DateTime.now().toString());
     _controller3 = TextEditingController(text: DateTime.now().toString());
 
     String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
     _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
-
-    _getValue();
-  }
-
-  /// This implementation is just to simulate a load data behavior
-  /// from a data base sqlite or from a API
-  Future<void> _getValue() async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        //_initialValue = '2000-10-22 14:30';
-        _controller1.text = '26-4-2022 14:30';
-        _controller2.text = '26-4-2022 15:31';
-        _controller3.text = '26-4-2022';
-        _controller4.text = '17:01';
-      });
-    });
   }
 
   @override
@@ -94,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               DateTimePicker(
                 type: DateTimePickerType.dateTimeSeparate,
                 dateMask: 'dd MMM, yyyy',
-                locale: Locale('fr', 'CH'),
+                //              locale: Locale('fr', 'CH'),
                 use24HourFormat: true,
                 controller: _controller1,
                 //initialValue: _initialValue,
@@ -122,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               DateTimePicker(
                 type: DateTimePickerType.dateTime,
                 dateMask: 'dd-MM-yyyy HH:mm',
-                locale: const Locale('fr', 'CH'),
+//                locale: const Locale('fr', 'CH'),
                 use24HourFormat: true,
                 controller: _controller2,
                 //initialValue: _initialValue,
@@ -149,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 lastDate: DateTime(2100),
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
-                locale: Locale('fr', 'CH'),
+//                locale: Locale('fr', 'CH'),
                 onChanged: (val) => setState(() => _valueChanged3 = val),
                 validator: (val) {
                   setState(() => _valueToValidate3 = val ?? '');
@@ -159,13 +151,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DateTimePicker(
                 type: DateTimePickerType.time,
-                //timePickerEntryModeInput: true,
-                //controller: _controller4,
-                initialValue: '', //_initialValue,
+                timePickerEntryModeInput: true,
+                controller: _controller4,
+                //initialValue: '', //_initialValue,
                 icon: Icon(Icons.access_time),
                 timeLabelText: "Time",
                 use24HourFormat: true,
-                locale: Locale('fr', 'CH'),
+//                locale: Locale('fr', 'CH'),
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
                   setState(() => _valueToValidate4 = val ?? '');
