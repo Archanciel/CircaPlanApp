@@ -86,7 +86,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
+    _controller2 = TextEditingController(text: '$lsHour:$lsMinute');
   }
 
   String? _validateDateTime(String? value) {
@@ -134,9 +134,9 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Wrap(
@@ -152,7 +152,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     type: DateTimePickerType.dateTime,
                     dateMask: 'dd-MM-yyyy HH:mm',
                     use24HourFormat: true,
-                    controller: _controller2,
+                    controller: _controller1,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
                     icon: Icon(
@@ -174,45 +174,72 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
-              TextFormField(
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                decoration: MyInputDecoration(
-                  labelText: 'Wake up at',
-                  hintText: 'dd-mm hh:mm',
-                ),
-                keyboardType: TextInputType.datetime,
-                // The validator receives the text that the user has entered.
-                validator: (value) => _validateDateTime(value),
-                onSaved: (String? value) => _wakeUpDT = value,
+              Wrap(
+                children: [
+                  Text(
+                    'Stay awake',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  DateTimePicker(
+                    type: DateTimePickerType.time,
+                    timePickerEntryModeInput: true,
+                    controller: _controller2,
+                    icon: Icon(
+                      Icons.access_time,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    //dateLabelText: 'Date Time',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    onChanged: (val) => setState(() => _valueChanged2 = val),
+                    validator: (val) {
+                      setState(() => _valueToValidate2 = val ?? '');
+                      return null;
+                    },
+                    onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
+                  ),
+                ],
               ),
-              TextFormField(
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                decoration: MyInputDecoration(
-                  labelText: 'Stay awake',
-                  hintText: 'hh:mm',
-                ),
-                keyboardType: TextInputType.datetime,
-                validator: (value) => _validateTime(value),
-                onSaved: (String? value) => _awakeHHmm = value,
-              ),
-              TextFormField(
-                decoration: MyInputDecoration(
-                  labelText: 'Go to bed at',
-                  hintText: 'dd-mm hh:mm',
-                ),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                keyboardType: TextInputType.datetime,
-                validator: (value) => _validateDateTime(value),
-                onSaved: (String? value) => _goToBedDT = value,
-              ),
-              const SizedBox(
-                height: 20,
+              Wrap(
+                children: [
+                  Text(
+                    'Go to bed at',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  DateTimePicker(
+                    type: DateTimePickerType.dateTime,
+                    dateMask: 'dd-MM-yyyy HH:mm',
+                    use24HourFormat: true,
+                    controller: _controller3,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    icon: Icon(
+                      Icons.event,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    //dateLabelText: 'Date Time',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    onChanged: (val) => setState(() => _valueChanged3 = val),
+                    validator: (val) {
+                      setState(() => _valueToValidate3 = val ?? '');
+                      return null;
+                    },
+                    onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
+                  ),
+                ],
               ),
               Container(
                 alignment: Alignment.topRight,
@@ -234,7 +261,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                       );
                     }
                   },
-                  child: const Text('Submit'),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -244,7 +276,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 _outputText ?? '',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 20,
                 ),
               ),
             ],
