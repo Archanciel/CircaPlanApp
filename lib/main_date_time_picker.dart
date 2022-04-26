@@ -38,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller3;
   late TextEditingController _controller4;
 
+  late DateFormat _dateTimeFormat;
+
   //String _initialValue = '';
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
@@ -55,16 +57,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    //_initialValue = DateTime.now().toString();
+    String _initialValue = DateTime.now().toString();
     final String localName = 'fr_CH';
-    print(localName);
     Intl.defaultLocale = localName;
+    _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
-    _controller1 = TextEditingController(text: DateTime.now().toString());
-    print(DateTime.now().toString());
+    _controller1 = TextEditingController(text: _initialValue);
+    print(_initialValue);
     print(DateTime.now().timeZoneName);
-    _controller2 = TextEditingController(text: DateTime.now().toString());
-    _controller3 = TextEditingController(text: DateTime.now().toString());
+    _controller2 = TextEditingController(text: _initialValue);
+    _controller3 = TextEditingController(text: _initialValue);
 
     String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
@@ -85,11 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               DateTimePicker(
                 type: DateTimePickerType.dateTimeSeparate,
-                dateMask: 'dd MMM, yyyy',
-                //              locale: Locale('fr', 'CH'),
+                dateMask: 'dd MMM yyyy',
                 use24HourFormat: true,
                 controller: _controller1,
-                //initialValue: _initialValue,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(2100),
                 icon: Icon(Icons.event),
@@ -114,13 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
               DateTimePicker(
                 type: DateTimePickerType.dateTime,
                 dateMask: 'dd-MM-yyyy HH:mm',
-//                locale: const Locale('fr', 'CH'),
                 use24HourFormat: true,
                 controller: _controller2,
-                //initialValue: _initialValue,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(2100),
-                //icon: Icon(Icons.event),
+                icon: Icon(Icons.event),
                 dateLabelText: 'Date Time',
                 onChanged: (val) => setState(() => _valueChanged2 = val),
                 validator: (val) {
@@ -134,14 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DateTimePicker(
                 type: DateTimePickerType.date,
-                //dateMask: 'yyyy/MM/dd',
+                dateMask: 'dd-MM-yyyy',
                 controller: _controller3,
-                //initialValue: _initialValue,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(2100),
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
-//                locale: Locale('fr', 'CH'),
                 onChanged: (val) => setState(() => _valueChanged3 = val),
                 validator: (val) {
                   setState(() => _valueToValidate3 = val ?? '');
@@ -153,11 +149,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 type: DateTimePickerType.time,
                 timePickerEntryModeInput: true,
                 controller: _controller4,
-                //initialValue: '', //_initialValue,
                 icon: Icon(Icons.access_time),
                 timeLabelText: "Time",
                 use24HourFormat: true,
-//                locale: Locale('fr', 'CH'),
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
                   setState(() => _valueToValidate4 = val ?? '');
@@ -171,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText(_valueChanged1),
+              SelectableText((_valueChanged1 != '') ? _dateTimeFormat.format(DateFormat('yyyy-MM-dd HH:mm').parse(_valueChanged1)) : ''),
               SelectableText(_valueChanged2),
               SelectableText(_valueChanged3),
               SelectableText(_valueChanged4),
