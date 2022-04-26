@@ -58,20 +58,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    String _initialValue = DateTime.now().toString();
+    final DateTime dateTimeNow = DateTime.now();
+    String _initialValue = dateTimeNow.toString();
     final String localName = 'fr_CH';
     Intl.defaultLocale = localName;
     _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
     _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
     _controller1 = TextEditingController(text: _initialValue);
-    print(_initialValue);
-    print(DateTime.now().timeZoneName);
     _controller2 = TextEditingController(text: _initialValue);
     _controller3 = TextEditingController(text: _initialValue);
 
-    String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
-    String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
+    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
+    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
     _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
   }
 
@@ -188,9 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText(_valueToValidate1),
-              SelectableText(_valueToValidate2),
-              SelectableText(_valueToValidate3),
+              SelectableText(_reformatDateTimeStr(_valueToValidate1)),
+              SelectableText(_reformatDateTimeStr(_valueToValidate2)),
+              SelectableText(_reformatDateStr(_valueToValidate3)),
               SelectableText(_valueToValidate4),
               SizedBox(height: 10),
               Text(
@@ -198,10 +197,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText(_valueSaved1),
-              SelectableText(_valueSaved2),
-              SelectableText(_valueSaved3),
-              SelectableText(_valueSaved4),
+              SelectableText(_reformatDateTimeStr(_valueSaved1)),
+              SelectableText(_reformatDateTimeStr(_valueSaved2)),
+              SelectableText(_reformatDateStr(_valueSaved3)),
+              SelectableText(_valueToValidate4),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
