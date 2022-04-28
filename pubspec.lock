@@ -106,13 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  datetime_picker_formfield:
-    dependency: "direct main"
-    description:
-      name: datetime_picker_formfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -205,13 +198,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  localization:
-    dependency: "direct main"
-    description:
-      name: localization
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   logging:
     dependency: transitive
     description:
@@ -254,13 +240,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  number_inc_dec:
-    dependency: "direct main"
-    description:
-      name: number_inc_dec
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.0"
   package_config:
     dependency: transitive
     description:
@@ -443,4 +422,3 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.16.2 <3.0.0"
-  flutter: ">=2.0.0"
