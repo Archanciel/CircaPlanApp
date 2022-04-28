@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
 
     return const MaterialApp(
       title: appTitle,
-      home: MyCustomForm(),
+      home: AddDurationToDateTime(),
       localizationsDelegates: [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -29,18 +30,18 @@ class MyApp extends StatelessWidget {
 }
 
 // Create a Form widget.
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({Key? key}) : super(key: key);
+class AddDurationToDateTime extends StatefulWidget {
+  const AddDurationToDateTime({Key? key}) : super(key: key);
 
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  AddDurationToDateTimeState createState() {
+    return AddDurationToDateTimeState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
+class AddDurationToDateTimeState extends State<AddDurationToDateTime> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controller1;
@@ -127,6 +128,36 @@ class MyCustomFormState extends State<MyCustomForm> {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
       backgroundColor: Colors.blue,
+      drawer: Container(
+        width: MediaQuery.of(context).size.width * 0.65,
+        child: Drawer(
+          backgroundColor: Colors.blue[300],
+          child: ListView(padding: EdgeInsets.zero, children: [
+            const DrawerHeader(
+              child: Text('Header'),
+              decoration: BoxDecoration(color: Colors.blue),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.keyboard_double_arrow_up,
+              ),
+              title: const Text('Increase sleep time'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.event,
+              ),
+              title: const Text('Page 2'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ]),
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: Colors.yellow[300],
@@ -174,7 +205,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Wrap(
                 children: [
                   Text(
@@ -207,7 +240,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Wrap(
                 children: [
                   Text(
@@ -243,7 +278,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 alignment: Alignment.topRight,
                 child: ElevatedButton(
