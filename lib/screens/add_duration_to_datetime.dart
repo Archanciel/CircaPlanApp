@@ -1,3 +1,4 @@
+import 'package:circa_plan/screens/increase_sleep_time.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -117,7 +118,9 @@ class AddDurationToDateTimeState extends State<AddDurationToDateTime> {
               ),
               title: const Text('Increase sleep time'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => IncreaseSleepTime()));
               },
             ),
             ListTile(
@@ -266,7 +269,7 @@ class AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                       _formKey.currentState!.save();
                       setState(() {
                         _outputText =
-                        'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
+                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
                       });
                       print(
                           'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
@@ -300,4 +303,3 @@ class AddDurationToDateTimeState extends State<AddDurationToDateTime> {
     );
   }
 }
-
