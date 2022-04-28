@@ -41,6 +41,7 @@ dependencies:
   flutter_localizations: 
     sdk: flutter
   localization: ^2.1.0
+  number_inc_dec: ^0.8.0
 
 dev_dependencies:
   flutter_test:
