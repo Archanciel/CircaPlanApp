@@ -8,8 +8,8 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
 class IncreaseSleepTime extends StatefulWidget {
-  ScreenNavigTransData _screenNavigTransData;
-  IncreaseSleepTime({
+  final ScreenNavigTransData _screenNavigTransData;
+  const IncreaseSleepTime({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
   })  : _screenNavigTransData = screenNavigTransData,

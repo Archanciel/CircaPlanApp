@@ -8,9 +8,9 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
-  ScreenNavigTransData _screenNavigTransData;
+  final ScreenNavigTransData _screenNavigTransData;
 
-  AddDurationToDateTime({
+  const AddDurationToDateTime({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
   })  : _screenNavigTransData = screenNavigTransData,
@@ -222,7 +222,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    //dateLabelText: 'Date Time',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -236,45 +235,32 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                   ),
                 ],
               ),
-              SizedBox(
+                SizedBox(
                 height: 20,
               ),
-              Wrap(
-                children: [
-                  Text(
-                    'End date time',
-                    style: TextStyle(
-                      color: Colors.yellow[300],
-                      fontSize: 20,
-                    ),
-                  ),
-                  DateTimePicker(
-                    type: DateTimePickerType.dateTime,
-                    dateMask: 'dd-MM-yyyy HH:mm',
-                    use24HourFormat: true,
-                    controller: _controller3,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    icon: Icon(
-                      Icons.event,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    //dateLabelText: 'Date Time',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                    onChanged: (val) => setState(() => _valueChanged3 = val),
-                    validator: (val) {
-                      setState(() => _valueToValidate3 = val ?? '');
-                      return null;
-                    },
-                    onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
-                  ),
-                ],
+              Text(
+                'End date time',
+                style: TextStyle(
+                  color: Colors.yellow[300],
+                  fontSize: 20,
+                ),
               ),
-              SizedBox(
+              Container(
+                padding: const EdgeInsets.fromLTRB(47, 0, 0, 0),
+                child: const TextField(
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    labelText: '29-04-2022 09:45',
+                    labelStyle: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  // The validator receives the text that the user has entered.
+                ),
+              ),
+            SizedBox(
                 height: 20,
               ),
               Container(
