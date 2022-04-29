@@ -1,4 +1,4 @@
-import 'package:circa_plan/screens/date_time_difference_duration.dart';
+import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/increase_sleep_time.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
@@ -7,24 +7,25 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
-class AddDurationToDateTime extends StatefulWidget {
+class DateTimeDifferenceDuration extends StatefulWidget {
   ScreenNavigTransData _screenNavigTransData;
 
-  AddDurationToDateTime({
+  DateTimeDifferenceDuration({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
   })  : _screenNavigTransData = screenNavigTransData,
         super(key: key);
 
   @override
-  _AddDurationToDateTimeState createState() {
-    return _AddDurationToDateTimeState();
+  _DateTimeDifferenceDurationState createState() {
+    return _DateTimeDifferenceDurationState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
+class _DateTimeDifferenceDurationState
+    extends State<DateTimeDifferenceDuration> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controller1;
@@ -126,11 +127,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Date time difference duration'),
+                title: const Text('Add duration to date time'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => DateTimeDifferenceDuration(
+                      builder: (BuildContext context) => AddDurationToDateTime(
                             screenNavigTransData:
                                 ScreenNavigTransData(transferDataMap: {}),
                           )));

@@ -1,4 +1,5 @@
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
+import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -113,26 +114,41 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
         width: MediaQuery.of(context).size.width * 0.65,
         child: Drawer(
           backgroundColor: Colors.blue[300],
-          child: ListView(padding: EdgeInsets.zero, children: [
-            const DrawerHeader(
-              child: Text('Header'),
-              decoration: BoxDecoration(color: Colors.blue),
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.keyboard_double_arrow_up,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                child: Text('Header'),
+                decoration: BoxDecoration(color: Colors.blue),
               ),
-              title: const Text('Add duration to date time'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        AddDurationToDateTime(
-                          screenNavigTransData:
-                              ScreenNavigTransData(transferDataMap: {}),
-                        )));
-              },
-            ),
-          ]),
+              ListTile(
+                leading: const Icon(
+                  Icons.keyboard_double_arrow_up,
+                ),
+                title: const Text('Add duration to date time'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => AddDurationToDateTime(
+                            screenNavigTransData:
+                                ScreenNavigTransData(transferDataMap: {}),
+                          )));
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.keyboard_double_arrow_up,
+                ),
+                title: const Text('Date time difference duration'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => DateTimeDifferenceDuration(
+                            screenNavigTransData:
+                                ScreenNavigTransData(transferDataMap: {}),
+                          )));
+                },
+              ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(
