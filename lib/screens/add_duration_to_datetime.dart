@@ -1,4 +1,5 @@
 import 'package:circa_plan/screens/increase_sleep_time.dart';
+import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -6,17 +7,23 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
-  const AddDurationToDateTime({Key? key}) : super(key: key);
+  ScreenNavigTransData _screenNavigTransData;
+
+  AddDurationToDateTime({
+    Key? key,
+    required ScreenNavigTransData screenNavigTransData,
+  })  : _screenNavigTransData = screenNavigTransData,
+        super(key: key);
 
   @override
-  AddDurationToDateTimeState createState() {
-    return AddDurationToDateTimeState();
+  _AddDurationToDateTimeState createState() {
+    return _AddDurationToDateTimeState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class AddDurationToDateTimeState extends State<AddDurationToDateTime> {
+class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controller1;
@@ -113,23 +120,17 @@ class AddDurationToDateTimeState extends State<AddDurationToDateTime> {
               decoration: BoxDecoration(color: Colors.blue),
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.keyboard_double_arrow_up,
               ),
               title: const Text('Increase sleep time'),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => IncreaseSleepTime()));
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.event,
-              ),
-              title: const Text('Page 2'),
-              onTap: () {
-                Navigator.pop(context);
+                    builder: (BuildContext context) => IncreaseSleepTime(
+                          screenNavigTransData:
+                              ScreenNavigTransData(transferDataMap: {}),
+                        )));
               },
             ),
           ]),

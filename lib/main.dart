@@ -1,4 +1,5 @@
 import 'package:circa_plan/screens/increase_sleep_time.dart';
+import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -13,16 +14,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Circadian App';
 
-    return const MaterialApp(
+    return MaterialApp(
       title: appTitle,
-      home: AddDurationToDateTime(),
+      home: AddDurationToDateTime(
+        screenNavigTransData: ScreenNavigTransData(transferDataMap: {}),
+      ),
       localizationsDelegates: [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('fr', 'CH')],
+      supportedLocales: [const Locale('fr', 'CH')],
     );
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
+import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -6,17 +7,22 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
 class IncreaseSleepTime extends StatefulWidget {
-  const IncreaseSleepTime({Key? key}) : super(key: key);
+  ScreenNavigTransData _screenNavigTransData;
+  IncreaseSleepTime({
+    Key? key,
+    required ScreenNavigTransData screenNavigTransData,
+  })  : _screenNavigTransData = screenNavigTransData,
+        super(key: key);
 
   @override
-  IncreaseSleepTimeState createState() {
-    return IncreaseSleepTimeState();
+  _IncreaseSleepTimeState createState() {
+    return _IncreaseSleepTimeState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class IncreaseSleepTimeState extends State<IncreaseSleepTime> {
+class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controller1;
@@ -113,22 +119,17 @@ class IncreaseSleepTimeState extends State<IncreaseSleepTime> {
               decoration: BoxDecoration(color: Colors.blue),
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.keyboard_double_arrow_up,
               ),
               title: const Text('Add duration to date time'),
               onTap: () {
-                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => AddDurationToDateTime()));
-             },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.event,
-              ),
-              title: const Text('Page 2'),
-              onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        AddDurationToDateTime(
+                          screenNavigTransData:
+                              ScreenNavigTransData(transferDataMap: {}),
+                        )));
               },
             ),
           ]),
@@ -146,7 +147,7 @@ class IncreaseSleepTimeState extends State<IncreaseSleepTime> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Wrap(
@@ -195,7 +196,7 @@ class IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                       _formKey.currentState!.save();
                       setState(() {
                         _outputText =
-                        'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
+                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
                       });
                       print(
                           'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
@@ -229,4 +230,3 @@ class IncreaseSleepTimeState extends State<IncreaseSleepTime> {
     );
   }
 }
-
