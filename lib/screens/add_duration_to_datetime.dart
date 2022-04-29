@@ -18,15 +18,25 @@ class AddDurationToDateTime extends StatefulWidget {
 
   @override
   _AddDurationToDateTimeState createState() {
-    return _AddDurationToDateTimeState();
+    return _AddDurationToDateTimeState(
+        _screenNavigTransData.transferDataMap);
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
+  _AddDurationToDateTimeState(
+    Map<String, dynamic> transferDataMap
+  )   : _transferDataMap = transferDataMap,
+        _minusIconColor = transferDataMap['minusIconColor'] ?? Colors.white,
+        _durationSign = transferDataMap['durationSign'] ?? 1,
+        super();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Color _minusIconColor = Colors.white;
+  Map<String, dynamic> _transferDataMap;
+  Color _minusIconColor;
+  int _durationSign;
 
   late TextEditingController _controller1;
   late TextEditingController _controller2;
@@ -63,6 +73,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
     _controller2 = TextEditingController(text: '$lsHour:$lsMinute');
+  }
+
+  Map<String, dynamic> _createTransferDataMap() {
+    Map<String, dynamic> map = _transferDataMap;
+
+    map['minusIconColor'] = _minusIconColor;
+    map['durationSign'] = _durationSign;
+
+    return map;
   }
 
   String? _validateDateTime(String? value) {
@@ -124,9 +143,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          const DateTimeDifferenceDuration(
-                        screenNavigTransData:
-                            ScreenNavigTransData(transferDataMap: {}),
+                          DateTimeDifferenceDuration(
+                        screenNavigTransData: ScreenNavigTransData(
+                            transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
@@ -228,8 +247,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                             setState(() {
                               if (_minusIconColor == Colors.white) {
                                 _minusIconColor = Colors.red;
+                                _durationSign = -1;
                               } else {
                                 _minusIconColor = Colors.white;
+                                _durationSign = 1;
                               }
                             });
                           },
