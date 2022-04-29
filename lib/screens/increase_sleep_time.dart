@@ -27,9 +27,6 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controller1;
-  late TextEditingController _controller2;
-  late TextEditingController _controller3;
-  late TextEditingController _controller4;
 
   late DateFormat _dateTimeFormat;
   late DateFormat _dateOnlyFormat;
@@ -38,16 +35,6 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
   String _valueSaved1 = '';
-  String _valueChanged2 = '';
-  String _valueToValidate2 = '';
-  String _valueSaved2 = '';
-  String _valueChanged3 = '';
-  String _valueToValidate3 = '';
-  String _valueSaved3 = '';
-  String _valueChanged4 = '';
-  String _valueToValidate4 = '';
-  String _valueSaved4 = '';
-
   String? _wakeUpDT;
   String? _awakeHHmm;
   String? _goToBedDT;
@@ -63,13 +50,9 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
     _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
     _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
-    _controller1 = TextEditingController(text: _initialValue);
-    _controller2 = TextEditingController(text: _initialValue);
-    _controller3 = TextEditingController(text: _initialValue);
-
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller2 = TextEditingController(text: '$lsHour:$lsMinute');
+    _controller1 = TextEditingController(text: '$lsHour:$lsMinute');
   }
 
   String? _validateDateTime(String? value) {
@@ -127,11 +110,15 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                 ),
                 title: const Text('Add duration to date time'),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => AddDurationToDateTime(
-                            screenNavigTransData:
-                                ScreenNavigTransData(transferDataMap: {}),
-                          )));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const AddDurationToDateTime(
+                        screenNavigTransData:
+                            const ScreenNavigTransData(transferDataMap: {}),
+                      ),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -140,11 +127,15 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                 ),
                 title: const Text('Date time difference duration'),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => DateTimeDifferenceDuration(
-                            screenNavigTransData:
-                                ScreenNavigTransData(transferDataMap: {}),
-                          )));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const DateTimeDifferenceDuration(
+                        screenNavigTransData:
+                            const ScreenNavigTransData(transferDataMap: {}),
+                      ),
+                    ),
+                  );
                 },
               ),
             ],
@@ -163,7 +154,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Wrap(
@@ -178,27 +169,27 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                   DateTimePicker(
                     type: DateTimePickerType.time,
                     timePickerEntryModeInput: true,
-                    controller: _controller2,
-                    icon: Icon(
+                    controller: _controller1,
+                    icon:const  Icon(
                       Icons.access_time,
                       color: Colors.white,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
-                    onChanged: (val) => setState(() => _valueChanged2 = val),
+                    onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
-                      setState(() => _valueToValidate2 = val ?? '');
+                      setState(() => _valueToValidate1 = val ?? '');
                       return null;
                     },
-                    onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
+                    onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(

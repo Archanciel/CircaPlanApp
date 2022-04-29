@@ -30,8 +30,6 @@ class _DateTimeDifferenceDurationState
 
   late TextEditingController _controller1;
   late TextEditingController _controller2;
-  late TextEditingController _controller3;
-  late TextEditingController _controller4;
 
   late DateFormat _dateTimeFormat;
   late DateFormat _dateOnlyFormat;
@@ -43,12 +41,6 @@ class _DateTimeDifferenceDurationState
   String _valueChanged2 = '';
   String _valueToValidate2 = '';
   String _valueSaved2 = '';
-  String _valueChanged3 = '';
-  String _valueToValidate3 = '';
-  String _valueSaved3 = '';
-  String _valueChanged4 = '';
-  String _valueToValidate4 = '';
-  String _valueSaved4 = '';
 
   String? _wakeUpDT;
   String? _awakeHHmm;
@@ -67,7 +59,6 @@ class _DateTimeDifferenceDurationState
 
     _controller1 = TextEditingController(text: _initialValue);
     _controller2 = TextEditingController(text: _initialValue);
-    _controller3 = TextEditingController(text: _initialValue);
 
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
@@ -130,11 +121,15 @@ class _DateTimeDifferenceDurationState
                 title: const Text('Add duration to date time'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => AddDurationToDateTime(
-                            screenNavigTransData:
-                                ScreenNavigTransData(transferDataMap: {}),
-                          )));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const AddDurationToDateTime(
+                        screenNavigTransData:
+                            ScreenNavigTransData(transferDataMap: {}),
+                      ),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -144,11 +139,15 @@ class _DateTimeDifferenceDurationState
                 title: const Text('Increase sleep time'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => IncreaseSleepTime(
-                            screenNavigTransData:
-                                ScreenNavigTransData(transferDataMap: {}),
-                          )));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const IncreaseSleepTime(
+                        screenNavigTransData:
+                            ScreenNavigTransData(transferDataMap: {}),
+                      ),
+                    ),
+                  );
                 },
               ),
             ],
@@ -183,13 +182,13 @@ class _DateTimeDifferenceDurationState
                     controller: _controller1,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.event,
                       color: Colors.white,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
@@ -202,7 +201,7 @@ class _DateTimeDifferenceDurationState
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Wrap(
@@ -218,29 +217,29 @@ class _DateTimeDifferenceDurationState
                     type: DateTimePickerType.dateTime,
                     dateMask: 'dd-MM-yyyy HH:mm',
                     use24HourFormat: true,
-                    controller: _controller3,
+                    controller: _controller2,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.event,
                       color: Colors.white,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
-                    onChanged: (val) => setState(() => _valueChanged3 = val),
+                    onChanged: (val) => setState(() => _valueChanged2 = val),
                     validator: (val) {
-                      setState(() => _valueToValidate3 = val ?? '');
+                      setState(() => _valueToValidate2 = val ?? '');
                       return null;
                     },
-                    onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
+                    onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -265,7 +264,7 @@ class _DateTimeDifferenceDurationState
                   // The validator receives the text that the user has entered.
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
