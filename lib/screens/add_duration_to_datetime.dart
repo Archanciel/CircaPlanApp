@@ -212,25 +212,28 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                       fontSize: 20,
                     ),
                   ),
-                  DateTimePicker(
-                    type: DateTimePickerType.time,
-                    timePickerEntryModeInput: true,
-                    controller: _controller2,
-                    icon: const Icon(
-                      Icons.access_time,
-                      color: Colors.white,
-                      size: 30,
+                  Container(
+                    padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: DateTimePicker(
+                      type: DateTimePickerType.time,
+                      timePickerEntryModeInput: true,
+                      controller: _controller2,
+                      icon: const Icon(
+                        Icons.access_time,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                      onChanged: (val) => setState(() => _valueChanged2 = val),
+                      validator: (val) {
+                        setState(() => _valueToValidate2 = val ?? '');
+                        return null;
+                      },
+                      onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                    onChanged: (val) => setState(() => _valueChanged2 = val),
-                    validator: (val) {
-                      setState(() => _valueToValidate2 = val ?? '');
-                      return null;
-                    },
-                    onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
                   ),
                 ],
               ),
