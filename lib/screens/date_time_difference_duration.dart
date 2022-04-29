@@ -30,6 +30,7 @@ class _DateTimeDifferenceDurationState
   _DateTimeDifferenceDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         super();
+        
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> _transferDataMap;
 
@@ -152,9 +153,9 @@ class _DateTimeDifferenceDurationState
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          const IncreaseSleepTime(
+                           IncreaseSleepTime(
                         screenNavigTransData:
-                            ScreenNavigTransData(transferDataMap: {}),
+                            ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );

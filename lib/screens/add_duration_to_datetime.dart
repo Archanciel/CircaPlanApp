@@ -161,9 +161,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          const IncreaseSleepTime(
+                           IncreaseSleepTime(
                         screenNavigTransData:
-                            ScreenNavigTransData(transferDataMap: {}),
+                            ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );

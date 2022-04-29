@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 class IncreaseSleepTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
+  
   const IncreaseSleepTime({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
@@ -17,14 +18,19 @@ class IncreaseSleepTime extends StatefulWidget {
 
   @override
   _IncreaseSleepTimeState createState() {
-    return _IncreaseSleepTimeState();
+    return _IncreaseSleepTimeState(_screenNavigTransData.transferDataMap);
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
+  _IncreaseSleepTimeState(Map<String, dynamic> transferDataMap)
+      : _transferDataMap = transferDataMap,
+        super();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> _transferDataMap;
 
   late TextEditingController _controller1;
 
@@ -66,6 +72,12 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
     }
 
     return null;
+  }
+
+  Map<String, dynamic> _createTransferDataMap() {
+    Map<String, dynamic> map = _transferDataMap;
+
+    return map;
   }
 
   String? _validateTime(String? value) {
@@ -113,9 +125,9 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          const AddDurationToDateTime(
+                           AddDurationToDateTime(
                         screenNavigTransData:
-                            const ScreenNavigTransData(transferDataMap: {}),
+                             ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
@@ -130,9 +142,9 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          const DateTimeDifferenceDuration(
+                           DateTimeDifferenceDuration(
                         screenNavigTransData:
-                            const ScreenNavigTransData(transferDataMap: {}),
+                             ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
