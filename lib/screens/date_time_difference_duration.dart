@@ -18,7 +18,8 @@ class DateTimeDifferenceDuration extends StatefulWidget {
 
   @override
   _DateTimeDifferenceDurationState createState() {
-    return _DateTimeDifferenceDurationState();
+    return _DateTimeDifferenceDurationState(
+        _screenNavigTransData.transferDataMap);
   }
 }
 
@@ -26,7 +27,11 @@ class DateTimeDifferenceDuration extends StatefulWidget {
 // This class holds data related to the form.
 class _DateTimeDifferenceDurationState
     extends State<DateTimeDifferenceDuration> {
+  _DateTimeDifferenceDurationState(Map<String, dynamic> transferDataMap)
+      : _transferDataMap = transferDataMap,
+        super();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> _transferDataMap;
 
   late TextEditingController _controller1;
   late TextEditingController _controller2;
@@ -63,6 +68,12 @@ class _DateTimeDifferenceDurationState
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
     _controller2 = TextEditingController(text: '$lsHour:$lsMinute');
+  }
+
+  Map<String, dynamic> _createTransferDataMap() {
+    Map<String, dynamic> map = _transferDataMap;
+
+    return map;
   }
 
   String? _validateDateTime(String? value) {
@@ -123,10 +134,9 @@ class _DateTimeDifferenceDurationState
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const AddDurationToDateTime(
-                        screenNavigTransData:
-                            ScreenNavigTransData(transferDataMap: {}),
+                      builder: (BuildContext context) => AddDurationToDateTime(
+                        screenNavigTransData: ScreenNavigTransData(
+                            transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
