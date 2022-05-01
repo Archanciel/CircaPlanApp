@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
@@ -35,7 +36,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _durationSign = transferDataMap['durationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['durationTextColor'] ?? durationPositiveColor,
-        _startDateTimeStr = transferDataMap['startDateTimeStr'] ?? DateTime.now().toString(),
+        _startDateTimeStr =
+            transferDataMap['startDateTimeStr'] ?? DateTime.now().toString(),
         _durationStr = transferDataMap['durationStr'] ?? '00:00',
         _endDateTimeStr = transferDataMap['endDateTimeStr'] ?? '',
         super();
@@ -339,6 +341,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ),
                   ),
                 ),
+              ),
+              TextField(
+                style: TextStyle(
+                    color: _durationTextColor,
+                    fontSize: textFontSize,
+                    fontWeight: textFontWeight),
+                decoration: InputDecoration(
+                    labelText: 'Duration',
+                    labelStyle: TextStyle(
+                        color: labelColor,
+                        fontSize: textFontSize,
+                        fontWeight: textFontWeight)),
+                keyboardType: TextInputType.datetime,
+                onSubmitted: (value) => print(value),
               ),
             ],
           ),
