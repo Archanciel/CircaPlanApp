@@ -242,7 +242,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                             size: 30,
                             color: _minusIconColor,
                           ),
-                          label: Text(''),
+                          label: const Text(''),
                           onPressed: () {
                             setState(() {
                               if (_minusIconColor == Colors.white) {
