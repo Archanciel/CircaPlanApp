@@ -1,5 +1,6 @@
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/increase_sleep_time.dart';
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -24,7 +25,7 @@ class AddDurationToDateTime extends StatefulWidget {
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
+class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with ScreenMixin {
   _AddDurationToDateTimeState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         _durationIcon = transferDataMap['durationIconData'] ?? Icons.add,
@@ -35,7 +36,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
             transferDataMap['durationTextColor'] ?? durationPositiveColor,
         super();
 
-  static Color labelColor = Colors.yellow.shade300;
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
 
@@ -200,8 +200,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                     'Start date time',
                     style: TextStyle(
                       color: labelColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -211,16 +211,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                     controller: _controller1,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.event,
-                      color: Colors.white,
+                      color: textAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
+                    style: TextStyle(
+                      color: textAndIconColor,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -240,8 +240,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                     'Duration',
                     style: TextStyle(
                       color: labelColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                   ),
                   Stack(
@@ -278,15 +278,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                           type: DateTimePickerType.time,
                           timePickerEntryModeInput: true,
                           controller: _controller2,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.access_time,
-                            color: Colors.white,
+                            color: textAndIconColor,
                             size: 30,
                           ),
                           style: TextStyle(
                             color: _durationTextColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontSize: textFontSize,
+                            fontWeight: textFontWeight,
                           ),
                           onChanged: (val) =>
                               setState(() => _valueChanged2 = val),
@@ -309,21 +309,21 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                 'End date time',
                 style: TextStyle(
                   color: labelColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontSize: textFontSize,
+                  fontWeight: textFontWeight,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(47, 0, 0, 0),
-                child: const TextField(
+                child: TextField(
                   readOnly: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     labelText: '29-04-2022 09:45',
                     labelStyle: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontSize: textFontSize,
+                      color: textAndIconColor,
+                      fontWeight: textFontWeight,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
@@ -352,10 +352,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                       );
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: textFontSize,
                     ),
                   ),
                 ),
@@ -365,9 +365,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
               ),
               Text(
                 _outputText ?? '',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                style: TextStyle(
+                  color: textAndIconColor,
+                  fontSize: textFontSize,
                 ),
               ),
             ],

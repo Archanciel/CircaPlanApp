@@ -1,5 +1,6 @@
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -24,7 +25,7 @@ class IncreaseSleepTime extends StatefulWidget {
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
+class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin {
   _IncreaseSleepTimeState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         super();
@@ -156,7 +157,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        foregroundColor: Colors.yellow[300],
+        foregroundColor: labelColor,
         title: const Text('Circadian App'),
       ),
       body: SingleChildScrollView(
@@ -174,23 +175,23 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                   Text(
                     'Stay awake',
                     style: TextStyle(
-                      color: Colors.yellow[300],
-                      fontSize: 20,
+                      color: labelColor,
+                      fontSize: textFontSize,
                     ),
                   ),
                   DateTimePicker(
                     type: DateTimePickerType.time,
                     timePickerEntryModeInput: true,
                     controller: _controller1,
-                    icon:const  Icon(
+                    icon: Icon(
                       Icons.access_time,
-                      color: Colors.white,
+                      color: textAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                    style: TextStyle(
+                      color: textAndIconColor,
+                      fontSize: textFontSize,
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -224,10 +225,10 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
                       );
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: textFontSize,
                     ),
                   ),
                 ),
@@ -237,9 +238,9 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> {
               ),
               Text(
                 _outputText ?? '',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                style: TextStyle(
+                  color: textAndIconColor,
+                  fontSize: textFontSize,
                 ),
               ),
             ],

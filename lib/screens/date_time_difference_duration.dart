@@ -1,5 +1,6 @@
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/increase_sleep_time.dart';
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -26,7 +27,7 @@ class DateTimeDifferenceDuration extends StatefulWidget {
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _DateTimeDifferenceDurationState
-    extends State<DateTimeDifferenceDuration> {
+    extends State<DateTimeDifferenceDuration> with ScreenMixin {
   _DateTimeDifferenceDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         super();
@@ -167,7 +168,7 @@ class _DateTimeDifferenceDurationState
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        foregroundColor: Colors.yellow[300],
+        foregroundColor: labelColor,
         title: const Text('Circadian App'),
       ),
       body: SingleChildScrollView(
@@ -182,8 +183,9 @@ class _DateTimeDifferenceDurationState
                   Text(
                     'Start date time',
                     style: TextStyle(
-                      color: Colors.yellow[300],
-                      fontSize: 20,
+                      color: labelColor,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -193,15 +195,16 @@ class _DateTimeDifferenceDurationState
                     controller: _controller1,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.event,
-                      color: Colors.white,
+                      color: textAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                    style: TextStyle(
+                      color: textAndIconColor,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -220,8 +223,9 @@ class _DateTimeDifferenceDurationState
                   Text(
                     'End date time',
                     style: TextStyle(
-                      color: Colors.yellow[300],
-                      fontSize: 20,
+                      color: labelColor,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -231,15 +235,16 @@ class _DateTimeDifferenceDurationState
                     controller: _controller2,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.event,
-                      color: Colors.white,
+                      color: textAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                    style: TextStyle(
+                      color: textAndIconColor,
+                      fontSize: textFontSize,
+                      fontWeight: textFontWeight,
                     ),
                     onChanged: (val) => setState(() => _valueChanged2 = val),
                     validator: (val) {
@@ -256,20 +261,22 @@ class _DateTimeDifferenceDurationState
               Text(
                 'Duration',
                 style: TextStyle(
-                  color: Colors.yellow[300],
-                  fontSize: 20,
+                  color: labelColor,
+                  fontSize: textFontSize,
+                  fontWeight: textFontWeight,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(47, 0, 0, 0),
-                child: const TextField(
+                child: TextField(
                   readOnly: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     labelText: '09:45',
                     labelStyle: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+                      fontSize: textFontSize,
+                      color: textAndIconColor,
+                      fontWeight: textFontWeight,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
@@ -298,10 +305,10 @@ class _DateTimeDifferenceDurationState
                       );
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: textFontSize,
                     ),
                   ),
                 ),
@@ -311,9 +318,9 @@ class _DateTimeDifferenceDurationState
               ),
               Text(
                 _outputText ?? '',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                style: TextStyle(
+                  color: textAndIconColor,
+                  fontSize: textFontSize,
                 ),
               ),
             ],
