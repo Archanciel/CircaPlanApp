@@ -44,7 +44,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   static Color durationNegativeColor = Colors.red.shade200;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> _transferDataMap;
+
+  final Map<String, dynamic> _transferDataMap;
+
   IconData _durationIcon;
   Color _durationIconColor;
   Color _durationTextColor;
@@ -58,7 +60,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   late DateFormat _englishDateTimeFormat;
   late DateFormat _frenchDateTimeFormat;
-  late DateFormat _dateOnlyFormat;
 
   //String _initialValue = '';
   String _valueChanged1 = '';
@@ -68,30 +69,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   String _valueToValidate2 = '';
   String _valueSaved2 = '';
 
-  String? _wakeUpDT;
-  String? _awakeHHmm;
-  String? _goToBedDT;
-  String? _outputText;
-
   @override
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
     String _initialValue = dateTimeNow.toString();
-    final String localName = 'fr_CH';
+    const String localName = 'fr_CH';
     Intl.defaultLocale = localName;
     _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
     _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-    _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
-//    _controller1 = TextEditingController(text: _initialValue);
-
-//    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
-//    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller2 =
-        TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
     _controller1 = TextEditingController(
         text: _transferDataMap['startDateTimeStr'] ?? _initialValue);
+    _controller2 =
+        TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
   }
 
@@ -109,38 +100,23 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return map;
   }
 
-  String? _validateDateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid dd-mm hh:mm wake up date time';
-    } else {
-      List<String?> dateTimeStrLst = DateTimeParser.parseDDMMDateTime(value);
-      if (dateTimeStrLst.contains(null)) {
-        return 'Please enter a valid dd-mm hh:mm wake up date time';
+  void _setStateEndDateTime() {
+    setState(() {
+      _durationStr = _controller2.text;
+      Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
+      _startDateTimeStr = _controller1.text;
+      DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+      DateTime endDateTime;
+      if (duration != null && startDateTime != null) {
+        if (_durationSign > 0) {
+          endDateTime = startDateTime.add(duration);
+        } else {
+          endDateTime = startDateTime.subtract(duration);
+        }
+        _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
       }
-    }
-
-    return null;
+    });
   }
-
-  String? _validateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid hh:mm wake up duration';
-    } else {
-      String? timeStr = DateTimeParser.parseTime(value);
-      if (timeStr == null) {
-        return 'Please enter a valid hh:mm wake up duration';
-      }
-    }
-
-    return null;
-  }
-
-  String _reformatDateTimeStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _englishDateTimeFormat.format(DateTime.parse(dateTimeStr))
-      : '';
-  String _reformatDateStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _dateOnlyFormat.format(DateTime.parse(dateTimeStr))
-      : '';
 
   @override
   Widget build(BuildContext context) {
@@ -354,15 +330,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
                       _formKey.currentState!.save();
-                      setState(() {
-                        _outputText =
-                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
-                      });
-                      print(
-                          'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
                     }
                   },
                   child: Text(
@@ -373,38 +340,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                _outputText ?? '',
-                style: TextStyle(
-                  color: textAndIconColor,
-                  fontSize: textFontSize,
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void _setStateEndDateTime() {
-    setState(() {
-      _durationStr = _controller2.text;
-      Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
-      _startDateTimeStr = _controller1.text;
-      DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
-      DateTime endDateTime;
-      if (duration != null && startDateTime != null) {
-        if (_durationSign > 0) {
-          endDateTime = startDateTime.add(duration);
-        } else {
-          endDateTime = startDateTime.subtract(duration);
-        }
-        _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
-      }
-    });
   }
 }
