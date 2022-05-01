@@ -18,24 +18,28 @@ class AddDurationToDateTime extends StatefulWidget {
 
   @override
   _AddDurationToDateTimeState createState() {
-    return _AddDurationToDateTimeState(
-        _screenNavigTransData.transferDataMap);
+    return _AddDurationToDateTimeState(_screenNavigTransData.transferDataMap);
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
-  _AddDurationToDateTimeState(
-    Map<String, dynamic> transferDataMap
-  )   : _transferDataMap = transferDataMap,
-        _minusIconColor = transferDataMap['minusIconColor'] ?? Colors.white,
+  _AddDurationToDateTimeState(Map<String, dynamic> transferDataMap)
+      : _transferDataMap = transferDataMap,
+        _durationIcon = transferDataMap['durationIconData'] ?? Icons.add,
+        _durationIconColor =
+            transferDataMap['durationIconColor'] ?? Colors.green[300],
         _durationSign = transferDataMap['durationSign'] ?? 1,
+        _durationTextColor =
+            transferDataMap['durationTextColor'] ?? Colors.green[300],
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> _transferDataMap;
-  Color _minusIconColor;
+  IconData _durationIcon;
+  Color _durationIconColor;
+  Color _durationTextColor;
   int _durationSign;
 
   late TextEditingController _controller1;
@@ -78,8 +82,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
   Map<String, dynamic> _createTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
-    map['minusIconColor'] = _minusIconColor;
+    map['durationIconData'] = _durationIcon;
+    map['durationIconColor'] = _durationIconColor;
     map['durationSign'] = _durationSign;
+    map['durationTextColor'] = _durationTextColor;
 
     return map;
   }
@@ -160,10 +166,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                           IncreaseSleepTime(
-                        screenNavigTransData:
-                            ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
+                      builder: (BuildContext context) => IncreaseSleepTime(
+                        screenNavigTransData: ScreenNavigTransData(
+                            transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
@@ -238,19 +243,23 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                         left: -18,
                         child: TextButton.icon(
                           icon: Icon(
-                            Icons.remove,
+                            _durationIcon,
                             size: 30,
-                            color: _minusIconColor,
+                            color: _durationIconColor,
                           ),
                           label: const Text(''),
                           onPressed: () {
                             setState(() {
-                              if (_minusIconColor == Colors.white) {
-                                _minusIconColor = Colors.red;
+                              if (_durationIcon == Icons.add) {
+                                _durationIcon = Icons.remove;
+                                _durationIconColor = Colors.red.shade200;
                                 _durationSign = -1;
+                                _durationTextColor = Colors.red.shade200;
                               } else {
-                                _minusIconColor = Colors.white;
+                                _durationIcon = Icons.add;
+                                _durationIconColor = Colors.green[200]!;
                                 _durationSign = 1;
+                                _durationTextColor = Colors.green[200]!;
                               }
                             });
                           },
@@ -267,8 +276,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                             color: Colors.white,
                             size: 30,
                           ),
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: _durationTextColor,
                             fontSize: 20,
                           ),
                           onChanged: (val) =>
