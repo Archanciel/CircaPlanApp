@@ -104,13 +104,6 @@ class _DateTimeDifferenceDurationState
     return null;
   }
 
-  String _reformatDateTimeStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _dateTimeFormat.format(DateTime.parse(dateTimeStr))
-      : '';
-  String _reformatDateStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _dateOnlyFormat.format(DateTime.parse(dateTimeStr))
-      : '';
-
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.

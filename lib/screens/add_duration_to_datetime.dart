@@ -35,6 +35,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _durationSign = transferDataMap['durationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['durationTextColor'] ?? durationPositiveColor,
+        _startDateTimeStr = transferDataMap['startDateTimeStr'] ?? DateTime.now().toString(),
+        _durationStr = transferDataMap['durationStr'] ?? '00:00',
+        _endDateTimeStr = transferDataMap['endDateTimeStr'] ?? '',
         super();
 
   static Color durationPositiveColor = Colors.green.shade200;
@@ -46,7 +49,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   Color _durationIconColor;
   Color _durationTextColor;
   int _durationSign;
-  String _endDateTime = '';
+  String _startDateTimeStr = '';
+  String _durationStr = '';
+  String _endDateTimeStr = '';
 
   late TextEditingController _controller1;
   late TextEditingController _controller2;
@@ -79,12 +84,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
     _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
-    _controller1 = TextEditingController(text: _initialValue);
+//    _controller1 = TextEditingController(text: _initialValue);
 
 //    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
 //    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller2 = TextEditingController(
-        text: _transferDataMap['addDurationHHmm'] ?? '00:00');
+    _controller2 =
+        TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
+    _controller1 = TextEditingController(
+        text: _transferDataMap['startDateTimeStr'] ?? _initialValue);
+    _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
   }
 
   Map<String, dynamic> _createTransferDataMap() {
@@ -94,7 +102,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     map['durationIconColor'] = _durationIconColor;
     map['durationSign'] = _durationSign;
     map['durationTextColor'] = _durationTextColor;
-    map['addDurationHHmm'] = _controller2.text;
+    map['startDateTimeStr'] = _startDateTimeStr;
+    map['durationStr'] = _durationStr;
+    map['endDateTimeStr'] = _endDateTimeStr;
 
     return map;
   }
@@ -322,7 +332,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   readOnly: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    labelText: _endDateTime,
+                    labelText: _endDateTimeStr,
                     labelStyle: TextStyle(
                       fontSize: textFontSize,
                       color: textAndIconColor,
@@ -382,10 +392,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _setStateEndDateTime() {
     setState(() {
-      String durationStr = _controller2.text;
-      Duration? duration = DateTimeParser.parseHHmmDuration(durationStr);
-      String text = _controller1.text;
-      DateTime? startDateTime = _englishDateTimeFormat.parse(text);
+      _durationStr = _controller2.text;
+      Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
+      _startDateTimeStr = _controller1.text;
+      DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
       DateTime endDateTime;
       if (duration != null && startDateTime != null) {
         if (_durationSign > 0) {
@@ -393,7 +403,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         } else {
           endDateTime = startDateTime.subtract(duration);
         }
-        _endDateTime = _frenchDateTimeFormat.format(endDateTime);
+        _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
       }
     });
   }
