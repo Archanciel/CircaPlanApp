@@ -25,7 +25,8 @@ class AddDurationToDateTime extends StatefulWidget {
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with ScreenMixin {
+class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
+    with ScreenMixin {
   _AddDurationToDateTimeState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         _durationIcon = transferDataMap['durationIconData'] ?? Icons.add,
@@ -45,11 +46,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
   Color _durationIconColor;
   Color _durationTextColor;
   int _durationSign;
+  String _endDateTime = '';
 
   late TextEditingController _controller1;
   late TextEditingController _controller2;
 
-  late DateFormat _dateTimeFormat;
+  late DateFormat _englishDateTimeFormat;
+  late DateFormat _frenchDateTimeFormat;
   late DateFormat _dateOnlyFormat;
 
   //String _initialValue = '';
@@ -72,15 +75,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
     String _initialValue = dateTimeNow.toString();
     final String localName = 'fr_CH';
     Intl.defaultLocale = localName;
-    _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+    _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
+    _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
     _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
     _controller1 = TextEditingController(text: _initialValue);
-    _controller2 = TextEditingController(text: _initialValue);
 
-    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
-    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller2 = TextEditingController(text: '$lsHour:$lsMinute');
+//    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
+//    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
+    _controller2 = TextEditingController(
+        text: _transferDataMap['addDurationHHmm'] ?? '00:00');
   }
 
   Map<String, dynamic> _createTransferDataMap() {
@@ -90,6 +94,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
     map['durationIconColor'] = _durationIconColor;
     map['durationSign'] = _durationSign;
     map['durationTextColor'] = _durationTextColor;
+    map['addDurationHHmm'] = _controller2.text;
 
     return map;
   }
@@ -121,7 +126,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
   }
 
   String _reformatDateTimeStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _dateTimeFormat.format(DateTime.parse(dateTimeStr))
+      ? _englishDateTimeFormat.format(DateTime.parse(dateTimeStr))
       : '';
   String _reformatDateStr(String dateTimeStr) => (dateTimeStr != '')
       ? _dateOnlyFormat.format(DateTime.parse(dateTimeStr))
@@ -222,7 +227,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
                       fontSize: textFontSize,
                       fontWeight: textFontWeight,
                     ),
-                    onChanged: (val) => setState(() => _valueChanged1 = val),
+                    onChanged: (val) => _setStateEndDateTime(),
                     validator: (val) {
                       setState(() => _valueToValidate1 = val ?? '');
                       return null;
@@ -269,6 +274,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
                                 _durationTextColor = durationPositiveColor;
                               }
                             });
+                            _setStateEndDateTime();
                           },
                         ),
                       ),
@@ -288,8 +294,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
                             fontSize: textFontSize,
                             fontWeight: textFontWeight,
                           ),
-                          onChanged: (val) =>
-                              setState(() => _valueChanged2 = val),
+                          onChanged: (val) => _setStateEndDateTime(),
                           validator: (val) {
                             setState(() => _valueToValidate2 = val ?? '');
                             return null;
@@ -319,7 +324,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
                   readOnly: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    labelText: '29-04-2022 09:45',
+                    labelText: _endDateTime,
                     labelStyle: TextStyle(
                       fontSize: textFontSize,
                       color: textAndIconColor,
@@ -375,5 +380,23 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> with Scre
         ),
       ),
     );
+  }
+
+  void _setStateEndDateTime() {
+    setState(() {
+      String durationStr = _controller2.text;
+      Duration? duration = DateTimeParser.parseHHmmDuration(durationStr);
+      String text = _controller1.text;
+      DateTime? startDateTime = _englishDateTimeFormat.parse(text);
+      DateTime endDateTime;
+      if (duration != null && startDateTime != null) {
+        if (_durationSign > 0) {
+          endDateTime = startDateTime.add(duration);
+        } else {
+          endDateTime = startDateTime.subtract(duration);
+        }
+        _endDateTime = _frenchDateTimeFormat.format(endDateTime);
+      }
+    });
   }
 }
