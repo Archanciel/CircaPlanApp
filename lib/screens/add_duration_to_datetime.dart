@@ -266,27 +266,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       ),
                       Container(
                         padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
-                        child: DateTimePicker(
-                          type: DateTimePickerType.time,
-                          timePickerEntryModeInput: true,
-                          controller: _controller2,
-                          icon: Icon(
-                            Icons.access_time,
-                            color: textAndIconColor,
-                            size: 30,
-                          ),
+                        child: TextField(
                           style: TextStyle(
-                            color: _durationTextColor,
-                            fontSize: textFontSize,
-                            fontWeight: textFontWeight,
-                          ),
-                          onChanged: (val) => _setStateEndDateTime(),
-                          validator: (val) {
-                            setState(() => _valueToValidate2 = val ?? '');
-                            return null;
+                              color: _durationTextColor,
+                              fontSize: textFontSize,
+                              fontWeight: textFontWeight),
+                          keyboardType: TextInputType.datetime,
+                          controller: _controller2,
+                          onChanged: (ValueListenableBuilder) {
+                            _setStateEndDateTime();
                           },
-                          onSaved: (val) =>
-                              setState(() => _valueSaved2 = val ?? ''),
                         ),
                       ),
                     ],
@@ -341,20 +330,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ),
                   ),
                 ),
-              ),
-              TextField(
-                style: TextStyle(
-                    color: _durationTextColor,
-                    fontSize: textFontSize,
-                    fontWeight: textFontWeight),
-                decoration: InputDecoration(
-                    labelText: 'Duration',
-                    labelStyle: TextStyle(
-                        color: labelColor,
-                        fontSize: textFontSize,
-                        fontWeight: textFontWeight)),
-                keyboardType: TextInputType.datetime,
-                onSubmitted: (value) => print(value),
               ),
             ],
           ),
