@@ -261,19 +261,17 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           ),
                           label: const Text(''),
                           onPressed: () {
-                            setState(() {
-                              if (_durationIcon == Icons.add) {
-                                _durationIcon = Icons.remove;
-                                _durationIconColor = durationNegativeColor;
-                                _durationSign = -1;
-                                _durationTextColor = durationNegativeColor;
-                              } else {
-                                _durationIcon = Icons.add;
-                                _durationIconColor = durationPositiveColor;
-                                _durationSign = 1;
-                                _durationTextColor = durationPositiveColor;
-                              }
-                            });
+                            if (_durationIcon == Icons.add) {
+                              _durationIcon = Icons.remove;
+                              _durationIconColor = durationNegativeColor;
+                              _durationSign = -1;
+                              _durationTextColor = durationNegativeColor;
+                            } else {
+                              _durationIcon = Icons.add;
+                              _durationIconColor = durationPositiveColor;
+                              _durationSign = 1;
+                              _durationTextColor = durationPositiveColor;
+                            }
                             _setStateEndDateTime();
                           },
                         ),
