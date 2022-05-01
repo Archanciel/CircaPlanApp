@@ -29,11 +29,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
       : _transferDataMap = transferDataMap,
         _durationIcon = transferDataMap['durationIconData'] ?? Icons.add,
         _durationIconColor =
-            transferDataMap['durationIconColor'] ?? Colors.green[300],
+            transferDataMap['durationIconColor'] ?? durationPositiveColor,
         _durationSign = transferDataMap['durationSign'] ?? 1,
         _durationTextColor =
-            transferDataMap['durationTextColor'] ?? Colors.green[300],
+            transferDataMap['durationTextColor'] ?? durationPositiveColor,
         super();
+
+  static Color labelColor = Colors.yellow.shade300;
+  static Color durationPositiveColor = Colors.green.shade200;
+  static Color durationNegativeColor = Colors.red.shade200;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> _transferDataMap;
@@ -180,7 +184,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        foregroundColor: Colors.yellow[300],
+        foregroundColor: labelColor,
         title: const Text('Circadian App'),
       ),
       body: SingleChildScrollView(
@@ -195,8 +199,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                   Text(
                     'Start date time',
                     style: TextStyle(
-                      color: Colors.yellow[300],
+                      color: labelColor,
                       fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   DateTimePicker(
@@ -215,6 +220,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
+                      fontWeight: FontWeight.bold
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -233,8 +239,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                   Text(
                     'Duration',
                     style: TextStyle(
-                      color: Colors.yellow[300],
+                      color: labelColor,
                       fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Stack(
@@ -252,14 +259,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                             setState(() {
                               if (_durationIcon == Icons.add) {
                                 _durationIcon = Icons.remove;
-                                _durationIconColor = Colors.red.shade200;
+                                _durationIconColor = durationNegativeColor;
                                 _durationSign = -1;
-                                _durationTextColor = Colors.red.shade200;
+                                _durationTextColor = durationNegativeColor;
                               } else {
                                 _durationIcon = Icons.add;
-                                _durationIconColor = Colors.green[200]!;
+                                _durationIconColor = durationPositiveColor;
                                 _durationSign = 1;
-                                _durationTextColor = Colors.green[200]!;
+                                _durationTextColor = durationPositiveColor;
                               }
                             });
                           },
@@ -279,6 +286,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                           style: TextStyle(
                             color: _durationTextColor,
                             fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                           onChanged: (val) =>
                               setState(() => _valueChanged2 = val),
@@ -300,8 +308,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
               Text(
                 'End date time',
                 style: TextStyle(
-                  color: Colors.yellow[300],
+                  color: labelColor,
                   fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Container(
@@ -314,6 +323,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime> {
                     labelStyle: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
