@@ -30,22 +30,20 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     with ScreenMixin {
   _DateTimeDifferenceDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
-        _startDateTimeStr =
-            transferDataMap['dtDiffStartDateTimeStr'] ?? DateTime.now().toString(),
-        _endDateTimeStr =
-            transferDataMap['dtDiffEndDateTimeStr'] ?? DateTime.now().toString(),
-        _durationStr =
-            transferDataMap['dtDiffDurationStr'] ?? '',
-
+        _startDateTimeStr = transferDataMap['dtDiffStartDateTimeStr'] ??
+            DateTime.now().toString(),
+        _endDateTimeStr = transferDataMap['dtDiffEndDateTimeStr'] ??
+            DateTime.now().toString(),
+        _durationStr = transferDataMap['dtDiffDurationStr'] ?? '',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+
   Map<String, dynamic> _transferDataMap;
 
   String _startDateTimeStr = '';
-  String _durationStr = '';
   String _endDateTimeStr = '';
+  String _durationStr = '';
 
   late TextEditingController _startDateTimeController;
   late TextEditingController _endDateTimeController;
@@ -59,47 +57,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   String _valueChanged2 = '';
   String _valueToValidate2 = '';
   String _valueSaved2 = '';
-
-  String? _wakeUpDT;
-  String? _awakeHHmm;
-  String? _goToBedDT;
-  String? _outputText;
-
-  Map<String, dynamic> _createTransferDataMap() {
-    Map<String, dynamic> map = _transferDataMap;
-
-    map['dtDiffStartDateTimeStr'] = _startDateTimeStr;
-    map['dtDiffEndDateTimeStr'] = _endDateTimeStr;
-    map['dtDiffDurationStr'] = _durationStr;
-
-    return map;
-  }
-
-  String? _validateDateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid dd-mm hh:mm wake up date time';
-    } else {
-      List<String?> dateTimeStrLst = DateTimeParser.parseDDMMDateTime(value);
-      if (dateTimeStrLst.contains(null)) {
-        return 'Please enter a valid dd-mm hh:mm wake up date time';
-      }
-    }
-
-    return null;
-  }
-
-  String? _validateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid hh:mm wake up duration';
-    } else {
-      String? timeStr = DateTimeParser.parseTime(value);
-      if (timeStr == null) {
-        return 'Please enter a valid hh:mm wake up duration';
-      }
-    }
-
-    return null;
-  }
 
   @override
   void initState() {
@@ -118,29 +75,41 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _endDateTimeController = TextEditingController(
         text: _transferDataMap['dtDiffEndDateTimeStr'] ?? _initialValue);
 
-
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
     _endDateTimeController = TextEditingController(text: '$lsHour:$lsMinute');
   }
 
-  void _setStateDiffDuration() {
-    setState(() {
-      _startDateTimeStr = _startDateTimeController.text;
-      DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
-      _endDateTimeStr = _endDateTimeController.text;
-      DateTime? endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
-      Duration diffDuration;
+  Map<String, dynamic> _createTransferDataMap() {
+    Map<String, dynamic> map = _transferDataMap;
 
-      if (startDateTime != null && endDateTime != null) {
-        if (endDateTime.isAfter(startDateTime)) {
-          diffDuration = endDateTime.difference(startDateTime);
-        } else {
-          diffDuration = startDateTime.difference(endDateTime);
+    map['dtDiffStartDateTimeStr'] = _startDateTimeStr;
+    map['dtDiffEndDateTimeStr'] = _endDateTimeStr;
+    map['dtDiffDurationStr'] = _durationStr;
+
+    return map;
+  }
+
+  void _setStateDiffDuration() {
+    setState(
+      () {
+        _startDateTimeStr = _startDateTimeController.text;
+        DateTime? startDateTime =
+            _englishDateTimeFormat.parse(_startDateTimeStr);
+        _endDateTimeStr = _endDateTimeController.text;
+        DateTime? endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
+        Duration diffDuration;
+
+        if (startDateTime != null && endDateTime != null) {
+          if (endDateTime.isAfter(startDateTime)) {
+            diffDuration = endDateTime.difference(startDateTime);
+          } else {
+            diffDuration = startDateTime.difference(endDateTime);
+          }
+          _durationStr = diffDuration.HHmm();
         }
-        _durationStr = diffDuration.HHmm();
-      }
-    });
+      },
+    );
   }
 
   @override
@@ -277,7 +246,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       fontSize: appTextFontSize,
                       fontWeight: appTextFontWeight,
                     ),
-                    onChanged: (val) =>  _setStateDiffDuration(),
+                    onChanged: (val) => _setStateDiffDuration(),
                     validator: (val) {
                       setState(() => _valueToValidate2 = val ?? '');
                       return null;
@@ -325,15 +294,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
                       _formKey.currentState!.save();
-                      setState(() {
-                        _outputText =
-                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
-                      });
-                      print(
-                          'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
                     }
                   },
                   child: Text(
@@ -342,16 +302,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       fontSize: appTextFontSize,
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                _outputText ?? '',
-                style: TextStyle(
-                  color: appTextAndIconColor,
-                  fontSize: appTextFontSize,
                 ),
               ),
             ],
