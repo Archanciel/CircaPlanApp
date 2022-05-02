@@ -157,7 +157,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        foregroundColor: labelColor,
+        foregroundColor: appLabelColor,
         title: const Text('Circadian App'),
       ),
       body: SingleChildScrollView(
@@ -175,8 +175,8 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                   Text(
                     'Stay awake',
                     style: TextStyle(
-                      color: labelColor,
-                      fontSize: textFontSize,
+                      color: appLabelColor,
+                      fontSize: appTextFontSize,
                     ),
                   ),
                   DateTimePicker(
@@ -185,13 +185,13 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                     controller: _controller1,
                     icon: Icon(
                       Icons.access_time,
-                      color: textAndIconColor,
+                      color: appTextAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
-                      color: textAndIconColor,
-                      fontSize: textFontSize,
+                      color: appTextAndIconColor,
+                      fontSize: appTextFontSize,
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -228,7 +228,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: appTextFontSize,
                     ),
                   ),
                 ),
@@ -239,8 +239,8 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
               Text(
                 _outputText ?? '',
                 style: TextStyle(
-                  color: textAndIconColor,
-                  fontSize: textFontSize,
+                  color: appTextAndIconColor,
+                  fontSize: appTextFontSize,
                 ),
               ),
             ],

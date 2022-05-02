@@ -57,8 +57,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   String _durationStr = '';
   String _endDateTimeStr = '';
 
-  late TextEditingController _controller1;
-  late TextEditingController _controller2;
+  late TextEditingController _startDateTimeController;
+  late TextEditingController _durationTextFieldController;
 
   late DateFormat _englishDateTimeFormat;
   late DateFormat _frenchDateTimeFormat;
@@ -81,9 +81,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
     _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
-    _controller1 = TextEditingController(
+    _startDateTimeController = TextEditingController(
         text: _transferDataMap['startDateTimeStr'] ?? _initialValue);
-    _controller2 =
+    _durationTextFieldController =
         TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
   }
@@ -104,9 +104,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _setStateEndDateTime() {
     setState(() {
-      _durationStr = _controller2.text;
+      _durationStr = _durationTextFieldController.text;
       Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
-      _startDateTimeStr = _controller1.text;
+      _startDateTimeStr = _startDateTimeController.text;
       DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
       DateTime endDateTime;
       if (duration != null && startDateTime != null) {
@@ -177,7 +177,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        foregroundColor: labelColor,
+        foregroundColor: appLabelColor,
         title: const Text('Circadian App'),
       ),
       body: SingleChildScrollView(
@@ -192,28 +192,28 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   Text(
                     'Start date time',
                     style: TextStyle(
-                      color: labelColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appLabelColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                   ),
                   DateTimePicker(
                     type: DateTimePickerType.dateTime,
                     dateMask: 'dd-MM-yyyy HH:mm',
                     use24HourFormat: true,
-                    controller: _controller1,
+                    controller: _startDateTimeController,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
                     icon: Icon(
                       Icons.event,
-                      color: textAndIconColor,
+                      color: appTextAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
-                      color: textAndIconColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appTextAndIconColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                     onChanged: (val) => _setStateEndDateTime(),
                     validator: (val) {
@@ -232,9 +232,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   Text(
                     'Duration',
                     style: TextStyle(
-                      color: labelColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appLabelColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                   ),
                   Stack(
@@ -269,10 +269,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         child: TextField(
                           style: TextStyle(
                               color: _durationTextColor,
-                              fontSize: textFontSize,
-                              fontWeight: textFontWeight),
+                              fontSize: appTextFontSize,
+                              fontWeight: appTextFontWeight),
+                          decoration: const InputDecoration(
+                          ),
                           keyboardType: TextInputType.datetime,
-                          controller: _controller2,
+                          controller: _durationTextFieldController,
                           onChanged: (ValueListenableBuilder) {
                             _setStateEndDateTime();
                           },
@@ -288,9 +290,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               Text(
                 'End date time',
                 style: TextStyle(
-                  color: labelColor,
-                  fontSize: textFontSize,
-                  fontWeight: textFontWeight,
+                  color: appLabelColor,
+                  fontSize: appTextFontSize,
+                  fontWeight: appTextFontWeight,
                 ),
               ),
               Container(
@@ -301,9 +303,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     labelText: _endDateTimeStr,
                     labelStyle: TextStyle(
-                      fontSize: textFontSize,
-                      color: textAndIconColor,
-                      fontWeight: textFontWeight,
+                      fontSize: appTextFontSize,
+                      color: appTextAndIconColor,
+                      fontWeight: appTextFontWeight,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
@@ -326,7 +328,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: appTextFontSize,
                     ),
                   ),
                 ),

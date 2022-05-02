@@ -6,8 +6,8 @@ mixin ScreenMixin {
   /// base class for the statefull widgets, using a mixin class
   /// to add those common instance variables to the statefull 
   /// widgets solves the problem.
-  final Color labelColor = Colors.yellow.shade300;
-  final Color textAndIconColor = Colors.white;
-  final FontWeight textFontWeight = FontWeight.normal;
-  final double textFontSize = 20;
+  final Color appLabelColor = Colors.yellow.shade300;
+  final Color appTextAndIconColor = Colors.white;
+  final FontWeight appTextFontWeight = FontWeight.normal;
+  final double appTextFontSize = 20;
 }

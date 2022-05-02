@@ -161,7 +161,7 @@ class _DateTimeDifferenceDurationState
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        foregroundColor: labelColor,
+        foregroundColor: appLabelColor,
         title: const Text('Circadian App'),
       ),
       body: SingleChildScrollView(
@@ -176,9 +176,9 @@ class _DateTimeDifferenceDurationState
                   Text(
                     'Start date time',
                     style: TextStyle(
-                      color: labelColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appLabelColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -190,14 +190,14 @@ class _DateTimeDifferenceDurationState
                     lastDate: DateTime(2100),
                     icon: Icon(
                       Icons.event,
-                      color: textAndIconColor,
+                      color: appTextAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
-                      color: textAndIconColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appTextAndIconColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -216,9 +216,9 @@ class _DateTimeDifferenceDurationState
                   Text(
                     'End date time',
                     style: TextStyle(
-                      color: labelColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appLabelColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -230,14 +230,14 @@ class _DateTimeDifferenceDurationState
                     lastDate: DateTime(2100),
                     icon: Icon(
                       Icons.event,
-                      color: textAndIconColor,
+                      color: appTextAndIconColor,
                       size: 30,
                     ),
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
-                      color: textAndIconColor,
-                      fontSize: textFontSize,
-                      fontWeight: textFontWeight,
+                      color: appTextAndIconColor,
+                      fontSize: appTextFontSize,
+                      fontWeight: appTextFontWeight,
                     ),
                     onChanged: (val) => setState(() => _valueChanged2 = val),
                     validator: (val) {
@@ -254,9 +254,9 @@ class _DateTimeDifferenceDurationState
               Text(
                 'Duration',
                 style: TextStyle(
-                  color: labelColor,
-                  fontSize: textFontSize,
-                  fontWeight: textFontWeight,
+                  color: appLabelColor,
+                  fontSize: appTextFontSize,
+                  fontWeight: appTextFontWeight,
                 ),
               ),
               Container(
@@ -267,9 +267,9 @@ class _DateTimeDifferenceDurationState
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     labelText: '09:45',
                     labelStyle: TextStyle(
-                      fontSize: textFontSize,
-                      color: textAndIconColor,
-                      fontWeight: textFontWeight,
+                      fontSize: appTextFontSize,
+                      color: appTextAndIconColor,
+                      fontWeight: appTextFontWeight,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
@@ -301,7 +301,7 @@ class _DateTimeDifferenceDurationState
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: appTextFontSize,
                     ),
                   ),
                 ),
@@ -312,8 +312,8 @@ class _DateTimeDifferenceDurationState
               Text(
                 _outputText ?? '',
                 style: TextStyle(
-                  color: textAndIconColor,
-                  fontSize: textFontSize,
+                  color: appTextAndIconColor,
+                  fontSize: appTextFontSize,
                 ),
               ),
             ],
