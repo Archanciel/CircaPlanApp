@@ -37,7 +37,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _durationTextColor =
             transferDataMap['durationTextColor'] ?? durationPositiveColor,
         _startDateTimeStr =
-            transferDataMap['startDateTimeStr'] ?? DateTime.now().toString(),
+            transferDataMap['addDurStartDateTimeStr'] ?? DateTime.now().toString(),
         _durationStr = transferDataMap['durationStr'] ?? '00:00',
         _endDateTimeStr = transferDataMap['endDateTimeStr'] ?? '',
         super();
@@ -47,7 +47,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final Map<String, dynamic> _transferDataMap;
+  Map<String, dynamic> _transferDataMap;
 
   IconData _durationIcon;
   Color _durationIconColor;
@@ -82,11 +82,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
     _startDateTimeController = TextEditingController(
-        text: _transferDataMap['startDateTimeStr'] ?? _initialValue);
+        text: _transferDataMap['addDurStartDateTimeStr'] ?? _initialValue);
     _durationTextFieldController =
         TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
+
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
-  }
+  } 
 
   Map<String, dynamic> _createTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
@@ -95,7 +96,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     map['durationIconColor'] = _durationIconColor;
     map['durationSign'] = _durationSign;
     map['durationTextColor'] = _durationTextColor;
-    map['startDateTimeStr'] = _startDateTimeStr;
+    map['addDurStartDateTimeStr'] = _startDateTimeStr;
     map['durationStr'] = _durationStr;
     map['endDateTimeStr'] = _endDateTimeStr;
 

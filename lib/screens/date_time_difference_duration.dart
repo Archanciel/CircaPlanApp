@@ -26,20 +26,31 @@ class DateTimeDifferenceDuration extends StatefulWidget {
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _DateTimeDifferenceDurationState
-    extends State<DateTimeDifferenceDuration> with ScreenMixin {
+class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
+    with ScreenMixin {
   _DateTimeDifferenceDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
+        _startDateTimeStr =
+            transferDataMap['dtDiffStartDateTimeStr'] ?? DateTime.now().toString(),
+        _endDateTimeStr =
+            transferDataMap['dtDiffEndDateTimeStr'] ?? DateTime.now().toString(),
+        _durationStr =
+            transferDataMap['dtDiffDurationStr'] ?? '',
+
         super();
-        
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  
   Map<String, dynamic> _transferDataMap;
 
-  late TextEditingController _controller1;
-  late TextEditingController _controller2;
+  String _startDateTimeStr = '';
+  String _durationStr = '';
+  String _endDateTimeStr = '';
 
-  late DateFormat _dateTimeFormat;
-  late DateFormat _dateOnlyFormat;
+  late TextEditingController _startDateTimeController;
+  late TextEditingController _endDateTimeController;
+
+  late DateFormat _englishDateTimeFormat;
 
   //String _initialValue = '';
   String _valueChanged1 = '';
@@ -54,26 +65,12 @@ class _DateTimeDifferenceDurationState
   String? _goToBedDT;
   String? _outputText;
 
-  @override
-  void initState() {
-    super.initState();
-    final DateTime dateTimeNow = DateTime.now();
-    String _initialValue = dateTimeNow.toString();
-    final String localName = 'fr_CH';
-    Intl.defaultLocale = localName;
-    _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-    _dateOnlyFormat = DateFormat("dd-MM-yyyy");
-
-    _controller1 = TextEditingController(text: _initialValue);
-    _controller2 = TextEditingController(text: _initialValue);
-
-    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
-    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller2 = TextEditingController(text: '$lsHour:$lsMinute');
-  }
-
   Map<String, dynamic> _createTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
+
+    map['dtDiffStartDateTimeStr'] = _startDateTimeStr;
+    map['dtDiffEndDateTimeStr'] = _endDateTimeStr;
+    map['dtDiffDurationStr'] = _durationStr;
 
     return map;
   }
@@ -102,6 +99,48 @@ class _DateTimeDifferenceDurationState
     }
 
     return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final DateTime dateTimeNow = DateTime.now();
+    String _initialValue = dateTimeNow.toString();
+    final String localName = 'fr_CH';
+    Intl.defaultLocale = localName;
+    _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
+
+    _startDateTimeController = TextEditingController(text: _initialValue);
+    _endDateTimeController = TextEditingController(text: _initialValue);
+
+    _startDateTimeController = TextEditingController(
+        text: _transferDataMap['dtDiffStartDateTimeStr'] ?? _initialValue);
+    _endDateTimeController = TextEditingController(
+        text: _transferDataMap['dtDiffEndDateTimeStr'] ?? _initialValue);
+
+
+    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
+    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
+    _endDateTimeController = TextEditingController(text: '$lsHour:$lsMinute');
+  }
+
+  void _setStateDiffDuration() {
+    setState(() {
+      _startDateTimeStr = _startDateTimeController.text;
+      DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+      _endDateTimeStr = _endDateTimeController.text;
+      DateTime? endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
+      Duration diffDuration;
+
+      if (startDateTime != null && endDateTime != null) {
+        if (endDateTime.isAfter(startDateTime)) {
+          diffDuration = endDateTime.difference(startDateTime);
+        } else {
+          diffDuration = startDateTime.difference(endDateTime);
+        }
+        _durationStr = diffDuration.HHmm();
+      }
+    });
   }
 
   @override
@@ -146,10 +185,9 @@ class _DateTimeDifferenceDurationState
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                           IncreaseSleepTime(
-                        screenNavigTransData:
-                            ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
+                      builder: (BuildContext context) => IncreaseSleepTime(
+                        screenNavigTransData: ScreenNavigTransData(
+                            transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
@@ -185,7 +223,7 @@ class _DateTimeDifferenceDurationState
                     type: DateTimePickerType.dateTime,
                     dateMask: 'dd-MM-yyyy HH:mm',
                     use24HourFormat: true,
-                    controller: _controller1,
+                    controller: _startDateTimeController,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
                     icon: Icon(
@@ -199,7 +237,7 @@ class _DateTimeDifferenceDurationState
                       fontSize: appTextFontSize,
                       fontWeight: appTextFontWeight,
                     ),
-                    onChanged: (val) => setState(() => _valueChanged1 = val),
+                    onChanged: (val) => _setStateDiffDuration(),
                     validator: (val) {
                       setState(() => _valueToValidate1 = val ?? '');
                       return null;
@@ -225,7 +263,7 @@ class _DateTimeDifferenceDurationState
                     type: DateTimePickerType.dateTime,
                     dateMask: 'dd-MM-yyyy HH:mm',
                     use24HourFormat: true,
-                    controller: _controller2,
+                    controller: _endDateTimeController,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
                     icon: Icon(
@@ -239,7 +277,7 @@ class _DateTimeDifferenceDurationState
                       fontSize: appTextFontSize,
                       fontWeight: appTextFontWeight,
                     ),
-                    onChanged: (val) => setState(() => _valueChanged2 = val),
+                    onChanged: (val) =>  _setStateDiffDuration(),
                     validator: (val) {
                       setState(() => _valueToValidate2 = val ?? '');
                       return null;
@@ -265,7 +303,7 @@ class _DateTimeDifferenceDurationState
                   readOnly: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    labelText: '09:45',
+                    labelText: _durationStr,
                     labelStyle: TextStyle(
                       fontSize: appTextFontSize,
                       color: appTextAndIconColor,
