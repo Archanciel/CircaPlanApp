@@ -8,25 +8,25 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
 
-class IncreaseSleepTime extends StatefulWidget {
+class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
   
-  const IncreaseSleepTime({
+  const CalculateSleepDuration({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
   })  : _screenNavigTransData = screenNavigTransData,
         super(key: key);
 
   @override
-  _IncreaseSleepTimeState createState() {
-    return _IncreaseSleepTimeState(_screenNavigTransData.transferDataMap);
+  _CalculateSleepDurationState createState() {
+    return _CalculateSleepDurationState(_screenNavigTransData.transferDataMap);
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin {
-  _IncreaseSleepTimeState(Map<String, dynamic> transferDataMap)
+class _CalculateSleepDurationState extends State<CalculateSleepDuration> with ScreenMixin {
+  _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         super();
 

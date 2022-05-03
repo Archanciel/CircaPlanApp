@@ -1,5 +1,5 @@
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
-import 'package:circa_plan/screens/increase_sleep_time.dart';
+import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
@@ -168,7 +168,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => IncreaseSleepTime(
+                      builder: (BuildContext context) => CalculateSleepDuration(
                         screenNavigTransData: ScreenNavigTransData(
                             transferDataMap: _createTransferDataMap()),
                       ),
