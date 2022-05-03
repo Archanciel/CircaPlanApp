@@ -36,8 +36,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _durationSign = transferDataMap['durationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['durationTextColor'] ?? durationPositiveColor,
-        _startDateTimeStr =
-            transferDataMap['addDurStartDateTimeStr'] ?? DateTime.now().toString(),
+        _startDateTimeStr = transferDataMap['addDurStartDateTimeStr'] ??
+            DateTime.now().toString(),
         _durationStr = transferDataMap['durationStr'] ?? '00:00',
         _endDateTimeStr = transferDataMap['endDateTimeStr'] ?? '',
         super();
@@ -87,7 +87,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
 
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
-  } 
+  }
 
   Map<String, dynamic> _createTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
@@ -127,7 +127,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: Container(
-        width: MediaQuery.of(context).size.width * ScreenMixin.appDrawerWidthProportion,
+        width: MediaQuery.of(context).size.width *
+            ScreenMixin.appDrawerWidthProportion,
         child: Drawer(
           backgroundColor: Colors.blue[300],
           child: ListView(
@@ -144,7 +145,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Date time difference duration'),
+                title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
@@ -162,7 +163,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Increase sleep time'),
+                title: const Text(ScreenMixin.calculateSleepDurationTitle),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
@@ -182,7 +183,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: appLabelColor,
-        title: const Text(ScreenMixin.appTitle),
+        title: const Text(ScreenMixin.addDurationToDateTimeTitle),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -275,8 +276,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                               color: _durationTextColor,
                               fontSize: ScreenMixin.appTextFontSize,
                               fontWeight: ScreenMixin.appTextFontWeight),
-                          decoration: const InputDecoration(
-                          ),
+                          decoration: const InputDecoration(),
                           keyboardType: TextInputType.datetime,
                           controller: _durationTextFieldController,
                           onChanged: (ValueListenableBuilder) {

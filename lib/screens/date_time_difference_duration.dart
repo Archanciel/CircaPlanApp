@@ -135,7 +135,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Add duration to date time'),
+                title: const Text(ScreenMixin.addDurationToDateTimeTitle),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
@@ -152,7 +152,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Increase sleep time'),
+                title: const Text(ScreenMixin.calculateSleepDurationTitle),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
@@ -172,7 +172,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: appLabelColor,
-        title: const Text(ScreenMixin.appTitle),
+        title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
       ),
       body: SingleChildScrollView(
         child: Container(

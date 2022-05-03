@@ -14,4 +14,7 @@ mixin ScreenMixin {
   static const double appDrawerWidthProportion = 0.8;
   static const double appDrawerHeaderHeight = 80;
   static const String appDrawerHeaderText = ScreenMixin.appTitle;
+  static const String addDurationToDateTimeTitle = 'Add Duration To Date Time';
+  static const String dateTimeDiffDurationTitle = 'Date Time Difference Duration';
+  static const String calculateSleepDurationTitle = 'Calculate Sleep Duration';
 }

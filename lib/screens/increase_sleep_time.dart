@@ -124,7 +124,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Add duration to date time'),
+                title: const Text(ScreenMixin.addDurationToDateTimeTitle),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -141,7 +141,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text('Date time difference duration'),
+                title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -161,7 +161,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: appLabelColor,
-        title: const Text(ScreenMixin.appTitle),
+        title: const Text(ScreenMixin.calculateSleepDurationTitle),
       ),
       body: SingleChildScrollView(
         child: Container(
