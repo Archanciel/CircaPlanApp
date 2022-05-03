@@ -107,15 +107,18 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: Container(
-        width: MediaQuery.of(context).size.width * 0.65,
+        width: MediaQuery.of(context).size.width * ScreenMixin.appDrawerWidthProportion,
         child: Drawer(
           backgroundColor: Colors.blue[300],
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
-                child: Text('Header'),
-                decoration: BoxDecoration(color: Colors.blue),
+              const SizedBox(
+                height: ScreenMixin.appDrawerHeaderHeight,
+                child: DrawerHeader(
+                  child: Text(ScreenMixin.appDrawerHeaderText),
+                  decoration: BoxDecoration(color: Colors.blue),
+                ),
               ),
               ListTile(
                 leading: const Icon(
@@ -158,7 +161,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: appLabelColor,
-        title: const Text('Circadian App'),
+        title: const Text(ScreenMixin.appTitle),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -176,7 +179,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                     'Stay awake',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
                   DateTimePicker(
@@ -191,7 +194,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
                       color: appTextAndIconColor,
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                     ),
                     onChanged: (val) => setState(() => _valueChanged1 = val),
                     validator: (val) {
@@ -228,7 +231,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
                 ),
@@ -240,7 +243,7 @@ class _IncreaseSleepTimeState extends State<IncreaseSleepTime> with ScreenMixin 
                 _outputText ?? '',
                 style: TextStyle(
                   color: appTextAndIconColor,
-                  fontSize: appTextFontSize,
+                  fontSize: ScreenMixin.appTextFontSize,
                 ),
               ),
             ],

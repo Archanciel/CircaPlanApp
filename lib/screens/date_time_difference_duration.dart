@@ -118,15 +118,18 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: Container(
-        width: MediaQuery.of(context).size.width * 0.65,
+        width: MediaQuery.of(context).size.width * ScreenMixin.appDrawerWidthProportion,
         child: Drawer(
           backgroundColor: Colors.blue[300],
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
-                child: Text('Header'),
-                decoration: BoxDecoration(color: Colors.blue),
+              const SizedBox(
+                height: ScreenMixin.appDrawerHeaderHeight,
+                child: DrawerHeader(
+                  child: Text(ScreenMixin.appDrawerHeaderText),
+                  decoration: BoxDecoration(color: Colors.blue),
+                ),
               ),
               ListTile(
                 leading: const Icon(
@@ -169,7 +172,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: appLabelColor,
-        title: const Text('Circadian App'),
+        title: const Text(ScreenMixin.appTitle),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -184,8 +187,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     'Start date time',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -203,8 +206,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
                       color: appTextAndIconColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                     onChanged: (val) => _setStateDiffDuration(),
                     validator: (val) {
@@ -224,8 +227,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     'End date time',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -243,8 +246,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
                       color: appTextAndIconColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                     onChanged: (val) => _setStateDiffDuration(),
                     validator: (val) {
@@ -262,8 +265,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 'Duration',
                 style: TextStyle(
                   color: appLabelColor,
-                  fontSize: appTextFontSize,
-                  fontWeight: appTextFontWeight,
+                  fontSize: ScreenMixin.appTextFontSize,
+                  fontWeight: ScreenMixin.appTextFontWeight,
                 ),
               ),
               Container(
@@ -274,9 +277,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     labelText: _durationStr,
                     labelStyle: TextStyle(
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                       color: appTextAndIconColor,
-                      fontWeight: appTextFontWeight,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
@@ -299,7 +302,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
                 ),

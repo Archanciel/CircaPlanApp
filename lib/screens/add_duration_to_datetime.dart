@@ -127,15 +127,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: Container(
-        width: MediaQuery.of(context).size.width * 0.65,
+        width: MediaQuery.of(context).size.width * ScreenMixin.appDrawerWidthProportion,
         child: Drawer(
           backgroundColor: Colors.blue[300],
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
-                child: Text('Header'),
-                decoration: BoxDecoration(color: Colors.blue),
+              const SizedBox(
+                height: ScreenMixin.appDrawerHeaderHeight,
+                child: DrawerHeader(
+                  child: Text(ScreenMixin.appDrawerHeaderText),
+                  decoration: BoxDecoration(color: Colors.blue),
+                ),
               ),
               ListTile(
                 leading: const Icon(
@@ -179,7 +182,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         foregroundColor: appLabelColor,
-        title: const Text('Circadian App'),
+        title: const Text(ScreenMixin.appTitle),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -194,8 +197,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     'Start date time',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
                   DateTimePicker(
@@ -213,8 +216,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     //dateLabelText: 'Date Time',
                     style: TextStyle(
                       color: appTextAndIconColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                     onChanged: (val) => _setStateEndDateTime(),
                     validator: (val) {
@@ -234,8 +237,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     'Duration',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: appTextFontSize,
-                      fontWeight: appTextFontWeight,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
                   Stack(
@@ -270,8 +273,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         child: TextField(
                           style: TextStyle(
                               color: _durationTextColor,
-                              fontSize: appTextFontSize,
-                              fontWeight: appTextFontWeight),
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
                           decoration: const InputDecoration(
                           ),
                           keyboardType: TextInputType.datetime,
@@ -292,8 +295,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 'End date time',
                 style: TextStyle(
                   color: appLabelColor,
-                  fontSize: appTextFontSize,
-                  fontWeight: appTextFontWeight,
+                  fontSize: ScreenMixin.appTextFontSize,
+                  fontWeight: ScreenMixin.appTextFontWeight,
                 ),
               ),
               Container(
@@ -304,9 +307,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     labelText: _endDateTimeStr,
                     labelStyle: TextStyle(
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                       color: appTextAndIconColor,
-                      fontWeight: appTextFontWeight,
+                      fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
                   // The validator receives the text that the user has entered.
@@ -329,7 +332,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: appTextFontSize,
+                      fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
                 ),
