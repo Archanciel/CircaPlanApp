@@ -139,7 +139,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     style: TextStyle(
                       color: Colors.yellow,
                       fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                      fontWeight: ScreenMixin.appDrawerFontWeight,
                     ),
                   ),
                   decoration: BoxDecoration(color: Colors.blue),
@@ -154,7 +154,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   style: TextStyle(
                     color: Colors.yellow,
                     fontSize: ScreenMixin.appDrawerTextFontSize,
-                    fontWeight: ScreenMixin.appTextFontWeight,
+                    fontWeight: ScreenMixin.appDrawerFontWeight,
                   ),
                 ),
                 onTap: () {
@@ -179,7 +179,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   style: TextStyle(
                     color: Colors.yellow,
                     fontSize: ScreenMixin.appDrawerTextFontSize,
-                    fontWeight: ScreenMixin.appTextFontWeight,
+                    fontWeight: ScreenMixin.appDrawerFontWeight,
                   ),
                 ),
                 onTap: () {

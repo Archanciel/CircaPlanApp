@@ -99,7 +99,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     style: TextStyle(
                       color: Colors.yellow,
                       fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                      fontWeight: ScreenMixin.appDrawerFontWeight,
                     ),
                   ),
                   decoration: BoxDecoration(color: Colors.blue),
@@ -114,7 +114,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   style: TextStyle(
                     color: Colors.yellow,
                     fontSize: ScreenMixin.appDrawerTextFontSize,
-                    fontWeight: ScreenMixin.appTextFontWeight,
+                    fontWeight: ScreenMixin.appDrawerFontWeight,
                   ),
                 ),
                 onTap: () {
@@ -137,7 +137,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   style: TextStyle(
                     color: Colors.yellow,
                     fontSize: ScreenMixin.appDrawerTextFontSize,
-                    fontWeight: ScreenMixin.appTextFontWeight,
+                    fontWeight: ScreenMixin.appDrawerFontWeight,
                   ),
                 ),
                 onTap: () {
