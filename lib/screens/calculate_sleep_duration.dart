@@ -36,7 +36,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   late TextEditingController _controller1;
 
-  late DateFormat _dateTimeFormat;
+  final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   //String _initialValue = '';
   String? _wakeUpDT;
@@ -48,27 +48,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String _initialValue = dateTimeNow.toString();
-    final String localName = 'fr_CH';
-    Intl.defaultLocale = localName;
-    _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
-    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
-    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller1 = TextEditingController(text: _dateTimeFormat.format(dateTimeNow));
-  }
-
-  String? _validateDateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid dd-mm hh:mm wake up date time';
-    } else {
-      List<String?> dateTimeStrLst = DateTimeParser.parseDDMMDateTime(value);
-      if (dateTimeStrLst.contains(null)) {
-        return 'Please enter a valid dd-mm hh:mm wake up date time';
-      }
-    }
-
-    return null;
+    _controller1 =
+        TextEditingController(text: _frenchDateTimeFormat.format(dateTimeNow));
   }
 
   Map<String, dynamic> _createTransferDataMap() {
@@ -77,22 +59,24 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return map;
   }
 
-  String? _validateTime(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid hh:mm wake up duration';
+  String _reformatDateTimeStr(String englishDateTimeStr) =>
+      (englishDateTimeStr != '')
+          ? _frenchDateTimeFormat.format(DateTime.parse(englishDateTimeStr))
+          : '';
+
+  void _modifyNewDateTimeMinute({required int minuteNb}) {
+    DateTime newDateTime = _frenchDateTimeFormat.parse(_controller1.text);
+
+    if (minuteNb > 0) {
+      newDateTime = newDateTime.subtract(Duration(minutes: -minuteNb));
     } else {
-      String? timeStr = DateTimeParser.parseTime(value);
-      if (timeStr == null) {
-        return 'Please enter a valid hh:mm wake up duration';
-      }
+      newDateTime = newDateTime.add(Duration(minutes: minuteNb));
     }
 
-    return null;
+    setState(() {
+      _controller1.text = _frenchDateTimeFormat.format(newDateTime);
+    });
   }
-
-  String _reformatDateTimeStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _dateTimeFormat.format(DateTime.parse(dateTimeStr))
-      : '';
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +94,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               const SizedBox(
                 height: ScreenMixin.appDrawerHeaderHeight,
                 child: DrawerHeader(
-                  child: Text(ScreenMixin.appDrawerHeaderText),
+                  child: Text(
+                    ScreenMixin.appDrawerHeaderText,
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                  ),
                   decoration: BoxDecoration(color: Colors.blue),
                 ),
               ),
@@ -118,7 +109,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text(ScreenMixin.addDurationToDateTimeTitle),
+                title: const Text(
+                  ScreenMixin.addDurationToDateTimeTitle,
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: ScreenMixin.appDrawerTextFontSize,
+                    fontWeight: ScreenMixin.appTextFontWeight,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -134,7 +132,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
+                title: const Text(
+                  ScreenMixin.dateTimeDiffDurationTitle,
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: ScreenMixin.appDrawerTextFontSize,
+                    fontWeight: ScreenMixin.appTextFontWeight,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -186,6 +191,73 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               fontWeight: ScreenMixin.appTextFontWeight),
                           keyboardType: TextInputType.datetime,
                           controller: _controller1,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _controller1.text =
+                                _frenchDateTimeFormat.format(DateTime.now());
+                          });
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(
+                              minHeight: 0,
+                              minWidth: 0,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {
+                              _modifyNewDateTimeMinute(minuteNb: 1);
+                            },
+                            icon: Icon(
+                              Icons.add,
+                              color: appTextAndIconColor,
+                            ),
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(
+                              minHeight: 0,
+                              minWidth: 0,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {
+                              _modifyNewDateTimeMinute(minuteNb: -1);
+                            },
+                            icon: Icon(
+                              Icons.remove,
+                              color: appTextAndIconColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            print('Add button pressed');
+                          });
+                        },
+                        child: const Text(
+                          'Add',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
                         ),
                       ),
                     ],

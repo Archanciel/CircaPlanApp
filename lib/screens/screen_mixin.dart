@@ -11,7 +11,8 @@ mixin ScreenMixin {
   final Color appTextAndIconColor = Colors.white;
   static const FontWeight appTextFontWeight = FontWeight.normal;
   static const double appTextFontSize = 20;
-  static const double appDrawerWidthProportion = 0.8;
+  static const double appDrawerTextFontSize = 18;
+  static const double appDrawerWidthProportion = 0.92;
   static const double appDrawerHeaderHeight = 80;
   static const String appDrawerHeaderText = ScreenMixin.appTitle;
   static const String addDurationToDateTimeTitle = 'Add Duration To Date Time';

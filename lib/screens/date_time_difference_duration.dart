@@ -48,7 +48,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _startDateTimeController;
   late TextEditingController _endDateTimeController;
 
-  late DateFormat _englishDateTimeFormat;
+  final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
   //String _initialValue = '';
   String _valueChanged1 = '';
@@ -63,9 +63,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
-    final String localName = 'fr_CH';
-    Intl.defaultLocale = localName;
-    _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
     _startDateTimeController = TextEditingController(
         text: _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr);
@@ -87,20 +84,18 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     setState(
       () {
         _startDateTimeStr = _startDateTimeController.text;
-        DateTime? startDateTime =
+        DateTime startDateTime =
             _englishDateTimeFormat.parse(_startDateTimeStr);
         _endDateTimeStr = _endDateTimeController.text;
-        DateTime? endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
+        DateTime endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
         Duration diffDuration;
 
-        if (startDateTime != null && endDateTime != null) {
-          if (endDateTime.isAfter(startDateTime)) {
-            diffDuration = endDateTime.difference(startDateTime);
-          } else {
-            diffDuration = startDateTime.difference(endDateTime);
-          }
-          _durationStr = diffDuration.HHmm();
+        if (endDateTime.isAfter(startDateTime)) {
+          diffDuration = endDateTime.difference(startDateTime);
+        } else {
+          diffDuration = startDateTime.difference(endDateTime);
         }
+        _durationStr = diffDuration.HHmm();
       },
     );
   }
@@ -121,7 +116,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               const SizedBox(
                 height: ScreenMixin.appDrawerHeaderHeight,
                 child: DrawerHeader(
-                  child: Text(ScreenMixin.appDrawerHeaderText),
+                  child: Text(
+                    ScreenMixin.appDrawerHeaderText,
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                  ),
                   decoration: BoxDecoration(color: Colors.blue),
                 ),
               ),
@@ -129,7 +131,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text(ScreenMixin.addDurationToDateTimeTitle),
+                title: const Text(
+                  ScreenMixin.addDurationToDateTimeTitle,
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: ScreenMixin.appDrawerTextFontSize,
+                    fontWeight: ScreenMixin.appTextFontWeight,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
@@ -146,7 +155,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text(ScreenMixin.calculateSleepDurationTitle),
+                title: const Text(
+                  ScreenMixin.calculateSleepDurationTitle,
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: ScreenMixin.appDrawerTextFontSize,
+                    fontWeight: ScreenMixin.appTextFontWeight,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(

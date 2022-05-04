@@ -60,8 +60,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   late TextEditingController _startDateTimeController;
   late TextEditingController _durationTextFieldController;
 
-  late DateFormat _englishDateTimeFormat;
-  late DateFormat _frenchDateTimeFormat;
+  final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
+  final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   //String _initialValue = '';
   String _valueChanged1 = '';
@@ -76,10 +76,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
-    const String localName = 'fr_CH';
-    Intl.defaultLocale = localName;
-    _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-    _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
     _startDateTimeController = TextEditingController(
         text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimeStr);
@@ -108,8 +104,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       _durationStr = _durationTextFieldController.text;
       Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
       _startDateTimeStr = _startDateTimeController.text;
-      DateTime? startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+      DateTime startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
       DateTime endDateTime;
+
       if (duration != null && startDateTime != null) {
         if (_durationSign > 0) {
           endDateTime = startDateTime.add(duration);
@@ -137,7 +134,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               const SizedBox(
                 height: ScreenMixin.appDrawerHeaderHeight,
                 child: DrawerHeader(
-                  child: Text(ScreenMixin.appDrawerHeaderText),
+                  child: Text(
+                    ScreenMixin.appDrawerHeaderText,
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                  ),
                   decoration: BoxDecoration(color: Colors.blue),
                 ),
               ),
@@ -145,7 +149,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
+                title: const Text(
+                  ScreenMixin.dateTimeDiffDurationTitle,
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: ScreenMixin.appDrawerTextFontSize,
+                    fontWeight: ScreenMixin.appTextFontWeight,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
@@ -163,7 +174,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 leading: const Icon(
                   Icons.keyboard_double_arrow_up,
                 ),
-                title: const Text(ScreenMixin.calculateSleepDurationTitle),
+                title: const Text(
+                  ScreenMixin.calculateSleepDurationTitle,
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: ScreenMixin.appDrawerTextFontSize,
+                    fontWeight: ScreenMixin.appTextFontWeight,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
