@@ -5,15 +5,20 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'screens/screen_mixin.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget with ScreenMixin {
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: ScreenMixin.appTitle,
+      theme: ThemeData(
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: appTextAndIconColor, // requires with ScreenMixin !
+        ),
+      ),
       home: AddDurationToDateTime(
         screenNavigTransData: ScreenNavigTransData(transferDataMap: {}),
       ),
