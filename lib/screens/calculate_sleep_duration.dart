@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
-  
+
   const CalculateSleepDuration({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
@@ -25,7 +25,8 @@ class CalculateSleepDuration extends StatefulWidget {
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class _CalculateSleepDurationState extends State<CalculateSleepDuration> with ScreenMixin {
+class _CalculateSleepDurationState extends State<CalculateSleepDuration>
+    with ScreenMixin {
   _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         super();
@@ -36,12 +37,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
   late TextEditingController _controller1;
 
   late DateFormat _dateTimeFormat;
-  late DateFormat _dateOnlyFormat;
 
   //String _initialValue = '';
-  String _valueChanged1 = '';
-  String _valueToValidate1 = '';
-  String _valueSaved1 = '';
   String? _wakeUpDT;
   String? _awakeHHmm;
   String? _goToBedDT;
@@ -55,11 +52,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
     final String localName = 'fr_CH';
     Intl.defaultLocale = localName;
     _dateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-    _dateOnlyFormat = DateFormat("dd-MM-yyyy");
 
     String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
     String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _controller1 = TextEditingController(text: '$lsHour:$lsMinute');
+    _controller1 = TextEditingController(text: _dateTimeFormat.format(dateTimeNow));
   }
 
   String? _validateDateTime(String? value) {
@@ -97,9 +93,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
   String _reformatDateTimeStr(String dateTimeStr) => (dateTimeStr != '')
       ? _dateTimeFormat.format(DateTime.parse(dateTimeStr))
       : '';
-  String _reformatDateStr(String dateTimeStr) => (dateTimeStr != '')
-      ? _dateOnlyFormat.format(DateTime.parse(dateTimeStr))
-      : '';
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +100,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: Container(
-        width: MediaQuery.of(context).size.width * ScreenMixin.appDrawerWidthProportion,
+        width: MediaQuery.of(context).size.width *
+            ScreenMixin.appDrawerWidthProportion,
         child: Drawer(
           backgroundColor: Colors.blue[300],
           child: ListView(
@@ -128,10 +122,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                           AddDurationToDateTime(
-                        screenNavigTransData:
-                             ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
+                      builder: (BuildContext context) => AddDurationToDateTime(
+                        screenNavigTransData: ScreenNavigTransData(
+                            transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
@@ -146,9 +139,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                           DateTimeDifferenceDuration(
-                        screenNavigTransData:
-                             ScreenNavigTransData(transferDataMap: _createTransferDataMap()),
+                          DateTimeDifferenceDuration(
+                        screenNavigTransData: ScreenNavigTransData(
+                            transferDataMap: _createTransferDataMap()),
                       ),
                     ),
                   );
@@ -176,32 +169,26 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
               Wrap(
                 children: [
                   Text(
-                    'Stay awake',
+                    'New date time',
                     style: TextStyle(
                       color: appLabelColor,
                       fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
-                  DateTimePicker(
-                    type: DateTimePickerType.time,
-                    timePickerEntryModeInput: true,
-                    controller: _controller1,
-                    icon: Icon(
-                      Icons.access_time,
-                      color: appTextAndIconColor,
-                      size: 30,
-                    ),
-                    //dateLabelText: 'Date Time',
-                    style: TextStyle(
-                      color: appTextAndIconColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                    ),
-                    onChanged: (val) => setState(() => _valueChanged1 = val),
-                    validator: (val) {
-                      setState(() => _valueToValidate1 = val ?? '');
-                      return null;
-                    },
-                    onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        child: TextField(
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
+                          keyboardType: TextInputType.datetime,
+                          controller: _controller1,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -238,13 +225,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration> with Sc
               ),
               const SizedBox(
                 height: 20,
-              ),
-              Text(
-                _outputText ?? '',
-                style: TextStyle(
-                  color: appTextAndIconColor,
-                  fontSize: ScreenMixin.appTextFontSize,
-                ),
               ),
             ],
           ),

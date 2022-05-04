@@ -62,22 +62,15 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String _initialValue = dateTimeNow.toString();
+    String nowDateTimeStr = dateTimeNow.toString();
     final String localName = 'fr_CH';
     Intl.defaultLocale = localName;
     _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
-    _startDateTimeController = TextEditingController(text: _initialValue);
-    _endDateTimeController = TextEditingController(text: _initialValue);
-
     _startDateTimeController = TextEditingController(
-        text: _transferDataMap['dtDiffStartDateTimeStr'] ?? _initialValue);
+        text: _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr);
     _endDateTimeController = TextEditingController(
-        text: _transferDataMap['dtDiffEndDateTimeStr'] ?? _initialValue);
-
-    String lsHour = dateTimeNow.hour.toString().padLeft(2, '0');
-    String lsMinute = dateTimeNow.minute.toString().padLeft(2, '0');
-    _endDateTimeController = TextEditingController(text: '$lsHour:$lsMinute');
+        text: _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr);
   }
 
   Map<String, dynamic> _createTransferDataMap() {
@@ -118,7 +111,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: Container(
-        width: MediaQuery.of(context).size.width * ScreenMixin.appDrawerWidthProportion,
+        width: MediaQuery.of(context).size.width *
+            ScreenMixin.appDrawerWidthProportion,
         child: Drawer(
           backgroundColor: Colors.blue[300],
           child: ListView(
@@ -183,13 +177,33 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
             children: [
               Wrap(
                 children: [
-                  Text(
-                    'Start date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Start date time',
+                        style: TextStyle(
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _startDateTimeController.text =
+                              DateTime.now().toString();
+                          _setStateDiffDuration();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   DateTimePicker(
                     type: DateTimePickerType.dateTime,
@@ -223,13 +237,33 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               ),
               Wrap(
                 children: [
-                  Text(
-                    'End date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'End date time',
+                        style: TextStyle(
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _endDateTimeController.text =
+                              DateTime.now().toString();
+                          _setStateDiffDuration();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   DateTimePicker(
                     type: DateTimePickerType.dateTime,

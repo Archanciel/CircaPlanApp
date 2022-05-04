@@ -75,14 +75,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String _initialValue = dateTimeNow.toString();
+    String nowDateTimeStr = dateTimeNow.toString();
     const String localName = 'fr_CH';
     Intl.defaultLocale = localName;
     _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
     _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
     _startDateTimeController = TextEditingController(
-        text: _transferDataMap['addDurStartDateTimeStr'] ?? _initialValue);
+        text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimeStr);
     _durationTextFieldController =
         TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
 
@@ -194,13 +194,33 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             children: [
               Wrap(
                 children: [
-                  Text(
-                    'Start date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Start date time',
+                        style: TextStyle(
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _startDateTimeController.text =
+                              DateTime.now().toString();
+                          _setStateEndDateTime();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   DateTimePicker(
                     type: DateTimePickerType.dateTime,
@@ -276,10 +296,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                               color: _durationTextColor,
                               fontSize: ScreenMixin.appTextFontSize,
                               fontWeight: ScreenMixin.appTextFontWeight),
-                          decoration: const InputDecoration(),
                           keyboardType: TextInputType.datetime,
                           controller: _durationTextFieldController,
-                          onChanged: (ValueListenableBuilder) {
+                          onChanged: (val) {
                             _setStateEndDateTime();
                           },
                         ),
