@@ -9,6 +9,12 @@ mixin ScreenMixin {
   static const String appTitle = 'Circadian Calculator';
   final Color appLabelColor = Colors.yellow.shade300;
   final Color appTextAndIconColor = Colors.white;
+  final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
+      MaterialStateProperty.all(Colors.blue[900]);
+  final MaterialStateProperty<RoundedRectangleBorder>
+      appElevatedButtonRoundedShape =
+      MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
   static const FontWeight appTextFontWeight = FontWeight.normal;
   static const double appTextFontSize = 20;
   static const double appDrawerTextFontSize = 18;
@@ -17,6 +23,7 @@ mixin ScreenMixin {
   static const String appDrawerHeaderText = ScreenMixin.appTitle;
   static const FontWeight appDrawerFontWeight = FontWeight.bold;
   static const String addDurationToDateTimeTitle = 'Add Duration To Date Time';
-  static const String dateTimeDiffDurationTitle = 'Date Time Difference Duration';
+  static const String dateTimeDiffDurationTitle =
+      'Date Time Difference Duration';
   static const String calculateSleepDurationTitle = 'Calculate Sleep Duration';
 }

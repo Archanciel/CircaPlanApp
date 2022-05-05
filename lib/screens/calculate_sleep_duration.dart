@@ -33,8 +33,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> _transferDataMap;
+  String _status = 'Sleep';
 
-  late TextEditingController _controller1;
+  late TextEditingController _newDateTimeController;
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -49,7 +50,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
 
-    _controller1 =
+    _newDateTimeController =
         TextEditingController(text: _frenchDateTimeFormat.format(dateTimeNow));
   }
 
@@ -65,7 +66,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           : '';
 
   void _modifyNewDateTimeMinute({required int minuteNb}) {
-    DateTime newDateTime = _frenchDateTimeFormat.parse(_controller1.text);
+    DateTime newDateTime =
+        _frenchDateTimeFormat.parse(_newDateTimeController.text);
 
     if (minuteNb > 0) {
       newDateTime = newDateTime.subtract(Duration(minutes: -minuteNb));
@@ -74,7 +76,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
 
     setState(() {
-      _controller1.text = _frenchDateTimeFormat.format(newDateTime);
+      _newDateTimeController.text = _frenchDateTimeFormat.format(newDateTime);
     });
   }
 
@@ -161,146 +163,234 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         foregroundColor: appLabelColor,
         title: const Text(ScreenMixin.calculateSleepDurationTitle),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height:
+                          15, // same distance from Appbar than the other screens
+                    ),
+                    Text(
+                      'New date time',
+                      style: TextStyle(
+                        color: appLabelColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          child: TextField(
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            keyboardType: TextInputType.datetime,
+                            controller: _newDateTimeController,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () {
+                            setState(() {
+                              _newDateTimeController.text =
+                                  _frenchDateTimeFormat.format(DateTime.now());
+                            });
+                          },
+                          child: const Text(
+                            'Now',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            IconButton(
+                              constraints: const BoxConstraints(
+                                minHeight: 0,
+                                minWidth: 0,
+                              ),
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                _modifyNewDateTimeMinute(minuteNb: 1);
+                              },
+                              icon: Icon(
+                                Icons.add,
+                                color: appTextAndIconColor,
+                              ),
+                            ),
+                            IconButton(
+                              constraints: const BoxConstraints(
+                                minHeight: 0,
+                                minWidth: 0,
+                              ),
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                _modifyNewDateTimeMinute(minuteNb: -1);
+                              },
+                              icon: Icon(
+                                Icons.remove,
+                                color: appTextAndIconColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () {
+                            setState(() {
+                              print('Add button pressed');
+                            });
+                          },
+                          child: const Text(
+                            'Add',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'Stored date time',
+                      style: TextStyle(
+                        color: appLabelColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          child: TextField(
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
+                              labelStyle: TextStyle(
+                                fontSize: ScreenMixin.appTextFontSize,
+                                color: appTextAndIconColor,
+                                fontWeight: ScreenMixin.appTextFontWeight,
+                              ),
+                            ),
+                            keyboardType: TextInputType.datetime,
+                            controller: _newDateTimeController,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'Current sleep duration',
+                      style: TextStyle(
+                        color: appLabelColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          child: TextField(
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
+                              labelStyle: TextStyle(
+                                fontSize: ScreenMixin.appTextFontSize,
+                                color: appTextAndIconColor,
+                                fontWeight: ScreenMixin.appTextFontWeight,
+                              ),
+                            ),
+                            keyboardType: TextInputType.datetime,
+                            controller: _newDateTimeController,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Wrap(
-                children: [
-                  Text(
-                    'New date time',
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(''),
+                Container(
+                  child: Text(
+                    _status,
                     style: TextStyle(
                       color: appLabelColor,
                       fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 160,
-                        child: TextField(
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight),
-                          keyboardType: TextInputType.datetime,
-                          controller: _controller1,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _controller1.text =
-                                _frenchDateTimeFormat.format(DateTime.now());
-                          });
-                        },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          IconButton(
-                            constraints: const BoxConstraints(
-                              minHeight: 0,
-                              minWidth: 0,
-                            ),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: () {
-                              _modifyNewDateTimeMinute(minuteNb: 1);
-                            },
-                            icon: Icon(
-                              Icons.add,
-                              color: appTextAndIconColor,
-                            ),
-                          ),
-                          IconButton(
-                            constraints: const BoxConstraints(
-                              minHeight: 0,
-                              minWidth: 0,
-                            ),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: () {
-                              _modifyNewDateTimeMinute(minuteNb: -1);
-                            },
-                            icon: Icon(
-                              Icons.remove,
-                              color: appTextAndIconColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            print('Add button pressed');
-                          });
-                        },
-                        child: const Text(
-                          'Add',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                alignment: Alignment.topRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      _formKey.currentState!.save();
-                      setState(() {
-                        _outputText =
-                            'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT';
-                      });
-                      print(
-                          'Input values: $_wakeUpDT, $_awakeHHmm, $_goToBedDT');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
-                    }
-                  },
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: ScreenMixin.appTextFontSize,
-                    ),
-                  ),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: appElevatedButtonBackgroundColor,
+                  shape: appElevatedButtonRoundedShape),
+              onPressed: () {
+                setState(() {
+                  if (_status == 'Wake up') {
+                    _status = 'Sleep';
+                  } else {
+                    _status = 'Wake up';
+                  }
+                });
+              },
+              child: const Text(
+                'Reset',
+                style: TextStyle(
+                  fontSize: ScreenMixin.appTextFontSize,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

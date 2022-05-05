@@ -191,62 +191,60 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Wrap(
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Start date time',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          _startDateTimeController.text =
-                              DateTime.now().toString();
-                          _setStateDiffDuration();
-                        },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  DateTimePicker(
-                    type: DateTimePickerType.dateTime,
-                    dateMask: 'dd-MM-yyyy HH:mm',
-                    use24HourFormat: true,
-                    controller: _startDateTimeController,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    icon: Icon(
-                      Icons.event,
-                      color: appTextAndIconColor,
-                      size: 30,
-                    ),
-                    //dateLabelText: 'Date Time',
+                  Text(
+                    'Start date time',
                     style: TextStyle(
-                      color: appTextAndIconColor,
+                      color: appLabelColor,
                       fontSize: ScreenMixin.appTextFontSize,
                       fontWeight: ScreenMixin.appTextFontWeight,
                     ),
-                    onChanged: (val) => _setStateDiffDuration(),
-                    validator: (val) {
-                      setState(() => _valueToValidate1 = val ?? '');
-                      return null;
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: appElevatedButtonBackgroundColor,
+                        shape: appElevatedButtonRoundedShape),
+                    onPressed: () {
+                      _startDateTimeController.text = DateTime.now().toString();
+                      _setStateDiffDuration();
                     },
-                    onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
+                    child: const Text(
+                      'Now',
+                      style: TextStyle(
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
+                    ),
                   ),
                 ],
+              ),
+              DateTimePicker(
+                type: DateTimePickerType.dateTime,
+                dateMask: 'dd-MM-yyyy HH:mm',
+                use24HourFormat: true,
+                controller: _startDateTimeController,
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+                icon: Icon(
+                  Icons.event,
+                  color: appTextAndIconColor,
+                  size: 30,
+                ),
+                decoration: const InputDecoration.collapsed(hintText: ''),
+                style: TextStyle(
+                  color: appTextAndIconColor,
+                  fontSize: ScreenMixin.appTextFontSize,
+                  fontWeight: ScreenMixin.appTextFontWeight,
+                ),
+                onChanged: (val) => _setStateDiffDuration(),
+                validator: (val) {
+                  setState(() => _valueToValidate1 = val ?? '');
+                  return null;
+                },
+                onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
               ),
               const SizedBox(
                 height: 20,
@@ -267,6 +265,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         width: 15,
                       ),
                       ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
                         onPressed: () {
                           _endDateTimeController.text =
                               DateTime.now().toString();
@@ -293,7 +294,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       color: appTextAndIconColor,
                       size: 30,
                     ),
-                    //dateLabelText: 'Date Time',
+                    decoration: const InputDecoration.collapsed(hintText: ''),
                     style: TextStyle(
                       color: appTextAndIconColor,
                       fontSize: ScreenMixin.appTextFontSize,
@@ -324,7 +325,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 child: TextField(
                   readOnly: true,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    isCollapsed: true,
+                    contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     labelText: _durationStr,
                     labelStyle: TextStyle(
                       fontSize: ScreenMixin.appTextFontSize,
@@ -341,6 +343,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               Container(
                 alignment: Alignment.topRight,
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: appElevatedButtonBackgroundColor,
+                      shape: appElevatedButtonRoundedShape),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
