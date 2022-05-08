@@ -56,19 +56,24 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> with ScreenMixin {
   final _navigationKey = GlobalKey<CurvedNavigationBarState>();
   int _currentIndex = 0; // initial selected screen
-  int _previousIndex = 0;
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
   @override
   Widget build(BuildContext context) {
-    final screens = [
+    final List<StatefulWidget> screens = [
       AddDurationToDateTime(screenNavigTransData: _screenNavigTransData),
       DateTimeDifferenceDuration(screenNavigTransData: _screenNavigTransData),
       CalculateSleepDuration(screenNavigTransData: _screenNavigTransData),
     ];
 
-    final items = <Widget>[
+    final List<String> screenTitles = [
+      ScreenMixin.addDurationToDateTimeTitle,
+      ScreenMixin.dateTimeDiffDurationTitle,
+      ScreenMixin.calculateSleepDurationTitle,
+    ];
+
+    final List<Widget> items = [
       Image.asset(
         "images/add_duration_to_date_time_blue_trans.png",
         width: 36,
@@ -98,7 +103,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             appBar: AppBar(
               backgroundColor: Colors.blue.shade900,
               title: Text(
-                ScreenMixin.appTitle,
+                screenTitles[_currentIndex],
                 style: TextStyle(color: Colors.yellow.shade200),
               ),
               elevation: 0,
@@ -120,11 +125,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 index: _currentIndex,
                 items: items,
                 onTap: (index) => setState(() {
-                  _previousIndex = _currentIndex;
                   _currentIndex = index;
-              /*    Map<String, dynamic> updatedTransferDataMap =
-                      (screens[_previousIndex] as ScreenMixin).getUpdatedTransferDataMap();
-                  _screenNavigTransData.transferDataMap = updatedTransferDataMap);*/
                 }),
               ),
             ),
