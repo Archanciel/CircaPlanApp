@@ -70,7 +70,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         text: _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr);
   }
 
-  Map<String, dynamic> _createTransferDataMap() {
+  Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
     map['dtDiffStartDateTimeStr'] = _startDateTimeStr;
@@ -98,6 +98,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         _durationStr = diffDuration.HHmm();
       },
     );
+    
+    _updateTransferDataMap();
   }
 
   @override
@@ -145,7 +147,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     MaterialPageRoute(
                       builder: (BuildContext context) => AddDurationToDateTime(
                         screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _createTransferDataMap()),
+                            transferDataMap: _updateTransferDataMap()),
                       ),
                     ),
                   );
@@ -169,7 +171,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     MaterialPageRoute(
                       builder: (BuildContext context) => CalculateSleepDuration(
                         screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _createTransferDataMap()),
+                            transferDataMap: _updateTransferDataMap()),
                       ),
                     ),
                   );

@@ -54,7 +54,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         TextEditingController(text: _frenchDateTimeFormat.format(dateTimeNow));
   }
 
-  Map<String, dynamic> _createTransferDataMap() {
+  Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
     return map;
@@ -78,6 +78,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     setState(() {
       _newDateTimeController.text = _frenchDateTimeFormat.format(newDateTime);
     });
+
+    _updateTransferDataMap();
   }
 
   @override
@@ -124,7 +126,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     MaterialPageRoute(
                       builder: (BuildContext context) => AddDurationToDateTime(
                         screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _createTransferDataMap()),
+                            transferDataMap: _updateTransferDataMap()),
                       ),
                     ),
                   );
@@ -148,7 +150,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       builder: (BuildContext context) =>
                           DateTimeDifferenceDuration(
                         screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _createTransferDataMap()),
+                            transferDataMap: _updateTransferDataMap()),
                       ),
                     ),
                   );

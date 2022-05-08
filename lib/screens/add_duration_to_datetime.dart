@@ -85,7 +85,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
   }
 
-  Map<String, dynamic> _createTransferDataMap() {
+  Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
     map['durationIconData'] = _durationIcon;
@@ -116,6 +116,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
       }
     });
+    
+    _updateTransferDataMap();
   }
 
   @override
@@ -164,7 +166,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       builder: (BuildContext context) =>
                           DateTimeDifferenceDuration(
                         screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _createTransferDataMap()),
+                            transferDataMap: _updateTransferDataMap()),
                       ),
                     ),
                   );
@@ -188,7 +190,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     MaterialPageRoute(
                       builder: (BuildContext context) => CalculateSleepDuration(
                         screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _createTransferDataMap()),
+                            transferDataMap: _updateTransferDataMap()),
                       ),
                     ),
                   );
