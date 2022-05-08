@@ -179,11 +179,11 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
           ),
         ),
       ),
-      appBar: AppBar(
+/*      appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
         foregroundColor: appLabelColor,
         title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
-      ),
+      ),*/
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),

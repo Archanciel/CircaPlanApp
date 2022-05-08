@@ -39,6 +39,7 @@ dependencies:
   date_time_picker: ^2.1.0
   flutter_localizations: 
     sdk: flutter
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:

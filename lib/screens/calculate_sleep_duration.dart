@@ -158,11 +158,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           ),
         ),
       ),
-      appBar: AppBar(
+/*      appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
         foregroundColor: appLabelColor,
         title: const Text(ScreenMixin.calculateSleepDurationTitle),
-      ),
+      ),*/
       body: Stack(
         children: [
           Align(
