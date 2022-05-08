@@ -55,7 +55,8 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> with ScreenMixin {
   final _navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int _index = 0; // initial selected screen
+  int _currentIndex = 0; // initial selected screen
+  int _previousIndex = 0;
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
@@ -103,7 +104,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               elevation: 0,
               centerTitle: true,
             ),
-            body: screens[_index],
+            body: screens[_currentIndex],
             bottomNavigationBar: Theme(
               data: Theme.of(context).copyWith(
                 iconTheme: IconThemeData(color: Colors.blue.shade900),
@@ -116,9 +117,15 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 height: 55,
                 animationCurve: Curves.easeInOut,
                 animationDuration: Duration(milliseconds: 500),
-                index: _index,
+                index: _currentIndex,
                 items: items,
-                onTap: (index) => setState(() => _index = index),
+                onTap: (index) => setState(() {
+                  _previousIndex = _currentIndex;
+                  _currentIndex = index;
+              /*    Map<String, dynamic> updatedTransferDataMap =
+                      (screens[_previousIndex] as ScreenMixin).getUpdatedTransferDataMap();
+                  _screenNavigTransData.transferDataMap = updatedTransferDataMap);*/
+                }),
               ),
             ),
           ),

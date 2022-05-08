@@ -26,4 +26,10 @@ mixin ScreenMixin {
   static const String dateTimeDiffDurationTitle =
       'Date Time Difference Duration';
   static const String calculateSleepDurationTitle = 'Calculate Sleep Duration';
+
+  Map<String, dynamic> getUpdatedTransferDataMap() {
+    /// Returns the transferDataMap after having updated the map with the
+    /// up to date values of the data specific to the current screen.
+    throw UnimplementedError('getUpdatedTransferDataMap() not implemented');
+  }
 }
