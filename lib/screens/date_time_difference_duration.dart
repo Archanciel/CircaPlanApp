@@ -98,7 +98,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         _durationStr = diffDuration.HHmm();
       },
     );
-    
+
     _updateTransferDataMap();
   }
 
@@ -180,11 +180,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
             ],
           ),
         ),
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade900,
-        foregroundColor: appLabelColor,
-        title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
       ),
       body: SingleChildScrollView(
         child: Container(

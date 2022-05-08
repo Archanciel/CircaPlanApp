@@ -200,11 +200,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
           ),
         ),
       ),
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade900,
-        foregroundColor: appLabelColor,
-        title: const Text(ScreenMixin.addDurationToDateTimeTitle),
-      ),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
