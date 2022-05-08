@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.circa_plan">
    <application
-        android:label="circa_plan"
+        android:label="Circadian Calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

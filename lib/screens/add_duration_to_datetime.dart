@@ -199,7 +199,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.blue.shade900,
         foregroundColor: appLabelColor,
         title: const Text(ScreenMixin.addDurationToDateTimeTitle),
       ),

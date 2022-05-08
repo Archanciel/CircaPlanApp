@@ -10,7 +10,7 @@ mixin ScreenMixin {
   final Color appLabelColor = Colors.yellow.shade300;
   final Color appTextAndIconColor = Colors.white;
   final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
-      MaterialStateProperty.all(Colors.blue[900]);
+      MaterialStateProperty.all(Colors.blue.shade900);
   final MaterialStateProperty<RoundedRectangleBorder>
       appElevatedButtonRoundedShape =
       MaterialStateProperty.all<RoundedRectangleBorder>(

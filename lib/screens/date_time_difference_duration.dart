@@ -180,7 +180,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.blue.shade900,
         foregroundColor: appLabelColor,
         title: const Text(ScreenMixin.dateTimeDiffDurationTitle),
       ),
