@@ -258,7 +258,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(47, 0, 0, 0),
+//              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: TextField(
                 readOnly: true,
                 decoration: InputDecoration(
