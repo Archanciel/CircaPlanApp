@@ -123,7 +123,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               height: screenHeight * 0.9,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.blue,
                 ),
                 child: screens[_currentIndex],
               ),
