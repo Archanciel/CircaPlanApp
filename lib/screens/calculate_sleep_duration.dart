@@ -200,7 +200,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 5,
                     ),
                     Text(
                       'Stored date time',
@@ -234,7 +234,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     Text(
                       'Current sleep duration',
@@ -286,30 +286,33 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 86),
                 ),
               ],
             ),
           ),
           Align(
-            alignment: Alignment.bottomRight,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: appElevatedButtonBackgroundColor,
-                  shape: appElevatedButtonRoundedShape),
-              onPressed: () {
-                setState(() {
-                  if (_status == 'Wake up') {
-                    _status = 'Sleep';
-                  } else {
-                    _status = 'Wake up';
-                  }
-                });
-              },
-              child: const Text(
-                'Reset',
-                style: TextStyle(
-                  fontSize: ScreenMixin.appTextFontSize,
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 75),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: appElevatedButtonBackgroundColor,
+                    shape: appElevatedButtonRoundedShape),
+                onPressed: () {
+                  setState(() {
+                    if (_status == 'Wake up') {
+                      _status = 'Sleep';
+                    } else {
+                      _status = 'Wake up';
+                    }
+                  });
+                },
+                child: const Text(
+                  'Reset',
+                  style: TextStyle(
+                    fontSize: ScreenMixin.appTextFontSize,
+                  ),
                 ),
               ),
             ),
