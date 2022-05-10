@@ -125,7 +125,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        margin: EdgeInsets.symmetric(
+            horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,

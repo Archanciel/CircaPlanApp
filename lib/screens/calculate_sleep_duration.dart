@@ -85,88 +85,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      drawer: Container(
-        width: MediaQuery.of(context).size.width *
-            ScreenMixin.appDrawerWidthProportion,
-        child: Drawer(
-          backgroundColor: Colors.blue[300],
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const SizedBox(
-                height: ScreenMixin.appDrawerHeaderHeight,
-                child: DrawerHeader(
-                  child: Text(
-                    ScreenMixin.appDrawerHeaderText,
-                    style: TextStyle(
-                      color: Colors.yellow,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appDrawerFontWeight,
-                    ),
-                  ),
-                  decoration: BoxDecoration(color: Colors.blue),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.keyboard_double_arrow_up,
-                ),
-                title: const Text(
-                  ScreenMixin.addDurationToDateTimeTitle,
-                  style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: ScreenMixin.appDrawerTextFontSize,
-                    fontWeight: ScreenMixin.appDrawerFontWeight,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => AddDurationToDateTime(
-                        screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _updateTransferDataMap()),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.keyboard_double_arrow_up,
-                ),
-                title: const Text(
-                  ScreenMixin.dateTimeDiffDurationTitle,
-                  style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: ScreenMixin.appDrawerTextFontSize,
-                    fontWeight: ScreenMixin.appDrawerFontWeight,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          DateTimeDifferenceDuration(
-                        screenNavigTransData: ScreenNavigTransData(
-                            transferDataMap: _updateTransferDataMap()),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: Stack(
+    return Container(
+      child: Stack(
         children: [
           Align(
             alignment: Alignment.topCenter,
             child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                margin: EdgeInsets.symmetric(
+                    horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
