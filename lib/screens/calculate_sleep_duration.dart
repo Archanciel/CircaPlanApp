@@ -370,13 +370,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     backgroundColor: appElevatedButtonBackgroundColor,
                     shape: appElevatedButtonRoundedShape),
                 onPressed: () {
-                  setState(() {
-                    if (_status == 'Wake Up') {
-                      _status = 'Sleep';
-                    } else {
-                      _status = 'Wake Up';
-                    }
-                  });
+                  setState(
+                    () {
+                      if (_status == 'Wake Up') {
+                        _status = 'Sleep';
+                      } else {
+                        _status = 'Wake Up';
+                      }
+                    },
+                  );
+
+                  _updateTransferDataMap();
                 },
                 child: const Text(
                   'Reset',
