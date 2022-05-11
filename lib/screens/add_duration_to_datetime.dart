@@ -1,12 +1,9 @@
-import 'package:circa_plan/screens/date_time_difference_duration.dart';
-import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
@@ -93,7 +90,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _setStateEndDateTime() {
     /// Private method called each time one of the elements
-    /// implied in calculating the End date time value is 
+    /// implied in calculating the End date time value is
     /// changed.
     setState(
       () {
@@ -104,7 +101,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             _englishDateTimeFormat.parse(_startDateTimeStr);
         DateTime endDateTime;
 
-        if (duration != null && startDateTime != null) {
+        if (duration != null) {
           if (_durationSign > 0) {
             endDateTime = startDateTime.add(duration);
           } else {
@@ -220,7 +217,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(25, 11, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(25, 11, 0, 0),
                       child: TextField(
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
@@ -250,22 +247,19 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 fontWeight: ScreenMixin.appTextFontWeight,
               ),
             ),
-            Container(
-//              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  isCollapsed: true,
-                  contentPadding: EdgeInsets.fromLTRB(0, 25, 0, 0),
-                  labelText: _endDateTimeStr,
-                  labelStyle: TextStyle(
-                    fontSize: ScreenMixin.appTextFontSize,
-                    color: appTextAndIconColor,
-                    fontWeight: ScreenMixin.appTextFontWeight,
-                  ),
+            TextField(
+              readOnly: true,
+              decoration: InputDecoration(
+                isCollapsed: true,
+                contentPadding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                labelText: _endDateTimeStr,
+                labelStyle: TextStyle(
+                  fontSize: ScreenMixin.appTextFontSize,
+                  color: appTextAndIconColor,
+                  fontWeight: ScreenMixin.appTextFontWeight,
                 ),
-                // The validator receives the text that the user has entered.
               ),
+              // The validator receives the text that the user has entered.
             ),
             const SizedBox(
               height: 20,
@@ -279,12 +273,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
                     _formKey.currentState!.save();
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Submit',
                   style: TextStyle(
                     fontSize: ScreenMixin.appTextFontSize,
