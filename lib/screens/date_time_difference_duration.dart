@@ -73,6 +73,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   }
 
   void _setStateDiffDuration() {
+    /// Private method called each time one of the elements
+    /// implied in calculating the Duration value is changed.
     setState(
       () {
         _startDateTimeStr = _startDateTimeController.text;
