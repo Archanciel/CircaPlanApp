@@ -50,14 +50,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
-  //String _initialValue = '';
-  String _valueChanged1 = '';
-  String _valueToValidate1 = '';
-  String _valueSaved1 = '';
-  String _valueChanged2 = '';
-  String _valueToValidate2 = '';
-  String _valueSaved2 = '';
-
   @override
   void initState() {
     super.initState();
@@ -162,11 +154,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 fontWeight: ScreenMixin.appTextFontWeight,
               ),
               onChanged: (val) => _setStateDiffDuration(),
-              validator: (val) {
-                setState(() => _valueToValidate1 = val ?? '');
-                return null;
-              },
-              onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
             ),
             const SizedBox(
               height: 20,
@@ -222,11 +209,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     fontWeight: ScreenMixin.appTextFontWeight,
                   ),
                   onChanged: (val) => _setStateDiffDuration(),
-                  validator: (val) {
-                    setState(() => _valueToValidate2 = val ?? '');
-                    return null;
-                  },
-                  onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
                 ),
               ],
             ),

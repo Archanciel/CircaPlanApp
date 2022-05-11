@@ -65,19 +65,22 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     ScreenMixin.setAppVerticalTopMargin(screenHeight);
-    final List<StatefulWidget> screens = [
+
+    // data for CurvedNavigationBar
+
+    final List<StatefulWidget> screensLst = [
       AddDurationToDateTime(screenNavigTransData: _screenNavigTransData),
       DateTimeDifferenceDuration(screenNavigTransData: _screenNavigTransData),
       CalculateSleepDuration(screenNavigTransData: _screenNavigTransData),
     ];
 
-    final List<String> screenTitles = [
+    final List<String> screenTitlesLst = [
       ScreenMixin.addDurationToDateTimeTitle,
       ScreenMixin.dateTimeDiffDurationTitle,
       ScreenMixin.calculateSleepDurationTitle,
     ];
 
-    final List<Widget> items = [
+    final List<Widget> curvedNavigationBarItemIconsLst = [
       Image.asset(
         "images/add_duration_to_date_time_blue_trans.png",
         width: 36,
@@ -111,7 +114,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               child: AppBar(
                 backgroundColor: Colors.blue.shade900,
                 title: Text(
-                  screenTitles[_currentIndex],
+                  screenTitlesLst[_currentIndex],
                   style: TextStyle(color: Colors.yellow.shade200),
                 ),
                 elevation: 0,
@@ -128,7 +131,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.blue,
                 ),
-                child: screens[_currentIndex],
+                child: screensLst[_currentIndex],
               ),
             ),
             Positioned(
@@ -148,7 +151,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   animationCurve: Curves.easeInOut,
                   animationDuration: Duration(milliseconds: 500),
                   index: _currentIndex,
-                  items: items,
+                  items: curvedNavigationBarItemIconsLst,
                   onTap: (index) => setState(() {
                     _currentIndex = index;
                   }),

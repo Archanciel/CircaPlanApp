@@ -63,14 +63,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
-  //String _initialValue = '';
-  String _valueChanged1 = '';
-  String _valueToValidate1 = '';
-  String _valueSaved1 = '';
-  String _valueChanged2 = '';
-  String _valueToValidate2 = '';
-  String _valueSaved2 = '';
-
   @override
   void initState() {
     super.initState();
@@ -180,11 +172,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 fontWeight: ScreenMixin.appTextFontWeight,
               ),
               onChanged: (val) => _setStateEndDateTime(),
-              validator: (val) {
-                setState(() => _valueToValidate1 = val ?? '');
-                return null;
-              },
-              onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
             ),
             const SizedBox(
               height: 20,
