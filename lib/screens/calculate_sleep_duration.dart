@@ -36,6 +36,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _status = 'Sleep';
 
   late TextEditingController _newDateTimeController;
+  late TextEditingController _previousDateTimeController;
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -52,6 +53,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _newDateTimeController =
         TextEditingController(text: _frenchDateTimeFormat.format(dateTimeNow));
+    _previousDateTimeController = TextEditingController(text: '');
   }
 
   Map<String, dynamic> _updateTransferDataMap() {
@@ -203,7 +205,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       height: 5,
                     ),
                     Text(
-                      'Stored date time',
+                      'Previous date time',
                       style: TextStyle(
                         color: appLabelColor,
                         fontSize: ScreenMixin.appTextFontSize,
@@ -228,7 +230,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             keyboardType: TextInputType.datetime,
-                            controller: _newDateTimeController,
+                            controller: _previousDateTimeController,
                           ),
                         ),
                       ],
@@ -262,7 +264,41 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             keyboardType: TextInputType.datetime,
-                            controller: _newDateTimeController,
+                            //controller: _newDateTimeController,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Current wake up duration',
+                      style: TextStyle(
+                        color: appLabelColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          child: TextField(
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
+                              labelStyle: TextStyle(
+                                fontSize: ScreenMixin.appTextFontSize,
+                                color: appTextAndIconColor,
+                                fontWeight: ScreenMixin.appTextFontWeight,
+                              ),
+                            ),
+                            keyboardType: TextInputType.datetime,
+                            //controller: _newDateTimeController,
                           ),
                         ),
                       ],
