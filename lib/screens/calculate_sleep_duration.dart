@@ -31,6 +31,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       : _transferDataMap = transferDataMap,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
             DateTime.now().toString(),
+        _previousDateTimeStr =
+            transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
         _currentWakeUpDurationStr =
@@ -42,6 +44,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   Map<String, dynamic> _transferDataMap;
 
   String _newDateTimeStr = '';
+  String _previousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
   String _status = 'Sleep';
@@ -64,6 +67,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Map<String, dynamic> map = _transferDataMap;
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
+    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrentWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurStatus'] = _status;
@@ -104,6 +108,22 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     setState(() {
       _newDateTimeController.text = _newDateTimeStr;
     });
+
+    _updateTransferDataMap();
+  }
+
+  void _resetScreen() {
+    /// Private method called when clicking on ^Reset' button.
+    setState(
+      () {
+        _newDateTimeStr = DateTime.now().toString();
+        _newDateTimeController.text = _newDateTimeStr;
+        _previousDateTimeStr = '';
+        _currentSleepDurationStr = '';
+        _currentWakeUpDurationStr = '';
+        _status = 'Wake Up';
+      },
+    );
 
     _updateTransferDataMap();
   }
@@ -247,6 +267,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         SizedBox(
                           width: 160,
                           child: TextField(
+                            readOnly: true,
                             style: TextStyle(
                                 color: appTextAndIconColor,
                                 fontSize: ScreenMixin.appTextFontSize,
@@ -254,6 +275,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
+                              labelText: _previousDateTimeStr,
                               labelStyle: TextStyle(
                                 fontSize: ScreenMixin.appTextFontSize,
                                 color: appTextAndIconColor,
@@ -370,17 +392,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     backgroundColor: appElevatedButtonBackgroundColor,
                     shape: appElevatedButtonRoundedShape),
                 onPressed: () {
-                  setState(
-                    () {
-                      if (_status == 'Wake Up') {
-                        _status = 'Sleep';
-                      } else {
-                        _status = 'Wake Up';
-                      }
-                    },
-                  );
-
-                  _updateTransferDataMap();
+                  _resetScreen();
                 },
                 child: const Text(
                   'Reset',
