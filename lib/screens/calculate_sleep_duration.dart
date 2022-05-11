@@ -29,45 +29,67 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     with ScreenMixin {
   _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
+        _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
+            DateTime.now().toString(),
+        _currentSleepDurationStr =
+            transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
+        _currentWakeUpDurationStr =
+            transferDataMap['calcSlDurCurrentWakeUpDurationStr'] ?? '',
+        _status = transferDataMap['calcSlDurStatus'] ?? 'Wake Up',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> _transferDataMap;
+
+  String _newDateTimeStr = '';
+  String _currentSleepDurationStr = '';
+  String _currentWakeUpDurationStr = '';
   String _status = 'Sleep';
 
   late TextEditingController _newDateTimeController;
-  late TextEditingController _previousDateTimeController;
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-
-  //String _initialValue = '';
-  String? _wakeUpDT;
-  String? _awakeHHmm;
-  String? _goToBedDT;
-  String? _outputText;
 
   @override
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
+    String nowDateTimeStr = dateTimeNow.toString();
 
-    _newDateTimeController =
-        TextEditingController(text: _frenchDateTimeFormat.format(dateTimeNow));
-    _previousDateTimeController = TextEditingController(text: '');
+    _newDateTimeController = TextEditingController(
+        text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
   }
 
   Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
+    map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
+    map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
+    map['calcSlDurCurrentWakeUpDurationStr'] = _currentWakeUpDurationStr;
+    map['calcSlDurStatus'] = _status;
+
     return map;
   }
 
-  String _reformatDateTimeStr(String englishDateTimeStr) =>
-      (englishDateTimeStr != '')
-          ? _frenchDateTimeFormat.format(DateTime.parse(englishDateTimeStr))
-          : '';
+  void _setStateNewDateTimeDependentFields() {
+    /// Private method called each time the New date time TextField
+    /// is nanually modified. This is temporary !
+    DateTime newDateTime =
+        _frenchDateTimeFormat.parse(_newDateTimeController.text);
+
+    setState(() {
+      // temporary setting !
+      _currentSleepDurationStr = '${newDateTime.hour}:${newDateTime.minute}';
+      _currentWakeUpDurationStr =
+          '${newDateTime.hour - 3}:${newDateTime.minute}';
+    });
+
+    _updateTransferDataMap();
+  }
 
   void _modifyNewDateTimeMinute({required int minuteNb}) {
+    /// Private method called each time the '+' or '-' button
+    /// is pressed.
     DateTime newDateTime =
         _frenchDateTimeFormat.parse(_newDateTimeController.text);
 
@@ -77,8 +99,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       newDateTime = newDateTime.add(Duration(minutes: minuteNb));
     }
 
+    _newDateTimeStr = _frenchDateTimeFormat.format(newDateTime);
+
     setState(() {
-      _newDateTimeController.text = _frenchDateTimeFormat.format(newDateTime);
+      _newDateTimeController.text = _newDateTimeStr;
     });
 
     _updateTransferDataMap();
@@ -123,7 +147,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 fontSize: ScreenMixin.appTextFontSize,
                                 fontWeight: ScreenMixin.appTextFontWeight),
                             keyboardType: TextInputType.datetime,
-                            controller: _newDateTimeController,
+                            controller: _newDateTimeController, // links the
+//                                                TextField content to pressing
+//                                                the button 'Now'. '+' or '-'
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content
+                              _setStateNewDateTimeDependentFields();
+                            },
                           ),
                         ),
                         const SizedBox(
@@ -230,7 +261,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             keyboardType: TextInputType.datetime,
-                            controller: _previousDateTimeController,
                           ),
                         ),
                       ],
@@ -250,6 +280,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         SizedBox(
                           width: 160,
                           child: TextField(
+                            readOnly: true,
                             style: TextStyle(
                                 color: appTextAndIconColor,
                                 fontSize: ScreenMixin.appTextFontSize,
@@ -257,6 +288,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
+                              labelText: _currentSleepDurationStr,
                               labelStyle: TextStyle(
                                 fontSize: ScreenMixin.appTextFontSize,
                                 color: appTextAndIconColor,
@@ -284,6 +316,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         SizedBox(
                           width: 160,
                           child: TextField(
+                            readOnly: true,
                             style: TextStyle(
                                 color: appTextAndIconColor,
                                 fontSize: ScreenMixin.appTextFontSize,
@@ -291,6 +324,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
+                              labelText: _currentWakeUpDurationStr,
                               labelStyle: TextStyle(
                                 fontSize: ScreenMixin.appTextFontSize,
                                 color: appTextAndIconColor,
@@ -337,10 +371,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     shape: appElevatedButtonRoundedShape),
                 onPressed: () {
                   setState(() {
-                    if (_status == 'Wake up') {
+                    if (_status == 'Wake Up') {
                       _status = 'Sleep';
                     } else {
-                      _status = 'Wake up';
+                      _status = 'Wake Up';
                     }
                   });
                 },
