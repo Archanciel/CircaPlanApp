@@ -63,6 +63,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         text: _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr);
   }
 
+  @override
+  void dispose() {
+    _startDateTimeController.dispose();
+    _endDateTimeController.dispose();
+
+    super.dispose();
+  }
+
   Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 

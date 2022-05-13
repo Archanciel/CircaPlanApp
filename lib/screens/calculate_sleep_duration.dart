@@ -64,6 +64,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _addTimeDialogController = TextEditingController();
   }
 
+  @override
+  void dispose() {
+    _newDateTimeController.dispose();
+    _addTimeDialogController.dispose();
+
+    super.dispose();
+  }
+
   Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
@@ -529,16 +537,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   Future<String?> openDialog() => showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Time to add'),
+          title: const Text('Time to add'),
           content: TextField(
             autofocus: true,
-            decoration: InputDecoration(hintText: 'HH:mm'),
+            style: TextStyle(
+                fontSize: ScreenMixin.appTextFontSize,
+                fontWeight: ScreenMixin.appTextFontWeight),
+            decoration: const InputDecoration(hintText: 'HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
           ),
           actions: [
             TextButton(
-              child: Text('Add time'),
+              child: const Text('Add time'),
               onPressed: submit,
             ),
           ],

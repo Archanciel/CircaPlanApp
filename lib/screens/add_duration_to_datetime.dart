@@ -75,6 +75,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
   }
 
+  @override
+  void dispose() {
+    _startDateTimeController.dispose();
+    _durationTextFieldController.dispose();
+
+    super.dispose();
+  }
+
   Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
