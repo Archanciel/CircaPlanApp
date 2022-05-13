@@ -87,7 +87,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void _setStateNewDateTimeDependentFields(
       BuildContext context, String dateTimeStr) {
     /// Private method called each time the New date time TextField
-    /// is nanually modified. This is temporary !
+    /// is nanually modified.
     DateTime newDateTime;
 
     try {
@@ -144,101 +144,109 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   void _handleAddButton(BuildContext context) {
     /// Private method called when clicking on 'Add' button.
-    setState(
-      () {
-        if (_status == status.wakeUp) {
-          if (_currentSleepDurationStr == '') {
-            // first click on 'Add' button after reinitializing
-            // or resetting the app
-            _previousDateTimeStr = _newDateTimeStr;
-          } else {
-            DateTime? newDateTime;
-
-            try {
-              newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
-            } on FormatException {
-              openWarningDialog(context,
-                  'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
-              return;
-            }
-
-            DateTime? previousDateTime;
-
-            try {
-              previousDateTime =
-                  frenchDateTimeFormat.parse(_previousDateTimeStr);
-            } on FormatException {
-              openWarningDialog(context,
-                  'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
-              return;
-            }
-
-            if (newDateTime.isBefore(previousDateTime)) {
-              openWarningDialog(context,
-                  'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please retry !');
-              return;
-            }
-
-            Duration wakeUpDuration = newDateTime.difference(previousDateTime);
-
-            Duration? currentWakeUpDuration =
-                DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
-
-            if (currentWakeUpDuration == null) {
-              currentWakeUpDuration = wakeUpDuration;
-            } else {
-              currentWakeUpDuration += wakeUpDuration;
-            }
-
-            _currentWakeUpDurationStr = currentWakeUpDuration.HHmm();
-            _previousDateTimeStr = _newDateTimeStr;
-          }
-
-          _status = status.sleep;
-        } else {
-          // status == status.sleep
-          DateTime? newDateTime;
-
-          try {
-            newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
-          } on FormatException {
-            openWarningDialog(context,
-                'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
-            return;
-          }
-
-          DateTime? previousDateTime;
-
-          try {
-            previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
-          } on FormatException {
-            openWarningDialog(context,
-                'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
-            return;
-          }
-
-          Duration sleepDuration = newDateTime.difference(previousDateTime);
-
-          Duration? currentSleepDuration =
-              DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
-
-          if (currentSleepDuration == null) {
-            currentSleepDuration = sleepDuration;
-          } else {
-            currentSleepDuration += sleepDuration;
-          }
-
-          _currentSleepDurationStr = currentSleepDuration.HHmm();
+    if (_status == status.wakeUp) {
+      if (_currentSleepDurationStr == '') {
+        // first click on 'Add' button after reinitializing
+        // or resetting the app
+        setState(() {
           _previousDateTimeStr = _newDateTimeStr;
-          _status = status.wakeUp;
-        }
-      },
-    );
+          _status = status.sleep;
+        });
+      } else {
+        DateTime? newDateTime;
 
-    _updateTransferDataMap();
+        try {
+          newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
+        } on FormatException {
+          openWarningDialog(context,
+              'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
+          return;
+        }
+
+        DateTime? previousDateTime;
+
+        try {
+          previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
+        } on FormatException {
+          openWarningDialog(context,
+              'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
+          return;
+        }
+
+        if (newDateTime.isBefore(previousDateTime)) {
+          openWarningDialog(context,
+              'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please retry !');
+          return;
+        }
+
+        Duration wakeUpDuration = newDateTime.difference(previousDateTime);
+
+        Duration? currentWakeUpDuration =
+            DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
+
+        if (currentWakeUpDuration == null) {
+          currentWakeUpDuration = wakeUpDuration;
+        } else {
+          currentWakeUpDuration += wakeUpDuration;
+        }
+
+        setState(() {
+          _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
+          _previousDateTimeStr = _newDateTimeStr;
+          _status = status.sleep;
+        });
+      }
+    } else {
+      // status == status.sleep
+      DateTime? newDateTime;
+
+      try {
+        newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
+      } on FormatException {
+        openWarningDialog(context,
+            'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
+        return;
+      }
+
+      DateTime? previousDateTime;
+
+      try {
+        previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
+      } on FormatException {
+        openWarningDialog(context,
+            'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
+        return;
+      }
+
+      if (newDateTime.isBefore(previousDateTime)) {
+        openWarningDialog(context,
+            'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please retry !');
+        return;
+      }
+
+      Duration sleepDuration = newDateTime.difference(previousDateTime);
+
+      Duration? currentSleepDuration =
+          DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
+
+      if (currentSleepDuration == null) {
+        currentSleepDuration = sleepDuration;
+      } else {
+        currentSleepDuration += sleepDuration;
+      }
+
+      setState(() {
+        _currentSleepDurationStr = currentSleepDuration!.HHmm();
+        _previousDateTimeStr = _newDateTimeStr;
+        _status = status.wakeUp;
+      });
+
+      _updateTransferDataMap();
+    }
   }
 
-  void _addTimeToCurrentSleepDuration(String durationStr) {
+  void _addTimeToCurrentSleepDuration(
+      BuildContext context, String durationStr) {
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
@@ -459,7 +467,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           final timeStr = await openDialog();
                           if (timeStr == null || timeStr.isEmpty) return;
 
-                          _addTimeToCurrentSleepDuration(timeStr);
+                          _addTimeToCurrentSleepDuration(context, timeStr);
                         },
                         child: const Text(
                           'Add',
