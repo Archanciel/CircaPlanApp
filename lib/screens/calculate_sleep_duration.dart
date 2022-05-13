@@ -55,7 +55,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = dateTimeNow.toString();
+    String nowDateTimeStr = _frenchDateTimeFormat.format(dateTimeNow);
 
     _newDateTimeController = TextEditingController(
         text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
@@ -113,7 +113,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _resetScreen() {
-    /// Private method called when clicking on ^Reset' button.
+    /// Private method called when clicking on 'Reset' button.
     setState(
       () {
         _newDateTimeStr = _frenchDateTimeFormat.format(DateTime.now());
@@ -129,12 +129,48 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _handleAddButton() {
-    /// Private method called when clicking on ^Reset' button.
+    /// Private method called when clicking on 'Add' button.
     setState(
       () {
         if (_status == status.wakeUp) {
+          if (_currentSleepDurationStr == '') {
+            // first click on 'Add' button after reinitializing
+            // or resetting the app
+            _previousDateTimeStr = _newDateTimeStr;
+          } else {
+            DateTime? newDateTime;
+
+            try {
+              newDateTime = _frenchDateTimeFormat.parse(_newDateTimeStr);
+            } on FormatException {
+              return;
+            }
+
+            DateTime? previousDateTime;
+
+            try {
+              previousDateTime =
+                  _frenchDateTimeFormat.parse(_previousDateTimeStr);
+            } on FormatException {
+              return;
+            }
+
+            Duration wakeUpDuration = newDateTime.difference(previousDateTime);
+
+            Duration? currentWakeUpDuration =
+                DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
+
+            if (currentWakeUpDuration == null) {
+              currentWakeUpDuration = wakeUpDuration;
+            } else {
+              currentWakeUpDuration += wakeUpDuration;
+            }
+
+            _currentWakeUpDurationStr = currentWakeUpDuration.HHmm();
+            _previousDateTimeStr = _newDateTimeStr;
+          }
+
           _status = status.sleep;
-          _previousDateTimeStr = _newDateTimeStr;
         } else {
           // status == status.sleep
           DateTime? newDateTime;
