@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 enum status { wakeUp, sleep }
+final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
 class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -29,7 +30,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
-            DateTime.now().toString(),
+            frenchDateTimeFormat.format(DateTime.now()),
         _previousDateTimeStr =
             transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
@@ -49,13 +50,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   late TextEditingController _newDateTimeController;
 
-  final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-
   @override
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = _frenchDateTimeFormat.format(dateTimeNow);
+    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
     _newDateTimeController = TextEditingController(
         text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
@@ -79,7 +78,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     DateTime newDateTime;
 
     try {
-      newDateTime = _frenchDateTimeFormat.parse(dateTimeStr);
+      newDateTime = frenchDateTimeFormat.parse(dateTimeStr);
     } on FormatException {
       return;
     }
@@ -95,7 +94,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     /// Private method called each time the '+' or '-' button
     /// is pressed.
     DateTime newDateTime =
-        _frenchDateTimeFormat.parse(_newDateTimeController.text);
+        frenchDateTimeFormat.parse(_newDateTimeController.text);
 
     if (minuteNb > 0) {
       newDateTime = newDateTime.subtract(Duration(minutes: -minuteNb));
@@ -103,7 +102,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       newDateTime = newDateTime.add(Duration(minutes: minuteNb));
     }
 
-    _newDateTimeStr = _frenchDateTimeFormat.format(newDateTime);
+    _newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
 
     setState(() {
       _newDateTimeController.text = _newDateTimeStr;
@@ -116,7 +115,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     /// Private method called when clicking on 'Reset' button.
     setState(
       () {
-        _newDateTimeStr = _frenchDateTimeFormat.format(DateTime.now());
+        _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
         _newDateTimeController.text = _newDateTimeStr;
         _previousDateTimeStr = '';
         _currentSleepDurationStr = '';
@@ -141,7 +140,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             DateTime? newDateTime;
 
             try {
-              newDateTime = _frenchDateTimeFormat.parse(_newDateTimeStr);
+              newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
             } on FormatException {
               return;
             }
@@ -150,7 +149,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
             try {
               previousDateTime =
-                  _frenchDateTimeFormat.parse(_previousDateTimeStr);
+                  frenchDateTimeFormat.parse(_previousDateTimeStr);
             } on FormatException {
               return;
             }
@@ -176,7 +175,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           DateTime? newDateTime;
 
           try {
-            newDateTime = _frenchDateTimeFormat.parse(_newDateTimeStr);
+            newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
           } on FormatException {
             return;
           }
@@ -185,7 +184,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
           try {
             previousDateTime =
-                _frenchDateTimeFormat.parse(_previousDateTimeStr);
+                frenchDateTimeFormat.parse(_previousDateTimeStr);
           } on FormatException {
             return;
           }
@@ -269,7 +268,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         onPressed: () {
                           setState(() {
                             _newDateTimeController.text =
-                                _frenchDateTimeFormat.format(DateTime.now());
+                                frenchDateTimeFormat.format(DateTime.now());
                           });
                         },
                         child: const Text(
