@@ -28,4 +28,26 @@ mixin ScreenMixin {
   static void setAppVerticalTopMargin(double screenHeight) {
     appVerticalTopMargin = screenHeight * appVerticalTopMarginProportion;
   }
+
+  void openWarningDialog(BuildContext context, String message) {
+    /// Located in ScreenMixin in order to be usable in any screen.
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('WARNING'),
+        content: Text(
+          message,
+          style: TextStyle(
+            fontSize: ScreenMixin.appTextFontSize,
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
 }

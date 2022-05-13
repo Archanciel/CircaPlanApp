@@ -577,22 +577,3 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _addTimeDialogController.clear();
   }
 }
-
-void openWarningDialog(BuildContext context, String message) => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('WARNING'),
-        content: Text(
-          message,
-          style: TextStyle(
-            fontSize: ScreenMixin.appTextFontSize,
-          ),
-        ),
-        actions: [
-          TextButton(
-            child: const Text('Ok'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-    );
