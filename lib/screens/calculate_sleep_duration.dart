@@ -165,13 +165,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         DateTime? previousDateTime;
 
-        try {
-          previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
-        } on FormatException {
-          openWarningDialog(context,
-              'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
-          return;
-        }
+        previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
 
         if (newDateTime.isBefore(previousDateTime)) {
           openWarningDialog(context,
@@ -210,13 +204,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       DateTime? previousDateTime;
 
-      try {
-        previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
-      } on FormatException {
-        openWarningDialog(context,
-            'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
-        return;
-      }
+      previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
 
       if (newDateTime.isBefore(previousDateTime)) {
         openWarningDialog(context,
