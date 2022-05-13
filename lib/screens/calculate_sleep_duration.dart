@@ -84,7 +84,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return map;
   }
 
-  void _setStateNewDateTimeDependentFields(String dateTimeStr) {
+  void _setStateNewDateTimeDependentFields(
+      BuildContext context, String dateTimeStr) {
     /// Private method called each time the New date time TextField
     /// is nanually modified. This is temporary !
     DateTime newDateTime;
@@ -92,6 +93,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     try {
       newDateTime = frenchDateTimeFormat.parse(dateTimeStr);
     } on FormatException {
+      openWarningDialog(context,
+          'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($dateTimeStr). Please retry !');
       return;
     }
 
@@ -139,7 +142,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
-  void _handleAddButton() {
+  void _handleAddButton(BuildContext context) {
     /// Private method called when clicking on 'Add' button.
     setState(
       () {
@@ -154,6 +157,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             try {
               newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
             } on FormatException {
+              openWarningDialog(context,
+                  'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
               return;
             }
 
@@ -163,6 +168,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               previousDateTime =
                   frenchDateTimeFormat.parse(_previousDateTimeStr);
             } on FormatException {
+              openWarningDialog(context,
+                  'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
               return;
             }
 
@@ -189,6 +196,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           try {
             newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
           } on FormatException {
+            openWarningDialog(context,
+                'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
             return;
           }
 
@@ -197,6 +206,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           try {
             previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
           } on FormatException {
+            openWarningDialog(context,
+                'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_previousDateTimeStr). Please retry !');
             return;
           }
 
@@ -225,6 +236,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
+      openWarningDialog(context,
+          'You entered an incorrectly formated HH:mm time ($durationStr). Please retry !');
       return;
     } else {
       Duration? currentSleepDuration =
@@ -288,7 +301,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           onChanged: (val) {
                             // called when manually updating the TextField
                             // content
-                            _setStateNewDateTimeDependentFields(val);
+                            _setStateNewDateTimeDependentFields(context, val);
                           },
                         ),
                       ),
@@ -351,7 +364,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
-                        onPressed: () => _handleAddButton(),
+                        onPressed: () => _handleAddButton(context),
                         child: const Text(
                           'Add',
                           style: TextStyle(
@@ -562,3 +575,22 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _addTimeDialogController.clear();
   }
 }
+
+void openWarningDialog(BuildContext context, String message) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('WARNING'),
+        content: Text(
+          message,
+          style: TextStyle(
+            fontSize: ScreenMixin.appTextFontSize,
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
