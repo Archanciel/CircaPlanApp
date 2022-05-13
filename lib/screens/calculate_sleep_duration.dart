@@ -1,12 +1,11 @@
-import 'package:circa_plan/screens/add_duration_to_datetime.dart';
-import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import 'package:flutter/material.dart';
-import 'package:date_time_picker/date_time_picker.dart';
-
 import 'package:circa_plan/utils/date_time_parser.dart';
+import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
+
+enum status { wakeUp, sleep }
 
 class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -37,17 +36,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
         _currentWakeUpDurationStr =
             transferDataMap['calcSlDurCurrentWakeUpDurationStr'] ?? '',
-        _status = transferDataMap['calcSlDurStatus'] ?? 'Wake Up',
+        _status = transferDataMap['calcSlDurStatus'] ?? status.wakeUp,
         super();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> _transferDataMap;
 
   String _newDateTimeStr = '';
   String _previousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
-  String _status = 'Sleep';
+  status _status = status.wakeUp;
 
   late TextEditingController _newDateTimeController;
 
@@ -75,17 +73,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return map;
   }
 
-  void _setStateNewDateTimeDependentFields() {
+  void _setStateNewDateTimeDependentFields(String dateTimeStr) {
     /// Private method called each time the New date time TextField
     /// is nanually modified. This is temporary !
-    DateTime newDateTime =
-        _frenchDateTimeFormat.parse(_newDateTimeController.text);
+    DateTime newDateTime;
+
+    try {
+      newDateTime = _frenchDateTimeFormat.parse(dateTimeStr);
+    } on FormatException {
+      return;
+    }
 
     setState(() {
-      // temporary setting !
-      _currentSleepDurationStr = '${newDateTime.hour}:${newDateTime.minute}';
-      _currentWakeUpDurationStr =
-          '${newDateTime.hour - 3}:${newDateTime.minute}';
+      _newDateTimeStr = dateTimeStr;
     });
 
     _updateTransferDataMap();
@@ -116,12 +116,59 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     /// Private method called when clicking on ^Reset' button.
     setState(
       () {
-        _newDateTimeStr = DateTime.now().toString();
+        _newDateTimeStr = _frenchDateTimeFormat.format(DateTime.now());
         _newDateTimeController.text = _newDateTimeStr;
         _previousDateTimeStr = '';
         _currentSleepDurationStr = '';
         _currentWakeUpDurationStr = '';
-        _status = 'Wake Up';
+        _status = status.wakeUp;
+      },
+    );
+
+    _updateTransferDataMap();
+  }
+
+  void _handleAddButton() {
+    /// Private method called when clicking on ^Reset' button.
+    setState(
+      () {
+        if (_status == status.wakeUp) {
+          _status = status.sleep;
+          _previousDateTimeStr = _newDateTimeStr;
+        } else {
+          // status == status.sleep
+          DateTime? newDateTime;
+
+          try {
+            newDateTime = _frenchDateTimeFormat.parse(_newDateTimeStr);
+          } on FormatException {
+            return;
+          }
+
+          DateTime? previousDateTime;
+
+          try {
+            previousDateTime =
+                _frenchDateTimeFormat.parse(_previousDateTimeStr);
+          } on FormatException {
+            return;
+          }
+
+          Duration sleepDuration = newDateTime.difference(previousDateTime);
+
+          Duration? currentSleepDuration =
+              DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
+
+          if (currentSleepDuration == null) {
+            currentSleepDuration = sleepDuration;
+          } else {
+            currentSleepDuration += sleepDuration;
+          }
+
+          _currentSleepDurationStr = currentSleepDuration.HHmm();
+          _previousDateTimeStr = _newDateTimeStr;
+          _status = status.wakeUp;
+        }
       },
     );
 
@@ -131,280 +178,273 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Container(
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height:
-                          15, // same distance from Appbar than the other screens
-                    ),
-                    Text(
-                      'New date time',
-                      style: TextStyle(
-                        color: appLabelColor,
-                        fontSize: ScreenMixin.appTextFontSize,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
-                            keyboardType: TextInputType.datetime,
-                            controller: _newDateTimeController, // links the
-//                                                TextField content to pressing
-//                                                the button 'Now'. '+' or '-'
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content
-                              _setStateNewDateTimeDependentFields();
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: appElevatedButtonBackgroundColor,
-                              shape: appElevatedButtonRoundedShape),
-                          onPressed: () {
-                            setState(() {
-                              _newDateTimeController.text =
-                                  _frenchDateTimeFormat.format(DateTime.now());
-                            });
-                          },
-                          child: const Text(
-                            'Now',
-                            style: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            IconButton(
-                              constraints: const BoxConstraints(
-                                minHeight: 0,
-                                minWidth: 0,
-                              ),
-                              padding: const EdgeInsets.all(0),
-                              onPressed: () {
-                                _modifyNewDateTimeMinute(minuteNb: 1);
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                color: appTextAndIconColor,
-                              ),
-                            ),
-                            IconButton(
-                              constraints: const BoxConstraints(
-                                minHeight: 0,
-                                minWidth: 0,
-                              ),
-                              padding: const EdgeInsets.all(0),
-                              onPressed: () {
-                                _modifyNewDateTimeMinute(minuteNb: -1);
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: appTextAndIconColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: appElevatedButtonBackgroundColor,
-                              shape: appElevatedButtonRoundedShape),
-                          onPressed: () {
-                            setState(() {
-                              print('Add button pressed');
-                            });
-                          },
-                          child: const Text(
-                            'Add',
-                            style: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Previous date time',
-                      style: TextStyle(
-                        color: appLabelColor,
-                        fontSize: ScreenMixin.appTextFontSize,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: TextField(
-                            readOnly: true,
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
-                            decoration: InputDecoration(
-                              isCollapsed: true,
-                              contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
-                              labelText: _previousDateTimeStr,
-                              labelStyle: TextStyle(
-                                fontSize: ScreenMixin.appTextFontSize,
-                                color: appTextAndIconColor,
-                                fontWeight: ScreenMixin.appTextFontWeight,
-                              ),
-                            ),
-                            keyboardType: TextInputType.datetime,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Current sleep duration',
-                      style: TextStyle(
-                        color: appLabelColor,
-                        fontSize: ScreenMixin.appTextFontSize,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: TextField(
-                            readOnly: true,
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
-                            decoration: InputDecoration(
-                              isCollapsed: true,
-                              contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
-                              labelText: _currentSleepDurationStr,
-                              labelStyle: TextStyle(
-                                fontSize: ScreenMixin.appTextFontSize,
-                                color: appTextAndIconColor,
-                                fontWeight: ScreenMixin.appTextFontWeight,
-                              ),
-                            ),
-                            keyboardType: TextInputType.datetime,
-                            //controller: _newDateTimeController,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Current wake up duration',
-                      style: TextStyle(
-                        color: appLabelColor,
-                        fontSize: ScreenMixin.appTextFontSize,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: TextField(
-                            readOnly: true,
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
-                            decoration: InputDecoration(
-                              isCollapsed: true,
-                              contentPadding: EdgeInsets.fromLTRB(0, 17, 0, 0),
-                              labelText: _currentWakeUpDurationStr,
-                              labelStyle: TextStyle(
-                                fontSize: ScreenMixin.appTextFontSize,
-                                color: appTextAndIconColor,
-                                fontWeight: ScreenMixin.appTextFontWeight,
-                              ),
-                            ),
-                            keyboardType: TextInputType.datetime,
-                            //controller: _newDateTimeController,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(''),
-                Container(
-                  child: Text(
-                    _status,
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height:
+                        15, // same distance from Appbar than the other screens
+                  ),
+                  Text(
+                    'New date time',
                     style: TextStyle(
                       color: appLabelColor,
                       fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 86),
-                ),
-              ],
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
+                          keyboardType: TextInputType.datetime,
+                          controller: _newDateTimeController, // links the
+//                                                TextField content to pressing
+//                                                the button 'Now'. '+' or '-'
+                          onChanged: (val) {
+                            // called when manually updating the TextField
+                            // content
+                            _setStateNewDateTimeDependentFields(val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          setState(() {
+                            _newDateTimeController.text =
+                                _frenchDateTimeFormat.format(DateTime.now());
+                          });
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(
+                              minHeight: 0,
+                              minWidth: 0,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () =>
+                                _modifyNewDateTimeMinute(minuteNb: 1),
+                            icon: Icon(
+                              Icons.add,
+                              color: appTextAndIconColor,
+                            ),
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(
+                              minHeight: 0,
+                              minWidth: 0,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () =>
+                                _modifyNewDateTimeMinute(minuteNb: -1),
+                            icon: Icon(
+                              Icons.remove,
+                              color: appTextAndIconColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () => _handleAddButton(),
+                        child: const Text(
+                          'Add',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Previous date time',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        child: TextField(
+                          readOnly: true,
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(0, 17, 0, 0),
+                            labelText: _previousDateTimeStr,
+                            labelStyle: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                              color: appTextAndIconColor,
+                              fontWeight: ScreenMixin.appTextFontWeight,
+                            ),
+                          ),
+                          keyboardType: TextInputType.datetime,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Current sleep duration',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        child: TextField(
+                          readOnly: true,
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(0, 17, 0, 0),
+                            labelText: _currentSleepDurationStr,
+                            labelStyle: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                              color: appTextAndIconColor,
+                              fontWeight: ScreenMixin.appTextFontWeight,
+                            ),
+                          ),
+                          keyboardType: TextInputType.datetime,
+                          //controller: _newDateTimeController,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Current wake up duration',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        child: TextField(
+                          readOnly: true,
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(0, 17, 0, 0),
+                            labelText: _currentWakeUpDurationStr,
+                            labelStyle: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                              color: appTextAndIconColor,
+                              fontWeight: ScreenMixin.appTextFontWeight,
+                            ),
+                          ),
+                          keyboardType: TextInputType.datetime,
+                          //controller: _newDateTimeController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 75),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: appElevatedButtonBackgroundColor,
-                    shape: appElevatedButtonRoundedShape),
-                onPressed: () {
-                  _resetScreen();
-                },
-                child: const Text(
-                  'Reset',
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(''),
+              Container(
+                child: Text(
+                  _status.toString(),
                   style: TextStyle(
+                    color: appLabelColor,
                     fontSize: ScreenMixin.appTextFontSize,
                   ),
+                ),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 86),
+              ),
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 75),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: appElevatedButtonBackgroundColor,
+                  shape: appElevatedButtonRoundedShape),
+              onPressed: () => _resetScreen(),
+              child: const Text(
+                'Reset',
+                style: TextStyle(
+                  fontSize: ScreenMixin.appTextFontSize,
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

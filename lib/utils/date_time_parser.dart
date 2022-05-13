@@ -24,7 +24,7 @@ class DateTimeParser {
   static final RegExp regExpDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
   static final RegExp regExpTime = RegExp(r'(^[-]?\d+:\d{2})');
 
-  /// Parses the passed ddMMDateTimrStr formatted as dd-mm hh:mm or d-m h:mm
+  /// Parses the passed ddMMDateTimeStr formatted as dd-mm hh:mm or d-m h:mm
   static List<String?> parseDDMMDateTime(String ddMMDateTimrStr) {
     final RegExpMatch? match = regExpDateTime.firstMatch(ddMMDateTimrStr);
     final String? dayMonth = match?.group(1);

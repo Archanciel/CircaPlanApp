@@ -259,7 +259,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     _formKey.currentState!.save();
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Submit',
                   style: TextStyle(
                     fontSize: ScreenMixin.appTextFontSize,

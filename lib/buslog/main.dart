@@ -2,6 +2,16 @@ import 'dart:io';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+extension on Duration {
+  static final NumberFormat numberFormat = NumberFormat('00');
+
+  /// returns the Duration formatted as HH:mm
+  String HHmm() {
+    final int durationMinute = this.inMinutes.remainder(60);
+    return "${numberFormat.format(this.inHours)}:${numberFormat.format(durationMinute)}";
+  }
+}
+
 void main() {
   final String defaultLocale =
       Platform.localeName; // Returns locale string in the form 'en_US
