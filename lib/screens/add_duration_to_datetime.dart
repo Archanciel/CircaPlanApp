@@ -3,8 +3,9 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
+
+import 'package:circa_plan/utils/date_time_parser.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -248,7 +249,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               ),
             ),
             TextField(
-              readOnly: true,
+              enabled: false,
               decoration: InputDecoration(
                 isCollapsed: true,
                 contentPadding: const EdgeInsets.fromLTRB(0, 25, 0, 0),

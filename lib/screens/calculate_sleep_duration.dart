@@ -343,7 +343,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       SizedBox(
                         width: 160,
                         child: TextField(
-                          readOnly: true,
+                          enabled: false,
                           style: TextStyle(
                               color: appTextAndIconColor,
                               fontSize: ScreenMixin.appTextFontSize,
@@ -379,7 +379,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       SizedBox(
                         width: 160,
                         child: TextField(
-                          readOnly: true,
+                          enabled: false,
                           style: TextStyle(
                               color: appTextAndIconColor,
                               fontSize: ScreenMixin.appTextFontSize,
@@ -416,7 +416,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       SizedBox(
                         width: 160,
                         child: TextField(
-                          readOnly: true,
+                          enabled: false,
                           style: TextStyle(
                               color: appTextAndIconColor,
                               fontSize: ScreenMixin.appTextFontSize,

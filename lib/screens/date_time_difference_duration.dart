@@ -5,8 +5,9 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:intl/intl.dart';
+
+import 'package:circa_plan/utils/date_time_parser.dart';
 
 class DateTimeDifferenceDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -226,9 +227,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               ),
             ),
             Container(
-//              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: TextField(
-                readOnly: true,
+                enabled: false,
                 decoration: InputDecoration(
                   isCollapsed: true,
                   contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 0),
