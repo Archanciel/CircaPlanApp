@@ -307,9 +307,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           },
                         ),
                       ),
-                      const SizedBox(
-                        width: 5,
-                      ),
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
@@ -328,6 +325,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             fontSize: ScreenMixin.appTextFontSize,
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                        width: 6,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -363,6 +363,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        width: 6,
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
@@ -559,6 +562,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             decoration: const InputDecoration(hintText: 'HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
+            keyboardType: TextInputType.number,
           ),
           actions: [
             TextButton(
