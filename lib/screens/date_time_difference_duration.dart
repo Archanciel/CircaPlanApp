@@ -84,20 +84,20 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void _setStateDiffDuration() {
     /// Private method called each time one of the elements
     /// implied in calculating the Duration value is changed.
+    _startDateTimeStr = _startDateTimeController.text;
+    DateTime startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+    _endDateTimeStr = _endDateTimeController.text;
+    DateTime endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
+    Duration diffDuration;
+
+    if (endDateTime.isAfter(startDateTime)) {
+      diffDuration = endDateTime.difference(startDateTime);
+    } else {
+      diffDuration = startDateTime.difference(endDateTime);
+    }
+    
     setState(
       () {
-        _startDateTimeStr = _startDateTimeController.text;
-        DateTime startDateTime =
-            _englishDateTimeFormat.parse(_startDateTimeStr);
-        _endDateTimeStr = _endDateTimeController.text;
-        DateTime endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
-        Duration diffDuration;
-
-        if (endDateTime.isAfter(startDateTime)) {
-          diffDuration = endDateTime.difference(startDateTime);
-        } else {
-          diffDuration = startDateTime.difference(endDateTime);
-        }
         _durationStr = diffDuration.HHmm();
       },
     );
