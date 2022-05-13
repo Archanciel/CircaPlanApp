@@ -101,25 +101,22 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     /// Private method called each time one of the elements
     /// implied in calculating the End date time value is
     /// changed.
-    setState(
-      () {
-        _durationStr = _durationTextFieldController.text;
-        Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
-        _startDateTimeStr = _startDateTimeController.text;
-        DateTime startDateTime =
-            _englishDateTimeFormat.parse(_startDateTimeStr);
-        DateTime endDateTime;
+    _durationStr = _durationTextFieldController.text;
+    Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
+    _startDateTimeStr = _startDateTimeController.text;
+    DateTime startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+    DateTime endDateTime;
 
-        if (duration != null) {
-          if (_durationSign > 0) {
-            endDateTime = startDateTime.add(duration);
-          } else {
-            endDateTime = startDateTime.subtract(duration);
-          }
-          _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
-        }
-      },
-    );
+    if (duration != null) {
+      if (_durationSign > 0) {
+        endDateTime = startDateTime.add(duration);
+      } else {
+        endDateTime = startDateTime.subtract(duration);
+      }
+      setState(() {
+        _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
+      });
+    }
 
     _updateTransferDataMap();
   }
