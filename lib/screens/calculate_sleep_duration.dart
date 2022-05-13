@@ -173,6 +173,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               return;
             }
 
+            if (newDateTime.isBefore(previousDateTime)) {
+              openWarningDialog(context,
+                  'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please retry !');
+              return;
+            }
+
             Duration wakeUpDuration = newDateTime.difference(previousDateTime);
 
             Duration? currentWakeUpDuration =
