@@ -145,7 +145,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void _handleAddButton(BuildContext context) {
     /// Private method called when clicking on 'Add' button.
     if (_status == status.wakeUp) {
-      if (_currentSleepDurationStr == '') {
+      if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or resetting the app
         setState(() {
@@ -316,8 +316,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
                           setState(() {
-                            _newDateTimeController.text =
+                            String dateTimeStr =
                                 frenchDateTimeFormat.format(DateTime.now());
+                            _newDateTimeController.text = dateTimeStr;
+                            _newDateTimeStr = dateTimeStr;
                           });
                         },
                         child: const Text(
