@@ -445,8 +445,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               fontWeight: ScreenMixin.appTextFontWeight,
                             ),
                           ),
-                          keyboardType: TextInputType.datetime,
-                          //controller: _newDateTimeController,
                         ),
                       ),
                       ElevatedButton(
@@ -454,7 +452,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () async {
-                          final timeStr = await openDialog();
+                          final timeStr = await openTextInputDialog();
                           if (timeStr == null || timeStr.isEmpty) return;
 
                           _addTimeToCurrentSleepDuration(context, timeStr);
@@ -499,8 +497,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               fontWeight: ScreenMixin.appTextFontWeight,
                             ),
                           ),
-                          keyboardType: TextInputType.datetime,
-                          //controller: _newDateTimeController,
                         ),
                       ),
                     ],
@@ -551,7 +547,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
   }
 
-  Future<String?> openDialog() => showDialog<String>(
+  Future<String?> openTextInputDialog() => showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Time to add'),
