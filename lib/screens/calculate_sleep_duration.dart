@@ -1,9 +1,10 @@
-import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+
+import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:circa_plan/screens/screen_navig_trans_data.dart';
+import 'package:circa_plan/utils/date_time_parser.dart';
 
 enum status { wakeUp, sleep }
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
@@ -47,8 +48,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
   status _status = status.wakeUp;
+  String _name = '';
 
   late TextEditingController _newDateTimeController;
+  late TextEditingController _addTimeDialogController;
 
   @override
   void initState() {
@@ -58,6 +61,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _newDateTimeController = TextEditingController(
         text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
+    _addTimeDialogController = TextEditingController();
   }
 
   Map<String, dynamic> _updateTransferDataMap() {
@@ -183,8 +187,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           DateTime? previousDateTime;
 
           try {
-            previousDateTime =
-                frenchDateTimeFormat.parse(_previousDateTimeStr);
+            previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
           } on FormatException {
             return;
           }
@@ -208,6 +211,29 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
 
     _updateTransferDataMap();
+  }
+
+  void _addTimeToCurrentSleepDuration(String durationStr) {
+    Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
+
+    if (addDuration == null) {
+      return;
+    } else {
+      Duration? currentSleepDuration =
+          DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
+
+      if (currentSleepDuration == null) {
+        currentSleepDuration = addDuration;
+      } else {
+        currentSleepDuration += addDuration;
+      }
+
+      setState(() {
+        _currentSleepDurationStr = currentSleepDuration!.HHmm();
+      });
+
+      _updateTransferDataMap();
+    }
   }
 
   @override
@@ -398,6 +424,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           //controller: _newDateTimeController,
                         ),
                       ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () async {
+                          final timeStr = await openDialog();
+                          if (timeStr == null || timeStr.isEmpty) return;
+
+                          _addTimeToCurrentSleepDuration(timeStr);
+                        },
+                        child: const Text(
+                          'Add',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.appTextFontSize,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -481,5 +524,30 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         ),
       ],
     );
+  }
+
+  Future<String?> openDialog() => showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Time to add'),
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(hintText: 'HH:mm'),
+            controller: _addTimeDialogController,
+            onSubmitted: (_) => submit(),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Add time'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context).pop(_addTimeDialogController.text);
+
+    _addTimeDialogController.clear();
   }
 }
