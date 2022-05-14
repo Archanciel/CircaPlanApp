@@ -191,6 +191,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         children: [
                           Positioned(
                             left: -18,
+                            top: 1,
                             child: TextButton.icon(
                               icon: Icon(
                                 _durationIcon,
@@ -215,7 +216,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.fromLTRB(25, 11, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(25, 13, 0, 0),
                             child: TextField(
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
@@ -245,11 +246,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   TextField(
                     enabled: false,
                     decoration: InputDecoration(
                       isCollapsed: true,
-                      contentPadding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
                       labelText: _endDateTimeStr,
                       labelStyle: TextStyle(
                         fontSize: ScreenMixin.appTextFontSize,
@@ -260,7 +263,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     // The validator receives the text that the user has entered.
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Container(
                     alignment: Alignment.topRight,
