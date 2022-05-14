@@ -128,166 +128,183 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       child: Container(
         margin: EdgeInsets.symmetric(
             horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
-              children: [
-                Text(
-                  'Start date time',
-                  style: TextStyle(
-                    color: appLabelColor,
-                    fontSize: ScreenMixin.appTextFontSize,
-                    fontWeight: ScreenMixin.appTextFontWeight,
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: appElevatedButtonBackgroundColor,
-                      shape: appElevatedButtonRoundedShape),
-                  onPressed: () {
-                    _startDateTimeController.text = DateTime.now().toString();
-                    _setStateEndDateTime();
-                  },
-                  child: const Text(
-                    'Now',
-                    style: TextStyle(
-                      fontSize: ScreenMixin.appTextFontSize,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            DateTimePicker(
-              type: DateTimePickerType.dateTime,
-              dateMask: 'dd-MM-yyyy HH:mm',
-              use24HourFormat: true,
-              controller: _startDateTimeController,
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-              icon: Icon(
-                Icons.event,
-                color: appTextAndIconColor,
-                size: 30,
-              ),
-              decoration: const InputDecoration.collapsed(hintText: ''),
-              style: TextStyle(
-                color: appTextAndIconColor,
-                fontSize: ScreenMixin.appTextFontSize,
-                fontWeight: ScreenMixin.appTextFontWeight,
-              ),
-              onChanged: (val) => _setStateEndDateTime(),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Wrap(
-              children: [
-                Text(
-                  'Duration',
-                  style: TextStyle(
-                    color: appLabelColor,
-                    fontSize: ScreenMixin.appTextFontSize,
-                    fontWeight: ScreenMixin.appTextFontWeight,
-                  ),
-                ),
-                Stack(
-                  children: [
-                    Positioned(
-                      left: -18,
-                      child: TextButton.icon(
-                        icon: Icon(
-                          _durationIcon,
-                          size: 30,
-                          color: _durationIconColor,
-                        ),
-                        label: const Text(''),
-                        onPressed: () {
-                          if (_durationIcon == Icons.add) {
-                            _durationIcon = Icons.remove;
-                            _durationIconColor = durationNegativeColor;
-                            _durationSign = -1;
-                            _durationTextColor = durationNegativeColor;
-                          } else {
-                            _durationIcon = Icons.add;
-                            _durationIconColor = durationPositiveColor;
-                            _durationSign = 1;
-                            _durationTextColor = durationPositiveColor;
-                          }
-                          _setStateEndDateTime();
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(25, 11, 0, 0),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
+                  Row(
+                    children: [
+                      Text(
+                        'Start date time',
                         style: TextStyle(
-                            color: _durationTextColor,
-                            fontSize: ScreenMixin.appTextFontSize,
-                            fontWeight: ScreenMixin.appTextFontWeight),
-                        keyboardType: TextInputType.datetime,
-                        controller: _durationTextFieldController,
-                        onChanged: (val) {
-                          _setStateEndDateTime();
-                        },
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  DateTimePicker(
+                    type: DateTimePickerType.dateTime,
+                    dateMask: 'dd-MM-yyyy HH:mm',
+                    use24HourFormat: true,
+                    controller: _startDateTimeController,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    icon: Icon(
+                      Icons.event,
+                      color: appTextAndIconColor,
+                      size: 30,
+                    ),
+                    decoration: const InputDecoration.collapsed(hintText: ''),
+                    style: TextStyle(
+                      color: appTextAndIconColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                    onChanged: (val) => _setStateEndDateTime(),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Wrap(
+                    children: [
+                      Text(
+                        'Duration',
+                        style: TextStyle(
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight,
+                        ),
+                      ),
+                      Stack(
+                        children: [
+                          Positioned(
+                            left: -18,
+                            child: TextButton.icon(
+                              icon: Icon(
+                                _durationIcon,
+                                size: 30,
+                                color: _durationIconColor,
+                              ),
+                              label: const Text(''),
+                              onPressed: () {
+                                if (_durationIcon == Icons.add) {
+                                  _durationIcon = Icons.remove;
+                                  _durationIconColor = durationNegativeColor;
+                                  _durationSign = -1;
+                                  _durationTextColor = durationNegativeColor;
+                                } else {
+                                  _durationIcon = Icons.add;
+                                  _durationIconColor = durationPositiveColor;
+                                  _durationSign = 1;
+                                  _durationTextColor = durationPositiveColor;
+                                }
+                                _setStateEndDateTime();
+                              },
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(25, 11, 0, 0),
+                            child: TextField(
+                              decoration:
+                                  const InputDecoration.collapsed(hintText: ''),
+                              style: TextStyle(
+                                  color: _durationTextColor,
+                                  fontSize: ScreenMixin.appTextFontSize,
+                                  fontWeight: ScreenMixin.appTextFontWeight),
+                              keyboardType: TextInputType.datetime,
+                              controller: _durationTextFieldController,
+                              onChanged: (val) {
+                                _setStateEndDateTime();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    'End date time',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                  ),
+                  TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      isCollapsed: true,
+                      contentPadding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                      labelText: _endDateTimeStr,
+                      labelStyle: TextStyle(
+                        fontSize: ScreenMixin.appTextFontSize,
+                        color: appTextAndIconColor,
+                        fontWeight: ScreenMixin.appTextFontWeight,
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'End date time',
-              style: TextStyle(
-                color: appLabelColor,
-                fontSize: ScreenMixin.appTextFontSize,
-                fontWeight: ScreenMixin.appTextFontWeight,
-              ),
-            ),
-            TextField(
-              enabled: false,
-              decoration: InputDecoration(
-                isCollapsed: true,
-                contentPadding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                labelText: _endDateTimeStr,
-                labelStyle: TextStyle(
-                  fontSize: ScreenMixin.appTextFontSize,
-                  color: appTextAndIconColor,
-                  fontWeight: ScreenMixin.appTextFontWeight,
-                ),
-              ),
-              // The validator receives the text that the user has entered.
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.topRight,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: appElevatedButtonBackgroundColor,
-                    shape: appElevatedButtonRoundedShape),
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                  }
-                },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontSize: ScreenMixin.appTextFontSize,
+                    // The validator receives the text that the user has entered.
                   ),
-                ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: appElevatedButtonBackgroundColor,
+                          shape: appElevatedButtonRoundedShape),
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false otherwise.
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                        }
+                      },
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: ScreenMixin.appTextFontSize,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: appElevatedButtonBackgroundColor,
+                        shape: appElevatedButtonRoundedShape),
+                    onPressed: () {
+                      _startDateTimeController.text = DateTime.now().toString();
+                      _setStateEndDateTime();
+                    },
+                    child: const Text(
+                      'Now',
+                      style: TextStyle(
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
