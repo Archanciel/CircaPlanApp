@@ -109,8 +109,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             Positioned(
               left: 0,
               right: 0,
-              top: 0,
-              height: screenHeight * 0.12,
+              top: 4,
+              height: screenHeight * 0.125,
               child: AppBar(
                 backgroundColor: Colors.blue.shade900,
                 title: Text(
