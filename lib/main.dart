@@ -110,7 +110,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               left: 0,
               right: 0,
               top: 0,
-              height: screenHeight * 0.1,
+              height: screenHeight * 0.12,
               child: AppBar(
                 backgroundColor: Colors.blue.shade900,
                 title: Text(
@@ -124,8 +124,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             Positioned(
               left: 0,
               right: 0,
-              top: screenHeight * 0.105,
-              height: screenHeight * 0.9,
+              top: screenHeight * 0.125,
+              height: screenHeight * 0.875,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),

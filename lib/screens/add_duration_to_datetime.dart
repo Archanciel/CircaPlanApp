@@ -191,7 +191,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         children: [
                           Positioned(
                             left: -18,
-                            top: 1,
+                            top: 0,
                             child: TextButton.icon(
                               icon: Icon(
                                 _durationIcon,
