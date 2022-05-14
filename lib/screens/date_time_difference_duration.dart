@@ -120,6 +120,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     children: [
                       Text(
@@ -130,10 +133,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                           fontWeight: ScreenMixin.appTextFontWeight,
                         ),
                       ),
-                      const SizedBox(
-                        width: 15,
-                      ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 15,
                   ),
                   DateTimePicker(
                     type: DateTimePickerType.dateTime,
@@ -156,50 +159,45 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     onChanged: (val) => _setStateDiffDuration(),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
-                  Wrap(
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'End date time',
-                            style: TextStyle(
-                              color: appLabelColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      ),
-                      DateTimePicker(
-                        type: DateTimePickerType.dateTime,
-                        dateMask: 'dd-MM-yyyy HH:mm',
-                        use24HourFormat: true,
-                        controller: _endDateTimeController,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                        icon: Icon(
-                          Icons.event,
-                          color: appTextAndIconColor,
-                          size: 30,
-                        ),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
+                      Text(
+                        'End date time',
                         style: TextStyle(
-                          color: appTextAndIconColor,
+                          color: appLabelColor,
                           fontSize: ScreenMixin.appTextFontSize,
                           fontWeight: ScreenMixin.appTextFontWeight,
                         ),
-                        onChanged: (val) => _setStateDiffDuration(),
                       ),
                     ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
+                  ),
+                  DateTimePicker(
+                    type: DateTimePickerType.dateTime,
+                    dateMask: 'dd-MM-yyyy HH:mm',
+                    use24HourFormat: true,
+                    controller: _endDateTimeController,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    icon: Icon(
+                      Icons.event,
+                      color: appTextAndIconColor,
+                      size: 30,
+                    ),
+                    decoration: const InputDecoration.collapsed(hintText: ''),
+                    style: TextStyle(
+                      color: appTextAndIconColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                    onChanged: (val) => _setStateDiffDuration(),
+                  ),
+                  const SizedBox(
+                    height: 25,
                   ),
                   Text(
                     'Duration',
@@ -209,24 +207,25 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       fontWeight: ScreenMixin.appTextFontWeight,
                     ),
                   ),
-                  Container(
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                        isCollapsed: true,
-                        contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                        labelText: _durationStr,
-                        labelStyle: TextStyle(
-                          fontSize: ScreenMixin.appTextFontSize,
-                          color: appTextAndIconColor,
-                          fontWeight: ScreenMixin.appTextFontWeight,
-                        ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      isCollapsed: true,
+                      //           contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      labelText: _durationStr,
+                      labelStyle: TextStyle(
+                        fontSize: ScreenMixin.appTextFontSize,
+                        color: appTextAndIconColor,
+                        fontWeight: ScreenMixin.appTextFontWeight,
                       ),
-                      // The validator receives the text that the user has entered.
                     ),
+                    // The validator receives the text that the user has entered.
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Container(
                     alignment: Alignment.topRight,
@@ -271,6 +270,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         fontSize: ScreenMixin.appTextFontSize,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 37,
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
