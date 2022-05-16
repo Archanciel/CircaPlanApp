@@ -87,7 +87,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void _setStateNewDateTimeDependentFields(String dateTimeStr) {
     /// Private method called each time the New date time TextField
     /// is nanually modified.
-    
+
     // dateTimeStr format is not validated here in order to avoid preventing
     // new date time manual modification. The new date time string format will
     // be validated right before it is used.
@@ -98,7 +98,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
-  void _incDecNewDateTimeMinute({required int minuteNb}) {
+  void _incDecNewDateTimeMinute(
+      {required BuildContext context, required int minuteNb}) {
     /// Private method called each time the '+' or '-' button
     /// is pressed.
     DateTime? newDateTime;
@@ -228,9 +229,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _addTimeToCurrentSleepDuration(
-    /// Private method called when clicking on 'Add' button located at right of
-    /// current sleep duration TextField.
-      BuildContext context, String durationStr) {
+
+      /// Private method called when clicking on 'Add' button located at right of
+      /// current sleep duration TextField.
+      BuildContext context,
+      String durationStr) {
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
@@ -252,6 +255,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       });
 
       _updateTransferDataMap();
+    }
+  }
+
+  String _statusStr(status enumStatus) {
+    if (enumStatus == status.wakeUp) {
+      return 'Wake Up';
+    } else if (enumStatus == status.sleep) {
+      return 'Sleep';
+    } else {
+      return '';
     }
   }
 
@@ -338,8 +351,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               minWidth: 0,
                             ),
                             padding: const EdgeInsets.all(0),
-                            onPressed: () =>
-                                _incDecNewDateTimeMinute(minuteNb: 1),
+                            onPressed: () => _incDecNewDateTimeMinute(
+                                context: context, minuteNb: 1),
                             icon: Icon(
                               Icons.add,
                               color: appTextAndIconColor,
@@ -351,8 +364,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               minWidth: 0,
                             ),
                             padding: const EdgeInsets.all(0),
-                            onPressed: () =>
-                                _incDecNewDateTimeMinute(minuteNb: -1),
+                            onPressed: () => _incDecNewDateTimeMinute(
+                                context: context, minuteNb: -1),
                             icon: Icon(
                               Icons.remove,
                               color: appTextAndIconColor,
@@ -511,18 +524,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         Align(
           alignment: Alignment.center,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(''),
               Container(
                 child: Text(
-                  _status.toString(),
+                  _statusStr(_status),
                   style: TextStyle(
                     color: appLabelColor,
                     fontSize: ScreenMixin.appTextFontSize,
                   ),
                 ),
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 86),
+                margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
               ),
             ],
           ),

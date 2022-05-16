@@ -113,12 +113,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       } else {
         endDateTime = startDateTime.subtract(duration);
       }
+
       setState(() {
         _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
       });
-    }
 
-    _updateTransferDataMap();
+      _updateTransferDataMap();
+    }
   }
 
   @override
@@ -177,61 +178,57 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     height: 25,
                   ),
-                  Wrap(
+                  Text(
+                    'Duration',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                      fontWeight: ScreenMixin.appTextFontWeight,
+                    ),
+                  ),
+                  Stack(
                     children: [
-                      Text(
-                        'Duration',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight,
+                      Positioned(
+                        left: -18,
+                        top: 0,
+                        child: TextButton.icon(
+                          icon: Icon(
+                            _durationIcon,
+                            size: 30,
+                            color: _durationIconColor,
+                          ),
+                          label: const Text(''),
+                          onPressed: () {
+                            if (_durationIcon == Icons.add) {
+                              _durationIcon = Icons.remove;
+                              _durationIconColor = durationNegativeColor;
+                              _durationSign = -1;
+                              _durationTextColor = durationNegativeColor;
+                            } else {
+                              _durationIcon = Icons.add;
+                              _durationIconColor = durationPositiveColor;
+                              _durationSign = 1;
+                              _durationTextColor = durationPositiveColor;
+                            }
+                            _setStateEndDateTime();
+                          },
                         ),
                       ),
-                      Stack(
-                        children: [
-                          Positioned(
-                            left: -18,
-                            top: 0,
-                            child: TextButton.icon(
-                              icon: Icon(
-                                _durationIcon,
-                                size: 30,
-                                color: _durationIconColor,
-                              ),
-                              label: const Text(''),
-                              onPressed: () {
-                                if (_durationIcon == Icons.add) {
-                                  _durationIcon = Icons.remove;
-                                  _durationIconColor = durationNegativeColor;
-                                  _durationSign = -1;
-                                  _durationTextColor = durationNegativeColor;
-                                } else {
-                                  _durationIcon = Icons.add;
-                                  _durationIconColor = durationPositiveColor;
-                                  _durationSign = 1;
-                                  _durationTextColor = durationPositiveColor;
-                                }
-                                _setStateEndDateTime();
-                              },
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(25, 13, 0, 0),
-                            child: TextField(
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              style: TextStyle(
-                                  color: _durationTextColor,
-                                  fontSize: ScreenMixin.appTextFontSize,
-                                  fontWeight: ScreenMixin.appTextFontWeight),
-                              keyboardType: TextInputType.datetime,
-                              controller: _durationTextFieldController,
-                              onChanged: (val) {
-                                _setStateEndDateTime();
-                              },
-                            ),
-                          ),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(25, 13, 0, 0),
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: _durationTextColor,
+                              fontSize: ScreenMixin.appTextFontSize,
+                              fontWeight: ScreenMixin.appTextFontWeight),
+                          keyboardType: TextInputType.datetime,
+                          controller: _durationTextFieldController,
+                          onChanged: (val) {
+                            _setStateEndDateTime();
+                          },
+                        ),
                       ),
                     ],
                   ),

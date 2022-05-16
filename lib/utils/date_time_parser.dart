@@ -1,7 +1,7 @@
 // adding method HHmm which returns the Duration formatted as HH:mm
 import 'package:intl/intl.dart';
 
-extension FormattedHourMinute on Duration {
+extension FormattedDayHourMinute on Duration {
   static final NumberFormat numberFormatTwoInt = NumberFormat('00');
 
   /// returns the Duration formatted as HH:mm
@@ -10,13 +10,26 @@ extension FormattedHourMinute on Duration {
     String minusStr = '';
 
     if (this.inMinutes < 0) {
-      if (this.inHours == 0) {
         minusStr = '-';
-      }
-      durationMinute = -durationMinute;
     }
 
-    return "$minusStr${this.inHours}:${numberFormatTwoInt.format(durationMinute)}";
+    return "$minusStr${this.inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}";
+  }
+
+  /// returns the Duration formatted as HH:mm
+  String ddHHmm() {
+    int durationMinute = this.inMinutes.remainder(60);
+    String minusStr = '';
+    int durationHour = Duration(minutes: (this.inMinutes - durationMinute))
+        .inHours
+        .remainder(24);
+    int durationDay = Duration(hours: (this.inHours - durationHour)).inDays;
+
+    if (this.inMinutes < 0) {
+      minusStr = '-';
+    }
+
+    return "$minusStr${numberFormatTwoInt.format(durationDay.abs())}:${numberFormatTwoInt.format(durationHour.abs())}:${numberFormatTwoInt.format(durationMinute.abs())}";
   }
 }
 
@@ -24,7 +37,8 @@ class DateTimeParser {
   static final RegExp regExpYYYYDateTime =
       RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
   static final RegExp regExpNoYearDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
-  static final RegExp regExpTime = RegExp(r'(^[-]?\d+:\d{2})');
+  static final RegExp regExpHHMMTime = RegExp(r'(^[-]?\d+:\d{2})');
+  static final RegExp regExpDDHHMMTime = RegExp(r'(^\d+:\d+:\d{2})');
 
   /// Parses the passed ddMMDateTimeStr formatted as dd-mm hh:mm or d-m h:mm
   static List<String?> parseDDMMDateTime(String ddMMDateTimrStr) {
@@ -46,11 +60,13 @@ class DateTimeParser {
 
     if (dayMonthYear != null && hourMinute != null) {
       List<String> dayMonthYearStrLst = dayMonthYear.split('-');
-      List<int?> dayMonthYearIntLst =
-          dayMonthYearStrLst.map((element) => int.tryParse(element)).toList();
+      List<int?> dayMonthYearIntLst = dayMonthYearStrLst
+          .map((element) => int.tryParse(element))
+          .toList(growable: false);
       List<String> hourMinuteStrLst = hourMinute.split(':');
-      List<int?> hourMinuteIntLst =
-          hourMinuteStrLst.map((element) => int.tryParse(element)).toList();
+      List<int?> hourMinuteIntLst = hourMinuteStrLst
+          .map((element) => int.tryParse(element))
+          .toList(growable: false);
 
       if (!dayMonthYearIntLst.contains(null) &&
           !hourMinuteIntLst.contains(null)) {
@@ -72,17 +88,30 @@ class DateTimeParser {
   /// if the passed hourMinuteStr does not respect the hh:mm or h:mm or -hh:mm
   /// or -h:mm format, like 03:2 or 3:2 or 03-02 or 03:a2 or -03:2 or -3:2 or
   /// -03-02 or -03:a2 for example.
-  static String? parseTime(String hourMinuteStr) {
-    final RegExpMatch? match = regExpTime.firstMatch(hourMinuteStr);
+  static String? parseHHMMTimeStr(String hourMinuteStr) {
+    final RegExpMatch? match = regExpHHMMTime.firstMatch(hourMinuteStr);
     final String? parsedHourMinuteStr = match?.group(1);
 
     return parsedHourMinuteStr;
   }
 
+  /// Parses the passed hourMinuteStr formatted as hh:mm or h:mm or -hh:mm or
+  /// -h:mm and returns the hh:mm, h:mm, -hh:mm or -h:mm parsed String or null
+  /// if the passed hourMinuteStr does not respect the hh:mm or h:mm or -hh:mm
+  /// or -h:mm format, like 03:2 or 3:2 or 03-02 or 03:a2 or -03:2 or -3:2 or
+  /// -03-02 or -03:a2 for example.
+  static String? parseDDHHMMTimeStr(String dayHhourMinuteStr) {
+    final RegExpMatch? match = regExpDDHHMMTime.firstMatch(dayHhourMinuteStr);
+    final String? parsedDayHourMinuteStr = match?.group(1);
+
+    return parsedDayHourMinuteStr;
+  }
+
   /// Parses the passed hourMinuteStr and returns a Duration instanciated
   /// with the parsed hour and minute values.
   static Duration? parseHHmmDuration(String hourMinuteStr) {
-    final String? parsedHourMinuteStr = DateTimeParser.parseTime(hourMinuteStr);
+    final String? parsedHourMinuteStr =
+        DateTimeParser.parseHHMMTimeStr(hourMinuteStr);
 
     if (parsedHourMinuteStr != null) {
       List<String> hourMinuteStrLst = parsedHourMinuteStr.split(':');
@@ -105,6 +134,28 @@ class DateTimeParser {
       }
 
       return Duration(hours: hourMinuteIntLst[0], minutes: minuteInt);
+    }
+
+    return null;
+  }
+
+  /// Parses the passed hourMinuteStr and returns a Duration instanciated
+  /// with the parsed hour and minute values.
+  static Duration? parseDDHHMMDuration(String dayHourMinuteStr) {
+    final String? parsedDayHourMinuteStr =
+        DateTimeParser.parseDDHHMMTimeStr(dayHourMinuteStr);
+
+    if (parsedDayHourMinuteStr != null) {
+      List<String> dayHourMinuteStrLst = parsedDayHourMinuteStr.split(':');
+      List<int> hourMinuteIntLst = dayHourMinuteStrLst
+          .map((element) => int.parse(element))
+          .toList(growable: false);
+
+      final int dayInt = hourMinuteIntLst[0];
+      final int hourInt = hourMinuteIntLst[1];
+      final int minuteInt = hourMinuteIntLst[2];
+
+      return Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
     }
 
     return null;
@@ -175,6 +226,10 @@ void main() {
     '-3-5',
   ];
 
+  Duration dur = Duration(days: 2, hours: 10, minutes: 30);
+  print(dur.inMinutes);
+  print(dur.ddHHmm());
+  
   print('\nDateTimeParser.parseDDMMDateTime()\n');
 
   for (String str in dateTimeNoYearStrLst) {
@@ -194,14 +249,14 @@ void main() {
   print('\nDateTimeParser.parseTime()\n');
 
   for (String str in timeStrLst) {
-    String? hourMinute = DateTimeParser.parseTime(str);
+    String? hourMinute = DateTimeParser.parseHHMMTimeStr(str);
     print('String $str parsed as: $hourMinute');
   }
 
   print('');
 
   for (String str in negativeTimeStrLst) {
-    String? hourMinute = DateTimeParser.parseTime(str);
+    String? hourMinute = DateTimeParser.parseHHMMTimeStr(str);
     print('String $str parsed as: $hourMinute');
   }
 

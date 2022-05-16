@@ -100,9 +100,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         height: 36,
       ),
       Image.asset(
-        "images/date_time_calculator.png",
-        width: 48,
-        height: 48,
+        "images/calculate_time_blue_trans.png",
+        width: 38,
+        height: 38,
       ),
     ];
 

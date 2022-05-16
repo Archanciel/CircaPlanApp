@@ -76,91 +76,91 @@ void main() {
 
   group('DateTimeParser.parseTime()', () {
     test('valid format time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('13:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('13:35');
 
       expect(hourMinute, '13:35');
     });
 
     test('invalid format time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('13-35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('13-35');
 
       expect(hourMinute, null);
     });
 
     test('valid time string 1 digit hour', () {
-      final String? hourMinute = DateTimeParser.parseTime('3:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('3:35');
 
       expect(hourMinute, '3:35');
     });
 
     test('invalid time string 1 digit hour', () {
-      final String? hourMinute = DateTimeParser.parseTime('3:u5');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('3:u5');
 
       expect(hourMinute, null);
     });
 
     test('invalid time string format 1 digit hour', () {
-      final String? hourMinute = DateTimeParser.parseTime('3-05');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('3-05');
 
       expect(hourMinute, null);
     });
 
     test('invalid time string 1 digit minute', () {
-      final String? hourMinute = DateTimeParser.parseTime('3:5');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('3:5');
 
       expect(hourMinute, null);
     });
 
     test('valid negative time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('-13:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('-13:35');
 
       expect(hourMinute, '-13:35');
     });
 
     test('invalid format negative time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('-13-35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('-13-35');
 
       expect(hourMinute, null);
     });
 
     test('valid negative time string 1 digit hour', () {
-      final String? hourMinute = DateTimeParser.parseTime('-3:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('-3:35');
 
       expect(hourMinute, '-3:35');
     });
 
     test('invalid format negative time string 1 digit hour', () {
-      final String? hourMinute = DateTimeParser.parseTime('-3-05');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('-3-05');
 
       expect(hourMinute, null);
     });
 
     test('invalid negative time string 1 digit hour', () {
-      final String? hourMinute = DateTimeParser.parseTime('-3:u5');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('-3:u5');
 
       expect(hourMinute, null);
     });
 
     test('invalid negative time string 1 digit minute', () {
-      final String? hourMinute = DateTimeParser.parseTime('-3:5');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('-3:5');
 
       expect(hourMinute, null);
     });
 
     test('date and time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('14-12 13:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('14-12 13:35');
 
       expect(hourMinute, null);
     });
 
     test('1 digit day and month date and time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('4-2 13:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('4-2 13:35');
 
       expect(hourMinute, null);
     });
 
     test('invalid date and time string', () {
-      final String? hourMinute = DateTimeParser.parseTime('a4-2 13:35');
+      final String? hourMinute = DateTimeParser.parseHHMMTimeStr('a4-2 13:35');
 
       expect(hourMinute, null);
     });
@@ -169,7 +169,8 @@ void main() {
   group('DateTimeParser.parseHHmmDuration()', () {
     test('valid hh:mm format time string', () {
       const String hourMinuteStr = '13:35';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, const Duration(hours: 13, minutes: 35));
       expect(duration?.HHmm(), hourMinuteStr);
@@ -177,7 +178,8 @@ void main() {
 
     test('valid h:mm format time string', () {
       const String hourMinuteStr = '3:05';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, const Duration(hours: 3, minutes: 5));
       expect(duration?.HHmm(), hourMinuteStr);
@@ -185,7 +187,8 @@ void main() {
 
     test('valid 0:0m format time string', () {
       const String hourMinuteStr = '0:05';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, const Duration(hours: 0, minutes: 5));
       expect(duration?.HHmm(), hourMinuteStr);
@@ -193,7 +196,8 @@ void main() {
 
     test('invalid h:<letter>m format time string', () {
       const String hourMinuteStr = '3:u5';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -201,7 +205,8 @@ void main() {
 
     test('invalid h:m format time string', () {
       const String hourMinuteStr = '3:5';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -209,7 +214,8 @@ void main() {
 
     test('invalid h-0m format time string', () {
       const String hourMinuteStr = '3-05';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -217,7 +223,8 @@ void main() {
 
     test('invalid h-m format time string', () {
       const String hourMinuteStr = '3-5';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -225,7 +232,8 @@ void main() {
 
     test('unacceptable valid dd-mm-yyyy hh:mmm format date time string', () {
       const String hourMinuteStr = '14-12-2022 13:35';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -233,7 +241,8 @@ void main() {
 
     test('unacceptable valid dd-mm hh:mmm format date time string', () {
       const String hourMinuteStr = '14-12 13:35';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -241,18 +250,17 @@ void main() {
 
     test('unacceptable invalid <letter>d-m hh:mmm format date time string', () {
       const String hourMinuteStr = 'a4-2 3:35';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
     });
 
-
-
-
     test('valid negative hh:mm format time string', () {
       const String hourMinuteStr = '-13:35';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, const Duration(hours: -13, minutes: -35));
       expect(duration?.HHmm(), hourMinuteStr);
@@ -260,7 +268,8 @@ void main() {
 
     test('valid negative h:mm format time string', () {
       const String hourMinuteStr = '-3:05';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, const Duration(hours: -3, minutes: -5));
       expect(duration?.HHmm(), hourMinuteStr);
@@ -268,7 +277,8 @@ void main() {
 
     test('valid negative 0:0m format time string', () {
       const String hourMinuteStr = '-0:05';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, const Duration(hours: 0, minutes: -5));
       expect(duration?.HHmm(), hourMinuteStr);
@@ -276,7 +286,8 @@ void main() {
 
     test('invalid negative h-mm format time string', () {
       const String hourMinuteStr = '-3-05';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -284,7 +295,8 @@ void main() {
 
     test('invalid negative h:<letter>m format time string', () {
       const String hourMinuteStr = '-3:u5';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -292,7 +304,8 @@ void main() {
 
     test('invalid negative h:m format time string', () {
       const String hourMinuteStr = '-3:5';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
@@ -300,7 +313,8 @@ void main() {
 
     test('invalid negative h-m format time string', () {
       const String hourMinuteStr = '-3-5';
-      final Duration? duration = DateTimeParser.parseHHmmDuration(hourMinuteStr);
+      final Duration? duration =
+          DateTimeParser.parseHHmmDuration(hourMinuteStr);
 
       expect(duration, null);
       expect(duration?.HHmm(), null);
