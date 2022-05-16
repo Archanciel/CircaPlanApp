@@ -82,7 +82,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     return map;
   }
 
-  void _addSubtractTimeDuration({required BuildContext context, required bool isPlus}) {
+  void _addSubtractTimeDuration(
+      {required BuildContext context, required bool isPlus}) {
     /// Private method called when pressing the 'Plus' or 'Minus' buttons.
     _firstTimeStr = _firstTimeTextFieldController.text;
     _secondTimeStr = _secondTimeTextFieldController.text;
@@ -111,8 +112,16 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       resultDuration = firstTimeDuration - secondTimeDuration;
     }
 
+      String resultTimeStr;
+
+      if (resultDuration.inDays > 0) {
+        resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
+      } else {
+        resultTimeStr = '${resultDuration.ddHHmm()}';        
+      }
+
     setState(() {
-      _resultTimeStr = resultDuration.ddHHmm();
+      _resultTimeStr = resultTimeStr;
     });
 
     _updateTransferDataMap();
@@ -253,7 +262,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
                           //  _startDateTimeController.text = DateTime.now().toString();
-                          _addSubtractTimeDuration(context: context, isPlus: true);
+                          _addSubtractTimeDuration(
+                              context: context, isPlus: true);
                         },
                         child: const Text(
                           'Add',
@@ -271,7 +281,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
                           //  _startDateTimeController.text = DateTime.now().toString();
-                          _addSubtractTimeDuration(context: context, isPlus: false);
+                          _addSubtractTimeDuration(
+                              context: context, isPlus: false);
                         },
                         child: const Text(
                           'Subtr',
