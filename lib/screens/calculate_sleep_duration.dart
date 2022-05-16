@@ -84,20 +84,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return map;
   }
 
-  void _setStateNewDateTimeDependentFields(
-      BuildContext context, String dateTimeStr) {
+  void _setStateNewDateTimeDependentFields(String dateTimeStr) {
     /// Private method called each time the New date time TextField
     /// is nanually modified.
-    DateTime newDateTime;
-
-    try {
-      newDateTime = frenchDateTimeFormat.parse(dateTimeStr);
-    } on FormatException {
-      openWarningDialog(context,
-          'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($dateTimeStr). Please retry !');
-      return;
-    }
-
+    
+    // dateTimeStr format is not validated here in order to avoid preventing
+    // new date time manual modification. The new date time string format will
+    // be validated right before it is used.
     setState(() {
       _newDateTimeStr = dateTimeStr;
     });
@@ -105,11 +98,18 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
-  void _modifyNewDateTimeMinute({required int minuteNb}) {
+  void _incDecNewDateTimeMinute({required int minuteNb}) {
     /// Private method called each time the '+' or '-' button
     /// is pressed.
-    DateTime newDateTime =
-        frenchDateTimeFormat.parse(_newDateTimeController.text);
+    DateTime? newDateTime;
+
+    newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
+
+    if (newDateTime == null) {
+      openWarningDialog(context,
+          'You are trying to increase/decrease an incorrectly formated dd-MM-yyyy HH:mm new date time ($_newDateTimeStr). Please correct it and retry !');
+      return;
+    }
 
     if (minuteNb > 0) {
       newDateTime = newDateTime.subtract(Duration(minutes: -minuteNb));
@@ -143,33 +143,37 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _handleAddButton(BuildContext context) {
-    /// Private method called when clicking on 'Add' button.
+    /// Private method called when clicking on 'Add' button located at right of
+    /// new date time TextField.
+    DateTime? newDateTime;
+
+    newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
+
+    if (newDateTime == null) {
+      openWarningDialog(context,
+          'You entered an incorrectly formated dd-MM-yyyy HH:mm new date time ($_newDateTimeStr). Please correct it and retry !');
+      return;
+    }
+
     if (_status == status.wakeUp) {
       if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or resetting the app
         setState(() {
-          _previousDateTimeStr = _newDateTimeStr;
+          // Without using applying ! bang operator to the newDateTime variable,
+          // the compiler displays this error: 'The argument type 'DateTime?'
+          // can't be assigned to the parameter type DateTime
+          _previousDateTimeStr = frenchDateTimeFormat.format(newDateTime!);
           _status = status.sleep;
         });
       } else {
-        DateTime? newDateTime;
-
-        try {
-          newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
-        } on FormatException {
-          openWarningDialog(context,
-              'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
-          return;
-        }
-
         DateTime? previousDateTime;
 
         previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
 
         if (newDateTime.isBefore(previousDateTime)) {
           openWarningDialog(context,
-              'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please retry !');
+              'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please increase it and retry !');
           return;
         }
 
@@ -192,16 +196,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       }
     } else {
       // status == status.sleep
-      DateTime? newDateTime;
-
-      try {
-        newDateTime = frenchDateTimeFormat.parse(_newDateTimeStr);
-      } on FormatException {
-        openWarningDialog(context,
-            'You entered an incorrectly formated dd-MM-yyyy HH:mm date time ($_newDateTimeStr). Please retry !');
-        return;
-      }
-
       DateTime? previousDateTime;
 
       previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
@@ -234,6 +228,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _addTimeToCurrentSleepDuration(
+    /// Private method called when clicking on 'Add' button located at right of
+    /// current sleep duration TextField.
       BuildContext context, String durationStr) {
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
@@ -303,7 +299,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           onChanged: (val) {
                             // called when manually updating the TextField
                             // content
-                            _setStateNewDateTimeDependentFields(context, val);
+                            _setStateNewDateTimeDependentFields(val);
                           },
                         ),
                       ),
@@ -334,7 +330,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const SizedBox(
-                            height: 10,
+                            height: 8,
                           ),
                           IconButton(
                             constraints: const BoxConstraints(
@@ -343,7 +339,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             ),
                             padding: const EdgeInsets.all(0),
                             onPressed: () =>
-                                _modifyNewDateTimeMinute(minuteNb: 1),
+                                _incDecNewDateTimeMinute(minuteNb: 1),
                             icon: Icon(
                               Icons.add,
                               color: appTextAndIconColor,
@@ -356,11 +352,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             ),
                             padding: const EdgeInsets.all(0),
                             onPressed: () =>
-                                _modifyNewDateTimeMinute(minuteNb: -1),
+                                _incDecNewDateTimeMinute(minuteNb: -1),
                             icon: Icon(
                               Icons.remove,
                               color: appTextAndIconColor,
                             ),
+                          ),
+                          const SizedBox(
+                            height: 2,
                           ),
                         ],
                       ),

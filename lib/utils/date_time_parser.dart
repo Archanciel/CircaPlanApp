@@ -21,7 +21,8 @@ extension FormattedHourMinute on Duration {
 }
 
 class DateTimeParser {
-  static final RegExp regExpYYYYDateTime = RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
+  static final RegExp regExpYYYYDateTime =
+      RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
   static final RegExp regExpNoYearDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
   static final RegExp regExpTime = RegExp(r'(^[-]?\d+:\d{2})');
 
@@ -35,12 +36,35 @@ class DateTimeParser {
   }
 
   /// Parses the passed ddMMyyyyDateTimeStr formatted as dd-mm-yyyy hh:mm or d-m-yyyy h:mm
-  static List<String?> parseDDMMYYYYDateTime(String ddMMyyyyDateTimrStr) {
-    final RegExpMatch? match = regExpYYYYDateTime.firstMatch(ddMMyyyyDateTimrStr);
+  static DateTime? parseDDMMYYYYDateTime(String ddMMyyyyDateTimrStr) {
+    final RegExpMatch? match =
+        regExpYYYYDateTime.firstMatch(ddMMyyyyDateTimrStr);
     final String? dayMonthYear = match?.group(1);
     final String? hourMinute = match?.group(2);
 
-    return [dayMonthYear, hourMinute];
+    DateTime? dateTime;
+
+    if (dayMonthYear != null && hourMinute != null) {
+      List<String> dayMonthYearStrLst = dayMonthYear.split('-');
+      List<int?> dayMonthYearIntLst =
+          dayMonthYearStrLst.map((element) => int.tryParse(element)).toList();
+      List<String> hourMinuteStrLst = hourMinute.split(':');
+      List<int?> hourMinuteIntLst =
+          hourMinuteStrLst.map((element) => int.tryParse(element)).toList();
+
+      if (!dayMonthYearIntLst.contains(null) &&
+          !hourMinuteIntLst.contains(null)) {
+        dateTime = DateTime(
+          dayMonthYearIntLst[2] ?? 0, // year
+          dayMonthYearIntLst[1] ?? 0, // month
+          dayMonthYearIntLst[0] ?? 0, // day
+          hourMinuteIntLst[0] ?? 0, // hour
+          hourMinuteIntLst[1] ?? 0, // minute
+        );
+      }
+    }
+
+    return dateTime;
   }
 
   /// Parses the passed hourMinuteStr formatted as hh:mm or h:mm or -hh:mm or
@@ -97,6 +121,9 @@ void main() {
     // new
     '14-12-2022 13:35',
     '4-2-2022 3:05',
+    '04-02-2022 3:05',
+    '4-2-2022 3:00',
+    '4-2-2022 3:0',
     'a4-2-2022 3:05',
     '14-2-2022 3:u5',
     '14-2-2022 3:5',
@@ -106,6 +133,9 @@ void main() {
   const List<String> dateTimeYYYYStrLst = [
     '14-12-2022 13:35',
     '4-2-2022 3:05',
+    '04-02-2022 3:05',
+    '4-2-2022 3:00',
+    '4-2-2022 3:0',
     'a4-2-2022 3:05',
     '14-2-2022 3:u5',
     '14-2-2022 3:5',
@@ -157,10 +187,8 @@ void main() {
   print('\nDateTimeParser.parseDDMMYYYYDateTime()\n');
 
   for (String str in dateTimeYYYYStrLst) {
-    List<String?> dateTimeStrLst = DateTimeParser.parseDDMMYYYYDateTime(str);
-    String? dayMonthYear = dateTimeStrLst[0];
-    String? hourMinute = dateTimeStrLst[1];
-    print('String $str parsed as: $dayMonthYear $hourMinute');
+    DateTime? dateTime = DateTimeParser.parseDDMMYYYYDateTime(str);
+    print('String $str parsed as: ${dateTime.toString()}');
   }
 
   print('\nDateTimeParser.parseTime()\n');
