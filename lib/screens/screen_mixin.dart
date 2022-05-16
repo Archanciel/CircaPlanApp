@@ -24,6 +24,7 @@ mixin ScreenMixin {
   static const String dateTimeDiffDurationTitle =
       'Date Time Difference Duration';
   static const String calculateSleepDurationTitle = 'Calculate Sleep Duration';
+  static const String timeCalculatorTitle = 'Time Calculator';
 
   static void setAppVerticalTopMargin(double screenHeight) {
     appVerticalTopMargin = screenHeight * appVerticalTopMarginProportion;
