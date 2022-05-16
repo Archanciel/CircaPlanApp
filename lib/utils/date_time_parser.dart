@@ -21,19 +21,29 @@ extension FormattedHourMinute on Duration {
 }
 
 class DateTimeParser {
-  static final RegExp regExpDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
+  static final RegExp regExpYYYYDateTime = RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
+  static final RegExp regExpNoYearDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
   static final RegExp regExpTime = RegExp(r'(^[-]?\d+:\d{2})');
 
   /// Parses the passed ddMMDateTimeStr formatted as dd-mm hh:mm or d-m h:mm
   static List<String?> parseDDMMDateTime(String ddMMDateTimrStr) {
-    final RegExpMatch? match = regExpDateTime.firstMatch(ddMMDateTimrStr);
+    final RegExpMatch? match = regExpNoYearDateTime.firstMatch(ddMMDateTimrStr);
     final String? dayMonth = match?.group(1);
     final String? hourMinute = match?.group(2);
 
     return [dayMonth, hourMinute];
   }
 
-  /// Parses the passed hourMinuteStr formatted as hh:mm or h:mm or -hh:mm or 
+  /// Parses the passed ddMMyyyyDateTimeStr formatted as dd-mm-yyyy hh:mm or d-m-yyyy h:mm
+  static List<String?> parseDDMMYYYYDateTime(String ddMMyyyyDateTimrStr) {
+    final RegExpMatch? match = regExpYYYYDateTime.firstMatch(ddMMyyyyDateTimrStr);
+    final String? dayMonthYear = match?.group(1);
+    final String? hourMinute = match?.group(2);
+
+    return [dayMonthYear, hourMinute];
+  }
+
+  /// Parses the passed hourMinuteStr formatted as hh:mm or h:mm or -hh:mm or
   /// -h:mm and returns the hh:mm, h:mm, -hh:mm or -h:mm parsed String or null
   /// if the passed hourMinuteStr does not respect the hh:mm or h:mm or -hh:mm
   /// or -h:mm format, like 03:2 or 3:2 or 03-02 or 03:a2 or -03:2 or -3:2 or
@@ -78,12 +88,31 @@ class DateTimeParser {
 }
 
 void main() {
-  const List<String> dateTimeStrLst = [
+  const List<String> dateTimeNoYearStrLst = [
     '14-12 13:35',
     '4-2 3:05',
     'a4-2 3:05',
     '14-2 3:u5',
     '14-2 3:5',
+    // new
+    '14-12-2022 13:35',
+    '4-2-2022 3:05',
+    'a4-2-2022 3:05',
+    '14-2-2022 3:u5',
+    '14-2-2022 3:5',
+  ];
+
+  // new
+  const List<String> dateTimeYYYYStrLst = [
+    '14-12-2022 13:35',
+    '4-2-2022 3:05',
+    'a4-2-2022 3:05',
+    '14-2-2022 3:u5',
+    '14-2-2022 3:5',
+    '4-2-22 3:05',
+    'a4-2-22 3:05',
+    '14-2-22 3:u5',
+    '14-2-22 3:5',
   ];
 
   const List<String> timeStrLst = [
@@ -97,6 +126,13 @@ void main() {
     '14-12 13:35',
     '4-2 3:05',
     'a4-2 3:05',
+    // new
+    '14-12-2022 13:35',
+    '4-2-2022 3:05',
+    'a4-2-2022 3:05',
+    '14-12-22 3:05',
+    '4-2-22 3:05',
+    'a4-2-22 3:05',
   ];
 
   const List<String> negativeTimeStrLst = [
@@ -109,11 +145,22 @@ void main() {
     '-3-5',
   ];
 
-  for (String str in dateTimeStrLst) {
+  print('\nDateTimeParser.parseDDMMDateTime()\n');
+
+  for (String str in dateTimeNoYearStrLst) {
     List<String?> dateTimeStrLst = DateTimeParser.parseDDMMDateTime(str);
     String? dayMonth = dateTimeStrLst[0];
     String? hourMinute = dateTimeStrLst[1];
     print('String $str parsed as: $dayMonth $hourMinute');
+  }
+
+  print('\nDateTimeParser.parseDDMMYYYYDateTime()\n');
+
+  for (String str in dateTimeYYYYStrLst) {
+    List<String?> dateTimeStrLst = DateTimeParser.parseDDMMYYYYDateTime(str);
+    String? dayMonthYear = dateTimeStrLst[0];
+    String? hourMinute = dateTimeStrLst[1];
+    print('String $str parsed as: $dayMonthYear $hourMinute');
   }
 
   print('\nDateTimeParser.parseTime()\n');
@@ -134,23 +181,26 @@ void main() {
 
   for (String str in timeStrLst) {
     Duration? duration = DateTimeParser.parseHHmmDuration(str);
-    print('String $str parsed as Duration: $duration HHmm: ${duration?.HHmm()}');
+    print(
+        'String $str parsed as Duration: $duration HHmm: ${duration?.HHmm()}');
   }
 
   print('');
 
   for (String str in negativeTimeStrLst) {
     Duration? duration = DateTimeParser.parseHHmmDuration(str);
-    print('String $str parsed as Duration: $duration HHmm: ${duration?.HHmm()}');
+    print(
+        'String $str parsed as Duration: $duration HHmm: ${duration?.HHmm()}');
   }
 
   print('');
 
   print(Duration(hours: -1)); // -1:00:00.000000
   print(Duration.zero - Duration(hours: 1)); // -1:00:00.000000
-  print(Duration(minutes: -1).HHmm()); // 0:01:00.000000 instead of -0:01:00.000000
-  print((Duration.zero -
-      Duration(minutes: 1)).HHmm()); // 0:01:00.000000 instead of -0:01:00.000000
+  print(Duration(minutes: -1)
+      .HHmm()); // 0:01:00.000000 instead of -0:01:00.000000
+  print((Duration.zero - Duration(minutes: 1))
+      .HHmm()); // 0:01:00.000000 instead of -0:01:00.000000
   print(Duration(minutes: -1).inMinutes); // -1
   print((Duration.zero - Duration(minutes: 1)).inMinutes); // -1
 
