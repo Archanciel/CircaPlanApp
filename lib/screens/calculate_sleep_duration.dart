@@ -462,20 +462,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () async {
-                          final timeStr = await openTextInputDialog();
-                          if (timeStr == null || timeStr.isEmpty) return;
-
-                          _addTimeToCurrentSleepDuration(context, timeStr);
-                        },
-                        child: const Text(
-                          'Add',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
+                      Tooltip(
+                        message: 'Used to add siesta time whatever the status is.',
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () async {
+                            final timeStr = await openTextInputDialog();
+                            if (timeStr == null || timeStr.isEmpty) return;
+                      
+                            _addTimeToCurrentSleepDuration(context, timeStr);
+                          },
+                          child: const Text(
+                            'Add',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                            ),
                           ),
                         ),
                       ),
