@@ -338,7 +338,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             //                                                the button 'Now'. '+' or '-'
                             onChanged: (val) {
                               // called when manually updating the TextField
-                              // content
+                              // content or when pasting
                               _setStateNewDateTimeDependentFields(val);
                             },
                           ),
