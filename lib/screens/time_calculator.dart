@@ -112,13 +112,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       resultDuration = firstTimeDuration - secondTimeDuration;
     }
 
-      String resultTimeStr;
+    String resultTimeStr;
 
-      if (resultDuration.inDays > 0) {
-        resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
-      } else {
-        resultTimeStr = '${resultDuration.ddHHmm()}';        
-      }
+    if (resultDuration.inDays > 0) {
+      resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
+    } else {
+      resultTimeStr = '${resultDuration.ddHHmm()}';
+    }
 
     setState(() {
       _resultTimeStr = resultTimeStr;
@@ -155,14 +155,33 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
-                    child: TextField(
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight),
-                      keyboardType: TextInputType.datetime,
-                      controller: _firstTimeTextFieldController,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          cursorColor: appTextAndIconColor,
+                        ),
+                      ),
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.appTextFontSize,
+                            fontWeight: ScreenMixin.appTextFontWeight),
+                        keyboardType: TextInputType.datetime,
+                        controller: _firstTimeTextFieldController,
+                        onChanged: (val) {
+                          // called when manually updating the TextField
+                          // content. onChanged must be defined in order for
+                          // pasting a value to the TextField to really
+                          // modify the TextField value and store it
+                          // in the screen navigation transfer
+                          // data map.
+                          _firstTimeStr = val;
+                          _updateTransferDataMap();
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -178,14 +197,33 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
-                    child: TextField(
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight),
-                      keyboardType: TextInputType.datetime,
-                      controller: _secondTimeTextFieldController,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          cursorColor: appTextAndIconColor,
+                        ),
+                      ),
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.appTextFontSize,
+                            fontWeight: ScreenMixin.appTextFontWeight),
+                        keyboardType: TextInputType.datetime,
+                        controller: _secondTimeTextFieldController,
+                        onChanged: (val) {
+                          // called when manually updating the TextField
+                          // content. onChanged must be defined in order for
+                          // pasting a value to the TextField to really
+                          // modify the TextField value and store it
+                          // in the screen navigation transfer
+                          // data map.
+                          _secondTimeStr = val;
+                          _updateTransferDataMap();
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(
