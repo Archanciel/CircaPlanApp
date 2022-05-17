@@ -37,7 +37,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentSleepDurationStr =
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
         _currentWakeUpDurationStr =
-            transferDataMap['calcSlDurCurrentWakeUpDurationStr'] ?? '',
+            transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '',
         _status = transferDataMap['calcSlDurStatus'] ?? status.wakeUp,
         super();
 
@@ -54,6 +54,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _previousDateTimeController;
   late TextEditingController _addTimeDialogController;
   late TextEditingController _currentSleepDurationController;
+  late TextEditingController _currentWakeUpDurationController;
 
   @override
   void initState() {
@@ -67,6 +68,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
     _currentSleepDurationController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '');
+    _currentWakeUpDurationController = TextEditingController(
+        text: _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '');
     _addTimeDialogController = TextEditingController();
   }
 
@@ -75,6 +78,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _newDateTimeController.dispose();
     _previousDateTimeController.dispose();
     _currentSleepDurationController.dispose();
+    _currentWakeUpDurationController.dispose();
     _addTimeDialogController.dispose();
 
     super.dispose();
@@ -86,7 +90,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
     map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
-    map['calcSlDurCurrentWakeUpDurationStr'] = _currentWakeUpDurationStr;
+    map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurStatus'] = _status;
 
     return map;
@@ -146,6 +150,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentSleepDurationStr = '';
         _currentSleepDurationController.text = _currentSleepDurationStr;
         _currentWakeUpDurationStr = '';
+        _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
         _status = status.wakeUp;
       },
     );
@@ -202,6 +207,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         setState(() {
           _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
+          _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
           _previousDateTimeStr = _newDateTimeStr;
           _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
@@ -237,9 +243,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeController.text = _previousDateTimeStr;
         _status = status.wakeUp;
       });
-
-      _updateTransferDataMap();
     }
+    _updateTransferDataMap();
   }
 
   void _addTimeToCurrentSleepDuration(
@@ -266,6 +271,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       setState(() {
         _currentSleepDurationStr = currentSleepDuration!.HHmm();
+        _currentSleepDurationController.text = _currentSleepDurationStr;
       });
 
       _updateTransferDataMap();
@@ -455,6 +461,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               // the TextField to really modify the TextField
                               // value.
                               _previousDateTimeController.text = val;
+
+                              // next two instructions required for the changes
+                              // to be memorized in screen navigation transfer
+                              // data
+                              _previousDateTimeStr = val;
+                              _updateTransferDataMap();
                             },
                           ),
                         ),
@@ -485,23 +497,30 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             ),
                           ),
                           child: TextField(
-                              style: TextStyle(
-                                  color: appTextAndIconColor,
-                                  fontSize: ScreenMixin.appTextFontSize,
-                                  fontWeight: ScreenMixin.appTextFontWeight),
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              keyboardType: TextInputType.datetime,
-                              controller: _currentSleepDurationController,
-                              onChanged: (val) {
-                                // called when manually updating the TextField
-                                // content. Although we do not edit this field
-                                // manually, onChanged must be defined aswell as
-                                // the controller in order for pasting a value to
-                                // the TextField to really modify the TextField
-                                // value.
-                                _currentSleepDurationController.text = val;
-                              }),
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            keyboardType: TextInputType.datetime,
+                            controller: _currentSleepDurationController,
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content. Although we do not edit this field
+                              // manually, onChanged must be defined aswell as
+                              // the controller in order for pasting a value to
+                              // the TextField to really modify the TextField
+                              // value.
+                              _currentSleepDurationController.text = val;
+
+                              // next two instructions required for the changes
+                              // to be memorized in screen navigation transfer
+                              // data
+                              _currentSleepDurationStr = val;
+                              _updateTransferDataMap();
+                            },
+                          ),
                         ),
                       ),
                       Tooltip(
@@ -541,22 +560,39 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       SizedBox(
                         width: 160,
-                        child: TextField(
-                          enabled: false,
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight),
-                          decoration: InputDecoration(
-                            isCollapsed: true,
-                            contentPadding:
-                                const EdgeInsets.fromLTRB(0, 17, 0, 0),
-                            labelText: _currentWakeUpDurationStr,
-                            labelStyle: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
-                              color: appTextAndIconColor,
-                              fontWeight: ScreenMixin.appTextFontWeight,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              // commenting cursorColor discourage manually
+                              // editing the TextField !
+                              // cursorColor: appTextAndIconColor,
                             ),
+                          ),
+                          child: TextField(
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            keyboardType: TextInputType.datetime,
+                            controller: _currentWakeUpDurationController,
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content. Although we do not edit this field
+                              // manually, onChanged must be defined aswell as
+                              // the controller in order for pasting a value to
+                              // the TextField to really modify the TextField
+                              // value.
+                              _currentWakeUpDurationController.text = val;
+
+                              // next two instructions required for the changes
+                              // to be memorized in screen navigation transfer
+                              // data
+                              _currentWakeUpDurationStr = val;
+                              _updateTransferDataMap();
+                            },
                           ),
                         ),
                       ),
@@ -619,7 +655,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             decoration: const InputDecoration(hintText: 'HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.datetime,
           ),
           actions: [
             TextButton(
