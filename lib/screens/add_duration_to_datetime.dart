@@ -155,25 +155,33 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     height: 15,
                   ),
-                  DateTimePicker(
-                    type: DateTimePickerType.dateTime,
-                    dateMask: 'dd-MM-yyyy HH:mm',
-                    use24HourFormat: true,
-                    controller: _startDateTimeController,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    icon: Icon(
-                      Icons.event,
-                      color: appTextAndIconColor,
-                      size: 30,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        cursorColor: appTextAndIconColor,
+                      ),
                     ),
-                    decoration: const InputDecoration.collapsed(hintText: ''),
-                    style: TextStyle(
-                      color: appTextAndIconColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                    child: DateTimePicker(
+                      type: DateTimePickerType.dateTime,
+                      dateMask: 'dd-MM-yyyy HH:mm',
+                      use24HourFormat: true,
+                      controller: _startDateTimeController,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                      icon: Icon(
+                        Icons.event,
+                        color: appTextAndIconColor,
+                        size: 30,
+                      ),
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                        color: appTextAndIconColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                        fontWeight: ScreenMixin.appTextFontWeight,
+                      ),
+                      onChanged: (val) => _setStateEndDateTime(),
                     ),
-                    onChanged: (val) => _setStateEndDateTime(),
                   ),
                   const SizedBox(
                     height: 25,
@@ -216,18 +224,26 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(25, 13, 0, 0),
-                        child: TextField(
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          style: TextStyle(
-                              color: _durationTextColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight),
-                          keyboardType: TextInputType.datetime,
-                          controller: _durationTextFieldController,
-                          onChanged: (val) {
-                            _setStateEndDateTime();
-                          },
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              cursorColor: appTextAndIconColor,
+                            ),
+                          ),
+                          child: TextField(
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: _durationTextColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            keyboardType: TextInputType.datetime,
+                            controller: _durationTextFieldController,
+                            onChanged: (val) {
+                              _setStateEndDateTime();
+                            },
+                          ),
                         ),
                       ),
                     ],
