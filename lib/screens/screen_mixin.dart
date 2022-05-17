@@ -11,6 +11,7 @@ mixin ScreenMixin {
   static const String appTitle = 'Circadian Calculator';
   final Color appLabelColor = Colors.yellow.shade300;
   final Color appTextAndIconColor = Colors.white;
+  final Color selectionColor = Colors.blue.shade900;
   final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
       MaterialStateProperty.all(Colors.blue.shade900);
   final MaterialStateProperty<RoundedRectangleBorder>

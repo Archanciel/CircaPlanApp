@@ -51,7 +51,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _name = '';
 
   late TextEditingController _newDateTimeController;
+  late TextEditingController _previousDateTimeController;
   late TextEditingController _addTimeDialogController;
+  late TextEditingController _currentSleepDurationController;
 
   @override
   void initState() {
@@ -61,12 +63,18 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _newDateTimeController = TextEditingController(
         text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
+    _previousDateTimeController = TextEditingController(
+        text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
+    _currentSleepDurationController = TextEditingController(
+        text: _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '');
     _addTimeDialogController = TextEditingController();
   }
 
   @override
   void dispose() {
     _newDateTimeController.dispose();
+    _previousDateTimeController.dispose();
+    _currentSleepDurationController.dispose();
     _addTimeDialogController.dispose();
 
     super.dispose();
@@ -134,7 +142,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
         _newDateTimeController.text = _newDateTimeStr;
         _previousDateTimeStr = '';
+        _previousDateTimeController.text = _previousDateTimeStr;
         _currentSleepDurationStr = '';
+        _currentSleepDurationController.text = _currentSleepDurationStr;
         _currentWakeUpDurationStr = '';
         _status = status.wakeUp;
       },
@@ -165,6 +175,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           // the compiler displays this error: 'The argument type 'DateTime?'
           // can't be assigned to the parameter type DateTime
           _previousDateTimeStr = frenchDateTimeFormat.format(newDateTime!);
+          _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
         });
       } else {
@@ -192,6 +203,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         setState(() {
           _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
           _previousDateTimeStr = _newDateTimeStr;
+          _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
         });
       }
@@ -220,7 +232,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       setState(() {
         _currentSleepDurationStr = currentSleepDuration!.HHmm();
+        _currentSleepDurationController.text = _currentSleepDurationStr;
         _previousDateTimeStr = _newDateTimeStr;
+        _previousDateTimeController.text = _previousDateTimeStr;
         _status = status.wakeUp;
       });
 
@@ -298,22 +312,30 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       SizedBox(
                         width: 160,
-                        child: TextField(
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight),
-                          keyboardType: TextInputType.datetime,
-                          controller: _newDateTimeController, // links the
-//                                                TextField content to pressing
-//                                                the button 'Now'. '+' or '-'
-                          onChanged: (val) {
-                            // called when manually updating the TextField
-                            // content
-                            _setStateNewDateTimeDependentFields(val);
-                          },
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              cursorColor: appTextAndIconColor,
+                            ),
+                          ),
+                          child: TextField(
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            keyboardType: TextInputType.datetime,
+                            controller: _newDateTimeController, // links the
+                            //                                                TextField content to pressing
+                            //                                                the button 'Now'. '+' or '-'
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content
+                              _setStateNewDateTimeDependentFields(val);
+                            },
+                          ),
                         ),
                       ),
                       ElevatedButton(
@@ -407,24 +429,34 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       SizedBox(
                         width: 160,
-                        child: TextField(
-                          enabled: false,
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight),
-                          decoration: InputDecoration(
-                            isCollapsed: true,
-                            contentPadding:
-                                const EdgeInsets.fromLTRB(0, 17, 0, 0),
-                            labelText: _previousDateTimeStr,
-                            labelStyle: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
-                              color: appTextAndIconColor,
-                              fontWeight: ScreenMixin.appTextFontWeight,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              // commenting cursorColor discourage manually
+                              // editing the TextField !
+                              // cursorColor: appTextAndIconColor,
                             ),
                           ),
-                          keyboardType: TextInputType.datetime,
+                          child: TextField(
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            keyboardType: TextInputType.datetime,
+                            controller: _previousDateTimeController,
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content. Although we do not edit this field
+                              // manually, onChanged must be defined aswell as
+                              // the controller in order for pasting a value to
+                              // the TextField to really modify the TextField
+                              // value.
+                              _previousDateTimeController.text = val;
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -443,27 +475,38 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       SizedBox(
                         width: 160,
-                        child: TextField(
-                          enabled: false,
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.appTextFontSize,
-                              fontWeight: ScreenMixin.appTextFontWeight),
-                          decoration: InputDecoration(
-                            isCollapsed: true,
-                            contentPadding:
-                                const EdgeInsets.fromLTRB(0, 17, 0, 0),
-                            labelText: _currentSleepDurationStr,
-                            labelStyle: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
-                              color: appTextAndIconColor,
-                              fontWeight: ScreenMixin.appTextFontWeight,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              // commenting cursorColor discourage manually
+                              // editing the TextField !
+                              // cursorColor: appTextAndIconColor,
                             ),
                           ),
+                          child: TextField(
+                              style: TextStyle(
+                                  color: appTextAndIconColor,
+                                  fontSize: ScreenMixin.appTextFontSize,
+                                  fontWeight: ScreenMixin.appTextFontWeight),
+                              decoration:
+                                  const InputDecoration.collapsed(hintText: ''),
+                              keyboardType: TextInputType.datetime,
+                              controller: _currentSleepDurationController,
+                              onChanged: (val) {
+                                // called when manually updating the TextField
+                                // content. Although we do not edit this field
+                                // manually, onChanged must be defined aswell as
+                                // the controller in order for pasting a value to
+                                // the TextField to really modify the TextField
+                                // value.
+                                _currentSleepDurationController.text = val;
+                              }),
                         ),
                       ),
                       Tooltip(
-                        message: 'Used to add siesta time whatever the status is.',
+                        message:
+                            'Used to add siesta time whatever the status is.',
                         child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
@@ -471,7 +514,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           onPressed: () async {
                             final timeStr = await openTextInputDialog();
                             if (timeStr == null || timeStr.isEmpty) return;
-                      
+
                             _addTimeToCurrentSleepDuration(context, timeStr);
                           },
                           child: const Text(
