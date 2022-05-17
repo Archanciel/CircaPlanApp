@@ -57,6 +57,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   late TextEditingController _startDateTimeController;
   late TextEditingController _durationTextFieldController;
+  late TextEditingController _endDateTimeTextFieldController;
 
   final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
@@ -71,6 +72,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimeStr);
     _durationTextFieldController =
         TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
+    _endDateTimeTextFieldController =
+        TextEditingController(text: _transferDataMap['endDateTimeStr'] ?? '');
 
     _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
   }
@@ -79,6 +82,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void dispose() {
     _startDateTimeController.dispose();
     _durationTextFieldController.dispose();
+    _endDateTimeTextFieldController.dispose();
 
     super.dispose();
   }
@@ -116,6 +120,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
       setState(() {
         _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
+        _endDateTimeTextFieldController.text = _endDateTimeStr;
       });
 
       _updateTransferDataMap();
@@ -262,18 +267,35 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     height: 15,
                   ),
-                  TextField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      labelText: _endDateTimeStr,
-                      labelStyle: TextStyle(
-                        fontSize: ScreenMixin.appTextFontSize,
-                        color: appTextAndIconColor,
-                        fontWeight: ScreenMixin.appTextFontWeight,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        // commenting cursorColor discourage manually
+                        // editing the TextField !
+                        // cursorColor: appTextAndIconColor,
                       ),
                     ),
-                    // The validator receives the text that the user has entered.
+                    child: TextField(
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                          color: appTextAndIconColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight),
+                      // The validator receives the text that the user has entered.
+                      controller: _endDateTimeTextFieldController,
+                      onChanged: (val) {
+                        // called when manually updating the TextField
+                        // content. onChanged must be defined in order for
+                        // pasting a value to the TextField to really
+                        // modify the TextField value and store it
+                        // in the screen navigation transfer
+                        // data map.
+                        _endDateTimeTextFieldController.text = val;
+                        _endDateTimeStr = val;
+                        _updateTransferDataMap();
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 25,
