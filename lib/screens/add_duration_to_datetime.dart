@@ -164,7 +164,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
                         selectionColor: selectionColor,
-                        cursorColor: appTextAndIconColor,
                       ),
                     ),
                     child: DateTimePicker(

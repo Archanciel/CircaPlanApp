@@ -48,6 +48,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   late TextEditingController _startDateTimeController;
   late TextEditingController _endDateTimeController;
+  late TextEditingController _durationTextFieldController;
 
   final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
@@ -61,12 +62,15 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         text: _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr);
     _endDateTimeController = TextEditingController(
         text: _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr);
+    _durationTextFieldController = TextEditingController(
+        text: _transferDataMap['dtDiffDurationStr'] ?? '');
   }
 
   @override
   void dispose() {
     _startDateTimeController.dispose();
     _endDateTimeController.dispose();
+    _durationTextFieldController.dispose();
 
     super.dispose();
   }
@@ -99,6 +103,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     setState(
       () {
         _durationStr = diffDuration.HHmm();
+        _durationTextFieldController.text = _durationStr;
       },
     );
 
@@ -138,25 +143,32 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  DateTimePicker(
-                    type: DateTimePickerType.dateTime,
-                    dateMask: 'dd-MM-yyyy HH:mm',
-                    use24HourFormat: true,
-                    controller: _startDateTimeController,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    icon: Icon(
-                      Icons.event,
-                      color: appTextAndIconColor,
-                      size: 30,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                      ),
                     ),
-                    decoration: const InputDecoration.collapsed(hintText: ''),
-                    style: TextStyle(
-                      color: appTextAndIconColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                    child: DateTimePicker(
+                      type: DateTimePickerType.dateTime,
+                      dateMask: 'dd-MM-yyyy HH:mm',
+                      use24HourFormat: true,
+                      controller: _startDateTimeController,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                      icon: Icon(
+                        Icons.event,
+                        color: appTextAndIconColor,
+                        size: 30,
+                      ),
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                        color: appTextAndIconColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                        fontWeight: ScreenMixin.appTextFontWeight,
+                      ),
+                      onChanged: (val) => _setStateDiffDuration(),
                     ),
-                    onChanged: (val) => _setStateDiffDuration(),
                   ),
                   const SizedBox(
                     height: 25,
@@ -176,25 +188,32 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  DateTimePicker(
-                    type: DateTimePickerType.dateTime,
-                    dateMask: 'dd-MM-yyyy HH:mm',
-                    use24HourFormat: true,
-                    controller: _endDateTimeController,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    icon: Icon(
-                      Icons.event,
-                      color: appTextAndIconColor,
-                      size: 30,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                      ),
                     ),
-                    decoration: const InputDecoration.collapsed(hintText: ''),
-                    style: TextStyle(
-                      color: appTextAndIconColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                    child: DateTimePicker(
+                      type: DateTimePickerType.dateTime,
+                      dateMask: 'dd-MM-yyyy HH:mm',
+                      use24HourFormat: true,
+                      controller: _endDateTimeController,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                      icon: Icon(
+                        Icons.event,
+                        color: appTextAndIconColor,
+                        size: 30,
+                      ),
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                        color: appTextAndIconColor,
+                        fontSize: ScreenMixin.appTextFontSize,
+                        fontWeight: ScreenMixin.appTextFontWeight,
+                      ),
+                      onChanged: (val) => _setStateDiffDuration(),
                     ),
-                    onChanged: (val) => _setStateDiffDuration(),
                   ),
                   const SizedBox(
                     height: 25,
@@ -210,19 +229,37 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  TextField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      //           contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      labelText: _durationStr,
-                      labelStyle: TextStyle(
-                        fontSize: ScreenMixin.appTextFontSize,
-                        color: appTextAndIconColor,
-                        fontWeight: ScreenMixin.appTextFontWeight,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        cursorColor: appTextAndIconColor,
                       ),
                     ),
-                    // The validator receives the text that the user has entered.
+                    child: TextField(
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                          color: appTextAndIconColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight),
+                      keyboardType: TextInputType.datetime,
+                      controller: _durationTextFieldController,
+                      onChanged: (val) {
+                        // called when manually updating the TextField
+                        // content. Although we do not edit this field
+                        // manually, onChanged must be defined aswell as
+                        // the controller in order for pasting a value to
+                        // the TextField to really modify the TextField
+                        // value.
+                        _durationTextFieldController.text = val;
+
+                        // next two instructions required for the changes
+                        // to be memorized in screen navigation transfer
+                        // data
+                        _durationStr = val;
+                        _updateTransferDataMap();
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 25,
