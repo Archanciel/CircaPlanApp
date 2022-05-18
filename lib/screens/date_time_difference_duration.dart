@@ -117,7 +117,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       diffDuration = startDateTime.difference(endDateTime);
     }
 
-    Duration? finalDuration = null;
+    Duration? finalDuration;
     Duration? addTimeDuration = DateTimeParser.parseHHmmDuration(_addTimeStr);
 
     if (addTimeDuration != null) {
@@ -136,28 +136,38 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   void _addPosOrNegTimeToCurrentDuration(
 
-      /// Private method called when clicking on 'Add' button located at right of
-      /// duration TextField.
+      /// Private method called when clicking on 'Add' button located at right
+      /// of the 3 duration TextField's.
       BuildContext context,
-      String timeStr) {
-    Duration? addTimeDuration = DateTimeParser.parseHHmmDuration(timeStr);
+      String dialogTimeStr) {
+    Duration? dialogTimeDuration = DateTimeParser.parseHHmmDuration(dialogTimeStr);
 
-    if (addTimeDuration == null) {
+    if (dialogTimeDuration == null) {
       openWarningDialog(context,
-          'You entered an incorrectly formated (-)HH:mm time ($timeStr). Please retry !');
+          'You entered an incorrectly formated (-)HH:mm time ($dialogTimeStr). Please retry !');
       return;
     } else {
-      Duration? duration = DateTimeParser.parseHHmmDuration(_addTimeStr);
+      Duration? existingAddTimeDuration =
+          DateTimeParser.parseHHmmDuration(_addTimeStr);
 
-      if (duration == null) {
-        duration = addTimeDuration;
+      if (existingAddTimeDuration == null) {
+        existingAddTimeDuration = dialogTimeDuration;
       } else {
-        duration += addTimeDuration;
+        existingAddTimeDuration += dialogTimeDuration;
+      }
+
+      Duration? startEndDateTimeDiffDuration = DateTimeParser.parseHHmmDuration(_durationStr);
+      Duration? finalDuration;
+
+      if (startEndDateTimeDiffDuration != null) {
+        finalDuration = startEndDateTimeDiffDuration + existingAddTimeDuration;
       }
 
       setState(() {
-        _addTimeStr = duration!.HHmm();
+        _addTimeStr = existingAddTimeDuration!.HHmm();
         _addTimeTextFieldController.text = _addTimeStr;
+        _finalDurationStr = finalDuration?.HHmm() ?? '';
+        _finalDurationTextFieldController.text = _finalDurationStr;
       });
 
       _updateTransferDataMap();
