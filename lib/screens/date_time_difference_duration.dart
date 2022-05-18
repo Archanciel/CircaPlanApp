@@ -49,6 +49,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _startDateTimeController;
   late TextEditingController _endDateTimeController;
   late TextEditingController _durationTextFieldController;
+  late TextEditingController _addTimeDialogController;
 
   final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
@@ -64,6 +65,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         text: _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr);
     _durationTextFieldController = TextEditingController(
         text: _transferDataMap['dtDiffDurationStr'] ?? '');
+    _addTimeDialogController = TextEditingController();
   }
 
   @override
@@ -71,6 +73,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _startDateTimeController.dispose();
     _endDateTimeController.dispose();
     _durationTextFieldController.dispose();
+    _addTimeDialogController.dispose();
 
     super.dispose();
   }
@@ -108,6 +111,37 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     );
 
     _updateTransferDataMap();
+  }
+
+  void _addTimeToCurrentSleepDuration(
+
+      /// Private method called when clicking on 'Add' button located at right of
+      /// current sleep duration TextField.
+      BuildContext context,
+      String durationStr) {
+    Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
+
+    if (addDuration == null) {
+      openWarningDialog(context,
+          'You entered an incorrectly formated HH:mm time ($durationStr). Please retry !');
+      return;
+    } else {
+      Duration? duration =
+          DateTimeParser.parseHHmmDuration(_durationStr);
+
+      if (duration == null) {
+        duration = addDuration;
+      } else {
+        duration += addDuration;
+      }
+
+      setState(() {
+        _durationStr = duration!.HHmm();
+        _durationTextFieldController.text = _durationStr;
+      });
+
+      _updateTransferDataMap();
+    }
   }
 
   @override
@@ -326,6 +360,26 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       ),
                     ),
                   ),
+                  Tooltip(
+                    message: 'Used to add siesta time whatever the status is.',
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: appElevatedButtonBackgroundColor,
+                          shape: appElevatedButtonRoundedShape),
+                      onPressed: () async {
+                        final timeStr = await openTextInputDialog();
+                        if (timeStr == null || timeStr.isEmpty) return;
+
+                        _addTimeToCurrentSleepDuration(context, timeStr);
+                      },
+                      child: const Text(
+                        'Add',
+                        style: TextStyle(
+                          fontSize: ScreenMixin.appTextFontSize,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -333,5 +387,34 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         ),
       ),
     );
+  }
+
+  Future<String?> openTextInputDialog() => showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Time to add'),
+          content: TextField(
+            autofocus: true,
+            style: TextStyle(
+                fontSize: ScreenMixin.appTextFontSize,
+                fontWeight: ScreenMixin.appTextFontWeight),
+            decoration: const InputDecoration(hintText: 'HH:mm'),
+            controller: _addTimeDialogController,
+            onSubmitted: (_) => submit(),
+            keyboardType: TextInputType.datetime,
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Add time'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context).pop(_addTimeDialogController.text);
+
+    _addTimeDialogController.clear();
   }
 }
