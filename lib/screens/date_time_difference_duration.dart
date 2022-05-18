@@ -36,6 +36,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         _endDateTimeStr = transferDataMap['dtDiffEndDateTimeStr'] ??
             DateTime.now().toString(),
         _durationStr = transferDataMap['dtDiffDurationStr'] ?? '',
+        _addTimeStr = transferDataMap['dtDiffAddTimeStr'] ?? '',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -45,11 +46,13 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   String _startDateTimeStr = '';
   String _endDateTimeStr = '';
   String _durationStr = '';
+  String _addTimeStr = '';
 
   late TextEditingController _startDateTimeController;
   late TextEditingController _endDateTimeController;
   late TextEditingController _durationTextFieldController;
   late TextEditingController _addTimeDialogController;
+  late TextEditingController _addTimeTextFieldController;
 
   final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
 
@@ -66,6 +69,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _durationTextFieldController = TextEditingController(
         text: _transferDataMap['dtDiffDurationStr'] ?? '');
     _addTimeDialogController = TextEditingController();
+    _addTimeTextFieldController = TextEditingController(
+        text: _transferDataMap['dtDiffAddTimeStr'] ?? '');
   }
 
   @override
@@ -74,6 +79,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _endDateTimeController.dispose();
     _durationTextFieldController.dispose();
     _addTimeDialogController.dispose();
+    _addTimeTextFieldController.dispose();
 
     super.dispose();
   }
@@ -84,6 +90,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     map['dtDiffStartDateTimeStr'] = _startDateTimeStr;
     map['dtDiffEndDateTimeStr'] = _endDateTimeStr;
     map['dtDiffDurationStr'] = _durationStr;
+    map['dtDiffAddTimeStr'] = _addTimeStr;
 
     return map;
   }
@@ -118,26 +125,25 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       /// Private method called when clicking on 'Add' button located at right of
       /// duration TextField.
       BuildContext context,
-      String durationStr) {
-    Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
+      String timeStr) {
+    Duration? addTimeDuration = DateTimeParser.parseHHmmDuration(timeStr);
 
-    if (addDuration == null) {
+    if (addTimeDuration == null) {
       openWarningDialog(context,
-          'You entered an incorrectly formated (-)HH:mm time ($durationStr). Please retry !');
+          'You entered an incorrectly formated (-)HH:mm time ($timeStr). Please retry !');
       return;
     } else {
-      Duration? duration =
-          DateTimeParser.parseHHmmDuration(_durationStr);
+      Duration? duration = DateTimeParser.parseHHmmDuration(_addTimeStr);
 
       if (duration == null) {
-        duration = addDuration;
+        duration = addTimeDuration;
       } else {
-        duration += addDuration;
+        duration += addTimeDuration;
       }
 
       setState(() {
-        _durationStr = duration!.HHmm();
-        _durationTextFieldController.text = _durationStr;
+        _addTimeStr = duration!.HHmm();
+        _addTimeTextFieldController.text = _addTimeStr;
       });
 
       _updateTransferDataMap();
@@ -275,7 +281,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             ),
                           ),
                           child: TextField(
-                            decoration: const InputDecoration.collapsed(hintText: ''),
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
                                 fontSize: ScreenMixin.appTextFontSize,
@@ -310,13 +317,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             ),
                           ),
                           child: TextField(
-                            decoration: const InputDecoration.collapsed(hintText: ''),
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
                                 fontSize: ScreenMixin.appTextFontSize,
                                 fontWeight: ScreenMixin.appTextFontWeight),
                             keyboardType: TextInputType.datetime,
-                            controller: _durationTextFieldController,
+                            controller: _addTimeTextFieldController,
                             onChanged: (val) {
                               // called when manually updating the TextField
                               // content. Although we do not edit this field
@@ -324,12 +332,12 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                               // the controller in order for pasting a value to
                               // the TextField to really modify the TextField
                               // value.
-                              _durationTextFieldController.text = val;
+                              _addTimeTextFieldController.text = val;
 
                               // next two instructions required for the changes
                               // to be memorized in screen navigation transfer
                               // data
-                              _durationStr = val;
+                              _addTimeStr = val;
                               _updateTransferDataMap();
                             },
                           ),
