@@ -263,37 +263,79 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
-                        cursorColor: appTextAndIconColor,
-                      ),
-                    ),
-                    child: TextField(
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight),
-                      keyboardType: TextInputType.datetime,
-                      controller: _durationTextFieldController,
-                      onChanged: (val) {
-                        // called when manually updating the TextField
-                        // content. Although we do not edit this field
-                        // manually, onChanged must be defined aswell as
-                        // the controller in order for pasting a value to
-                        // the TextField to really modify the TextField
-                        // value.
-                        _durationTextFieldController.text = val;
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              cursorColor: appTextAndIconColor,
+                            ),
+                          ),
+                          child: TextField(
+                            decoration: const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            keyboardType: TextInputType.datetime,
+                            controller: _durationTextFieldController,
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content. Although we do not edit this field
+                              // manually, onChanged must be defined aswell as
+                              // the controller in order for pasting a value to
+                              // the TextField to really modify the TextField
+                              // value.
+                              _durationTextFieldController.text = val;
 
-                        // next two instructions required for the changes
-                        // to be memorized in screen navigation transfer
-                        // data
-                        _durationStr = val;
-                        _updateTransferDataMap();
-                      },
-                    ),
+                              // next two instructions required for the changes
+                              // to be memorized in screen navigation transfer
+                              // data
+                              _durationStr = val;
+                              _updateTransferDataMap();
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 60,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              cursorColor: appTextAndIconColor,
+                            ),
+                          ),
+                          child: TextField(
+                            decoration: const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.appTextFontSize,
+                                fontWeight: ScreenMixin.appTextFontWeight),
+                            keyboardType: TextInputType.datetime,
+                            controller: _durationTextFieldController,
+                            onChanged: (val) {
+                              // called when manually updating the TextField
+                              // content. Although we do not edit this field
+                              // manually, onChanged must be defined aswell as
+                              // the controller in order for pasting a value to
+                              // the TextField to really modify the TextField
+                              // value.
+                              _durationTextFieldController.text = val;
+
+                              // next two instructions required for the changes
+                              // to be memorized in screen navigation transfer
+                              // data
+                              _durationStr = val;
+                              _updateTransferDataMap();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 25,
