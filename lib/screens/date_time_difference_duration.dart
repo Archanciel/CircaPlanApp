@@ -406,7 +406,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 150,
                   ),
                   Container(
                     alignment: Alignment.topRight,

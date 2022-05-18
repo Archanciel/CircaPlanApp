@@ -297,7 +297,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ),
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 150,
                   ),
                   Container(
                     alignment: Alignment.topRight,

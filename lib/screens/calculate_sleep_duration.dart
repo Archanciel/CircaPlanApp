@@ -624,7 +624,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 85),
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 98),
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: appElevatedButtonBackgroundColor,

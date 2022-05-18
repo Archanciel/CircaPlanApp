@@ -254,25 +254,31 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     // The validator receives the text that the user has entered.
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 150,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          // Validate returns true if the form is valid, or false otherwise.
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                          }
-                        },
-                        child: const Text(
-                          'Submit',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
+                      const SizedBox(
+                        width: 200,
+                      ),
+                      Container(
+                    alignment: Alignment.topRight,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () {
+                            // Validate returns true if the form is valid, or false otherwise.
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                            }
+                          },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.appTextFontSize,
+                            ),
                           ),
                         ),
                       ),
