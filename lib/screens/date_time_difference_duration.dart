@@ -113,7 +113,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
-  void _addTimeToCurrentDuration(
+  void _addPosOrNegTimeToCurrentDuration(
 
       /// Private method called when clicking on 'Add' button located at right of
       /// duration TextField.
@@ -123,7 +123,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     if (addDuration == null) {
       openWarningDialog(context,
-          'You entered an incorrectly formated HH:mm time ($durationStr). Please retry !');
+          'You entered an incorrectly formated (-)HH:mm time ($durationStr). Please retry !');
       return;
     } else {
       Duration? duration =
@@ -364,7 +364,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     height: 70,
                   ),
                   Tooltip(
-                    message: 'Used to add siesta time whatever the status is.',
+                    message: 'Used to add positive or negative time.',
                     child: ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor: appElevatedButtonBackgroundColor,
@@ -373,7 +373,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         final timeStr = await openTextInputDialog();
                         if (timeStr == null || timeStr.isEmpty) return;
 
-                        _addTimeToCurrentDuration(context, timeStr);
+                        _addPosOrNegTimeToCurrentDuration(context, timeStr);
                       },
                       child: const Text(
                         'Add',
@@ -401,7 +401,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
             style: TextStyle(
                 fontSize: ScreenMixin.appTextFontSize,
                 fontWeight: ScreenMixin.appTextFontWeight),
-            decoration: const InputDecoration(hintText: 'HH:mm'),
+            decoration: const InputDecoration(hintText: '(-)HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
             keyboardType: TextInputType.datetime,
