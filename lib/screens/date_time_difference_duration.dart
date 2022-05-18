@@ -113,10 +113,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
-  void _addTimeToCurrentSleepDuration(
+  void _addTimeToCurrentDuration(
 
       /// Private method called when clicking on 'Add' button located at right of
-      /// current sleep duration TextField.
+      /// duration TextField.
       BuildContext context,
       String durationStr) {
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
@@ -360,6 +360,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 70,
+                  ),
                   Tooltip(
                     message: 'Used to add siesta time whatever the status is.',
                     child: ElevatedButton(
@@ -370,7 +373,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         final timeStr = await openTextInputDialog();
                         if (timeStr == null || timeStr.isEmpty) return;
 
-                        _addTimeToCurrentSleepDuration(context, timeStr);
+                        _addTimeToCurrentDuration(context, timeStr);
                       },
                       child: const Text(
                         'Add',
