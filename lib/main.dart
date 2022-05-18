@@ -107,66 +107,68 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ];
 
     /// For iOS platform: SafeArea and ClipRect needed
-    return Container(
-      color: Colors.blue,
-      child: Scaffold(
-        extendBody: true,
-        backgroundColor: Colors.blue.shade900,
-        body: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 4,
-              height: screenHeight * 0.125,
-              child: AppBar(
-                backgroundColor: Colors.blue.shade900,
-                title: Text(
-                  screenTitlesLst[_currentIndex],
-                  style: TextStyle(color: Colors.yellow.shade200),
-                ),
-                elevation: 0,
-                centerTitle: true,
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: screenHeight * 0.125,
-              height: screenHeight * 0.875,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.blue,
-                ),
-                child: screensLst[_currentIndex],
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  iconTheme: IconThemeData(color: Colors.blue.shade900),
-                ),
-                child: CurvedNavigationBar(
-                  key: _navigationKey,
-                  color: Colors.white,
-                  buttonBackgroundColor: Colors.yellow.shade200,
-                  backgroundColor: Colors.transparent,
-                  height: 55,
-                  animationCurve: Curves.easeInOut,
-                  animationDuration: Duration(milliseconds: 500),
-                  index: _currentIndex,
-                  items: curvedNavigationBarItemIconsLst,
-                  onTap: (index) => setState(() {
-                    _currentIndex = index;
-                  }),
+    return SafeArea(
+      child: Container(
+        color: Colors.blue,
+        child: Scaffold(
+          extendBody: true,
+          backgroundColor: Colors.blue.shade900,
+          body: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 4,
+                height: screenHeight * 0.07,
+                child: AppBar(
+                  backgroundColor: Colors.blue.shade900,
+                  title: Text(
+                    screenTitlesLst[_currentIndex],
+                    style: TextStyle(color: Colors.yellow.shade200),
+                  ),
+                  elevation: 0,
+                  centerTitle: true,
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                left: 0,
+                right: 0,
+                top: screenHeight * 0.08,
+                height: screenHeight * 0.92,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.blue,
+                  ),
+                  child: screensLst[_currentIndex],
+                ),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    iconTheme: IconThemeData(color: Colors.blue.shade900),
+                  ),
+                  child: CurvedNavigationBar(
+                    key: _navigationKey,
+                    color: Colors.white,
+                    buttonBackgroundColor: Colors.yellow.shade200,
+                    backgroundColor: Colors.transparent,
+                    height: 55,
+                    animationCurve: Curves.easeInOut,
+                    animationDuration: Duration(milliseconds: 500),
+                    index: _currentIndex,
+                    items: curvedNavigationBarItemIconsLst,
+                    onTap: (index) => setState(() {
+                      _currentIndex = index;
+                    }),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
