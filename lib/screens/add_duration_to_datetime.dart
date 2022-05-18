@@ -322,10 +322,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
+            Positioned(
+              right: 90,
               child: Column(
                 children: [
+                  SizedBox(height: 38,),
                   ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor: appElevatedButtonBackgroundColor,
