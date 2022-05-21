@@ -7,6 +7,7 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 enum status { wakeUp, sleep }
+
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
 class CalculateSleepDuration extends StatefulWidget {
@@ -39,6 +40,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpDurationStr =
             transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '',
         _status = transferDataMap['calcSlDurStatus'] ?? status.wakeUp,
+        _sleepTimeStrHistory =
+            transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [],
+        _wakeUpTimeStrHistory =
+            transferDataMap['calcSlDurWakeUpTimeStrHistory'] ?? [],
         super();
 
   Map<String, dynamic> _transferDataMap;
@@ -48,7 +53,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
   status _status = status.wakeUp;
-  String _name = '';
+  List<String> _sleepTimeStrHistory = [];
+  List<String> _wakeUpTimeStrHistory = [];
 
   late TextEditingController _newDateTimeController;
   late TextEditingController _previousDateTimeController;
@@ -92,6 +98,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurStatus'] = _status;
+    map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
+    map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
+  //  print('sleepTimeStrHistory: $_sleepTimeStrHistory');
+  //  print('wakeUpTimeStrHistory: $_wakeUpTimeStrHistory');
 
     return map;
   }
@@ -152,6 +162,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpDurationStr = '';
         _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
         _status = status.wakeUp;
+        _sleepTimeStrHistory = [];
+        _wakeUpTimeStrHistory = [];
       },
     );
 
@@ -182,6 +194,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           _previousDateTimeStr = frenchDateTimeFormat.format(newDateTime!);
           _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
+          _sleepTimeStrHistory.add(_previousDateTimeStr);
         });
       } else {
         DateTime? previousDateTime;
@@ -211,6 +224,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           _previousDateTimeStr = _newDateTimeStr;
           _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
+          _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         });
       }
     } else {
@@ -232,6 +246,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       if (currentSleepDuration == null) {
         currentSleepDuration = sleepDuration;
+        _wakeUpTimeStrHistory.add(_newDateTimeStr);
       } else {
         currentSleepDuration += sleepDuration;
       }
@@ -242,6 +257,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeStr = _newDateTimeStr;
         _previousDateTimeController.text = _previousDateTimeStr;
         _status = status.wakeUp;
+        _sleepTimeStrHistory.add(sleepDuration.HHmm());
       });
     }
     _updateTransferDataMap();
