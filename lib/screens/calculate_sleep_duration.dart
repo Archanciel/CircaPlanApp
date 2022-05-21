@@ -64,11 +64,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _sleepWakeUpHistoryController;
 
   String _buildSleepWakeUpHistoryStr() {
-    List<String> sleepTimeHistoryLst =
+    List<String>? sleepTimeHistoryLst =
         _transferDataMap['calcSlDurSleepTimeStrHistory'];
-    List<String> wakeUpTimeHistoryLst =
+    List<String>? wakeUpTimeHistoryLst =
         _transferDataMap['calcSlDurWakeUpTimeStrHistory'];
 
+    if (sleepTimeHistoryLst == null || wakeUpTimeHistoryLst == null) {
+      return '';
+    }
+    
     String sleepTimeHistoryStr = '';
 
     if (sleepTimeHistoryLst.length >= 2) {
@@ -108,8 +112,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentWakeUpDurationController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '');
     _addTimeDialogController = TextEditingController();
-//    _sleepWakeUpHistoryController =
-//        TextEditingController(text: _buildSleepWakeUpHistoryStr());
+    _sleepWakeUpHistoryController =
+        TextEditingController(text: _buildSleepWakeUpHistoryStr());
   }
 
   @override
