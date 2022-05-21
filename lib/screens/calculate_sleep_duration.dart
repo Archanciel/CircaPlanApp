@@ -61,18 +61,35 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _addTimeDialogController;
   late TextEditingController _currentSleepDurationController;
   late TextEditingController _currentWakeUpDurationController;
+  late TextEditingController _sleepWakeUpHistoryController;
 
   String _buildSleepWakeUpHistoryStr() {
     List<String> sleepTimeHistoryLst =
         _transferDataMap['calcSlDurSleepTimeStrHistory'];
     List<String> wakeUpTimeHistoryLst =
         _transferDataMap['calcSlDurWakeUpTimeStrHistory'];
-    String sleepTimeHistoryStr = 'Sleep ' + sleepTimeHistoryLst.first + ': ' + sleepTimeHistoryLst.sublist(1).join(', ');
-    String wakeUpTimeHistoryStr = 'Wake up ' + wakeUpTimeHistoryLst.first + ': ' + wakeUpTimeHistoryLst.sublist(1).join(', ');
-   
+
+    String sleepTimeHistoryStr = '';
+
+    if (sleepTimeHistoryLst.length >= 2) {
+      sleepTimeHistoryStr = 'Sleep ' +
+          sleepTimeHistoryLst.first +
+          ': ' +
+          sleepTimeHistoryLst.sublist(1).join(', ');
+    }
+
+    String wakeUpTimeHistoryStr = '';
+
+    if (wakeUpTimeHistoryLst.length >= 2) {
+      wakeUpTimeHistoryStr = 'Wake up ' +
+          wakeUpTimeHistoryLst.first +
+          ': ' +
+          wakeUpTimeHistoryLst.sublist(1).join(', ');
+    }
+
     print(sleepTimeHistoryStr);
     print(wakeUpTimeHistoryStr);
-   
+
     return sleepTimeHistoryStr + '\n' + wakeUpTimeHistoryStr;
   }
 
@@ -91,6 +108,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentWakeUpDurationController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '');
     _addTimeDialogController = TextEditingController();
+//    _sleepWakeUpHistoryController =
+//        TextEditingController(text: _buildSleepWakeUpHistoryStr());
   }
 
   @override
