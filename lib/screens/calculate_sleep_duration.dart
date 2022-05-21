@@ -72,7 +72,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     if (sleepTimeHistoryLst == null || wakeUpTimeHistoryLst == null) {
       return '';
     }
-    
+
     String sleepTimeHistoryStr = '';
 
     if (sleepTimeHistoryLst.length >= 2) {
@@ -123,6 +123,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentSleepDurationController.dispose();
     _currentWakeUpDurationController.dispose();
     _addTimeDialogController.dispose();
+    _sleepWakeUpHistoryController.dispose();
 
     super.dispose();
   }
@@ -297,6 +298,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeController.text = _previousDateTimeStr;
         _status = status.wakeUp;
         _sleepTimeStrHistory.add(sleepDuration.HHmm());
+        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       });
     }
     _updateTransferDataMap();
@@ -652,6 +654,39 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Sleep and wake up history',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 160,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          // commenting cursorColor discourage manually
+                          // editing the TextField !
+                          // cursorColor: appTextAndIconColor,
+                        ),
+                      ),
+                      child: TextField(
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.appTextFontSize,
+                            fontWeight: ScreenMixin.appTextFontWeight),
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _sleepWakeUpHistoryController,
+                      ),
+                    ),
                   ),
                 ],
               ),
