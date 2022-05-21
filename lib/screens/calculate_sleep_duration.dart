@@ -62,6 +62,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _currentSleepDurationController;
   late TextEditingController _currentWakeUpDurationController;
 
+  String _buildSleepWakeUpHistoryStr() {
+    List<String> sleepTimeHistoryLst =
+        _transferDataMap['calcSlDurSleepTimeStrHistory'];
+    List<String> wakeUpTimeHistoryLst =
+        _transferDataMap['calcSlDurWakeUpTimeStrHistory'];
+    String sleepTimeHistoryStr = 'Sleep ' + sleepTimeHistoryLst.first + ': ' + sleepTimeHistoryLst.sublist(1).join(', ');
+    String wakeUpTimeHistoryStr = 'Wake up ' + wakeUpTimeHistoryLst.first + ': ' + wakeUpTimeHistoryLst.sublist(1).join(', ');
+   
+    print(sleepTimeHistoryStr);
+    print(wakeUpTimeHistoryStr);
+   
+    return sleepTimeHistoryStr + '\n' + wakeUpTimeHistoryStr;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -100,8 +114,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurStatus'] = _status;
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
-  //  print('sleepTimeStrHistory: $_sleepTimeStrHistory');
-  //  print('wakeUpTimeStrHistory: $_wakeUpTimeStrHistory');
+
+    _buildSleepWakeUpHistoryStr();
+    //  print('sleepTimeStrHistory: $_sleepTimeStrHistory');
+    //  print('wakeUpTimeStrHistory: $_wakeUpTimeStrHistory');
 
     return map;
   }
