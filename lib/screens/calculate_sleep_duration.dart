@@ -77,7 +77,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (sleepTimeHistoryLst.length >= 2) {
       sleepTimeHistoryStr = 'Sleep ' +
-          sleepTimeHistoryLst.first +
+          _removeYear(sleepTimeHistoryLst.first) +
           ': ' +
           sleepTimeHistoryLst.sublist(1).join(', ');
     }
@@ -85,8 +85,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     String wakeUpTimeHistoryStr = '';
 
     if (wakeUpTimeHistoryLst.length >= 2) {
-      wakeUpTimeHistoryStr = 'Wake up ' +
-          wakeUpTimeHistoryLst.first +
+      wakeUpTimeHistoryStr = 'Wake ' +
+          _removeYear(wakeUpTimeHistoryLst.first) +
           ': ' +
           wakeUpTimeHistoryLst.sublist(1).join(', ');
     }
@@ -95,6 +95,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     print(wakeUpTimeHistoryStr);
 
     return sleepTimeHistoryStr + '\n' + wakeUpTimeHistoryStr;
+  }
+
+  String _removeYear(dateTimeStr) {
+    List<String> dateTimeStrLst = dateTimeStr.split(' ');
+    List<String> dateStrLst = dateTimeStrLst.first.split('-');
+
+    String dateTimeNoYearStr =
+        '${dateStrLst.sublist(0, 2).join('-')} ${dateTimeStrLst.last}';
+
+    return dateTimeNoYearStr;
   }
 
   @override
@@ -204,6 +214,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _status = status.wakeUp;
         _sleepTimeStrHistory = [];
         _wakeUpTimeStrHistory = [];
+        _sleepWakeUpHistoryController.text = '';
       },
     );
 
@@ -265,6 +276,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
           _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
+          _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
         });
       }
     } else {
@@ -665,27 +677,25 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       fontSize: ScreenMixin.appTextFontSize,
                     ),
                   ),
-                  SizedBox(
-                    width: 160,
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          // commenting cursorColor discourage manually
-                          // editing the TextField !
-                          // cursorColor: appTextAndIconColor,
-                        ),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        // commenting cursorColor discourage manually
+                        // editing the TextField !
+                        // cursorColor: appTextAndIconColor,
                       ),
-                      child: TextField(
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.appTextFontSize,
-                            fontWeight: ScreenMixin.appTextFontWeight),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        keyboardType: TextInputType.datetime,
-                        controller: _sleepWakeUpHistoryController,
-                      ),
+                    ),
+                    child: TextField(
+                      maxLines: null,
+                      minLines: 3,
+                      style: TextStyle(
+                          color: appTextAndIconColor,
+                          fontSize: ScreenMixin.appTextFontSize,
+                          fontWeight: ScreenMixin.appTextFontWeight),
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      keyboardType: TextInputType.datetime,
+                      controller: _sleepWakeUpHistoryController,
                     ),
                   ),
                 ],
@@ -714,7 +724,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 98),
+            margin: const EdgeInsets.fromLTRB(280, 0, 0, 78),
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: appElevatedButtonBackgroundColor,
