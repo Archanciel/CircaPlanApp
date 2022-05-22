@@ -476,7 +476,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 ],
               ),
             ),
-            Align(
+/*            Align(
               alignment: Alignment.bottomLeft,
               child: Container(
                 margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
@@ -500,7 +500,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
