@@ -140,6 +140,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state = $state');
+  }
+
   Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
