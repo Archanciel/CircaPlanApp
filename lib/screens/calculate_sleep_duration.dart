@@ -69,22 +69,24 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     List<String>? wakeUpTimeHistoryLst =
         _transferDataMap['calcSlDurWakeUpTimeStrHistory'];
 
-    if (sleepTimeHistoryLst == null || wakeUpTimeHistoryLst == null) {
-      return '';
-    }
-
     String sleepTimeHistoryStr = '';
 
-    if (sleepTimeHistoryLst.length >= 2) {
-      sleepTimeHistoryStr = 'Sleep ' +
-          _removeYear(sleepTimeHistoryLst.first) +
-          ': ' +
-          sleepTimeHistoryLst.sublist(1).join(', ');
+    if (sleepTimeHistoryLst != null) {
+      if (sleepTimeHistoryLst.length == 1) {
+        // the case if the add siesta button was pressed before adding
+        // any sleep time
+        sleepTimeHistoryStr = sleepTimeHistoryLst.first;
+      } else if (sleepTimeHistoryLst.length >= 2) {
+        sleepTimeHistoryStr = 'Sleep ' +
+            _removeYear(sleepTimeHistoryLst.first) +
+            ': ' +
+            sleepTimeHistoryLst.sublist(1).join(', ');
+      }
     }
 
     String wakeUpTimeHistoryStr = '';
 
-    if (wakeUpTimeHistoryLst.length >= 2) {
+    if (wakeUpTimeHistoryLst != null && wakeUpTimeHistoryLst.length >= 2) {
       wakeUpTimeHistoryStr = 'Wake ' +
           _removeYear(wakeUpTimeHistoryLst.first) +
           ': ' +
@@ -237,15 +239,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     if (_status == status.wakeUp) {
       if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
-        // or resetting the app
+        // or restarting the app
+        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime!);
+        _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
+
         setState(() {
           // Without using applying ! bang operator to the newDateTime variable,
           // the compiler displays this error: 'The argument type 'DateTime?'
           // can't be assigned to the parameter type DateTime
-          _previousDateTimeStr = frenchDateTimeFormat.format(newDateTime!);
+          _previousDateTimeStr = newDateTimeStr;
           _previousDateTimeController.text = _previousDateTimeStr;
           _status = status.sleep;
-          _sleepTimeStrHistory.add(_previousDateTimeStr);
         });
       } else {
         DateTime? previousDateTime;
@@ -316,6 +320,25 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
+  void _addFirstDateTimeStrToHistorylst(
+
+      /// This method handle two situations:
+      ///   1/ if the first sleep duration is to be added to an empty sleep time
+      ///      history list
+      ///   2/ if a siesto duration was added before adding any sleep time
+      ///      duration. In this case, the date time string must be inserted
+      ///      at the first position in the history list.
+      List<String> historyLst,
+      String dateTimeStr) {
+    if (historyLst.isEmpty) {
+      historyLst.add(dateTimeStr);
+    } else {
+      // the case if add siesto duration was done before adding any sleep
+      // duration
+      historyLst.insert(0, dateTimeStr);
+    }
+  }
+
   void _addTimeToCurrentSleepDuration(
 
       /// Private method called when clicking on 'Add' button located at right of
@@ -341,6 +364,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       setState(() {
         _currentSleepDurationStr = currentSleepDuration!.HHmm();
         _currentSleepDurationController.text = _currentSleepDurationStr;
+        _sleepTimeStrHistory.add(durationStr);
+        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       });
 
       _updateTransferDataMap();
