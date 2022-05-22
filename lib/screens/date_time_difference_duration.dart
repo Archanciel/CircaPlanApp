@@ -140,7 +140,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       /// of the 3 duration TextField's.
       BuildContext context,
       String dialogTimeStr) {
-    Duration? dialogTimeDuration = DateTimeParser.parseHHmmDuration(dialogTimeStr);
+    Duration? dialogTimeDuration =
+        DateTimeParser.parseHHmmDuration(dialogTimeStr);
 
     if (dialogTimeDuration == null) {
       openWarningDialog(context,
@@ -156,7 +157,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         existingAddTimeDuration += dialogTimeDuration;
       }
 
-      Duration? startEndDateTimeDiffDuration = DateTimeParser.parseHHmmDuration(_durationStr);
+      Duration? startEndDateTimeDiffDuration =
+          DateTimeParser.parseHHmmDuration(_durationStr);
       Duration? finalDuration;
 
       if (startEndDateTimeDiffDuration != null) {
@@ -405,31 +407,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 150,
-                  ),
-                  Container(
-                    alignment: Alignment.topRight,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: appElevatedButtonBackgroundColor,
-                          shape: appElevatedButtonRoundedShape),
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          _formKey.currentState!.save();
-                        }
-                      },
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(
-                          fontSize: ScreenMixin.appTextFontSize,
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -497,6 +474,31 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                 ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: appElevatedButtonBackgroundColor,
+                      shape: appElevatedButtonRoundedShape),
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      _formKey.currentState!.save();
+                    }
+                  },
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

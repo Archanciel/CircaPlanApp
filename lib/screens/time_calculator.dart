@@ -322,7 +322,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                margin: const EdgeInsets.fromLTRB(240, 405, 0, 0),
+                margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: appElevatedButtonBackgroundColor,
