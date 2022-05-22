@@ -7,6 +7,7 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 enum status { wakeUp, sleep }
+
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
 class TimeCalculator extends StatefulWidget {
@@ -256,36 +257,11 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   const SizedBox(
                     height: 150,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const SizedBox(
-                        width: 200,
-                      ),
-                      Container(
-                    alignment: Alignment.topRight,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: appElevatedButtonBackgroundColor,
-                              shape: appElevatedButtonRoundedShape),
-                          onPressed: () {
-                            // Validate returns true if the form is valid, or false otherwise.
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                            }
-                          },
-                          child: const Text(
-                            'Submit',
-                            style: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 37,
-                      ),
-                    ],
+                  const SizedBox(
+                    width: 200,
+                  ),
+                  const SizedBox(
+                    width: 37,
                   ),
                 ],
               ),
@@ -341,6 +317,29 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(240, 405, 0, 0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: appElevatedButtonBackgroundColor,
+                      shape: appElevatedButtonRoundedShape),
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                    }
+                  },
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
