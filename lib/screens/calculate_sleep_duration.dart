@@ -28,7 +28,7 @@ class CalculateSleepDuration extends StatefulWidget {
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _CalculateSleepDurationState extends State<CalculateSleepDuration>
-    with ScreenMixin {
+    with ScreenMixin, WidgetsBindingObserver {
   _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
@@ -112,6 +112,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
@@ -126,10 +128,21 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _addTimeDialogController = TextEditingController();
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
+
+    _handleMedics();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _handleMedics();
+    }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
     _newDateTimeController.dispose();
     _previousDateTimeController.dispose();
     _currentSleepDurationController.dispose();
@@ -138,11 +151,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepWakeUpHistoryController.dispose();
 
     super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    print('state = $state');
   }
 
   Map<String, dynamic> _updateTransferDataMap() {
@@ -161,6 +169,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     //  print('wakeUpTimeStrHistory: $_wakeUpTimeStrHistory');
 
     return map;
+  }
+
+  void _handleMedics() {
+    /// Called each time the CalculateSleepDuration screen is selected or the
+    /// app showing the CalculateSleepDuration screen resumes. Handles the
+    /// the medics to take display, i.e. changing the screen body color in the
+    /// situation the medics have not been taken although the hour of taking
+    /// them is passed or near.
+    print('_handleMedics() called');
   }
 
   void _setStateNewDateTimeDependentFields(String dateTimeStr) {
