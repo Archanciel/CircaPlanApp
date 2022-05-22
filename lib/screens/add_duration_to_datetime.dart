@@ -296,29 +296,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 150,
-                  ),
-                  Container(
-                    alignment: Alignment.topRight,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: appElevatedButtonBackgroundColor,
-                          shape: appElevatedButtonRoundedShape),
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                        }
-                      },
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(
-                          fontSize: ScreenMixin.appTextFontSize,
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -326,7 +303,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               right: 90,
               child: Column(
                 children: [
-                  SizedBox(height: 38,),
+                  SizedBox(
+                    height: 38,
+                  ),
                   ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor: appElevatedButtonBackgroundColor,
@@ -343,6 +322,29 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ),
                   ),
                 ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: appElevatedButtonBackgroundColor,
+                      shape: appElevatedButtonRoundedShape),
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                    }
+                  },
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: ScreenMixin.appTextFontSize,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
