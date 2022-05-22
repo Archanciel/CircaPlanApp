@@ -245,7 +245,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
-        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime!);
+        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
         setState(() {
