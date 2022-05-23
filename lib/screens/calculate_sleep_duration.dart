@@ -6,7 +6,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
-enum status { wakeUp, sleep }
+enum Status { wakeUp, sleep }
 
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -39,7 +39,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
         _currentWakeUpDurationStr =
             transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '',
-        _status = transferDataMap['calcSlDurStatus'] ?? status.wakeUp,
+        _status = transferDataMap['calcSlDurStatus'] ?? Status.wakeUp,
         _sleepTimeStrHistory =
             transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [],
         _wakeUpTimeStrHistory =
@@ -52,7 +52,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _previousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
-  status _status = status.wakeUp;
+  Status _status = Status.wakeUp;
   List<String> _sleepTimeStrHistory = [];
   List<String> _wakeUpTimeStrHistory = [];
 
@@ -168,7 +168,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     DateTime dateTime;
 
     // reformatting the entered dateTimeStr in order for the previous date time
-    // string to be set at a fully conform format. For eample, if the user 
+    // string to be set at a fully conform format. For eample, if the user
     // entered 23-05-2022 2:57, dateTimeStr is reformated to 23-05-2022 02:57.
     // In case of FormatException, nothing is done (see method description).
     try {
@@ -224,7 +224,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentSleepDurationController.text = _currentSleepDurationStr;
         _currentWakeUpDurationStr = '';
         _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
-        _status = status.wakeUp;
+        _status = Status.wakeUp;
         _sleepTimeStrHistory = [];
         _wakeUpTimeStrHistory = [];
         _sleepWakeUpHistoryController.text = '';
@@ -247,7 +247,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       return;
     }
 
-    if (_status == status.wakeUp) {
+    if (_status == Status.wakeUp) {
       if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
@@ -260,7 +260,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           // can't be assigned to the parameter type DateTime
           _previousDateTimeStr = newDateTimeStr;
           _previousDateTimeController.text = _previousDateTimeStr;
-          _status = status.sleep;
+          _status = Status.sleep;
         });
       } else {
         DateTime? previousDateTime;
@@ -292,7 +292,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
           _previousDateTimeStr = _newDateTimeStr;
           _previousDateTimeController.text = _previousDateTimeStr;
-          _status = status.sleep;
+          _status = Status.sleep;
           _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
           _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
         });
@@ -326,7 +326,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentSleepDurationController.text = _currentSleepDurationStr;
         _previousDateTimeStr = _newDateTimeStr;
         _previousDateTimeController.text = _previousDateTimeStr;
-        _status = status.wakeUp;
+        _status = Status.wakeUp;
         _sleepTimeStrHistory.add(sleepDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       });
@@ -386,10 +386,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
-  String _statusStr(status enumStatus) {
-    if (enumStatus == status.wakeUp) {
+  String _statusStr(Status enumStatus) {
+    if (enumStatus == Status.wakeUp) {
       return 'Wake Up';
-    } else if (enumStatus == status.sleep) {
+    } else if (enumStatus == Status.sleep) {
       return 'Sleep';
     } else {
       return '';
