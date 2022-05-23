@@ -184,9 +184,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     /// Private method called each time the New date time TextField
     /// is nanually modified.
 
-    // dateTimeStr format is not validated here in order to avoid preventing
-    // new date time manual modification. The new date time string format will
-    // be validated right before it is used.
+    /// dateTimeStr format is not validated here in order to avoid preventing
+    /// new date time manual modification. The new date time string format will
+    /// be validated right before it is used.
+    DateTime dateTime;
+
+    // reformatting the entered dateTimeStr in order for the previous date time
+    // string to be set at a fully conform format. For eample, if the user 
+    // entered 23-05-2022 2:57, dateTimeStr is reformated to 23-05-2022 02:57.
+    // In case of FormatException, nothing is done (see method description).
+    try {
+      dateTime = frenchDateTimeFormat.parse(dateTimeStr);
+      dateTimeStr = frenchDateTimeFormat.format(dateTime);
+    } on FormatException catch (_) {}
+
     setState(() {
       _newDateTimeStr = dateTimeStr;
     });
@@ -291,6 +302,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         if (currentWakeUpDuration == null) {
           currentWakeUpDuration = wakeUpDuration;
+          if (_wakeUpTimeStrHistory.isEmpty) {
+            _wakeUpTimeStrHistory.add(_previousDateTimeStr);
+          }
         } else {
           currentWakeUpDuration += wakeUpDuration;
         }
