@@ -72,15 +72,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     String sleepTimeHistoryStr = '';
 
     if (sleepTimeHistoryLst != null) {
-      if (sleepTimeHistoryLst.length == 1) {
-        // the case if the add siesta button was pressed before adding
-        // any sleep time
-//        sleepTimeHistoryStr = sleepTimeHistoryLst.first;
-      } else if (sleepTimeHistoryLst.length >= 2) {
-        sleepTimeHistoryStr = 'Sleep ' +
-            _removeYear(sleepTimeHistoryLst.first) +
-            ': ' +
-            sleepTimeHistoryLst.sublist(1).join(', ');
+      if (sleepTimeHistoryLst.length >= 2) {
+        String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
+
+        if (_isDateTimeStr(firstSleepTimeHistoryLstItem)) {
+          sleepTimeHistoryStr = 'Sleep ' +
+              _removeYear(firstSleepTimeHistoryLstItem) +
+              ': ' +
+              sleepTimeHistoryLst.sublist(1).join(', ');
+        }
       }
     }
 
@@ -370,7 +370,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
-  void _addTimeToCurrentSleepOrWakeUpDuration(
+  void _addTimeToCurrentSleepAndWakeUpDuration(
+
       /// Private method called when clicking on 'Add' button located at right
       /// of current sleep duration TextField.
       BuildContext context,
@@ -393,12 +394,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         } else {
           currentWakeUpDuration -= addDuration;
         }
+
+        currentSleepDuration = _addDurationToCurrentSleepDuration(
+            currentSleepDuration, addDuration);
       } else {
-        if (currentSleepDuration == null) {
-          currentSleepDuration = addDuration;
-        } else {
-          currentSleepDuration += addDuration;
-        }
+        currentSleepDuration = _addDurationToCurrentSleepDuration(
+            currentSleepDuration, addDuration);
       }
 
       setState(() {
@@ -406,17 +407,27 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
           _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
           _wakeUpTimeStrHistory.add(durationStr.replaceFirst('-', ''));
-        } else {
-          _currentSleepDurationStr = currentSleepDuration!.HHmm();
-          _currentSleepDurationController.text = _currentSleepDurationStr;
-          _sleepTimeStrHistory.add(durationStr);
         }
 
+        _currentSleepDurationStr = currentSleepDuration!.HHmm();
+        _currentSleepDurationController.text = _currentSleepDurationStr;
+        _sleepTimeStrHistory.add(durationStr);
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       });
 
       _updateTransferDataMap();
     }
+  }
+
+  Duration _addDurationToCurrentSleepDuration(
+      Duration? currentSleepDuration, Duration duration) {
+    if (currentSleepDuration == null) {
+      currentSleepDuration = duration;
+    } else {
+      currentSleepDuration += duration;
+    }
+
+    return currentSleepDuration;
   }
 
   String _statusStr(Status enumStatus) {
@@ -674,7 +685,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             final timeStr = await openTextInputDialog();
                             if (timeStr == null || timeStr.isEmpty) return;
 
-                            _addTimeToCurrentSleepOrWakeUpDuration(context, timeStr);
+                            _addTimeToCurrentSleepAndWakeUpDuration(
+                                context, timeStr);
                           },
                           child: const Text(
                             'Add',
