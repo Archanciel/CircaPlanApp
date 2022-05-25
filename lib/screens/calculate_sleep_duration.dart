@@ -368,17 +368,34 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     } else {
       Duration? currentSleepDuration =
           DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
+      Duration? currentWakeUpDuration =
+          DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
 
-      if (currentSleepDuration == null) {
-        currentSleepDuration = addDuration;
+      if (durationStr.contains('-')) {
+        if (currentWakeUpDuration == null) {
+          currentWakeUpDuration = -addDuration;
+        } else {
+          currentWakeUpDuration -= addDuration;
+        }
       } else {
-        currentSleepDuration += addDuration;
+        if (currentSleepDuration == null) {
+          currentSleepDuration = addDuration;
+        } else {
+          currentSleepDuration += addDuration;
+        }
       }
 
       setState(() {
-        _currentSleepDurationStr = currentSleepDuration!.HHmm();
-        _currentSleepDurationController.text = _currentSleepDurationStr;
-        _sleepTimeStrHistory.add(durationStr);
+        if (durationStr.contains('-')) {
+          _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
+          _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+          _wakeUpTimeStrHistory.add(durationStr.replaceFirst('-', ''));
+        } else {
+          _currentSleepDurationStr = currentSleepDuration!.HHmm();
+          _currentSleepDurationController.text = _currentSleepDurationStr;
+          _sleepTimeStrHistory.add(durationStr);
+        }
+
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       });
 
@@ -632,8 +649,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         ),
                       ),
                       Tooltip(
-                        message:
-                            'Add siesta or sleep reduction time.',
+                        message: 'Add siesta or sleep reduction time.',
                         child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
