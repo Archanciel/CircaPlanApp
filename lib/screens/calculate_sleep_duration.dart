@@ -75,7 +75,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (sleepTimeHistoryLst.length == 1) {
         // the case if the add siesta button was pressed before adding
         // any sleep time
-        sleepTimeHistoryStr = sleepTimeHistoryLst.first;
+//        sleepTimeHistoryStr = sleepTimeHistoryLst.first;
       } else if (sleepTimeHistoryLst.length >= 2) {
         sleepTimeHistoryStr = 'Sleep ' +
             _removeYear(sleepTimeHistoryLst.first) +
@@ -97,9 +97,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             wakeUpTimeHistoryLst.sublist(1).join(', ');
       }
     }
-
-    print(sleepTimeHistoryStr);
-    print(wakeUpTimeHistoryStr);
 
     return sleepTimeHistoryStr + '\n' + wakeUpTimeHistoryStr;
   }
@@ -373,10 +370,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
-  void _addTimeToCurrentSleepDuration(
-
-      /// Private method called when clicking on 'Add' button located at right of
-      /// current sleep duration TextField.
+  void _addTimeToCurrentSleepOrWakeUpDuration(
+      /// Private method called when clicking on 'Add' button located at right
+      /// of current sleep duration TextField.
       BuildContext context,
       String durationStr) {
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
@@ -678,7 +674,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             final timeStr = await openTextInputDialog();
                             if (timeStr == null || timeStr.isEmpty) return;
 
-                            _addTimeToCurrentSleepDuration(context, timeStr);
+                            _addTimeToCurrentSleepOrWakeUpDuration(context, timeStr);
                           },
                           child: const Text(
                             'Add',
