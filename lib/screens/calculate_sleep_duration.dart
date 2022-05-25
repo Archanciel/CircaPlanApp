@@ -280,6 +280,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           return;
         }
 
+        if (_wakeUpTimeStrHistory.isEmpty ||
+            !_isDateTimeStr(_wakeUpTimeStrHistory.first)) {
+          // here, registering the first wake up time duration and ensuring
+          // that the wake up time history list first item is the date time
+          // here, registering the first wake up time duration
+          String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
+          _addFirstDateTimeStrToHistorylst(
+              _wakeUpTimeStrHistory, newDateTimeStr);
+        }
+
         Duration wakeUpDuration = newDateTime.difference(previousDateTime);
 
         Duration? currentWakeUpDuration =
@@ -287,9 +297,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         if (currentWakeUpDuration == null) {
           currentWakeUpDuration = wakeUpDuration;
-          if (_wakeUpTimeStrHistory.isEmpty) {
+/*          if (_wakeUpTimeStrHistory.isEmpty) {
             _wakeUpTimeStrHistory.add(_previousDateTimeStr);
-          }
+          } */
         } else {
           currentWakeUpDuration += wakeUpDuration;
         }
@@ -323,28 +333,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       if (currentSleepDuration == null) {
         currentSleepDuration = sleepDuration;
-        _wakeUpTimeStrHistory.add(_newDateTimeStr);
       } else {
         currentSleepDuration += sleepDuration;
-      }
-
-      if (_currentWakeUpDurationStr == '') {
-        // first click on 'Add' button after reinitializing
-        // or restarting the app
-        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
-        _addFirstDateTimeStrToHistorylst(_wakeUpTimeStrHistory, newDateTimeStr);
-/*
-        setState(
-          () {
-            // Without using applying ! bang operator to the newDateTime variable,
-            // the compiler displays this error: 'The argument type 'DateTime?'
-            // can't be assigned to the parameter type DateTime
-            _previousDateTimeStr = newDateTimeStr;
-            _previousDateTimeController.text = _previousDateTimeStr;
-            _status = Status.sleep;
-          },
-        );
-*/
       }
 
       setState(() {
@@ -352,12 +342,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentSleepDurationController.text = _currentSleepDurationStr;
         _previousDateTimeStr = _newDateTimeStr;
         _previousDateTimeController.text = _previousDateTimeStr;
-        _status = Status.wakeUp;
         _sleepTimeStrHistory.add(sleepDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
+        _status = Status.wakeUp;
       });
     }
     _updateTransferDataMap();
+  }
+
+  bool _isDateTimeStr(String str) {
+    return str.contains('-');
   }
 
   void _addFirstDateTimeStrToHistorylst(
