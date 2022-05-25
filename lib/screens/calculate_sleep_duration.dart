@@ -371,11 +371,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _addTimeToCurrentSleepAndWakeUpDuration(
+      BuildContext context, String durationStr) {
+    /// Private method called when clicking on 'Add' button located at right
+    /// of current sleep duration TextField.
 
-      /// Private method called when clicking on 'Add' button located at right
-      /// of current sleep duration TextField.
-      BuildContext context,
-      String durationStr) {
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
