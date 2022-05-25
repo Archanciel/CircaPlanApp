@@ -633,7 +633,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ),
                       Tooltip(
                         message:
-                            'Used to add siesta time whatever the status is.',
+                            'Add siesta or sleep reduction time.',
                         child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
@@ -791,7 +791,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             style: TextStyle(
                 fontSize: ScreenMixin.appTextFontSize,
                 fontWeight: ScreenMixin.appTextFontWeight),
-            decoration: const InputDecoration(hintText: 'HH:mm'),
+            decoration: const InputDecoration(hintText: '(-)HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
             keyboardType: TextInputType.datetime,
