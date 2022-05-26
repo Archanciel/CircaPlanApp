@@ -207,7 +207,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -252,7 +252,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -293,7 +293,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Row(
                     children: [
@@ -415,7 +415,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 38,
+                    height: 33,
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -433,7 +433,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 32,
+                    height: 27,
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -451,7 +451,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 30,
                   ),
                   Tooltip(
                     message: 'Used to add positive or negative time.',

@@ -158,7 +158,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ],
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -202,7 +202,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     children: [
                       Positioned(
                         left: -18,
-                        top: 0,
+                        top: -5,
                         child: TextButton.icon(
                           icon: Icon(
                             _durationIcon,
@@ -227,7 +227,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(25, 13, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(25, 8, 0, 0),
                         child: Theme(
                           data: Theme.of(context).copyWith(
                             textSelectionTheme: TextSelectionThemeData(
@@ -264,7 +264,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -304,7 +304,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 38,
+                    height: 33,
                   ),
                   ElevatedButton(
                     style: ButtonStyle(

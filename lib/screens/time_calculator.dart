@@ -155,7 +155,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
@@ -197,7 +197,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
@@ -239,7 +239,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   TextField(
                     enabled: false,
@@ -271,7 +271,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 115,
+                    height: 105,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
