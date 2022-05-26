@@ -133,8 +133,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               Positioned(
                 left: 0,
                 right: 0,
-                top: screenHeight * 0.1,
-                height: screenHeight * 0.9,
+                top: screenHeight * 0.09,
+                height: screenHeight * 0.91,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
