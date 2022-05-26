@@ -266,8 +266,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
+            Positioned(
+              right: -20,
               child: Column(
                 children: [
                   SizedBox(
