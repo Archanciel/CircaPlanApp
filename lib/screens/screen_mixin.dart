@@ -7,7 +7,7 @@ mixin ScreenMixin {
   /// to add those common instance variables to the statefull
   /// widgets solves the problem.
 
-  static const double APP_VERTICAL_TOP_MARGIN = 0;
+  static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
   final Color appLabelColor = Colors.yellow.shade300;
   final Color appTextAndIconColor = Colors.white;
@@ -31,7 +31,8 @@ mixin ScreenMixin {
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
 
   static void setAppVerticalTopMargin(double screenHeight) {
-    APP_VERTICAL_TOP_MARGIN = screenHeight * APP_VERTICAL_TOP_MARGIN_PROPORTION;
+    app_computed_vertical_top_margin =
+        screenHeight * APP_VERTICAL_TOP_MARGIN_PROPORTION;
   }
 
   void openWarningDialog(BuildContext context, String message) {

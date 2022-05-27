@@ -134,7 +134,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: 15, vertical: ScreenMixin.APP_VERTICAL_TOP_MARGIN),
+            horizontal: 15,
+            vertical: ScreenMixin.app_computed_vertical_top_margin),
         child: Stack(
           children: [
             Align(

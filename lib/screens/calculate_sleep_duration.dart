@@ -449,7 +449,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             child: Container(
               margin: EdgeInsets.symmetric(
                   horizontal: 15,
-                  vertical: ScreenMixin.APP_VERTICAL_TOP_MARGIN),
+                  vertical: ScreenMixin.app_computed_vertical_top_margin),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
