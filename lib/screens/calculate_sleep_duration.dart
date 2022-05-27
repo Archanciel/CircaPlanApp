@@ -281,10 +281,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             !_isDateTimeStr(_wakeUpTimeStrHistory.first)) {
           // here, registering the first wake up time duration and ensuring
           // that the wake up time history list first item is the date time
-          // here, registering the first wake up time duration
-          String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
+          // when I waked up, i.e the _previousDateTimeStr
           _addFirstDateTimeStrToHistorylst(
-              _wakeUpTimeStrHistory, newDateTimeStr);
+              _wakeUpTimeStrHistory, _previousDateTimeStr);
         }
 
         Duration wakeUpDuration = newDateTime.difference(previousDateTime);
@@ -449,7 +448,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           child: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.symmetric(
-                  horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
+                  horizontal: 15,
+                  vertical: ScreenMixin.APP_VERTICAL_TOP_MARGIN),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -462,7 +462,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     'New date time',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
                   Row(
@@ -481,8 +481,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             keyboardType: TextInputType.datetime,
                             controller: _newDateTimeController, // links the
                             //                                                TextField content to pressing
@@ -510,7 +510,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         child: const Text(
                           'Now',
                           style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                           ),
                         ),
                       ),
@@ -566,7 +566,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         child: const Text(
                           'Add',
                           style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                           ),
                         ),
                       ),
@@ -579,7 +579,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     'Previous date time',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
                   Row(
@@ -598,8 +598,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           child: TextField(
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             decoration:
                                 const InputDecoration.collapsed(hintText: ''),
                             keyboardType: TextInputType.datetime,
@@ -631,7 +631,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     'Current sleep duration',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
                   Row(
@@ -650,8 +650,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           child: TextField(
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             decoration:
                                 const InputDecoration.collapsed(hintText: ''),
                             keyboardType: TextInputType.datetime,
@@ -690,7 +690,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           child: const Text(
                             'Add',
                             style: TextStyle(
-                              fontSize: ScreenMixin.appTextFontSize,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             ),
                           ),
                         ),
@@ -704,7 +704,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     'Current wake up duration',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
                   Row(
@@ -723,8 +723,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           child: TextField(
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             decoration:
                                 const InputDecoration.collapsed(hintText: ''),
                             keyboardType: TextInputType.datetime,
@@ -756,7 +756,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     'Sleep and wake up history',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
                   Theme(
@@ -773,8 +773,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       minLines: 3,
                       style: TextStyle(
                           color: appTextAndIconColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight),
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                       decoration: const InputDecoration.collapsed(hintText: ''),
                       keyboardType: TextInputType.datetime,
                       controller: _sleepWakeUpHistoryController,
@@ -795,7 +795,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   _statusStr(_status),
                   style: TextStyle(
                     color: appLabelColor,
-                    fontSize: ScreenMixin.appTextFontSize,
+                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                   ),
                 ),
                 margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
@@ -806,7 +806,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-            margin: const EdgeInsets.fromLTRB(265, 0, 0, 8),
+            margin: const EdgeInsets.fromLTRB(265, 0, 0, 88),
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: appElevatedButtonBackgroundColor,
@@ -815,7 +815,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               child: const Text(
                 'Reset',
                 style: TextStyle(
-                  fontSize: ScreenMixin.appTextFontSize,
+                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                 ),
               ),
             ),
@@ -832,8 +832,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           content: TextField(
             autofocus: true,
             style: TextStyle(
-                fontSize: ScreenMixin.appTextFontSize,
-                fontWeight: ScreenMixin.appTextFontWeight),
+                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
             decoration: const InputDecoration(hintText: '(-)HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
