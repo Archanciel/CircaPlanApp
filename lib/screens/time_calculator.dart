@@ -134,7 +134,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
+            horizontal: 15, vertical: ScreenMixin.APP_VERTICAL_TOP_MARGIN),
         child: Stack(
           children: [
             Align(
@@ -150,8 +150,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     'Time (dd:hh:mm)',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                     ),
                   ),
                   Container(
@@ -168,8 +168,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             const InputDecoration.collapsed(hintText: ''),
                         style: TextStyle(
                             color: appTextAndIconColor,
-                            fontSize: ScreenMixin.appTextFontSize,
-                            fontWeight: ScreenMixin.appTextFontWeight),
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         keyboardType: TextInputType.datetime,
                         controller: _firstTimeTextFieldController,
                         onChanged: (val) {
@@ -192,8 +192,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     'Time (dd:hh:mm)',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                     ),
                   ),
                   Container(
@@ -210,8 +210,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             const InputDecoration.collapsed(hintText: ''),
                         style: TextStyle(
                             color: appTextAndIconColor,
-                            fontSize: ScreenMixin.appTextFontSize,
-                            fontWeight: ScreenMixin.appTextFontWeight),
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         keyboardType: TextInputType.datetime,
                         controller: _secondTimeTextFieldController,
                         onChanged: (val) {
@@ -234,8 +234,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     'Result',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                     ),
                   ),
                   const SizedBox(
@@ -247,9 +247,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       isCollapsed: true,
                       labelText: _resultTimeStr,
                       labelStyle: TextStyle(
-                        fontSize: ScreenMixin.appTextFontSize,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         color: appTextAndIconColor,
-                        fontWeight: ScreenMixin.appTextFontWeight,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                       ),
                     ),
                     // The validator receives the text that the user has entered.
@@ -288,7 +288,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         child: const Text(
                           'Add',
                           style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                           ),
                         ),
                       ),
@@ -307,7 +307,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         child: const Text(
                           'Subtr',
                           style: TextStyle(
-                            fontSize: ScreenMixin.appTextFontSize,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                           ),
                         ),
                       ),

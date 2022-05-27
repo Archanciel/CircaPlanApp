@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: ScreenMixin.appTitle,
+        title: ScreenMixin.APP_TITLE,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           textSelectionTheme: TextSelectionThemeData(
@@ -77,10 +77,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ];
 
     final List<String> screenTitlesLst = [
-      ScreenMixin.addDurationToDateTimeTitle,
-      ScreenMixin.dateTimeDiffDurationTitle,
-      ScreenMixin.calculateSleepDurationTitle,
-      ScreenMixin.timeCalculatorTitle,
+      ScreenMixin.APP_DURATION_TO_DATE_TIME_TITLE,
+      ScreenMixin.DATE_TIME_DIFF_DURATION_TITLE,
+      ScreenMixin.CALCULATR_SLEEP_DURATION_TITLE,
+      ScreenMixin.TIME_CALCULATOR_TITLE,
     ];
 
     final List<Widget> curvedNavigationBarItemIconsLst = [

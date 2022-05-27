@@ -182,7 +182,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: 15, vertical: ScreenMixin.appVerticalTopMargin),
+            horizontal: 15, vertical: ScreenMixin.APP_VERTICAL_TOP_MARGIN),
         child: Stack(
           children: [
             Align(
@@ -200,8 +200,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         'Start date time',
                         style: TextStyle(
                           color: appLabelColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                         ),
                       ),
                     ],
@@ -230,8 +230,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       decoration: const InputDecoration.collapsed(hintText: ''),
                       style: TextStyle(
                         color: appTextAndIconColor,
-                        fontSize: ScreenMixin.appTextFontSize,
-                        fontWeight: ScreenMixin.appTextFontWeight,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                       ),
                       onChanged: (val) => _setStateDiffDuration(),
                     ),
@@ -245,8 +245,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         'End date time',
                         style: TextStyle(
                           color: appLabelColor,
-                          fontSize: ScreenMixin.appTextFontSize,
-                          fontWeight: ScreenMixin.appTextFontWeight,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                         ),
                       ),
                     ],
@@ -275,8 +275,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       decoration: const InputDecoration.collapsed(hintText: ''),
                       style: TextStyle(
                         color: appTextAndIconColor,
-                        fontSize: ScreenMixin.appTextFontSize,
-                        fontWeight: ScreenMixin.appTextFontWeight,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                       ),
                       onChanged: (val) => _setStateDiffDuration(),
                     ),
@@ -288,8 +288,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     'Duration',
                     style: TextStyle(
                       color: appLabelColor,
-                      fontSize: ScreenMixin.appTextFontSize,
-                      fontWeight: ScreenMixin.appTextFontWeight,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                     ),
                   ),
                   const SizedBox(
@@ -311,8 +311,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             keyboardType: TextInputType.datetime,
                             controller: _durationTextFieldController,
                             onChanged: (val) {
@@ -347,8 +347,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             keyboardType: TextInputType.datetime,
                             controller: _addTimeTextFieldController,
                             onChanged: (val) {
@@ -383,8 +383,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
-                                fontSize: ScreenMixin.appTextFontSize,
-                                fontWeight: ScreenMixin.appTextFontWeight),
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             keyboardType: TextInputType.datetime,
                             controller: _finalDurationTextFieldController,
                             onChanged: (val) {
@@ -428,7 +428,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     child: const Text(
                       'Now',
                       style: TextStyle(
-                        fontSize: ScreenMixin.appTextFontSize,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                       ),
                     ),
                   ),
@@ -446,7 +446,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     child: const Text(
                       'Now',
                       style: TextStyle(
-                        fontSize: ScreenMixin.appTextFontSize,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                       ),
                     ),
                   ),
@@ -468,7 +468,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                       child: const Text(
                         'Add',
                         style: TextStyle(
-                          fontSize: ScreenMixin.appTextFontSize,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         ),
                       ),
                     ),
@@ -514,8 +514,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
           content: TextField(
             autofocus: true,
             style: TextStyle(
-                fontSize: ScreenMixin.appTextFontSize,
-                fontWeight: ScreenMixin.appTextFontWeight),
+                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
             decoration: const InputDecoration(hintText: '(-)HH:mm'),
             controller: _addTimeDialogController,
             onSubmitted: (_) => submit(),
