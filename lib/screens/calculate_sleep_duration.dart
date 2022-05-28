@@ -681,7 +681,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             color: appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        decoration: const InputDecoration.collapsed(hintText: ''),
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
                         keyboardType: TextInputType.datetime,
                         controller: _sleepWakeUpHistoryController,
                       ),
@@ -692,21 +693,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             ),
             Align(
               alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Text(
-                      _statusStr(_status),
-                      style: TextStyle(
-                        color: appLabelColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      ),
-                    ),
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  ),
-                ],
-              ),
             ),
             Align(
               alignment: Alignment.bottomLeft,
@@ -728,11 +714,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             ),
             Positioned(
               right: 0,
+              top: -6,
               child: Column(
                 children: [
+                  Container(
+                    child: Text(
+                      _statusStr(_status),
+                      style: TextStyle(
+                        color: appLabelColor,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      ),
+                    ),
+                  ),
                   const SizedBox(
-                    height: 20, // val 97 is compliant with current value 6
-//                                 of APP_LABEL_TO_TEXT_DISTANCE
+                    height: 6,
                   ),
                   Row(
                     children: [
