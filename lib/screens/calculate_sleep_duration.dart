@@ -513,7 +513,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         width: 6,
                       ),
                       Text(
-                        'Before prev date time',
+                        'Date time before prev',
                         style: TextStyle(
                           color: appLabelColor,
                           fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
@@ -529,7 +529,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         //                                            compliant with current value 5 of
                         //                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
-                          width: 160,
+                          width: 155,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(
