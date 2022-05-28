@@ -50,6 +50,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   String _newDateTimeStr = '';
   String _previousDateTimeStr = '';
+  String _beforePreviousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
   Status _status = Status.wakeUp;
@@ -58,6 +59,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   late TextEditingController _newDateTimeController;
   late TextEditingController _previousDateTimeController;
+  late TextEditingController _beforePreviousDateTimeController;
   late TextEditingController _addTimeDialogController;
   late TextEditingController _currentSleepDurationController;
   late TextEditingController _currentWakeUpDurationController;
@@ -121,6 +123,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
     _previousDateTimeController = TextEditingController(
         text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
+    _beforePreviousDateTimeController = TextEditingController(
+        text: _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '');
     _currentSleepDurationController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '');
     _currentWakeUpDurationController = TextEditingController(
@@ -134,6 +138,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void dispose() {
     _newDateTimeController.dispose();
     _previousDateTimeController.dispose();
+    _beforePreviousDateTimeController.dispose();
     _currentSleepDurationController.dispose();
     _currentWakeUpDurationController.dispose();
     _addTimeDialogController.dispose();
@@ -147,6 +152,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
     map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
+    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurStatus'] = _status;
@@ -222,6 +228,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _newDateTimeController.text = _newDateTimeStr;
         _previousDateTimeStr = '';
         _previousDateTimeController.text = _previousDateTimeStr;
+        _beforePreviousDateTimeStr = '';
+        _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
         _currentSleepDurationStr = '';
         _currentSleepDurationController.text = _currentSleepDurationStr;
         _currentWakeUpDurationStr = '';
@@ -303,6 +311,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         setState(() {
           _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
           _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+          _beforePreviousDateTimeStr = _previousDateTimeStr;
+          _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
           _previousDateTimeStr = _newDateTimeStr;
           _previousDateTimeController.text = _previousDateTimeStr;
           _status = Status.sleep;
@@ -333,15 +343,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         currentSleepDuration += sleepDuration;
       }
 
-      setState(() {
-        _currentSleepDurationStr = currentSleepDuration!.HHmm();
-        _currentSleepDurationController.text = _currentSleepDurationStr;
-        _previousDateTimeStr = _newDateTimeStr;
-        _previousDateTimeController.text = _previousDateTimeStr;
-        _sleepTimeStrHistory.add(sleepDuration.HHmm());
-        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
-        _status = Status.wakeUp;
-      });
+      setState(
+        () {
+          _currentSleepDurationStr = currentSleepDuration!.HHmm();
+          _currentSleepDurationController.text = _currentSleepDurationStr;
+          _beforePreviousDateTimeStr = _previousDateTimeStr;
+          _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+          _previousDateTimeStr = _newDateTimeStr;
+          _previousDateTimeController.text = _previousDateTimeStr;
+          _sleepTimeStrHistory.add(sleepDuration.HHmm());
+          _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
+          _status = Status.wakeUp;
+        },
+      );
     }
     _updateTransferDataMap();
   }
@@ -543,10 +557,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               style: TextStyle(
                                   color: appTextAndIconColor,
                                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                  fontWeight:
-                                      ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                              decoration: const InputDecoration.collapsed(
-                                  hintText: ''),
+                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                              decoration:
+                                  const InputDecoration.collapsed(hintText: ''),
                               keyboardType: TextInputType.datetime,
                               controller: _previousDateTimeController,
                               onChanged: (val) {
@@ -557,7 +570,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 // the TextField to really modify the TextField
                                 // value.
                                 _previousDateTimeController.text = val;
-                        
+
                                 // next two instructions required for the changes
                                 // to be memorized in screen navigation transfer
                                 // data
@@ -574,7 +587,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         //                                            compliant with current value 5 of
                         //                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
-                          width: 155  ,
+                          width: 155,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(
@@ -592,7 +605,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
                               keyboardType: TextInputType.datetime,
-                              controller: _previousDateTimeController,
+                              controller: _beforePreviousDateTimeController,
                               onChanged: (val) {
                                 // called when manually updating the TextField
                                 // content. Although we do not edit this field
@@ -600,12 +613,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 // the controller in order for pasting a value to
                                 // the TextField to really modify the TextField
                                 // value.
-                                _previousDateTimeController.text = val;
-                        
+                                _beforePreviousDateTimeController.text = val;
+
                                 // next two instructions required for the changes
                                 // to be memorized in screen navigation transfer
                                 // data
-                                _previousDateTimeStr = val;
+                                _beforePreviousDateTimeStr = val;
                                 _updateTransferDataMap();
                               },
                             ),
