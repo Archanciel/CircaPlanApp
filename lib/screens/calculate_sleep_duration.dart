@@ -543,7 +543,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 //                                            compliant with current value 5 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
-                          width: 155,
+                          width: 156,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(
