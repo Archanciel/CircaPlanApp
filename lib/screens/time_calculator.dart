@@ -259,15 +259,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                     // The validator receives the text that the user has entered.
                   ),
-                  const SizedBox(
-                    height: 150,
-                  ),
-                  const SizedBox(
-                    width: 200,
-                  ),
-                  const SizedBox(
-                    width: 37,
-                  ),
                 ],
               ),
             ),
