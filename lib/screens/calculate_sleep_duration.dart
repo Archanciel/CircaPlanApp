@@ -440,6 +440,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
@@ -692,12 +694,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               ),
             ),
             Align(
-              alignment: Alignment.center,
-            ),
-            Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                margin: const EdgeInsets.fromLTRB(252, 520, 0, 0),
+              //  margin: const EdgeInsets.fromLTRB(252, 505, 0, 0),
+                margin: EdgeInsets.fromLTRB(252, screenHeight * 0.66, 0, 0),
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: appElevatedButtonBackgroundColor,
