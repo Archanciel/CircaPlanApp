@@ -307,7 +307,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 28,  // val 28 is compliant with current value 6
+                    height: 26,  // val 28 is compliant with current value 6
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   ElevatedButton(

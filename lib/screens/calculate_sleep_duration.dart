@@ -466,7 +466,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
 //                                            compliant with current value 6 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
@@ -506,7 +506,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
 //                                            compliant with current value 6 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
@@ -559,7 +559,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       Container(
                         padding:
-                            const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+                            const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
 //                                            compliant with current value 6 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                         width: 160,
@@ -612,7 +612,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
 //                                            compliant with current value 6 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
@@ -697,7 +697,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                margin: const EdgeInsets.fromLTRB(252, 390, 0, 0),
+                margin: const EdgeInsets.fromLTRB(252, 520, 0, 0),
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: appElevatedButtonBackgroundColor,
@@ -714,7 +714,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             ),
             Positioned(
               right: 0,
-              top: -6,
+              top: -4,
               child: Column(
                 children: [
                   Container(
@@ -727,7 +727,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 5,
                   ),
                   Row(
                     children: [
@@ -814,7 +814,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 91,
+                    height: 89,
                   ),
                   Row(
                     children: [

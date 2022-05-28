@@ -263,11 +263,11 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               ),
             ),
             Positioned(
-              right: -20,
+              right: -30,
               child: Column(
                 children: [
                   SizedBox(
-                    height: 97, // val 97 is compliant with current value 6
+                    height: 96, // val 97 is compliant with current value 6
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Row(

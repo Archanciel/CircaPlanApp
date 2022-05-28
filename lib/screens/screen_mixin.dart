@@ -19,9 +19,9 @@ mixin ScreenMixin {
       MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
   static const FontWeight APP_TEXT_FONT_WEIGHT = FontWeight.normal;
-  static const double APP_LABEL_TO_TEXT_DISTANCE = 6;
+  static const double APP_LABEL_TO_TEXT_DISTANCE = 5;
   static const double APP_TEXT_FONT_SIZE = 18;
-  static const double APP_VERTICAL_TOP_MARGIN_PROPORTION = 0.025;
+  static const double APP_VERTICAL_TOP_MARGIN_PROPORTION = 0.03;
   static const String APP_DURATION_TO_DATE_TIME_TITLE =
       'Add Duration To Date Time';
   static const String DATE_TIME_DIFF_DURATION_TITLE =
