@@ -505,50 +505,48 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 160,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              // commenting cursorColor discourage manually
-                              // editing the TextField !
-                              // cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            keyboardType: TextInputType.datetime,
-                            controller: _previousDateTimeController,
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content. Although we do not edit this field
-                              // manually, onChanged must be defined aswell as
-                              // the controller in order for pasting a value to
-                              // the TextField to really modify the TextField
-                              // value.
-                              _previousDateTimeController.text = val;
-
-                              // next two instructions required for the changes
-                              // to be memorized in screen navigation transfer
-                              // data
-                              _previousDateTimeStr = val;
-                              _updateTransferDataMap();
-                            },
-                          ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          // commenting cursorColor discourage manually
+                          // editing the TextField !
+                          // cursorColor: appTextAndIconColor,
                         ),
                       ),
-                    ],
+                      child: TextField(
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _previousDateTimeController,
+                        onChanged: (val) {
+                          // called when manually updating the TextField
+                          // content. Although we do not edit this field
+                          // manually, onChanged must be defined aswell as
+                          // the controller in order for pasting a value to
+                          // the TextField to really modify the TextField
+                          // value.
+                          _previousDateTimeController.text = val;
+
+                          // next two instructions required for the changes
+                          // to be memorized in screen navigation transfer
+                          // data
+                          _previousDateTimeStr = val;
+                          _updateTransferDataMap();
+                        },
+                      ),
+                    ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Current sleep duration',
