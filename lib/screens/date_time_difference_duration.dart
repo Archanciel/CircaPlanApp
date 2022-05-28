@@ -416,7 +416,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 26, // val 28 is compliant with current value 6
+                    height: 26, // val 26 is compliant with current value 5
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
 
                   ),
@@ -436,7 +436,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 24,  // val 24 is compliant with current value 6
+                    height: 24,  // val 24 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   ElevatedButton(
@@ -455,7 +455,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 24,  // val 24 is compliant with current value 6
+                    height: 24,  // val 24 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Tooltip(

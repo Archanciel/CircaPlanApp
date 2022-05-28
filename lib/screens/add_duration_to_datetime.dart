@@ -229,7 +229,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
-//                                          4 is compliant with current value 6
+//                                          4 is compliant with current value 5
 //                                          of APP_LABEL_TO_TEXT_DISTANCE
                         child: Theme(
                           data: Theme.of(context).copyWith(
@@ -307,7 +307,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 26,  // val 28 is compliant with current value 6
+                    height: 26,  // val 28 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   ElevatedButton(
