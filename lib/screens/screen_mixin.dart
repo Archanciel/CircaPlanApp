@@ -7,8 +7,8 @@ mixin ScreenMixin {
   /// to add those common instance variables to the statefull
   /// widgets solves the problem.
 
-  static double appVerticalTopMargin = 0;
-  static const String appTitle = 'Circadian Calculator';
+  static double app_computed_vertical_top_margin = 0;
+  static const String APP_TITLE = 'Circadian Calculator';
   final Color appLabelColor = Colors.yellow.shade300;
   final Color appTextAndIconColor = Colors.white;
   final Color selectionColor = Colors.blue.shade900;
@@ -18,17 +18,21 @@ mixin ScreenMixin {
       appElevatedButtonRoundedShape =
       MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
-  static const FontWeight appTextFontWeight = FontWeight.normal;
-  static const double appTextFontSize = 18;
-  static const double appVerticalTopMarginProportion = 0.025;
-  static const String addDurationToDateTimeTitle = 'Add Duration To Date Time';
-  static const String dateTimeDiffDurationTitle =
+  static const FontWeight APP_TEXT_FONT_WEIGHT = FontWeight.normal;
+  static const double APP_LABEL_TO_TEXT_DISTANCE = 6;
+  static const double APP_TEXT_FONT_SIZE = 18;
+  static const double APP_VERTICAL_TOP_MARGIN_PROPORTION = 0.025;
+  static const String APP_DURATION_TO_DATE_TIME_TITLE =
+      'Add Duration To Date Time';
+  static const String DATE_TIME_DIFF_DURATION_TITLE =
       'Date Time Difference Duration';
-  static const String calculateSleepDurationTitle = 'Calculate Sleep Duration';
-  static const String timeCalculatorTitle = 'Time Calculator';
+  static const String CALCULATR_SLEEP_DURATION_TITLE =
+      'Calculate Sleep Duration';
+  static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
 
   static void setAppVerticalTopMargin(double screenHeight) {
-    appVerticalTopMargin = screenHeight * appVerticalTopMarginProportion;
+    app_computed_vertical_top_margin =
+        screenHeight * APP_VERTICAL_TOP_MARGIN_PROPORTION;
   }
 
   void openWarningDialog(BuildContext context, String message) {
@@ -40,7 +44,7 @@ mixin ScreenMixin {
         content: Text(
           message,
           style: TextStyle(
-            fontSize: ScreenMixin.appTextFontSize,
+            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
           ),
         ),
         actions: [
