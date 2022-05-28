@@ -29,6 +29,9 @@ class CalculateSleepDuration extends StatefulWidget {
 // This class holds data related to the form.
 class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     with ScreenMixin, WidgetsBindingObserver {
+    // adding the WidgetsBindingObserver as mixin enables 
+    // _CalculateSleepDurationState to be added as observer to WidgetsBinding
+    // in overridden method initState
   _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
       : _transferDataMap = transferDataMap,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
@@ -114,6 +117,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   void initState() {
     super.initState();
+
+    // adding the instance as observer to WidgetsBinding.instance causes the
+    // overridden method didChangeAppLifecycleState() to be called each time
+    // the current screen ststus changes
     WidgetsBinding.instance.addObserver(this);
 
     final DateTime dateTimeNow = DateTime.now();
@@ -137,6 +144,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      // the case when the current screen is selected or, if the screen is
+      // active, when the app is reselected
       _handleMedics();
     }
   }
@@ -176,8 +185,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void _handleMedics() {
     /// Called each time the CalculateSleepDuration screen is selected or the
     /// app showing the CalculateSleepDuration screen resumes. Handles the
-    /// the medics to take display, i.e. changing the screen body color in the
-    /// situation the medics have not been taken although the hour of taking
+    /// medics to take display, i.e. changing the screen body color in the
+    /// situation the medics have not yet been taken although the hour of taking
     /// them is passed or near.
     print('_handleMedics() called');
   }
