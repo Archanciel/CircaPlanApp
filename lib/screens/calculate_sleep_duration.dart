@@ -441,15 +441,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Stack(
-      children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: ScreenMixin.app_computed_vertical_top_margin),
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: ScreenMixin.app_computed_vertical_top_margin),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,115 +465,38 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 160,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            keyboardType: TextInputType.datetime,
-                            controller: _newDateTimeController, // links the
-                            //                                                TextField content to pressing
-                            //                                                the button 'Now'. '+' or '-'
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content or when pasting
-                              _setStateNewDateTimeDependentFields(val);
-                            },
-                          ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          setState(() {
-                            String dateTimeStr =
-                                frenchDateTimeFormat.format(DateTime.now());
-                            _newDateTimeController.text = dateTimeStr;
-                            _newDateTimeStr = dateTimeStr;
-                          });
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        keyboardType: TextInputType.datetime,
+                        controller: _newDateTimeController, // links the
+                        //                                                TextField content to pressing
+                        //                                                the button 'Now'. '+' or '-'
+                        onChanged: (val) {
+                          // called when manually updating the TextField
+                          // content or when pasting
+                          _setStateNewDateTimeDependentFields(val);
                         },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
                       ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          IconButton(
-                            constraints: const BoxConstraints(
-                              minHeight: 0,
-                              minWidth: 0,
-                            ),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: () => _incDecNewDateTimeMinute(
-                                context: context, minuteNb: 1),
-                            icon: Icon(
-                              Icons.add,
-                              color: appTextAndIconColor,
-                            ),
-                          ),
-                          IconButton(
-                            constraints: const BoxConstraints(
-                              minHeight: 0,
-                              minWidth: 0,
-                            ),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: () => _incDecNewDateTimeMinute(
-                                context: context, minuteNb: -1),
-                            icon: Icon(
-                              Icons.remove,
-                              color: appTextAndIconColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 2,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () => _handleAddButton(context),
-                        child: const Text(
-                          'Add',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 25,
                   ),
                   Text(
                     'Previous date time',
@@ -783,45 +706,141 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                child: Text(
-                  _statusStr(_status),
-                  style: TextStyle(
-                    color: appLabelColor,
-                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      _statusStr(_status),
+                      style: TextStyle(
+                        color: appLabelColor,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      ),
+                    ),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   ),
-                ),
-                margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                ],
               ),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: Container(
-            margin: const EdgeInsets.fromLTRB(265, 0, 0, 88),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: appElevatedButtonBackgroundColor,
-                  shape: appElevatedButtonRoundedShape),
-              onPressed: () => _resetScreen(),
-              child: const Text(
-                'Reset',
-                style: TextStyle(
-                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(252, 390, 0, 0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: appElevatedButtonBackgroundColor,
+                      shape: appElevatedButtonRoundedShape),
+                  onPressed: () => _resetScreen(),
+                  child: const Text(
+                    'Reset',
+                    style: TextStyle(
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+            Positioned(
+              right: 0,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20, // val 97 is compliant with current value 6
+//                                 of APP_LABEL_TO_TEXT_DISTANCE
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        child: SizedBox(
+                          width: 160,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          setState(() {
+                            String dateTimeStr =
+                                frenchDateTimeFormat.format(DateTime.now());
+                            _newDateTimeController.text = dateTimeStr;
+                            _newDateTimeStr = dateTimeStr;
+                          });
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(
+                              minHeight: 0,
+                              minWidth: 0,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () => _incDecNewDateTimeMinute(
+                                context: context, minuteNb: 1),
+                            icon: Icon(
+                              Icons.add,
+                              color: appTextAndIconColor,
+                            ),
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(
+                              minHeight: 0,
+                              minWidth: 0,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () => _incDecNewDateTimeMinute(
+                                context: context, minuteNb: -1),
+                            icon: Icon(
+                              Icons.remove,
+                              color: appTextAndIconColor,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () => _handleAddButton(context),
+                        child: const Text(
+                          'Add',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
