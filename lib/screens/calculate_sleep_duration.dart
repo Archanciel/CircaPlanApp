@@ -549,7 +549,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     height: 25,
                   ),
                   Text(
-                    'Current sleep duration',
+                    'Sleep duration',
                     style: TextStyle(
                       color: appLabelColor,
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
@@ -605,7 +605,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     height: 20,
                   ),
                   Text(
-                    'Current wake up duration',
+                    'Wake up duration',
                     style: TextStyle(
                       color: appLabelColor,
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
@@ -661,25 +661,30 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
-                        // commenting cursorColor discourage manually
-                        // editing the TextField !
-                        // cursorColor: appTextAndIconColor,
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          // commenting cursorColor discourage manually
+                          // editing the TextField !
+                          // cursorColor: appTextAndIconColor,
+                        ),
                       ),
-                    ),
-                    child: TextField(
-                      maxLines: null,
-                      minLines: 3,
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      keyboardType: TextInputType.datetime,
-                      controller: _sleepWakeUpHistoryController,
+                      child: TextField(
+                        maxLines: null,
+                        minLines: 3,
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        decoration: const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _sleepWakeUpHistoryController,
+                      ),
                     ),
                   ),
                 ],
