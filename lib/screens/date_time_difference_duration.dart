@@ -208,7 +208,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                   ),
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -253,7 +253,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                   ),
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -294,7 +294,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                   ),
                   Row(
                     children: [
@@ -416,7 +416,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 33,
+                    height: 28, // val 28 is compliant with current value 6
+//                                 of APP_LABEL_TO_TEXT_DISTANCE
+
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -434,7 +436,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 27,
+                    height: 24,  // val 24 is compliant with current value 6
+//                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -452,7 +455,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 25,  // val 25 is compliant with current value 6
+//                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Tooltip(
                     message: 'Used to add positive or negative time.',

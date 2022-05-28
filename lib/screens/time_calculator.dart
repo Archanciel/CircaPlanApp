@@ -156,7 +156,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
@@ -198,7 +200,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
@@ -240,7 +244,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                   ),
                   TextField(
                     enabled: false,
@@ -272,7 +276,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 105,
+                    height: 97, // val 97 is compliant with current value 6
+//                                 of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
