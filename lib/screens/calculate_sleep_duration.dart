@@ -468,8 +468,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
-//                                            compliant with current value 6 of
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+//                                            compliant with current value 5 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
                       data: Theme.of(context).copyWith(
@@ -500,52 +500,119 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   const SizedBox(
                     height: 25,
                   ),
-                  Text(
-                    'Previous date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
-//                                            compliant with current value 6 of
-//                                            APP_LABEL_TO_TEXT_DISTANCE
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          // commenting cursorColor discourage manually
-                          // editing the TextField !
-                          // cursorColor: appTextAndIconColor,
+                  Row(
+                    children: [
+                      Text(
+                        'Previous date time',
+                        style: TextStyle(
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         ),
                       ),
-                      child: TextField(
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        keyboardType: TextInputType.datetime,
-                        controller: _previousDateTimeController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. Although we do not edit this field
-                          // manually, onChanged must be defined aswell as
-                          // the controller in order for pasting a value to
-                          // the TextField to really modify the TextField
-                          // value.
-                          _previousDateTimeController.text = val;
-
-                          // next two instructions required for the changes
-                          // to be memorized in screen navigation transfer
-                          // data
-                          _previousDateTimeStr = val;
-                          _updateTransferDataMap();
-                        },
+                      const SizedBox(
+                        width: 6,
                       ),
-                    ),
+                      Text(
+                        'Before prev date time',
+                        style: TextStyle(
+                          color: appLabelColor,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        padding:
+                            const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+                        //                                            compliant with current value 5 of
+                        //                                            APP_LABEL_TO_TEXT_DISTANCE
+                        child: SizedBox(
+                          width: 160,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              textSelectionTheme: TextSelectionThemeData(
+                                selectionColor: selectionColor,
+                                // commenting cursorColor discourage manually
+                                // editing the TextField !
+                                // cursorColor: appTextAndIconColor,
+                              ),
+                            ),
+                            child: TextField(
+                              style: TextStyle(
+                                  color: appTextAndIconColor,
+                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  fontWeight:
+                                      ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                              decoration: const InputDecoration.collapsed(
+                                  hintText: ''),
+                              keyboardType: TextInputType.datetime,
+                              controller: _previousDateTimeController,
+                              onChanged: (val) {
+                                // called when manually updating the TextField
+                                // content. Although we do not edit this field
+                                // manually, onChanged must be defined aswell as
+                                // the controller in order for pasting a value to
+                                // the TextField to really modify the TextField
+                                // value.
+                                _previousDateTimeController.text = val;
+                        
+                                // next two instructions required for the changes
+                                // to be memorized in screen navigation transfer
+                                // data
+                                _previousDateTimeStr = val;
+                                _updateTransferDataMap();
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+                        //                                            compliant with current value 5 of
+                        //                                            APP_LABEL_TO_TEXT_DISTANCE
+                        child: SizedBox(
+                          width: 160,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              textSelectionTheme: TextSelectionThemeData(
+                                selectionColor: selectionColor,
+                                // commenting cursorColor discourage manually
+                                // editing the TextField !
+                                // cursorColor: appTextAndIconColor,
+                              ),
+                            ),
+                            child: TextField(
+                              style: TextStyle(
+                                  color: appTextAndIconColor,
+                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                              decoration:
+                                  const InputDecoration.collapsed(hintText: ''),
+                              keyboardType: TextInputType.datetime,
+                              controller: _previousDateTimeController,
+                              onChanged: (val) {
+                                // called when manually updating the TextField
+                                // content. Although we do not edit this field
+                                // manually, onChanged must be defined aswell as
+                                // the controller in order for pasting a value to
+                                // the TextField to really modify the TextField
+                                // value.
+                                _previousDateTimeController.text = val;
+                        
+                                // next two instructions required for the changes
+                                // to be memorized in screen navigation transfer
+                                // data
+                                _previousDateTimeStr = val;
+                                _updateTransferDataMap();
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 25,
@@ -561,8 +628,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       Container(
                         padding:
-                            const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
-//                                            compliant with current value 6 of
+                            const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+//                                            compliant with current value 5 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                         width: 160,
                         child: Theme(
@@ -614,8 +681,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
-//                                            compliant with current value 6 of
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+//                                            compliant with current value 5 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
                       data: Theme.of(context).copyWith(
@@ -664,8 +731,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
-//                                            compliant with current value 6 of
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+//                                            compliant with current value 5 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
                       data: Theme.of(context).copyWith(
@@ -696,7 +763,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-              //  margin: const EdgeInsets.fromLTRB(252, 505, 0, 0),
+                //  margin: const EdgeInsets.fromLTRB(252, 505, 0, 0),
                 margin: EdgeInsets.fromLTRB(252, screenHeight * 0.66, 0, 0),
                 child: ElevatedButton(
                   style: ButtonStyle(
@@ -717,13 +784,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               top: -4,
               child: Column(
                 children: [
-                  Container(
-                    child: Text(
-                      _statusStr(_status),
-                      style: TextStyle(
-                        color: appLabelColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      ),
+                  Text(
+                    _statusStr(_status),
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
                   const SizedBox(
