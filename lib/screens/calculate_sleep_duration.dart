@@ -526,8 +526,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       Container(
                         padding:
                             const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
-                        //                                            compliant with current value 5 of
-                        //                                            APP_LABEL_TO_TEXT_DISTANCE
+//                                            compliant with current value 5 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
                           width: 155,
                           child: Theme(
@@ -574,7 +574,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         //                                            compliant with current value 5 of
                         //                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
-                          width: 160,
+                          width: 155  ,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(
