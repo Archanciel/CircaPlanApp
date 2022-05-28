@@ -455,7 +455,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ),
                   ),
                   SizedBox(
-                    height: 25,  // val 25 is compliant with current value 6
+                    height: 24,  // val 24 is compliant with current value 6
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Tooltip(
