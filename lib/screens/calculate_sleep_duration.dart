@@ -485,8 +485,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         keyboardType: TextInputType.datetime,
                         controller: _newDateTimeController, // links the
-                        //                                                TextField content to pressing
-                        //                                                the button 'Now'. '+' or '-'
+                        //                         TextField content to pressing
+                        //                         the button 'Now'. '+' or '-'
                         onChanged: (val) {
                           // called when manually updating the TextField
                           // content or when pasting
@@ -557,7 +557,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      Container(
+                        padding:
+                            const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
                         width: 160,
                         child: Theme(
                           data: Theme.of(context).copyWith(
@@ -595,27 +599,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           ),
                         ),
                       ),
-                      Tooltip(
-                        message: 'Add siesta or sleep reduction time.',
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: appElevatedButtonBackgroundColor,
-                              shape: appElevatedButtonRoundedShape),
-                          onPressed: () async {
-                            final timeStr = await openTextInputDialog();
-                            if (timeStr == null || timeStr.isEmpty) return;
-
-                            _addTimeToCurrentSleepAndWakeUpDuration(
-                                context, timeStr);
-                          },
-                          child: const Text(
-                            'Add',
-                            style: TextStyle(
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(
@@ -628,47 +611,45 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     ),
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 160,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              // commenting cursorColor discourage manually
-                              // editing the TextField !
-                              // cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            keyboardType: TextInputType.datetime,
-                            controller: _currentWakeUpDurationController,
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content. Although we do not edit this field
-                              // manually, onChanged must be defined aswell as
-                              // the controller in order for pasting a value to
-                              // the TextField to really modify the TextField
-                              // value.
-                              _currentWakeUpDurationController.text = val;
-
-                              // next two instructions required for the changes
-                              // to be memorized in screen navigation transfer
-                              // data
-                              _currentWakeUpDurationStr = val;
-                              _updateTransferDataMap();
-                            },
-                          ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+//                                            compliant with current value 6 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          // commenting cursorColor discourage manually
+                          // editing the TextField !
+                          // cursorColor: appTextAndIconColor,
                         ),
                       ),
-                    ],
+                      child: TextField(
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _currentWakeUpDurationController,
+                        onChanged: (val) {
+                          // called when manually updating the TextField
+                          // content. Although we do not edit this field
+                          // manually, onChanged must be defined aswell as
+                          // the controller in order for pasting a value to
+                          // the TextField to really modify the TextField
+                          // value.
+                          _currentWakeUpDurationController.text = val;
+
+                          // next two instructions required for the changes
+                          // to be memorized in screen navigation transfer
+                          // data
+                          _currentWakeUpDurationStr = val;
+                          _updateTransferDataMap();
+                        },
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -744,29 +725,28 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               right: 0,
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20, // val 97 is compliant with current value 6
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        child: SizedBox(
-                          width: 160,
-                        ),
+                      const SizedBox(
+                        width: 160,
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          setState(() {
-                            String dateTimeStr =
-                                frenchDateTimeFormat.format(DateTime.now());
-                            _newDateTimeController.text = dateTimeStr;
-                            _newDateTimeStr = dateTimeStr;
-                          });
+                          setState(
+                            () {
+                              String dateTimeStr =
+                                  frenchDateTimeFormat.format(DateTime.now());
+                              _newDateTimeController.text = dateTimeStr;
+                              _newDateTimeStr = dateTimeStr;
+                            },
+                          );
                         },
                         child: const Text(
                           'Now',
@@ -828,6 +808,37 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           'Add',
                           style: TextStyle(
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 91,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 55,
+                      ),
+                      Tooltip(
+                        message: 'Add siesta or sleep reduction time.',
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () async {
+                            final timeStr = await openTextInputDialog();
+                            if (timeStr == null || timeStr.isEmpty) return;
+
+                            _addTimeToCurrentSleepAndWakeUpDuration(
+                                context, timeStr);
+                          },
+                          child: const Text(
+                            'Add',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            ),
                           ),
                         ),
                       ),
