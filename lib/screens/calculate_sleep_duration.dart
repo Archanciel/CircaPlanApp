@@ -757,8 +757,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         ),
                       ),
                       child: TextField(
-                        maxLines: null,
-                        minLines: 3,
+                        maxLines: null, // must be set, otherwise multi lines
+//                                         not displayed
                         style: TextStyle(
                             color: appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
@@ -773,11 +773,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomLeft,
+            SizedBox(
+              height: screenHeight * 0.755,
+            ),
+            Positioned(
+              right: 0,
+              bottom: 10,
               child: Container(
                 //  margin: const EdgeInsets.fromLTRB(252, 505, 0, 0),
-                margin: EdgeInsets.fromLTRB(252, screenHeight * 0.66, 0, 0),
+                //margin: EdgeInsets.fromLTRB(252, screenHeight * 0.66, 0, 0),
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: appElevatedButtonBackgroundColor,
