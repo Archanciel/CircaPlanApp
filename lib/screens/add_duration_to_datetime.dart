@@ -118,10 +118,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         endDateTime = startDateTime.subtract(duration);
       }
 
-      setState(() {
-        _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
-        _endDateTimeTextFieldController.text = _endDateTimeStr;
-      });
+      _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
+      _endDateTimeTextFieldController.text = _endDateTimeStr;
+
+      setState(() {});
 
       _updateTransferDataMap();
     }
@@ -307,7 +307,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 26,  // val 28 is compliant with current value 5
+                    height: 26, // val 28 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   ElevatedButton(

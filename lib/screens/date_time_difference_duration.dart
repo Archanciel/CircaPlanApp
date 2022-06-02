@@ -124,12 +124,12 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       finalDuration = diffDuration + addTimeDuration;
     }
 
-    setState(() {
-      _durationStr = diffDuration.HHmm();
-      _durationTextFieldController.text = _durationStr;
-      _finalDurationStr = finalDuration?.HHmm() ?? '';
-      _finalDurationTextFieldController.text = _finalDurationStr;
-    });
+    _durationStr = diffDuration.HHmm();
+    _durationTextFieldController.text = _durationStr;
+    _finalDurationStr = finalDuration?.HHmm() ?? '';
+    _finalDurationTextFieldController.text = _finalDurationStr;
+
+    setState(() {});
 
     _updateTransferDataMap();
   }
@@ -165,15 +165,26 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         finalDuration = startEndDateTimeDiffDuration + existingAddTimeDuration;
       }
 
-      setState(() {
-        _addTimeStr = existingAddTimeDuration!.HHmm();
-        _addTimeTextFieldController.text = _addTimeStr;
-        _finalDurationStr = finalDuration?.HHmm() ?? '';
-        _finalDurationTextFieldController.text = _finalDurationStr;
-      });
+      _addTimeStr = existingAddTimeDuration.HHmm();
+      _addTimeTextFieldController.text = _addTimeStr;
+      _finalDurationStr = finalDuration?.HHmm() ?? '';
+      _finalDurationTextFieldController.text = _finalDurationStr;
+
+      setState(() {});
 
       _updateTransferDataMap();
     }
+  }
+
+  void _deleteAddedTimeDuration() {
+    _addTimeStr = '';
+    _addTimeTextFieldController.text = _addTimeStr;
+    _finalDurationStr = '';
+    _finalDurationTextFieldController.text = _finalDurationStr;
+
+    setState(() {});
+
+    _updateTransferDataMap();
   }
 
   @override
@@ -412,71 +423,108 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               ),
             ),
             Positioned(
-              right: 90,
+              right: 0,
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 26, // val 26 is compliant with current value 5
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
-
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: appElevatedButtonBackgroundColor,
-                        shape: appElevatedButtonRoundedShape),
-                    onPressed: () {
-                      _startDateTimeController.text = DateTime.now().toString();
-                      _setStateDiffDuration();
-                    },
-                    child: const Text(
-                      'Now',
-                      style: TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 24,  // val 24 is compliant with current value 5
-//                                  of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: appElevatedButtonBackgroundColor,
-                        shape: appElevatedButtonRoundedShape),
-                    onPressed: () {
-                      _endDateTimeController.text = DateTime.now().toString();
-                      _setStateDiffDuration();
-                    },
-                    child: const Text(
-                      'Now',
-                      style: TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 24,  // val 24 is compliant with current value 5
-//                                  of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  Tooltip(
-                    message: 'Used to add positive or negative time.',
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: appElevatedButtonBackgroundColor,
-                          shape: appElevatedButtonRoundedShape),
-                      onPressed: () async {
-                        final timeStr = await openTextInputDialog();
-                        if (timeStr == null || timeStr.isEmpty) return;
-
-                        _addPosOrNegTimeToCurrentDuration(context, timeStr);
-                      },
-                      child: const Text(
-                        'Add',
-                        style: TextStyle(
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          _startDateTimeController.text =
+                              DateTime.now().toString();
+                          _setStateDiffDuration();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
                         ),
                       ),
-                    ),
+                      const SizedBox(
+                        width: 85,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24, // val 24 is compliant with current value 5
+//                                  of APP_LABEL_TO_TEXT_DISTANCE
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          _endDateTimeController.text =
+                              DateTime.now().toString();
+                          _setStateDiffDuration();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 85,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24, // val 24 is compliant with current value 5
+//                                 of APP_LABEL_TO_TEXT_DISTANCE
+                  ),
+                  Row(
+                    children: [
+                      Tooltip(
+                        message: 'Used to add positive or negative time.',
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () async {
+                            final timeStr = await openTextInputDialog();
+                            if (timeStr == null || timeStr.isEmpty) return;
+
+                            _addPosOrNegTimeToCurrentDuration(context, timeStr);
+                          },
+                          child: const Text(
+                            'Add',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          //  _startDateTimeController.text = DateTime.now().toString();
+                          _deleteAddedTimeDuration();
+                        },
+                        child: const Text(
+                          'Del',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

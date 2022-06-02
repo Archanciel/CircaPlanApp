@@ -29,6 +29,7 @@ mixin ScreenMixin {
   static const String CALCULATR_SLEEP_DURATION_TITLE =
       'Calculate Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
+  static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
 
   static void setAppVerticalTopMargin(double screenHeight) {
     app_computed_vertical_top_margin =

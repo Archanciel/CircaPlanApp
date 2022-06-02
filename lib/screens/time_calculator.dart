@@ -83,6 +83,18 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     return map;
   }
 
+  void _resetScreen() {
+    _firstTimeStr = '00:00:00';
+    _firstTimeTextFieldController.text = _firstTimeStr;
+    _secondTimeStr = '00:00:00';
+    _secondTimeTextFieldController.text = _secondTimeStr;
+    _resultTimeStr = '';
+
+    setState(() {});
+
+    _updateTransferDataMap();
+  }
+
   void _addSubtractTimeDuration(
       {required BuildContext context, required bool isPlus}) {
     /// Private method called when pressing the 'Plus' or 'Minus' buttons.
@@ -121,9 +133,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       resultTimeStr = '${resultDuration.ddHHmm()}';
     }
 
-    setState(() {
-      _resultTimeStr = resultTimeStr;
-    });
+    _resultTimeStr = resultTimeStr;
+    
+    setState(() {});
 
     _updateTransferDataMap();
   }
@@ -131,6 +143,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -263,7 +277,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               ),
             ),
             Positioned(
-              right: -30,
+              right: 0,
               child: Column(
                 children: [
                   SizedBox(
@@ -290,7 +304,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                       ),
                       const SizedBox(
-                        width: 6,
+                        width: 20,
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
@@ -308,12 +322,33 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 50,
-                      ),
                     ],
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: screenHeight *
+                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
+            ),
+            Positioned(
+              right: 0,
+              bottom: 10,
+              child: Container(
+                //  margin: const EdgeInsets.fromLTRB(252, 505, 0, 0),
+                //margin: EdgeInsets.fromLTRB(252, screenHeight * 0.66, 0, 0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: appElevatedButtonBackgroundColor,
+                      shape: appElevatedButtonRoundedShape),
+                  onPressed: () => _resetScreen(),
+                  child: const Text(
+                    'Reset',
+                    style: TextStyle(
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                    ),
+                  ),
+                ),
               ),
             ),
 /*            Align(

@@ -184,9 +184,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       dateTimeStr = frenchDateTimeFormat.format(dateTime);
     } on FormatException catch (_) {}
 
-    setState(() {
-      _newDateTimeStr = dateTimeStr;
-    });
+    _newDateTimeStr = dateTimeStr;
+
+    setState(() {});
 
     _updateTransferDataMap();
   }
@@ -213,33 +213,31 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
 
-    setState(() {
-      _newDateTimeController.text = _newDateTimeStr;
-    });
+    _newDateTimeController.text = _newDateTimeStr;
+
+    setState(() {});
 
     _updateTransferDataMap();
   }
 
   void _resetScreen() {
     /// Private method called when clicking on 'Reset' button.
-    setState(
-      () {
-        _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
-        _newDateTimeController.text = _newDateTimeStr;
-        _previousDateTimeStr = '';
-        _previousDateTimeController.text = _previousDateTimeStr;
-        _beforePreviousDateTimeStr = '';
-        _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
-        _currentSleepDurationStr = '';
-        _currentSleepDurationController.text = _currentSleepDurationStr;
-        _currentWakeUpDurationStr = '';
-        _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
-        _status = Status.wakeUp;
-        _sleepTimeStrHistory = [];
-        _wakeUpTimeStrHistory = [];
-        _sleepWakeUpHistoryController.text = '';
-      },
-    );
+    _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
+    _newDateTimeController.text = _newDateTimeStr;
+    _previousDateTimeStr = '';
+    _previousDateTimeController.text = _previousDateTimeStr;
+    _beforePreviousDateTimeStr = '';
+    _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+    _currentSleepDurationStr = '';
+    _currentSleepDurationController.text = _currentSleepDurationStr;
+    _currentWakeUpDurationStr = '';
+    _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+    _status = Status.wakeUp;
+    _sleepTimeStrHistory = [];
+    _wakeUpTimeStrHistory = [];
+    _sleepWakeUpHistoryController.text = '';
+
+    setState(() {});
 
     _updateTransferDataMap();
   }
@@ -264,16 +262,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
-        setState(
-          () {
-            // Without using applying ! bang operator to the newDateTime variable,
-            // the compiler displays this error: 'The argument type 'DateTime?'
-            // can't be assigned to the parameter type DateTime
-            _previousDateTimeStr = newDateTimeStr;
-            _previousDateTimeController.text = _previousDateTimeStr;
-            _status = Status.sleep;
-          },
-        );
+        // Without using applying ! bang operator to the newDateTime variable,
+        // the compiler displays this error: 'The argument type 'DateTime?'
+        // can't be assigned to the parameter type DateTime
+        _previousDateTimeStr = newDateTimeStr;
+        _previousDateTimeController.text = _previousDateTimeStr;
+        _status = Status.sleep;
+
+        setState(() {});
       } else {
         DateTime? previousDateTime;
 
@@ -308,17 +304,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           currentWakeUpDuration += wakeUpDuration;
         }
 
-        setState(() {
-          _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
-          _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
-          _beforePreviousDateTimeStr = _previousDateTimeStr;
-          _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
-          _previousDateTimeStr = _newDateTimeStr;
-          _previousDateTimeController.text = _previousDateTimeStr;
-          _status = Status.sleep;
-          _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
-          _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
-        });
+        _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
+        _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+        _beforePreviousDateTimeStr = _previousDateTimeStr;
+        _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+        _previousDateTimeStr = _newDateTimeStr;
+        _previousDateTimeController.text = _previousDateTimeStr;
+        _status = Status.sleep;
+        _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
+        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
+
+        setState(() {});
       }
     } else {
       // status == status.sleep
@@ -343,20 +339,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         currentSleepDuration += sleepDuration;
       }
 
-      setState(
-        () {
-          _currentSleepDurationStr = currentSleepDuration!.HHmm();
-          _currentSleepDurationController.text = _currentSleepDurationStr;
-          _beforePreviousDateTimeStr = _previousDateTimeStr;
-          _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
-          _previousDateTimeStr = _newDateTimeStr;
-          _previousDateTimeController.text = _previousDateTimeStr;
-          _sleepTimeStrHistory.add(sleepDuration.HHmm());
-          _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
-          _status = Status.wakeUp;
-        },
-      );
+      _currentSleepDurationStr = currentSleepDuration!.HHmm();
+      _currentSleepDurationController.text = _currentSleepDurationStr;
+      _beforePreviousDateTimeStr = _previousDateTimeStr;
+      _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+      _previousDateTimeStr = _newDateTimeStr;
+      _previousDateTimeController.text = _previousDateTimeStr;
+      _sleepTimeStrHistory.add(sleepDuration.HHmm());
+      _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
+      _status = Status.wakeUp;
+
+      setState(() {});
     }
+
     _updateTransferDataMap();
   }
 
@@ -414,18 +409,18 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             currentSleepDuration, addDuration);
       }
 
-      setState(() {
-        if (durationStr.contains('-')) {
-          _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
-          _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
-          _wakeUpTimeStrHistory.add(durationStr.replaceFirst('-', ''));
-        }
+      if (durationStr.contains('-')) {
+        _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
+        _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+        _wakeUpTimeStrHistory.add(durationStr.replaceFirst('-', ''));
+      }
 
-        _currentSleepDurationStr = currentSleepDuration!.HHmm();
-        _currentSleepDurationController.text = _currentSleepDurationStr;
-        _sleepTimeStrHistory.add(durationStr);
-        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
-      });
+      _currentSleepDurationStr = currentSleepDuration!.HHmm();
+      _currentSleepDurationController.text = _currentSleepDurationStr;
+      _sleepTimeStrHistory.add(durationStr);
+      _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
+
+      setState(() {});
 
       _updateTransferDataMap();
     }
@@ -774,24 +769,21 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               ),
             ),
             SizedBox(
-              height: screenHeight * 0.755,
+              height: screenHeight *
+                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
             ),
             Positioned(
               right: 0,
               bottom: 10,
-              child: Container(
-                //  margin: const EdgeInsets.fromLTRB(252, 505, 0, 0),
-                //margin: EdgeInsets.fromLTRB(252, screenHeight * 0.66, 0, 0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: appElevatedButtonBackgroundColor,
-                      shape: appElevatedButtonRoundedShape),
-                  onPressed: () => _resetScreen(),
-                  child: const Text(
-                    'Reset',
-                    style: TextStyle(
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: appElevatedButtonBackgroundColor,
+                    shape: appElevatedButtonRoundedShape),
+                onPressed: () => _resetScreen(),
+                child: const Text(
+                  'Reset',
+                  style: TextStyle(
+                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                   ),
                 ),
               ),
@@ -821,14 +813,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          setState(
-                            () {
-                              String dateTimeStr =
-                                  frenchDateTimeFormat.format(DateTime.now());
-                              _newDateTimeController.text = dateTimeStr;
-                              _newDateTimeStr = dateTimeStr;
-                            },
-                          );
+                          String dateTimeStr =
+                              frenchDateTimeFormat.format(DateTime.now());
+                          _newDateTimeController.text = dateTimeStr;
+                          _newDateTimeStr = dateTimeStr;
+
+                          setState(() {});
                         },
                         child: const Text(
                           'Now',
