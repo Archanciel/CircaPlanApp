@@ -415,7 +415,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _wakeUpTimeStrHistory.add(durationStr.replaceFirst('-', ''));
       }
 
-      _currentSleepDurationStr = currentSleepDuration!.HHmm();
+      _currentSleepDurationStr = currentSleepDuration.HHmm();
       _currentSleepDurationController.text = _currentSleepDurationStr;
       _sleepTimeStrHistory.add(durationStr);
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
