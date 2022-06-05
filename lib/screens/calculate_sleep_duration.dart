@@ -239,6 +239,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentSleepDurationStr = '';
     _currentSleepDurationController.text = _currentSleepDurationStr;
     _currentWakeUpDurationStr = '';
+    _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
     _currentTotalDurationStr = '';
     _currentTotalDurationController.text = _currentTotalDurationStr;
     _status = Status.wakeUp;
