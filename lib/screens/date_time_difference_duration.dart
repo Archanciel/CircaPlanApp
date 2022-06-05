@@ -102,6 +102,31 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     return map;
   }
 
+  void _resetScreen() {
+    _startDateTimeStr = '';
+    _endDateTimeStr = '';
+    _durationStr = '';
+    _addTimeStr = '';
+    _finalDurationStr = '';
+
+    final DateTime dateTimeNow = DateTime.now();
+    String nowDateTimeStr = dateTimeNow.toString();
+    _startDateTimeStr = nowDateTimeStr;
+    _startDateTimeController.text = _startDateTimeStr;
+    _durationStr = '';
+    _durationTextFieldController.text = _durationStr;
+    _addTimeStr = '';
+    _addTimeTextFieldController.text = _addTimeStr;
+    _finalDurationStr = '';
+    _finalDurationTextFieldController.text = _finalDurationStr;
+    _endDateTimeStr = nowDateTimeStr;
+    _endDateTimeController.text = _endDateTimeStr;
+
+    setState(() {});
+
+    _updateTransferDataMap();
+  }
+
   void _setStateDiffDuration() {
     /// Private method called each time one of the elements
     /// implied in calculating the Duration value is changed.
@@ -189,6 +214,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
@@ -527,6 +554,26 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     ],
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: screenHeight *
+                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
+            ),
+            Positioned(
+              right: 0,
+              bottom: 10,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: appElevatedButtonBackgroundColor,
+                    shape: appElevatedButtonRoundedShape),
+                onPressed: () => _resetScreen(),
+                child: const Text(
+                  'Reset',
+                  style: TextStyle(
+                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                  ),
+                ),
               ),
             ),
             Align(
