@@ -561,7 +561,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
             ),
-           ResetButton(
+            ResetButton(
               onPress: _resetScreen,
             ),
             Align(

@@ -1,3 +1,4 @@
+import 'package:circa_plan/screens/reset_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -862,21 +863,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
             ),
-            Positioned(
-              right: 0,
-              bottom: 10,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: appElevatedButtonBackgroundColor,
-                    shape: appElevatedButtonRoundedShape),
-                onPressed: () => _resetScreen(),
-                child: const Text(
-                  'Reset',
-                  style: TextStyle(
-                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                  ),
-                ),
-              ),
+            ResetButton(
+              onPress: _resetScreen,
             ),
             Positioned(
               right: 0,

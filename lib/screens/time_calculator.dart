@@ -135,7 +135,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     }
 
     _resultTimeStr = resultTimeStr;
-    
+
     setState(() {});
 
     _updateTransferDataMap();
@@ -332,7 +332,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
             ),
-           ResetButton(
+            ResetButton(
               onPress: _resetScreen,
             ),
 /*            Align(
