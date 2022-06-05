@@ -39,6 +39,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
         _currentWakeUpDurationStr =
             transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '',
+        _currentTotalDurationStr =
+            transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '',
         _status = transferDataMap['calcSlDurStatus'] ?? Status.wakeUp,
         _sleepTimeStrHistory =
             transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [],
@@ -53,6 +55,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _beforePreviousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
+  String _currentTotalDurationStr = '';
   Status _status = Status.wakeUp;
   List<String> _sleepTimeStrHistory = [];
   List<String> _wakeUpTimeStrHistory = [];
@@ -63,6 +66,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _addTimeDialogController;
   late TextEditingController _currentSleepDurationController;
   late TextEditingController _currentWakeUpDurationController;
+  late TextEditingController _currentTotalDurationController;
   late TextEditingController _sleepWakeUpHistoryController;
 
   String _buildSleepWakeUpHistoryStr() {
@@ -129,6 +133,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         text: _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '');
     _currentWakeUpDurationController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '');
+    _currentTotalDurationController = TextEditingController(
+        text: _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '');
     _addTimeDialogController = TextEditingController();
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
@@ -141,6 +147,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _beforePreviousDateTimeController.dispose();
     _currentSleepDurationController.dispose();
     _currentWakeUpDurationController.dispose();
+    _currentTotalDurationController.dispose();
     _addTimeDialogController.dispose();
     _sleepWakeUpHistoryController.dispose();
 
@@ -155,6 +162,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
+    map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
     map['calcSlDurStatus'] = _status;
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
@@ -231,7 +239,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentSleepDurationStr = '';
     _currentSleepDurationController.text = _currentSleepDurationStr;
     _currentWakeUpDurationStr = '';
-    _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+    _currentTotalDurationStr = '';
+    _currentTotalDurationController.text = _currentTotalDurationStr;
     _status = Status.wakeUp;
     _sleepTimeStrHistory = [];
     _wakeUpTimeStrHistory = [];
@@ -304,8 +313,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           currentWakeUpDuration += wakeUpDuration;
         }
 
-        _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
+        Duration? currentTotalDuration =
+            DateTimeParser.parseHHmmDuration(_currentTotalDurationStr);
+
+        if (currentTotalDuration == null) {
+          currentTotalDuration = currentWakeUpDuration;
+        } else {
+          currentTotalDuration += wakeUpDuration;
+        }
+
+        _currentWakeUpDurationStr = currentWakeUpDuration.HHmm();
         _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
+        _currentTotalDurationStr = currentTotalDuration.HHmm();
+        _currentTotalDurationController.text = _currentTotalDurationStr;
         _beforePreviousDateTimeStr = _previousDateTimeStr;
         _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
         _previousDateTimeStr = _newDateTimeStr;
@@ -339,8 +359,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         currentSleepDuration += sleepDuration;
       }
 
-      _currentSleepDurationStr = currentSleepDuration!.HHmm();
+      Duration? currentTotalDuration =
+          DateTimeParser.parseHHmmDuration(_currentTotalDurationStr);
+
+      if (currentTotalDuration == null) {
+        currentTotalDuration = currentSleepDuration;
+      } else {
+        currentTotalDuration += sleepDuration;
+      }
+
+      _currentSleepDurationStr = currentSleepDuration.HHmm();
       _currentSleepDurationController.text = _currentSleepDurationStr;
+      _currentTotalDurationStr = currentTotalDuration.HHmm();
+      _currentTotalDurationController.text = _currentTotalDurationStr;
       _beforePreviousDateTimeStr = _previousDateTimeStr;
       _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
       _previousDateTimeStr = _newDateTimeStr;
@@ -394,6 +425,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
       Duration? currentWakeUpDuration =
           DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
+      Duration? currentTotalDuration =
+          DateTimeParser.parseHHmmDuration(_currentTotalDurationStr);
 
       if (durationStr.contains('-')) {
         if (currentWakeUpDuration == null) {
@@ -401,13 +434,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         } else {
           currentWakeUpDuration -= addDuration;
         }
-
-        currentSleepDuration = _addDurationToCurrentSleepDuration(
-            currentSleepDuration, addDuration);
       } else {
-        currentSleepDuration = _addDurationToCurrentSleepDuration(
-            currentSleepDuration, addDuration);
+        if (currentTotalDuration == null) {
+          currentTotalDuration = addDuration;
+        } else {
+          currentTotalDuration += addDuration;
+        }
       }
+
+      currentSleepDuration =
+          _addDurationToCurrentSleepDuration(currentSleepDuration, addDuration);
 
       if (durationStr.contains('-')) {
         _currentWakeUpDurationStr = currentWakeUpDuration!.HHmm();
@@ -417,6 +453,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       _currentSleepDurationStr = currentSleepDuration.HHmm();
       _currentSleepDurationController.text = _currentSleepDurationStr;
+      _currentTotalDurationStr =
+          (currentTotalDuration != null) ? currentTotalDuration.HHmm() : '';
+      _currentTotalDurationController.text = _currentTotalDurationStr;
       _sleepTimeStrHistory.add(durationStr);
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
 
@@ -723,6 +762,56 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           // to be memorized in screen navigation transfer
                           // data
                           _currentWakeUpDurationStr = val;
+                          _updateTransferDataMap();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Total duration',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
+//                                            compliant with current value 5 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          // commenting cursorColor discourage manually
+                          // editing the TextField !
+                          // cursorColor: appTextAndIconColor,
+                        ),
+                      ),
+                      child: TextField(
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _currentTotalDurationController,
+                        onChanged: (val) {
+                          // called when manually updating the TextField
+                          // content. Although we do not edit this field
+                          // manually, onChanged must be defined aswell as
+                          // the controller in order for pasting a value to
+                          // the TextField to really modify the TextField
+                          // value.
+                          _currentTotalDurationController.text = val;
+
+                          // next two instructions required for the changes
+                          // to be memorized in screen navigation transfer
+                          // data
+                          _currentTotalDurationStr = val;
                           _updateTransferDataMap();
                         },
                       ),
