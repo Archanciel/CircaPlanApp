@@ -1,3 +1,4 @@
+import 'package:circa_plan/screens/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
@@ -345,11 +346,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 ],
               ),
             ),
+            SizedBox(
+              height: screenHeight *
+                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
+            ),
             ResetButton(
-              screenHeight: screenHeight,
               onPress: _resetScreen,
             ),
-
 /*            Align(
               alignment: Alignment.bottomLeft,
               child: Container(
@@ -376,47 +379,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
           ],
         ),
       ),
-    );
-  }
-}
-
-class ResetButton extends StatelessWidget with ScreenMixin {
-  final double _screenHeight;
-  final void Function() _onPress;
-
-  ResetButton({
-    required double screenHeight,
-    required void Function() onPress,
-    Key? key,
-  })  : _screenHeight = screenHeight,
-        _onPress = onPress,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: _screenHeight *
-              ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
-        ),
-        Positioned(
-          right: 0,
-          bottom: 10,
-          child: ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: appElevatedButtonBackgroundColor,
-                shape: appElevatedButtonRoundedShape),
-                   onPressed: _onPress,
-            child: const Text(
-              'Reset',
-              style: TextStyle(
-                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

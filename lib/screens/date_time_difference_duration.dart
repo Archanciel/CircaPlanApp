@@ -1,5 +1,6 @@
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
+import 'package:circa_plan/screens/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
@@ -560,21 +561,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
             ),
-            Positioned(
-              right: 0,
-              bottom: 10,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: appElevatedButtonBackgroundColor,
-                    shape: appElevatedButtonRoundedShape),
-                onPressed: () => _resetScreen(),
-                child: const Text(
-                  'Reset',
-                  style: TextStyle(
-                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                  ),
-                ),
-              ),
+           ResetButton(
+              onPress: _resetScreen,
             ),
             Align(
               alignment: Alignment.bottomLeft,
