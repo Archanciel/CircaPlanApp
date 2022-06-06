@@ -286,9 +286,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
 
-        if (newDateTime.isBefore(previousDateTime)) {
-          openWarningDialog(context,
-              'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please increase it and retry !');
+        if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
         }
 
@@ -344,9 +342,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
       previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
 
-      if (newDateTime.isBefore(previousDateTime)) {
-        openWarningDialog(context,
-            'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please retry !');
+      if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
       }
 
@@ -386,6 +382,22 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
 
     _updateTransferDataMap();
+  }
+
+  bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
+    if (newDateTime.isBefore(previousDateTime)) {
+      openWarningDialog(context,
+          'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please increase it and retry !');
+      return false;
+    }
+
+    if (newDateTime == previousDateTime) {
+      openWarningDialog(context,
+          'New date time can\'t be equal to previous date time ($_newDateTimeStr = $_previousDateTimeStr). Please increase it and retry !');
+      return false;
+    }
+
+    return true;
   }
 
   bool _isDateTimeStr(String str) {
