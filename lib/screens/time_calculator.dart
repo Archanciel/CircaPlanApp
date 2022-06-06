@@ -1,4 +1,4 @@
-import 'package:circa_plan/screens/reset_button.dart';
+import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';

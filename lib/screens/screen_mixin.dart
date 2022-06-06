@@ -7,13 +7,17 @@ mixin ScreenMixin {
   /// to add those common instance variables to the statefull
   /// widgets solves the problem.
 
+  static Color APP_DARK_BLUE_COLOR = Colors.blue.shade900;
+  static Color APP_LIGHT_BLUE_COLOR = Colors.blue;
+  static Color APP_LIGHT_YELLOW_COLOR = Colors.yellow.shade300;
+  static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
-  final Color appLabelColor = Colors.yellow.shade300;
+  final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
   final Color appTextAndIconColor = Colors.white;
-  final Color selectionColor = Colors.blue.shade900;
+  final Color selectionColor = ScreenMixin.APP_DARK_BLUE_COLOR;
   final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
-      MaterialStateProperty.all(Colors.blue.shade900);
+      MaterialStateProperty.all(ScreenMixin.APP_DARK_BLUE_COLOR);
   final MaterialStateProperty<RoundedRectangleBorder>
       appElevatedButtonRoundedShape =
       MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -25,7 +29,6 @@ mixin ScreenMixin {
   static const double APP_VERTICAL_TOP_MARGIN_PROPORTION = 0.03;
   static const String APP_DURATION_TO_DATE_TIME_TITLE =
       'Add Duration To Date Time';
-static Color APP_SELECTION_COLOR = Colors.blue.shade900;
 static const String DATE_TIME_DIFF_DURATION_TITLE =
       'Date Time Difference Duration';
   static const String CALCULATR_SLEEP_DURATION_TITLE =

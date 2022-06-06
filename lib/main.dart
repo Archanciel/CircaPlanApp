@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget with ScreenMixin {
         debugShowCheckedModeBanner: false,
         title: ScreenMixin.APP_TITLE,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.blue, // using ScreenMixin.APP_LIGHT_BLUE_COLOR
+//                                       not possible I don't know why !
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: appTextAndIconColor, // requires with ScreenMixin !
           ),
@@ -109,10 +110,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     /// For iOS platform: SafeArea and ClipRect needed
     return SafeArea(
       child: Container(
-        color: Colors.blue,
+        color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
         child: Scaffold(
           extendBody: true,
-          backgroundColor: Colors.blue.shade900,
+          backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
           body: Stack(
             children: [
               Positioned(
@@ -121,10 +122,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 top: 4,
                 height: screenHeight * 0.09,
                 child: AppBar(
-                  backgroundColor: Colors.blue.shade900,
+                  backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
                   title: Text(
                     screenTitlesLst[_currentIndex],
-                    style: TextStyle(color: Colors.yellow.shade200),
+                    style: TextStyle(color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR),
                   ),
                   elevation: 0,
                   centerTitle: true,
@@ -138,7 +139,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Colors.blue,
+                    color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
                   ),
                   child: screensLst[_currentIndex],
                 ),
@@ -149,12 +150,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 bottom: 0,
                 child: Theme(
                   data: Theme.of(context).copyWith(
-                    iconTheme: IconThemeData(color: Colors.blue.shade900),
+                    iconTheme: IconThemeData(color: ScreenMixin.APP_DARK_BLUE_COLOR),
                   ),
                   child: CurvedNavigationBar(
                     key: _navigationKey,
                     color: Colors.white,
-                    buttonBackgroundColor: Colors.yellow.shade200,
+                    buttonBackgroundColor: ScreenMixin.APP_LIGHT_YELLOW_COLOR,
                     backgroundColor: Colors.transparent,
                     height: 55,
                     animationCurve: Curves.easeInOut,

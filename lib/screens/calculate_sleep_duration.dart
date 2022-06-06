@@ -1,4 +1,4 @@
-import 'package:circa_plan/screens/reset_button.dart';
+import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -7,7 +7,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
-import 'circadian_snackbar.dart';
+import '../widgets/circadian_snackbar.dart';
 
 enum Status { wakeUp, sleep }
 
@@ -289,12 +289,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
-          final CircadianSnackBar snackBar = CircadianSnackBar(message: 'Bad new date time !');
-
-          // Find the ScaffoldMessenger in the widget tree
-          // and use it to show a SnackBar.
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
           return;
         }
 
