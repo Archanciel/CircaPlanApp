@@ -61,8 +61,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
-  _updateTransferDataMap() => _screenNavigTransData.transferDataMap;
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;

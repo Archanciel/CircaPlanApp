@@ -7,8 +7,6 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
-import '../widgets/circadian_snackbar.dart';
-
 enum Status { wakeUp, sleep }
 
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
