@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 mixin ScreenMixin {
   /// This mixin class contains UI parameters used by all the Circa
@@ -13,6 +14,7 @@ mixin ScreenMixin {
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
+  final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
   final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
   final Color appTextAndIconColor = Colors.white;
   final Color selectionColor = ScreenMixin.APP_DARK_BLUE_COLOR;
@@ -64,12 +66,31 @@ mixin ScreenMixin {
   }
 
   List<String> buildAppDateTimeStrList(
-      {required Map<String, dynamic> transferDataMap}) {
+      {required Map<String, dynamic> transferDataMap,
+      required bool mostRecentFirst}) {
     List<String> appDateTimeStrList = [];
+    List<DateTime> appDateTimeList = [];
 
-    return appDateTimeStrList;
+    for (var value in transferDataMap.values) {
+      if (value is String && isDateTimeStr(value)) {
+        DateTime dateTime = frenchDateTimeFormat.parse(value);
+        if (!appDateTimeList.contains(dateTime)) {
+          appDateTimeList.add(dateTime);
+        }
+      }
+    }
+
+    if (mostRecentFirst) {
+      appDateTimeList.sort((a, b) =>
+          b.millisecondsSinceEpoch.compareTo(a.millisecondsSinceEpoch));
+    } else {
+      appDateTimeList.sort((a, b) =>
+          a.millisecondsSinceEpoch.compareTo(b.millisecondsSinceEpoch));
+    }
+
+    return appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
   }
-  
+
   bool isDateTimeStr(String str) {
     return str.contains('-');
   }
