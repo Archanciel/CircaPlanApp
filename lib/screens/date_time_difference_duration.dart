@@ -214,8 +214,31 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   }
 
   void _selectEndDateTime() {
-    
+    showMenu<String>(
+      context: context,
+      position: const RelativeRect.fromLTRB(1.0, 290.0, 0.0,
+          0.0), //position where you want to show the menu on screen
+      items: [
+        const PopupMenuItem<String>(child: Text('menu option 1'), value: '1'),
+        const PopupMenuItem<String>(child: Text('menu option 2'), value: '2'),
+        const PopupMenuItem<String>(child: Text('menu option 3'), value: '3'),
+      ],
+      elevation: 8.0,
+    ).then<void>((String? itemSelected) {
+      if (itemSelected == null) return;
+
+      print('itemSelected $itemSelected');
+
+      if (itemSelected == "1") {
+        print('itemSelected ONE');
+      } else if (itemSelected == "2") {
+        print('itemSelected TWO');
+      } else {
+        print('itemSelected THREE');
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
