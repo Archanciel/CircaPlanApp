@@ -202,5 +202,47 @@ void main() {
 
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
     });
+
+    final Map<String, dynamic> transferDataMapEnglishAndFrenchDateTime = {};
+
+    transferDataMapEnglishAndFrenchDateTime['calcSlDurNewDateTimeStr'] =
+        '01-06-2022 23:42';
+    transferDataMapEnglishAndFrenchDateTime['dtDiffEndDateTimeStr'] =
+        '2022-06-11 22:30';
+    transferDataMapEnglishAndFrenchDateTime['calcSlDurPreviousDateTimeStr'] =
+        '02-06-2022 23:42';
+    transferDataMapEnglishAndFrenchDateTime['dtDiffStartDateTimeStr'] =
+        '2022-06-10 00:30';
+
+    test('buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most late first', () {
+      List<String> actualDateTimeStrLst =
+          testClassWithSreenMixin.buildSortedAppDateTimeStrList(
+              transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+              mostRecentFirst: false);
+      List<String> expectedDateTimeStrLst = [
+        '01-06-2022 23:42',
+        '02-06-2022 23:42',
+        '10-06-2022 00:30',
+        '11-06-2022 22:30',
+      ];
+
+      expect(actualDateTimeStrLst, expectedDateTimeStrLst);
+    });
+
+    test('buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first',
+        () {
+      List<String> actualDateTimeStrLst =
+          testClassWithSreenMixin.buildSortedAppDateTimeStrList(
+              transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+              mostRecentFirst: true);
+      List<String> expectedDateTimeStrLst = [
+        '11-06-2022 22:30',
+        '10-06-2022 00:30',
+        '02-06-2022 23:42',
+        '01-06-2022 23:42',
+      ];
+
+      expect(actualDateTimeStrLst, expectedDateTimeStrLst);
+    });
   });
 }
