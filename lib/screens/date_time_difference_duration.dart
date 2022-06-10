@@ -213,6 +213,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
+  void _selectEndDateTime() {
+    
+  }
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -504,7 +507,22 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         ),
                       ),
                       const SizedBox(
-                        width: 85,
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          //  _startDateTimeController.text = DateTime.now().toString();
+                          _selectEndDateTime();
+                        },
+                        child: const Text(
+                          'Sel',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
                       ),
                     ],
                   ),
