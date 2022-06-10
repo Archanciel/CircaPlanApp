@@ -541,7 +541,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          //  _startDateTimeController.text = DateTime.now().toString();
                           _selectEndDateTime();
                         },
                         child: const Text(
@@ -587,7 +586,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          //  _startDateTimeController.text = DateTime.now().toString();
                           _deleteAddedTimeDuration();
                         },
                         child: const Text(
