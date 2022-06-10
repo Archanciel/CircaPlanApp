@@ -214,6 +214,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   }
 
   void _selectEndDateTime() {
+    List<String> actualDateTimeStrLst = buildSortedAppDateTimeStrList(
+        transferDataMap: _transferDataMap, mostRecentFirst: true);
+    print('actualDateTimeStrLst $actualDateTimeStrLst');
+    print('\n_transferDataMap $_transferDataMap');
     showMenu<String>(
       context: context,
       position: const RelativeRect.fromLTRB(1.0, 290.0, 0.0,
