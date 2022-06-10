@@ -28,9 +28,11 @@ void main() {
     transferDataMap['secondTimeStr'] = '00:00:45';
     transferDataMap['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
     transferDataMap['dtDiffDurationStr'] = '02:53';
-    test('buildAppDateTimeStrList several and double date time str most late first', () {
+    test(
+        'buildSortedAppDateTimeStrList several and double date time str most late first',
+        () {
       List<String> actualDateTimeStrLst =
-          testClassWithSreenMixin.buildAppDateTimeStrList(
+          testClassWithSreenMixin.buildSortedAppDateTimeStrList(
               transferDataMap: transferDataMap, mostRecentFirst: false);
       List<String> expectedDateTimeStrLst = [
         '01-06-2022 23:42',
@@ -42,9 +44,11 @@ void main() {
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
     });
 
-    test('buildAppDateTimeStrList several and double date time str most recent first', () {
+    test(
+        'buildSortedAppDateTimeStrList several and double date time str most recent first',
+        () {
       List<String> actualDateTimeStrLst =
-          testClassWithSreenMixin.buildAppDateTimeStrList(
+          testClassWithSreenMixin.buildSortedAppDateTimeStrList(
               transferDataMap: transferDataMap, mostRecentFirst: true);
       List<String> expectedDateTimeStrLst = [
         '03-06-2022 06:42',

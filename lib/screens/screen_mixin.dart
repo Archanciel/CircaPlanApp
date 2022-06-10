@@ -65,7 +65,10 @@ mixin ScreenMixin {
     );
   }
 
-  List<String> buildAppDateTimeStrList(
+  /// Extract date time string's from the passed transfer data map and return
+  /// them in a list sorted with most recent first or last according to the
+  /// mostRecentFirst bool paraneter.
+  List<String> buildSortedAppDateTimeStrList(
       {required Map<String, dynamic> transferDataMap,
       required bool mostRecentFirst}) {
     List<String> appDateTimeStrList = [];
@@ -75,10 +78,13 @@ mixin ScreenMixin {
       if (value is String && isDateTimeStr(value)) {
         DateTime dateTime = frenchDateTimeFormat.parse(value);
         if (!appDateTimeList.contains(dateTime)) {
+          // avoid inserting several same DateTime values
           appDateTimeList.add(dateTime);
         }
       }
     }
+
+    // now sorting the DateTime list
 
     if (mostRecentFirst) {
       appDateTimeList.sort((a, b) =>
@@ -87,6 +93,8 @@ mixin ScreenMixin {
       appDateTimeList.sort((a, b) =>
           a.millisecondsSinceEpoch.compareTo(b.millisecondsSinceEpoch));
     }
+
+    // returning a list of sorted date time string's
 
     return appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
   }

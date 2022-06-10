@@ -123,7 +123,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
                   title: Text(
                     screenTitlesLst[_currentIndex],
-                    style: TextStyle(color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR),
+                    style:
+                        TextStyle(color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR),
                   ),
                   elevation: 0,
                   centerTitle: true,
@@ -148,7 +149,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 bottom: 0,
                 child: Theme(
                   data: Theme.of(context).copyWith(
-                    iconTheme: IconThemeData(color: ScreenMixin.APP_DARK_BLUE_COLOR),
+                    iconTheme:
+                        IconThemeData(color: ScreenMixin.APP_DARK_BLUE_COLOR),
                   ),
                   child: CurvedNavigationBar(
                     key: _navigationKey,
