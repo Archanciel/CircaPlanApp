@@ -30,9 +30,6 @@ void main() {
     transferDataMapRegular['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
     transferDataMapRegular['dtDiffDurationStr'] = '02:53';
 
-    // entry with invalid time format
-    transferDataMapRegular['dtDiffStartDateTimeStr'] = '04-06-2022 06-22';
-
     test(
         'buildSortedAppDateTimeStrList several and double date time str most late first',
         () {
@@ -141,6 +138,69 @@ void main() {
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
     });
 
+    final Map<String, dynamic> transferDataMapInvalidFormat = {};
 
+    // entry with invalid date format
+    transferDataMapInvalidFormat['calcSlDurNewDateTimeStr'] =
+        '01/06/2022 23:42';
+
+    // entry with invalid date format
+    transferDataMapInvalidFormat['calcSlDurLastWakeUpTimeStr'] = '02-06 02:42';
+
+    // entry with invalid date format
+    transferDataMapInvalidFormat['calcSlDurPreviousDateTimeStr'] =
+        '06-2022 03:42';
+
+    // entry with invalid date format
+    transferDataMapInvalidFormat['calcSlDurBeforePreviousDateTimeStr'] =
+        '02-06 02:42';
+    transferDataMapInvalidFormat['calcSlDurCurrSleepDurationStr'] = '04:00';
+    transferDataMapInvalidFormat['calcSlDurCurrWakeUpDurationStr'] = '00:48';
+    transferDataMapInvalidFormat['calcSlDurCurrTotalDurationStr'] = '04:48';
+    transferDataMapInvalidFormat['calcSlDurSleepTimeStrHistory'] = [
+      '01-06-2022 23:42',
+      '04:00',
+    ];
+    transferDataMapInvalidFormat['addDurStartDateTimeStr'] = '03-06-2022 03:42';
+
+    transferDataMapInvalidFormat['firstTimeStr'] = '00:03:45';
+    transferDataMapInvalidFormat['secondTimeStr'] = '00:00:45';
+    transferDataMapInvalidFormat['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
+
+    // entry with invalid time format
+    transferDataMapInvalidFormat['dtDiffDurationStr'] = '02:53';
+
+    // entry with invalid time format
+    transferDataMapInvalidFormat['dtDiffStartDateTimeStr'] = '04-06-2022 06-22';
+
+    test(
+        'buildSortedAppDateTimeStrList several and double date time str most late first',
+        () {
+      List<String> actualDateTimeStrLst =
+          testClassWithSreenMixin.buildSortedAppDateTimeStrList(
+              transferDataMap: transferDataMapInvalidFormat,
+              mostRecentFirst: false);
+      List<String> expectedDateTimeStrLst = [
+        '03-06-2022 03:42',
+        '03-06-2022 06:42',
+      ];
+
+      expect(actualDateTimeStrLst, expectedDateTimeStrLst);
+    });
+
+    test(
+        'buildSortedAppDateTimeStrList several and double date time str most recent first',
+        () {
+      List<String> actualDateTimeStrLst =
+          testClassWithSreenMixin.buildSortedAppDateTimeStrList(
+              transferDataMap: transferDataMapInvalidFormat,
+              mostRecentFirst: true);
+      List<String> expectedDateTimeStrLst = [
+        '03-06-2022 06:42',
+        '03-06-2022 03:42',
+      ];
+
+      expect(actualDateTimeStrLst, expectedDateTimeStrLst);
+    });
   });
 }
