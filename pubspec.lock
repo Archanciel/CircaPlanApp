@@ -21,7 +21,7 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   async:
     dependency: transitive
     description:
@@ -70,28 +70,28 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   coverage:
     dependency: transitive
     description:
       name: coverage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.2"
   crypto:
     dependency: transitive
     description:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   cupertino_icons:
     dependency: "direct main"
     description:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   curved_navigation_bar:
     dependency: "direct main"
     description:
@@ -131,7 +131,7 @@ packages:
       name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -148,7 +148,7 @@ packages:
       name: frontend_server_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   glob:
     dependency: transitive
     description:
@@ -169,7 +169,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   intl:
     dependency: "direct main"
     description:
@@ -197,7 +197,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.0.0"
   logging:
     dependency: transitive
     description:
@@ -232,7 +232,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   node_preamble:
     dependency: transitive
     description:
@@ -377,7 +377,7 @@ packages:
       name: typed_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   vector_math:
     dependency: transitive
     description:
@@ -391,7 +391,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.5.0"
+    version: "8.3.0"
   watcher:
     dependency: transitive
     description:
@@ -405,20 +405,20 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   webkit_inspection_protocol:
     dependency: transitive
     description:
       name: webkit_inspection_protocol
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   yaml:
     dependency: transitive
     description:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
 sdks:
   dart: ">=2.17.1 <3.0.0"
