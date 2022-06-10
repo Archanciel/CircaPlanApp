@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/intl.dart';
+
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import 'package:flutter/material.dart';
-import 'package:date_time_picker/date_time_picker.dart';
-
-import 'package:intl/intl.dart';
-
 import 'package:circa_plan/utils/date_time_parser.dart';
+
+// Although defined in ScreenMixin, must be defined here since it is used in the
+// constructor where accessing to mixin data is not possible !
+final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
 class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -36,7 +39,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _durationTextColor =
             transferDataMap['durationTextColor'] ?? durationPositiveColor,
         _startDateTimeStr = transferDataMap['addDurStartDateTimeStr'] ??
-            DateTime.now().toString(),
+            frenchDateTimeFormat.format(DateTime.now()),
         _durationStr = transferDataMap['durationStr'] ?? '00:00',
         _endDateTimeStr = transferDataMap['endDateTimeStr'] ?? '',
         super();
@@ -60,14 +63,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   late TextEditingController _durationTextFieldController;
   late TextEditingController _endDateTimeTextFieldController;
 
-  final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   @override
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = dateTimeNow.toString();
+    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
     _startDateTimeController = TextEditingController(
         text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimeStr);
@@ -104,8 +106,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _resetScreen() {
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = dateTimeNow.toString();
-    _startDateTimeStr = nowDateTimeStr;
+    _startDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
     _startDateTimeController.text = _startDateTimeStr;
     _durationStr = '00:00';
     _durationTextFieldController.text = _durationStr;
@@ -124,7 +125,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _durationStr = _durationTextFieldController.text;
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
     _startDateTimeStr = _startDateTimeController.text;
-    DateTime startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+    DateTime startDateTime = frenchDateTimeFormat.parse(_startDateTimeStr);
     DateTime endDateTime;
 
     if (duration != null) {
@@ -134,7 +135,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         endDateTime = startDateTime.subtract(duration);
       }
 
-      _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = frenchDateTimeFormat.format(endDateTime);
       _endDateTimeTextFieldController.text = _endDateTimeStr;
 
       setState(() {});
@@ -333,7 +334,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         backgroundColor: appElevatedButtonBackgroundColor,
                         shape: appElevatedButtonRoundedShape),
                     onPressed: () {
-                      _startDateTimeController.text = DateTime.now().toString();
+                      _startDateTimeController.text = frenchDateTimeFormat.format(DateTime.now());
                       _setStateEndDateTime();
                     },
                     child: const Text(
