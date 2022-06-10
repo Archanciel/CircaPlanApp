@@ -9,6 +9,8 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 
 enum Status { wakeUp, sleep }
 
+// Although defined in ScreenMixin, must be defined here since it is used in the
+// constructor where accessing to mixin data is not possible !
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
 class CalculateSleepDuration extends StatefulWidget {
