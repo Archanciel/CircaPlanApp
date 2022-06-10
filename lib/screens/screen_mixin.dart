@@ -62,4 +62,15 @@ mixin ScreenMixin {
       ),
     );
   }
+
+  List<String> buildAppDateTimeStrList(
+      {required Map<String, dynamic> transferDataMap}) {
+    List<String> appDateTimeStrList = [];
+
+    return appDateTimeStrList;
+  }
+  
+  bool isDateTimeStr(String str) {
+    return str.contains('-');
+  }
 }
