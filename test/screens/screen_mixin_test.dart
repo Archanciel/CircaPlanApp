@@ -30,6 +30,9 @@ void main() {
     transferDataMapRegular['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
     transferDataMapRegular['dtDiffDurationStr'] = '02:53';
 
+    // entry with invalid time format
+    transferDataMapRegular['dtDiffStartDateTimeStr'] = '04-06-2022 06-22';
+
     test(
         'buildSortedAppDateTimeStrList several and double date time str most late first',
         () {
@@ -137,5 +140,7 @@ void main() {
 
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
     });
+
+
   });
 }

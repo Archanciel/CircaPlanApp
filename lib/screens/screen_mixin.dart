@@ -76,7 +76,14 @@ mixin ScreenMixin {
 
     for (var value in transferDataMap.values) {
       if (value is String && isDateTimeStr(value)) {
-        DateTime dateTime = frenchDateTimeFormat.parse(value);
+        DateTime dateTime;
+        
+        try {
+          dateTime = frenchDateTimeFormat.parse(value);
+        } on FormatException catch (e) {
+          continue;
+        }
+
         if (!appDateTimeList.contains(dateTime)) {
           // avoid inserting several same DateTime values
           appDateTimeList.add(dateTime);
