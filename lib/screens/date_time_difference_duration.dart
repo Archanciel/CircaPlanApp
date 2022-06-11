@@ -211,33 +211,42 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
-  void _selectEndDateTime() {
+  /// Method called by the two 'Sel' buttons positioned at right of te 'Now'
+  /// buttons.
+  void _selectDateTime(
+    TextEditingController dateTimePickerFieldController,
+    RelativeRect posLTRB,
+  ) {
     List<String> actualDateTimeStrLst = buildSortedAppDateTimeStrList(
         transferDataMap: _transferDataMap, mostRecentFirst: true);
-    print('actualDateTimeStrLst $actualDateTimeStrLst');
-    print('\n_transferDataMap $_transferDataMap');
+
+    List<PopupMenuEntry<String>> itemsLst = [];
+    int i = 0;
+
+    for (String dateTimeStr in actualDateTimeStrLst) {
+      itemsLst.add(PopupMenuItem<String>(
+        child: Text(dateTimeStr),
+        value: i.toString(),
+      ));
+      i++;
+    }
+
     showMenu<String>(
       context: context,
-      position: const RelativeRect.fromLTRB(1.0, 290.0, 0.0,
-          0.0), //position where you want to show the menu on screen
-      items: [
-        const PopupMenuItem<String>(child: Text('menu option 1'), value: '1'),
-        const PopupMenuItem<String>(child: Text('menu option 2'), value: '2'),
-        const PopupMenuItem<String>(child: Text('menu option 3'), value: '3'),
-      ],
+      position: posLTRB, // position where you want to show the menu on screen
+      items: itemsLst,
       elevation: 8.0,
     ).then<void>((String? itemSelected) {
-      if (itemSelected == null) return;
-
-      print('itemSelected $itemSelected');
-
-      if (itemSelected == "1") {
-        print('itemSelected ONE');
-      } else if (itemSelected == "2") {
-        print('itemSelected TWO');
-      } else {
-        print('itemSelected THREE');
+      if (itemSelected == null) {
+        return;
       }
+
+      String selectedDateTimeStr =
+          actualDateTimeStrLst[int.parse(itemSelected)];
+      DateTime selectedDateTime =
+          frenchDateTimeFormat.parse(selectedDateTimeStr);
+      dateTimePickerFieldController.text = selectedDateTime.toString();
+      _setStateDiffDuration();
     });
   }
 
@@ -539,7 +548,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          _selectEndDateTime();
+                          _selectDateTime(
+                              _endDateTimeController,
+                              const RelativeRect.fromLTRB(
+                                1.0,
+                                290.0,
+                                0.0,
+                                0.0,
+                              ));
                         },
                         child: const Text(
                           'Sel',
