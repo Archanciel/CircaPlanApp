@@ -220,6 +220,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     List<String> actualDateTimeStrLst = buildSortedAppDateTimeStrList(
         transferDataMap: _transferDataMap, mostRecentFirst: true);
 
+    if (actualDateTimeStrLst.isEmpty) {
+      return;
+    }
+    
     List<PopupMenuEntry<String>> itemsLst = [];
     int i = 0;
 
