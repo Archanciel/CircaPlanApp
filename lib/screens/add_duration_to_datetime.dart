@@ -144,6 +144,49 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     }
   }
 
+  /// Method called by the two 'Sel' buttons positioned at right of te 'Now'
+  /// buttons.
+  void _selectDateTime(
+    TextEditingController dateTimePickerFieldController,
+    RelativeRect posLTRB,
+  ) {
+    List<String> actualDateTimeStrLst = buildSortedAppDateTimeStrList(
+        transferDataMap: _transferDataMap, mostRecentFirst: true);
+
+    if (actualDateTimeStrLst.isEmpty) {
+      return;
+    }
+
+    List<PopupMenuEntry<String>> itemsLst = [];
+    int i = 0;
+
+    for (String dateTimeStr in actualDateTimeStrLst) {
+      itemsLst.add(PopupMenuItem<String>(
+        child: Text(dateTimeStr),
+        value: i.toString(),
+      ));
+      i++;
+    }
+
+    showMenu<String>(
+      context: context,
+      position: posLTRB, // position where you want to show the menu on screen
+      items: itemsLst,
+      elevation: 8.0,
+    ).then<void>((String? itemSelected) {
+      if (itemSelected == null) {
+        return;
+      }
+
+      String selectedDateTimeStr =
+          actualDateTimeStrLst[int.parse(itemSelected)];
+      DateTime selectedDateTime =
+          frenchDateTimeFormat.parse(selectedDateTimeStr);
+      dateTimePickerFieldController.text = selectedDateTime.toString();
+      _setStateEndDateTime();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -329,20 +372,48 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     height: 26, // val 28 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: appElevatedButtonBackgroundColor,
-                        shape: appElevatedButtonRoundedShape),
-                    onPressed: () {
-                      _startDateTimeController.text = DateTime.now().toString();
-                      _setStateEndDateTime();
-                    },
-                    child: const Text(
-                      'Now',
-                      style: TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          _startDateTimeController.text = DateTime.now().toString();
+                          _setStateEndDateTime();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          _selectDateTime(
+                              _startDateTimeController,
+                              const RelativeRect.fromLTRB(
+                                1.0,
+                                220.0,
+                                0.0,
+                                0.0,
+                              ));
+                        },
+                        child: const Text(
+                          'Sel',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
