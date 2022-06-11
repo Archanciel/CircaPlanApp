@@ -14,6 +14,7 @@ mixin ScreenMixin {
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
+  final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
   final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
   final Color appTextAndIconColor = Colors.white;
@@ -71,17 +72,24 @@ mixin ScreenMixin {
   List<String> buildSortedAppDateTimeStrList(
       {required Map<String, dynamic> transferDataMap,
       required bool mostRecentFirst}) {
+    final DateTime twoThousandDateTime = DateTime(2000);
     List<String> appDateTimeStrList = [];
     List<DateTime> appDateTimeList = [];
 
     for (var value in transferDataMap.values) {
       if (value is String && isDateTimeStr(value)) {
         DateTime dateTime;
-        
+
         try {
           dateTime = frenchDateTimeFormat.parse(value);
         } on FormatException catch (e) {
           continue;
+        }
+
+        if (dateTime.isBefore(twoThousandDateTime)) {
+          // the case is the parsed date time string was obtained from a
+          // DatePickerField
+          dateTime = englishDateTimeFormat.parse(value);
         }
 
         if (!appDateTimeList.contains(dateTime)) {
