@@ -514,7 +514,28 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         ),
                       ),
                       const SizedBox(
-                        width: 85,
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          _selectDateTime(
+                              _startDateTimeController,
+                              const RelativeRect.fromLTRB(
+                                1.0,
+                                220.0,
+                                0.0,
+                                0.0,
+                              ));
+                        },
+                        child: const Text(
+                          'Sel',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
                       ),
                     ],
                   ),
