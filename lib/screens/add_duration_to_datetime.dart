@@ -365,7 +365,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               ),
             ),
             Positioned(
-              right: 90,
+              right: 0,
               child: Column(
                 children: [
                   SizedBox(
