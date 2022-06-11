@@ -60,8 +60,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   late TextEditingController _durationTextFieldController;
   late TextEditingController _endDateTimeTextFieldController;
 
-  final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-  final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+  // Although defined in ScreenMixin, must be defined here since it is used in the
+  // constructor where accessing to mixin data is not possible !
+  final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   @override
   void initState() {
@@ -124,7 +125,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _durationStr = _durationTextFieldController.text;
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
     _startDateTimeStr = _startDateTimeController.text;
-    DateTime startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+    DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
     DateTime endDateTime;
 
     if (duration != null) {
@@ -134,7 +135,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         endDateTime = startDateTime.subtract(duration);
       }
 
-      _endDateTimeStr = _frenchDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = frenchDateTimeFormat.format(endDateTime);
       _endDateTimeTextFieldController.text = _endDateTimeStr;
 
       setState(() {});

@@ -58,8 +58,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
 
-  final DateFormat _englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-
   @override
   void initState() {
     super.initState();
@@ -132,9 +130,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     /// Private method called each time one of the elements
     /// implied in calculating the Duration value is changed.
     _startDateTimeStr = _startDateTimeController.text;
-    DateTime startDateTime = _englishDateTimeFormat.parse(_startDateTimeStr);
+    DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
     _endDateTimeStr = _endDateTimeController.text;
-    DateTime endDateTime = _englishDateTimeFormat.parse(_endDateTimeStr);
+    DateTime endDateTime = englishDateTimeFormat.parse(_endDateTimeStr);
     Duration diffDuration;
 
     if (endDateTime.isAfter(startDateTime)) {
