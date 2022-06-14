@@ -267,5 +267,93 @@ void main() {
 
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
     });
+
+    const List<String> dateTimeFrenchYYYYStrLst = [
+      '14-12-2022 13:35',
+      '4-2-2022 3:05',
+      '04-02-2022 03:05',
+      '4-2-2022 3:00',
+      '4-2-2022 3:0',
+      'a4-2-2022 3:05',
+      '14-2-2022 3:u5',
+      '14-2-2022 3:5',
+      '14/2/2022 3:50',
+      '14-2-2022 3-50',
+      '4-2-22 3:05',
+      'a4-2-22 3:05',
+      '14-2-22 3:u5',
+      '14-2-22 3:5',
+    ];
+
+    test('isDateTimeStrValid french format date time str', () {
+      List<bool> actualValidationResultLst = [];
+
+      for (String str in dateTimeFrenchYYYYStrLst) {
+        actualValidationResultLst
+            .add(testClassWithSreenMixin.isDateTimeStrValid(str));
+      }
+      List<bool> expectedValidationResultLst = [
+        true, // '14-12-2022 13:35',
+        true, // '4-2-2022 3:05',
+        true, // '04-02-2022 03:05',
+        true, // '4-2-2022 3:00',
+        false, // '4-2-2022 3:0',
+        false, // 'a4-2-2022 3:05',
+        false, // '14-2-2022 3:u5',
+        false, // '14-2-2022 3:5',
+        false, // '14/2/2022 3:50',
+        false, // '14-2-2022 3-50',
+        false, // '4-2-22 3:05',
+        false, // 'a4-2-22 3:05',
+        false, // '14-2-22 3:u5',
+        false, // '14-2-22 3:5',
+      ];
+
+      expect(actualValidationResultLst, expectedValidationResultLst);
+    });
+
+    const List<String> dateTimeEnglishYYYYStrLst = [
+      '2022-4-12 13:35',
+      '2022-4-2 3:05',
+      '2022-04-02 03:05',
+      '2022-4-2 3:00',
+      '2022-4-2 3:0',
+      '2022-a4-2 3:05',
+      '2022-04-02 3:u5',
+      '2022-04-20 3:5',
+      '2022/04/02 3:50',
+      '2022-04-02 3-50',
+      '22-04-02 3:05',
+      '22-a4-2 3:05',
+      '22-4-2 3:u5',
+      '22-4-2 3:5',
+    ];
+
+    test('isDateTimeStrValid english format date time str', () {
+      List<bool> actualValidationResultLst = [];
+
+      for (String str in dateTimeEnglishYYYYStrLst) {
+        actualValidationResultLst
+            .add(testClassWithSreenMixin.isDateTimeStrValid(str));
+      }
+      List<bool> expectedValidationResultLst = [
+      true, // '2022-4-12 13:35',
+      true, // '2022-4-2 3:05',
+      true, // '2022-04-02 03:05',
+      true, // '2022-4-2 3:00',
+      false, // '2022-4-2 3:0',
+      false, // '2022-a4-2 3:05',
+      false, // '2022-04-02 3:u5',
+      false, // '2022-04-20 3:5',
+      false, // '2022/04/02 3:50',
+      false, // '2022-04-02 3-50',
+      false, // '22-04-02 3:05',
+      false, // '22-a4-2 3:05',
+      false, // '22-4-2 3:u5',
+      false, // '22-4-2 3:5',
+    ];
+
+      expect(actualValidationResultLst, expectedValidationResultLst);
+    });
   });
 }
