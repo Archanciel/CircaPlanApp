@@ -20,7 +20,11 @@ void main() {
     transferDataMapRegular['calcSlDurCurrWakeUpDurationStr'] = '00:48';
     transferDataMapRegular['calcSlDurCurrTotalDurationStr'] = '04:48';
     transferDataMapRegular['calcSlDurSleepTimeStrHistory'] = [
-      '01-06-2022 23:42',
+      '01-06-2022 23:12',
+      '06:00',
+    ];
+    transferDataMapRegular['calcSlDurWakeUpTimeStrHistory'] = [
+      '02-06-2022 02:22',
       '04:00',
     ];
     transferDataMapRegular['addDurStartDateTimeStr'] = '03-06-2022 03:42';
@@ -37,7 +41,9 @@ void main() {
           testClassWithSreenMixin.buildSortedAppDateTimeStrList(
               transferDataMap: transferDataMapRegular, mostRecentFirst: false);
       List<String> expectedDateTimeStrLst = [
+        '01-06-2022 23:12',
         '01-06-2022 23:42',
+        '02-06-2022 02:22',
         '02-06-2022 02:42',
         '03-06-2022 03:42',
         '03-06-2022 06:42',
@@ -56,7 +62,9 @@ void main() {
         '03-06-2022 06:42',
         '03-06-2022 03:42',
         '02-06-2022 02:42',
+        '02-06-2022 02:22',
         '01-06-2022 23:42',
+        '01-06-2022 23:12',
       ];
 
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -69,6 +77,12 @@ void main() {
     transferDataMapTimeOnly['calcSlDurCurrTotalDurationStr'] = '04:48';
     transferDataMapTimeOnly['firstTimeStr'] = '00:03:45';
     transferDataMapTimeOnly['secondTimeStr'] = '00:00:45';
+    transferDataMapTimeOnly['calcSlDurSleepTimeStrHistory'] = [
+      '04:00',
+    ];
+    transferDataMapTimeOnly['calcSlDurWakeUpTimeStrHistory'] = [
+      '04:00',
+    ];
 
     test('buildSortedAppDateTimeStrList no date time str most late first', () {
       List<String> actualDateTimeStrLst =
@@ -161,6 +175,10 @@ void main() {
       '01-06-2022 23:42',
       '04:00',
     ];
+    transferDataMapInvalidFormat['calcSlDurWakeUpTimeStrHistory'] = [
+      '02-06-2022 21-42', // invalid format in histo list. Will be ignored !
+      '04:00',
+    ];
     transferDataMapInvalidFormat['addDurStartDateTimeStr'] = '03-06-2022 03:42';
 
     transferDataMapInvalidFormat['firstTimeStr'] = '00:03:45';
@@ -181,6 +199,7 @@ void main() {
               transferDataMap: transferDataMapInvalidFormat,
               mostRecentFirst: false);
       List<String> expectedDateTimeStrLst = [
+        '01-06-2022 23:42',
         '03-06-2022 03:42',
         '03-06-2022 06:42',
       ];
@@ -198,6 +217,7 @@ void main() {
       List<String> expectedDateTimeStrLst = [
         '03-06-2022 06:42',
         '03-06-2022 03:42',
+        '01-06-2022 23:42',
       ];
 
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -214,7 +234,9 @@ void main() {
     transferDataMapEnglishAndFrenchDateTime['dtDiffStartDateTimeStr'] =
         '2022-06-10 00:30';
 
-    test('buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most late first', () {
+    test(
+        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most late first',
+        () {
       List<String> actualDateTimeStrLst =
           testClassWithSreenMixin.buildSortedAppDateTimeStrList(
               transferDataMap: transferDataMapEnglishAndFrenchDateTime,
@@ -229,7 +251,8 @@ void main() {
       expect(actualDateTimeStrLst, expectedDateTimeStrLst);
     });
 
-    test('buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first',
+    test(
+        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first',
         () {
       List<String> actualDateTimeStrLst =
           testClassWithSreenMixin.buildSortedAppDateTimeStrList(

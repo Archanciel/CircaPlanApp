@@ -87,8 +87,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (sleepTimeHistoryLst.length >= 2) {
         String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
 
-        if (isDateTimeStr(firstSleepTimeHistoryLstItem)) {
-          sleepTimeHistoryStr = 'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}: ${sleepTimeHistoryLst.sublist(1).join(', ')}';
+        if (isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
+          sleepTimeHistoryStr =
+              'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}: ${sleepTimeHistoryLst.sublist(1).join(', ')}';
         }
       }
     }
@@ -100,7 +101,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // the case if the add siesta button with negative value was pressed
         // before adding any wake up time
       } else if (wakeUpTimeHistoryLst.length >= 2) {
-        wakeUpTimeHistoryStr = 'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}: ${wakeUpTimeHistoryLst.sublist(1).join(', ')}';
+        wakeUpTimeHistoryStr =
+            'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}: ${wakeUpTimeHistoryLst.sublist(1).join(', ')}';
       }
     }
 
@@ -292,7 +294,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         }
 
         if (_wakeUpTimeStrHistory.isEmpty ||
-            !isDateTimeStr(_wakeUpTimeStrHistory.first)) {
+            !isDateTimeStrValid(_wakeUpTimeStrHistory.first)) {
           // here, registering the first wake up time duration and ensuring
           // that the wake up time history list first item is the date time
           // when I waked up, i.e the _previousDateTimeStr

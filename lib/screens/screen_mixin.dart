@@ -77,12 +77,10 @@ mixin ScreenMixin {
     List<DateTime> appDateTimeList = [];
 
     for (var value in transferDataMap.values) {
-      if (value is String && isDateTimeStr(value)) {
-        DateTime dateTime;
+      if (value is String && isDateTimeStrValid(value)) {
+        DateTime? dateTime = parseDateTime(value);
 
-        try {
-          dateTime = frenchDateTimeFormat.parse(value);
-        } on FormatException catch (e) {
+        if (dateTime == null) {
           continue;
         }
 
@@ -92,10 +90,19 @@ mixin ScreenMixin {
           dateTime = englishDateTimeFormat.parse(value);
         }
 
-        if (!appDateTimeList.contains(dateTime)) {
-          // avoid inserting several same DateTime values
-          appDateTimeList.add(dateTime);
+        addDateTimeIfNotExist(appDateTimeList, dateTime);
+      } else if (value is List<String> &&
+          value.isNotEmpty &&
+          isDateTimeStrValid(value.first)) {
+        // adding to the DateTime list the first date time value of the sleep
+        // and wake-up history list
+        DateTime? dateTime = parseDateTime(value.first);
+
+        if (dateTime == null) {
+          continue;
         }
+
+        addDateTimeIfNotExist(appDateTimeList, dateTime);
       }
     }
 
@@ -114,7 +121,48 @@ mixin ScreenMixin {
     return appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
   }
 
-  bool isDateTimeStr(String str) {
-    return str.contains('-');
+  bool isDateTimeStrValid(String dateTimeStr) {
+    /// Returns true if the passed dateTimeStr is either in french format
+    /// (02-11-2022 03:55) or in english format (2022-11-21 09:34). Else,
+    /// returns false.
+    final RegExp regExpFrenchYYYYDateTime =
+        RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
+    final RegExp regExpEnglishYYYYDateTime =
+        RegExp(r'^(\d{4}-\d+-\d+)\s(\d+:\d{2})');
+
+    RegExpMatch? match = regExpFrenchYYYYDateTime.firstMatch(dateTimeStr);
+
+    if (match != null && match.groupCount == 2) {
+      return true;
+    } else {
+      match = regExpEnglishYYYYDateTime.firstMatch(dateTimeStr);
+      if (match != null && match.groupCount == 2) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  DateTime? parseDateTime(String dateTimeStr) {
+    /// Returns a DateTime instance or null if parsing the dateTimeStr throws
+    /// a FormatException
+    DateTime dateTime;
+
+    try {
+      dateTime = frenchDateTimeFormat.parse(dateTimeStr);
+    } on FormatException catch (_) {
+      return null;
+    }
+
+    return dateTime;
+  }
+
+  void addDateTimeIfNotExist(
+      List<DateTime> appDateTimeList, DateTime dateTime) {
+    if (!appDateTimeList.contains(dateTime)) {
+      // avoid inserting several same DateTime values
+      appDateTimeList.add(dateTime);
+    }
   }
 }
