@@ -231,26 +231,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
-  void showAlertDialog(
-      {required List<Widget> buttonList,
-      required String dialogTitle,
-      String dialogContent = '',
-      required String okValueStr,
-      required Function okFunction}) {
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(dialogTitle),
-        content: Text(dialogContent),
-        actions: buttonList,
-      ),
-    ).then((value) {
-      if (value == okValueStr) {
-        okFunction();
-      }
-    });
-  }
-
   void _resetScreen() {
     /// Private method called when clicking on 'Reset' button.
 
@@ -270,6 +250,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       dialogContent: 'Click on Cancel to avoid resetting',
       okValueStr: okButtonStr,
       okFunction: _applyReset,
+      context: context,
     );
   }
 

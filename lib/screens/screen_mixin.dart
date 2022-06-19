@@ -165,4 +165,25 @@ mixin ScreenMixin {
       appDateTimeList.add(dateTime);
     }
   }
+
+  void showAlertDialog(
+      {required List<Widget> buttonList,
+      required String dialogTitle,
+      String dialogContent = '',
+      required String okValueStr,
+      required Function okFunction,
+      required BuildContext context}) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(dialogTitle),
+        content: Text(dialogContent),
+        actions: buttonList,
+      ),
+    ).then((value) {
+      if (value == okValueStr) {
+        okFunction();
+      }
+    });
+  }
 }
