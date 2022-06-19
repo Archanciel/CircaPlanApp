@@ -52,7 +52,7 @@ mixin ScreenMixin {
         title: const Text('WARNING'),
         content: Text(
           message,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
           ),
         ),
