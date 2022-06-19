@@ -49,6 +49,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   late TextEditingController _firstTimeTextFieldController;
   late TextEditingController _secondTimeTextFieldController;
+  late TextEditingController _resultTextFieldController;
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -62,7 +63,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         text: _transferDataMap['firstTimeStr'] ?? '00:00:00');
     _secondTimeTextFieldController = TextEditingController(
         text: _transferDataMap['secondTimeStr'] ?? '00:00:00');
-
+    _resultTextFieldController =
+        TextEditingController(text: _transferDataMap['resultTimeStr'] ?? '');
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
   }
 
@@ -70,6 +72,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   void dispose() {
     _firstTimeTextFieldController.dispose();
     _secondTimeTextFieldController.dispose();
+    _resultTextFieldController.dispose();
 
     super.dispose();
   }
@@ -90,6 +93,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _secondTimeStr = '00:00:00';
     _secondTimeTextFieldController.text = _secondTimeStr;
     _resultTimeStr = '';
+    _resultTextFieldController.text = _resultTimeStr;
 
     setState(() {});
 
@@ -135,6 +139,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     }
 
     _resultTimeStr = resultTimeStr;
+    _resultTextFieldController.text = resultTimeStr;
 
     setState(() {});
 
@@ -261,18 +266,35 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   const SizedBox(
                     height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                   ),
-                  TextField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      labelText: _resultTimeStr,
-                      labelStyle: TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        color: appTextAndIconColor,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        // commenting cursorColor discourage manually
+                        // editing the TextField !
+                        // cursorColor: appTextAndIconColor,
                       ),
                     ),
-                    // The validator receives the text that the user has entered.
+                    child: TextField(
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                          color: appTextAndIconColor,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                      // The validator receives the text that the user has entered.
+                      controller: _resultTextFieldController,
+                      onChanged: (val) {
+                        // called when manually updating the TextField
+                        // content. onChanged must be defined in order for
+                        // pasting a value to the TextField to really
+                        // modify the TextField value and store it
+                        // in the screen navigation transfer
+                        // data map.
+                        _resultTextFieldController.text = val;
+                        _resultTimeStr = val;
+                        _updateTransferDataMap();
+                      },
+                    ),
                   ),
                 ],
               ),
