@@ -231,8 +231,49 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
+  void showAlertDialog(
+      {required List<Widget> buttonList,
+      required String dialogTitle,
+      String dialogContent = '',
+      required String okValueStr,
+      required Function okFunction}) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(dialogTitle),
+        content: Text(dialogContent),
+        actions: buttonList,
+      ),
+    ).then((value) {
+      if (value == okValueStr) {
+        okFunction();
+      }
+    });
+  }
+
   void _resetScreen() {
     /// Private method called when clicking on 'Reset' button.
+
+    String okButtonStr = 'Ok';
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () => Navigator.pop(context, 'Cancel'),
+    );
+    Widget okButton = TextButton(
+      child: Text(okButtonStr),
+      onPressed: () => Navigator.pop(context, okButtonStr),
+    );
+
+    showAlertDialog(
+      buttonList: [cancelButton, okButton],
+      dialogTitle: 'WARNING - Reset will erase everything',
+      dialogContent: 'Click on Cancel to avoid resetting',
+      okValueStr: okButtonStr,
+      okFunction: _applyReset,
+    );
+  }
+
+  void _applyReset() {
     _lastWakeUpTimeStr = _newDateTimeStr;
     _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
