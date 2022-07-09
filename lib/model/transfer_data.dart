@@ -28,9 +28,6 @@ class TransferData extends SerializableObject {
     final Serializer serializer = Serializer();
     final String orderJsonStr = serializer.serialize(this);
 
-    print(
-        'transferData json string before writing it to $filePathName:\n$orderJsonStr\n\n');
-
     File(filePathName).writeAsStringSync(orderJsonStr);
   }
 }
