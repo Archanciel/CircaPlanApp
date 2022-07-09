@@ -23,6 +23,8 @@ class AddDurationToDateTimeData extends ScreenData {
     map['durationStr'] = _durationStr;
     map['endDateTimeStr'] = _endDateTimeStr;
 */
+  DurationIconType get durationIconType => attributes['durationIconType'];
+  set durationIconType(DurationIconType value) => attributes['durationIconType'] = value;
 
   String get addDurationStartDateTimeStr => attributes['addDurationStartDateTimeStr'];
   set addDurationStartDateTimeStr(String value) => attributes['addDurationStartDateTimeStr'] = value;
