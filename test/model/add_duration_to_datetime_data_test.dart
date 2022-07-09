@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:circa_plan/buslog/date_time_computer.dart';
+import 'package:circa_plan/model/transfer_data.dart';
 
 void main() {
   group(
