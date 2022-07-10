@@ -7,6 +7,11 @@ enum DurationIconType {
   subtract,
 }
 
+/// Add duration screen data class.
+/// 
+/// Inherit from [ScreenData] base class. Its unique instance will be
+/// added to the [TransferData] instance which is responsible of saving
+/// and loading data to and from json file.
 class AddDurationToDateTimeData extends ScreenData {
   AddDurationToDateTimeData() {
     transformers['durationIconType'] = (value) => value is DurationIconType

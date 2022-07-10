@@ -3,6 +3,13 @@ import 'dart:io';
 import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:enough_serialization/enough_serialization.dart';
 
+/// Class including screen data instances and responsible of saving
+/// and loading data to and from json file.
+/// 
+/// Included screen data classes: [AddDurationToDateTimeData],
+/// [CalculateSleepDurationData], [DateTimeDifferenceDurationData],
+/// [TimeCalculatorData] which inherit from [ScreenData] base class.
+/// 
 class TransferData extends SerializableObject {
   TransferData() {
     objectCreators['addDurationToDateTimeData'] =

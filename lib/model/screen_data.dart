@@ -8,8 +8,8 @@ enum ScreenDataType {
   timeCalculatorData,
 }
 
-// used to define Colors value since Color instances can't be
-// serialized/deserialized in json file
+/// used to define Colors value since Color instances can't be
+/// serialized/deserialized in json file
 enum ColorType {
   white,
   blue,
@@ -18,6 +18,7 @@ enum ColorType {
   yellow300,
 }
 
+/// Screen data base class.
 class ScreenData extends SerializableObject {
   ScreenData() {
     transformers['screenDataType'] = (value) =>
