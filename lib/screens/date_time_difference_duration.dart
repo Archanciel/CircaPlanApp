@@ -1,3 +1,4 @@
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
@@ -12,11 +13,14 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 
 class DateTimeDifferenceDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
+  final TransferDataViewModel _transferDataViewModel;
 
   const DateTimeDifferenceDuration({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
+    required TransferDataViewModel transferDataViewModel,
   })  : _screenNavigTransData = screenNavigTransData,
+        _transferDataViewModel = transferDataViewModel,
         super(key: key);
 
   @override
@@ -223,7 +227,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     if (actualDateTimeStrLst.isEmpty) {
       return;
     }
-    
+
     List<PopupMenuEntry<String>> itemsLst = [];
     int i = 0;
 

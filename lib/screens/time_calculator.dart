@@ -1,3 +1,4 @@
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,14 @@ final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
 class TimeCalculator extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
+  final TransferDataViewModel _transferDataViewModel;
 
   const TimeCalculator({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
+    required TransferDataViewModel transferDataViewModel,
   })  : _screenNavigTransData = screenNavigTransData,
+        _transferDataViewModel = transferDataViewModel,
         super(key: key);
 
   @override

@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'screens/screen_mixin.dart';
@@ -11,6 +15,14 @@ import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 
+Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
+  Directory directory = await getApplicationDocumentsDirectory();
+  String transferDataJsonFilePathName =
+      directory.path + Platform.pathSeparator + 'circadian.json';
+  return TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathName);
+}
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
@@ -18,11 +30,17 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MyApp());
+  TransferDataViewModel transferDataViewModel;
+  transferDataViewModel = await instanciateTransferDataViewModel();
+
+  runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }
 
 class MyApp extends StatelessWidget with ScreenMixin {
-  MyApp({Key? key}) : super(key: key);
+  TransferDataViewModel _transferDataViewModel;
+  MyApp({Key? key, required TransferDataViewModel transferDataViewModel})
+      : _transferDataViewModel = transferDataViewModel,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -35,7 +53,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
             cursorColor: appTextAndIconColor, // requires with ScreenMixin !
           ),
         ),
-        home: MainApp(),
+        home: MainApp(transferDataViewModel: _transferDataViewModel),
         localizationsDelegates: const [
           GlobalWidgetsLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -49,7 +67,13 @@ class MyApp extends StatelessWidget with ScreenMixin {
 }
 
 class MainApp extends StatefulWidget {
-  MainApp({Key? key}) : super(key: key);
+  final TransferDataViewModel _transferDataViewModel;
+
+  MainApp({
+    Key? key,
+    required TransferDataViewModel transferDataViewModel,
+  })  : _transferDataViewModel = transferDataViewModel,
+        super(key: key);
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -65,14 +89,28 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     ScreenMixin.setAppVerticalTopMargin(screenHeight);
-
+    TransferDataViewModel transferDataViewModel = widget._transferDataViewModel;
+    transferDataViewModel.transferDataMap =
+        _screenNavigTransData.transferDataMap;
     // data for CurvedNavigationBar
 
     final List<StatefulWidget> screensLst = [
-      AddDurationToDateTime(screenNavigTransData: _screenNavigTransData),
-      DateTimeDifferenceDuration(screenNavigTransData: _screenNavigTransData),
-      CalculateSleepDuration(screenNavigTransData: _screenNavigTransData),
-      TimeCalculator(screenNavigTransData: _screenNavigTransData),
+      AddDurationToDateTime(
+        screenNavigTransData: _screenNavigTransData,
+        transferDataViewModel: transferDataViewModel,
+      ),
+      DateTimeDifferenceDuration(
+        screenNavigTransData: _screenNavigTransData,
+        transferDataViewModel: transferDataViewModel,
+      ),
+      CalculateSleepDuration(
+        screenNavigTransData: _screenNavigTransData,
+        transferDataViewModel: transferDataViewModel,
+      ),
+      TimeCalculator(
+        screenNavigTransData: _screenNavigTransData,
+        transferDataViewModel: transferDataViewModel,
+      ),
     ];
 
     final List<String> screenTitlesLst = [

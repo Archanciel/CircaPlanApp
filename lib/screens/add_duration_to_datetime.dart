@@ -1,3 +1,4 @@
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -10,11 +11,14 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
+  final TransferDataViewModel _transferDataViewModel;
 
   const AddDurationToDateTime({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
+    required TransferDataViewModel transferDataViewModel,
   })  : _screenNavigTransData = screenNavigTransData,
+        _transferDataViewModel = transferDataViewModel,
         super(key: key);
 
   @override
@@ -118,10 +122,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateTransferDataMap();
   }
 
+  /// Private method called each time one of the elements
+  /// implied in calculating the End date time value is
+  /// changed.
   void _setStateEndDateTime() {
-    /// Private method called each time one of the elements
-    /// implied in calculating the End date time value is
-    /// changed.
     _durationStr = _durationTextFieldController.text;
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
     _startDateTimeStr = _startDateTimeController.text;
@@ -379,7 +383,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          _startDateTimeController.text = DateTime.now().toString();
+                          _startDateTimeController.text =
+                              DateTime.now().toString();
                           _setStateEndDateTime();
                         },
                         child: const Text(
