@@ -30,14 +30,17 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  TransferDataViewModel transferDataViewModel;
-  transferDataViewModel = await instanciateTransferDataViewModel();
+  // it was necessary to place here the asynchronous TransferDataViewModel
+  // instanciation instead of locating it in [_MainAppState.build()]
+  // or [_MainAppState.initState()], two methods which could not be
+  // declared async !
+  TransferDataViewModel transferDataViewModel = await instanciateTransferDataViewModel();
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }
 
 class MyApp extends StatelessWidget with ScreenMixin {
-  TransferDataViewModel _transferDataViewModel;
+  final TransferDataViewModel _transferDataViewModel;
   MyApp({Key? key, required TransferDataViewModel transferDataViewModel})
       : _transferDataViewModel = transferDataViewModel,
         super(key: key);
@@ -67,13 +70,12 @@ class MyApp extends StatelessWidget with ScreenMixin {
 }
 
 class MainApp extends StatefulWidget {
-  final TransferDataViewModel _transferDataViewModel;
+  final TransferDataViewModel transferDataViewModel;
 
-  MainApp({
+  const MainApp({
     Key? key,
-    required TransferDataViewModel transferDataViewModel,
-  })  : _transferDataViewModel = transferDataViewModel,
-        super(key: key);
+    required this.transferDataViewModel,
+  })  : super(key: key);
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -89,7 +91,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     ScreenMixin.setAppVerticalTopMargin(screenHeight);
-    TransferDataViewModel transferDataViewModel = widget._transferDataViewModel;
+    TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     transferDataViewModel.transferDataMap =
         _screenNavigTransData.transferDataMap;
     // data for CurvedNavigationBar

@@ -16,4 +16,8 @@ class TransferDataViewModel {
 
   set transferDataMap(Map<String, dynamic> transferDataMap) =>
       _transferDataMap = transferDataMap;
+
+  void dataUpdated() {
+    print('TransferDataViewModel.dataUpdated()');
+  }
 }

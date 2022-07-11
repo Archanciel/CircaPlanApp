@@ -23,7 +23,9 @@ class AddDurationToDateTime extends StatefulWidget {
 
   @override
   _AddDurationToDateTimeState createState() {
-    return _AddDurationToDateTimeState(_screenNavigTransData.transferDataMap);
+    return _AddDurationToDateTimeState(
+        transferDataMap: _screenNavigTransData.transferDataMap,
+        transferDataViewModel: _transferDataViewModel);
   }
 }
 
@@ -31,8 +33,11 @@ class AddDurationToDateTime extends StatefulWidget {
 // This class holds data related to the form.
 class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     with ScreenMixin {
-  _AddDurationToDateTimeState(Map<String, dynamic> transferDataMap)
+  _AddDurationToDateTimeState(
+      {required Map<String, dynamic> transferDataMap,
+      required TransferDataViewModel transferDataViewModel})
       : _transferDataMap = transferDataMap,
+        _transferDataViewModel = transferDataViewModel,
         _durationIcon = transferDataMap['durationIconData'] ?? Icons.add,
         _durationIconColor =
             transferDataMap['durationIconColor'] ?? durationPositiveColor,
@@ -50,7 +55,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Map<String, dynamic> _transferDataMap;
+  final Map<String, dynamic> _transferDataMap;
+  final TransferDataViewModel _transferDataViewModel;
 
   IconData _durationIcon;
   Color _durationIconColor;
@@ -104,6 +110,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     map['durationStr'] = _durationStr;
     map['endDateTimeStr'] = _endDateTimeStr;
 
+    _transferDataViewModel.dataUpdated();
     return map;
   }
 
