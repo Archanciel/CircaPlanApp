@@ -26,7 +26,8 @@ class DateTimeDifferenceDuration extends StatefulWidget {
   @override
   _DateTimeDifferenceDurationState createState() {
     return _DateTimeDifferenceDurationState(
-        _screenNavigTransData.transferDataMap);
+        transferDataMap: _screenNavigTransData.transferDataMap,
+        transferDataViewModel: _transferDataViewModel);
   }
 }
 
@@ -34,8 +35,11 @@ class DateTimeDifferenceDuration extends StatefulWidget {
 // This class holds data related to the form.
 class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     with ScreenMixin {
-  _DateTimeDifferenceDurationState(Map<String, dynamic> transferDataMap)
+  _DateTimeDifferenceDurationState(
+      {required Map<String, dynamic> transferDataMap,
+      required TransferDataViewModel transferDataViewModel})
       : _transferDataMap = transferDataMap,
+        _transferDataViewModel = transferDataViewModel,
         _startDateTimeStr = transferDataMap['dtDiffStartDateTimeStr'] ??
             DateTime.now().toString(),
         _endDateTimeStr = transferDataMap['dtDiffEndDateTimeStr'] ??
@@ -47,7 +51,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Map<String, dynamic> _transferDataMap;
+  final Map<String, dynamic> _transferDataMap;
+  final TransferDataViewModel _transferDataViewModel;
 
   String _startDateTimeStr = '';
   String _endDateTimeStr = '';
@@ -101,6 +106,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     map['dtDiffDurationStr'] = _durationStr;
     map['dtDiffAddTimeStr'] = _addTimeStr;
     map['dtDiffFinalDurationStr'] = _finalDurationStr;
+
+    _transferDataViewModel.dataUpdated();
 
     return map;
   }

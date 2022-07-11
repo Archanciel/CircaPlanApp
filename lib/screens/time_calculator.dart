@@ -26,15 +26,20 @@ class TimeCalculator extends StatefulWidget {
 
   @override
   _TimeCalculatorState createState() {
-    return _TimeCalculatorState(_screenNavigTransData.transferDataMap);
+    return _TimeCalculatorState(
+        transferDataMap: _screenNavigTransData.transferDataMap,
+        transferDataViewModel: _transferDataViewModel);
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
-  _TimeCalculatorState(Map<String, dynamic> transferDataMap)
+  _TimeCalculatorState(
+      {required Map<String, dynamic> transferDataMap,
+      required TransferDataViewModel transferDataViewModel})
       : _transferDataMap = transferDataMap,
+        _transferDataViewModel = transferDataViewModel,
         _firstTimeStr = transferDataMap['firstTimeStr'] ?? '00:00:00',
         _secondTimeStr = transferDataMap['secondTimeStr'] ?? '00:00:00',
         _resultTimeStr = transferDataMap['resultTimeStr'] ?? '',
@@ -45,7 +50,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Map<String, dynamic> _transferDataMap;
+  final Map<String, dynamic> _transferDataMap;
+  final TransferDataViewModel _transferDataViewModel;
 
   String _firstTimeStr = '';
   String _secondTimeStr = '';
@@ -87,6 +93,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     map['firstTimeStr'] = _firstTimeStr;
     map['secondTimeStr'] = _secondTimeStr;
     map['resultTimeStr'] = _resultTimeStr;
+
+    _transferDataViewModel.dataUpdated();
 
     return map;
   }

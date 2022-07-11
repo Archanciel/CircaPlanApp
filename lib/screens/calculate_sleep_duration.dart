@@ -28,7 +28,9 @@ class CalculateSleepDuration extends StatefulWidget {
 
   @override
   _CalculateSleepDurationState createState() {
-    return _CalculateSleepDurationState(_screenNavigTransData.transferDataMap);
+    return _CalculateSleepDurationState(
+        transferDataMap: _screenNavigTransData.transferDataMap,
+        transferDataViewModel: _transferDataViewModel);
   }
 }
 
@@ -36,8 +38,11 @@ class CalculateSleepDuration extends StatefulWidget {
 // This class holds data related to the form.
 class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     with ScreenMixin {
-  _CalculateSleepDurationState(Map<String, dynamic> transferDataMap)
+  _CalculateSleepDurationState(
+      {required Map<String, dynamic> transferDataMap,
+      required TransferDataViewModel transferDataViewModel})
       : _transferDataMap = transferDataMap,
+        _transferDataViewModel = transferDataViewModel,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
             frenchDateTimeFormat.format(DateTime.now()),
         _previousDateTimeStr =
@@ -57,7 +62,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurWakeUpTimeStrHistory'] ?? [],
         super();
 
-  Map<String, dynamic> _transferDataMap;
+  final Map<String, dynamic> _transferDataMap;
+  final TransferDataViewModel _transferDataViewModel;
 
   String _newDateTimeStr = '';
   String _previousDateTimeStr = '';
@@ -177,6 +183,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _buildSleepWakeUpHistoryStr();
     //  print('sleepTimeStrHistory: $_sleepTimeStrHistory');
     //  print('wakeUpTimeStrHistory: $_wakeUpTimeStrHistory');
+
+    _transferDataViewModel.dataUpdated();
 
     return map;
   }
