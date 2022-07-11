@@ -1,7 +1,11 @@
 import 'dart:io';
 
-import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:enough_serialization/enough_serialization.dart';
+
+import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
+import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
+import 'package:circa_plan/model/date_time_difference_duration_data.dart';
+import 'package:circa_plan/model/time_calculator_data.dart';
 
 /// Class including screen data instances and responsible of saving
 /// and loading data to and from json file.
@@ -14,6 +18,12 @@ class TransferData extends SerializableObject {
   TransferData() {
     objectCreators['addDurationToDateTimeData'] =
         (map) => AddDurationToDateTimeData();
+    objectCreators['calculateSleepDurationData'] =
+        (map) => CalculateSleepDurationData();
+    objectCreators['dateTimeDifferenceDurationData'] =
+        (map) => DateTimeDifferenceDurationData();
+    objectCreators['timeCalculatorData'] =
+        (map) => TimeCalculatorData();
   }
 
   AddDurationToDateTimeData get addDurationToDateTimeData =>
@@ -21,21 +31,36 @@ class TransferData extends SerializableObject {
   set addDurationToDateTimeData(AddDurationToDateTimeData value) =>
       attributes['addDurationToDateTimeData'] = value;
 
+  CalculateSleepDurationData get calculateSleepDurationData =>
+      attributes['calculateSleepDurationData'];
+  set calculateSleepDurationData(CalculateSleepDurationData value) =>
+      attributes['calculateSleepDurationData'] = value;
+
+  AddDurationToDateTimeData get dateTimeDifferenceDurationData =>
+      attributes['dateTimeDifferenceDurationData'];
+  set dateTimeDifferenceDurationData(AddDurationToDateTimeData value) =>
+      attributes['dateTimeDifferenceDurationData'] = value;
+
+  TimeCalculatorData get timeCalculatorData =>
+      attributes['timeCalculatorData'];
+  set timeCalculatorData(TimeCalculatorData value) =>
+      attributes['timeCalculatorData'] = value;
+
   Future<TransferData> loadTransferDataFromFile(
       {required String filePathName}) async {
     final Serializer serializer = Serializer();
     final String inputJsonStr = await File(filePathName).readAsString();
-    final TransferData deserializedOrder = this;
-    serializer.deserialize(inputJsonStr, deserializedOrder);
+    final TransferData deserializedTransferData = this;
+    serializer.deserialize(inputJsonStr, deserializedTransferData);
 
-    return deserializedOrder;
+    return deserializedTransferData;
   }
 
   void saveTransferDataToFile({required String filePathName}) {
     final Serializer serializer = Serializer();
-    final String orderJsonStr = serializer.serialize(this);
+    final String outputJsonStr = serializer.serialize(this);
 
-    File(filePathName).writeAsStringSync(orderJsonStr);
+    File(filePathName).writeAsStringSync(outputJsonStr);
   }
 }
 

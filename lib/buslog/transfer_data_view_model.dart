@@ -19,5 +19,19 @@ class TransferDataViewModel {
 
   void dataUpdated() {
     print('TransferDataViewModel.dataUpdated()');
+    print(_transferDataMap);
+  }
+
+  void updateAddDurationToDateTimeData(){
+      AddDurationToDateTimeData addDurationToDateTimeData =
+      AddDurationToDateTimeData();
+  addDurationToDateTimeData.durationIconType = DurationIconType.add;
+  addDurationToDateTimeData.addDurationStartDateTimeStr = '09_07_2022 23:58';
+  addDurationToDateTimeData.durationStr = '01:00';
+  addDurationToDateTimeData.endDateTimeStr = '10_07_2022 00:58';
+
+  TransferData transferData = TransferData();
+  transferData.addDurationToDateTimeData = addDurationToDateTimeData;
+
   }
 }
