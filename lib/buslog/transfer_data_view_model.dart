@@ -34,7 +34,7 @@ class TransferDataViewModel {
   /// then update the json file.
   void updateTransferData() {
     updateAddDurationToDateTimeData();
-//    updateCalculateSleepDurationData();
+    updateCalculateSleepDurationData();
     printScreenData();
   }
 

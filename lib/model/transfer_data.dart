@@ -32,6 +32,7 @@ class TransferData extends SerializableObject {
         (map) => dateTimeDifferenceDurationData;
     objectCreators['timeCalculatorData'] = (map) => timeCalculatorData;
 
+    // required as well so that the getter/setter below do work !
     attributes['addDurationToDateTimeData'] = addDurationToDateTimeData;
     attributes['calculateSleepDurationData'] = calculateSleepDurationData;
     attributes['dateTimeDifferenceDurationData'] =
