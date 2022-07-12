@@ -107,7 +107,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     map['dtDiffAddTimeStr'] = _addTimeStr;
     map['dtDiffFinalDurationStr'] = _finalDurationStr;
 
-    _transferDataViewModel.dataUpdated();
+    _transferDataViewModel.updateTransferData();
 
     return map;
   }

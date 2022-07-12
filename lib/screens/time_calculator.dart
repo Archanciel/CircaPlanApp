@@ -94,7 +94,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     map['secondTimeStr'] = _secondTimeStr;
     map['resultTimeStr'] = _resultTimeStr;
 
-    _transferDataViewModel.dataUpdated();
+    _transferDataViewModel.updateTransferData();
 
     return map;
   }

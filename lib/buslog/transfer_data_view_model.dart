@@ -21,10 +21,17 @@ class TransferDataViewModel {
         // data sub classes.
         _transferData = TransferData();
 
+  /// the transferDataMap being not setable by the constructor, this
+  /// setter must be declared.
   set transferDataMap(Map<String, dynamic> transferDataMap) =>
       _transferDataMap = transferDataMap;
 
-  void dataUpdated() {
+  AddDurationToDateTimeData get addDurationToDateTimeData =>
+      _transferData.addDurationToDateTimeData;
+
+  /// Copy transferDataMap values to TransferData instance in order to
+  /// then update the json file.
+  void updateTransferData() {
     updateAddDurationToDateTimeData();
     printScreenData();
   }
@@ -38,7 +45,8 @@ class TransferDataViewModel {
         _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.durationIconType =
-        (_transferDataMap!['durationSign'] > 0) // _transferDataMap is nullable !
+        (_transferDataMap!['durationSign'] >
+                0) // _transferDataMap is nullable !
             ? DurationIconType.add
             : DurationIconType.subtract;
     addDurationToDateTimeData.addDurationStartDateTimeStr =
