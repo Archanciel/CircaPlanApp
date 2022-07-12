@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Flutter/Dart: Run all Tests",
+            "type": "dart",
+            "request": "launch",
+            "program": "./test/"
+        },
+        {
             "name": "circa_plan",
             "request": "launch",
             "type": "dart"

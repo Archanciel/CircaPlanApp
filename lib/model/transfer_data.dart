@@ -16,11 +16,27 @@ import 'package:circa_plan/model/time_calculator_data.dart';
 ///
 class TransferData extends SerializableObject {
   TransferData() {
-    // instanciating empty screen data sub classes
-    attributes['addDurationToDateTimeData'] = AddDurationToDateTimeData();
-    attributes['calculateSleepDurationData'] = CalculateSleepDurationData();
-    attributes['dateTimeDifferenceDurationData'] = DateTimeDifferenceDurationData();
-    attributes['timeCalculatorData'] = TimeCalculatorData();
+    AddDurationToDateTimeData addDurationToDateTimeData =
+        AddDurationToDateTimeData();
+    CalculateSleepDurationData calculateSleepDurationData =
+        CalculateSleepDurationData();
+    DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+        DateTimeDifferenceDurationData();
+    TimeCalculatorData timeCalculatorData = TimeCalculatorData();
+
+    objectCreators['addDurationToDateTimeData'] =
+        (map) => addDurationToDateTimeData;
+    objectCreators['calculateSleepDurationData'] =
+        (map) => calculateSleepDurationData;
+    objectCreators['dateTimeDifferenceDurationData'] =
+        (map) => dateTimeDifferenceDurationData;
+    objectCreators['timeCalculatorData'] = (map) => timeCalculatorData;
+
+    attributes['addDurationToDateTimeData'] = addDurationToDateTimeData;
+    attributes['calculateSleepDurationData'] = calculateSleepDurationData;
+    attributes['dateTimeDifferenceDurationData'] =
+        dateTimeDifferenceDurationData;
+    attributes['timeCalculatorData'] = timeCalculatorData;
   }
 
   AddDurationToDateTimeData get addDurationToDateTimeData =>
