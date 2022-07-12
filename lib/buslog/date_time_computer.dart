@@ -61,14 +61,11 @@ class DateTimeComputer {
 void main() {
   DateTimeComputer dateTimeComputer = DateTimeComputer();
 
-  final String wakeUpDateTimeStr = '15-04-2022 18:15';
-  final String wakeHourMinuteDuration = '20:30';
+  const String wakeUpDateTimeStr = '15-04-2022 18:15';
+  const String wakeHourMinuteDuration = '20:30';
   DateTime computeGoToSleepDateTime = dateTimeComputer.computeGoToSleepHour(
       wakeUpDateTimeStr: wakeUpDateTimeStr,
       wakeHourMinuteDurationStr: wakeHourMinuteDuration);
-  print(
-      'you waked up on $wakeUpDateTimeStr\nyou will stay awake $wakeHourMinuteDuration H\nyou will go to bed on $computeGoToSleepDateTime');
-
   final dateFormatNotLocal = DateFormat("dd-MM-yyyy HH:mm");
 
   String wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
@@ -80,7 +77,7 @@ void main() {
     print('WARNING: BUG !');
   }
 
-  final String goToSleepDateTimeStr = '17-4-2022 8:45';
+  const String goToSleepDateTimeStr = '17-4-2022 8:45';
 
   wakeUpHHmmStr = dateTimeComputer.computeWakeUpDuration(
       wakeUpDateTimeStr: wakeUpDateTimeStr,

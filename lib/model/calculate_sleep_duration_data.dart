@@ -29,8 +29,8 @@ class CalculateSleepDurationData extends ScreenData {
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
 */
-  Status get durationIconType => attributes['status'];
-  set durationIconType(Status value) =>
+  Status get status => attributes['status'];
+  set status(Status value) =>
       attributes['status'] = value;
 
   String get addDurationStartDateTimeStr =>

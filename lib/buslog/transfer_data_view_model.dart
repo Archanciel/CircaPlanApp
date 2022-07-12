@@ -1,4 +1,5 @@
 import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
+import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/transfer_data.dart';
 
 /// This class manages the correspondance between the transfer data
@@ -33,6 +34,7 @@ class TransferDataViewModel {
   /// then update the json file.
   void updateTransferData() {
     updateAddDurationToDateTimeData();
+//    updateCalculateSleepDurationData();
     printScreenData();
   }
 
@@ -44,8 +46,16 @@ class TransferDataViewModel {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
 
+    int? durationSign = _transferDataMap!['durationSign'];
+
+    if (durationSign == null) {
+      // the case if no AddDurationToDateTime screen field was
+      // modified
+      return;
+    }
+
     addDurationToDateTimeData.durationIconType =
-        (_transferDataMap!['durationSign'] >
+        (durationSign >
                 0) // _transferDataMap is nullable !
             ? DurationIconType.add
             : DurationIconType.subtract;
@@ -53,6 +63,31 @@ class TransferDataViewModel {
         _transferDataMap!['addDurStartDateTimeStr'];
     addDurationToDateTimeData.durationStr = _transferDataMap!['durationStr'];
     addDurationToDateTimeData.endDateTimeStr =
+        _transferDataMap!['endDateTimeStr'];
+  }
+
+  void updateCalculateSleepDurationData() {
+    CalculateSleepDurationData calculateSleepDurationData =
+        _transferData.calculateSleepDurationData;
+
+    /*
+    map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
+    map['calcSlDurLastWakeUpTimeStr'] = _lastWakeUpTimeStr;
+    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
+    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
+    map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
+    map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
+    map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
+    map['calcSlDurStatus'] = _status;
+    map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
+    map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
+*/
+
+    calculateSleepDurationData.status = _transferDataMap!['calcSlDurStatus'];
+    calculateSleepDurationData.addDurationStartDateTimeStr =
+        _transferDataMap!['addDurStartDateTimeStr'];
+    calculateSleepDurationData.durationStr = _transferDataMap!['durationStr'];
+    calculateSleepDurationData.endDateTimeStr =
         _transferDataMap!['endDateTimeStr'];
   }
 }

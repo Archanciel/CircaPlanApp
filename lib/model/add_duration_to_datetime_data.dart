@@ -28,6 +28,15 @@ class AddDurationToDateTimeData extends ScreenData {
     map['durationStr'] = _durationStr;
     map['endDateTimeStr'] = _endDateTimeStr;
 */
+  /// Replaces dart getter since testing if nullis returned by the
+  /// method is useful.
+  ///
+  /// A getter can not return null. Null is returned if no
+  /// AddDurationToDateTime screen field was modified.
+  DurationIconType? getDurationIconType() {
+    return attributes['durationIconType'];
+  }
+
   DurationIconType get durationIconType => attributes['durationIconType'];
   set durationIconType(DurationIconType value) =>
       attributes['durationIconType'] = value;
@@ -43,7 +52,14 @@ class AddDurationToDateTimeData extends ScreenData {
   String get endDateTimeStr => attributes['endDateTimeStr'];
   set endDateTimeStr(String value) => attributes['endDateTimeStr'] = value;
 
+  @override
   String toString() {
-    return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $durationStr\nendDateTimeStr: $endDateTimeStr}';
+    DurationIconType? durationIconType = getDurationIconType();
+
+    if (durationIconType == null) {
+      return '';
+    } else {
+      return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $durationStr\nendDateTimeStr: $endDateTimeStr}';
+    }
   }
 }
