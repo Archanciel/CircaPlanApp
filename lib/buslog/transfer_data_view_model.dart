@@ -6,8 +6,12 @@ import 'package:circa_plan/model/transfer_data.dart';
 /// [TransferData] instance which save or load data in or from
 /// the circadian json file.
 class TransferDataViewModel {
-  String _transferDataJsonFilePathName;
-  TransferData _transferData;
+  final String _transferDataJsonFilePathName;
+  final TransferData _transferData;
+
+  // since the transferDataMap can not be set by the constructor but
+  // by calling the corresponding setter, the instance variable must
+  // be declared nullable.
   Map<String, dynamic>? _transferDataMap;
 
   TransferDataViewModel({
@@ -21,8 +25,6 @@ class TransferDataViewModel {
       _transferDataMap = transferDataMap;
 
   void dataUpdated() {
-    print('TransferDataViewModel.dataUpdated()');
-    print(_transferDataMap);
     updateAddDurationToDateTimeData();
     printScreenData();
   }
@@ -36,7 +38,7 @@ class TransferDataViewModel {
         _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.durationIconType =
-        (_transferDataMap!['durationSign'] > 0)
+        (_transferDataMap!['durationSign'] > 0) // _transferDataMap is nullable !
             ? DurationIconType.add
             : DurationIconType.subtract;
     addDurationToDateTimeData.addDurationStartDateTimeStr =
