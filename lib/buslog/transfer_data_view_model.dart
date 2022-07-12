@@ -24,17 +24,25 @@ class TransferDataViewModel {
     print('TransferDataViewModel.dataUpdated()');
     print(_transferDataMap);
     updateAddDurationToDateTimeData();
+    printScreenData();
+  }
+
+  void printScreenData() {
+    print(_transferData.addDurationToDateTimeData);
   }
 
   void updateAddDurationToDateTimeData() {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
-    addDurationToDateTimeData.durationIconType = DurationIconType.add;
-    addDurationToDateTimeData.addDurationStartDateTimeStr = '09_07_2022 23:58';
-    addDurationToDateTimeData.durationStr = '01:00';
-    addDurationToDateTimeData.endDateTimeStr = '10_07_2022 00:58';
 
-    TransferData transferData = TransferData();
-    transferData.addDurationToDateTimeData = addDurationToDateTimeData;
+    addDurationToDateTimeData.durationIconType =
+        (_transferDataMap!['durationSign'] > 0)
+            ? DurationIconType.add
+            : DurationIconType.subtract;
+    addDurationToDateTimeData.addDurationStartDateTimeStr =
+        _transferDataMap!['addDurStartDateTimeStr'];
+    addDurationToDateTimeData.durationStr = _transferDataMap!['durationStr'];
+    addDurationToDateTimeData.endDateTimeStr =
+        _transferDataMap!['endDateTimeStr'];
   }
 }

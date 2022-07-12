@@ -8,7 +8,7 @@ enum DurationIconType {
 }
 
 /// Add duration screen data class.
-/// 
+///
 /// Inherit from [ScreenData] base class. Its unique instance will be
 /// added to the [TransferData] instance which is responsible of saving
 /// and loading data to and from json file.
@@ -29,14 +29,21 @@ class AddDurationToDateTimeData extends ScreenData {
     map['endDateTimeStr'] = _endDateTimeStr;
 */
   DurationIconType get durationIconType => attributes['durationIconType'];
-  set durationIconType(DurationIconType value) => attributes['durationIconType'] = value;
+  set durationIconType(DurationIconType value) =>
+      attributes['durationIconType'] = value;
 
-  String get addDurationStartDateTimeStr => attributes['addDurationStartDateTimeStr'];
-  set addDurationStartDateTimeStr(String value) => attributes['addDurationStartDateTimeStr'] = value;
+  String get addDurationStartDateTimeStr =>
+      attributes['addDurationStartDateTimeStr'];
+  set addDurationStartDateTimeStr(String value) =>
+      attributes['addDurationStartDateTimeStr'] = value;
 
   String get durationStr => attributes['durationStr'];
   set durationStr(String value) => attributes['durationStr'] = value;
 
   String get endDateTimeStr => attributes['endDateTimeStr'];
   set endDateTimeStr(String value) => attributes['endDateTimeStr'] = value;
+
+  String toString() {
+    return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $durationStr\nendDateTimeStr: $endDateTimeStr}';
+  }
 }
