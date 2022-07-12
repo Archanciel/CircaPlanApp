@@ -9,21 +9,21 @@ import 'package:circa_plan/model/time_calculator_data.dart';
 
 /// Class including screen data instances and responsible of saving
 /// and loading data to and from json file.
-/// 
+///
 /// Included screen data classes: [AddDurationToDateTimeData],
 /// [CalculateSleepDurationData], [DateTimeDifferenceDurationData],
 /// [TimeCalculatorData] which inherit from [ScreenData] base class.
-/// 
+///
 class TransferData extends SerializableObject {
   TransferData() {
+    // instanciating empty screen data sub classes
     objectCreators['addDurationToDateTimeData'] =
         (map) => AddDurationToDateTimeData();
     objectCreators['calculateSleepDurationData'] =
         (map) => CalculateSleepDurationData();
     objectCreators['dateTimeDifferenceDurationData'] =
         (map) => DateTimeDifferenceDurationData();
-    objectCreators['timeCalculatorData'] =
-        (map) => TimeCalculatorData();
+    objectCreators['timeCalculatorData'] = (map) => TimeCalculatorData();
   }
 
   AddDurationToDateTimeData get addDurationToDateTimeData =>
@@ -41,26 +41,25 @@ class TransferData extends SerializableObject {
   set dateTimeDifferenceDurationData(AddDurationToDateTimeData value) =>
       attributes['dateTimeDifferenceDurationData'] = value;
 
-  TimeCalculatorData get timeCalculatorData =>
-      attributes['timeCalculatorData'];
+  TimeCalculatorData get timeCalculatorData => attributes['timeCalculatorData'];
   set timeCalculatorData(TimeCalculatorData value) =>
       attributes['timeCalculatorData'] = value;
 
   Future<TransferData> loadTransferDataFromFile(
-      {required String filePathName}) async {
+      {required String jsonFilePathName}) async {
     final Serializer serializer = Serializer();
-    final String inputJsonStr = await File(filePathName).readAsString();
+    final String inputJsonStr = await File(jsonFilePathName).readAsString();
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
     return deserializedTransferData;
   }
 
-  void saveTransferDataToFile({required String filePathName}) {
+  void saveTransferDataToFile({required String jsonFilePathName}) {
     final Serializer serializer = Serializer();
     final String outputJsonStr = serializer.serialize(this);
 
-    File(filePathName).writeAsStringSync(outputJsonStr);
+    File(jsonFilePathName).writeAsStringSync(outputJsonStr);
   }
 }
 
@@ -76,11 +75,11 @@ Future<void> main() async {
   transferData.addDurationToDateTimeData = addDurationToDateTimeData;
 
   String jsonFilePathName = 'transfer_data.json';
-  transferData.saveTransferDataToFile(filePathName: jsonFilePathName);
+  transferData.saveTransferDataToFile(jsonFilePathName: jsonFilePathName);
 
   TransferData loadedTransferData = TransferData();
   await loadedTransferData.loadTransferDataFromFile(
-      filePathName: jsonFilePathName);
+      jsonFilePathName: jsonFilePathName);
 
   AddDurationToDateTimeData loadedAddDurationToDateTimeData =
       loadedTransferData.addDurationToDateTimeData;

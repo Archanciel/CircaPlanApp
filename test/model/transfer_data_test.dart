@@ -23,11 +23,12 @@ void main() {
           transferData.addDurationToDateTimeData = addDurationToDateTimeData;
 
           String jsonFilePathName = 'transfer_data.json';
-          transferData.saveTransferDataToFile(filePathName: jsonFilePathName);
+          transferData.saveTransferDataToFile(
+              jsonFilePathName: jsonFilePathName);
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
-              filePathName: jsonFilePathName);
+              jsonFilePathName: jsonFilePathName);
 
           AddDurationToDateTimeData loadedAddDurationToDateTimeData =
               loadedTransferData.addDurationToDateTimeData;
@@ -38,8 +39,7 @@ void main() {
               DurationIconType.add);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '09_07_2022 23:58');
-          expect(loadedAddDurationToDateTimeData.durationStr,
-              '01:00');
+          expect(loadedAddDurationToDateTimeData.durationStr, '01:00');
           expect(loadedAddDurationToDateTimeData.endDateTimeStr,
               '10_07_2022 00:58');
         },
