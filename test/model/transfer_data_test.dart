@@ -60,6 +60,22 @@ void main() {
           calculateSleepDurationData.sleepDurationStr = '01:00';
           calculateSleepDurationData.wakeUpDurationStr = '00:30';
           calculateSleepDurationData.totalDurationStr = '01:30';
+
+/*
+"calcSlDurSleepTimeStrHistory"
+List (4 items)
+"13-07-2022 20:26"
+"1:00"
+"0:30"
+"1:00"
+"calcSlDurWakeUpTimeStrHistory" -> List (4 items)
+"calcSlDurWakeUpTimeStrHistory"
+List (4 items)
+"13-07-2022 21:26"
+"1:00"
+"1:00"
+"2:00"
+*/
           calculateSleepDurationData.sleepHistoryDateTimeStr = '10_07_2022 00:58 05:35 04:00';
           calculateSleepDurationData.wakeUpHistoryDateTimeStr = '10_07_2022 05:58 00:35 01:00';
 

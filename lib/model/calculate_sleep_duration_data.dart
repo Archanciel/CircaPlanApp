@@ -27,7 +27,22 @@ class CalculateSleepDurationData extends ScreenData {
     map['calcSlDurStatus'] = _status;
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
+
+    "calcSlDurSleepTimeStrHistory"
+    List (4 items)
+    "13-07-2022 20:26"
+    "1:00"
+    "0:30"
+    "1:00"
+    "calcSlDurWakeUpTimeStrHistory" -> List (4 items)
+    "calcSlDurWakeUpTimeStrHistory"
+    List (4 items)
+    "13-07-2022 21:26"
+    "1:00"
+    "1:00"
+    "2:00"
 */
+
   /// Alternative to dart getter since testing if null is returned by
   /// the method is useful.
   ///
@@ -64,7 +79,21 @@ class CalculateSleepDurationData extends ScreenData {
 
   String get totalDurationStr => attributes['totalDurationStr'];
   set totalDurationStr(String value) => attributes['totalDurationStr'] = value;
-
+/*
+"calcSlDurSleepTimeStrHistory"
+List (4 items)
+"13-07-2022 20:26"
+"1:00"
+"0:30"
+"1:00"
+"calcSlDurWakeUpTimeStrHistory" -> List (4 items)
+"calcSlDurWakeUpTimeStrHistory"
+List (4 items)
+"13-07-2022 21:26"
+"1:00"
+"1:00"
+"2:00"
+*/
   String get sleepHistoryDateTimeStr => attributes['sleepHistoryDateTimeStr'];
   set sleepHistoryDateTimeStr(String value) =>
       attributes['sleepHistoryDateTimeStr'] = value;

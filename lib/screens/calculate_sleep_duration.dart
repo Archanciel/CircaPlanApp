@@ -187,7 +187,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     //  print('sleepTimeStrHistory: $_sleepTimeStrHistory');
     //  print('wakeUpTimeStrHistory: $_wakeUpTimeStrHistory');
 
-    _transferDataViewModel.updateTransferData();
+//    _transferDataViewModel.updateTransferData();
 
     return map;
   }
