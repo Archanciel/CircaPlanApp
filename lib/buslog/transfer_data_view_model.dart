@@ -40,25 +40,25 @@ class TransferDataViewModel {
 
   void printScreenData() {
     print(_transferData.addDurationToDateTimeData);
+    print(_transferData.calculateSleepDurationData);
   }
 
   void updateAddDurationToDateTimeData() {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
 
+    // _transferDataMap is nullable !
     int? durationSign = _transferDataMap!['durationSign'];
 
     if (durationSign == null) {
       // the case if no AddDurationToDateTime screen field was
-      // modified
+      // modified and so no AddDurationToDateTime data were stored
+      // in the transfer data map !
       return;
     }
 
     addDurationToDateTimeData.durationIconType =
-        (durationSign >
-                0) // _transferDataMap is nullable !
-            ? DurationIconType.add
-            : DurationIconType.subtract;
+        (durationSign > 0) ? DurationIconType.add : DurationIconType.subtract;
     addDurationToDateTimeData.addDurationStartDateTimeStr =
         _transferDataMap!['addDurStartDateTimeStr'];
     addDurationToDateTimeData.durationStr = _transferDataMap!['durationStr'];
@@ -84,10 +84,21 @@ class TransferDataViewModel {
 */
 
     calculateSleepDurationData.status = _transferDataMap!['calcSlDurStatus'];
-    calculateSleepDurationData.addDurationStartDateTimeStr =
-        _transferDataMap!['addDurStartDateTimeStr'];
-    calculateSleepDurationData.durationStr = _transferDataMap!['durationStr'];
-    calculateSleepDurationData.endDateTimeStr =
-        _transferDataMap!['endDateTimeStr'];
+    calculateSleepDurationData.sleepDurationNewDateTimeStr =
+        _transferDataMap!['calcSlDurNewDateTimeStr'];
+    calculateSleepDurationData.sleepDurationPreviousDateTimeStr =
+        _transferDataMap!['calcSlDurPreviousDateTimeStr'];
+    calculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr =
+        _transferDataMap!['calcSlDurBeforePreviousDateTimeStr'];
+    calculateSleepDurationData.sleepDurationStr =
+        _transferDataMap!['calcSlDurCurrSleepDurationStr'];
+    calculateSleepDurationData.wakeUpDurationStr =
+        _transferDataMap!['calcSlDurCurrWakeUpDurationStr'];
+    calculateSleepDurationData.totalDurationStr =
+        _transferDataMap!['calcSlDurCurrTotalDurationStr'];
+    calculateSleepDurationData.sleepHistoryDateTimeStr =
+        _transferDataMap!['calcSlDurSleepTimeStrHistory'];
+    calculateSleepDurationData.wakeUpHistoryDateTimeStr =
+        _transferDataMap!['calcSlDurWakeUpTimeStrHistory'];
   }
 }

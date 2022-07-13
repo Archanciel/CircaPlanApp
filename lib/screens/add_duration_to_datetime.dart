@@ -111,6 +111,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     map['endDateTimeStr'] = _endDateTimeStr;
 
     _transferDataViewModel.updateTransferData();
+    
     return map;
   }
 

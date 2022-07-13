@@ -12,9 +12,8 @@ enum Status {
 /// and loading data to and from json file.
 class CalculateSleepDurationData extends ScreenData {
   CalculateSleepDurationData() {
-    transformers['status'] = (value) => value is Status
-        ? value.index
-        : Status.values[value];
+    transformers['status'] =
+        (value) => value is Status ? value.index : Status.values[value];
     screenDataType = ScreenDataType.calculateSleepDurationData;
   }
   /*
@@ -29,18 +28,59 @@ class CalculateSleepDurationData extends ScreenData {
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
 */
+  /// Alternative to dart getter since testing if null is returned by
+  /// the method is useful.
+  ///
+  /// A getter can not return null. Null is returned if no
+  /// CalculateSleepDuration screen field was modified.
+  Status? getStatus() {
+    return attributes['status'];
+  }
+
   Status get status => attributes['status'];
-  set status(Status value) =>
-      attributes['status'] = value;
+  set status(Status value) => attributes['status'] = value;
 
-  String get addDurationStartDateTimeStr =>
-      attributes['addDurationStartDateTimeStr'];
-  set addDurationStartDateTimeStr(String value) =>
-      attributes['addDurationStartDateTimeStr'] = value;
+  String get sleepDurationNewDateTimeStr =>
+      attributes['sleepDurationNewDateTimeStr'];
+  set sleepDurationNewDateTimeStr(String value) =>
+      attributes['sleepDurationNewDateTimeStr'] = value;
 
-  String get durationStr => attributes['durationStr'];
-  set durationStr(String value) => attributes['durationStr'] = value;
+  String get sleepDurationPreviousDateTimeStr =>
+      attributes['sleepDurationPreviousDateTimeStr'];
+  set sleepDurationPreviousDateTimeStr(String value) =>
+      attributes['sleepDurationPreviousDateTimeStr'] = value;
 
-  String get endDateTimeStr => attributes['endDateTimeStr'];
-  set endDateTimeStr(String value) => attributes['endDateTimeStr'] = value;
+  String get sleepDurationBeforePreviousDateTimeStr =>
+      attributes['sleepDurationBeforePreviousDateTimeStr'];
+  set sleepDurationBeforePreviousDateTimeStr(String value) =>
+      attributes['sleepDurationBeforePreviousDateTimeStr'] = value;
+
+  String get sleepDurationStr => attributes['sleepDurationStr'];
+  set sleepDurationStr(String value) => attributes['sleepDurationStr'] = value;
+
+  String get wakeUpDurationStr => attributes['wakeUpDurationStr'];
+  set wakeUpDurationStr(String value) =>
+      attributes['wakeUpDurationStr'] = value;
+
+  String get totalDurationStr => attributes['totalDurationStr'];
+  set totalDurationStr(String value) => attributes['totalDurationStr'] = value;
+
+  String get sleepHistoryDateTimeStr => attributes['sleepHistoryDateTimeStr'];
+  set sleepHistoryDateTimeStr(String value) =>
+      attributes['sleepHistoryDateTimeStr'] = value;
+
+  String get wakeUpHistoryDateTimeStr => attributes['wakeUpHistoryDateTimeStr'];
+  set wakeUpHistoryDateTimeStr(String value) =>
+      attributes['wakeUpHistoryDateTimeStr'] = value;
+
+  @override
+  String toString() {
+    Status? status = getStatus();
+
+    if (status == null) {
+      return '';
+    } else {
+      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStr\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStr';
+    }
+  }
 }

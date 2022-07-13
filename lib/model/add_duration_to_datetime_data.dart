@@ -28,8 +28,8 @@ class AddDurationToDateTimeData extends ScreenData {
     map['durationStr'] = _durationStr;
     map['endDateTimeStr'] = _endDateTimeStr;
 */
-  /// Replaces dart getter since testing if nullis returned by the
-  /// method is useful.
+  /// Alternative to dart getter since testing if null is returned by
+  /// the method is useful.
   ///
   /// A getter can not return null. Null is returned if no
   /// AddDurationToDateTime screen field was modified.
@@ -59,7 +59,7 @@ class AddDurationToDateTimeData extends ScreenData {
     if (durationIconType == null) {
       return '';
     } else {
-      return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $durationStr\nendDateTimeStr: $endDateTimeStr}';
+      return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $durationStr\nendDateTimeStr: $endDateTimeStr';
     }
   }
 }
