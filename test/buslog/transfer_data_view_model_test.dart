@@ -78,9 +78,20 @@ List (4 items)
 "1:00"
 "1:00"
 "2:00"
+
+"calcSlDurNewDateTimeStr" -> "14-07-2022 13:20"
+"calcSlDurPreviousDateTimeStr" -> "14-07-2022 13:13"
+"calcSlDurBeforePreviousDateTimeStr" -> "14-07-2022 13:12"
+"calcSlDurCurrSleepDurationStr" -> "12:36"
+"calcSlDurCurrWakeUpDurationStr" -> "0:02"
+"calcSlDurCurrTotalDurationStr" -> "12:38"
+"calcSlDurStatus" -> Status
+"calcSlDurSleepTimeStrHistory" -> List (4 items)
+"calcSlDurWakeUpTimeStrHistory" -> List (3 items)
 */
+
           Map<String, dynamic> transferDataMap = {
-            "durationIconData": Icons.add,
+            "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "durationIconColor": Colors.green.shade200,
             "durationSign": 1,
             "durationTextColor": Colors.green.shade200,

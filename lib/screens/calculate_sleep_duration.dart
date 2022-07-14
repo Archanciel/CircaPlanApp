@@ -54,8 +54,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalDurationStr =
             transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '',
         _status = transferDataMap['calcSlDurStatus'] ?? Status.wakeUp,
-        _lastWakeUpTimeStr =
-            transferDataMap['calcSlDurLastWakeUpTimeStr'] ?? '',
         _sleepTimeStrHistory =
             transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [],
         _wakeUpTimeStrHistory =
@@ -72,7 +70,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _currentWakeUpDurationStr = '';
   String _currentTotalDurationStr = '';
   Status _status = Status.wakeUp;
-  String _lastWakeUpTimeStr = '';
   List<String> _sleepTimeStrHistory = [];
   List<String> _wakeUpTimeStrHistory = [];
 
@@ -170,7 +167,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Map<String, dynamic> map = _transferDataMap;
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
-    map['calcSlDurLastWakeUpTimeStr'] = _lastWakeUpTimeStr;
     map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
     map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
@@ -265,7 +261,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _applyReset() {
-    _lastWakeUpTimeStr = _newDateTimeStr;
     _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
     _previousDateTimeStr = '';
