@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:circa_plan/constants.dart';
+import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:test/test.dart';
@@ -44,60 +45,36 @@ void main() {
 
           expect(addDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
-          expect(addDurationToDateTimeData.durationIconType,
-              DurationIconType.add);
+          expect(
+              addDurationToDateTimeData.durationIconType, DurationIconType.add);
           expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
           expect(addDurationToDateTimeData.durationStr, '00:00');
-          expect(addDurationToDateTimeData.endDateTimeStr,
-              '12-07-2022 16:00');
+          expect(addDurationToDateTimeData.endDateTimeStr, '12-07-2022 16:00');
         },
       );
       test(
         'TransferDataViewModel updateCalculateSleepDurationData',
         () async {
-/*
-"calcSlDurNewDateTimeStr" -> "14-07-2022 02:56"
-"calcSlDurLastWakeUpTimeStr" -> ""
-"calcSlDurPreviousDateTimeStr" -> "14-07-2022 02:56"
-"calcSlDurBeforePreviousDateTimeStr" -> "14-07-2022 00:56"
-"calcSlDurCurrSleepDurationStr" -> "2:30"
-"calcSlDurCurrWakeUpDurationStr" -> "4:00"
-"calcSlDurCurrTotalDurationStr" -> "6:30"
-"calcSlDurStatus" -> Status
-"calcSlDurSleepTimeStrHistory"
-List (4 items)
-"13-07-2022 20:26"
-"1:00"
-"0:30"
-"1:00"
-"calcSlDurWakeUpTimeStrHistory" -> List (4 items)
-"calcSlDurWakeUpTimeStrHistory"
-List (4 items)
-"13-07-2022 21:26"
-"1:00"
-"1:00"
-"2:00"
-
-"calcSlDurNewDateTimeStr" -> "14-07-2022 13:20"
-"calcSlDurPreviousDateTimeStr" -> "14-07-2022 13:13"
-"calcSlDurBeforePreviousDateTimeStr" -> "14-07-2022 13:12"
-"calcSlDurCurrSleepDurationStr" -> "12:36"
-"calcSlDurCurrWakeUpDurationStr" -> "0:02"
-"calcSlDurCurrTotalDurationStr" -> "12:38"
-"calcSlDurStatus" -> Status
-"calcSlDurSleepTimeStrHistory" -> List (4 items)
-"calcSlDurWakeUpTimeStrHistory" -> List (3 items)
-*/
 
           Map<String, dynamic> transferDataMap = {
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
-            "durationIconColor": Colors.green.shade200,
-            "durationSign": 1,
-            "durationTextColor": Colors.green.shade200,
-            "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
-            "durationStr": "00:00",
-            "endDateTimeStr": "12-07-2022 16:00",
+            "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurStatus": Status.sleep,
+            "calcSlDurSleepTimeStrHistory": [
+              '10_07_2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": [
+              '10_07_2022 05:58',
+              '00:35',
+              '01:00'
+            ],
           };
 
           Directory directory = await getApplicationDocumentsDirectory();
@@ -107,20 +84,28 @@ List (4 items)
           TransferDataViewModel transferDataViewModel = TransferDataViewModel(
               transferDataJsonFilePathName: transferDataJsonFilePathName);
           transferDataViewModel.transferDataMap = transferDataMap;
-          transferDataViewModel.updateAddDurationToDateTimeData();
+          transferDataViewModel.updateCalculateSleepDurationData();
 
-          AddDurationToDateTimeData addDurationToDateTimeData =
-              transferDataViewModel.addDurationToDateTimeData;
+          CalculateSleepDurationData calculateSleepDurationData =
+              transferDataViewModel.calculateSleepDurationData;
 
-          expect(addDurationToDateTimeData.screenDataType,
-              ScreenDataType.addDurationToDateTimeData);
-          expect(addDurationToDateTimeData.durationIconType,
-              DurationIconType.add);
-          expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
-              '2022-07-12 16:00:26.486627');
-          expect(addDurationToDateTimeData.durationStr, '00:00');
-          expect(addDurationToDateTimeData.endDateTimeStr,
-              '12-07-2022 16:00');
+          expect(calculateSleepDurationData.screenDataType,
+              ScreenDataType.calculateSleepDurationData);
+          expect(calculateSleepDurationData.status, Status.sleep);
+          expect(calculateSleepDurationData.sleepDurationNewDateTimeStr,
+              '14-07-2022 13:09');
+          expect(calculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+              '14-07-2022 13:13');
+          expect(
+              calculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
+              '14-07-2022 13:12');
+          expect(calculateSleepDurationData.sleepDurationStr, '12:36');
+          expect(calculateSleepDurationData.wakeUpDurationStr, '0:02');
+          expect(calculateSleepDurationData.totalDurationStr, '12:38');
+          expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
+              ['10_07_2022 00:58', '05:35', '04:00']);
+          expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
+              ['10_07_2022 05:58', '00:35', '01:00']);
         },
       );
     },

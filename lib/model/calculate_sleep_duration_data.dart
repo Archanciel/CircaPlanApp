@@ -15,18 +15,6 @@ class CalculateSleepDurationData extends ScreenData {
     objectCreators['wakeUpHistoryDateTimeStrLst'] = (map) => <String>[];
     screenDataType = ScreenDataType.calculateSleepDurationData;
   }
-  /*
-    map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
-    map['calcSlDurLastWakeUpTimeStr'] = _lastWakeUpTimeStr;
-    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
-    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
-    map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
-    map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
-    map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
-    map['calcSlDurStatus'] = _status;
-    map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
-    map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
-*/
 
   /// Alternative to dart getter since testing if null is returned by
   /// the method is useful.

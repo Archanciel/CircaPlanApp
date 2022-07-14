@@ -1,5 +1,7 @@
 import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
+import 'package:circa_plan/model/date_time_difference_duration_data.dart';
+import 'package:circa_plan/model/time_calculator_data.dart';
 import 'package:circa_plan/model/transfer_data.dart';
 
 import '../constants.dart';
@@ -24,13 +26,22 @@ class TransferDataViewModel {
         // data sub classes.
         _transferData = TransferData();
 
-  /// the transferDataMap being not setable by the constructor, this
+  /// the transferDataMap being not settable by the constructor, this
   /// setter must be declared.
   set transferDataMap(Map<String, dynamic> transferDataMap) =>
       _transferDataMap = transferDataMap;
 
   AddDurationToDateTimeData get addDurationToDateTimeData =>
       _transferData.addDurationToDateTimeData;
+
+  CalculateSleepDurationData get calculateSleepDurationData =>
+      _transferData.calculateSleepDurationData;
+
+  DateTimeDifferenceDurationData get dateTimeDifferenceDurationData =>
+      _transferData.dateTimeDifferenceDurationData;
+
+  TimeCalculatorData get timeCalculatorData =>
+      _transferData.timeCalculatorData;
 
   /// Copy transferDataMap values to TransferData instance in order to
   /// then update the json file.

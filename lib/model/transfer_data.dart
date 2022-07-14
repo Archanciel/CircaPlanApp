@@ -52,9 +52,9 @@ class TransferData extends SerializableObject {
   set calculateSleepDurationData(CalculateSleepDurationData value) =>
       attributes['calculateSleepDurationData'] = value;
 
-  AddDurationToDateTimeData get dateTimeDifferenceDurationData =>
+  DateTimeDifferenceDurationData get dateTimeDifferenceDurationData =>
       attributes['dateTimeDifferenceDurationData'];
-  set dateTimeDifferenceDurationData(AddDurationToDateTimeData value) =>
+  set dateTimeDifferenceDurationData(DateTimeDifferenceDurationData value) =>
       attributes['dateTimeDifferenceDurationData'] = value;
 
   TimeCalculatorData get timeCalculatorData => attributes['timeCalculatorData'];
