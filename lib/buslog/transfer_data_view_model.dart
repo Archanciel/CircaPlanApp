@@ -2,6 +2,8 @@ import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/transfer_data.dart';
 
+import '../constants.dart';
+
 /// This class manages the correspondance between the transfer data
 /// map currently storing the different screens data and the
 /// [TransferData] instance which save or load data in or from
@@ -70,18 +72,15 @@ class TransferDataViewModel {
     CalculateSleepDurationData calculateSleepDurationData =
         _transferData.calculateSleepDurationData;
 
-    /*
-    map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
-    map['calcSlDurLastWakeUpTimeStr'] = _lastWakeUpTimeStr;
-    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
-    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
-    map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
-    map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
-    map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
-    map['calcSlDurStatus'] = _status;
-    map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
-    map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
-*/
+    // _transferDataMap is nullable !
+    Status? status = _transferDataMap!['calcSlDurStatus'];
+
+    if (status == null) {
+      // the case if no CalculateSleepDuration screen field was
+      // modified and so no CalculateSleepDuration data were stored
+      // in the transfer data map !
+      return;
+    }
 
     calculateSleepDurationData.status = _transferDataMap!['calcSlDurStatus'];
     calculateSleepDurationData.sleepDurationNewDateTimeStr =

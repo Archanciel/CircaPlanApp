@@ -1,9 +1,6 @@
 import 'package:circa_plan/model/screen_data.dart';
 
-enum Status {
-  wakeUp,
-  sleep,
-}
+import '../constants.dart';
 
 /// Calculate sleep duration screen data class.
 ///
@@ -29,20 +26,6 @@ class CalculateSleepDurationData extends ScreenData {
     map['calcSlDurStatus'] = _status;
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
-
-    "calcSlDurSleepTimeStrHistory"
-    List (4 items)
-    "13-07-2022 20:26"
-    "1:00"
-    "0:30"
-    "1:00"
-    "calcSlDurWakeUpTimeStrHistory" -> List (4 items)
-    "calcSlDurWakeUpTimeStrHistory"
-    List (4 items)
-    "13-07-2022 21:26"
-    "1:00"
-    "1:00"
-    "2:00"
 */
 
   /// Alternative to dart getter since testing if null is returned by

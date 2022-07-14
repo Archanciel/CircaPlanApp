@@ -1,11 +1,6 @@
 import 'package:circa_plan/model/screen_data.dart';
 
-// used to select Icons type since Icon instances can't be
-// serialized/deserialized in json file
-enum DurationIconType {
-  add,
-  subtract,
-}
+import '../constants.dart';
 
 /// Add duration screen data class.
 ///
