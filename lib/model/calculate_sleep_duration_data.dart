@@ -14,6 +14,8 @@ class CalculateSleepDurationData extends ScreenData {
   CalculateSleepDurationData() {
     transformers['status'] =
         (value) => value is Status ? value.index : Status.values[value];
+    objectCreators['sleepHistoryDateTimeStrLst'] = (map) => <String>[];
+    objectCreators['wakeUpHistoryDateTimeStrLst'] = (map) => <String>[];
     screenDataType = ScreenDataType.calculateSleepDurationData;
   }
   /*
@@ -79,28 +81,16 @@ class CalculateSleepDurationData extends ScreenData {
 
   String get totalDurationStr => attributes['totalDurationStr'];
   set totalDurationStr(String value) => attributes['totalDurationStr'] = value;
-/*
-"calcSlDurSleepTimeStrHistory"
-List (4 items)
-"13-07-2022 20:26"
-"1:00"
-"0:30"
-"1:00"
-"calcSlDurWakeUpTimeStrHistory" -> List (4 items)
-"calcSlDurWakeUpTimeStrHistory"
-List (4 items)
-"13-07-2022 21:26"
-"1:00"
-"1:00"
-"2:00"
-*/
-  String get sleepHistoryDateTimeStr => attributes['sleepHistoryDateTimeStr'];
-  set sleepHistoryDateTimeStr(String value) =>
-      attributes['sleepHistoryDateTimeStr'] = value;
 
-  String get wakeUpHistoryDateTimeStr => attributes['wakeUpHistoryDateTimeStr'];
-  set wakeUpHistoryDateTimeStr(String value) =>
-      attributes['wakeUpHistoryDateTimeStr'] = value;
+  List<String> get sleepHistoryDateTimeStrLst =>
+      attributes['sleepHistoryDateTimeStrLst'];
+  set sleepHistoryDateTimeStrLst(List<String> value) =>
+      attributes['sleepHistoryDateTimeStrLst'] = value;
+
+  List<String> get wakeUpHistoryDateTimeStrLst =>
+      attributes['wakeUpHistoryDateTimeStrLst'];
+  set wakeUpHistoryDateTimeStrLst(List<String> value) =>
+      attributes['wakeUpHistoryDateTimeStrLst'] = value;
 
   @override
   String toString() {
@@ -109,7 +99,7 @@ List (4 items)
     if (status == null) {
       return '';
     } else {
-      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStr\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStr';
+      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst';
     }
   }
 }

@@ -60,24 +60,10 @@ void main() {
           calculateSleepDurationData.sleepDurationStr = '01:00';
           calculateSleepDurationData.wakeUpDurationStr = '00:30';
           calculateSleepDurationData.totalDurationStr = '01:30';
-
-/*
-"calcSlDurSleepTimeStrHistory"
-List (4 items)
-"13-07-2022 20:26"
-"1:00"
-"0:30"
-"1:00"
-"calcSlDurWakeUpTimeStrHistory" -> List (4 items)
-"calcSlDurWakeUpTimeStrHistory"
-List (4 items)
-"13-07-2022 21:26"
-"1:00"
-"1:00"
-"2:00"
-*/
-          calculateSleepDurationData.sleepHistoryDateTimeStr = '10_07_2022 00:58 05:35 04:00';
-          calculateSleepDurationData.wakeUpHistoryDateTimeStr = '10_07_2022 05:58 00:35 01:00';
+          calculateSleepDurationData.sleepHistoryDateTimeStrLst =
+              ['10_07_2022 00:58', '05:35', '04:00'];
+          calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
+              ['10_07_2022 05:58', '00:35', '01:00'];
 
           TransferData transferData = TransferData();
           transferData.calculateSleepDurationData = calculateSleepDurationData;
@@ -95,21 +81,23 @@ List (4 items)
 
           expect(loadedCalculateSleepDurationData.screenDataType,
               ScreenDataType.calculateSleepDurationData);
-          expect(loadedCalculateSleepDurationData.status,
-              Status.sleep);
+          expect(loadedCalculateSleepDurationData.status, Status.sleep);
           expect(loadedCalculateSleepDurationData.sleepDurationNewDateTimeStr,
               '09_07_2022 23:58');
-          expect(loadedCalculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+          expect(
+              loadedCalculateSleepDurationData.sleepDurationPreviousDateTimeStr,
               '09_07_2022 22:58');
-          expect(loadedCalculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
+          expect(
+              loadedCalculateSleepDurationData
+                  .sleepDurationBeforePreviousDateTimeStr,
               '09_07_2022 21:58');
           expect(loadedCalculateSleepDurationData.sleepDurationStr, '01:00');
           expect(loadedCalculateSleepDurationData.wakeUpDurationStr, '00:30');
           expect(loadedCalculateSleepDurationData.totalDurationStr, '01:30');
-          expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStr,
-              '10_07_2022 00:58 05:35 04:00');
-          expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStr,
-              '10_07_2022 05:58 00:35 01:00');
+          expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
+              ['10_07_2022 00:58', '05:35', '04:00']);
+          expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
+              ['10_07_2022 05:58', '00:35', '01:00']);
         },
       );
     },

@@ -96,9 +96,9 @@ class TransferDataViewModel {
         _transferDataMap!['calcSlDurCurrWakeUpDurationStr'];
     calculateSleepDurationData.totalDurationStr =
         _transferDataMap!['calcSlDurCurrTotalDurationStr'];
-    calculateSleepDurationData.sleepHistoryDateTimeStr =
+    calculateSleepDurationData.sleepHistoryDateTimeStrLst =
         _transferDataMap!['calcSlDurSleepTimeStrHistory'];
-    calculateSleepDurationData.wakeUpHistoryDateTimeStr =
+    calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
         _transferDataMap!['calcSlDurWakeUpTimeStrHistory'];
   }
 }
