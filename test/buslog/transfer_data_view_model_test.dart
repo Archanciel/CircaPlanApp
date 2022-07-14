@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
+import 'package:circa_plan/model/date_time_difference_duration_data.dart';
+import 'package:circa_plan/model/time_calculator_data.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:test/test.dart';
@@ -106,6 +108,75 @@ void main() {
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
               ['10_07_2022 05:58', '00:35', '01:00']);
+        },
+      );
+      test(
+        'TransferDataViewModel updateDateTimeDifferenceDurationData',
+        () async {
+
+          Map<String, dynamic> transferDataMap = {
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+          };
+
+          Directory directory = await getApplicationDocumentsDirectory();
+          String pathSeparator = Platform.pathSeparator;
+          String transferDataJsonFilePathName =
+              '${directory.path}${pathSeparator}test${pathSeparator}buslog${pathSeparator}circadian.json';
+          TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+              transferDataJsonFilePathName: transferDataJsonFilePathName);
+          transferDataViewModel.transferDataMap = transferDataMap;
+          transferDataViewModel.updateDateTimeDifferenceDurationData();
+
+          DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+              transferDataViewModel.dateTimeDifferenceDurationData;
+
+          expect(dateTimeDifferenceDurationData.screenDataType,
+              ScreenDataType.dateTimeDifferenceDurationData);
+          expect(dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              "2022-07-13 16:09");
+          expect(dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              "2022-07-14 16:09:42.390753");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
+              "24:00");
+          expect(dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr, "25:00");
+        },
+      );
+      test(
+        'TransferDataViewModel updateTimeCalculatorData',
+        () async {
+
+          Map<String, dynamic> transferDataMap = {
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+          };
+
+          Directory directory = await getApplicationDocumentsDirectory();
+          String pathSeparator = Platform.pathSeparator;
+          String transferDataJsonFilePathName =
+              '${directory.path}${pathSeparator}test${pathSeparator}buslog${pathSeparator}circadian.json';
+          TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+              transferDataJsonFilePathName: transferDataJsonFilePathName);
+          transferDataViewModel.transferDataMap = transferDataMap;
+          transferDataViewModel.updateTimeCalculatorData();
+
+          TimeCalculatorData timeCalculatorData =
+              transferDataViewModel.timeCalculatorData;
+
+          expect(timeCalculatorData.screenDataType,
+              ScreenDataType.timeCalculatorData);
+          expect(timeCalculatorData.timeCalculatorFirstTimeStr,
+              "00:10:00");
+          expect(timeCalculatorData.timeCalculatorSecondTimeStr,
+              "00:05:00");
+          expect(
+              timeCalculatorData.timeCalculatorResultTimeStr,
+              "00:15:00");
         },
       );
     },
