@@ -47,18 +47,19 @@ class TransferDataViewModel {
   void updateTransferData() {
     updateAddDurationToDateTimeData();
     updateCalculateSleepDurationData();
+    updateDateTimeDifferenceDurationData();
+    updateTimeCalculatorData();
     printScreenData();
   }
 
   void printScreenData() {
     print(_transferData.addDurationToDateTimeData);
     print(_transferData.calculateSleepDurationData);
+    print(_transferData.dateTimeDifferenceDurationData);
+    print(_transferData.timeCalculatorData);
   }
 
   void updateAddDurationToDateTimeData() {
-    AddDurationToDateTimeData addDurationToDateTimeData =
-        _transferData.addDurationToDateTimeData;
-
     // _transferDataMap is nullable !
     int? durationSign = _transferDataMap!['durationSign'];
 
@@ -68,6 +69,9 @@ class TransferDataViewModel {
       // in the transfer data map !
       return;
     }
+
+    AddDurationToDateTimeData addDurationToDateTimeData =
+        _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.durationIconType =
         (durationSign > 0) ? DurationIconType.add : DurationIconType.subtract;
@@ -80,9 +84,6 @@ class TransferDataViewModel {
   }
 
   void updateCalculateSleepDurationData() {
-    CalculateSleepDurationData calculateSleepDurationData =
-        _transferData.calculateSleepDurationData;
-
     // _transferDataMap is nullable !
     Status? status = _transferDataMap!['calcSlDurStatus'];
 
@@ -93,7 +94,10 @@ class TransferDataViewModel {
       return;
     }
 
-    calculateSleepDurationData.status = _transferDataMap!['calcSlDurStatus'];
+    CalculateSleepDurationData calculateSleepDurationData =
+        _transferData.calculateSleepDurationData;
+
+    calculateSleepDurationData.status = status;
     calculateSleepDurationData.sleepDurationNewDateTimeStr =
         _transferDataMap!['calcSlDurNewDateTimeStr'];
     calculateSleepDurationData.sleepDurationPreviousDateTimeStr =
@@ -110,5 +114,52 @@ class TransferDataViewModel {
         _transferDataMap!['calcSlDurSleepTimeStrHistory'];
     calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
         _transferDataMap!['calcSlDurWakeUpTimeStrHistory'];
+  }
+
+  void updateDateTimeDifferenceDurationData() {
+    // _transferDataMap is nullable !
+    String? dateTimeDifferenceStartDateTimeStr =
+        _transferDataMap!['dtDiffStartDateTimeStr'];
+
+    if (dateTimeDifferenceStartDateTimeStr == null) {
+      // the case if no DateTimeDifferenceDuration screen field was
+      // modified and so no DateTimeDifferenceDuration data were stored
+      // in the transfer data map !
+      return;
+    }
+
+    DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+        _transferData.dateTimeDifferenceDurationData;
+
+    dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr =
+        dateTimeDifferenceStartDateTimeStr;
+    dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr =
+        _transferDataMap!['dtDiffEndDateTimeStr'];
+    dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr =
+        _transferDataMap!['dtDiffDurationStr'];
+    dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr =
+        _transferDataMap!['dtDiffAddTimeStr'];
+    dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
+        _transferDataMap!['dtDiffFinalDurationStr'];
+  }
+
+  void updateTimeCalculatorData() {
+    // _transferDataMap is nullable !
+    String? timeCalculatorFirstTimeStr = _transferDataMap!['firstTimeStr'];
+
+    if (timeCalculatorFirstTimeStr == null) {
+      // the case if no TimeCalculator screen field was
+      // modified and so no TimeCalculator data were stored
+      // in the transfer data map !
+      return;
+    }
+
+    TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;
+
+    timeCalculatorData.timeCalculatorFirstTimeStr = timeCalculatorFirstTimeStr;
+    timeCalculatorData.timeCalculatorSecondTimeStr =
+        _transferDataMap!['secondTimeStr'];
+    timeCalculatorData.timeCalculatorResultTimeStr =
+        _transferDataMap!['resultTimeStr'];
   }
 }

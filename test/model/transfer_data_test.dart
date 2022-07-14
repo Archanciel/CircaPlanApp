@@ -1,6 +1,8 @@
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
+import 'package:circa_plan/model/date_time_difference_duration_data.dart';
+import 'package:circa_plan/model/time_calculator_data.dart';
 import 'package:test/test.dart';
 
 import 'package:circa_plan/model/screen_data.dart';
@@ -107,6 +109,80 @@ void main() {
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
               ['10_07_2022 05:58', '00:35', '01:00']);
+        },
+      );
+      test(
+        'TransferData with DateTimeDifferenceDurationData only',
+        () async {
+          DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+              DateTimeDifferenceDurationData();
+          dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr =
+              '09_07_2022 23:58';
+          dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr =
+              '09_07_2022 22:58';
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr = '-01:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr = '02:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr = '01:00';
+
+          TransferData transferData = TransferData();
+          transferData.dateTimeDifferenceDurationData = dateTimeDifferenceDurationData;
+
+          String jsonFilePathName = 'transfer_data.json';
+          transferData.saveTransferDataToFile(
+              jsonFilePathName: jsonFilePathName);
+
+          TransferData loadedTransferData = TransferData();
+          await loadedTransferData.loadTransferDataFromFile(
+              jsonFilePathName: jsonFilePathName);
+
+          DateTimeDifferenceDurationData loadedDateTimeDifferenceDurationData =
+              loadedTransferData.dateTimeDifferenceDurationData;
+
+          expect(loadedDateTimeDifferenceDurationData.screenDataType,
+              ScreenDataType.dateTimeDifferenceDurationData);
+          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              '09_07_2022 23:58');
+          expect(
+              loadedDateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              '09_07_2022 22:58');
+          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceDurationStr, '-01:00');
+          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr, '02:00');
+          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr, '01:00');
+        },
+      );
+      test(
+        'TransferData with TimeCalculatorData only',
+        () async {
+          TimeCalculatorData timeCalculatorData =
+              TimeCalculatorData();
+          timeCalculatorData.timeCalculatorFirstTimeStr =
+              '00:10:00';
+          timeCalculatorData.timeCalculatorSecondTimeStr =
+              '00:05:00';
+          timeCalculatorData.timeCalculatorResultTimeStr = '00:15:00';
+
+          TransferData transferData = TransferData();
+          transferData.timeCalculatorData = timeCalculatorData;
+
+          String jsonFilePathName = 'transfer_data.json';
+          transferData.saveTransferDataToFile(
+              jsonFilePathName: jsonFilePathName);
+
+          TransferData loadedTransferData = TransferData();
+          await loadedTransferData.loadTransferDataFromFile(
+              jsonFilePathName: jsonFilePathName);
+
+          TimeCalculatorData loadedTimeCalculatorData =
+              loadedTransferData.timeCalculatorData;
+
+          expect(loadedTimeCalculatorData.screenDataType,
+              ScreenDataType.timeCalculatorData);
+          expect(loadedTimeCalculatorData.timeCalculatorFirstTimeStr,
+              '00:10:00');
+          expect(
+              loadedTimeCalculatorData.timeCalculatorSecondTimeStr,
+              '00:05:00');
+          expect(loadedTimeCalculatorData.timeCalculatorResultTimeStr, '00:15:00');
         },
       );
     },

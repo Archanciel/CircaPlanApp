@@ -9,17 +9,33 @@ class TimeCalculatorData extends ScreenData {
   TimeCalculatorData() {
     screenDataType = ScreenDataType.timeCalculatorData;
   }
-  /*
-    map['firstTimeStr'] = _firstTimeStr;
-    map['secondTimeStr'] = _secondTimeStr;
-    map['resultTimeStr'] = _resultTimeStr;
-*/
-  String get addDurationStartDateTimeStr => attributes['addDurationStartDateTimeStr'];
-  set addDurationStartDateTimeStr(String value) => attributes['addDurationStartDateTimeStr'] = value;
 
-  String get durationStr => attributes['durationStr'];
-  set durationStr(String value) => attributes['durationStr'] = value;
+  /// Alternative to dart getter since testing if null is returned by
+  /// the method is useful.
+  ///
+  /// A getter can not return null. Null is returned if no
+  /// TimeCalculator screen field was modified.
+  String? getTimeCalculatorFirstTimeStr() {
+    return attributes['timeCalculatorFirstTimeStr'];
+  }
 
-  String get endDateTimeStr => attributes['endDateTimeStr'];
-  set endDateTimeStr(String value) => attributes['endDateTimeStr'] = value;
+  String get timeCalculatorFirstTimeStr => attributes['timeCalculatorFirstTimeStr'];
+  set timeCalculatorFirstTimeStr(String value) => attributes['timeCalculatorFirstTimeStr'] = value;
+
+  String get timeCalculatorSecondTimeStr => attributes['timeCalculatorSecondTimeStr'];
+  set timeCalculatorSecondTimeStr(String value) => attributes['timeCalculatorSecondTimeStr'] = value;
+
+  String get timeCalculatorResultTimeStr => attributes['timeCalculatorResultTimeStr'];
+  set timeCalculatorResultTimeStr(String value) => attributes['timeCalculatorResultTimeStr'] = value;
+
+  @override
+  String toString() {
+    String? timeCalculatorFirstTimeStr = getTimeCalculatorFirstTimeStr();
+
+    if (timeCalculatorFirstTimeStr == null) {
+      return '';
+    } else {
+      return 'timeCalculatorFirstTimeStr: $timeCalculatorFirstTimeStr\ntimeCalculatorSecondTimeStr: $timeCalculatorSecondTimeStr\ntimeCalculatorResultTimeStr: $timeCalculatorResultTimeStr';
+    }
+  }
 }
