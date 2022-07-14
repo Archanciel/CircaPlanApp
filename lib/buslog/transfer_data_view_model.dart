@@ -40,8 +40,7 @@ class TransferDataViewModel {
   DateTimeDifferenceDurationData get dateTimeDifferenceDurationData =>
       _transferData.dateTimeDifferenceDurationData;
 
-  TimeCalculatorData get timeCalculatorData =>
-      _transferData.timeCalculatorData;
+  TimeCalculatorData get timeCalculatorData => _transferData.timeCalculatorData;
 
   /// Copy transferDataMap values to TransferData instance in order to
   /// then update the json file.
@@ -74,8 +73,9 @@ class TransferDataViewModel {
         (durationSign > 0) ? DurationIconType.add : DurationIconType.subtract;
     addDurationToDateTimeData.addDurationStartDateTimeStr =
         _transferDataMap!['addDurStartDateTimeStr'];
-    addDurationToDateTimeData.durationStr = _transferDataMap!['durationStr'];
-    addDurationToDateTimeData.endDateTimeStr =
+    addDurationToDateTimeData.addDurationDurationStr =
+        _transferDataMap!['durationStr'];
+    addDurationToDateTimeData.addDurationEndDateTimeStr =
         _transferDataMap!['endDateTimeStr'];
   }
 

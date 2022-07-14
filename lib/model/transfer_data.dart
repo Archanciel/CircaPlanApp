@@ -84,8 +84,8 @@ Future<void> main() async {
       AddDurationToDateTimeData();
   addDurationToDateTimeData.durationIconType = DurationIconType.add;
   addDurationToDateTimeData.addDurationStartDateTimeStr = '09_07_2022 23:58';
-  addDurationToDateTimeData.durationStr = '01:00';
-  addDurationToDateTimeData.endDateTimeStr = '10_07_2022 00:58';
+  addDurationToDateTimeData.addDurationDurationStr = '01:00';
+  addDurationToDateTimeData.addDurationEndDateTimeStr = '10_07_2022 00:58';
 
   TransferData transferData = TransferData();
   transferData.addDurationToDateTimeData = addDurationToDateTimeData;
@@ -103,6 +103,6 @@ Future<void> main() async {
   print(loadedAddDurationToDateTimeData.screenDataType);
   print(loadedAddDurationToDateTimeData.durationIconType);
   print(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr);
-  print(loadedAddDurationToDateTimeData.durationStr);
-  print(loadedAddDurationToDateTimeData.endDateTimeStr);
+  print(loadedAddDurationToDateTimeData.addDurationDurationStr);
+  print(loadedAddDurationToDateTimeData.addDurationEndDateTimeStr);
 }

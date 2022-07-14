@@ -18,8 +18,9 @@ void main() {
           addDurationToDateTimeData.durationIconType = DurationIconType.add;
           addDurationToDateTimeData.addDurationStartDateTimeStr =
               '09_07_2022 23:58';
-          addDurationToDateTimeData.durationStr = '01:00';
-          addDurationToDateTimeData.endDateTimeStr = '10_07_2022 00:58';
+          addDurationToDateTimeData.addDurationDurationStr = '01:00';
+          addDurationToDateTimeData.addDurationEndDateTimeStr =
+              '10_07_2022 00:58';
 
           TransferData transferData = TransferData();
           transferData.addDurationToDateTimeData = addDurationToDateTimeData;
@@ -41,8 +42,9 @@ void main() {
               DurationIconType.add);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '09_07_2022 23:58');
-          expect(loadedAddDurationToDateTimeData.durationStr, '01:00');
-          expect(loadedAddDurationToDateTimeData.endDateTimeStr,
+          expect(
+              loadedAddDurationToDateTimeData.addDurationDurationStr, '01:00');
+          expect(loadedAddDurationToDateTimeData.addDurationEndDateTimeStr,
               '10_07_2022 00:58');
         },
       );
@@ -61,10 +63,16 @@ void main() {
           calculateSleepDurationData.sleepDurationStr = '01:00';
           calculateSleepDurationData.wakeUpDurationStr = '00:30';
           calculateSleepDurationData.totalDurationStr = '01:30';
-          calculateSleepDurationData.sleepHistoryDateTimeStrLst =
-              ['10_07_2022 00:58', '05:35', '04:00'];
-          calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
-              ['10_07_2022 05:58', '00:35', '01:00'];
+          calculateSleepDurationData.sleepHistoryDateTimeStrLst = [
+            '10_07_2022 00:58',
+            '05:35',
+            '04:00'
+          ];
+          calculateSleepDurationData.wakeUpHistoryDateTimeStrLst = [
+            '10_07_2022 05:58',
+            '00:35',
+            '01:00'
+          ];
 
           TransferData transferData = TransferData();
           transferData.calculateSleepDurationData = calculateSleepDurationData;

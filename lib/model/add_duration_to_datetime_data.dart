@@ -41,11 +41,13 @@ class AddDurationToDateTimeData extends ScreenData {
   set addDurationStartDateTimeStr(String value) =>
       attributes['addDurationStartDateTimeStr'] = value;
 
-  String get durationStr => attributes['durationStr'];
-  set durationStr(String value) => attributes['durationStr'] = value;
+  String get addDurationDurationStr => attributes['addDurationDurationStr'];
+  set addDurationDurationStr(String value) => attributes['addDurationDurationStr'] = value;
 
-  String get endDateTimeStr => attributes['endDateTimeStr'];
-  set endDateTimeStr(String value) => attributes['endDateTimeStr'] = value;
+  String get addDurationEndDateTimeStr =>
+      attributes['addDurationEndDateTimeStr'];
+  set addDurationEndDateTimeStr(String value) =>
+      attributes['addDurationEndDateTimeStr'] = value;
 
   @override
   String toString() {
@@ -54,7 +56,7 @@ class AddDurationToDateTimeData extends ScreenData {
     if (durationIconType == null) {
       return '';
     } else {
-      return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $durationStr\nendDateTimeStr: $endDateTimeStr';
+      return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $addDurationDurationStr\nendDateTimeStr: $addDurationEndDateTimeStr';
     }
   }
 }

@@ -49,14 +49,14 @@ void main() {
               addDurationToDateTimeData.durationIconType, DurationIconType.add);
           expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
-          expect(addDurationToDateTimeData.durationStr, '00:00');
-          expect(addDurationToDateTimeData.endDateTimeStr, '12-07-2022 16:00');
+          expect(addDurationToDateTimeData.addDurationDurationStr, '00:00');
+          expect(addDurationToDateTimeData.addDurationEndDateTimeStr,
+              '12-07-2022 16:00');
         },
       );
       test(
         'TransferDataViewModel updateCalculateSleepDurationData',
         () async {
-
           Map<String, dynamic> transferDataMap = {
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
