@@ -113,7 +113,6 @@ void main() {
       test(
         'TransferDataViewModel updateDateTimeDifferenceDurationData',
         () async {
-
           Map<String, dynamic> transferDataMap = {
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
@@ -136,20 +135,22 @@ void main() {
 
           expect(dateTimeDifferenceDurationData.screenDataType,
               ScreenDataType.dateTimeDifferenceDurationData);
-          expect(dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
-              "2022-07-13 16:09");
-          expect(dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
-              "2022-07-14 16:09:42.390753");
           expect(
-              dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
+              dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              "2022-07-13 16:09");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              "2022-07-14 16:09:42.390753");
+          expect(dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
               "24:00");
-          expect(dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr, "25:00");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
+              "25:00");
         },
       );
       test(
         'TransferDataViewModel updateTimeCalculatorData',
         () async {
-
           Map<String, dynamic> transferDataMap = {
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
@@ -170,13 +171,237 @@ void main() {
 
           expect(timeCalculatorData.screenDataType,
               ScreenDataType.timeCalculatorData);
-          expect(timeCalculatorData.timeCalculatorFirstTimeStr,
-              "00:10:00");
-          expect(timeCalculatorData.timeCalculatorSecondTimeStr,
-              "00:05:00");
+          expect(timeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
+          expect(timeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
+          expect(timeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+        },
+      );
+      test(
+        'TransferDataViewModel updateTransferData',
+        () async {
+          Map<String, dynamic> transferDataMap = {
+            "durationIconData": Icons.add,
+            "durationIconColor": Colors.green.shade200,
+            "durationSign": 1,
+            "durationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
+            "durationStr": "00:00",
+            "endDateTimeStr": "12-07-2022 16:00",
+            "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
+            "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurStatus": Status.sleep,
+            "calcSlDurSleepTimeStrHistory": [
+              '10_07_2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": [
+              '10_07_2022 05:58',
+              '00:35',
+              '01:00'
+            ],
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+          };
+
+          Directory directory = await getApplicationDocumentsDirectory();
+          String pathSeparator = Platform.pathSeparator;
+          String transferDataJsonFilePathName =
+              '${directory.path}${pathSeparator}circadian.json';
+          TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+              transferDataJsonFilePathName: transferDataJsonFilePathName);
+          transferDataViewModel.transferDataMap = transferDataMap;
+          transferDataViewModel.updateTransferData();
+
+          AddDurationToDateTimeData addDurationToDateTimeData =
+              transferDataViewModel.addDurationToDateTimeData;
+
+          expect(addDurationToDateTimeData.screenDataType,
+              ScreenDataType.addDurationToDateTimeData);
           expect(
-              timeCalculatorData.timeCalculatorResultTimeStr,
-              "00:15:00");
+              addDurationToDateTimeData.durationIconType, DurationIconType.add);
+          expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
+              '2022-07-12 16:00:26.486627');
+          expect(addDurationToDateTimeData.addDurationDurationStr, '00:00');
+          expect(addDurationToDateTimeData.addDurationEndDateTimeStr,
+              '12-07-2022 16:00');
+
+          CalculateSleepDurationData calculateSleepDurationData =
+              transferDataViewModel.calculateSleepDurationData;
+
+          expect(calculateSleepDurationData.screenDataType,
+              ScreenDataType.calculateSleepDurationData);
+          expect(calculateSleepDurationData.status, Status.sleep);
+          expect(calculateSleepDurationData.sleepDurationNewDateTimeStr,
+              '14-07-2022 13:09');
+          expect(calculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+              '14-07-2022 13:13');
+          expect(
+              calculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
+              '14-07-2022 13:12');
+          expect(calculateSleepDurationData.sleepDurationStr, '12:36');
+          expect(calculateSleepDurationData.wakeUpDurationStr, '0:02');
+          expect(calculateSleepDurationData.totalDurationStr, '12:38');
+          expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
+              ['10_07_2022 00:58', '05:35', '04:00']);
+          expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
+              ['10_07_2022 05:58', '00:35', '01:00']);
+
+          DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+              transferDataViewModel.dateTimeDifferenceDurationData;
+
+          expect(dateTimeDifferenceDurationData.screenDataType,
+              ScreenDataType.dateTimeDifferenceDurationData);
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              "2022-07-13 16:09");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              "2022-07-14 16:09:42.390753");
+          expect(dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
+              "24:00");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
+              "25:00");
+
+          TimeCalculatorData timeCalculatorData =
+              transferDataViewModel.timeCalculatorData;
+
+          expect(timeCalculatorData.screenDataType,
+              ScreenDataType.timeCalculatorData);
+          expect(timeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
+          expect(timeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
+          expect(timeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+        },
+      );
+      test(
+        'TransferDataViewModel loadTransferData',
+        () async {
+          Map<String, dynamic> transferDataMap = {
+            "durationIconData": Icons.add,
+            "durationIconColor": Colors.green.shade200,
+            "durationSign": 1,
+            "durationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
+            "durationStr": "00:00",
+            "endDateTimeStr": "12-07-2022 16:00",
+            "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
+            "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurStatus": Status.sleep,
+            "calcSlDurSleepTimeStrHistory": [
+              '10_07_2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": [
+              '10_07_2022 05:58',
+              '00:35',
+              '01:00'
+            ],
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+          };
+
+          Directory directory = await getApplicationDocumentsDirectory();
+          String pathSeparator = Platform.pathSeparator;
+          String transferDataJsonFilePathName =
+              '${directory.path}${pathSeparator}circadian.json';
+          TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+              transferDataJsonFilePathName: transferDataJsonFilePathName);
+          transferDataViewModel.transferDataMap = transferDataMap;
+          transferDataViewModel.updateTransferData(); // saves to json file
+
+          TransferDataViewModel loadedTransferDataViewModel =
+              TransferDataViewModel(
+                  transferDataJsonFilePathName: transferDataJsonFilePathName);
+
+          Map<String, dynamic> emptyTransferDataMap = {};
+
+          loadedTransferDataViewModel.transferDataMap = emptyTransferDataMap;
+          await loadedTransferDataViewModel.loadTransferData();
+
+          AddDurationToDateTimeData addDurationToDateTimeData =
+              loadedTransferDataViewModel.addDurationToDateTimeData;
+
+          expect(addDurationToDateTimeData.screenDataType,
+              ScreenDataType.addDurationToDateTimeData);
+          expect(
+              addDurationToDateTimeData.durationIconType, DurationIconType.add);
+          expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
+              '2022-07-12 16:00:26.486627');
+          expect(addDurationToDateTimeData.addDurationDurationStr, '00:00');
+          expect(addDurationToDateTimeData.addDurationEndDateTimeStr,
+              '12-07-2022 16:00');
+
+          CalculateSleepDurationData calculateSleepDurationData =
+              loadedTransferDataViewModel.calculateSleepDurationData;
+
+          expect(calculateSleepDurationData.screenDataType,
+              ScreenDataType.calculateSleepDurationData);
+          expect(calculateSleepDurationData.status, Status.sleep);
+          expect(calculateSleepDurationData.sleepDurationNewDateTimeStr,
+              '14-07-2022 13:09');
+          expect(calculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+              '14-07-2022 13:13');
+          expect(
+              calculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
+              '14-07-2022 13:12');
+          expect(calculateSleepDurationData.sleepDurationStr, '12:36');
+          expect(calculateSleepDurationData.wakeUpDurationStr, '0:02');
+          expect(calculateSleepDurationData.totalDurationStr, '12:38');
+          expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
+              ['10_07_2022 00:58', '05:35', '04:00']);
+          expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
+              ['10_07_2022 05:58', '00:35', '01:00']);
+
+          DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+              loadedTransferDataViewModel.dateTimeDifferenceDurationData;
+
+          expect(dateTimeDifferenceDurationData.screenDataType,
+              ScreenDataType.dateTimeDifferenceDurationData);
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              "2022-07-13 16:09");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              "2022-07-14 16:09:42.390753");
+          expect(dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
+              "24:00");
+          expect(
+              dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
+              "25:00");
+
+          TimeCalculatorData timeCalculatorData =
+              loadedTransferDataViewModel.timeCalculatorData;
+
+          expect(timeCalculatorData.screenDataType,
+              ScreenDataType.timeCalculatorData);
+          expect(timeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
+          expect(timeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
+          expect(timeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+
+          expect(loadedTransferDataViewModel.getTransferDataMap(),
+              transferDataMap);
         },
       );
     },

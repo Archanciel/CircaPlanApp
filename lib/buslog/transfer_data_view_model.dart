@@ -3,6 +3,7 @@ import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
 import 'package:circa_plan/model/transfer_data.dart';
+import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
@@ -26,6 +27,7 @@ class TransferDataViewModel {
         // data sub classes.
         _transferData = TransferData();
 
+  Map<String, dynamic>? getTransferDataMap() => _transferDataMap;
   /// the transferDataMap being not settable by the constructor, this
   /// setter must be declared.
   set transferDataMap(Map<String, dynamic> transferDataMap) =>
@@ -49,7 +51,9 @@ class TransferDataViewModel {
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
     updateTimeCalculatorData();
-    printScreenData();
+//    printScreenData();
+    _transferData.saveTransferDataToFile(
+        jsonFilePathName: _transferDataJsonFilePathName);
   }
 
   void printScreenData() {
@@ -161,5 +165,75 @@ class TransferDataViewModel {
         _transferDataMap!['secondTimeStr'];
     timeCalculatorData.timeCalculatorResultTimeStr =
         _transferDataMap!['resultTimeStr'];
+  }
+
+  Future<void> loadTransferData() async {
+    await _transferData.loadTransferDataFromFile(
+        jsonFilePathName: _transferDataJsonFilePathName);
+
+    AddDurationToDateTimeData addDurationToDateTimeData =
+        _transferData.addDurationToDateTimeData;
+
+    if (addDurationToDateTimeData.durationIconType == DurationIconType.add) {
+      _transferDataMap!["durationIconData"] = Icons.add;
+      _transferDataMap!["durationIconColor"] = Colors.green.shade200;
+      _transferDataMap!["durationSign"] = 1;
+      _transferDataMap!["durationTextColor"] = Colors.green.shade200;
+    } else {
+      _transferDataMap!["durationIconData"] = Icons.remove;
+      _transferDataMap!["durationIconColor"] = Colors.red.shade200;
+      _transferDataMap!["durationSign"] = -1;
+      _transferDataMap!["durationTextColor"] = Colors.red.shade200;
+    }
+    _transferDataMap!["addDurStartDateTimeStr"] =
+        addDurationToDateTimeData.addDurationStartDateTimeStr;
+    _transferDataMap!["durationStr"] =
+        addDurationToDateTimeData.addDurationDurationStr;
+    _transferDataMap!["endDateTimeStr"] =
+        addDurationToDateTimeData.addDurationEndDateTimeStr;
+
+    CalculateSleepDurationData calculateSleepDurationData =
+        _transferData.calculateSleepDurationData;
+
+    _transferDataMap!["calcSlDurNewDateTimeStr"] =
+        calculateSleepDurationData.sleepDurationNewDateTimeStr;
+    _transferDataMap!["calcSlDurPreviousDateTimeStr"] =
+        calculateSleepDurationData.sleepDurationPreviousDateTimeStr;
+    _transferDataMap!["calcSlDurBeforePreviousDateTimeStr"] =
+        calculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr;
+    _transferDataMap!["calcSlDurCurrSleepDurationStr"] =
+        calculateSleepDurationData.sleepDurationStr;
+    _transferDataMap!["calcSlDurCurrWakeUpDurationStr"] =
+        calculateSleepDurationData.wakeUpDurationStr;
+    _transferDataMap!["calcSlDurCurrTotalDurationStr"] =
+        calculateSleepDurationData.totalDurationStr;
+    _transferDataMap!["calcSlDurStatus"] = calculateSleepDurationData.status;
+    _transferDataMap!["calcSlDurSleepTimeStrHistory"] =
+        calculateSleepDurationData.sleepHistoryDateTimeStrLst;
+    _transferDataMap!["calcSlDurWakeUpTimeStrHistory"] =
+        calculateSleepDurationData.wakeUpHistoryDateTimeStrLst;
+
+    DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+        _transferData.dateTimeDifferenceDurationData;
+
+    _transferDataMap!["dtDiffStartDateTimeStr"] =
+        dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr;
+    _transferDataMap!["dtDiffEndDateTimeStr"] =
+        dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr;
+    _transferDataMap!["dtDiffDurationStr"] =
+        dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr;
+    _transferDataMap!["dtDiffAddTimeStr"] =
+        dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr;
+    _transferDataMap!["dtDiffFinalDurationStr"] =
+        dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr;
+
+    TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;
+
+    _transferDataMap!["firstTimeStr"] =
+        timeCalculatorData.timeCalculatorFirstTimeStr;
+    _transferDataMap!["secondTimeStr"] =
+        timeCalculatorData.timeCalculatorSecondTimeStr;
+    _transferDataMap!["resultTimeStr"] =
+        timeCalculatorData.timeCalculatorResultTimeStr;
   }
 }
