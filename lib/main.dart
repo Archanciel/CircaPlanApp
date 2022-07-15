@@ -19,8 +19,11 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
   Directory directory = await getApplicationDocumentsDirectory();
   String transferDataJsonFilePathName =
       directory.path + Platform.pathSeparator + 'circadian.json';
-  return TransferDataViewModel(
+  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
+  transferDataViewModel.loadTransferData();
+  
+  return transferDataViewModel;
 }
 
 Future main() async {
@@ -34,7 +37,8 @@ Future main() async {
   // instanciation instead of locating it in [_MainAppState.build()]
   // or [_MainAppState.initState()], two methods which could not be
   // declared async !
-  TransferDataViewModel transferDataViewModel = await instanciateTransferDataViewModel();
+  TransferDataViewModel transferDataViewModel =
+      await instanciateTransferDataViewModel();
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }
@@ -75,7 +79,7 @@ class MainApp extends StatefulWidget {
   const MainApp({
     Key? key,
     required this.transferDataViewModel,
-  })  : super(key: key);
+  }) : super(key: key);
 
   @override
   State<MainApp> createState() => _MainAppState();

@@ -167,6 +167,13 @@ class TransferDataViewModel {
         _transferDataMap!['resultTimeStr'];
   }
 
+  /// Loads the application screen data json file and sets
+  /// the loaded values in the _transferDataMap.
+  /// 
+  /// The _transferDataMap references the screen data map
+  /// used to store all the screen field values. Each time
+  /// a screen field is modified, the app json file is
+  /// updated.
   Future<void> loadTransferData() async {
     await _transferData.loadTransferDataFromFile(
         jsonFilePathName: _transferDataJsonFilePathName);
