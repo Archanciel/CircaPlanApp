@@ -21,7 +21,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
       directory.path + Platform.pathSeparator + 'circadian.json';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
-  transferDataViewModel.loadTransferData();
+  await transferDataViewModel.loadTransferData();
 
   return transferDataViewModel;
 }

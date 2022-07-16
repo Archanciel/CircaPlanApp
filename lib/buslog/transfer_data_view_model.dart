@@ -28,6 +28,7 @@ class TransferDataViewModel {
         _transferData = TransferData();
 
   Map<String, dynamic>? getTransferDataMap() => _transferDataMap;
+
   /// the transferDataMap being not settable by the constructor, this
   /// setter must be declared.
   set transferDataMap(Map<String, dynamic> transferDataMap) =>
@@ -169,7 +170,7 @@ class TransferDataViewModel {
 
   /// Loads the application screen data json file and sets
   /// the loaded values in the _transferDataMap.
-  /// 
+  ///
   /// The _transferDataMap references the screen data map
   /// used to store all the screen field values. Each time
   /// a screen field is modified, the app json file is
@@ -181,23 +182,28 @@ class TransferDataViewModel {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
 
-    if (addDurationToDateTimeData.durationIconType == DurationIconType.add) {
-      _transferDataMap!["durationIconData"] = Icons.add;
-      _transferDataMap!["durationIconColor"] = Colors.green.shade200;
-      _transferDataMap!["durationSign"] = 1;
-      _transferDataMap!["durationTextColor"] = Colors.green.shade200;
-    } else {
-      _transferDataMap!["durationIconData"] = Icons.remove;
-      _transferDataMap!["durationIconColor"] = Colors.red.shade200;
-      _transferDataMap!["durationSign"] = -1;
-      _transferDataMap!["durationTextColor"] = Colors.red.shade200;
+    DurationIconType? durationIconType =
+        addDurationToDateTimeData.getDurationIconType();
+
+    if (durationIconType != null) {
+      if (addDurationToDateTimeData.durationIconType == DurationIconType.add) {
+        _transferDataMap!["durationIconData"] = Icons.add;
+        _transferDataMap!["durationIconColor"] = Colors.green.shade200;
+        _transferDataMap!["durationSign"] = 1;
+        _transferDataMap!["durationTextColor"] = Colors.green.shade200;
+      } else {
+        _transferDataMap!["durationIconData"] = Icons.remove;
+        _transferDataMap!["durationIconColor"] = Colors.red.shade200;
+        _transferDataMap!["durationSign"] = -1;
+        _transferDataMap!["durationTextColor"] = Colors.red.shade200;
+      }
+      _transferDataMap!["addDurStartDateTimeStr"] =
+          addDurationToDateTimeData.addDurationStartDateTimeStr;
+      _transferDataMap!["durationStr"] =
+          addDurationToDateTimeData.addDurationDurationStr;
+      _transferDataMap!["endDateTimeStr"] =
+          addDurationToDateTimeData.addDurationEndDateTimeStr;
     }
-    _transferDataMap!["addDurStartDateTimeStr"] =
-        addDurationToDateTimeData.addDurationStartDateTimeStr;
-    _transferDataMap!["durationStr"] =
-        addDurationToDateTimeData.addDurationDurationStr;
-    _transferDataMap!["endDateTimeStr"] =
-        addDurationToDateTimeData.addDurationEndDateTimeStr;
 
     CalculateSleepDurationData calculateSleepDurationData =
         _transferData.calculateSleepDurationData;
