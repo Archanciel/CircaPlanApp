@@ -51,29 +51,27 @@ class MyApp extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    print(Colors.blue.runtimeType);
-    print(Colors.blue.runtimeType);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: ScreenMixin.APP_TITLE,
-        theme: ThemeData(
-          primarySwatch: ScreenMixin.APP_LIGHT_BLUE_COLOR,
-          //  primarySwatch: ScreenMixin.APP_MATERIAL_APP_LIGHT_BLUE_COLOR,
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: appTextAndIconColor, // requires with ScreenMixin !
-          ),
+      debugShowCheckedModeBanner: false,
+      title: ScreenMixin.APP_TITLE,
+      theme: ThemeData(
+        primarySwatch:
+            ScreenMixin.APP_LIGHT_BLUE_COLOR, // var untyped ScreenMixin const !
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: appTextAndIconColor, // requires with ScreenMixin !
         ),
-        home: MainApp(transferDataViewModel: _transferDataViewModel),
-        localizationsDelegates: const [
-          GlobalWidgetsLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('fr', ''),
-          Locale('en', ''),
-        ],
-      );
+      ),
+      home: MainApp(transferDataViewModel: _transferDataViewModel),
+      localizationsDelegates: const [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr', ''),
+        Locale('en', ''),
+      ],
+    );
   }
 }
 
