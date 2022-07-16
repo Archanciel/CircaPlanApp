@@ -9,7 +9,8 @@ mixin ScreenMixin {
   /// widgets solves the problem.
 
   static Color APP_DARK_BLUE_COLOR = Colors.blue.shade900;
-  static Color APP_LIGHT_BLUE_COLOR = Colors.blue;
+  static var APP_LIGHT_BLUE_COLOR = Colors.blue;
+  static MaterialColor APP_MATERIAL_APP_LIGHT_BLUE_COLOR = Colors.blue;
   static Color APP_LIGHT_YELLOW_COLOR = Colors.yellow.shade300;
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
   static double app_computed_vertical_top_margin = 0;

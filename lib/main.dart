@@ -22,7 +22,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.loadTransferData();
-  
+
   return transferDataViewModel;
 }
 
@@ -50,12 +50,15 @@ class MyApp extends StatelessWidget with ScreenMixin {
         super(key: key);
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) {
+    print(Colors.blue.runtimeType);
+    print(Colors.blue.runtimeType);
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: ScreenMixin.APP_TITLE,
         theme: ThemeData(
-          primarySwatch: Colors.blue, // using ScreenMixin.APP_LIGHT_BLUE_COLOR
-//                                       not possible I don't know why !
+          primarySwatch: ScreenMixin.APP_LIGHT_BLUE_COLOR,
+          //  primarySwatch: ScreenMixin.APP_MATERIAL_APP_LIGHT_BLUE_COLOR,
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: appTextAndIconColor, // requires with ScreenMixin !
           ),
@@ -71,6 +74,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
           Locale('en', ''),
         ],
       );
+  }
 }
 
 class MainApp extends StatefulWidget {
