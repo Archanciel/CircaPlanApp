@@ -9,3 +9,5 @@ enum Status {
   wakeUp,
   sleep,
 }
+
+const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';

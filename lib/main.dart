@@ -13,9 +13,10 @@ import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
+import 'constants.dart';
 
 Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
-  String path = '/storage/emulated/0/Download/CircadianData';
+  String path = kDownloadAppDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -111,7 +112,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     transferDataViewModel.transferDataMap =
         _screenNavigTransData.transferDataMap;
-        
+
     // data for CurvedNavigationBar
 
     final List<StatefulWidget> screensLst = [

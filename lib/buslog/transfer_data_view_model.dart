@@ -204,7 +204,7 @@ class TransferDataViewModel {
       _transferDataMap!["endDateTimeStr"] =
           addDurationToDateTimeData.addDurationEndDateTimeStr;
     }
-    
+
     CalculateSleepDurationData calculateSleepDurationData =
         _transferData.calculateSleepDurationData;
 
@@ -229,24 +229,34 @@ class TransferDataViewModel {
     DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
         _transferData.dateTimeDifferenceDurationData;
 
-    _transferDataMap!["dtDiffStartDateTimeStr"] =
-        dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr;
-    _transferDataMap!["dtDiffEndDateTimeStr"] =
-        dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr;
-    _transferDataMap!["dtDiffDurationStr"] =
-        dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr;
-    _transferDataMap!["dtDiffAddTimeStr"] =
-        dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr;
-    _transferDataMap!["dtDiffFinalDurationStr"] =
-        dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr;
+    String? dateTimeDifferenceStartDateTimeStr =
+        dateTimeDifferenceDurationData.getDateTimeDifferenceStartDateTimeStr();
+
+    if (dateTimeDifferenceStartDateTimeStr != null) {
+      _transferDataMap!["dtDiffStartDateTimeStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr;
+      _transferDataMap!["dtDiffEndDateTimeStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr;
+      _transferDataMap!["dtDiffDurationStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr;
+      _transferDataMap!["dtDiffAddTimeStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr;
+      _transferDataMap!["dtDiffFinalDurationStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr;
+    }
 
     TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;
 
-    _transferDataMap!["firstTimeStr"] =
-        timeCalculatorData.timeCalculatorFirstTimeStr;
-    _transferDataMap!["secondTimeStr"] =
-        timeCalculatorData.timeCalculatorSecondTimeStr;
-    _transferDataMap!["resultTimeStr"] =
-        timeCalculatorData.timeCalculatorResultTimeStr;
+    String? timeCalculatorFirstTimeStr =
+        timeCalculatorData.getTimeCalculatorFirstTimeStr();
+
+    if (timeCalculatorFirstTimeStr != null) {
+      _transferDataMap!["firstTimeStr"] =
+          timeCalculatorData.timeCalculatorFirstTimeStr;
+      _transferDataMap!["secondTimeStr"] =
+          timeCalculatorData.timeCalculatorSecondTimeStr;
+      _transferDataMap!["resultTimeStr"] =
+          timeCalculatorData.timeCalculatorResultTimeStr;
+    }
   }
 }
