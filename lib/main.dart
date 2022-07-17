@@ -45,10 +45,13 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // it was necessary to place here the asynchronous TransferDataViewModel
+  // It was necessary to place here the asynchronous TransferDataViewModel
   // instanciation instead of locating it in [_MainAppState.build()]
   // or [_MainAppState.initState()], two methods which could not be
   // declared async !
+  //
+  // Setting the TransferDataViewModel transfer data Map reference is done
+  // at the beginning of the _MainAppState.build() method.
   TransferDataViewModel transferDataViewModel =
       await instanciateTransferDataViewModel();
 
