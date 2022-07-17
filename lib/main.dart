@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'screens/screen_mixin.dart';
@@ -16,12 +15,24 @@ import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 
 Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
-  Directory directory = await getApplicationDocumentsDirectory();
+  String path = '/storage/emulated/0/Download/CircadianData';
+  final Directory directory = Directory(path);
+  bool directoryExists = await directory.exists();
+
+  if (!directoryExists) {
+    await directory.create();
+  }
+
   String transferDataJsonFilePathName =
-      directory.path + Platform.pathSeparator + 'circadian.json';
+      '$path${Platform.pathSeparator}circadian.json';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
-  transferDataViewModel.loadTransferData();
+
+  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
+
+  if (jsonFileExists) {
+    transferDataViewModel.loadTransferData();
+  }
 
   return transferDataViewModel;
 }
@@ -100,6 +111,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     transferDataViewModel.transferDataMap =
         _screenNavigTransData.transferDataMap;
+        
     // data for CurvedNavigationBar
 
     final List<StatefulWidget> screensLst = [

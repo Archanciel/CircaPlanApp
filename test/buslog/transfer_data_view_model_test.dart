@@ -4,7 +4,6 @@ import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:test/test.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
@@ -33,7 +32,14 @@ void main() {
             "endDateTimeStr": "12-07-2022 16:00",
           };
 
-          Directory directory = await getApplicationDocumentsDirectory();
+          String path = 'c:\\temp\\CircadianData';
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
           String pathSeparator = Platform.pathSeparator;
           String transferDataJsonFilePathName =
               '${directory.path}${pathSeparator}test${pathSeparator}buslog${pathSeparator}circadian.json';
@@ -79,7 +85,14 @@ void main() {
             ],
           };
 
-          Directory directory = await getApplicationDocumentsDirectory();
+          String path = 'c:\\temp\\CircadianData';
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
           String pathSeparator = Platform.pathSeparator;
           String transferDataJsonFilePathName =
               '${directory.path}${pathSeparator}test${pathSeparator}buslog${pathSeparator}circadian.json';
@@ -121,7 +134,14 @@ void main() {
             "dtDiffFinalDurationStr": "25:00",
           };
 
-          Directory directory = await getApplicationDocumentsDirectory();
+          String path = 'c:\\temp\\CircadianData';
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
           String pathSeparator = Platform.pathSeparator;
           String transferDataJsonFilePathName =
               '${directory.path}${pathSeparator}test${pathSeparator}buslog${pathSeparator}circadian.json';
@@ -157,7 +177,14 @@ void main() {
             "resultTimeStr": "00:15:00",
           };
 
-          Directory directory = await getApplicationDocumentsDirectory();
+          String path = 'c:\\temp\\CircadianData';
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
           String pathSeparator = Platform.pathSeparator;
           String transferDataJsonFilePathName =
               '${directory.path}${pathSeparator}test${pathSeparator}buslog${pathSeparator}circadian.json';
@@ -214,7 +241,14 @@ void main() {
             "resultTimeStr": "00:15:00",
           };
 
-          Directory directory = await getApplicationDocumentsDirectory();
+          String path = 'c:\\temp\\CircadianData';
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
           String pathSeparator = Platform.pathSeparator;
           String transferDataJsonFilePathName =
               '${directory.path}${pathSeparator}circadian.json';
@@ -322,7 +356,14 @@ void main() {
             "resultTimeStr": "00:15:00",
           };
 
-          Directory directory = await getApplicationDocumentsDirectory();
+          String path = 'c:\\temp\\CircadianData';
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
           String pathSeparator = Platform.pathSeparator;
           String transferDataJsonFilePathName =
               '${directory.path}${pathSeparator}circadian.json';
