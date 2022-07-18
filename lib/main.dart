@@ -222,7 +222,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         switch (value) {
                           case 0:
                             {
-                              print("Save as is selected.");
+                              transferDataViewModel.saveAsTransferData();
                               break;
                             }
                           case 1:

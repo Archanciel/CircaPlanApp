@@ -178,7 +178,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _buildSleepWakeUpHistoryStr();
 
-    _transferDataViewModel.updateTransferData();
+    _transferDataViewModel.updateAndSaveTransferData();
 
     return map;
   }

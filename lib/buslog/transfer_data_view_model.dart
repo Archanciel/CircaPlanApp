@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
 import 'package:circa_plan/model/transfer_data.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../constants.dart';
 
@@ -47,14 +50,75 @@ class TransferDataViewModel {
 
   /// Copy transferDataMap values to TransferData instance in order to
   /// then update the json file.
-  void updateTransferData() {
+  void updateAndSaveTransferData() {
     updateAddDurationToDateTimeData();
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
     updateTimeCalculatorData();
-//    printScreenData();
+
     _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName);
+  }
+
+  void saveAsTransferData({String? transferDataJsonFileName}) {
+    final String transferDataJsonPath = getTransferDataJsonPath();
+
+    if (transferDataJsonFileName == null) {
+      final CalculateSleepDurationData calculateSleepDurationData =
+          _transferData.calculateSleepDurationData;
+      final String sleepDurationNewDateTimeStr =
+          calculateSleepDurationData.sleepDurationNewDateTimeStr;
+
+      final String englishDateTimeStr =
+          reformatDateTimeStrToCompatibleFileName(sleepDurationNewDateTimeStr);
+
+      final String saveAsTransferDataJsonFilePathName =
+          '$transferDataJsonPath${Platform.pathSeparator}$englishDateTimeStr.json';
+
+      _transferData.saveTransferDataToFile(
+          jsonFilePathName: saveAsTransferDataJsonFilePathName);
+
+      final List<String?> fileNameLst = getFileNameInDirLst(transferDataJsonPath);
+
+      print(fileNameLst);
+    }
+  }
+
+  List<String?> getFileNameInDirLst(String transferDataJsonPath) {
+    final Directory directory = Directory(transferDataJsonPath);
+    final List<FileSystemEntity> contents = directory.listSync();
+    final List<String?> fileNameLst = contents
+        .map((e) => e is File ? e : null)
+        .map((e) => e?.path.split(Platform.pathSeparator).last)
+        .toList();
+
+    return fileNameLst;
+  }
+
+  String reformatDateTimeStrToCompatibleFileName(
+      String sleepDurationNewDateTimeStr) {
+    final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+    final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH.mm");
+    DateTime dateTime;
+    String englishDateTimeStr = '';
+
+    try {
+      dateTime = frenchDateTimeFormat.parse(sleepDurationNewDateTimeStr);
+      englishDateTimeStr = englishDateTimeFormat.format(dateTime);
+    } on FormatException catch (_) {}
+
+    return englishDateTimeStr;
+  }
+
+  String getTransferDataJsonPath() {
+    final List<String> pathComponents =
+        _transferDataJsonFilePathName.split(Platform.pathSeparator);
+    final String transferDataJsonPath = pathComponents
+        .sublist(0, pathComponents.length - 1)
+        .map((e) => e)
+        .join(Platform.pathSeparator);
+
+    return transferDataJsonPath;
   }
 
   void printScreenData() {

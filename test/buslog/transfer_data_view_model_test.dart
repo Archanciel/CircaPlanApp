@@ -256,7 +256,7 @@ void main() {
           TransferDataViewModel transferDataViewModel = TransferDataViewModel(
               transferDataJsonFilePathName: transferDataJsonFilePathName);
           transferDataViewModel.transferDataMap = transferDataMap;
-          transferDataViewModel.updateTransferData();
+          transferDataViewModel.updateAndSaveTransferData();
 
           AddDurationToDateTimeData addDurationToDateTimeData =
               transferDataViewModel.addDurationToDateTimeData;
@@ -371,7 +371,8 @@ void main() {
           TransferDataViewModel transferDataViewModel = TransferDataViewModel(
               transferDataJsonFilePathName: transferDataJsonFilePathName);
           transferDataViewModel.transferDataMap = transferDataMap;
-          transferDataViewModel.updateTransferData(); // saves to json file
+          transferDataViewModel
+              .updateAndSaveTransferData(); // saves to json file
 
           TransferDataViewModel loadedTransferDataViewModel =
               TransferDataViewModel(
