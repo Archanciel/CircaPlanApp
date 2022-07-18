@@ -98,6 +98,8 @@ class TransferDataViewModel {
   String reformatDateTimeStrToCompatibleFileName(
       String sleepDurationNewDateTimeStr) {
     final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+
+    // on Android, file name can not contain ':' !
     final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH.mm");
     DateTime dateTime;
     String englishDateTimeStr = '';
