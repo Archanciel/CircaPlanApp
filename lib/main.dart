@@ -192,32 +192,63 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   centerTitle: true,
                   actions: [
                     PopupMenuButton(
-                        // add icon, by default "3 dot" icon
-                        // icon: Icon(Icons.book)
-                        itemBuilder: (context) {
-                      return [
-                        PopupMenuItem<int>(
-                          value: 0,
-                          child: Text("My Account"),
-                        ),
-                        PopupMenuItem<int>(
-                          value: 1,
-                          child: Text("Settings"),
-                        ),
-                        PopupMenuItem<int>(
-                          value: 2,
-                          child: Text("Logout"),
-                        ),
-                      ];
-                    }, onSelected: (value) {
-                      if (value == 0) {
-                        print("My account menu is selected.");
-                      } else if (value == 1) {
-                        print("Settings menu is selected.");
-                      } else if (value == 2) {
-                        print("Logout menu is selected.");
-                      }
-                    }),
+                      // add icon, by default "3 dot" icon
+                      // icon: Icon(Icons.book)
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem<int>(
+                            value: 0,
+                            child: Text("Save as"),
+                          ),
+                          PopupMenuItem<int>(
+                            value: 1,
+                            child: Text("Load"),
+                          ),
+                          PopupMenuItem<int>(
+                            value: 2,
+                            child: Text("Upload to cloud"),
+                          ),
+                          PopupMenuItem<int>(
+                            value: 3,
+                            child: Text("Download from cloud"),
+                          ),
+                          PopupMenuItem<int>(
+                            value: 4,
+                            child: Text("Settings"),
+                          ),
+                        ];
+                      },
+                      onSelected: (value) {
+                        switch (value) {
+                          case 0:
+                            {
+                              print("Save as is selected.");
+                              break;
+                            }
+                          case 1:
+                            {
+                              print("Load is selected.");
+                              break;
+                            }
+                          case 2:
+                            {
+                              print("Upload is selected.");
+                              break;
+                            }
+                          case 3:
+                            {
+                              print("Download is selected.");
+                              break;
+                            }
+                          case 4:
+                            {
+                              print("Settings is selected.");
+                              break;
+                            }
+                          default: {}
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
