@@ -86,7 +86,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ScreenNavigTransData(transferDataMap: {});
 
   void _handleSelectedFileName(String selectedFileNameStr) {
-    print(selectedFileNameStr);
+    TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
+    transferDataViewModel.loadTransferData(jsonFileName: selectedFileNameStr);
   }
 
   @override
@@ -220,7 +221,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                                 selectableStrItemLst: fileNameLst,
                                 posRectangleLTRB: const RelativeRect.fromLTRB(
                                   1.0,
-                                  220.0,
+                                  130.0,
                                   0.0,
                                   0.0,
                                 ),

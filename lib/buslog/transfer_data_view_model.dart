@@ -77,10 +77,11 @@ class TransferDataViewModel {
 
       _transferData.saveTransferDataToFile(
           jsonFilePathName: saveAsTransferDataJsonFilePathName);
+//
+//      final List<String?> fileNameLst =
+//          getFileNameInDirLst(transferDataJsonPath);
 
-      final List<String?> fileNameLst = getFileNameInDirLst(transferDataJsonPath);
-
-      print(fileNameLst);
+//      print(fileNameLst);
     }
   }
 
@@ -241,9 +242,18 @@ class TransferDataViewModel {
   /// used to store all the screen field values. Each time
   /// a screen field is modified, the app json file is
   /// updated.
-  Future<void> loadTransferData() async {
+  Future<void> loadTransferData({String? jsonFileName}) async {
+    String jsonFilePathName;
+
+    if (jsonFileName == null) {
+      jsonFilePathName = _transferDataJsonFilePathName;
+    } else {
+      jsonFilePathName =
+          '${getTransferDataJsonPath()}${Platform.pathSeparator}$jsonFileName';
+    }
+
     await _transferData.loadTransferDataFromFile(
-        jsonFilePathName: _transferDataJsonFilePathName);
+        jsonFilePathName: jsonFilePathName);
 
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
