@@ -85,6 +85,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
+
+  void _handleSelectedFileName(String selectedDateTimeStr) {
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -204,7 +208,20 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             }
                           case 1:
                             {
-                              print("Load is selected.");
+                              List<String?> fileNameLstNullable = transferDataViewModel
+                                        .getFileNameInDirLst(kDownloadAppDir);
+                              List<String> fileNameLst = fileNameLstNullable.whereType<String>().toList();
+                              displaySelPopupMenu(
+                                context: context,
+                                selectableStrItemLst:  fileNameLst,
+                                posRectangleLTRB: const RelativeRect.fromLTRB(
+                                  1.0,
+                                  220.0,
+                                  0.0,
+                                  0.0,
+                                ),
+                                handleSelectedItem: _handleSelectedFileName,
+                              );
                               break;
                             }
                           case 2:
@@ -222,7 +239,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                               print("Settings is selected.");
                               break;
                             }
-                          default: {}
+                          default:
+                            {}
                         }
                       },
                     ),
