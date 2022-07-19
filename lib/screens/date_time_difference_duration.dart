@@ -222,47 +222,18 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
-  /// Method called by the two 'Sel' buttons positioned at right of te 'Now'
-  /// buttons.
-  void _selectDateTime(
-    TextEditingController dateTimePickerFieldController,
-    RelativeRect posLTRB,
-  ) {
-    List<String> actualDateTimeStrLst = buildSortedAppDateTimeStrList(
-        transferDataMap: _transferDataMap, mostRecentFirst: true);
+  void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
+    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _startDateTimeController.text = selectedDateTime.toString();
 
-    if (actualDateTimeStrLst.isEmpty) {
-      return;
-    }
+    _setStateDiffDuration();
+  }
 
-    List<PopupMenuEntry<String>> itemsLst = [];
-    int i = 0;
+  void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
+    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _endDateTimeController.text = selectedDateTime.toString();
 
-    for (String dateTimeStr in actualDateTimeStrLst) {
-      itemsLst.add(PopupMenuItem<String>(
-        child: Text(dateTimeStr),
-        value: i.toString(),
-      ));
-      i++;
-    }
-
-    showMenu<String>(
-      context: context,
-      position: posLTRB, // position where you want to show the menu on screen
-      items: itemsLst,
-      elevation: 8.0,
-    ).then<void>((String? itemSelected) {
-      if (itemSelected == null) {
-        return;
-      }
-
-      String selectedDateTimeStr =
-          actualDateTimeStrLst[int.parse(itemSelected)];
-      DateTime selectedDateTime =
-          frenchDateTimeFormat.parse(selectedDateTimeStr);
-      dateTimePickerFieldController.text = selectedDateTime.toString();
-      _setStateDiffDuration();
-    });
+    _setStateDiffDuration();
   }
 
   @override
@@ -536,14 +507,19 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          _selectDateTime(
-                              _startDateTimeController,
-                              const RelativeRect.fromLTRB(
-                                1.0,
-                                220.0,
-                                0.0,
-                                0.0,
-                              ));
+                          displaySelPopupMenu(
+                            context: context,
+                            selectableStrItemLst: buildSortedAppDateTimeStrList(
+                                transferDataMap: _transferDataMap,
+                                mostRecentFirst: true),
+                            posRectangleLTRB: const RelativeRect.fromLTRB(
+                              1.0,
+                              220.0,
+                              0.0,
+                              0.0,
+                            ),
+                            handleSelectedIten: _handleSelectedStartDateTimeStr,
+                          );
                         },
                         child: const Text(
                           'Sel',
@@ -584,14 +560,19 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          _selectDateTime(
-                              _endDateTimeController,
-                              const RelativeRect.fromLTRB(
+                          displaySelPopupMenu(
+                            context: context,
+                            selectableStrItemLst: buildSortedAppDateTimeStrList(
+                                transferDataMap: _transferDataMap,
+                                mostRecentFirst: true),
+                            posRectangleLTRB: const RelativeRect.fromLTRB(
                                 1.0,
                                 290.0,
                                 0.0,
                                 0.0,
-                              ));
+                              ),
+                            handleSelectedIten: _handleSelectedEndDateTimeStr,
+                          );
                         },
                         child: const Text(
                           'Sel',
