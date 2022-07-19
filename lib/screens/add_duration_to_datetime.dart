@@ -130,6 +130,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateTransferDataMap();
   }
 
+  void _handleSel(String selectedDateTimeStr) {
+    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _startDateTimeController.text = selectedDateTime.toString();
+
+    _setStateEndDateTime();
+  }
+
   /// Private method called each time one of the elements
   /// implied in calculating the End date time value is
   /// changed.
@@ -154,49 +161,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
       _updateTransferDataMap();
     }
-  }
-
-  /// Method called by the two 'Sel' buttons positioned at right of te 'Now'
-  /// buttons.
-  void _selectDateTime(
-    TextEditingController dateTimePickerFieldController,
-    RelativeRect posLTRB,
-  ) {
-    List<String> actualDateTimeStrLst = buildSortedAppDateTimeStrList(
-        transferDataMap: _transferDataMap, mostRecentFirst: true);
-
-    if (actualDateTimeStrLst.isEmpty) {
-      return;
-    }
-
-    List<PopupMenuEntry<String>> itemsLst = [];
-    int i = 0;
-
-    for (String dateTimeStr in actualDateTimeStrLst) {
-      itemsLst.add(PopupMenuItem<String>(
-        child: Text(dateTimeStr),
-        value: i.toString(),
-      ));
-      i++;
-    }
-
-    showMenu<String>(
-      context: context,
-      position: posLTRB, // position where you want to show the menu on screen
-      items: itemsLst,
-      elevation: 8.0,
-    ).then<void>((String? itemSelected) {
-      if (itemSelected == null) {
-        return;
-      }
-
-      String selectedDateTimeStr =
-          actualDateTimeStrLst[int.parse(itemSelected)];
-      DateTime selectedDateTime =
-          frenchDateTimeFormat.parse(selectedDateTimeStr);
-      dateTimePickerFieldController.text = selectedDateTime.toString();
-      _setStateEndDateTime();
-    });
   }
 
   @override
@@ -410,14 +374,19 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          _selectDateTime(
-                              _startDateTimeController,
-                              const RelativeRect.fromLTRB(
-                                1.0,
-                                220.0,
-                                0.0,
-                                0.0,
-                              ));
+                          displaySelPopupMenu(
+                            context: context,
+                            actualDateTimeStrLst: buildSortedAppDateTimeStrList(
+                                transferDataMap: _transferDataMap,
+                                mostRecentFirst: true),
+                            posRectangleLTRB: const RelativeRect.fromLTRB(
+                              1.0,
+                              220.0,
+                              0.0,
+                              0.0,
+                            ),
+                            handleSelectedIten: _handleSel,
+                          );
                         },
                         child: const Text(
                           'Sel',

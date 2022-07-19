@@ -187,4 +187,48 @@ mixin ScreenMixin {
       }
     });
   }
+
+  /// Method called by the 'Sel' buttons.
+  void displaySelPopupMenu({
+    required BuildContext context,
+    required List<String> actualDateTimeStrLst,
+    required RelativeRect posRectangleLTRB,
+    required void Function(String) handleSelectedIten,
+  }) {
+    if (actualDateTimeStrLst.isEmpty) {
+      return;
+    }
+
+    List<PopupMenuEntry<String>> itemsLst = [];
+    int i = 0;
+
+    for (String dateTimeStr in actualDateTimeStrLst) {
+      itemsLst.add(
+        PopupMenuItem<String>(
+          child: Text(dateTimeStr),
+          value: i.toString(),
+        ),
+      );
+      i++;
+    }
+
+    showMenu<String>(
+      context: context,
+      position:
+          posRectangleLTRB, // position where you want to show the menu on screen
+      items: itemsLst,
+      elevation: 8.0,
+    ).then<void>(
+      (String? itemSelected) {
+        if (itemSelected == null) {
+          return;
+        }
+
+        String selectedDateTimeStr =
+            actualDateTimeStrLst[int.parse(itemSelected)];
+
+        handleSelectedIten(selectedDateTimeStr);
+      },
+    );
+  }
 }
