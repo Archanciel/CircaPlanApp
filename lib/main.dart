@@ -85,8 +85,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
-
-  void _handleSelectedFileName(String selectedDateTimeStr) {
+  void _handleSelectedFileName(String selectedFileNameStr) {
+    print(selectedFileNameStr);
   }
 
   @override
@@ -208,12 +208,16 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             }
                           case 1:
                             {
-                              List<String?> fileNameLstNullable = transferDataViewModel
-                                        .getFileNameInDirLst(kDownloadAppDir);
-                              List<String> fileNameLst = fileNameLstNullable.whereType<String>().toList();
+                              List<String?> fileNameNullableLst =
+                                  transferDataViewModel
+                                      .getFileNameInDirLst(kDownloadAppDir);
+                              List<String> fileNameLst = fileNameNullableLst
+                                  .whereType<String>()
+                                  .toList();
+
                               displaySelPopupMenu(
                                 context: context,
-                                selectableStrItemLst:  fileNameLst,
+                                selectableStrItemLst: fileNameLst,
                                 posRectangleLTRB: const RelativeRect.fromLTRB(
                                   1.0,
                                   220.0,
