@@ -130,7 +130,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateTransferDataMap();
   }
 
-  void _handleSel(String selectedDateTimeStr) {
+  void _handleSelectedDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTime.toString();
 
@@ -376,7 +376,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         onPressed: () {
                           displaySelPopupMenu(
                             context: context,
-                            actualDateTimeStrLst: buildSortedAppDateTimeStrList(
+                            selectableStrItemLst: buildSortedAppDateTimeStrList(
                                 transferDataMap: _transferDataMap,
                                 mostRecentFirst: true),
                             posRectangleLTRB: const RelativeRect.fromLTRB(
@@ -385,7 +385,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                               0.0,
                               0.0,
                             ),
-                            handleSelectedIten: _handleSel,
+                            handleSelectedIten: _handleSelectedDateTimeStr,
                           );
                         },
                         child: const Text(

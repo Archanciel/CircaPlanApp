@@ -191,21 +191,21 @@ mixin ScreenMixin {
   /// Method called by the 'Sel' buttons.
   void displaySelPopupMenu({
     required BuildContext context,
-    required List<String> actualDateTimeStrLst,
+    required List<String> selectableStrItemLst,
     required RelativeRect posRectangleLTRB,
     required void Function(String) handleSelectedIten,
   }) {
-    if (actualDateTimeStrLst.isEmpty) {
+    if (selectableStrItemLst.isEmpty) {
       return;
     }
 
-    List<PopupMenuEntry<String>> itemsLst = [];
+    List<PopupMenuEntry<String>> itemLst = [];
     int i = 0;
 
-    for (String dateTimeStr in actualDateTimeStrLst) {
-      itemsLst.add(
+    for (String selectableStrItem in selectableStrItemLst) {
+      itemLst.add(
         PopupMenuItem<String>(
-          child: Text(dateTimeStr),
+          child: Text(selectableStrItem),
           value: i.toString(),
         ),
       );
@@ -216,7 +216,7 @@ mixin ScreenMixin {
       context: context,
       position:
           posRectangleLTRB, // position where you want to show the menu on screen
-      items: itemsLst,
+      items: itemLst,
       elevation: 8.0,
     ).then<void>(
       (String? itemSelected) {
@@ -224,10 +224,10 @@ mixin ScreenMixin {
           return;
         }
 
-        String selectedDateTimeStr =
-            actualDateTimeStrLst[int.parse(itemSelected)];
+        String selectedItemStr =
+            selectableStrItemLst[int.parse(itemSelected)];
 
-        handleSelectedIten(selectedDateTimeStr);
+        handleSelectedIten(selectedItemStr);
       },
     );
   }
