@@ -15,29 +15,6 @@ import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 import 'constants.dart';
 
-Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
-  String path = kDownloadAppDir;
-  final Directory directory = Directory(path);
-  bool directoryExists = await directory.exists();
-
-  if (!directoryExists) {
-    await directory.create();
-  }
-
-  String transferDataJsonFilePathName =
-      '$path${Platform.pathSeparator}circadian.json';
-  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
-      transferDataJsonFilePathName: transferDataJsonFilePathName);
-
-  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
-
-  if (jsonFileExists) {
-    transferDataViewModel.loadTransferData();
-  }
-
-  return transferDataViewModel;
-}
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
@@ -196,23 +173,23 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       // icon: Icon(Icons.book)
                       itemBuilder: (context) {
                         return [
-                          PopupMenuItem<int>(
+                          const PopupMenuItem<int>(
                             value: 0,
                             child: Text("Save as"),
                           ),
-                          PopupMenuItem<int>(
+                          const PopupMenuItem<int>(
                             value: 1,
                             child: Text("Load"),
                           ),
-                          PopupMenuItem<int>(
+                          const PopupMenuItem<int>(
                             value: 2,
                             child: Text("Upload to cloud"),
                           ),
-                          PopupMenuItem<int>(
+                          const PopupMenuItem<int>(
                             value: 3,
                             child: Text("Download from cloud"),
                           ),
-                          PopupMenuItem<int>(
+                          const PopupMenuItem<int>(
                             value: 4,
                             child: Text("Settings"),
                           ),
@@ -281,7 +258,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     backgroundColor: Colors.transparent,
                     height: 55,
                     animationCurve: Curves.easeInOut,
-                    animationDuration: Duration(milliseconds: 500),
+                    animationDuration: const Duration(milliseconds: 500),
                     index: _currentIndex,
                     items: curvedNavigationBarItemIconsLst,
                     onTap: (index) => setState(() {
@@ -296,4 +273,27 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ),
     );
   }
+}
+
+Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
+  String path = kDownloadAppDir;
+  final Directory directory = Directory(path);
+  bool directoryExists = await directory.exists();
+
+  if (!directoryExists) {
+    await directory.create();
+  }
+
+  String transferDataJsonFilePathName =
+      '$path${Platform.pathSeparator}circadian.json';
+  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathName);
+
+  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
+
+  if (jsonFileExists) {
+    transferDataViewModel.loadTransferData();
+  }
+
+  return transferDataViewModel;
 }
