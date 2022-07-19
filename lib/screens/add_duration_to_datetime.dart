@@ -385,7 +385,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                               0.0,
                               0.0,
                             ),
-                            handleSelectedIten: _handleSelectedDateTimeStr,
+                            handleSelectedItem: _handleSelectedDateTimeStr,
                           );
                         },
                         child: const Text(

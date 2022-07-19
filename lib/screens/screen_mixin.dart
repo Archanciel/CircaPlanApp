@@ -193,7 +193,7 @@ mixin ScreenMixin {
     required BuildContext context,
     required List<String> selectableStrItemLst,
     required RelativeRect posRectangleLTRB,
-    required void Function(String) handleSelectedIten,
+    required void Function(String) handleSelectedItem,
   }) {
     if (selectableStrItemLst.isEmpty) {
       return;
@@ -224,10 +224,9 @@ mixin ScreenMixin {
           return;
         }
 
-        String selectedItemStr =
-            selectableStrItemLst[int.parse(itemSelected)];
+        String selectedItemStr = selectableStrItemLst[int.parse(itemSelected)];
 
-        handleSelectedIten(selectedItemStr);
+        handleSelectedItem(selectedItemStr);
       },
     );
   }

@@ -518,7 +518,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                               0.0,
                               0.0,
                             ),
-                            handleSelectedIten: _handleSelectedStartDateTimeStr,
+                            handleSelectedItem: _handleSelectedStartDateTimeStr,
                           );
                         },
                         child: const Text(
@@ -566,12 +566,12 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 transferDataMap: _transferDataMap,
                                 mostRecentFirst: true),
                             posRectangleLTRB: const RelativeRect.fromLTRB(
-                                1.0,
-                                290.0,
-                                0.0,
-                                0.0,
-                              ),
-                            handleSelectedIten: _handleSelectedEndDateTimeStr,
+                              1.0,
+                              290.0,
+                              0.0,
+                              0.0,
+                            ),
+                            handleSelectedItem: _handleSelectedEndDateTimeStr,
                           );
                         },
                         child: const Text(
