@@ -210,16 +210,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             }
                           case 1:
                             {
-                              List<String?> fileNameNullableLst =
-                                  transferDataViewModel
-                                      .getFileNameInDirLst(kDownloadAppDir);
-                              List<String> fileNameLst = fileNameNullableLst
-                                  .whereType<String>()
-                                  .toList();
+                              List<String> nonNullablefileNameLst =
+                                  getSortedFileNameLstInDir(
+                                      transferDataViewModel);
 
                               displaySelPopupMenu(
                                 context: context,
-                                selectableStrItemLst: fileNameLst,
+                                selectableStrItemLst: nonNullablefileNameLst,
                                 posRectangleLTRB: const RelativeRect.fromLTRB(
                                   1.0,
                                   130.0,
@@ -297,6 +294,28 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         ),
       ),
     );
+  }
+
+  List<String> getSortedFileNameLstInDir(
+      TransferDataViewModel transferDataViewModel) {
+    List<String?> nullablefileNameLst =
+        transferDataViewModel.getFileNameInDirLst(kDownloadAppDir);
+
+    List<String> nonNullablefileNameLst =
+        nullablefileNameLst.whereType<String>().toList();
+
+    List<String> sortedFileNameLst = [];
+
+    sortedFileNameLst.add(nonNullablefileNameLst
+        .firstWhere((element) => element == 'circadian.json'));
+
+    RegExp regExp = RegExp(r"^[\d\- \.]+json");
+    List<String> dateTimeFileNameSortedLst =
+        nonNullablefileNameLst.where((e) => regExp.hasMatch(e)).toList();
+    dateTimeFileNameSortedLst.sort();
+    sortedFileNameLst.addAll(dateTimeFileNameSortedLst.reversed);
+
+    return sortedFileNameLst;
   }
 }
 
