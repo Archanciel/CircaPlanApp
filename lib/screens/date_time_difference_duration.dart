@@ -514,7 +514,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 mostRecentFirst: true),
                             posRectangleLTRB: const RelativeRect.fromLTRB(
                               1.0,
-                              220.0,
+                              130.0,
                               0.0,
                               0.0,
                             ),
@@ -567,7 +567,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 mostRecentFirst: true),
                             posRectangleLTRB: const RelativeRect.fromLTRB(
                               1.0,
-                              290.0,
+                              200.0,
                               0.0,
                               0.0,
                             ),

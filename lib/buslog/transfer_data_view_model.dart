@@ -194,9 +194,9 @@ class TransferDataViewModel {
         _transferDataMap!['dtDiffStartDateTimeStr'];
 
     if (dateTimeDifferenceStartDateTimeStr == null) {
-      // the case if no DateTimeDifferenceDuration screen field was
-      // modified and so no DateTimeDifferenceDuration data were stored
-      // in the transfer data map !
+      // the case if no DateTimeDifferenceDuration screen field
+      // was modified and so no DateTimeDifferenceDuration data
+      // were stored in the transfer data map !
       return;
     }
 

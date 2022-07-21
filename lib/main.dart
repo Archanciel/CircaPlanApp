@@ -309,7 +309,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     sortedFileNameLst.add(nonNullablefileNameLst
         .firstWhere((element) => element == 'circadian.json'));
 
-    RegExp regExp = RegExp(r"^[\d\- \.]+json");
+    RegExp regExp = RegExp(r'^[\d\- \.]+json');
     List<String> dateTimeFileNameSortedLst =
         nonNullablefileNameLst.where((e) => regExp.hasMatch(e)).toList();
     dateTimeFileNameSortedLst.sort();

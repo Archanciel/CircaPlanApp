@@ -381,7 +381,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                                 mostRecentFirst: true),
                             posRectangleLTRB: const RelativeRect.fromLTRB(
                               1.0,
-                              220.0,
+                              130.0,
                               0.0,
                               0.0,
                             ),
