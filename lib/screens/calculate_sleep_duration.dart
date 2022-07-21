@@ -237,9 +237,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
+  /// Private method called when clicking on 'Reset' button.
   void _resetScreen() {
-    /// Private method called when clicking on 'Reset' button.
-
     String okButtonStr = 'Ok';
     Widget cancelButton = TextButton(
       child: const Text("Cancel"),
@@ -260,7 +259,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
   }
 
+  /// Private method called when 'Reset' is confirmed.
   void _applyReset() {
+    // before resetting the current new date time string, its
+    // value, which is the last wake up time, is copied to the
+    // date time difference duration start date time map entry.
+    // The effect is not updating the screen field, but adding
+    // the value to the Sel available values.
+    _transferDataMap['dtDiffStartDateTimeStr'] = _newDateTimeStr;
+
     _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
     _previousDateTimeStr = '';
