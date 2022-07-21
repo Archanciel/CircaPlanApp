@@ -22,17 +22,43 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // It was necessary to place here the asynchronous TransferDataViewModel
-  // instanciation instead of locating it in [_MainAppState.build()]
-  // or [_MainAppState.initState()], two methods which could not be
-  // declared async !
+  // It was necessary to place here the asynchronous
+  // TransferDataViewModel instanciation instead of locating it
+  // in [_MainAppState.build()] or [_MainAppState.initState()],
+  // two methods which could not be declared async !
   //
-  // Setting the TransferDataViewModel transfer data Map reference is done
-  // at the beginning of the _MainAppState.build() method.
+  // Setting the TransferDataViewModel transfer data Map
+  // reference is done at the beginning of the
+  //_MainAppState.build() method.
   TransferDataViewModel transferDataViewModel =
       await instanciateTransferDataViewModel();
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
+}
+
+/// Async main method which instanciates and loads the
+/// TransferDataViewModel. 
+Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
+  String path = kDownloadAppDir;
+  final Directory directory = Directory(path);
+  bool directoryExists = await directory.exists();
+
+  if (!directoryExists) {
+    await directory.create();
+  }
+
+  String transferDataJsonFilePathName =
+      '$path${Platform.pathSeparator}circadian.json';
+  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathName);
+
+  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
+
+  if (jsonFileExists) {
+    transferDataViewModel.loadTransferData();
+  }
+
+  return transferDataViewModel;
 }
 
 class MyApp extends StatelessWidget with ScreenMixin {
@@ -179,13 +205,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       // icon: Icon(Icons.book)
                       itemBuilder: (context) {
                         return [
-                          const PopupMenuItem<int>(
+                          PopupMenuItem<int>(
                             value: 0,
-                            child: Text("Save as"),
+                            child: Text(_buildSaveAsMenuItemStr()),
                           ),
                           const PopupMenuItem<int>(
                             value: 1,
-                            child: Text("Load"),
+                            child: Text("Load ..."),
                           ),
                           const PopupMenuItem<int>(
                             value: 2,
@@ -211,7 +237,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           case 1:
                             {
                               List<String> nonNullablefileNameLst =
-                                  getSortedFileNameLstInDir(
+                                  _getSortedFileNameLstInDir(
                                       transferDataViewModel);
 
                               displaySelPopupMenu(
@@ -296,7 +322,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     );
   }
 
-  List<String> getSortedFileNameLstInDir(
+  /// Private method returning the Save as menu item string.
+  String _buildSaveAsMenuItemStr() {
+    return "Save as ${_screenNavigTransData.transferDataMap['calcSlDurNewDateTimeStr'].replaceFirst(':', '.')}.json";
+  }
+
+  /// Private method returning the sorted list of app data
+  /// files located in the app data dir.
+  List<String> _getSortedFileNameLstInDir(
       TransferDataViewModel transferDataViewModel) {
     List<String?> nullablefileNameLst =
         transferDataViewModel.getFileNameInDirLst(kDownloadAppDir);
@@ -317,27 +350,4 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
     return sortedFileNameLst;
   }
-}
-
-Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
-  String path = kDownloadAppDir;
-  final Directory directory = Directory(path);
-  bool directoryExists = await directory.exists();
-
-  if (!directoryExists) {
-    await directory.create();
-  }
-
-  String transferDataJsonFilePathName =
-      '$path${Platform.pathSeparator}circadian.json';
-  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
-      transferDataJsonFilePathName: transferDataJsonFilePathName);
-
-  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
-
-  if (jsonFileExists) {
-    transferDataViewModel.loadTransferData();
-  }
-
-  return transferDataViewModel;
 }
