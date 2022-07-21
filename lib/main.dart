@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -37,7 +38,7 @@ Future main() async {
 }
 
 /// Async main method which instanciates and loads the
-/// TransferDataViewModel. 
+/// TransferDataViewModel.
 Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
   String path = kDownloadAppDir;
   final Directory directory = Directory(path);
@@ -115,6 +116,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
+
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: 'App data file $selectedFileNameStr loaded');
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -207,7 +212,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         return [
                           PopupMenuItem<int>(
                             value: 0,
-                            child: Text(_buildSaveAsMenuItemStr()),
+                            child: Text("Save as ${_getSaveAsFileName()}"),
                           ),
                           const PopupMenuItem<int>(
                             value: 1,
@@ -232,6 +237,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           case 0:
                             {
                               transferDataViewModel.saveAsTransferData();
+                              final CircadianSnackBar snackBar = CircadianSnackBar(
+                                  message:
+                                      'App data saved to ${_getSaveAsFileName()}');
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+
                               break;
                             }
                           case 1:
@@ -322,9 +333,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     );
   }
 
-  /// Private method returning the Save as menu item string.
-  String _buildSaveAsMenuItemStr() {
-    return "Save as ${_screenNavigTransData.transferDataMap['calcSlDurNewDateTimeStr'].replaceFirst(':', '.')}.json";
+  /// Private method returning the Save as file name string.
+  String _getSaveAsFileName() {
+    return '${_screenNavigTransData.transferDataMap['calcSlDurNewDateTimeStr'].replaceFirst(':', '.')}.json';
   }
 
   /// Private method returning the sorted list of app data
