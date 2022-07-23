@@ -60,8 +60,15 @@ class TransferDataViewModel {
         jsonFilePathName: _transferDataJsonFilePathName);
   }
 
-  void saveAsTransferData({String? transferDataJsonFileName}) {
+  /// Saves the screens app transfer data to a json file and return
+  /// true if the json filr was created, false if it was updated.
+  ///
+  /// If nothing is passed transferDataJsonFileName, the json file name
+  /// is the current CalculateSleepDuration screen new date time
+  /// reformatted.
+  Future<bool> saveAsTransferData({String? transferDataJsonFileName}) async {
     final String transferDataJsonPath = getTransferDataJsonPath();
+    bool transferDataJsonFileCreated = false;
 
     if (transferDataJsonFileName == null) {
       final CalculateSleepDurationData calculateSleepDurationData =
@@ -75,6 +82,8 @@ class TransferDataViewModel {
       final String saveAsTransferDataJsonFilePathName =
           '$transferDataJsonPath${Platform.pathSeparator}$englishDateTimeStr.json';
 
+      transferDataJsonFileCreated =
+          !await File(saveAsTransferDataJsonFilePathName).exists();
       _transferData.saveTransferDataToFile(
           jsonFilePathName: saveAsTransferDataJsonFilePathName);
 //
@@ -83,6 +92,8 @@ class TransferDataViewModel {
 
 //      print(fileNameLst);
     }
+
+    return transferDataJsonFileCreated;
   }
 
   List<String?> getFileNameInDirLst(String transferDataJsonPath) {

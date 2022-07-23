@@ -7,14 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:circa_plan/screens/screen_navig_trans_data.dart';
+import 'constants.dart';
 import 'screens/screen_mixin.dart';
-
+import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
-import 'constants.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -118,7 +117,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         jsonFileName: selectedFileNameStr);
 
     final CircadianSnackBar snackBar =
-        CircadianSnackBar(message: 'App data file $selectedFileNameStr loaded');
+        CircadianSnackBar(message: '$selectedFileNameStr loaded');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -232,14 +231,23 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           ),
                         ];
                       },
-                      onSelected: (value) {
+                      onSelected: (value) async {
                         switch (value) {
                           case 0:
                             {
-                              transferDataViewModel.saveAsTransferData();
-                              final CircadianSnackBar snackBar = CircadianSnackBar(
-                                  message:
-                                      'App data saved to ${_getSaveAsFileName()}');
+                              bool transferDataJsonFileCreated =
+                                  await transferDataViewModel
+                                      .saveAsTransferData();
+                              String snackBarMsg;
+
+                              if (transferDataJsonFileCreated) {
+                                snackBarMsg = '${_getSaveAsFileName()} created';
+                              } else {
+                                snackBarMsg = '${_getSaveAsFileName()} updated';
+                              }
+
+                              final CircadianSnackBar snackBar =
+                                  CircadianSnackBar(message: snackBarMsg);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
 
