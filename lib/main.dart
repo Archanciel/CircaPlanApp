@@ -187,120 +187,110 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         child: Scaffold(
           extendBody: true,
           backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
+          appBar: AppBar(
+            backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
+            title: Text(
+              screenTitlesLst[_currentIndex],
+              style: TextStyle(color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR),
+            ),
+            elevation: 0,
+            centerTitle: true,
+            actions: [
+              PopupMenuButton(
+                // add icon, by default "3 dot" icon
+                // icon: Icon(Icons.book)
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem<int>(
+                      value: 0,
+                      child: Text("Save as ${_getSaveAsFileName()}"),
+                    ),
+                    const PopupMenuItem<int>(
+                      value: 1,
+                      child: Text("Load ..."),
+                    ),
+                    const PopupMenuItem<int>(
+                      value: 2,
+                      child: Text("Upload to cloud"),
+                    ),
+                    const PopupMenuItem<int>(
+                      value: 3,
+                      child: Text("Download from cloud"),
+                    ),
+                    const PopupMenuItem<int>(
+                      value: 4,
+                      child: Text("Settings"),
+                    ),
+                  ];
+                },
+                onSelected: (value) async {
+                  switch (value) {
+                    case 0:
+                      {
+                        bool transferDataJsonFileCreated =
+                            await transferDataViewModel.saveAsTransferData();
+                        String snackBarMsg;
+
+                        if (transferDataJsonFileCreated) {
+                          snackBarMsg = '${_getSaveAsFileName()} created';
+                        } else {
+                          snackBarMsg = '${_getSaveAsFileName()} updated';
+                        }
+
+                        final CircadianSnackBar snackBar =
+                            CircadianSnackBar(message: snackBarMsg);
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                        break;
+                      }
+                    case 1:
+                      {
+                        List<String> nonNullablefileNameLst =
+                            _getSortedFileNameLstInDir(transferDataViewModel);
+
+                        displaySelPopupMenu(
+                          context: context,
+                          selectableStrItemLst: nonNullablefileNameLst,
+                          posRectangleLTRB: const RelativeRect.fromLTRB(
+                            1.0,
+                            130.0,
+                            0.0,
+                            0.0,
+                          ),
+                          handleSelectedItem: _handleSelectedFileName,
+                        );
+// not working                              setState(() {});
+                        break;
+                      }
+                    case 2:
+                      {
+                        print("Upload is selected.");
+                        break;
+                      }
+                    case 3:
+                      {
+                        print("Download is selected.");
+                        break;
+                      }
+                    case 4:
+                      {
+                        print("Settings is selected.");
+                        break;
+                      }
+                    default:
+                      {}
+                  }
+                },
+              ),
+            ],
+          ),
           body: Stack(
             children: [
               Positioned(
                 left: 0,
                 right: 0,
-                top: 4,
-                height: screenHeight * 0.09,
-                child: AppBar(
-                  backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
-                  title: Text(
-                    screenTitlesLst[_currentIndex],
-                    style:
-                        TextStyle(color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR),
-                  ),
-                  elevation: 0,
-                  centerTitle: true,
-                  actions: [
-                    PopupMenuButton(
-                      // add icon, by default "3 dot" icon
-                      // icon: Icon(Icons.book)
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem<int>(
-                            value: 0,
-                            child: Text("Save as ${_getSaveAsFileName()}"),
-                          ),
-                          const PopupMenuItem<int>(
-                            value: 1,
-                            child: Text("Load ..."),
-                          ),
-                          const PopupMenuItem<int>(
-                            value: 2,
-                            child: Text("Upload to cloud"),
-                          ),
-                          const PopupMenuItem<int>(
-                            value: 3,
-                            child: Text("Download from cloud"),
-                          ),
-                          const PopupMenuItem<int>(
-                            value: 4,
-                            child: Text("Settings"),
-                          ),
-                        ];
-                      },
-                      onSelected: (value) async {
-                        switch (value) {
-                          case 0:
-                            {
-                              bool transferDataJsonFileCreated =
-                                  await transferDataViewModel
-                                      .saveAsTransferData();
-                              String snackBarMsg;
-
-                              if (transferDataJsonFileCreated) {
-                                snackBarMsg = '${_getSaveAsFileName()} created';
-                              } else {
-                                snackBarMsg = '${_getSaveAsFileName()} updated';
-                              }
-
-                              final CircadianSnackBar snackBar =
-                                  CircadianSnackBar(message: snackBarMsg);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-
-                              break;
-                            }
-                          case 1:
-                            {
-                              List<String> nonNullablefileNameLst =
-                                  _getSortedFileNameLstInDir(
-                                      transferDataViewModel);
-
-                              displaySelPopupMenu(
-                                context: context,
-                                selectableStrItemLst: nonNullablefileNameLst,
-                                posRectangleLTRB: const RelativeRect.fromLTRB(
-                                  1.0,
-                                  130.0,
-                                  0.0,
-                                  0.0,
-                                ),
-                                handleSelectedItem: _handleSelectedFileName,
-                              );
-// not working                              setState(() {});
-                              break;
-                            }
-                          case 2:
-                            {
-                              print("Upload is selected.");
-                              break;
-                            }
-                          case 3:
-                            {
-                              print("Download is selected.");
-                              break;
-                            }
-                          case 4:
-                            {
-                              print("Settings is selected.");
-                              break;
-                            }
-                          default:
-                            {}
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: screenHeight * 0.09,
-                height: screenHeight * 0.91,
+                top: 0,
+                height: screenHeight,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
