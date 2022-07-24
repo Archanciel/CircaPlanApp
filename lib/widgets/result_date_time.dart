@@ -4,36 +4,29 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 
 class ResultDateTime extends StatefulWidget {
   final TextEditingController _resultDateTimeController;
-  final String _resultDateTimeStr;
   final Function _updateTransferDataMap;
 
   ResultDateTime({
     required TextEditingController resultDateTimeController,
-    required String resultDateTimeStr,
     required Function updateTransferDataMapFunction,
   })  : _resultDateTimeController = resultDateTimeController,
-        _resultDateTimeStr = resultDateTimeStr,
         _updateTransferDataMap = updateTransferDataMapFunction;
 
   @override
   State<ResultDateTime> createState() => _ResultDateTimeState(
         resultDateTimeController: _resultDateTimeController,
-        resultDateTimeStr: _resultDateTimeStr,
         updateTransferDataMapFunction: _updateTransferDataMap,
       );
 }
 
 class _ResultDateTimeState extends State<ResultDateTime> with ScreenMixin {
   final TextEditingController _resultDateTimeController;
-  String _resultDateTimeStr;
   final Function _updateTransferDataMap;
 
   _ResultDateTimeState({
     required TextEditingController resultDateTimeController,
-    required String resultDateTimeStr,
     required Function updateTransferDataMapFunction,
   })  : _resultDateTimeController = resultDateTimeController,
-        _resultDateTimeStr = resultDateTimeStr,
         _updateTransferDataMap = updateTransferDataMapFunction;
 
   @override
@@ -79,7 +72,6 @@ class _ResultDateTimeState extends State<ResultDateTime> with ScreenMixin {
                 // in the screen navigation transfer
                 // data map.
                 _resultDateTimeController.text = val;
-                _resultDateTimeStr = val;
                 _updateTransferDataMap();
               },
             ),

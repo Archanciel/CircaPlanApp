@@ -296,7 +296,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   ResultDateTime(
                     resultDateTimeController: _endDateTimeTextFieldController,
-                    resultDateTimeStr: _endDateTimeStr,
                     updateTransferDataMapFunction: _updateTransferDataMap,
                   ),
                 ],
