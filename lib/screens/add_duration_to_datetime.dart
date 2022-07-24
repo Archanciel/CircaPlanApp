@@ -2,6 +2,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
+import 'package:circa_plan/widgets/result_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -293,49 +294,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    'End date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
-                        // commenting cursorColor discourage manually
-                        // editing the TextField !
-                        // cursorColor: appTextAndIconColor,
-                      ),
-                    ),
-                    child: TextField(
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                      // The validator receives the text that the user has entered.
-                      controller: _endDateTimeTextFieldController,
-                      onChanged: (val) {
-                        // called when manually updating the TextField
-                        // content. onChanged must be defined in order for
-                        // pasting a value to the TextField to really
-                        // modify the TextField value and store it
-                        // in the screen navigation transfer
-                        // data map.
-                        _endDateTimeTextFieldController.text = val;
-                        _endDateTimeStr = val;
-                        _updateTransferDataMap();
-                      },
-                    ),
+                  ResultDateTime(
+                    resultDateTimeController: _endDateTimeTextFieldController,
+                    resultDateTimeStr: _endDateTimeStr,
+                    updateTransferDataMapFunction: _updateTransferDataMap,
                   ),
                 ],
               ),
