@@ -14,15 +14,7 @@ class AddDurationToDateTimeData extends ScreenData {
         : DurationIconType.values[value];
     screenDataType = ScreenDataType.addDurationToDateTimeData;
   }
-  /*
-    map['durationIconData'] = _durationIcon;
-    map['durationIconColor'] =  YOU WILL USE DurationIconType instead !!!;
-    map['durationSign'] = _durationSign; YOU WILL USE DurationIconType instead !!!
-    map['durationTextColor'] = _durationTextColor; YOU WILL USE DurationIconType instead !!!
-    map['addDurStartDateTimeStr'] = _startDateTimeStr;
-    map['durationStr'] = _durationStr;
-    map['endDateTimeStr'] = _endDateTimeStr;
-*/
+  
   /// Alternative to dart getter since testing if null is returned by
   /// the method is useful.
   ///
