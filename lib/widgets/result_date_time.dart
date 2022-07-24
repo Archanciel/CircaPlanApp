@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
 
-class ResultDateTime extends StatefulWidget {
+class ResultDateTime extends StatelessWidget with ScreenMixin {
   final TextEditingController _resultDateTimeController;
   final Function _updateTransferDataMap;
 
@@ -11,24 +11,6 @@ class ResultDateTime extends StatefulWidget {
     required Function updateTransferDataMapFunction,
   })  : _resultDateTimeController = resultDateTimeController,
         _updateTransferDataMap = updateTransferDataMapFunction;
-
-  @override
-  State<ResultDateTime> createState() => _ResultDateTimeState(
-        resultDateTimeController: _resultDateTimeController,
-        updateTransferDataMapFunction: _updateTransferDataMap,
-      );
-}
-
-class _ResultDateTimeState extends State<ResultDateTime> with ScreenMixin {
-  final TextEditingController _resultDateTimeController;
-  final Function _updateTransferDataMap;
-
-  _ResultDateTimeState({
-    required TextEditingController resultDateTimeController,
-    required Function updateTransferDataMapFunction,
-  })  : _resultDateTimeController = resultDateTimeController,
-        _updateTransferDataMap = updateTransferDataMapFunction;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
