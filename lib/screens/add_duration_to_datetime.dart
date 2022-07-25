@@ -136,14 +136,27 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTime.toString();
 
-    _setStateEndDateTime(_durationSign);
+    _setStateEndDateTime();
+  }
+
+  void _setStateEndDateTimeForDurationSign(
+    int durationSign,
+    IconData durationIcon,
+    Color durationIconColor,
+    Color durationTextColor,
+  ) {
+    _durationSign = durationSign;
+    _durationIcon = durationIcon;
+    _durationIconColor = durationIconColor;
+    _durationTextColor = durationTextColor;
+
+    _setStateEndDateTime();
   }
 
   /// Private method called each time one of the elements
   /// implied in calculating the End date time value is
   /// changed.
-  void _setStateEndDateTime(int durationSign) {
-    _durationSign = durationSign;
+  void _setStateEndDateTime() {
     _durationStr = _durationTextFieldController.text;
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
     _startDateTimeStr = _startDateTimeController.text;
@@ -226,14 +239,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                       ),
-                      onChanged: (val) => _setStateEndDateTime(_durationSign),
+                      onChanged: (val) => _setStateEndDateTime(),
                     ),
                   ),
                   DurationResultDateTime(
                     resultDateTimeController: _endDateTimeTextFieldController,
                     durationTextFieldController: _durationTextFieldController,
                     updateTransferDataMapFunction: _updateTransferDataMap,
-                    durationChangeFunction: _setStateEndDateTime,
+                    durationChangeFunction: _setStateEndDateTimeForDurationSign,
                     durationIcon: _durationIcon,
                     durationIconColor: _durationIconColor,
                     durationTextColor: _durationTextColor,
@@ -259,7 +272,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         onPressed: () {
                           _startDateTimeController.text =
                               DateTime.now().toString();
-                          _setStateEndDateTime(_durationSign);
+                          _setStateEndDateTime();
                         },
                         child: const Text(
                           'Now',
