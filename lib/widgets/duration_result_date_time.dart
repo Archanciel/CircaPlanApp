@@ -100,13 +100,13 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
                 top: -10,
                 child: TextButton.icon(
                   icon: Icon(
-                    widget._durationIcon,
+                    _durationIcon,
                     size: 30,
-                    color: widget._durationIconColor,
+                    color: _durationIconColor,
                   ),
                   label: const Text(''),
                   onPressed: () {
-                    if (widget._durationIcon == Icons.add) {
+                    if (_durationIcon == Icons.add) {
                       _durationIcon = Icons.remove;
                       _durationIconColor =
                           DurationResultDateTime.durationNegativeColor;
@@ -121,10 +121,13 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
                       _durationTextColor =
                           DurationResultDateTime.durationPositiveColor;
                     }
-                    _durationChangeFunction(_durationSign);
-                    setState(() {
-                      
-                    });
+                    _durationChangeFunction(
+                      _durationSign,
+                      _durationIcon,
+                      _durationIconColor,
+                      _durationTextColor,
+                    );
+                    setState(() {});
                   },
                 ),
               ),
@@ -148,7 +151,13 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
                     keyboardType: TextInputType.datetime,
                     controller: widget._durationTextFieldController,
                     onChanged: (val) {
-                      widget._durationChangeFunction();
+                      _durationChangeFunction(
+                        _durationSign,
+                        _durationIcon,
+                        _durationIconColor,
+                        _durationTextColor,
+                      );
+                      setState(() {});
                     },
                   ),
                 ),
