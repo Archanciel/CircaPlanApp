@@ -3,6 +3,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
+import 'package:circa_plan/widgets/duration_result_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
@@ -418,23 +419,41 @@ void main() {
           AddDurationToDateTimeData loadedAddDurationToDateTimeData =
               loadedTransferDataViewModel.addDurationToDateTimeData;
           expect(loadedAddDurationToDateTimeData.toString(),
-          'firstDurationIconType: FirstDurationIconType.add\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationStr: 00:50\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: SecondDurationIconType.subtract\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nsecondDurationStr: 02:00\nsecondEndDateTimeStr: 12-07-2022 14:00');
+              'firstDurationIconType: FirstDurationIconType.add\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationStr: 00:50\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: SecondDurationIconType.subtract\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nsecondDurationStr: 02:00\nsecondEndDateTimeStr: 12-07-2022 14:00');
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
           expect(loadedAddDurationToDateTimeData.firstDurationIconType,
               FirstDurationIconType.add);
-          expect(
-              loadedAddDurationToDateTimeData.firstAddDurationDurationStr, '00:50');
+          expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
+              '00:50');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '12-07-2022 16:50');
           expect(loadedAddDurationToDateTimeData.secondDurationIconType,
               SecondDurationIconType.subtract);
+          expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
+              '02:00');
           expect(
-              loadedAddDurationToDateTimeData.secondAddDurationDurationStr, '02:00');
-          expect(loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
+              loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
               '12-07-2022 14:00');
+
+          // currently, those data are not stored in AddDurationToDateTimeData,
+          // but only in the transfer data map !
+          Map<String, dynamic> loadedTransferDataMap =
+              loadedTransferDataViewModel.getTransferDataMap()!;
+
+          expect(loadedTransferDataMap['firstDurationIconColor'],
+              DurationResultDateTime.durationPositiveColor);
+          expect(loadedTransferDataMap['firstDurationTextColor'],
+              DurationResultDateTime.durationPositiveColor);
+          expect(loadedTransferDataMap['firstDurationSign'], 1);
+
+          expect(loadedTransferDataMap['secondDurationIconColor'],
+              DurationResultDateTime.durationNegativeColor);
+          expect(loadedTransferDataMap['secondDurationTextColor'],
+              DurationResultDateTime.durationNegativeColor);
+          expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
               loadedTransferDataViewModel.calculateSleepDurationData;
@@ -444,10 +463,12 @@ void main() {
           expect(loadedCalculateSleepDurationData.status, Status.sleep);
           expect(loadedCalculateSleepDurationData.sleepDurationNewDateTimeStr,
               '14-07-2022 13:09');
-          expect(loadedCalculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+          expect(
+              loadedCalculateSleepDurationData.sleepDurationPreviousDateTimeStr,
               '14-07-2022 13:13');
           expect(
-              loadedCalculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
+              loadedCalculateSleepDurationData
+                  .sleepDurationBeforePreviousDateTimeStr,
               '14-07-2022 13:12');
           expect(loadedCalculateSleepDurationData.sleepDurationStr, '12:36');
           expect(loadedCalculateSleepDurationData.wakeUpDurationStr, '0:02');
@@ -463,15 +484,20 @@ void main() {
           expect(loadedDateTimeDifferenceDurationData.screenDataType,
               ScreenDataType.dateTimeDifferenceDurationData);
           expect(
-              loadedDateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceStartDateTimeStr,
               "2022-07-13 16:09");
           expect(
-              loadedDateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceEndDateTimeStr,
               "2022-07-14 16:09:42.390753");
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationStr,
               "24:00");
           expect(
-              loadedDateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceFinalDurationStr,
               "25:00");
 
           TimeCalculatorData loadedTimeCalculatorData =
@@ -479,9 +505,12 @@ void main() {
 
           expect(loadedTimeCalculatorData.screenDataType,
               ScreenDataType.timeCalculatorData);
-          expect(loadedTimeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
-          expect(loadedTimeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
-          expect(loadedTimeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
 
           expect(loadedTransferDataViewModel.getTransferDataMap(),
               transferDataMap);
