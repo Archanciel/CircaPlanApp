@@ -60,13 +60,19 @@ void main() {
 
           expect(addDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
-          expect(addDurationToDateTimeData.firstDurationIconType,
-              FirstDurationIconType.add);
           expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
+          expect(addDurationToDateTimeData.firstDurationIconType,
+              FirstDurationIconType.add);
           expect(
               addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
+              '12-07-2022 16:00');
+          expect(addDurationToDateTimeData.secondDurationIconType,
+              SecondDurationIconType.subtract);
+          expect(
+              addDurationToDateTimeData.secondAddDurationDurationStr, '00:00');
+          expect(addDurationToDateTimeData.secondAddDurationEndDateTimeStr,
               '12-07-2022 16:00');
         },
       );
@@ -284,6 +290,12 @@ void main() {
               addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '12-07-2022 16:00');
+          expect(addDurationToDateTimeData.secondDurationIconType,
+              SecondDurationIconType.subtract);
+          expect(
+              addDurationToDateTimeData.secondAddDurationDurationStr, '00:00');
+          expect(addDurationToDateTimeData.secondAddDurationEndDateTimeStr,
+              '12-07-2022 16:00');
 
           CalculateSleepDurationData calculateSleepDurationData =
               transferDataViewModel.calculateSleepDurationData;
@@ -415,6 +427,12 @@ void main() {
           expect(
               addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
+              '12-07-2022 16:00');
+          expect(addDurationToDateTimeData.secondDurationIconType,
+              SecondDurationIconType.subtract);
+          expect(
+              addDurationToDateTimeData.secondAddDurationDurationStr, '00:00');
+          expect(addDurationToDateTimeData.secondAddDurationEndDateTimeStr,
               '12-07-2022 16:00');
 
           CalculateSleepDurationData calculateSleepDurationData =
