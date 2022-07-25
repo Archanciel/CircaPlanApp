@@ -15,3 +15,5 @@ enum Status {
 }
 
 const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';
+const String kDefaultJsonFileName = 'circadian.json';
+

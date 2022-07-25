@@ -107,6 +107,15 @@ class TransferDataViewModel {
     return fileNameLst;
   }
 
+  static void deleteFilesInDir(String transferDataJsonPath) {
+    final Directory directory = Directory(transferDataJsonPath);
+    final List<FileSystemEntity> contents = directory.listSync();
+
+    for (FileSystemEntity file in contents) {
+      file.deleteSync();
+    }
+  }
+
   String reformatDateTimeStrToCompatibleFileName(
       String sleepDurationNewDateTimeStr) {
     final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
@@ -318,7 +327,7 @@ class TransferDataViewModel {
         _transferDataMap!["secondDurationSign"] = -1;
         _transferDataMap!["secondDurationTextColor"] = Colors.red.shade200;
       }
-      
+
       _transferDataMap!["secondDurationStr"] =
           addDurationToDateTimeData.secondAddDurationDurationStr;
       _transferDataMap!["secondEndDateTimeStr"] =

@@ -15,13 +15,29 @@ import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 
-Future main() async {
+Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
+  List<String> myArgs = [];
+
+  if (args.isNotEmpty) {
+    myArgs = args;
+  } else {
+    // myArgs = ["delAppDir"]; // used to empty dir on emulator
+    //                            app dir
+  }
+
+  bool deleteAppDir = false;
+
+  if (myArgs.isNotEmpty) {
+    if (myArgs.contains("delAppDir")) {
+      deleteAppDir = true;
+    }
+  }
   // It was necessary to place here the asynchronous
   // TransferDataViewModel instanciation instead of locating it
   // in [_MainAppState.build()] or [_MainAppState.initState()],
@@ -31,17 +47,24 @@ Future main() async {
   // reference is done at the beginning of the
   //_MainAppState.build() method.
   TransferDataViewModel transferDataViewModel =
-      await instanciateTransferDataViewModel();
+      await instanciateTransferDataViewModel(deleteAppDir);
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }
 
 /// Async main method which instanciates and loads the
 /// TransferDataViewModel.
-Future<TransferDataViewModel> instanciateTransferDataViewModel() async {
+Future<TransferDataViewModel> instanciateTransferDataViewModel(
+    bool deleteAppDir) async {
   String path = kDownloadAppDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
+
+  if (deleteAppDir) {
+    if (directoryExists) {
+      TransferDataViewModel.deleteFilesInDir(path);
+    }
+  }
 
   if (!directoryExists) {
     await directory.create();
@@ -200,10 +223,16 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 // add icon, by default "3 dot" icon
                 // icon: Icon(Icons.book)
                 itemBuilder: (context) {
+                  String saveAsFileName = _getSaveAsFileName();
+
+                  if (saveAsFileName == '') {
+                    saveAsFileName = kDefaultJsonFileName;
+                  }
+
                   return [
                     PopupMenuItem<int>(
                       value: 0,
-                      child: Text("Save as ${_getSaveAsFileName()}"),
+                      child: Text("Save as $saveAsFileName"),
                     ),
                     const PopupMenuItem<int>(
                       value: 1,
@@ -333,7 +362,21 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
   /// Private method returning the Save as file name string.
   String _getSaveAsFileName() {
-    return '${_screenNavigTransData.transferDataMap['calcSlDurNewDateTimeStr'].replaceFirst(':', '.')}.json';
+    Map<String, dynamic> transferDataMap =
+        _screenNavigTransData.transferDataMap;
+
+    if (transferDataMap.isEmpty) {
+      return '';
+    }
+
+    String? calcSlDurNewDateTimeStr =
+        transferDataMap['calcSlDurNewDateTimeStr'];
+
+    if (calcSlDurNewDateTimeStr != null) {
+      return '${calcSlDurNewDateTimeStr.replaceFirst(':', '.')}.json';
+    } else {
+      return '';
+    }
   }
 
   /// Private method returning the sorted list of app data
