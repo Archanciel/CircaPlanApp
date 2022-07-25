@@ -20,6 +20,11 @@ class AddDurationToDateTimeData extends ScreenData {
     screenDataType = ScreenDataType.addDurationToDateTimeData;
   }
 
+  String get addDurationStartDateTimeStr =>
+      attributes['addDurationStartDateTimeStr'];
+  set addDurationStartDateTimeStr(String value) =>
+      attributes['addDurationStartDateTimeStr'] = value;
+
   /// Alternative to dart getter since testing if null is returned by
   /// the method is useful.
   ///
@@ -34,11 +39,6 @@ class AddDurationToDateTimeData extends ScreenData {
   set firstDurationIconType(FirstDurationIconType value) =>
       attributes['firstDurationIconType'] = value;
 
-  String get addDurationStartDateTimeStr =>
-      attributes['addDurationStartDateTimeStr'];
-  set addDurationStartDateTimeStr(String value) =>
-      attributes['addDurationStartDateTimeStr'] = value;
-
   String get firstAddDurationDurationStr =>
       attributes['firstAddDurationDurationStr'];
   set firstAddDurationDurationStr(String value) =>
@@ -49,6 +49,18 @@ class AddDurationToDateTimeData extends ScreenData {
   set firstAddDurationEndDateTimeStr(String value) =>
       attributes['firstAddDurationEndDateTimeStr'] = value;
 
+  SecondDurationIconType get secondDurationIconType => attributes['secondDurationIconType'];
+  set secondDurationIconType(SecondDurationIconType value) =>
+      attributes['secondDurationIconType'] = value;
+
+  String get secondAddDurationDurationStr => attributes['secondAddDurationDurationStr'];
+  set secondAddDurationDurationStr(String value) => attributes['secondAddDurationDurationStr'] = value;
+
+  String get secondAddDurationEndDateTimeStr =>
+      attributes['secondAddDurationEndDateTimeStr'];
+  set secondAddDurationEndDateTimeStr(String value) =>
+      attributes['secondAddDurationEndDateTimeStr'] = value;
+
   @override
   String toString() {
     FirstDurationIconType? firstDurationIconType = getFirstDurationIconType();
@@ -56,7 +68,7 @@ class AddDurationToDateTimeData extends ScreenData {
     if (firstDurationIconType == null) {
       return '';
     } else {
-      return 'firstDurationIconType: $firstDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationStr: $firstAddDurationDurationStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr';
+      return 'firstDurationIconType: $firstDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationStr: $firstAddDurationDurationStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nsecondDurationIconType: $secondDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nsecondDurationStr: $secondAddDurationDurationStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr';
     }
   }
 }
