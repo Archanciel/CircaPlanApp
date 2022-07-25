@@ -9,46 +9,54 @@ import '../constants.dart';
 /// and loading data to and from json file.
 class AddDurationToDateTimeData extends ScreenData {
   AddDurationToDateTimeData() {
-    transformers['durationIconType'] = (value) => value is DurationIconType
-        ? value.index
-        : DurationIconType.values[value];
+    transformers['firstDurationIconType'] = (value) =>
+        value is FirstDurationIconType
+            ? value.index
+            : FirstDurationIconType.values[value];
+    transformers['secondDurationIconType'] = (value) =>
+        value is SecondDurationIconType
+            ? value.index
+            : SecondDurationIconType.values[value];
     screenDataType = ScreenDataType.addDurationToDateTimeData;
   }
-  
+
   /// Alternative to dart getter since testing if null is returned by
   /// the method is useful.
   ///
   /// A getter can not return null. Null is returned if no
   /// AddDurationToDateTime screen field was modified.
-  DurationIconType? getDurationIconType() {
-    return attributes['durationIconType'];
+  FirstDurationIconType? getFirstDurationIconType() {
+    return attributes['firstDurationIconType'];
   }
 
-  DurationIconType get durationIconType => attributes['durationIconType'];
-  set durationIconType(DurationIconType value) =>
-      attributes['durationIconType'] = value;
+  FirstDurationIconType get firstDurationIconType =>
+      attributes['firstDurationIconType'];
+  set firstDurationIconType(FirstDurationIconType value) =>
+      attributes['firstDurationIconType'] = value;
 
   String get addDurationStartDateTimeStr =>
       attributes['addDurationStartDateTimeStr'];
   set addDurationStartDateTimeStr(String value) =>
       attributes['addDurationStartDateTimeStr'] = value;
 
-  String get addDurationDurationStr => attributes['addDurationDurationStr'];
-  set addDurationDurationStr(String value) => attributes['addDurationDurationStr'] = value;
+  String get firstAddDurationDurationStr =>
+      attributes['firstAddDurationDurationStr'];
+  set firstAddDurationDurationStr(String value) =>
+      attributes['firstAddDurationDurationStr'] = value;
 
-  String get addDurationEndDateTimeStr =>
-      attributes['addDurationEndDateTimeStr'];
-  set addDurationEndDateTimeStr(String value) =>
-      attributes['addDurationEndDateTimeStr'] = value;
+  String get firstAddDurationEndDateTimeStr =>
+      attributes['firstAddDurationEndDateTimeStr'];
+  set firstAddDurationEndDateTimeStr(String value) =>
+      attributes['firstAddDurationEndDateTimeStr'] = value;
 
   @override
   String toString() {
-    DurationIconType? durationIconType = getDurationIconType();
+    FirstDurationIconType? firstDurationIconType = getFirstDurationIconType();
 
-    if (durationIconType == null) {
+    if (firstDurationIconType == null) {
       return '';
     } else {
-      return 'durationIconType: $durationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\ndurationStr: $addDurationDurationStr\nendDateTimeStr: $addDurationEndDateTimeStr';
+      return 'firstDurationIconType: $firstDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationStr: $firstAddDurationDurationStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr';
     }
   }
 }

@@ -82,10 +82,10 @@ class TransferData extends SerializableObject {
 Future<void> main() async {
   AddDurationToDateTimeData addDurationToDateTimeData =
       AddDurationToDateTimeData();
-  addDurationToDateTimeData.durationIconType = DurationIconType.add;
+  addDurationToDateTimeData.firstDurationIconType = FirstDurationIconType.add;
   addDurationToDateTimeData.addDurationStartDateTimeStr = '09_07_2022 23:58';
-  addDurationToDateTimeData.addDurationDurationStr = '01:00';
-  addDurationToDateTimeData.addDurationEndDateTimeStr = '10_07_2022 00:58';
+  addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
+  addDurationToDateTimeData.firstAddDurationEndDateTimeStr = '10_07_2022 00:58';
 
   TransferData transferData = TransferData();
   transferData.addDurationToDateTimeData = addDurationToDateTimeData;
@@ -101,8 +101,8 @@ Future<void> main() async {
       loadedTransferData.addDurationToDateTimeData;
 
   print(loadedAddDurationToDateTimeData.screenDataType);
-  print(loadedAddDurationToDateTimeData.durationIconType);
+  print(loadedAddDurationToDateTimeData.firstDurationIconType);
   print(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr);
-  print(loadedAddDurationToDateTimeData.addDurationDurationStr);
-  print(loadedAddDurationToDateTimeData.addDurationEndDateTimeStr);
+  print(loadedAddDurationToDateTimeData.firstAddDurationDurationStr);
+  print(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr);
 }

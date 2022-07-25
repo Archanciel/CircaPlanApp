@@ -40,16 +40,24 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       required TransferDataViewModel transferDataViewModel})
       : _transferDataMap = transferDataMap,
         _transferDataViewModel = transferDataViewModel,
-        _durationIcon = transferDataMap['durationIconData'] ?? Icons.add,
-        _durationIconColor =
-            transferDataMap['durationIconColor'] ?? durationPositiveColor,
-        _durationSign = transferDataMap['durationSign'] ?? 1,
-        _durationTextColor =
-            transferDataMap['durationTextColor'] ?? durationPositiveColor,
         _startDateTimeStr = transferDataMap['addDurStartDateTimeStr'] ??
             DateTime.now().toString(),
-        _durationStr = transferDataMap['durationStr'] ?? '00:00',
-        _endDateTimeStr = transferDataMap['endDateTimeStr'] ?? '',
+        _firstDurationIcon = transferDataMap['firstDurationIconData'] ?? Icons.add,
+        _firstDurationIconColor =
+            transferDataMap['firstDurationIconColor'] ?? durationPositiveColor,
+        _firstDurationSign = transferDataMap['firstDurationSign'] ?? 1,
+        _firstDurationTextColor =
+            transferDataMap['firstDurationTextColor'] ?? durationPositiveColor,
+        _firstDurationStr = transferDataMap['firstDurationStr'] ?? '00:00',
+        _firstEndDateTimeStr = transferDataMap['firstEndDateTimeStr'] ?? '',
+        _secondDurationIcon = transferDataMap['secondDurationIconData'] ?? Icons.add,
+        _secondDurationIconColor =
+            transferDataMap['secondDurationIconColor'] ?? durationPositiveColor,
+        _secondDurationSign = transferDataMap['secondDurationSign'] ?? 1,
+        _secondDurationTextColor =
+            transferDataMap['secondDurationTextColor'] ?? durationPositiveColor,
+        _secondDurationStr = transferDataMap['secondDurationStr'] ?? '00:00',
+        _secondEndDateTimeStr = transferDataMap['secondEndDateTimeStr'] ?? '',
         super();
 
   static Color durationPositiveColor = Colors.green.shade200;
@@ -60,17 +68,29 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
 
-  IconData _durationIcon;
-  Color _durationIconColor;
-  Color _durationTextColor;
-  int _durationSign;
   String _startDateTimeStr = '';
-  String _durationStr = '';
-  String _endDateTimeStr = '';
+
+  IconData _firstDurationIcon;
+  Color _firstDurationIconColor;
+  Color _firstDurationTextColor;
+  int _firstDurationSign;
+  String _firstDurationStr = '';
+  String _firstEndDateTimeStr = '';
+
+  IconData _secondDurationIcon;
+  Color _secondDurationIconColor;
+  Color _secondDurationTextColor;
+  int _secondDurationSign;
+  String _secondDurationStr = '';
+  String _secondEndDateTimeStr = '';
 
   late TextEditingController _startDateTimeController;
-  late TextEditingController _durationTextFieldController;
-  late TextEditingController _endDateTimeTextFieldController;
+
+  late TextEditingController _firstDurationTextFieldController;
+  late TextEditingController _firstEndDateTimeTextFieldController;
+
+  late TextEditingController _secondDurationTextFieldController;
+  late TextEditingController _secondEndDateTimeTextFieldController;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -84,19 +104,26 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     _startDateTimeController = TextEditingController(
         text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimeStr);
-    _durationTextFieldController =
-        TextEditingController(text: _transferDataMap['durationStr'] ?? '00:00');
-    _endDateTimeTextFieldController =
-        TextEditingController(text: _transferDataMap['endDateTimeStr'] ?? '');
+    _firstDurationTextFieldController =
+        TextEditingController(text: _transferDataMap['firstDurationStr'] ?? '00:00');
+    _firstEndDateTimeTextFieldController =
+        TextEditingController(text: _transferDataMap['firstEndDateTimeStr'] ?? '');
+    _secondDurationTextFieldController =
+        TextEditingController(text: _transferDataMap['firstDurationStr'] ?? '00:00');
+    _secondEndDateTimeTextFieldController =
+        TextEditingController(text: _transferDataMap['firstEndDateTimeStr'] ?? '');
 
-    _endDateTimeStr = _transferDataMap['endDateTimeStr'] ?? '';
+    _firstEndDateTimeStr = _transferDataMap['firstEndDateTimeStr'] ?? '';
+    _secondEndDateTimeStr = _transferDataMap['secondEndDateTimeStr'] ?? '';
   }
 
   @override
   void dispose() {
     _startDateTimeController.dispose();
-    _durationTextFieldController.dispose();
-    _endDateTimeTextFieldController.dispose();
+    _firstDurationTextFieldController.dispose();
+    _firstEndDateTimeTextFieldController.dispose();
+    _secondDurationTextFieldController.dispose();
+    _secondEndDateTimeTextFieldController.dispose();
 
     super.dispose();
   }
@@ -104,13 +131,21 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   Map<String, dynamic> _updateTransferDataMap() {
     Map<String, dynamic> map = _transferDataMap;
 
-    map['durationIconData'] = _durationIcon;
-    map['durationIconColor'] = _durationIconColor;
-    map['durationSign'] = _durationSign;
-    map['durationTextColor'] = _durationTextColor;
     map['addDurStartDateTimeStr'] = _startDateTimeStr;
-    map['durationStr'] = _durationStr;
-    map['endDateTimeStr'] = _endDateTimeStr;
+
+    map['firstDurationIconData'] = _firstDurationIcon;
+    map['firstDurationIconColor'] = _firstDurationIconColor;
+    map['firstDurationSign'] = _firstDurationSign;
+    map['firstDurationTextColor'] = _firstDurationTextColor;
+    map['firstDurationStr'] = _firstDurationStr;
+    map['firstEndDateTimeStr'] = _firstEndDateTimeStr;
+
+    map['secondDurationIconData'] = _secondDurationIcon;
+    map['secondDurationIconColor'] = _secondDurationIconColor;
+    map['secondDurationSign'] = _secondDurationSign;
+    map['secondDurationTextColor'] = _secondDurationTextColor;
+    map['secondDurationStr'] = _secondDurationStr;
+    map['secondEndDateTimeStr'] = _secondEndDateTimeStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
 
@@ -122,10 +157,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String nowDateTimeStr = dateTimeNow.toString();
     _startDateTimeStr = nowDateTimeStr;
     _startDateTimeController.text = _startDateTimeStr;
-    _durationStr = '00:00';
-    _durationTextFieldController.text = _durationStr;
-    _endDateTimeStr = '';
-    _endDateTimeTextFieldController.text = _endDateTimeStr;
+    _firstDurationStr = '00:00';
+    _firstDurationTextFieldController.text = _firstDurationStr;
+    _firstEndDateTimeStr = '';
+    _firstEndDateTimeTextFieldController.text = _firstEndDateTimeStr;
+    _secondDurationStr = '00:00';
+    _secondDurationTextFieldController.text = _secondDurationStr;
+    _secondEndDateTimeStr = '';
+    _secondEndDateTimeTextFieldController.text = _secondEndDateTimeStr;
 
     setState(() {});
 
@@ -139,16 +178,30 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _setStateEndDateTime();
   }
 
-  void _setStateEndDateTimeForDurationSign(
+  void _setFirstStateEndDateTimeForFirstDurationSign(
     int durationSign,
     IconData durationIcon,
     Color durationIconColor,
     Color durationTextColor,
   ) {
-    _durationSign = durationSign;
-    _durationIcon = durationIcon;
-    _durationIconColor = durationIconColor;
-    _durationTextColor = durationTextColor;
+    _firstDurationSign = durationSign;
+    _firstDurationIcon = durationIcon;
+    _firstDurationIconColor = durationIconColor;
+    _firstDurationTextColor = durationTextColor;
+
+    _setStateEndDateTime();
+  }
+
+  void _setSecondStateEndDateTimeForSecondDurationSign(
+    int durationSign,
+    IconData durationIcon,
+    Color durationIconColor,
+    Color durationTextColor,
+  ) {
+    _secondDurationSign = durationSign;
+    _secondDurationIcon = durationIcon;
+    _secondDurationIconColor = durationIconColor;
+    _secondDurationTextColor = durationTextColor;
 
     _setStateEndDateTime();
   }
@@ -157,21 +210,22 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// implied in calculating the End date time value is
   /// changed.
   void _setStateEndDateTime() {
-    _durationStr = _durationTextFieldController.text;
-    Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
+    // TODO à compléter !
+    _firstDurationStr = _firstDurationTextFieldController.text;
+    Duration? duration = DateTimeParser.parseHHmmDuration(_firstDurationStr);
     _startDateTimeStr = _startDateTimeController.text;
     DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
     DateTime endDateTime;
 
     if (duration != null) {
-      if (_durationSign > 0) {
+      if (_firstDurationSign > 0) {
         endDateTime = startDateTime.add(duration);
       } else {
         endDateTime = startDateTime.subtract(duration);
       }
 
-      _endDateTimeStr = frenchDateTimeFormat.format(endDateTime);
-      _endDateTimeTextFieldController.text = _endDateTimeStr;
+      _firstEndDateTimeStr = frenchDateTimeFormat.format(endDateTime);
+      _firstEndDateTimeTextFieldController.text = _firstEndDateTimeStr;
 
       setState(() {});
 
@@ -242,15 +296,27 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       onChanged: (val) => _setStateEndDateTime(),
                     ),
                   ),
+                  // First duration addition/subtraction
                   DurationResultDateTime(
-                    resultDateTimeController: _endDateTimeTextFieldController,
-                    durationTextFieldController: _durationTextFieldController,
+                    resultDateTimeController: _firstEndDateTimeTextFieldController,
+                    durationTextFieldController: _firstDurationTextFieldController,
                     updateTransferDataMapFunction: _updateTransferDataMap,
-                    durationChangeFunction: _setStateEndDateTimeForDurationSign,
-                    durationIcon: _durationIcon,
-                    durationIconColor: _durationIconColor,
-                    durationTextColor: _durationTextColor,
-                    durationSign: _durationSign,
+                    durationChangeFunction: _setFirstStateEndDateTimeForFirstDurationSign,
+                    durationIcon: _firstDurationIcon,
+                    durationIconColor: _firstDurationIconColor,
+                    durationTextColor: _firstDurationTextColor,
+                    durationSign: _firstDurationSign,
+                  ),
+                  // Second duration addition/subtraction
+                  DurationResultDateTime(
+                    resultDateTimeController: _secondEndDateTimeTextFieldController,
+                    durationTextFieldController: _secondDurationTextFieldController,
+                    updateTransferDataMapFunction: _updateTransferDataMap,
+                    durationChangeFunction: _setSecondStateEndDateTimeForSecondDurationSign,
+                    durationIcon: _secondDurationIcon,
+                    durationIconColor: _secondDurationIconColor,
+                    durationTextColor: _secondDurationTextColor,
+                    durationSign: _secondDurationSign,
                   ),
                 ],
               ),

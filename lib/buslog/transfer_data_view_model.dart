@@ -144,9 +144,9 @@ class TransferDataViewModel {
 
   void updateAddDurationToDateTimeData() {
     // _transferDataMap is nullable !
-    int? durationSign = _transferDataMap!['durationSign'];
+    int? firstDurationSign = _transferDataMap!['firstDurationSign'];
 
-    if (durationSign == null) {
+    if (firstDurationSign == null) {
       // the case if no AddDurationToDateTime screen field was
       // modified and so no AddDurationToDateTime data were stored
       // in the transfer data map !
@@ -156,14 +156,15 @@ class TransferDataViewModel {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
 
-    addDurationToDateTimeData.durationIconType =
-        (durationSign > 0) ? DurationIconType.add : DurationIconType.subtract;
+    addDurationToDateTimeData.firstDurationIconType = (firstDurationSign > 0)
+        ? FirstDurationIconType.add
+        : FirstDurationIconType.subtract;
     addDurationToDateTimeData.addDurationStartDateTimeStr =
         _transferDataMap!['addDurStartDateTimeStr'];
-    addDurationToDateTimeData.addDurationDurationStr =
-        _transferDataMap!['durationStr'];
-    addDurationToDateTimeData.addDurationEndDateTimeStr =
-        _transferDataMap!['endDateTimeStr'];
+    addDurationToDateTimeData.firstAddDurationDurationStr =
+        _transferDataMap!['firstDurationStr'];
+    addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
+        _transferDataMap!['firstEndDateTimeStr'];
   }
 
   void updateCalculateSleepDurationData() {
@@ -269,27 +270,28 @@ class TransferDataViewModel {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
 
-    DurationIconType? durationIconType =
-        addDurationToDateTimeData.getDurationIconType();
+    FirstDurationIconType? durationIconType =
+        addDurationToDateTimeData.getFirstDurationIconType();
 
     if (durationIconType != null) {
-      if (addDurationToDateTimeData.durationIconType == DurationIconType.add) {
-        _transferDataMap!["durationIconData"] = Icons.add;
-        _transferDataMap!["durationIconColor"] = Colors.green.shade200;
-        _transferDataMap!["durationSign"] = 1;
-        _transferDataMap!["durationTextColor"] = Colors.green.shade200;
+      if (addDurationToDateTimeData.firstDurationIconType ==
+          FirstDurationIconType.add) {
+        _transferDataMap!["firstDurationIconData"] = Icons.add;
+        _transferDataMap!["firstDurationIconColor"] = Colors.green.shade200;
+        _transferDataMap!["firstDurationSign"] = 1;
+        _transferDataMap!["firstDurationTextColor"] = Colors.green.shade200;
       } else {
-        _transferDataMap!["durationIconData"] = Icons.remove;
-        _transferDataMap!["durationIconColor"] = Colors.red.shade200;
-        _transferDataMap!["durationSign"] = -1;
-        _transferDataMap!["durationTextColor"] = Colors.red.shade200;
+        _transferDataMap!["firstDurationIconData"] = Icons.remove;
+        _transferDataMap!["firstDurationIconColor"] = Colors.red.shade200;
+        _transferDataMap!["firstDurationSign"] = -1;
+        _transferDataMap!["firstDurationTextColor"] = Colors.red.shade200;
       }
       _transferDataMap!["addDurStartDateTimeStr"] =
           addDurationToDateTimeData.addDurationStartDateTimeStr;
-      _transferDataMap!["durationStr"] =
-          addDurationToDateTimeData.addDurationDurationStr;
-      _transferDataMap!["endDateTimeStr"] =
-          addDurationToDateTimeData.addDurationEndDateTimeStr;
+      _transferDataMap!["firstDurationStr"] =
+          addDurationToDateTimeData.firstAddDurationDurationStr;
+      _transferDataMap!["firstEndDateTimeStr"] =
+          addDurationToDateTimeData.firstAddDurationEndDateTimeStr;
     }
 
     CalculateSleepDurationData calculateSleepDurationData =

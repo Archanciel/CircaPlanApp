@@ -17,11 +17,12 @@ void main() {
         () async {
           AddDurationToDateTimeData addDurationToDateTimeData =
               AddDurationToDateTimeData();
-          addDurationToDateTimeData.durationIconType = DurationIconType.add;
+          addDurationToDateTimeData.firstDurationIconType =
+              FirstDurationIconType.add;
           addDurationToDateTimeData.addDurationStartDateTimeStr =
               '09_07_2022 23:58';
-          addDurationToDateTimeData.addDurationDurationStr = '01:00';
-          addDurationToDateTimeData.addDurationEndDateTimeStr =
+          addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
+          addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
               '10_07_2022 00:58';
 
           TransferData transferData = TransferData();
@@ -40,13 +41,13 @@ void main() {
 
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
-          expect(loadedAddDurationToDateTimeData.durationIconType,
-              DurationIconType.add);
+          expect(loadedAddDurationToDateTimeData.firstDurationIconType,
+              FirstDurationIconType.add);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '09_07_2022 23:58');
-          expect(
-              loadedAddDurationToDateTimeData.addDurationDurationStr, '01:00');
-          expect(loadedAddDurationToDateTimeData.addDurationEndDateTimeStr,
+          expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
+              '01:00');
+          expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '10_07_2022 00:58');
         },
       );
@@ -120,12 +121,15 @@ void main() {
               '09_07_2022 23:58';
           dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr =
               '09_07_2022 22:58';
-          dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr = '-01:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr =
+              '-01:00';
           dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr = '02:00';
-          dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr = '01:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
+              '01:00';
 
           TransferData transferData = TransferData();
-          transferData.dateTimeDifferenceDurationData = dateTimeDifferenceDurationData;
+          transferData.dateTimeDifferenceDurationData =
+              dateTimeDifferenceDurationData;
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
@@ -140,25 +144,33 @@ void main() {
 
           expect(loadedDateTimeDifferenceDurationData.screenDataType,
               ScreenDataType.dateTimeDifferenceDurationData);
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceStartDateTimeStr,
               '09_07_2022 23:58');
           expect(
-              loadedDateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceEndDateTimeStr,
               '09_07_2022 22:58');
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceDurationStr, '-01:00');
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr, '02:00');
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr, '01:00');
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationStr,
+              '-01:00');
+          expect(
+              loadedDateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr,
+              '02:00');
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceFinalDurationStr,
+              '01:00');
         },
       );
       test(
         'TransferData with TimeCalculatorData only',
         () async {
-          TimeCalculatorData timeCalculatorData =
-              TimeCalculatorData();
-          timeCalculatorData.timeCalculatorFirstTimeStr =
-              '00:10:00';
-          timeCalculatorData.timeCalculatorSecondTimeStr =
-              '00:05:00';
+          TimeCalculatorData timeCalculatorData = TimeCalculatorData();
+          timeCalculatorData.timeCalculatorFirstTimeStr = '00:10:00';
+          timeCalculatorData.timeCalculatorSecondTimeStr = '00:05:00';
           timeCalculatorData.timeCalculatorResultTimeStr = '00:15:00';
 
           TransferData transferData = TransferData();
@@ -177,12 +189,12 @@ void main() {
 
           expect(loadedTimeCalculatorData.screenDataType,
               ScreenDataType.timeCalculatorData);
-          expect(loadedTimeCalculatorData.timeCalculatorFirstTimeStr,
-              '00:10:00');
           expect(
-              loadedTimeCalculatorData.timeCalculatorSecondTimeStr,
-              '00:05:00');
-          expect(loadedTimeCalculatorData.timeCalculatorResultTimeStr, '00:15:00');
+              loadedTimeCalculatorData.timeCalculatorFirstTimeStr, '00:10:00');
+          expect(
+              loadedTimeCalculatorData.timeCalculatorSecondTimeStr, '00:05:00');
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultTimeStr, '00:15:00');
         },
       );
       test(
@@ -190,11 +202,12 @@ void main() {
         () async {
           AddDurationToDateTimeData addDurationToDateTimeData =
               AddDurationToDateTimeData();
-          addDurationToDateTimeData.durationIconType = DurationIconType.add;
+          addDurationToDateTimeData.firstDurationIconType =
+              FirstDurationIconType.add;
           addDurationToDateTimeData.addDurationStartDateTimeStr =
               '09_07_2022 23:58';
-          addDurationToDateTimeData.addDurationDurationStr = '01:00';
-          addDurationToDateTimeData.addDurationEndDateTimeStr =
+          addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
+          addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
               '10_07_2022 00:58';
 
           TransferData transferData = TransferData();
@@ -231,18 +244,18 @@ void main() {
               '09_07_2022 23:58';
           dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr =
               '09_07_2022 22:58';
-          dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr = '-01:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr =
+              '-01:00';
           dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr = '02:00';
-          dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr = '01:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
+              '01:00';
 
-          transferData.dateTimeDifferenceDurationData = dateTimeDifferenceDurationData;
+          transferData.dateTimeDifferenceDurationData =
+              dateTimeDifferenceDurationData;
 
-          TimeCalculatorData timeCalculatorData =
-              TimeCalculatorData();
-          timeCalculatorData.timeCalculatorFirstTimeStr =
-              '00:10:00';
-          timeCalculatorData.timeCalculatorSecondTimeStr =
-              '00:05:00';
+          TimeCalculatorData timeCalculatorData = TimeCalculatorData();
+          timeCalculatorData.timeCalculatorFirstTimeStr = '00:10:00';
+          timeCalculatorData.timeCalculatorSecondTimeStr = '00:05:00';
           timeCalculatorData.timeCalculatorResultTimeStr = '00:15:00';
 
           transferData.timeCalculatorData = timeCalculatorData;
@@ -260,13 +273,13 @@ void main() {
 
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
-          expect(loadedAddDurationToDateTimeData.durationIconType,
-              DurationIconType.add);
+          expect(loadedAddDurationToDateTimeData.firstDurationIconType,
+              FirstDurationIconType.add);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '09_07_2022 23:58');
-          expect(
-              loadedAddDurationToDateTimeData.addDurationDurationStr, '01:00');
-          expect(loadedAddDurationToDateTimeData.addDurationEndDateTimeStr,
+          expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
+              '01:00');
+          expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '10_07_2022 00:58');
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
@@ -292,32 +305,42 @@ void main() {
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
               ['10_07_2022 05:58', '00:35', '01:00']);
 
-  
           DateTimeDifferenceDurationData loadedDateTimeDifferenceDurationData =
               loadedTransferData.dateTimeDifferenceDurationData;
 
           expect(loadedDateTimeDifferenceDurationData.screenDataType,
               ScreenDataType.dateTimeDifferenceDurationData);
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceStartDateTimeStr,
               '09_07_2022 23:58');
           expect(
-              loadedDateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceEndDateTimeStr,
               '09_07_2022 22:58');
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceDurationStr, '-01:00');
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr, '02:00');
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr, '01:00');
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationStr,
+              '-01:00');
+          expect(
+              loadedDateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr,
+              '02:00');
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceFinalDurationStr,
+              '01:00');
 
           TimeCalculatorData loadedTimeCalculatorData =
               loadedTransferData.timeCalculatorData;
 
           expect(loadedTimeCalculatorData.screenDataType,
               ScreenDataType.timeCalculatorData);
-          expect(loadedTimeCalculatorData.timeCalculatorFirstTimeStr,
-              '00:10:00');
           expect(
-              loadedTimeCalculatorData.timeCalculatorSecondTimeStr,
-              '00:05:00');
-          expect(loadedTimeCalculatorData.timeCalculatorResultTimeStr, '00:15:00');
+              loadedTimeCalculatorData.timeCalculatorFirstTimeStr, '00:10:00');
+          expect(
+              loadedTimeCalculatorData.timeCalculatorSecondTimeStr, '00:05:00');
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultTimeStr, '00:15:00');
         },
       );
     },
