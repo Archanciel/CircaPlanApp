@@ -127,7 +127,6 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
                       _durationIconColor,
                       _durationTextColor,
                     );
-                    setState(() {});
                   },
                 ),
               ),
@@ -157,7 +156,6 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
                         _durationIconColor,
                         _durationTextColor,
                       );
-                      setState(() {});
                     },
                   ),
                 ),
