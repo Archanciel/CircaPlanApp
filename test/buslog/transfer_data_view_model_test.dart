@@ -24,13 +24,13 @@ void main() {
         'TransferDataViewModel updateAddDurationToDateTimeData',
         () async {
           Map<String, dynamic> transferDataMap = {
-            "durationIconData": Icons.add,
-            "durationIconColor": Colors.green.shade200,
-            "durationSign": 1,
-            "durationTextColor": Colors.green.shade200,
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
             "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
-            "durationStr": "00:00",
-            "endDateTimeStr": "12-07-2022 16:00",
+            "firstDurationStr": "00:00",
+            "firstEndDateTimeStr": "12-07-2022 16:00",
           };
 
           String path = kCircadianAppDataDir;
@@ -209,13 +209,13 @@ void main() {
         'TransferDataViewModel updateTransferData',
         () async {
           Map<String, dynamic> transferDataMap = {
-            "durationIconData": Icons.add,
-            "durationIconColor": Colors.green.shade200,
-            "durationSign": 1,
-            "durationTextColor": Colors.green.shade200,
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
             "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
-            "durationStr": "00:00",
-            "endDateTimeStr": "12-07-2022 16:00",
+            "firstDurationStr": "00:00",
+            "firstEndDateTimeStr": "12-07-2022 16:00",
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
             "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -325,13 +325,13 @@ void main() {
         'TransferDataViewModel loadTransferData',
         () async {
           Map<String, dynamic> transferDataMap = {
-            "durationIconData": Icons.add,
-            "durationIconColor": Colors.green.shade200,
-            "durationSign": 1,
-            "durationTextColor": Colors.green.shade200,
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
             "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
-            "durationStr": "00:00",
-            "endDateTimeStr": "12-07-2022 16:00",
+            "firstDurationStr": "00:00",
+            "firstEndDateTimeStr": "12-07-2022 16:00",
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
             "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
