@@ -282,10 +282,10 @@ void main() {
 
           expect(addDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
-          expect(addDurationToDateTimeData.firstDurationIconType,
-              FirstDurationIconType.add);
           expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
+          expect(addDurationToDateTimeData.firstDurationIconType,
+              FirstDurationIconType.add);
           expect(
               addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
@@ -354,14 +354,14 @@ void main() {
             "firstDurationSign": 1,
             "firstDurationTextColor": Colors.green.shade200,
             "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
-            "firstDurationStr": "00:00",
-            "firstEndDateTimeStr": "12-07-2022 16:00",
+            "firstDurationStr": "00:50",
+            "firstEndDateTimeStr": "12-07-2022 16:50",
             "secondDurationIconData": Icons.remove,
             "secondDurationIconColor": Colors.red.shade200,
             "secondDurationSign": -1,
             "secondDurationTextColor": Colors.red.shade200,
-            "secondDurationStr": "00:00",
-            "secondEndDateTimeStr": "12-07-2022 16:00",
+            "secondDurationStr": "02:00",
+            "secondEndDateTimeStr": "12-07-2022 14:00",
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
             "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -415,72 +415,73 @@ void main() {
           loadedTransferDataViewModel.transferDataMap = emptyTransferDataMap;
           await loadedTransferDataViewModel.loadTransferData();
 
-          AddDurationToDateTimeData addDurationToDateTimeData =
+          AddDurationToDateTimeData loadedAddDurationToDateTimeData =
               loadedTransferDataViewModel.addDurationToDateTimeData;
-
-          expect(addDurationToDateTimeData.screenDataType,
+          expect(loadedAddDurationToDateTimeData.toString(),
+          'firstDurationIconType: FirstDurationIconType.add\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationStr: 00:50\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: SecondDurationIconType.subtract\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nsecondDurationStr: 02:00\nsecondEndDateTimeStr: 12-07-2022 14:00');
+          expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
-          expect(addDurationToDateTimeData.firstDurationIconType,
-              FirstDurationIconType.add);
-          expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
+          expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
+          expect(loadedAddDurationToDateTimeData.firstDurationIconType,
+              FirstDurationIconType.add);
           expect(
-              addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
-          expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
-              '12-07-2022 16:00');
-          expect(addDurationToDateTimeData.secondDurationIconType,
+              loadedAddDurationToDateTimeData.firstAddDurationDurationStr, '00:50');
+          expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
+              '12-07-2022 16:50');
+          expect(loadedAddDurationToDateTimeData.secondDurationIconType,
               SecondDurationIconType.subtract);
           expect(
-              addDurationToDateTimeData.secondAddDurationDurationStr, '00:00');
-          expect(addDurationToDateTimeData.secondAddDurationEndDateTimeStr,
-              '12-07-2022 16:00');
+              loadedAddDurationToDateTimeData.secondAddDurationDurationStr, '02:00');
+          expect(loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
+              '12-07-2022 14:00');
 
-          CalculateSleepDurationData calculateSleepDurationData =
+          CalculateSleepDurationData loadedCalculateSleepDurationData =
               loadedTransferDataViewModel.calculateSleepDurationData;
 
-          expect(calculateSleepDurationData.screenDataType,
+          expect(loadedCalculateSleepDurationData.screenDataType,
               ScreenDataType.calculateSleepDurationData);
-          expect(calculateSleepDurationData.status, Status.sleep);
-          expect(calculateSleepDurationData.sleepDurationNewDateTimeStr,
+          expect(loadedCalculateSleepDurationData.status, Status.sleep);
+          expect(loadedCalculateSleepDurationData.sleepDurationNewDateTimeStr,
               '14-07-2022 13:09');
-          expect(calculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+          expect(loadedCalculateSleepDurationData.sleepDurationPreviousDateTimeStr,
               '14-07-2022 13:13');
           expect(
-              calculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
+              loadedCalculateSleepDurationData.sleepDurationBeforePreviousDateTimeStr,
               '14-07-2022 13:12');
-          expect(calculateSleepDurationData.sleepDurationStr, '12:36');
-          expect(calculateSleepDurationData.wakeUpDurationStr, '0:02');
-          expect(calculateSleepDurationData.totalDurationStr, '12:38');
-          expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
+          expect(loadedCalculateSleepDurationData.sleepDurationStr, '12:36');
+          expect(loadedCalculateSleepDurationData.wakeUpDurationStr, '0:02');
+          expect(loadedCalculateSleepDurationData.totalDurationStr, '12:38');
+          expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
-          expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
+          expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
               ['10_07_2022 05:58', '00:35', '01:00']);
 
-          DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
+          DateTimeDifferenceDurationData loadedDateTimeDifferenceDurationData =
               loadedTransferDataViewModel.dateTimeDifferenceDurationData;
 
-          expect(dateTimeDifferenceDurationData.screenDataType,
+          expect(loadedDateTimeDifferenceDurationData.screenDataType,
               ScreenDataType.dateTimeDifferenceDurationData);
           expect(
-              dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
+              loadedDateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr,
               "2022-07-13 16:09");
           expect(
-              dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
+              loadedDateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr,
               "2022-07-14 16:09:42.390753");
-          expect(dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
+          expect(loadedDateTimeDifferenceDurationData.dateTimeDifferenceDurationStr,
               "24:00");
           expect(
-              dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
+              loadedDateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
 
-          TimeCalculatorData timeCalculatorData =
+          TimeCalculatorData loadedTimeCalculatorData =
               loadedTransferDataViewModel.timeCalculatorData;
 
-          expect(timeCalculatorData.screenDataType,
+          expect(loadedTimeCalculatorData.screenDataType,
               ScreenDataType.timeCalculatorData);
-          expect(timeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
-          expect(timeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
-          expect(timeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+          expect(loadedTimeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
+          expect(loadedTimeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
+          expect(loadedTimeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
 
           expect(loadedTransferDataViewModel.getTransferDataMap(),
               transferDataMap);
