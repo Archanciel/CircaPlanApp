@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/widgets/result_date_time.dart';
 
-class DurationResultDateTime extends StatefulWidget {
+class DurationResultDateTime extends StatelessWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
 
@@ -18,49 +18,6 @@ class DurationResultDateTime extends StatefulWidget {
   int _durationSign;
 
   DurationResultDateTime({
-    required TextEditingController resultDateTimeController,
-    required TextEditingController durationTextFieldController,
-    required Function updateTransferDataMapFunction,
-    required Function durationChangeFunction,
-    required IconData durationIcon,
-    required Color durationIconColor,
-    required Color durationTextColor,
-    required int durationSign,
-  })  : _resultDateTimeController = resultDateTimeController,
-        _durationTextFieldController = durationTextFieldController,
-        _updateTransferDataMap = updateTransferDataMapFunction,
-        _durationChangeFunction = durationChangeFunction,
-        _durationIcon = durationIcon,
-        _durationIconColor = durationIconColor,
-        _durationTextColor = durationTextColor,
-        _durationSign = durationSign;
-
-  @override
-  State<DurationResultDateTime> createState() => _DurationResultDateTimeState(
-        resultDateTimeController: _resultDateTimeController,
-        durationTextFieldController: _durationTextFieldController,
-        updateTransferDataMapFunction: _updateTransferDataMap,
-        durationChangeFunction: _durationChangeFunction,
-        durationIcon: _durationIcon,
-        durationIconColor: _durationIconColor,
-        durationTextColor: _durationTextColor,
-        durationSign: _durationSign,
-      );
-}
-
-class _DurationResultDateTimeState extends State<DurationResultDateTime>
-    with ScreenMixin {
-  Color _durationTextColor;
-  final TextEditingController _resultDateTimeController;
-  final TextEditingController _durationTextFieldController;
-  final Function _updateTransferDataMap;
-  final Function _durationChangeFunction;
-
-  IconData _durationIcon;
-  Color _durationIconColor;
-  int _durationSign;
-
-  _DurationResultDateTimeState({
     required TextEditingController resultDateTimeController,
     required TextEditingController durationTextFieldController,
     required Function updateTransferDataMapFunction,
@@ -148,7 +105,7 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
                         fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                     keyboardType: TextInputType.datetime,
-                    controller: widget._durationTextFieldController,
+                    controller: _durationTextFieldController,
                     onChanged: (val) {
                       _durationChangeFunction(
                         _durationSign,
@@ -163,8 +120,8 @@ class _DurationResultDateTimeState extends State<DurationResultDateTime>
             ],
           ),
           ResultDateTime(
-            resultDateTimeController: widget._resultDateTimeController,
-            updateTransferDataMapFunction: widget._updateTransferDataMap,
+            resultDateTimeController: _resultDateTimeController,
+            updateTransferDataMapFunction: _updateTransferDataMap,
           ),
         ],
       ),
