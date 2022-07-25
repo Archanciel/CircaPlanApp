@@ -7,9 +7,18 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
 
+  /// TextEditingController passed to the included ResultDateTime
+  /// widget.
   final TextEditingController _resultDateTimeController;
+
+  /// TextEditingController passed to this DurationResultDateTime
+  /// widget.
   final TextEditingController _durationTextFieldController;
+
+  /// Function passed to the included ResultDateTime widget.
   final Function _updateTransferDataMap;
+
+  /// Function passed to this DurationResultDateTime widget.
   final Function _durationChangeFunction;
 
   IconData _durationIcon;
