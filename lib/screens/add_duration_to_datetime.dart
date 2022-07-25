@@ -3,7 +3,6 @@ import 'package:circa_plan/widgets/duration_result_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import 'package:circa_plan/widgets/result_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -44,24 +43,21 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             DateTime.now().toString(),
         _firstDurationIcon = transferDataMap['firstDurationIconData'] ?? Icons.add,
         _firstDurationIconColor =
-            transferDataMap['firstDurationIconColor'] ?? durationPositiveColor,
+            transferDataMap['firstDurationIconColor'] ?? DurationResultDateTime.durationPositiveColor,
         _firstDurationSign = transferDataMap['firstDurationSign'] ?? 1,
         _firstDurationTextColor =
-            transferDataMap['firstDurationTextColor'] ?? durationPositiveColor,
+            transferDataMap['firstDurationTextColor'] ?? DurationResultDateTime.durationPositiveColor,
         _firstDurationStr = transferDataMap['firstDurationStr'] ?? '00:00',
         _firstEndDateTimeStr = transferDataMap['firstEndDateTimeStr'] ?? '',
         _secondDurationIcon = transferDataMap['secondDurationIconData'] ?? Icons.add,
         _secondDurationIconColor =
-            transferDataMap['secondDurationIconColor'] ?? durationPositiveColor,
+            transferDataMap['secondDurationIconColor'] ?? DurationResultDateTime.durationPositiveColor,
         _secondDurationSign = transferDataMap['secondDurationSign'] ?? 1,
         _secondDurationTextColor =
-            transferDataMap['secondDurationTextColor'] ?? durationPositiveColor,
+            transferDataMap['secondDurationTextColor'] ?? DurationResultDateTime.durationPositiveColor,
         _secondDurationStr = transferDataMap['secondDurationStr'] ?? '00:00',
         _secondEndDateTimeStr = transferDataMap['secondEndDateTimeStr'] ?? '',
         super();
-
-  static Color durationPositiveColor = Colors.green.shade200;
-  static Color durationNegativeColor = Colors.red.shade200;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
