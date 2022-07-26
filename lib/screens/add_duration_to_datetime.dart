@@ -125,7 +125,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     super.dispose();
   }
 
-  Map<String, dynamic> updateTransferDataMap() {
+  Map<String, dynamic> _updateTransferDataMap() {
 
     _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
 
@@ -164,7 +164,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     setState(() {});
 
-    updateTransferDataMap();
+    _updateTransferDataMap();
   }
 
   void _handleSelectedDateTimeStr(String selectedDateTimeStr) {
@@ -255,7 +255,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
         setState(() {});
 
-        updateTransferDataMap();
+        _updateTransferDataMap();
       }
     }
   }
@@ -329,7 +329,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         _firstEndDateTimeTextFieldController,
                     durationTextFieldController:
                         _firstDurationTextFieldController,
-                    updateTransferDataMapFunction: updateTransferDataMap,
                     durationChangeFunction:
                         setFirstStateEndDateTimeForFirstDurationSign,
                     durationIcon: _firstDurationIcon,
@@ -343,7 +342,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         _secondEndDateTimeTextFieldController,
                     durationTextFieldController:
                         _secondDurationTextFieldController,
-                    updateTransferDataMapFunction: updateTransferDataMap,
                     durationChangeFunction:
                         setSecondStateEndDateTimeForSecondDurationSign,
                     durationIcon: _secondDurationIcon,

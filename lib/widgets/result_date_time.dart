@@ -4,13 +4,10 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 
 class ResultDateTime extends StatelessWidget with ScreenMixin {
   final TextEditingController _resultDateTimeController;
-  final Function _updateTransferDataMap;
 
   ResultDateTime({
     required TextEditingController resultDateTimeController,
-    required Function updateTransferDataMapFunction,
-  })  : _resultDateTimeController = resultDateTimeController,
-        _updateTransferDataMap = updateTransferDataMapFunction;
+  })  : _resultDateTimeController = resultDateTimeController;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,18 +41,7 @@ class ResultDateTime extends StatelessWidget with ScreenMixin {
                   color: appTextAndIconColor,
                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                   fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-              // The validator receives the text that the user has entered.
               controller: _resultDateTimeController,
-              onChanged: (val) {
-                // called when manually updating the TextField
-                // content. onChanged must be defined in order for
-                // pasting a value to the TextField to really
-                // modify the TextField value and store it
-                // in the screen navigation transfer
-                // data map.
-                _resultDateTimeController.text = val;
-                _updateTransferDataMap();
-              },
             ),
           ),
         ],

@@ -15,9 +15,6 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
   /// widget.
   final TextEditingController _durationTextFieldController;
 
-  /// Function passed to the included ResultDateTime widget.
-  final Function _updateTransferDataMap;
-
   /// Function passed to this DurationResultDateTime widget.
   final Function _durationChangeFunction;
 
@@ -32,11 +29,9 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
   ///                               called when the duration +/-
   ///                               button is pressed or when the
   ///                               duration value is changed.
-  /// updateTransferDataMapFunction
   DurationResultDateTime({
     required TextEditingController resultDateTimeController,
     required TextEditingController durationTextFieldController,
-    required Function updateTransferDataMapFunction,
     required Function durationChangeFunction,
     required IconData durationIcon,
     required Color durationIconColor,
@@ -44,7 +39,6 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
     required int durationSign,
   })  : _resultDateTimeController = resultDateTimeController,
         _durationTextFieldController = durationTextFieldController,
-        _updateTransferDataMap = updateTransferDataMapFunction,
         _durationChangeFunction = durationChangeFunction,
         _durationIcon = durationIcon,
         _durationIconColor = durationIconColor,
@@ -137,7 +131,6 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
           ),
           ResultDateTime(
             resultDateTimeController: _resultDateTimeController,
-            updateTransferDataMapFunction: _updateTransferDataMap,
           ),
         ],
       ),
