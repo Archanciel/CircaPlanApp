@@ -26,6 +26,13 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
   Color _durationTextColor;
   int _durationSign;
 
+  /// Constructor parms:
+  /// 
+  /// durationChangeFunction        function of the including scn
+  ///                               called when the duration +/-
+  ///                               button is pressed or when the
+  ///                               duration value is changed.
+  /// updateTransferDataMapFunction
   DurationResultDateTime({
     required TextEditingController resultDateTimeController,
     required TextEditingController durationTextFieldController,
