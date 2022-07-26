@@ -2,12 +2,11 @@ import 'dart:io';
 
 import 'package:enough_serialization/enough_serialization.dart';
 
+import '../constants.dart';
 import 'package:circa_plan/model/add_duration_to_datetime_data.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
-
-import '../constants.dart';
 
 /// Class including screen data instances and responsible of saving
 /// and loading data to and from json file.
