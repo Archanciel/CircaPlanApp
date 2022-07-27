@@ -9,6 +9,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final Function _handleDateTimeModification;
   final Map<String, dynamic> _transferDataMap;
   final Function(String) _handleSelectedDateTimeStr;
+  final double _topSelMenuPosition;
 
   EditableDateTime({
     required String dateTimeTitle,
@@ -16,11 +17,13 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     required Function handleDateTimeModificationFunction,
     required Map<String, dynamic> transferDataMap,
     required Function(String) handleSelectedDateTimeStrFunction,
+    required double topSelMenuPosition,
   })  : _dateTimeTitle = dateTimeTitle,
         _dateTimePickerController = dateTimePickerController,
         _handleDateTimeModification = handleDateTimeModificationFunction,
         _transferDataMap = transferDataMap,
-        _handleSelectedDateTimeStr = handleSelectedDateTimeStrFunction;
+        _handleSelectedDateTimeStr = handleSelectedDateTimeStrFunction,
+        _topSelMenuPosition = topSelMenuPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +110,9 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   context: context,
                   selectableStrItemLst: buildSortedAppDateTimeStrList(
                       transferDataMap: _transferDataMap, mostRecentFirst: true),
-                  posRectangleLTRB: const RelativeRect.fromLTRB(
+                  posRectangleLTRB: RelativeRect.fromLTRB(
                     1.0,
-                    130.0,
+                    _topSelMenuPosition,
                     0.0,
                     0.0,
                   ),

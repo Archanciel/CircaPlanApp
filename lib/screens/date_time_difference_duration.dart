@@ -256,52 +256,22 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     height: 15,
                   ),
                   EditableDateTime(
-                      dateTimeTitle: 'Start date time',
-                      dateTimePickerController: _startDateTimeController,
-                      handleDateTimeModificationFunction: _setStateDiffDuration,
-                      transferDataMap: _transferDataMap,
-                      handleSelectedDateTimeStrFunction:
-                          _handleSelectedStartDateTimeStr),
-                  Text(
-                    'End date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                    ),
+                    dateTimeTitle: 'Start date time',
+                    dateTimePickerController: _startDateTimeController,
+                    handleDateTimeModificationFunction: _setStateDiffDuration,
+                    transferDataMap: _transferDataMap,
+                    handleSelectedDateTimeStrFunction:
+                        _handleSelectedStartDateTimeStr,
+                    topSelMenuPosition: 135.0,
                   ),
-                  const SizedBox(
-                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
-                      ),
-                    ),
-                    child: DateTimePicker(
-                      type: DateTimePickerType.dateTime,
-                      dateMask: 'dd-MM-yyyy HH:mm',
-                      use24HourFormat: true,
-                      controller: _endDateTimeController,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                      icon: Icon(
-                        Icons.event,
-                        color: appTextAndIconColor,
-                        size: 30,
-                      ),
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                        color: appTextAndIconColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                      ),
-                      onChanged: (val) => _setStateDiffDuration(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
+                  EditableDateTime(
+                    dateTimeTitle: 'End date time',
+                    dateTimePickerController: _endDateTimeController,
+                    handleDateTimeModificationFunction: _setStateDiffDuration,
+                    transferDataMap: _transferDataMap,
+                    handleSelectedDateTimeStrFunction:
+                        _handleSelectedEndDateTimeStr,
+                    topSelMenuPosition: 200.0,
                   ),
                   Text(
                     'Duration',
@@ -427,60 +397,11 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   const SizedBox(
-                    height: 24, // val 24 is compliant with current value 5
+                    height: 50, // val 24 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          _endDateTimeController.text =
-                              DateTime.now().toString();
-                          _setStateDiffDuration();
-                        },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          displaySelPopupMenu(
-                            context: context,
-                            selectableStrItemLst: buildSortedAppDateTimeStrList(
-                                transferDataMap: _transferDataMap,
-                                mostRecentFirst: true),
-                            posRectangleLTRB: const RelativeRect.fromLTRB(
-                              1.0,
-                              200.0,
-                              0.0,
-                              0.0,
-                            ),
-                            handleSelectedItem: _handleSelectedEndDateTimeStr,
-                          );
-                        },
-                        child: const Text(
-                          'Sel',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(
-                    height: 24, // val 24 is compliant with current value 5
+                    height: 50, // val 24 is compliant with current value 5
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Row(
