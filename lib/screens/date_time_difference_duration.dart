@@ -309,64 +309,55 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                           ),
                         ],
                       ),
-                      Stack(
+                      Row(
                         children: [
-                          Align(
-                            child: Positioned(
-                              top: 0,
-                              child: Row(
-                                children: [
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            appElevatedButtonBackgroundColor,
-                                        shape: appElevatedButtonRoundedShape),
-                                    onPressed: () {
-                                      _startDateTimeController.text =
-                                          DateTime.now().toString();
-                                      _setStateDiffDuration();
-                                    },
-                                    child: const Text(
-                                      'Now',
-                                      style: TextStyle(
-                                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            appElevatedButtonBackgroundColor,
-                                        shape: appElevatedButtonRoundedShape),
-                                    onPressed: () {
-                                      displaySelPopupMenu(
-                                        context: context,
-                                        selectableStrItemLst:
-                                            buildSortedAppDateTimeStrList(
-                                                transferDataMap: _transferDataMap,
-                                                mostRecentFirst: true),
-                                        posRectangleLTRB:
-                                            const RelativeRect.fromLTRB(
-                                          1.0,
-                                          130.0,
-                                          0.0,
-                                          0.0,
-                                        ),
-                                        handleSelectedItem:
-                                            _handleSelectedStartDateTimeStr,
-                                      );
-                                    },
-                                    child: const Text(
-                                      'Sel',
-                                      style: TextStyle(
-                                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                          ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    appElevatedButtonBackgroundColor,
+                                shape: appElevatedButtonRoundedShape),
+                            onPressed: () {
+                              _startDateTimeController.text =
+                                  DateTime.now().toString();
+                              _setStateDiffDuration();
+                            },
+                            child: const Text(
+                              'Now',
+                              style: TextStyle(
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    appElevatedButtonBackgroundColor,
+                                shape: appElevatedButtonRoundedShape),
+                            onPressed: () {
+                              displaySelPopupMenu(
+                                context: context,
+                                selectableStrItemLst:
+                                    buildSortedAppDateTimeStrList(
+                                        transferDataMap: _transferDataMap,
+                                        mostRecentFirst: true),
+                                posRectangleLTRB:
+                                    const RelativeRect.fromLTRB(
+                                  1.0,
+                                  130.0,
+                                  0.0,
+                                  0.0,
+                                ),
+                                handleSelectedItem:
+                                    _handleSelectedStartDateTimeStr,
+                              );
+                            },
+                            child: const Text(
+                              'Sel',
+                              style: TextStyle(
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                               ),
                             ),
                           ),
