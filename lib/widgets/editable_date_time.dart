@@ -77,7 +77,8 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 25, //  required for correct Now and Sel buttons
+              //              positioning.
             ),
           ],
         ),

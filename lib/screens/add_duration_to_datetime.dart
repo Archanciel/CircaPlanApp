@@ -1,5 +1,6 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/duration_result_date_time.dart';
+import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -280,47 +281,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Start date time',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
-                      ),
-                    ),
-                    child: DateTimePicker(
-                      type: DateTimePickerType.dateTime,
-                      dateMask: 'dd-MM-yyyy HH:mm',
-                      use24HourFormat: true,
-                      controller: _startDateTimeController,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                      icon: Icon(
-                        Icons.event,
-                        color: appTextAndIconColor,
-                        size: 30,
-                      ),
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                        color: appTextAndIconColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                      ),
-                      onChanged: (val) => _computeEndDateTimes(),
-                    ),
+                  EditableDateTime(
+                    dateTimeTitle: 'Start date time',
+                    dateTimePickerController: _startDateTimeController,
+                    handleDateTimeModificationFunction: _computeEndDateTimes,
+                    transferDataMap: _transferDataMap,
+                    handleSelectedDateTimeStrFunction:
+                        _handleSelectedDateTimeStr,
+                    topSelMenuPosition: 135.0,
                   ),
                   // First duration addition/subtraction
                   DurationResultDateTime(
@@ -334,6 +302,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     durationIconColor: _firstDurationIconColor,
                     durationTextColor: _firstDurationTextColor,
                     durationSign: _firstDurationSign,
+                  ),
+                  const SizedBox( //  necessary since
+                  //                  EditableDateTime must
+                  //                  include a SizedBox of 25 
+                  //                  height ...
+                    height: 25,
                   ),
                   // Second duration addition/subtraction
                   DurationResultDateTime(
@@ -354,61 +328,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             Positioned(
               right: 0,
               child: Column(
-                children: [
-                  SizedBox(
-                    height: 26, // val 28 is compliant with current value 5
-//                                  of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          _startDateTimeController.text =
-                              DateTime.now().toString();
-                          _computeEndDateTimes();
-                        },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          displaySelPopupMenu(
-                            context: context,
-                            selectableStrItemLst: buildSortedAppDateTimeStrList(
-                                transferDataMap: _transferDataMap,
-                                mostRecentFirst: true),
-                            posRectangleLTRB: const RelativeRect.fromLTRB(
-                              1.0,
-                              135.0,
-                              0.0,
-                              0.0,
-                            ),
-                            handleSelectedItem: _handleSelectedDateTimeStr,
-                          );
-                        },
-                        child: const Text(
-                          'Sel',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                children: [],
               ),
             ),
             SizedBox(
