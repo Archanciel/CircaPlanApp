@@ -105,13 +105,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationTextFieldController = TextEditingController(
         text: _transferDataMap['firstDurationStr'] ?? '00:00');
     _firstEndDateTimeStr = _transferDataMap['firstEndDateTimeStr'] ?? '';
-    _firstEndDateTimeTextFieldController = TextEditingController(
-        text: _firstEndDateTimeStr);
+    _firstEndDateTimeTextFieldController =
+        TextEditingController(text: _firstEndDateTimeStr);
     _secondDurationTextFieldController = TextEditingController(
         text: _transferDataMap['secondDurationStr'] ?? '00:00');
     _secondEndDateTimeStr = _transferDataMap['secondEndDateTimeStr'] ?? '';
-    _secondEndDateTimeTextFieldController = TextEditingController(
-        text: _secondEndDateTimeStr);
+    _secondEndDateTimeTextFieldController =
+        TextEditingController(text: _secondEndDateTimeStr);
   }
 
   @override
@@ -126,7 +126,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   Map<String, dynamic> _updateTransferDataMap() {
-
     _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
 
     _transferDataMap['firstDurationIconData'] = _firstDurationIcon;
@@ -177,7 +176,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// Method passed to the first DurationResultDateTime widget
   /// and called when the duration +/- button is pressed or when
   /// the duration value is changed.
-  /// 
+  ///
   /// The important method parameter is durationSign which has
   /// a value of 1 or -1. The 3 other parameters will be removed
   /// once the transfer data map will be suppressed.
@@ -198,7 +197,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// Method passed to the second DurationResultDateTime widget
   /// and called when the duration +/- button is pressed or when
   /// the duration value is changed.
-  /// 
+  ///
   /// The important method parameter is durationSign which has
   /// a value of 1 or -1. The 3 other parameters will be removed
   /// once the transfer data map will be suppressed.
@@ -359,6 +358,55 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   SizedBox(
                     height: 26, // val 28 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          _startDateTimeController.text =
+                              DateTime.now().toString();
+                          _computeEndDateTimes();
+                        },
+                        child: const Text(
+                          'Now',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          displaySelPopupMenu(
+                            context: context,
+                            selectableStrItemLst: buildSortedAppDateTimeStrList(
+                                transferDataMap: _transferDataMap,
+                                mostRecentFirst: true),
+                            posRectangleLTRB: const RelativeRect.fromLTRB(
+                              1.0,
+                              135.0,
+                              0.0,
+                              0.0,
+                            ),
+                            handleSelectedItem: _handleSelectedDateTimeStr,
+                          );
+                        },
+                        child: const Text(
+                          'Sel',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
