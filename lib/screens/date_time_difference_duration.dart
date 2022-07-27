@@ -257,17 +257,13 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Start date time',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Start date time',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+                    ),
                   ),
                   const SizedBox(
                     height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
@@ -302,17 +298,13 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 25,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'End date time',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'End date time',
+                    style: TextStyle(
+                      color: appLabelColor,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+                    ),
                   ),
                   const SizedBox(
                     height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
