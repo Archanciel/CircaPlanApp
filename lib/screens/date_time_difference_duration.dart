@@ -256,6 +256,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     height: 15,
                   ),
                   EditableDateTime(
+                      dateTimeTitle: 'Start date time',
                       dateTimePickerController: _startDateTimeController,
                       handleDateTimeModificationFunction: _setStateDiffDuration,
                       transferDataMap: _transferDataMap,

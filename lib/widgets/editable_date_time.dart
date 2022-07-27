@@ -4,21 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 class EditableDateTime extends StatelessWidget with ScreenMixin {
+  final String _dateTimeTitle;
   final TextEditingController _dateTimePickerController;
   final Function _handleDateTimeModification;
   final Map<String, dynamic> _transferDataMap;
   final Function(String) _handleSelectedDateTimeStr;
 
   EditableDateTime({
+    required String dateTimeTitle,
     required TextEditingController dateTimePickerController,
     required Function handleDateTimeModificationFunction,
     required Map<String, dynamic> transferDataMap,
     required Function(String) handleSelectedDateTimeStrFunction,
-  })  : _dateTimePickerController = dateTimePickerController,
+  })  : _dateTimeTitle = dateTimeTitle,
+        _dateTimePickerController = dateTimePickerController,
         _handleDateTimeModification = handleDateTimeModificationFunction,
         _transferDataMap = transferDataMap,
         _handleSelectedDateTimeStr = handleSelectedDateTimeStrFunction;
-        
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,7 +31,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Start date time',
+              _dateTimeTitle,
               style: TextStyle(
                 color: appLabelColor,
                 fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
