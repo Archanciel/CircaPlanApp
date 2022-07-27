@@ -1,5 +1,6 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
+import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -254,117 +255,12 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Start date time',
-                            style: TextStyle(
-                              color: appLabelColor,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                          ),
-                          SizedBox(
-                            // Required to fix Row exception
-                            // layoutConstraints.maxWidth < double.infinity.
-                            width: 155,
-                            child: Theme(
-                              data: Theme.of(context).copyWith(
-                                textSelectionTheme: TextSelectionThemeData(
-                                  selectionColor: selectionColor,
-                                ),
-                              ),
-                              child: DateTimePicker(
-                                type: DateTimePickerType.dateTime,
-                                dateMask: 'dd-MM-yyyy HH:mm',
-                                use24HourFormat: true,
-                                controller: _startDateTimeController,
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2100),
-                                icon: Icon(
-                                  Icons.event,
-                                  color: appTextAndIconColor,
-                                  size: 30,
-                                ),
-                                decoration: const InputDecoration.collapsed(
-                                    hintText: ''),
-                                style: TextStyle(
-                                  color: appTextAndIconColor,
-                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                                ),
-                                onChanged: (val) => _setStateDiffDuration(),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    appElevatedButtonBackgroundColor,
-                                shape: appElevatedButtonRoundedShape),
-                            onPressed: () {
-                              _startDateTimeController.text =
-                                  DateTime.now().toString();
-                              _setStateDiffDuration();
-                            },
-                            child: const Text(
-                              'Now',
-                              style: TextStyle(
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    appElevatedButtonBackgroundColor,
-                                shape: appElevatedButtonRoundedShape),
-                            onPressed: () {
-                              displaySelPopupMenu(
-                                context: context,
-                                selectableStrItemLst:
-                                    buildSortedAppDateTimeStrList(
-                                        transferDataMap: _transferDataMap,
-                                        mostRecentFirst: true),
-                                posRectangleLTRB:
-                                    const RelativeRect.fromLTRB(
-                                  1.0,
-                                  130.0,
-                                  0.0,
-                                  0.0,
-                                ),
-                                handleSelectedItem:
-                                    _handleSelectedStartDateTimeStr,
-                              );
-                            },
-                            child: const Text(
-                              'Sel',
-                              style: TextStyle(
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  EditableDateTime(
+                      dateTimePickerController: _startDateTimeController,
+                      handleDateTimeModificationFunction: _setStateDiffDuration,
+                      transferDataMap: _transferDataMap,
+                      handleSelectedDateTimeStrFunction:
+                          _handleSelectedStartDateTimeStr),
                   Text(
                     'End date time',
                     style: TextStyle(
