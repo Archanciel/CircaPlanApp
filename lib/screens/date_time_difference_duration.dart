@@ -254,46 +254,125 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  Text(
-                    'Start date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Start date time',
+                            style: TextStyle(
+                              color: appLabelColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
+                          ),
+                          SizedBox(
+                            // Required to fix Row exception
+                            // layoutConstraints.maxWidth < double.infinity.
+                            width: 155,
+                            child: Theme(
+                              data: Theme.of(context).copyWith(
+                                textSelectionTheme: TextSelectionThemeData(
+                                  selectionColor: selectionColor,
+                                ),
+                              ),
+                              child: DateTimePicker(
+                                type: DateTimePickerType.dateTime,
+                                dateMask: 'dd-MM-yyyy HH:mm',
+                                use24HourFormat: true,
+                                controller: _startDateTimeController,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                                icon: Icon(
+                                  Icons.event,
+                                  color: appTextAndIconColor,
+                                  size: 30,
+                                ),
+                                decoration: const InputDecoration.collapsed(
+                                    hintText: ''),
+                                style: TextStyle(
+                                  color: appTextAndIconColor,
+                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+                                ),
+                                onChanged: (val) => _setStateDiffDuration(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                        ],
                       ),
-                    ),
-                    child: DateTimePicker(
-                      type: DateTimePickerType.dateTime,
-                      dateMask: 'dd-MM-yyyy HH:mm',
-                      use24HourFormat: true,
-                      controller: _startDateTimeController,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                      icon: Icon(
-                        Icons.event,
-                        color: appTextAndIconColor,
-                        size: 30,
+                      Stack(
+                        children: [
+                          Align(
+                            child: Positioned(
+                              top: 0,
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            appElevatedButtonBackgroundColor,
+                                        shape: appElevatedButtonRoundedShape),
+                                    onPressed: () {
+                                      _startDateTimeController.text =
+                                          DateTime.now().toString();
+                                      _setStateDiffDuration();
+                                    },
+                                    child: const Text(
+                                      'Now',
+                                      style: TextStyle(
+                                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            appElevatedButtonBackgroundColor,
+                                        shape: appElevatedButtonRoundedShape),
+                                    onPressed: () {
+                                      displaySelPopupMenu(
+                                        context: context,
+                                        selectableStrItemLst:
+                                            buildSortedAppDateTimeStrList(
+                                                transferDataMap: _transferDataMap,
+                                                mostRecentFirst: true),
+                                        posRectangleLTRB:
+                                            const RelativeRect.fromLTRB(
+                                          1.0,
+                                          130.0,
+                                          0.0,
+                                          0.0,
+                                        ),
+                                        handleSelectedItem:
+                                            _handleSelectedStartDateTimeStr,
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Sel',
+                                      style: TextStyle(
+                                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                        color: appTextAndIconColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                      ),
-                      onChanged: (val) => _setStateDiffDuration(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
+                    ],
                   ),
                   Text(
                     'End date time',
@@ -456,57 +535,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 26, // val 26 is compliant with current value 5
+                    height: 72, // val 26 is compliant with current value 5
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          _startDateTimeController.text =
-                              DateTime.now().toString();
-                          _setStateDiffDuration();
-                        },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          displaySelPopupMenu(
-                            context: context,
-                            selectableStrItemLst: buildSortedAppDateTimeStrList(
-                                transferDataMap: _transferDataMap,
-                                mostRecentFirst: true),
-                            posRectangleLTRB: const RelativeRect.fromLTRB(
-                              1.0,
-                              130.0,
-                              0.0,
-                              0.0,
-                            ),
-                            handleSelectedItem: _handleSelectedStartDateTimeStr,
-                          );
-                        },
-                        child: const Text(
-                          'Sel',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                   const SizedBox(
                     height: 24, // val 24 is compliant with current value 5

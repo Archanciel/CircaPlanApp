@@ -360,55 +360,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     height: 26, // val 28 is compliant with current value 5
 //                                  of APP_LABEL_TO_TEXT_DISTANCE
                   ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          _startDateTimeController.text =
-                              DateTime.now().toString();
-                          _computeEndDateTimes();
-                        },
-                        child: const Text(
-                          'Now',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          displaySelPopupMenu(
-                            context: context,
-                            selectableStrItemLst: buildSortedAppDateTimeStrList(
-                                transferDataMap: _transferDataMap,
-                                mostRecentFirst: true),
-                            posRectangleLTRB: const RelativeRect.fromLTRB(
-                              1.0,
-                              130.0,
-                              0.0,
-                              0.0,
-                            ),
-                            handleSelectedItem: _handleSelectedDateTimeStr,
-                          );
-                        },
-                        child: const Text(
-                          'Sel',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
