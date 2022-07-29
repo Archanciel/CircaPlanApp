@@ -80,95 +80,93 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
             const SizedBox(
               height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
             ),
-            SizedBox(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 55,
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          cursorColor: appTextAndIconColor,
-                        ),
-                      ),
-                      child: GestureDetector(
-                        child: TextField(
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          controller: _durationTextFieldController,
-                          readOnly: true,
-                        ),
-                        onDoubleTap: () async {
-                          await copyToClipboard(
-                              context: context,
-                              controller: _durationTextFieldController);
-                        },
+            Row(
+              children: [
+                SizedBox(
+                  width: 55,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        cursorColor: appTextAndIconColor,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 55,
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          cursorColor: appTextAndIconColor,
-                        ),
+                    child: GestureDetector(
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        controller: _durationTextFieldController,
+                        readOnly: true,
                       ),
-                      child: GestureDetector(
-                        child: TextField(
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          controller: _addTimeTextFieldController,
-                          readOnly: true,
-                        ),
-                        onDoubleTap: () async {
-                          await copyToClipboard(
-                              context: context,
-                              controller: _addTimeTextFieldController);
-                        },
-                      ),
+                      onDoubleTap: () async {
+                        await copyToClipboard(
+                            context: context,
+                            controller: _durationTextFieldController);
+                      },
                     ),
                   ),
-                  SizedBox(
-                    width: 55,
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          cursorColor: appTextAndIconColor,
-                        ),
-                      ),
-                      child: GestureDetector(
-                        child: TextField(
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          controller: _finalDurationTextFieldController,
-                          readOnly: true,
-                        ),
-                        onDoubleTap: () async {
-                          await copyToClipboard(
-                              context: context,
-                              controller: _finalDurationTextFieldController);
-                        },
+                ),
+                SizedBox(
+                  width: 55,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        cursorColor: appTextAndIconColor,
                       ),
                     ),
+                    child: GestureDetector(
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        controller: _addTimeTextFieldController,
+                        readOnly: true,
+                      ),
+                      onDoubleTap: () async {
+                        await copyToClipboard(
+                            context: context,
+                            controller: _addTimeTextFieldController);
+                      },
+                    ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: 55,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: selectionColor,
+                        cursorColor: appTextAndIconColor,
+                      ),
+                    ),
+                    child: GestureDetector(
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        controller: _finalDurationTextFieldController,
+                        readOnly: true,
+                      ),
+                      onDoubleTap: () async {
+                        await copyToClipboard(
+                            context: context,
+                            controller: _finalDurationTextFieldController);
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 25, //  required for correct Now and Sel buttons
