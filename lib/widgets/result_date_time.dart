@@ -42,6 +42,7 @@ class ResultDateTime extends StatelessWidget with ScreenMixin {
                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                   fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
               controller: _resultDateTimeController,
+              readOnly: true,
             ),
           ),
         ],
