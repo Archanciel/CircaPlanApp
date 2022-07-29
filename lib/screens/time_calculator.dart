@@ -60,7 +60,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   late TextEditingController _firstTimeTextFieldController;
   late TextEditingController _secondTimeTextFieldController;
-  late TextEditingController _resultTextFieldController;
+  late TextEditingController _resultDDHHMMTextFieldController;
+  late TextEditingController _resultHHMMTextFieldController;
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -74,7 +75,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         text: _transferDataMap['firstTimeStr'] ?? '00:00:00');
     _secondTimeTextFieldController = TextEditingController(
         text: _transferDataMap['secondTimeStr'] ?? '00:00:00');
-    _resultTextFieldController =
+    _resultDDHHMMTextFieldController =
         TextEditingController(text: _transferDataMap['resultTimeStr'] ?? '');
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
   }
@@ -83,7 +84,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   void dispose() {
     _firstTimeTextFieldController.dispose();
     _secondTimeTextFieldController.dispose();
-    _resultTextFieldController.dispose();
+    _resultDDHHMMTextFieldController.dispose();
 
     super.dispose();
   }
@@ -106,7 +107,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _secondTimeStr = '00:00:00';
     _secondTimeTextFieldController.text = _secondTimeStr;
     _resultTimeStr = '';
-    _resultTextFieldController.text = _resultTimeStr;
+    _resultDDHHMMTextFieldController.text = _resultTimeStr;
 
     setState(() {});
 
@@ -148,11 +149,11 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     if (resultDuration.inDays > 0) {
       resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
     } else {
-      resultTimeStr = '${resultDuration.ddHHmm()}';
+      resultTimeStr = resultDuration.ddHHmm();
     }
 
     _resultTimeStr = resultTimeStr;
-    _resultTextFieldController.text = resultTimeStr;
+    _resultDDHHMMTextFieldController.text = resultTimeStr;
 
     setState(() {});
 
@@ -314,7 +315,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                                 fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                                 fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             // The validator receives the text that the user has entered.
-                            controller: _resultTextFieldController,
+                            controller: _resultDDHHMMTextFieldController,
                             readOnly: true,
                           ),
                         ),
@@ -345,7 +346,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                                 fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                                 fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             // The validator receives the text that the user has entered.
-                            controller: _resultTextFieldController,
+                            controller: _resultDDHHMMTextFieldController,
                             readOnly: true,
                           ),
                         ),
