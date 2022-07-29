@@ -22,7 +22,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
     required Function deleteAddedTimeDurationFunction,
   })  : _dateTimeTitle = dateTimeTitle,
         _durationTextFieldController = durationTextFieldController,
-        _addTimeTextFieldController = addTimeDialogController,
+        _addTimeTextFieldController = addTimeTextFieldController,
         _addTimeDialogController = addTimeDialogController,
         _finalDurationTextFieldController = finalDurationTextFieldController,
         _addPosOrNegTimeToCurrentDuration =

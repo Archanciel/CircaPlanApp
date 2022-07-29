@@ -1,6 +1,7 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
+import 'package:circa_plan/widgets/editable_duration.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -273,101 +274,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _handleSelectedEndDateTimeStr,
                     topSelMenuPosition: 200.0,
                   ),
-                  Text(
-                    'Duration',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 55,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            keyboardType: TextInputType.datetime,
-                            controller: _durationTextFieldController,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 55,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            keyboardType: TextInputType.datetime,
-                            controller: _addTimeTextFieldController,
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content. Although we do not edit this field
-                              // manually, onChanged must be defined aswell as
-                              // the controller in order for pasting a value to
-                              // the TextField to really modify the TextField
-                              // value.
-                              _addTimeTextFieldController.text = val;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 55,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            keyboardType: TextInputType.datetime,
-                            controller: _finalDurationTextFieldController,
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content. Although we do not edit this field
-                              // manually, onChanged must be defined aswell as
-                              // the controller in order for pasting a value to
-                              // the TextField to really modify the TextField
-                              // value.
-                              _finalDurationTextFieldController.text = val;
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
+                  EditableDuration(
+                    dateTimeTitle: 'Duration',
+                    durationTextFieldController: _durationTextFieldController,
+                    addTimeTextFieldController: _addTimeTextFieldController,
+                    addTimeDialogController: _addTimeDialogController,
+                    finalDurationTextFieldController: _finalDurationTextFieldController,
+                    addPosOrNegTimeToCurrentDurationFunction: _addPosOrNegTimeToCurrentDuration,
+                    deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
                   ),
                 ],
               ),
@@ -387,47 +301,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 50, // val 24 is compliant with current value 5
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  Row(
-                    children: [
-                      Tooltip(
-                        message: 'Used to add positive or negative time.',
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: appElevatedButtonBackgroundColor,
-                              shape: appElevatedButtonRoundedShape),
-                          onPressed: () async {
-                            final timeStr = await openTextInputDialog();
-                            if (timeStr == null || timeStr.isEmpty) return;
-
-                            _addPosOrNegTimeToCurrentDuration(context, timeStr);
-                          },
-                          child: const Text(
-                            'Add',
-                            style: TextStyle(
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: appElevatedButtonBackgroundColor,
-                            shape: appElevatedButtonRoundedShape),
-                        onPressed: () {
-                          _deleteAddedTimeDuration();
-                        },
-                        child: const Text(
-                          'Del',
-                          style: TextStyle(
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
