@@ -293,35 +293,32 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   const SizedBox(
                     height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                   ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
-                        // commenting cursorColor discourage manually
-                        // editing the TextField !
-                        // cursorColor: appTextAndIconColor,
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 175,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              // commenting cursorColor discourage manually
+                              // editing the TextField !
+                              // cursorColor: appTextAndIconColor,
+                            ),
+                          ),
+                          child: TextField(
+                            decoration: const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: appTextAndIconColor,
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                            // The validator receives the text that the user has entered.
+                            controller: _resultTextFieldController,
+                            readOnly: true,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: TextField(
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                      // The validator receives the text that the user has entered.
-                      controller: _resultTextFieldController,
-                      onChanged: (val) {
-                        // called when manually updating the TextField
-                        // content. onChanged must be defined in order for
-                        // pasting a value to the TextField to really
-                        // modify the TextField value and store it
-                        // in the screen navigation transfer
-                        // data map.
-                        _resultTextFieldController.text = val;
-                        _resultTimeStr = val;
-                        _updateTransferDataMap();
-                      },
-                    ),
+                    ],
                   ),
                 ],
               ),
