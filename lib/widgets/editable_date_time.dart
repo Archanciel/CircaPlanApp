@@ -7,7 +7,10 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _dateTimePickerController;
   final Function _handleDateTimeModification;
+
+  // used to fill the display selection popup menu
   final Map<String, dynamic> _transferDataMap;
+
   final Function(String) _handleSelectedDateTimeStr;
   final double _topSelMenuPosition;
 
