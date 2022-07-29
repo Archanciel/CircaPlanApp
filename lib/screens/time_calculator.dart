@@ -296,37 +296,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   Row(
                     children: [
                       SizedBox(
-                        width: 75,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              // commenting cursorColor discourage manually
-                              // editing the TextField !
-                              // cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            // The validator receives the text that the user has entered.
-                            controller: _resultTextFieldController,
-                            readOnly: true,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '= ',
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                      ),
-                      SizedBox(
                         width: 175,
                         child: Theme(
                           data: Theme.of(context).copyWith(
@@ -338,8 +307,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             ),
                           ),
                           child: TextField(
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
+                            decoration: const InputDecoration.collapsed(hintText: ''),
                             style: TextStyle(
                                 color: appTextAndIconColor,
                                 fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
