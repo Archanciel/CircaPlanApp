@@ -312,11 +312,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                               // the TextField to really modify the TextField
                               // value.
                               _durationTextFieldController.text = val;
-
-                              // next two instructions required for the changes
-                              // to be memorized in screen navigation transfer
-                              // data
-                              _durationStr = val;
                             },
                           ),
                         ),
@@ -347,7 +342,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                               // the TextField to really modify the TextField
                               // value.
                               _addTimeTextFieldController.text = val;
-                              _addTimeStr = val;
                             },
                           ),
                         ),
@@ -378,7 +372,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                               // the TextField to really modify the TextField
                               // value.
                               _finalDurationTextFieldController.text = val;
-                              _finalDurationStr = val;
                             },
                           ),
                         ),
