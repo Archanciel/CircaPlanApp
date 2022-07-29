@@ -1,6 +1,8 @@
+import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:flutter/services.dart';
 
 class EditableDuration extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
@@ -98,6 +100,19 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: _durationTextFieldController,
+                        onTap: () async {
+                          _durationTextFieldController.selection =
+                              TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset: _durationTextFieldController
+                                      .value.text.length);
+                          await Clipboard.setData(ClipboardData(
+                              text: _durationTextFieldController.text));
+                          final CircadianSnackBar snackBar = CircadianSnackBar(
+                              message:
+                                  '${_durationTextFieldController.text} copied to clipboard');
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
                         readOnly: true,
                       ),
                     ),
