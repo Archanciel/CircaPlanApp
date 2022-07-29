@@ -310,17 +310,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                       // The validator receives the text that the user has entered.
                       controller: _resultTextFieldController,
-                      onChanged: (val) {
-                        // called when manually updating the TextField
-                        // content. onChanged must be defined in order for
-                        // pasting a value to the TextField to really
-                        // modify the TextField value and store it
-                        // in the screen navigation transfer
-                        // data map.
-                        _resultTextFieldController.text = val;
-                        _resultTimeStr = val;
-                        _updateTransferDataMap();
-                      },
+                      readOnly: true,
                     ),
                   ),
                 ],
