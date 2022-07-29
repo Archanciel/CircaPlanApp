@@ -304,15 +304,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                                 fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                             keyboardType: TextInputType.datetime,
                             controller: _durationTextFieldController,
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content. Although we do not edit this field
-                              // manually, onChanged must be defined aswell as
-                              // the controller in order for pasting a value to
-                              // the TextField to really modify the TextField
-                              // value.
-                              _durationTextFieldController.text = val;
-                            },
                           ),
                         ),
                       ),
