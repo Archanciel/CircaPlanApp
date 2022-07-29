@@ -641,23 +641,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                   fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
-                              keyboardType: TextInputType.datetime,
                               controller: _previousDateTimeController,
-                              onChanged: (val) {
-                                // called when manually updating the TextField
-                                // content. Although we do not edit this field
-                                // manually, onChanged must be defined aswell as
-                                // the controller in order for pasting a value to
-                                // the TextField to really modify the TextField
-                                // value.
-                                _previousDateTimeController.text = val;
-
-                                // next two instructions required for the changes
-                                // to be memorized in screen navigation transfer
-                                // data
-                                _previousDateTimeStr = val;
-                                _updateTransferDataMap();
-                              },
+                              readOnly: true,
                             ),
                           ),
                         ),
@@ -685,23 +670,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                   fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
-                              keyboardType: TextInputType.datetime,
                               controller: _beforePreviousDateTimeController,
-                              onChanged: (val) {
-                                // called when manually updating the TextField
-                                // content. Although we do not edit this field
-                                // manually, onChanged must be defined aswell as
-                                // the controller in order for pasting a value to
-                                // the TextField to really modify the TextField
-                                // value.
-                                _beforePreviousDateTimeController.text = val;
-
-                                // next two instructions required for the changes
-                                // to be memorized in screen navigation transfer
-                                // data
-                                _beforePreviousDateTimeStr = val;
-                                _updateTransferDataMap();
-                              },
+                              readOnly: true,
                             ),
                           ),
                         ),
@@ -744,21 +714,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 const InputDecoration.collapsed(hintText: ''),
                             keyboardType: TextInputType.datetime,
                             controller: _currentSleepDurationController,
-                            onChanged: (val) {
-                              // called when manually updating the TextField
-                              // content. Although we do not edit this field
-                              // manually, onChanged must be defined aswell as
-                              // the controller in order for pasting a value to
-                              // the TextField to really modify the TextField
-                              // value.
-                              _currentSleepDurationController.text = val;
-
-                              // next two instructions required for the changes
-                              // to be memorized in screen navigation transfer
-                              // data
-                              _currentSleepDurationStr = val;
-                              _updateTransferDataMap();
-                            },
+                            readOnly: true,
                           ),
                         ),
                       ),
@@ -796,21 +752,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             const InputDecoration.collapsed(hintText: ''),
                         keyboardType: TextInputType.datetime,
                         controller: _currentWakeUpDurationController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. Although we do not edit this field
-                          // manually, onChanged must be defined aswell as
-                          // the controller in order for pasting a value to
-                          // the TextField to really modify the TextField
-                          // value.
-                          _currentWakeUpDurationController.text = val;
-
-                          // next two instructions required for the changes
-                          // to be memorized in screen navigation transfer
-                          // data
-                          _currentWakeUpDurationStr = val;
-                          _updateTransferDataMap();
-                        },
+                        readOnly: true,
                       ),
                     ),
                   ),
@@ -846,21 +788,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             const InputDecoration.collapsed(hintText: ''),
                         keyboardType: TextInputType.datetime,
                         controller: _currentTotalDurationController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. Although we do not edit this field
-                          // manually, onChanged must be defined aswell as
-                          // the controller in order for pasting a value to
-                          // the TextField to really modify the TextField
-                          // value.
-                          _currentTotalDurationController.text = val;
-
-                          // next two instructions required for the changes
-                          // to be memorized in screen navigation transfer
-                          // data
-                          _currentTotalDurationStr = val;
-                          _updateTransferDataMap();
-                        },
+                        readOnly: true,
                       ),
                     ),
                   ),
@@ -896,8 +824,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
-                        keyboardType: TextInputType.datetime,
                         controller: _sleepWakeUpHistoryController,
+                        readOnly: true,
                       ),
                     ),
                   ),
