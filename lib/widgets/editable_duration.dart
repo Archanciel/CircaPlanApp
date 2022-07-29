@@ -92,15 +92,18 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                           cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _durationTextFieldController,
-                        onTap: () async {
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: _durationTextFieldController,
+                          readOnly: true,
+                        ),
+                        onDoubleTap: () async {
                           _durationTextFieldController.selection =
                               TextSelection(
                                   baseOffset: 0,
@@ -113,7 +116,6 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                                   '${_durationTextFieldController.text} copied to clipboard');
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
-                        readOnly: true,
                       ),
                     ),
                   ),
