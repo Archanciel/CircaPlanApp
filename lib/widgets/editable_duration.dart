@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -98,8 +97,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                             color: appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        keyboardType: TextInputType.datetime,
                         controller: _durationTextFieldController,
+                        readOnly: true,
                       ),
                     ),
                   ),
@@ -119,17 +118,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                             color: appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        keyboardType: TextInputType.datetime,
                         controller: _addTimeTextFieldController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. Although we do not edit this field
-                          // manually, onChanged must be defined aswell as
-                          // the controller in order for pasting a value to
-                          // the TextField to really modify the TextField
-                          // value.
-                          _addTimeTextFieldController.text = val;
-                        },
+                        readOnly: true,
                       ),
                     ),
                   ),
@@ -149,17 +139,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                             color: appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        keyboardType: TextInputType.datetime,
                         controller: _finalDurationTextFieldController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. Although we do not edit this field
-                          // manually, onChanged must be defined aswell as
-                          // the controller in order for pasting a value to
-                          // the TextField to really modify the TextField
-                          // value.
-                          _finalDurationTextFieldController.text = val;
-                        },
+                        readOnly: true,
                       ),
                     ),
                   ),
