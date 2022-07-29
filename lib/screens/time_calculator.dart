@@ -1,6 +1,7 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 
@@ -198,24 +199,38 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        keyboardType: TextInputType.datetime,
-                        controller: _firstTimeTextFieldController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. onChanged must be defined in order for
-                          // pasting a value to the TextField to really
-                          // modify the TextField value and store it
-                          // in the screen navigation transfer
-                          // data map.
-                          _firstTimeStr = val;
-                          _updateTransferDataMap();
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          keyboardType: TextInputType.datetime,
+                          controller: _firstTimeTextFieldController,
+                          onChanged: (val) {
+                            // called when manually updating the TextField
+                            // content. onChanged must be defined in order for
+                            // pasting a value to the TextField to really
+                            // modify the TextField value and store it
+                            // in the screen navigation transfer
+                            // data map.
+                            _firstTimeStr = val;
+                            _updateTransferDataMap();
+                          },
+                        ),
+                        onDoubleTap: () async {
+                          _firstTimeTextFieldController.selection =
+                              TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset: _firstTimeTextFieldController
+                                      .value.text.length);
+                          ClipboardData? cdata =
+                              await Clipboard.getData(Clipboard.kTextPlain);
+                          String copiedtext =
+                              (cdata != null) ? cdata.text ?? '' : '';
+                          _firstTimeTextFieldController.text = copiedtext;
                         },
                       ),
                     ),
