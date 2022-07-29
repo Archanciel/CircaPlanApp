@@ -104,17 +104,9 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                           readOnly: true,
                         ),
                         onDoubleTap: () async {
-                          _durationTextFieldController.selection =
-                              TextSelection(
-                                  baseOffset: 0,
-                                  extentOffset: _durationTextFieldController
-                                      .value.text.length);
-                          await Clipboard.setData(ClipboardData(
-                              text: _durationTextFieldController.text));
-                          final CircadianSnackBar snackBar = CircadianSnackBar(
-                              message:
-                                  '${_durationTextFieldController.text} copied to clipboard');
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          await copyToClipboard(
+                              context: context,
+                              controller: _durationTextFieldController);
                         },
                       ),
                     ),
@@ -128,15 +120,22 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                           cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _addTimeTextFieldController,
-                        readOnly: true,
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: _addTimeTextFieldController,
+                          readOnly: true,
+                        ),
+                        onDoubleTap: () async {
+                          await copyToClipboard(
+                              context: context,
+                              controller: _addTimeTextFieldController);
+                        },
                       ),
                     ),
                   ),
@@ -149,15 +148,22 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                           cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _finalDurationTextFieldController,
-                        readOnly: true,
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: _finalDurationTextFieldController,
+                          readOnly: true,
+                        ),
+                        onDoubleTap: () async {
+                          await copyToClipboard(
+                              context: context,
+                              controller: _finalDurationTextFieldController);
+                        },
                       ),
                     ),
                   ),
@@ -212,5 +218,16 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
         ),
       ],
     );
+  }
+
+  Future<void> copyToClipboard(
+      {required BuildContext context,
+      required TextEditingController controller}) async {
+    controller.selection = TextSelection(
+        baseOffset: 0, extentOffset: controller.value.text.length);
+    await Clipboard.setData(ClipboardData(text: controller.text));
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: '${controller.text} copied to clipboard');
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

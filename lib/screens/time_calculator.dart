@@ -221,16 +221,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           },
                         ),
                         onDoubleTap: () async {
-                          _firstTimeTextFieldController.selection =
-                              TextSelection(
-                                  baseOffset: 0,
-                                  extentOffset: _firstTimeTextFieldController
-                                      .value.text.length);
-                          ClipboardData? cdata =
-                              await Clipboard.getData(Clipboard.kTextPlain);
-                          String copiedtext =
-                              (cdata != null) ? cdata.text ?? '' : '';
-                          _firstTimeTextFieldController.text = copiedtext;
+                          await pasteFromClipboard(
+                            controller: _firstTimeTextFieldController,
+                          );
                         },
                       ),
                     ),
@@ -257,24 +250,31 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        keyboardType: TextInputType.datetime,
-                        controller: _secondTimeTextFieldController,
-                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content. onChanged must be defined in order for
-                          // pasting a value to the TextField to really
-                          // modify the TextField value and store it
-                          // in the screen navigation transfer
-                          // data map.
-                          _secondTimeStr = val;
-                          _updateTransferDataMap();
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          keyboardType: TextInputType.datetime,
+                          controller: _secondTimeTextFieldController,
+                          onChanged: (val) {
+                            // called when manually updating the TextField
+                            // content. onChanged must be defined in order for
+                            // pasting a value to the TextField to really
+                            // modify the TextField value and store it
+                            // in the screen navigation transfer
+                            // data map.
+                            _secondTimeStr = val;
+                            _updateTransferDataMap();
+                          },
+                        ),
+                        onDoubleTap: () async {
+                          await pasteFromClipboard(
+                            controller: _secondTimeTextFieldController,
+                          );
                         },
                       ),
                     ),
@@ -411,5 +411,14 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         ),
       ),
     );
+  }
+
+  Future<void> pasteFromClipboard(
+      {required TextEditingController controller}) async {
+    controller.selection = TextSelection(
+        baseOffset: 0, extentOffset: controller.value.text.length);
+    ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
+    String copiedtext = (cdata != null) ? cdata.text ?? '' : '';
+    controller.text = copiedtext;
   }
 }
