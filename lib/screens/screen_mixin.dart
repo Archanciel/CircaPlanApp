@@ -1,4 +1,6 @@
+import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 mixin ScreenMixin {
@@ -229,5 +231,16 @@ mixin ScreenMixin {
         handleSelectedItem(selectedItemStr);
       },
     );
+  }
+
+  Future<void> copyToClipboard(
+      {required BuildContext context,
+      required TextEditingController controller}) async {
+    controller.selection = TextSelection(
+        baseOffset: 0, extentOffset: controller.value.text.length);
+    await Clipboard.setData(ClipboardData(text: controller.text));
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: '${controller.text} copied to clipboard');
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
