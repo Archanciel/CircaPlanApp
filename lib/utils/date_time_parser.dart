@@ -10,7 +10,7 @@ extension FormattedDayHourMinute on Duration {
     String minusStr = '';
 
     if (this.inMinutes < 0) {
-        minusStr = '-';
+      minusStr = '-';
     }
 
     return "$minusStr${this.inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}";
@@ -139,8 +139,8 @@ class DateTimeParser {
     return null;
   }
 
-  /// Parses the passed hourMinuteStr and returns a Duration instanciated
-  /// with the parsed hour and minute values.
+  /// Parses the passed dayHourMinuteStr and returns a Duration
+  /// instanciated with the parsed day, hour and minute values.
   static Duration? parseDDHHMMDuration(String dayHourMinuteStr) {
     final String? parsedDayHourMinuteStr =
         DateTimeParser.parseDDHHMMTimeStr(dayHourMinuteStr);
@@ -158,6 +158,43 @@ class DateTimeParser {
       return Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
     }
 
+    return null;
+  }
+
+  /// Parses the passed dayHourMinuteStr or hourMinuteStr and
+  /// returns a Duration instanciated with the parsed hour and
+  /// minute values.
+  static Duration? parseDDHHMMorHHMMDuration(String dayHourMinuteStr) {
+    final String? parsedDayHourMinuteStr =
+        DateTimeParser.parseDDHHMMTimeStr(dayHourMinuteStr);
+
+    if (parsedDayHourMinuteStr != null) {
+      List<String> dayHourMinuteStrLst = parsedDayHourMinuteStr.split(':');
+      List<int> dayHourMinuteIntLst = dayHourMinuteStrLst
+          .map((element) => int.parse(element))
+          .toList(growable: false);
+
+      final int dayInt = dayHourMinuteIntLst[0];
+      final int hourInt = dayHourMinuteIntLst[1];
+      final int minuteInt = dayHourMinuteIntLst[2];
+
+      return Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
+    } else {
+      final String? parsedHourMinuteStr =
+          DateTimeParser.parseHHMMTimeStr(dayHourMinuteStr);
+      if (parsedHourMinuteStr != null) {
+        List<String> dayHourMinuteStrLst = parsedHourMinuteStr.split(':');
+        List<int> hourMinuteIntLst = dayHourMinuteStrLst
+            .map((element) => int.parse(element))
+            .toList(growable: false);
+
+        final int hourInt = hourMinuteIntLst[0];
+        final int minuteInt = hourMinuteIntLst[1];
+
+        return Duration(hours: hourInt, minutes: minuteInt);
+      }
+    }
+    
     return null;
   }
 }
@@ -229,7 +266,7 @@ void main() {
   Duration dur = Duration(days: 2, hours: 10, minutes: 30);
   print(dur.inMinutes);
   print(dur.ddHHmm());
-  
+
   print('\nDateTimeParser.parseDDMMDateTime()\n');
 
   for (String str in dateTimeNoYearStrLst) {
