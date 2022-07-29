@@ -286,25 +286,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 ],
               ),
             ),
-            Positioned(
-              right: 0,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 72, // val 26 is compliant with current value 5
-//                                 of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  const SizedBox(
-                    height: 50, // val 24 is compliant with current value 5
-//                                  of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                  const SizedBox(
-                    height: 50, // val 24 is compliant with current value 5
-//                                 of APP_LABEL_TO_TEXT_DISTANCE
-                  ),
-                ],
-              ),
-            ),
             SizedBox(
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
