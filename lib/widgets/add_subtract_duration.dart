@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/widgets/result_date_time.dart';
 
-class DurationResultDateTime extends StatelessWidget with ScreenMixin {
+/// HH:MM editable widget with a '+' button changeable to '-'
+/// button. Adds or subtracts the defined duration value to
+/// the included ResultDateTime widget.
+class AddSubtractDuration extends StatelessWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
 
@@ -24,12 +27,17 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
   int _durationSign;
 
   /// Constructor parms:
-  /// 
+  ///
+  /// resultDateTimeController      TextEditingController passed to
+  ///                               the included ResultDateTime
+  ///                               widget constructor.
+  /// durationTextFieldController   TextEditingController linked
+  ///                               to the duration TextField.
   /// durationChangeFunction        function of the including scn
   ///                               called when the duration +/-
   ///                               button is pressed or when the
   ///                               duration value is changed.
-  DurationResultDateTime({
+  AddSubtractDuration({
     required TextEditingController resultDateTimeController,
     required TextEditingController durationTextFieldController,
     required Function durationChangeFunction,
@@ -74,17 +82,17 @@ class DurationResultDateTime extends StatelessWidget with ScreenMixin {
                   if (_durationIcon == Icons.add) {
                     _durationIcon = Icons.remove;
                     _durationIconColor =
-                        DurationResultDateTime.durationNegativeColor;
+                        AddSubtractDuration.durationNegativeColor;
                     _durationSign = -1;
                     _durationTextColor =
-                        DurationResultDateTime.durationNegativeColor;
+                        AddSubtractDuration.durationNegativeColor;
                   } else {
                     _durationIcon = Icons.add;
                     _durationIconColor =
-                        DurationResultDateTime.durationPositiveColor;
+                        AddSubtractDuration.durationPositiveColor;
                     _durationSign = 1;
                     _durationTextColor =
-                        DurationResultDateTime.durationPositiveColor;
+                        AddSubtractDuration.durationPositiveColor;
                   }
                   _durationChangeFunction(
                     _durationSign,
