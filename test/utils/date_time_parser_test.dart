@@ -447,6 +447,229 @@ void main() {
           expect(duration?.HHmm(), null);
         },
       );
+
+      test(
+        'valid negative 0h:0m format time string',
+        () {
+          const String hourMinuteStr = '-05:06';
+          final Duration? duration =
+              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+
+          expect(duration, const Duration(hours: -5, minutes: -6));
+          expect(duration?.HHmm(), '-5:06');
+        },
+      );
+
+      test(
+        'valid negative h:0m format time string',
+        () {
+          const String hourMinuteStr = '-5:06';
+          final Duration? duration =
+              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+
+          expect(duration, const Duration(hours: -5, minutes: -6));
+          expect(duration?.HHmm(), '-5:06');
+        },
+      );
+
+      test(
+        'valid negative 00:0m format time string',
+        () {
+          const String hourMinuteStr = '-00:06';
+          final Duration? duration =
+              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+
+          expect(duration, const Duration(hours: 0, minutes: -6));
+          expect(duration?.HHmm(), '-0:06');
+        },
+      );
+
+      test(
+        'valid negative 0:0m format time string',
+        () {
+          const String hourMinuteStr = '-0:06';
+          final Duration? duration =
+              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+
+          expect(duration, const Duration(hours: -0, minutes: -6));
+          expect(duration?.HHmm(), '-0:06');
+        },
+      );
+    },
+  );
+  group(
+    'DateTimeParser.parseDDHHMMDuration()',
+    () {
+      test(
+        'valid dd:hh:mm format nn days date time string',
+        () {
+          const String dayHourMinuteStr = '20:13:35';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
+
+          expect(duration, const Duration(days: 20, hours: 13, minutes: 35));
+          expect(duration?.ddHHmm(), dayHourMinuteStr);
+        },
+      );
+
+      test(
+        'valid dd:hh:mm format 0n days date time string',
+        () {
+          const String dayHourMinuteStr = '02:13:35';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
+
+          expect(duration, const Duration(days: 2, hours: 13, minutes: 35));
+          expect(duration?.ddHHmm(), dayHourMinuteStr);
+        },
+      );
+
+      test(
+        'valid dd:hh:mm format 0 days date time string',
+        () {
+          const String dayHourMinuteStr = '00:13:35';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
+
+          expect(duration, const Duration(days: 0, hours: 13, minutes: 35));
+          expect(duration?.ddHHmm(), dayHourMinuteStr);
+        },
+      );
+
+      test(
+        'valid negative dd:hh:mm format 0 days date time string',
+        () {
+          const String dayHourMinuteStr = '-00:13:35';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
+          expect(duration.toString(), '-13:35:00.000000');
+          expect(duration?.ddHHmm(), dayHourMinuteStr);
+        },
+      );
+    },
+  );
+  group(
+    'DateTimeParser.parseDDHHMMorHHMMDuration()',
+    () {
+      test(
+        'valid negative 00:mm time string',
+        () {
+          const String hourMinuteStr = '-00:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+          // expect(duration.toString(), '-0:05:00.000000'); Dart bug !
+          expect(duration?.ddHHmm(), '-00:00:05');
+          expect(duration?.HHmm(), '-0:05');
+        },
+      );
+
+      test(
+        'valid negative 0:mm time string',
+        () {
+          const String hourMinuteStr = '-0:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-00:00:05');
+          expect(duration?.HHmm(), '-0:05');
+        },
+      );
+      
+      test(
+        'valid negative 01:mm time string',
+        () {
+          const String hourMinuteStr = '-01:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-00:01:05');
+          expect(duration?.HHmm(), '-1:05');
+        },
+      );
+
+      test(
+        'valid negative 1:mm time string',
+        () {
+          const String hourMinuteStr = '-1:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-00:01:05');
+          expect(duration?.HHmm(), '-1:05');
+        },
+      );
+      
+      test(
+        'valid negative 11:mm time string',
+        () {
+          const String hourMinuteStr = '-11:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-00:11:05');
+          expect(duration?.HHmm(), '-11:05');
+        },
+      );
+
+      test(
+        'valid negative 00:00:mm time string',
+        () {
+          const String hourMinuteStr = '-00:00:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+          // expect(duration.toString(), '-0:05:00.000000'); Dart bug !
+          expect(duration?.ddHHmm(), '-00:00:05');
+          expect(duration?.HHmm(), '-0:05');
+        },
+      );
+
+      test(
+        'valid negative 0:00:mm time string',
+        () {
+          const String hourMinuteStr = '-0:00:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-00:00:05');
+          expect(duration?.HHmm(), '-0:05');
+        },
+      );
+      
+      test(
+        'valid negative 01:00:mm time string',
+        () {
+          const String hourMinuteStr = '-01:00:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-01:00:05');
+          expect(duration?.HHmm(), '-24:05');
+        },
+      );
+
+      test(
+        'valid negative 1:00:mm time string',
+        () {
+          const String hourMinuteStr = '-1:00:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-01:00:05');
+          expect(duration?.HHmm(), '-24:05');
+        },
+      );
+      
+      test(
+        'valid negative 11:00:mm time string',
+        () {
+          const String hourMinuteStr = '-11:00:05';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
+   //       expect(duration.toString(), '-0:05:00.000000');
+          expect(duration?.ddHHmm(), '-11:00:05');
+          expect(duration?.HHmm(), '-264:05');
+        },
+      );
     },
   );
 }

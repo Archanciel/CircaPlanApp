@@ -6,26 +6,25 @@ extension FormattedDayHourMinute on Duration {
 
   /// returns the Duration formatted as HH:mm
   String HHmm() {
-    int durationMinute = this.inMinutes.remainder(60);
+    int durationMinute = inMinutes.remainder(60);
     String minusStr = '';
 
     if (this.inMinutes < 0) {
       minusStr = '-';
     }
 
-    return "$minusStr${this.inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}";
+    return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}";
   }
 
   /// returns the Duration formatted as HH:mm
   String ddHHmm() {
-    int durationMinute = this.inMinutes.remainder(60);
+    int durationMinute = inMinutes.remainder(60);
     String minusStr = '';
-    int durationHour = Duration(minutes: (this.inMinutes - durationMinute))
-        .inHours
-        .remainder(24);
-    int durationDay = Duration(hours: (this.inHours - durationHour)).inDays;
+    int durationHour =
+        Duration(minutes: (inMinutes - durationMinute)).inHours.remainder(24);
+    int durationDay = Duration(hours: (inHours - durationHour)).inDays;
 
-    if (this.inMinutes < 0) {
+    if (inMinutes < 0) {
       minusStr = '-';
     }
 
@@ -38,7 +37,7 @@ class DateTimeParser {
       RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
   static final RegExp regExpNoYearDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
   static final RegExp regExpHHMMTime = RegExp(r'(^[-]?\d+:\d{2})');
-  static final RegExp regExpDDHHMMTime = RegExp(r'(^\d+:\d+:\d{2})');
+  static final RegExp regExpDDHHMMTime = RegExp(r'(^[-]?\d+:\d+:\d{2})');
 
   /// Parses the passed ddMMDateTimeStr formatted as dd-mm hh:mm or d-m h:mm
   static List<String?> parseDDMMDateTime(String ddMMDateTimrStr) {
@@ -119,21 +118,16 @@ class DateTimeParser {
           .map((element) => int.parse(element))
           .toList(growable: false);
 
-      final int hourInt = hourMinuteIntLst[0];
-      int minuteInt = hourMinuteIntLst[1];
+      final int hourInt = hourMinuteIntLst[0].abs();
+      int minuteInt = hourMinuteIntLst[1].abs();
 
-      if (hourMinuteStrLst[0].contains('-0')) {
-        // the case for hourMinuteStr == '-0:01' (minus 1 minute) for example
-        return Duration(minutes: -minuteInt);
+      Duration duration = Duration(hours: hourInt, minutes: minuteInt);
+
+      if (hourMinuteStrLst[0].startsWith('-')) {
+        return Duration.zero - duration;
+      } else {
+        return duration;
       }
-
-      if (hourInt < 0) {
-        // if this test was not performed, parsing -8:45 would return a
-        // Duration of -7:15:00.000000
-        minuteInt = -minuteInt;
-      }
-
-      return Duration(hours: hourMinuteIntLst[0], minutes: minuteInt);
     }
 
     return null;
@@ -151,11 +145,20 @@ class DateTimeParser {
           .map((element) => int.parse(element))
           .toList(growable: false);
 
+      int setNegative = 1;
+
       final int dayInt = hourMinuteIntLst[0];
       final int hourInt = hourMinuteIntLst[1];
       final int minuteInt = hourMinuteIntLst[2];
 
-      return Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
+      Duration duration =
+          Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
+
+      if (dayHourMinuteStr.startsWith('-00')) {
+        return Duration.zero - duration;
+      } else {
+        return duration;
+      }
     }
 
     return null;
@@ -174,11 +177,18 @@ class DateTimeParser {
           .map((element) => int.parse(element))
           .toList(growable: false);
 
-      final int dayInt = dayHourMinuteIntLst[0];
-      final int hourInt = dayHourMinuteIntLst[1];
-      final int minuteInt = dayHourMinuteIntLst[2];
+      final int dayInt = dayHourMinuteIntLst[0].abs();
+      final int hourInt = dayHourMinuteIntLst[1].abs();
+      final int minuteInt = dayHourMinuteIntLst[2].abs();
 
-      return Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
+      Duration duration =
+          Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
+
+      if (dayHourMinuteStr.startsWith('-')) {
+        return Duration.zero - duration;
+      } else {
+        return duration;
+      }
     } else {
       final String? parsedHourMinuteStr =
           DateTimeParser.parseHHMMTimeStr(dayHourMinuteStr);
@@ -188,13 +198,19 @@ class DateTimeParser {
             .map((element) => int.parse(element))
             .toList(growable: false);
 
-        final int hourInt = hourMinuteIntLst[0];
-        final int minuteInt = hourMinuteIntLst[1];
+        final int hourInt = hourMinuteIntLst[0].abs();
+        final int minuteInt = hourMinuteIntLst[1].abs();
 
-        return Duration(hours: hourInt, minutes: minuteInt);
+        Duration duration = Duration(hours: hourInt, minutes: minuteInt);
+
+        if (dayHourMinuteStr.startsWith('-')) {
+          return Duration.zero - duration;
+        } else {
+          return duration;
+        }
       }
     }
-    
+
     return null;
   }
 }
