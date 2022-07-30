@@ -495,6 +495,18 @@ void main() {
           expect(duration?.HHmm(), '-0:06');
         },
       );
+
+      test(
+        'valid negative hh:0m format time string',
+        () {
+          const String hourMinuteStr = '-15:06';
+          final Duration? duration =
+              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+
+          expect(duration, const Duration(hours: -15, minutes: -6));
+          expect(duration?.HHmm(), '-15:06');
+        },
+      );
     },
   );
   group(
@@ -544,6 +556,26 @@ void main() {
               DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
           expect(duration.toString(), '-13:35:00.000000');
           expect(duration?.ddHHmm(), dayHourMinuteStr);
+        },
+      );
+
+      test(
+        'valid negative hh:mm format 0 days date time string',
+        () {
+          const String dayHourMinuteStr = '-13:35';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
+          expect(duration, null);
+        },
+      );
+
+      test(
+        'valid positive hh:mm format 0 days date time string',
+        () {
+          const String dayHourMinuteStr = '13:35';
+          final Duration? duration =
+              DateTimeParser.parseDDHHMMDuration(dayHourMinuteStr);
+          expect(duration, null);
         },
       );
     },
