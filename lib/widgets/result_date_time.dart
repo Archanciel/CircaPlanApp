@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
 
+/// Widget included in AddSubtractDuration widget.
 class ResultDateTime extends StatelessWidget with ScreenMixin {
   final TextEditingController _resultDateTimeController;
 

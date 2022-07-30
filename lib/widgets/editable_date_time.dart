@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
 
+/// Widget which displays DateTimePicker as well as a 'Now' and a
+/// 'Sel' button.
+/// 
+/// Clicking on the DateTimePicker field opens the date time
+/// selection dialog. 'Now' button sets the DateTimePicker to now,
+/// 'Sel' button displays a date time selection menu in order to
+/// choose the date time value to set in the DateTimePicker field.
 class EditableDateTime extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _dateTimePickerController;

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:flutter/services.dart';
 
+/// Widget enabling to add or subtract a HH:MM value to the
+/// duration field.
 class EditableDuration extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _durationTextFieldController;

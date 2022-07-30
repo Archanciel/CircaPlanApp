@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../screens/screen_mixin.dart';
 
+/// This widget extends SnackBar and accept the String snackBar
+/// content as constructor parameter.
+/// 
 /// Using CircadianSnackBar
 ///
 /// final CircadianSnackBar snackBar = 

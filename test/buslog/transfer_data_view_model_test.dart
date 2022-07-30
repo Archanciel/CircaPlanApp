@@ -3,7 +3,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
-import 'package:circa_plan/widgets/duration_result_date_time.dart';
+import 'package:circa_plan/widgets/add_subtract_duration.dart';
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
@@ -444,15 +444,15 @@ void main() {
               loadedTransferDataViewModel.getTransferDataMap()!;
 
           expect(loadedTransferDataMap['firstDurationIconColor'],
-              DurationResultDateTime.durationPositiveColor);
+              AddSubtractDuration.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationTextColor'],
-              DurationResultDateTime.durationPositiveColor);
+              AddSubtractDuration.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationSign'], 1);
 
           expect(loadedTransferDataMap['secondDurationIconColor'],
-              DurationResultDateTime.durationNegativeColor);
+              AddSubtractDuration.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationTextColor'],
-              DurationResultDateTime.durationNegativeColor);
+              AddSubtractDuration.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =

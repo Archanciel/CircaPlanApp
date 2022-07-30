@@ -1,5 +1,5 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/widgets/duration_result_date_time.dart';
+import 'package:circa_plan/widgets/add_subtract_duration.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -45,19 +45,19 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _firstDurationIcon =
             transferDataMap['firstDurationIconData'] ?? Icons.add,
         _firstDurationIconColor = transferDataMap['firstDurationIconColor'] ??
-            DurationResultDateTime.durationPositiveColor,
+            AddSubtractDuration.durationPositiveColor,
         _firstDurationSign = transferDataMap['firstDurationSign'] ?? 1,
         _firstDurationTextColor = transferDataMap['firstDurationTextColor'] ??
-            DurationResultDateTime.durationPositiveColor,
+            AddSubtractDuration.durationPositiveColor,
         _firstDurationStr = transferDataMap['firstDurationStr'] ?? '00:00',
         _firstEndDateTimeStr = transferDataMap['firstEndDateTimeStr'] ?? '',
         _secondDurationIcon =
             transferDataMap['secondDurationIconData'] ?? Icons.add,
         _secondDurationIconColor = transferDataMap['secondDurationIconColor'] ??
-            DurationResultDateTime.durationPositiveColor,
+            AddSubtractDuration.durationPositiveColor,
         _secondDurationSign = transferDataMap['secondDurationSign'] ?? 1,
         _secondDurationTextColor = transferDataMap['secondDurationTextColor'] ??
-            DurationResultDateTime.durationPositiveColor,
+            AddSubtractDuration.durationPositiveColor,
         _secondDurationStr = transferDataMap['secondDurationStr'] ?? '00:00',
         _secondEndDateTimeStr = transferDataMap['secondEndDateTimeStr'] ?? '',
         super();
@@ -291,7 +291,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     topSelMenuPosition: 135.0,
                   ),
                   // First duration addition/subtraction
-                  DurationResultDateTime(
+                  AddSubtractDuration(
                     resultDateTimeController:
                         _firstEndDateTimeTextFieldController,
                     durationTextFieldController:
@@ -303,14 +303,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     durationTextColor: _firstDurationTextColor,
                     durationSign: _firstDurationSign,
                   ),
-                  const SizedBox( //  necessary since
-                  //                  EditableDateTime must
-                  //                  include a SizedBox of 25 
-                  //                  height ...
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of 25
+                    //                  height ...
                     height: 25,
                   ),
                   // Second duration addition/subtraction
-                  DurationResultDateTime(
+                  AddSubtractDuration(
                     resultDateTimeController:
                         _secondEndDateTimeTextFieldController,
                     durationTextFieldController:
