@@ -302,15 +302,23 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         // cursorColor: appTextAndIconColor,
                       ),
                     ),
-                    child: TextField(
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                      // The validator receives the text that the user has entered.
-                      controller: _resultTextFieldController,
-                      readOnly: true,
+                    child: GestureDetector(
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: TextStyle(
+                            color: appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        // The validator receives the text that the user has entered.
+                        controller: _resultTextFieldController,
+                        readOnly: true,
+                      ),
+                      onDoubleTap: () async {
+                        await copyToClipboard(
+                            context: context,
+                            controller: _resultTextFieldController);
+                      },
                     ),
                   ),
                 ],

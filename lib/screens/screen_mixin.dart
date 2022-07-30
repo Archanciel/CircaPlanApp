@@ -238,9 +238,22 @@ mixin ScreenMixin {
       required TextEditingController controller}) async {
     controller.selection = TextSelection(
         baseOffset: 0, extentOffset: controller.value.text.length);
-    await Clipboard.setData(ClipboardData(text: controller.text));
+
+    String selectedText = controller.text;
+
+    if (selectedText.contains('=')) {
+      // the case if copyToClipboard() was applied on result
+      // TextField of the TimeCalculator screen and that the field
+      // contained a string like 01:10:05 = 40:05. In this situation,
+      // 40.05 is copied to clipboard !
+      List<String> selectedTextLst = selectedText.split(' = ');
+      selectedText = selectedTextLst.last;
+    }
+
+    await Clipboard.setData(ClipboardData(text: selectedText));
+
     final CircadianSnackBar snackBar =
-        CircadianSnackBar(message: '${controller.text} copied to clipboard');
+        CircadianSnackBar(message: '$selectedText copied to clipboard');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
