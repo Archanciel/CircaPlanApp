@@ -705,16 +705,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               // cursorColor: appTextAndIconColor,
                             ),
                           ),
-                          child: TextField(
-                            style: TextStyle(
-                                color: appTextAndIconColor,
-                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            keyboardType: TextInputType.datetime,
-                            controller: _currentSleepDurationController,
-                            readOnly: true,
+                          child: GestureDetector(
+                            child: TextField(
+                              style: TextStyle(
+                                  color: appTextAndIconColor,
+                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                              decoration:
+                                  const InputDecoration.collapsed(hintText: ''),
+                              keyboardType: TextInputType.datetime,
+                              controller: _currentSleepDurationController,
+                              readOnly: true,
+                            ),
+                            onDoubleTap: () async {
+                              await copyToClipboard(
+                                  context: context,
+                                  controller: _currentSleepDurationController);
+                            },
                           ),
                         ),
                       ),
@@ -743,16 +750,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           // cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        keyboardType: TextInputType.datetime,
-                        controller: _currentWakeUpDurationController,
-                        readOnly: true,
+                      child: GestureDetector(
+                        child: TextField(
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          keyboardType: TextInputType.datetime,
+                          controller: _currentWakeUpDurationController,
+                          readOnly: true,
+                        ),
+                        onDoubleTap: () async {
+                          await copyToClipboard(
+                              context: context,
+                              controller: _currentWakeUpDurationController);
+                        },
                       ),
                     ),
                   ),
@@ -779,16 +793,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           // cursorColor: appTextAndIconColor,
                         ),
                       ),
-                      child: TextField(
-                        style: TextStyle(
-                            color: appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        keyboardType: TextInputType.datetime,
-                        controller: _currentTotalDurationController,
-                        readOnly: true,
+                      child: GestureDetector(
+                        child: TextField(
+                          style: TextStyle(
+                              color: appTextAndIconColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          keyboardType: TextInputType.datetime,
+                          controller: _currentTotalDurationController,
+                          readOnly: true,
+                        ),
+                        onDoubleTap: () async {
+                          await copyToClipboard(
+                              context: context,
+                              controller: _currentTotalDurationController);
+                        },
                       ),
                     ),
                   ),
