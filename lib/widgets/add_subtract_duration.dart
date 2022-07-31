@@ -114,22 +114,29 @@ class AddSubtractDuration extends StatelessWidget with ScreenMixin {
                     cursorColor: appTextAndIconColor,
                   ),
                 ),
-                child: TextField(
-                  decoration: const InputDecoration.collapsed(hintText: ''),
-                  style: TextStyle(
-                      color: _durationTextColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                  keyboardType: TextInputType.datetime,
-                  controller: _durationTextFieldController,
-                  onChanged: (val) {
-                    _durationChangeFunction(
-                      _durationSign,
-                      _durationIcon,
-                      _durationIconColor,
-                      _durationTextColor,
-                    );
-                  },
+                child: GestureDetector(
+                  child: TextField(
+                    decoration: const InputDecoration.collapsed(hintText: ''),
+                    style: TextStyle(
+                        color: _durationTextColor,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                    keyboardType: TextInputType.datetime,
+                    controller: _durationTextFieldController,
+                    onChanged: (val) {
+                      _durationChangeFunction(
+                        _durationSign,
+                        _durationIcon,
+                        _durationIconColor,
+                        _durationTextColor,
+                      );
+                    },
+                  ),
+                        onDoubleTap: () async {
+                          await copyToClipboard(
+                              context: context,
+                              controller: _durationTextFieldController);
+                        },
                 ),
               ),
             ),
