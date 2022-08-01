@@ -33,13 +33,13 @@ class ResultDateTime extends StatelessWidget with ScreenMixin {
                 selectionColor: selectionColor,
                 // commenting cursorColor discourage manually
                 // editing the TextField !
-                // cursorColor: appTextAndIconColor,
+                // cursorColor: ScreenMixin.appTextAndIconColor,
               ),
             ),
             child: TextField(
               decoration: const InputDecoration.collapsed(hintText: ''),
               style: TextStyle(
-                  color: appTextAndIconColor,
+                  color: ScreenMixin.appTextAndIconColor,
                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                   fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
               controller: _resultDateTimeController,

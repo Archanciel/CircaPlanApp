@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+/// This mixin class contains UI parameters used by all the Circa
+/// application screens. Since it is not possible to define a
+/// base class for the statefull widgets, using a mixin class
+/// to add those common instance variables to the statefull
+/// widgets solves the problem.
 mixin ScreenMixin {
-  /// This mixin class contains UI parameters used by all the Circa
-  /// application screens. Since it is not possible to define a
-  /// base class for the statefull widgets, using a mixin class
-  /// to add those common instance variables to the statefull
-  /// widgets solves the problem.
-
   static Color APP_DARK_BLUE_COLOR = Colors.blue.shade900;
   static var APP_LIGHT_BLUE_COLOR = Colors.blue;
   static MaterialColor APP_MATERIAL_APP_LIGHT_BLUE_COLOR = Colors.blue;
@@ -17,17 +16,7 @@ mixin ScreenMixin {
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
-  final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-  final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-  final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
-  final Color appTextAndIconColor = Colors.white;
-  final Color selectionColor = ScreenMixin.APP_DARK_BLUE_COLOR;
-  final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
-      MaterialStateProperty.all(ScreenMixin.APP_DARK_BLUE_COLOR);
-  final MaterialStateProperty<RoundedRectangleBorder>
-      appElevatedButtonRoundedShape =
-      MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
+  static const Color appTextAndIconColor = Colors.white;
   static const Color APP_TEXT_AND_ICON_COLOR = Colors.white;
   static const FontWeight APP_TEXT_FONT_WEIGHT = FontWeight.normal;
   static const double APP_LABEL_TO_TEXT_DISTANCE = 5;
@@ -41,6 +30,22 @@ mixin ScreenMixin {
       'Calculate Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
   static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
+
+  final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
+  final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+  final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
+  final Color selectionColor = ScreenMixin.APP_DARK_BLUE_COLOR;
+  final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
+      MaterialStateProperty.all(ScreenMixin.APP_DARK_BLUE_COLOR);
+  final MaterialStateProperty<RoundedRectangleBorder>
+      appElevatedButtonRoundedShape =
+      MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
+  final TextStyle valueTextStyle = TextStyle(
+    color: ScreenMixin.appTextAndIconColor,
+    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+    fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+  );
 
   static void setAppVerticalTopMargin(double screenHeight) {
     app_computed_vertical_top_margin =

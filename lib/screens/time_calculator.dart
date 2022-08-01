@@ -196,7 +196,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: selectionColor,
-                          cursorColor: appTextAndIconColor,
+                          cursorColor: ScreenMixin.appTextAndIconColor,
                         ),
                       ),
                       child: GestureDetector(
@@ -204,7 +204,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: TextStyle(
-                              color: appTextAndIconColor,
+                              color: ScreenMixin.appTextAndIconColor,
                               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                           keyboardType: TextInputType.datetime,
@@ -247,7 +247,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: selectionColor,
-                          cursorColor: appTextAndIconColor,
+                          cursorColor: ScreenMixin.appTextAndIconColor,
                         ),
                       ),
                       child: GestureDetector(
@@ -255,7 +255,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: TextStyle(
-                              color: appTextAndIconColor,
+                              color: ScreenMixin.appTextAndIconColor,
                               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                           keyboardType: TextInputType.datetime,
@@ -299,7 +299,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         selectionColor: selectionColor,
                         // commenting cursorColor discourage manually
                         // editing the TextField !
-                        // cursorColor: appTextAndIconColor,
+                        // cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
                     child: GestureDetector(
@@ -307,7 +307,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: TextStyle(
-                            color: appTextAndIconColor,
+                            color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         // The validator receives the text that the user has entered.

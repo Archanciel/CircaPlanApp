@@ -88,7 +88,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
                         selectionColor: selectionColor,
-                        cursorColor: appTextAndIconColor,
+                        cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
                     child: GestureDetector(
@@ -96,7 +96,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: TextStyle(
-                            color: appTextAndIconColor,
+                            color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: _durationTextFieldController,
@@ -116,7 +116,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
                         selectionColor: selectionColor,
-                        cursorColor: appTextAndIconColor,
+                        cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
                     child: GestureDetector(
@@ -124,7 +124,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: TextStyle(
-                            color: appTextAndIconColor,
+                            color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: _addTimeTextFieldController,
@@ -144,7 +144,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
                         selectionColor: selectionColor,
-                        cursorColor: appTextAndIconColor,
+                        cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
                     child: GestureDetector(
@@ -152,7 +152,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: TextStyle(
-                            color: appTextAndIconColor,
+                            color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: _finalDurationTextFieldController,

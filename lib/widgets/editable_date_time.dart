@@ -73,12 +73,12 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   lastDate: DateTime(2100),
                   icon: Icon(
                     Icons.event,
-                    color: appTextAndIconColor,
+                    color: ScreenMixin.appTextAndIconColor,
                     size: 30,
                   ),
                   decoration: const InputDecoration.collapsed(hintText: ''),
                   style: TextStyle(
-                    color: appTextAndIconColor,
+                    color: ScreenMixin.appTextAndIconColor,
                     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                     fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
                   ),

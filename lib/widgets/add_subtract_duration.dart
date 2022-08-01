@@ -111,7 +111,7 @@ class AddSubtractDuration extends StatelessWidget with ScreenMixin {
                 data: Theme.of(context).copyWith(
                   textSelectionTheme: TextSelectionThemeData(
                     selectionColor: selectionColor,
-                    cursorColor: appTextAndIconColor,
+                    cursorColor: ScreenMixin.appTextAndIconColor,
                   ),
                 ),
                 child: GestureDetector(

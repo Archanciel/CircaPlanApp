@@ -5,16 +5,23 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 /// Widget that displays duration HH:MM value as well as
 /// percentage.
 class ResultDuration extends StatelessWidget with ScreenMixin {
-  final TextEditingController _resultDurationController;
   final String _resultDurationTitle;
+  final TextEditingController _resultDurationController;
+  final TextEditingController _resultDurationPercentController;
 
   ResultDuration({
     required String resultDurationTitle,
     required TextEditingController resultDurationController,
+    required TextEditingController resultDurationPercentController,
   })  : _resultDurationTitle = resultDurationTitle,
-        _resultDurationController = resultDurationController;
+        _resultDurationController = resultDurationController,
+        _resultDurationPercentController = resultDurationPercentController;
   @override
   Widget build(BuildContext context) {
+    TextStyle valueTextStyle = TextStyle(
+        color: ScreenMixin.appTextAndIconColor,
+        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT);
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Column(
@@ -27,28 +34,25 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
             ),
           ),
+          const SizedBox(
+            height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
+          ),
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
-//                                            compliant with current value 5 of
-//                                            APP_LABEL_TO_TEXT_DISTANCE
-                width: 160,
+              SizedBox(
+                width: 55,
                 child: Theme(
                   data: Theme.of(context).copyWith(
                     textSelectionTheme: TextSelectionThemeData(
                       selectionColor: selectionColor,
                       // commenting cursorColor discourage manually
                       // editing the TextField !
-                      // cursorColor: appTextAndIconColor,
+                      // cursorColor: ScreenMixin.appTextAndIconColor,
                     ),
                   ),
                   child: GestureDetector(
                     child: TextField(
-                      style: TextStyle(
-                          color: appTextAndIconColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                      style: valueTextStyle,
                       decoration: const InputDecoration.collapsed(hintText: ''),
                       keyboardType: TextInputType.datetime,
                       controller: _resultDurationController,
@@ -61,6 +65,37 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     },
                   ),
                 ),
+              ),
+              SizedBox(
+                width: 50,
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    textSelectionTheme: TextSelectionThemeData(
+                      selectionColor: selectionColor,
+                      // commenting cursorColor discourage manually
+                      // editing the TextField !
+                      // cursorColor: ScreenMixin.appTextAndIconColor,
+                    ),
+                  ),
+                  child: GestureDetector(
+                    child: TextField(
+                      style: valueTextStyle,
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      keyboardType: TextInputType.datetime,
+                      controller: _resultDurationController,
+                      readOnly: true,
+                    ),
+                    onDoubleTap: () async {
+                      await copyToClipboard(
+                          context: context,
+                          controller: _resultDurationController);
+                    },
+                  ),
+                ),
+              ),
+              Text(
+                ' %',
+                style: valueTextStyle,
               ),
             ],
           ),

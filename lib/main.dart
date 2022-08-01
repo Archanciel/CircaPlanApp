@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
         primarySwatch:
             ScreenMixin.APP_LIGHT_BLUE_COLOR, // var untyped ScreenMixin const !
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: appTextAndIconColor, // requires with ScreenMixin !
+          cursorColor: ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !
         ),
       ),
       home: MainApp(transferDataViewModel: _transferDataViewModel),
