@@ -681,54 +681,61 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   const SizedBox(
                     height: 25,
                   ),
-                  Text(
-                    'Sleep duration',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        padding:
-                            const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
-//                                            compliant with current value 5 of
-//                                            APP_LABEL_TO_TEXT_DISTANCE
-                        width: 160,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              // commenting cursorColor discourage manually
-                              // editing the TextField !
-                              // cursorColor: appTextAndIconColor,
-                            ),
-                          ),
-                          child: GestureDetector(
-                            child: TextField(
-                              style: TextStyle(
-                                  color: appTextAndIconColor,
-                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              keyboardType: TextInputType.datetime,
-                              controller: _currentSleepDurationController,
-                              readOnly: true,
-                            ),
-                            onDoubleTap: () async {
-                              await copyToClipboard(
-                                  context: context,
-                                  controller: _currentSleepDurationController);
-                            },
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Sleep duration',
+                          style: TextStyle(
+                            color: appLabelColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0, 5, 0, 0), // val 5 is
+//                                            compliant with current value 5 of
+//                                            APP_LABEL_TO_TEXT_DISTANCE
+                              width: 160,
+                              child: Theme(
+                                data: Theme.of(context).copyWith(
+                                  textSelectionTheme: TextSelectionThemeData(
+                                    selectionColor: selectionColor,
+                                    // commenting cursorColor discourage manually
+                                    // editing the TextField !
+                                    // cursorColor: appTextAndIconColor,
+                                  ),
+                                ),
+                                child: GestureDetector(
+                                  child: TextField(
+                                    style: TextStyle(
+                                        color: appTextAndIconColor,
+                                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                        fontWeight:
+                                            ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                                    decoration: const InputDecoration.collapsed(
+                                        hintText: ''),
+                                    keyboardType: TextInputType.datetime,
+                                    controller: _currentSleepDurationController,
+                                    readOnly: true,
+                                  ),
+                                  onDoubleTap: () async {
+                                    await copyToClipboard(
+                                        context: context,
+                                        controller:
+                                            _currentSleepDurationController);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Text(
                     'Wake up duration',
