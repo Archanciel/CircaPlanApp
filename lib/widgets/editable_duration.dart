@@ -1,8 +1,6 @@
-import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:flutter/services.dart';
 
 /// Widget enabling to add or subtract a HH:MM value to the
 /// duration field.
