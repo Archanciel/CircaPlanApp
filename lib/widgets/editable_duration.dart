@@ -71,11 +71,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
           children: [
             Text(
               _dateTimeTitle,
-              style: TextStyle(
-                color: appLabelColor,
-                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-              ),
+              style: labelTextStyle,
             ),
             const SizedBox(
               height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,

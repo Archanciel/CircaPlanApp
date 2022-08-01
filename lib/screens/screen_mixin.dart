@@ -41,7 +41,11 @@ mixin ScreenMixin {
       appElevatedButtonRoundedShape =
       MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
-  final TextStyle valueTextStyle = TextStyle(
+  final TextStyle labelTextStyle = TextStyle(
+    color: ScreenMixin.APP_LIGHT_YELLOW_COLOR,
+    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+  );
+  final TextStyle valueTextStyle = const TextStyle(
     color: ScreenMixin.appTextAndIconColor,
     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
     fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,

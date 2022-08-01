@@ -18,10 +18,6 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
         _resultDurationPercentController = resultDurationPercentController;
   @override
   Widget build(BuildContext context) {
-    TextStyle valueTextStyle = TextStyle(
-        color: ScreenMixin.appTextAndIconColor,
-        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT);
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Column(
@@ -29,10 +25,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
         children: [
           Text(
             _resultDurationTitle,
-            style: TextStyle(
-              color: appLabelColor,
-              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-            ),
+            style: labelTextStyle,
           ),
           const SizedBox(
             height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,

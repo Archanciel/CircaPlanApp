@@ -45,11 +45,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
           children: [
             Text(
               _dateTimeTitle,
-              style: TextStyle(
-                color: appLabelColor,
-                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-              ),
+              style: labelTextStyle,
             ),
             const SizedBox(
               height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
@@ -71,17 +67,13 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   controller: _dateTimePickerController,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.event,
                     color: ScreenMixin.appTextAndIconColor,
                     size: 30,
                   ),
                   decoration: const InputDecoration.collapsed(hintText: ''),
-                  style: TextStyle(
-                    color: ScreenMixin.appTextAndIconColor,
-                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-                  ),
+                  style: valueTextStyle,
                   onChanged: (val) => _handleDateTimeModification(),
                 ),
               ),

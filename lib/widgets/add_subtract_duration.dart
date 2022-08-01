@@ -60,11 +60,7 @@ class AddSubtractDuration extends StatelessWidget with ScreenMixin {
       children: [
         Text(
           'Duration',
-          style: TextStyle(
-            color: appLabelColor,
-            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
-          ),
+          style: labelTextStyle,
         ),
         Stack(
           children: [

@@ -558,10 +558,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ),
                   Text(
                     'New date time',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
+                    style: labelTextStyle,
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
@@ -577,10 +574,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       child: TextField(
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
-                            color: ScreenMixin.appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        style: valueTextStyle,
                         keyboardType: TextInputType.datetime,
                         controller: _newDateTimeController, // links the
                         //                         TextField content to pressing
@@ -600,20 +594,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     children: [
                       Text(
                         'Previous date time',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        ),
+                        style: labelTextStyle,
                       ),
                       const SizedBox(
                         width: 6,
                       ),
                       Text(
                         'Date time before prev',
-                        style: TextStyle(
-                          color: appLabelColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        ),
+                        style: labelTextStyle,
                       ),
                     ],
                   ),
@@ -636,10 +624,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             child: TextField(
-                              style: TextStyle(
-                                  color: ScreenMixin.appTextAndIconColor,
-                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                              style: valueTextStyle,
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
                               controller: _previousDateTimeController,
@@ -665,10 +650,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             child: TextField(
-                              style: TextStyle(
-                                  color: ScreenMixin.appTextAndIconColor,
-                                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                  fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                              style: valueTextStyle,
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
                               controller: _beforePreviousDateTimeController,
@@ -685,24 +667,24 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ResultDuration(
                     resultDurationTitle: 'Sleep duration',
                     resultDurationController: _currentSleepDurationController,
-                    resultDurationPercentController: _currentSleepDurationController,
+                    resultDurationPercentController:
+                        _currentSleepDurationController,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Wake up duration',
                     resultDurationController: _currentWakeUpDurationController,
-                    resultDurationPercentController: _currentWakeUpDurationController,
+                    resultDurationPercentController:
+                        _currentWakeUpDurationController,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Total duration',
                     resultDurationController: _currentTotalDurationController,
-                    resultDurationPercentController: _currentTotalDurationController,
+                    resultDurationPercentController:
+                        _currentTotalDurationController,
                   ),
                   Text(
                     'Sleep and wake up history',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
+                    style: labelTextStyle,
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
@@ -720,10 +702,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       child: TextField(
                         maxLines: null, // must be set, otherwise multi lines
 //                                         not displayed
-                        style: TextStyle(
-                            color: ScreenMixin.appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        style: valueTextStyle,
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         controller: _sleepWakeUpHistoryController,
@@ -748,10 +727,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 children: [
                   Text(
                     _statusStr(_status),
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
+                    style: labelTextStyle,
                   ),
                   const SizedBox(
                     height: 5,
