@@ -686,91 +686,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     resultDurationTitle: 'Sleep duration',
                     resultDurationController: _currentSleepDurationController,
                   ),
-                  Text(
-                    'Wake up duration',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
+                  ResultDuration(
+                    resultDurationTitle: 'Wake up duration',
+                    resultDurationController: _currentWakeUpDurationController,
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
-//                                            compliant with current value 5 of
-//                                            APP_LABEL_TO_TEXT_DISTANCE
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          // commenting cursorColor discourage manually
-                          // editing the TextField !
-                          // cursorColor: appTextAndIconColor,
-                        ),
-                      ),
-                      child: GestureDetector(
-                        child: TextField(
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          keyboardType: TextInputType.datetime,
-                          controller: _currentWakeUpDurationController,
-                          readOnly: true,
-                        ),
-                        onDoubleTap: () async {
-                          await copyToClipboard(
-                              context: context,
-                              controller: _currentWakeUpDurationController);
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Total duration',
-                    style: TextStyle(
-                      color: appLabelColor,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
-//                                            compliant with current value 5 of
-//                                            APP_LABEL_TO_TEXT_DISTANCE
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          // commenting cursorColor discourage manually
-                          // editing the TextField !
-                          // cursorColor: appTextAndIconColor,
-                        ),
-                      ),
-                      child: GestureDetector(
-                        child: TextField(
-                          style: TextStyle(
-                              color: appTextAndIconColor,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          keyboardType: TextInputType.datetime,
-                          controller: _currentTotalDurationController,
-                          readOnly: true,
-                        ),
-                        onDoubleTap: () async {
-                          await copyToClipboard(
-                              context: context,
-                              controller: _currentTotalDurationController);
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
+                  ResultDuration(
+                    resultDurationTitle: 'Total duration',
+                    resultDurationController: _currentTotalDurationController,
                   ),
                   Text(
                     'Sleep and wake up history',
