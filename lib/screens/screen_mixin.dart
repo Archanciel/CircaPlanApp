@@ -250,6 +250,9 @@ mixin ScreenMixin {
 
     String selectedText = controller.text;
 
+    // useful in case copying Calculate Sleep Duration screen percent values
+    selectedText = selectedText.replaceAll(' %', '');
+
     if (selectedText.contains('=')) {
       // the case if copyToClipboard() was applied on result
       // TextField of the TimeCalculator screen and that the field

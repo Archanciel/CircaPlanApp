@@ -60,7 +60,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                 ),
               ),
               SizedBox(
-                width: 50,
+                width: 60,
                 child: Theme(
                   data: Theme.of(context).copyWith(
                     textSelectionTheme: TextSelectionThemeData(
@@ -75,20 +75,16 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       style: valueTextStyle,
                       decoration: const InputDecoration.collapsed(hintText: ''),
                       keyboardType: TextInputType.datetime,
-                      controller: _resultDurationController,
+                      controller: _resultDurationPercentController,
                       readOnly: true,
                     ),
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
-                          controller: _resultDurationController);
+                          controller: _resultDurationPercentController);
                     },
                   ),
                 ),
-              ),
-              Text(
-                ' %',
-                style: valueTextStyle,
               ),
             ],
           ),
