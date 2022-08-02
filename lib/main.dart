@@ -99,7 +99,8 @@ class MyApp extends StatelessWidget with ScreenMixin {
         primarySwatch:
             ScreenMixin.APP_LIGHT_BLUE_COLOR, // var untyped ScreenMixin const !
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !
+          cursorColor:
+              ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !
         ),
       ),
       home: MainApp(transferDataViewModel: _transferDataViewModel),
@@ -373,7 +374,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         transferDataMap['calcSlDurNewDateTimeStr'];
 
     if (calcSlDurNewDateTimeStr != null) {
-      return '${calcSlDurNewDateTimeStr.replaceFirst(':', '.')}.json';
+      String jsonFileName = widget.transferDataViewModel.reformatDateTimeStrToCompatibleFileName(calcSlDurNewDateTimeStr);
+      return '$jsonFileName.json';
     } else {
       return '';
     }
