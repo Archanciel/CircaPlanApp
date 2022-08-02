@@ -1,11 +1,12 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 
 /// Widget which displays DateTimePicker as well as a 'Now' and a
 /// 'Sel' button.
-/// 
+///
 /// Clicking on the DateTimePicker field opens the date time
 /// selection dialog. 'Now' button sets the DateTimePicker to now,
 /// 'Sel' button displays a date time selection menu in order to
@@ -14,6 +15,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _dateTimePickerController;
   final Function _handleDateTimeModification;
+  final TransferDataViewModel _transferDataViewModel;
 
   // used to fill the display selection popup menu
   final Map<String, dynamic> _transferDataMap;
@@ -28,12 +30,14 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     required Map<String, dynamic> transferDataMap,
     required Function(String) handleSelectedDateTimeStrFunction,
     required double topSelMenuPosition,
+    required TransferDataViewModel transferDataViewModel,
   })  : _dateTimeTitle = dateTimeTitle,
         _dateTimePickerController = dateTimePickerController,
         _handleDateTimeModification = handleDateTimeModificationFunction,
         _transferDataMap = transferDataMap,
         _handleSelectedDateTimeStr = handleSelectedDateTimeStrFunction,
-        _topSelMenuPosition = topSelMenuPosition;
+        _topSelMenuPosition = topSelMenuPosition,
+        _transferDataViewModel = transferDataViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +116,9 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                 displaySelPopupMenu(
                   context: context,
                   selectableStrItemLst: buildSortedAppDateTimeStrList(
-                      transferDataMap: _transferDataMap, mostRecentFirst: true),
+                      transferDataMap: _transferDataMap,
+                      mostRecentFirst: true,
+                      transferDataViewModel: _transferDataViewModel),
                   posRectangleLTRB: RelativeRect.fromLTRB(
                     1.0,
                     _topSelMenuPosition,

@@ -276,7 +276,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     case 1:
                       {
                         List<String> nonNullablefileNameLst =
-                            _getSortedFileNameLstInDir(transferDataViewModel);
+                            getSortedFileNameLstInDir(
+                                transferDataViewModel: transferDataViewModel,
+                                addCircadianJsonFileNameToLst: true);
 
                         displaySelPopupMenu(
                           context: context,
@@ -374,34 +376,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         transferDataMap['calcSlDurNewDateTimeStr'];
 
     if (calcSlDurNewDateTimeStr != null) {
-      String jsonFileName = widget.transferDataViewModel.reformatDateTimeStrToCompatibleFileName(calcSlDurNewDateTimeStr);
+      String jsonFileName = widget.transferDataViewModel
+          .reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+              calcSlDurNewDateTimeStr);
       return '$jsonFileName.json';
     } else {
       return '';
     }
-  }
-
-  /// Private method returning the sorted list of app data
-  /// files located in the app data dir.
-  List<String> _getSortedFileNameLstInDir(
-      TransferDataViewModel transferDataViewModel) {
-    List<String?> nullablefileNameLst =
-        transferDataViewModel.getFileNameInDirLst(kDownloadAppDir);
-
-    List<String> nonNullablefileNameLst =
-        nullablefileNameLst.whereType<String>().toList();
-
-    List<String> sortedFileNameLst = [];
-
-    sortedFileNameLst.add(nonNullablefileNameLst
-        .firstWhere((element) => element == 'circadian.json'));
-
-    RegExp regExp = RegExp(r'^[\d\- \.]+json');
-    List<String> dateTimeFileNameSortedLst =
-        nonNullablefileNameLst.where((e) => regExp.hasMatch(e)).toList();
-    dateTimeFileNameSortedLst.sort();
-    sortedFileNameLst.addAll(dateTimeFileNameSortedLst.reversed);
-
-    return sortedFileNameLst;
   }
 }

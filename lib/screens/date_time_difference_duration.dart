@@ -263,6 +263,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
+                    transferDataViewModel: _transferDataViewModel,
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'End date time',
@@ -272,6 +273,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedEndDateTimeStr,
                     topSelMenuPosition: 200.0,
+                    transferDataViewModel: _transferDataViewModel,
                   ),
                   EditableDuration(
                     dateTimeTitle: 'Duration',

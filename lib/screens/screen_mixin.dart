@@ -1,7 +1,10 @@
-import 'package:circa_plan/widgets/circadian_snackbar.dart';
+import 'package:circa_plan/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/widgets/circadian_snackbar.dart';
 
 /// This mixin class contains UI parameters used by all the Circa
 /// application screens. Since it is not possible to define a
@@ -81,9 +84,11 @@ mixin ScreenMixin {
   /// Extract date time string's from the passed transfer data map and return
   /// them in a list sorted with most recent first or last according to the
   /// mostRecentFirst bool paraneter.
-  List<String> buildSortedAppDateTimeStrList(
-      {required Map<String, dynamic> transferDataMap,
-      required bool mostRecentFirst}) {
+  List<String> buildSortedAppDateTimeStrList({
+    required Map<String, dynamic> transferDataMap,
+    required bool mostRecentFirst,
+    required TransferDataViewModel transferDataViewModel,
+  }) {
     final DateTime twoThousandDateTime = DateTime(2000);
     List<String> appDateTimeStrList = [];
     List<DateTime> appDateTimeList = [];
@@ -106,8 +111,8 @@ mixin ScreenMixin {
       } else if (value is List<String> &&
           value.isNotEmpty &&
           isDateTimeStrValid(value.first)) {
-        // adding to the DateTime list the first date time value of the sleep
-        // and wake-up history list
+        // adding to the DateTime list the first date time value of the
+        // sleep and wake-up history list
         DateTime? dateTime = parseDateTime(value.first);
 
         if (dateTime == null) {
@@ -116,6 +121,17 @@ mixin ScreenMixin {
 
         addDateTimeIfNotExist(appDateTimeList, dateTime);
       }
+    }
+
+    // now adding the last json date time file name to the Sel menu
+
+    final String lastCreatedJsonFileNameDateTimeStr =
+        getLastCreatedJsonFileNameDateTimeStr(transferDataViewModel);
+    final DateTime lastCreatedJsonFileNameDateTime =
+        parseDateTime(lastCreatedJsonFileNameDateTimeStr)!;
+
+    if (!appDateTimeList.contains(lastCreatedJsonFileNameDateTime)) {
+      appDateTimeList.add(lastCreatedJsonFileNameDateTime);
     }
 
     // now sorting the DateTime list
@@ -128,9 +144,12 @@ mixin ScreenMixin {
           a.millisecondsSinceEpoch.compareTo(b.millisecondsSinceEpoch));
     }
 
-    // returning a list of sorted date time string's
+    // and converting it to String list
+    
+    List<String> sortedAppDateTimeStrLst =
+        appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
 
-    return appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
+    return sortedAppDateTimeStrLst;
   }
 
   bool isDateTimeStrValid(String dateTimeStr) {
@@ -267,5 +286,45 @@ mixin ScreenMixin {
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedText copied to clipboard');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  /// Method returning the sorted list of app data
+  /// files located in the app data dir.
+  List<String> getSortedFileNameLstInDir(
+      {required TransferDataViewModel transferDataViewModel,
+      bool addCircadianJsonFileNameToLst = false}) {
+    List<String?> nullablefileNameLst =
+        transferDataViewModel.getFileNameInDirLst(kDownloadAppDir);
+
+    List<String> nonNullablefileNameLst =
+        nullablefileNameLst.whereType<String>().toList();
+
+    List<String> sortedFileNameLst = [];
+
+    if (addCircadianJsonFileNameToLst) {
+      sortedFileNameLst.add(nonNullablefileNameLst
+          .firstWhere((element) => element == 'circadian.json'));
+    }
+
+    RegExp regExp = RegExp(r'^[\d\- \.]+json');
+    List<String> dateTimeFileNameSortedLst =
+        nonNullablefileNameLst.where((e) => regExp.hasMatch(e)).toList();
+    dateTimeFileNameSortedLst.sort();
+    sortedFileNameLst.addAll(dateTimeFileNameSortedLst.reversed);
+
+    return sortedFileNameLst;
+  }
+
+  String getLastCreatedJsonFileNameDateTimeStr(
+      TransferDataViewModel transferDataViewModel) {
+    final List<String> jsonFileNameLst =
+        getSortedFileNameLstInDir(transferDataViewModel: transferDataViewModel);
+
+    final String lastCreatedJsonFileNameDateTime =
+        jsonFileNameLst.first.replaceFirst('.json', '');
+    final String frenchFornattedDateTimeStr = transferDataViewModel
+        .reformatEnglishDateTimeStrWithPointToFrenchFormattedDateTimeStr(
+            lastCreatedJsonFileNameDateTime);
+    return frenchFornattedDateTimeStr;
   }
 }

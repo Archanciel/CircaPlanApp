@@ -76,7 +76,8 @@ class TransferDataViewModel {
           calculateSleepDurationData.sleepDurationNewDateTimeStr;
 
       final String englishDateTimeStr =
-          reformatDateTimeStrToCompatibleFileName(sleepDurationNewDateTimeStr);
+          reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+              sleepDurationNewDateTimeStr);
 
       final String saveAsTransferDataJsonFilePathName =
           '$transferDataJsonPath${Platform.pathSeparator}$englishDateTimeStr.json';
@@ -115,8 +116,10 @@ class TransferDataViewModel {
     }
   }
 
-  String reformatDateTimeStrToCompatibleFileName(
-      String sleepDurationNewDateTimeStr) {
+  /// This method converts the french formatted date time string to
+  /// an english formatted date time string with '.' in place of ':'.
+  String reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+      String frenchFormattedDateTimeStr) {
     final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
     // on Android, file name can not contain ':' !
@@ -125,11 +128,30 @@ class TransferDataViewModel {
     String englishDateTimeStr = '';
 
     try {
-      dateTime = frenchDateTimeFormat.parse(sleepDurationNewDateTimeStr);
+      dateTime = frenchDateTimeFormat.parse(frenchFormattedDateTimeStr);
       englishDateTimeStr = englishDateTimeFormat.format(dateTime);
     } on FormatException catch (_) {}
 
     return englishDateTimeStr;
+  }
+
+  /// This method converts the english formatted date time string to
+  /// a french formatted date time string with ':' in place of '.'.
+  String reformatEnglishDateTimeStrWithPointToFrenchFormattedDateTimeStr(
+      String englishFormattedDateTimeStr) {
+    final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+
+    // on Android, file name can not contain ':' !
+    final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH.mm");
+    DateTime dateTime;
+    String frenchDateTimeStr = '';
+
+    try {
+      dateTime = englishDateTimeFormat.parse(englishFormattedDateTimeStr);
+      frenchDateTimeStr = frenchDateTimeFormat.format(dateTime);
+    } on FormatException catch (_) {}
+
+    return frenchDateTimeStr;
   }
 
   String getTransferDataJsonPath() {

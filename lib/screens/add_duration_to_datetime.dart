@@ -289,6 +289,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedDateTimeStr,
                     topSelMenuPosition: 135.0,
+                    transferDataViewModel: _transferDataViewModel,
                   ),
                   // First duration addition/subtraction
                   AddSubtractDuration(
