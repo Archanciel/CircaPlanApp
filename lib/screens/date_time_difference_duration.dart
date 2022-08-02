@@ -322,33 +322,4 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       ),
     );
   }
-
-  Future<String?> openTextInputDialog() => showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Time to add'),
-          content: TextField(
-            autofocus: true,
-            style: TextStyle(
-                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-            decoration: const InputDecoration(hintText: '(-)HH:mm'),
-            controller: _addTimeDialogController,
-            onSubmitted: (_) => submit(),
-            keyboardType: TextInputType.datetime,
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Add time'),
-              onPressed: submit,
-            ),
-          ],
-        ),
-      );
-
-  void submit() {
-    Navigator.of(context).pop(_addTimeDialogController.text);
-
-    _addTimeDialogController.clear();
-  }
 }
