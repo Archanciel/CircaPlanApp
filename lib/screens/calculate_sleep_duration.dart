@@ -146,9 +146,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       final double currentWakeUpDurationPercent =
           currentWakeUpDurationMinutes * 100 / currentTotalDurationMinutes;
       _currentSleepDurationPercentStr =
-          '${currentSleepDurationPercent.toStringAsFixed(2)} %';
+          '${currentSleepDurationPercent.toStringAsFixed(1)} %';
       _currentWakeUpDurationPercentStr =
-          '${currentWakeUpDurationPercent.toStringAsFixed(2)} %';
+          '${currentWakeUpDurationPercent.toStringAsFixed(1)} %';
       _currentTotalDurationPercentStr = '100 %';
       _currentSleepDurationPercentController.text =
           _currentSleepDurationPercentStr;
