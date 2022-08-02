@@ -53,6 +53,16 @@ class CalculateSleepDurationData extends ScreenData {
   String get totalDurationStr => attributes['totalDurationStr'];
   set totalDurationStr(String value) => attributes['totalDurationStr'] = value;
 
+  String get sleepDurationPercentStr => attributes['sleepDurationPercentStr'];
+  set sleepDurationPercentStr(String value) => attributes['sleepDurationPercentStr'] = value;
+
+  String get wakeUpDurationPercentStr => attributes['wakeUpDurationPercentStr'];
+  set wakeUpDurationPercentStr(String value) =>
+      attributes['wakeUpDurationPercentStr'] = value;
+
+  String get totalDurationPercentStr => attributes['totalDurationPercentStr'];
+  set totalDurationPercentStr(String value) => attributes['totalDurationPercentStr'] = value;
+
   List<String> get sleepHistoryDateTimeStrLst =>
       attributes['sleepHistoryDateTimeStrLst'];
   set sleepHistoryDateTimeStrLst(List<String> value) =>
@@ -70,7 +80,7 @@ class CalculateSleepDurationData extends ScreenData {
     if (status == null) {
       return '';
     } else {
-      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst';
+      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst';
     }
   }
 }
