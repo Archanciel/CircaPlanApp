@@ -19,7 +19,7 @@ class ResetButton extends StatelessWidget with ScreenMixin {
   Widget build(BuildContext context) {
     return Positioned(
       right: 0,
-      bottom: 10,
+      bottom: 0,
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor: appElevatedButtonBackgroundColor,
