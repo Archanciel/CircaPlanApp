@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/widgets/result_date_time.dart';
 
@@ -9,10 +11,6 @@ import 'package:circa_plan/widgets/result_date_time.dart';
 class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
-
-  /// TextEditingController passed to the included ResultDateTime
-  /// widget.
-  final TextEditingController _resultDateTimeController;
 
   /// TextEditingController passed to this DurationResultDateTime
   /// widget.
@@ -26,6 +24,17 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
   Color _durationTextColor;
   int _durationSign;
 
+  final String _dateTimeTitle;
+  final TextEditingController _dateTimePickerController;
+  final Function _handleDateTimeModificationFunction;
+  final TransferDataViewModel _transferDataViewModel;
+
+  // used to fill the display selection popup menu
+  final Map<String, dynamic> _transferDataMap;
+
+  final Function(String) _handleSelectedDateTimeStrFunction;
+  final double _topSelMenuPosition;
+
   /// Constructor parms:
   ///
   /// resultDateTimeController      TextEditingController passed to
@@ -38,14 +47,28 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
   ///                               button is pressed or when the
   ///                               duration value is changed.
   AddSubtractResultableDuration({
-    required TextEditingController resultDateTimeController,
+    required String dateTimeTitle,
+    required TextEditingController endDateTimeController,
+    required Function handleDateTimeModificationFunction,
+    required Map<String, dynamic> transferDataMap,
+    required Function(String) handleSelectedEndDateTimeStrFunction,
+    required TransferDataViewModel transferDataViewModel,
+    required double topSelMenuPosition,
     required TextEditingController durationTextFieldController,
     required Function durationChangeFunction,
     required IconData durationIcon,
     required Color durationIconColor,
     required Color durationTextColor,
     required int durationSign,
-  })  : _resultDateTimeController = resultDateTimeController,
+  })  : _dateTimeTitle = dateTimeTitle,
+        _dateTimePickerController = endDateTimeController,
+        _handleDateTimeModificationFunction =
+            handleDateTimeModificationFunction,
+        _transferDataMap = transferDataMap,
+        _handleSelectedDateTimeStrFunction =
+            handleSelectedEndDateTimeStrFunction,
+        _topSelMenuPosition = topSelMenuPosition,
+        _transferDataViewModel = transferDataViewModel,
         _durationTextFieldController = durationTextFieldController,
         _durationChangeFunction = durationChangeFunction,
         _durationIcon = durationIcon,
@@ -128,18 +151,29 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
                       );
                     },
                   ),
-                        onDoubleTap: () async {
-                          await copyToClipboard(
-                              context: context,
-                              controller: _durationTextFieldController);
-                        },
+                  onDoubleTap: () async {
+                    await copyToClipboard(
+                        context: context,
+                        controller: _durationTextFieldController);
+                  },
                 ),
               ),
             ),
           ],
         ),
-        ResultDateTime(
-          resultDateTimeController: _resultDateTimeController,
+        const SizedBox(
+          height: 25, //  required for correct Now and Sel buttons
+          //              positioning.
+        ),
+        EditableDateTime(
+          dateTimeTitle: _dateTimeTitle,
+          dateTimePickerController: _dateTimePickerController,
+          handleDateTimeModificationFunction:
+              _handleDateTimeModificationFunction,
+          transferDataMap: _transferDataMap,
+          handleSelectedDateTimeStrFunction: _handleSelectedDateTimeStrFunction,
+          topSelMenuPosition: _topSelMenuPosition,
+          transferDataViewModel: _transferDataViewModel,
         ),
       ],
     );

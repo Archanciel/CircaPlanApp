@@ -69,7 +69,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _thirdDurationTextColor = transferDataMap['thirdDurationTextColor'] ??
             AddSubtractDuration.durationPositiveColor,
         _thirdDurationStr = transferDataMap['thirdDurationStr'] ?? '00:00',
-        _thirdEndDateTimeStr = transferDataMap['thirdEndDateTimeStr'] ?? '',
+        _thirdEndDateTimeEnglishFormatStr =
+            transferDataMap['thirdEndDateTimeStr'] ?? '',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -98,7 +99,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   Color _thirdDurationTextColor;
   int _thirdDurationSign;
   String _thirdDurationStr = '';
-  String _thirdEndDateTimeStr = '';
+  String _thirdEndDateTimeEnglishFormatStr = '';
 
   late TextEditingController _startDateTimeController;
 
@@ -109,7 +110,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   late TextEditingController _secondEndDateTimeTextFieldController;
 
   late TextEditingController _thirdDurationTextFieldController;
-  late TextEditingController _thirdEndDateTimeTextFieldController;
+  late TextEditingController _thirdEndDateTimePickerController;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -135,9 +136,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         TextEditingController(text: _secondEndDateTimeStr);
     _thirdDurationTextFieldController = TextEditingController(
         text: _transferDataMap['thirdDurationStr'] ?? '00:00');
-    _thirdEndDateTimeStr = _transferDataMap['thirdEndDateTimeStr'] ?? '';
-    _thirdEndDateTimeTextFieldController =
-        TextEditingController(text: _thirdEndDateTimeStr);
+    _thirdEndDateTimeEnglishFormatStr =
+        _transferDataMap['thirdEndDateTimeStr'] ?? '';
+    _thirdEndDateTimePickerController =
+        TextEditingController(text: _thirdEndDateTimeEnglishFormatStr);
   }
 
   @override
@@ -148,7 +150,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _secondDurationTextFieldController.dispose();
     _secondEndDateTimeTextFieldController.dispose();
     _thirdDurationTextFieldController.dispose();
-    _thirdEndDateTimeTextFieldController.dispose();
+    _thirdEndDateTimePickerController.dispose();
 
     super.dispose();
   }
@@ -175,7 +177,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _transferDataMap['thirdDurationSign'] = _thirdDurationSign;
     _transferDataMap['thirdDurationTextColor'] = _thirdDurationTextColor;
     _transferDataMap['thirdDurationStr'] = _thirdDurationStr;
-    _transferDataMap['thirdEndDateTimeStr'] = _thirdEndDateTimeStr;
+    _transferDataMap['thirdEndDateTimeStr'] = _thirdEndDateTimeEnglishFormatStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
 
@@ -196,17 +198,24 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _secondEndDateTimeStr = '';
     _secondEndDateTimeTextFieldController.text = _secondEndDateTimeStr;
     _thirdDurationTextFieldController.text = _thirdDurationStr;
-    _thirdEndDateTimeStr = '';
-    _thirdEndDateTimeTextFieldController.text = _thirdEndDateTimeStr;
+    _thirdEndDateTimeEnglishFormatStr = '';
+    _thirdEndDateTimePickerController.text = _thirdEndDateTimeEnglishFormatStr;
 
     setState(() {});
 
     _updateTransferDataMap();
   }
 
-  void _handleSelectedDateTimeStr(String selectedDateTimeStr) {
+  void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTime.toString();
+
+    _computeEndDateTimes();
+  }
+
+  void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
+    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _thirdEndDateTimePickerController.text = selectedDateTime.toString();
 
     _computeEndDateTimes();
   }
@@ -323,8 +332,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             thirdEndDateTime = secondEndDateTime.subtract(thirdDuration);
           }
 
-          _thirdEndDateTimeStr = frenchDateTimeFormat.format(thirdEndDateTime);
-          _thirdEndDateTimeTextFieldController.text = _thirdEndDateTimeStr;
+          // since the controller is linked to a DateTimePicker
+          // instance, the date time string must be in english format,
+          // instead of french format !
+          _thirdEndDateTimeEnglishFormatStr =
+              englishDateTimeFormat.format(thirdEndDateTime);
+          _thirdEndDateTimePickerController.text =
+              _thirdEndDateTimeEnglishFormatStr;
 
           setState(() {});
 
@@ -361,7 +375,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     handleDateTimeModificationFunction: _computeEndDateTimes,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
-                        _handleSelectedDateTimeStr,
+                        _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
                   ),
@@ -407,8 +421,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   // Second duration addition/subtraction
                   AddSubtractResultableDuration(
-                    resultDateTimeController:
-                        _thirdEndDateTimeTextFieldController,
+                    dateTimeTitle: 'End date time',
+                    endDateTimeController: _thirdEndDateTimePickerController,
+                    handleDateTimeModificationFunction: _computeEndDateTimes,
+                    transferDataMap: _transferDataMap,
+                    handleSelectedEndDateTimeStrFunction:
+                        _handleSelectedEndDateTimeStr,
+                    topSelMenuPosition: 550.0,
+                    transferDataViewModel: _transferDataViewModel,
                     durationTextFieldController:
                         _thirdDurationTextFieldController,
                     durationChangeFunction:
