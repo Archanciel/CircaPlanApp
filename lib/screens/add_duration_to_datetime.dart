@@ -1,5 +1,6 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/add_subtract_duration.dart';
+import 'package:circa_plan/widgets/add_subtract_resultable_duration.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -60,6 +61,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             AddSubtractDuration.durationPositiveColor,
         _secondDurationStr = transferDataMap['secondDurationStr'] ?? '00:00',
         _secondEndDateTimeStr = transferDataMap['secondEndDateTimeStr'] ?? '',
+        _thirdDurationIcon =
+            transferDataMap['thirdDurationIconData'] ?? Icons.add,
+        _thirdDurationIconColor = transferDataMap['thirdDurationIconColor'] ??
+            AddSubtractDuration.durationPositiveColor,
+        _thirdDurationSign = transferDataMap['thirdDurationSign'] ?? 1,
+        _thirdDurationTextColor = transferDataMap['thirdDurationTextColor'] ??
+            AddSubtractDuration.durationPositiveColor,
+        _thirdDurationStr = transferDataMap['thirdDurationStr'] ?? '00:00',
+        _thirdEndDateTimeStr = transferDataMap['thirdEndDateTimeStr'] ?? '',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -83,6 +93,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   String _secondDurationStr = '';
   String _secondEndDateTimeStr = '';
 
+  IconData _thirdDurationIcon;
+  Color _thirdDurationIconColor;
+  Color _thirdDurationTextColor;
+  int _thirdDurationSign;
+  String _thirdDurationStr = '';
+  String _thirdEndDateTimeStr = '';
+
   late TextEditingController _startDateTimeController;
 
   late TextEditingController _firstDurationTextFieldController;
@@ -90,6 +107,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   late TextEditingController _secondDurationTextFieldController;
   late TextEditingController _secondEndDateTimeTextFieldController;
+
+  late TextEditingController _thirdDurationTextFieldController;
+  late TextEditingController _thirdEndDateTimeTextFieldController;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -113,6 +133,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _secondEndDateTimeStr = _transferDataMap['secondEndDateTimeStr'] ?? '';
     _secondEndDateTimeTextFieldController =
         TextEditingController(text: _secondEndDateTimeStr);
+    _thirdDurationTextFieldController = TextEditingController(
+        text: _transferDataMap['thirdDurationStr'] ?? '00:00');
+    _thirdEndDateTimeStr = _transferDataMap['thirdEndDateTimeStr'] ?? '';
+    _thirdEndDateTimeTextFieldController =
+        TextEditingController(text: _thirdEndDateTimeStr);
   }
 
   @override
@@ -122,6 +147,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstEndDateTimeTextFieldController.dispose();
     _secondDurationTextFieldController.dispose();
     _secondEndDateTimeTextFieldController.dispose();
+    _thirdDurationTextFieldController.dispose();
+    _thirdEndDateTimeTextFieldController.dispose();
 
     super.dispose();
   }
@@ -143,6 +170,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _transferDataMap['secondDurationStr'] = _secondDurationStr;
     _transferDataMap['secondEndDateTimeStr'] = _secondEndDateTimeStr;
 
+    _transferDataMap['thirdDurationIconData'] = _thirdDurationIcon;
+    _transferDataMap['thirdDurationIconColor'] = _thirdDurationIconColor;
+    _transferDataMap['thirdDurationSign'] = _thirdDurationSign;
+    _transferDataMap['thirdDurationTextColor'] = _thirdDurationTextColor;
+    _transferDataMap['thirdDurationStr'] = _thirdDurationStr;
+    _transferDataMap['thirdEndDateTimeStr'] = _thirdEndDateTimeStr;
+
     _transferDataViewModel.updateAndSaveTransferData();
 
     return _transferDataMap;
@@ -161,6 +195,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _secondDurationTextFieldController.text = _secondDurationStr;
     _secondEndDateTimeStr = '';
     _secondEndDateTimeTextFieldController.text = _secondEndDateTimeStr;
+    _thirdDurationTextFieldController.text = _thirdDurationStr;
+    _thirdEndDateTimeStr = '';
+    _thirdEndDateTimeTextFieldController.text = _thirdEndDateTimeStr;
 
     setState(() {});
 
@@ -216,6 +253,27 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _computeEndDateTimes();
   }
 
+  /// Method passed to the third DurationResultDateTime widget
+  /// and called when the duration +/- button is pressed or when
+  /// the duration value is changed.
+  ///
+  /// The important method parameter is durationSign which has
+  /// a value of 1 or -1. The 3 other parameters will be removed
+  /// once the transfer data map will be suppressed.
+  void setThirdStateEndDateTimeForThirdDurationSign(
+    int durationSign,
+    IconData durationIcon,
+    Color durationIconColor,
+    Color durationTextColor,
+  ) {
+    _thirdDurationSign = durationSign;
+    _thirdDurationIcon = durationIcon;
+    _thirdDurationIconColor = durationIconColor;
+    _thirdDurationTextColor = durationTextColor;
+
+    _computeEndDateTimes();
+  }
+
   /// Private method called each time one of the elements
   /// implied in calculating the first an the second End date
   /// time values is changed.
@@ -253,9 +311,25 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _secondEndDateTimeStr = frenchDateTimeFormat.format(secondEndDateTime);
         _secondEndDateTimeTextFieldController.text = _secondEndDateTimeStr;
 
-        setState(() {});
+        _thirdDurationStr = _thirdDurationTextFieldController.text;
+        Duration? thirdDuration =
+            DateTimeParser.parseHHmmDuration(_thirdDurationStr);
+        DateTime thirdEndDateTime;
 
-        _updateTransferDataMap();
+        if (thirdDuration != null) {
+          if (_thirdDurationSign > 0) {
+            thirdEndDateTime = secondEndDateTime.add(thirdDuration);
+          } else {
+            thirdEndDateTime = secondEndDateTime.subtract(thirdDuration);
+          }
+
+          _thirdEndDateTimeStr = frenchDateTimeFormat.format(thirdEndDateTime);
+          _thirdEndDateTimeTextFieldController.text = _thirdEndDateTimeStr;
+
+          setState(() {});
+
+          _updateTransferDataMap();
+        }
       }
     }
   }
@@ -323,6 +397,26 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     durationIconColor: _secondDurationIconColor,
                     durationTextColor: _secondDurationTextColor,
                     durationSign: _secondDurationSign,
+                  ),
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of 25
+                    //                  height ...
+                    height: 25,
+                  ),
+                  // Second duration addition/subtraction
+                  AddSubtractResultableDuration(
+                    resultDateTimeController:
+                        _thirdEndDateTimeTextFieldController,
+                    durationTextFieldController:
+                        _thirdDurationTextFieldController,
+                    durationChangeFunction:
+                        setThirdStateEndDateTimeForThirdDurationSign,
+                    durationIcon: _thirdDurationIcon,
+                    durationIconColor: _thirdDurationIconColor,
+                    durationTextColor: _thirdDurationTextColor,
+                    durationSign: _thirdDurationSign,
                   ),
                 ],
               ),
