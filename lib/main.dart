@@ -47,20 +47,21 @@ Future<void> main(List<String> args) async {
   // reference is done at the beginning of the
   //_MainAppState.build() method.
   TransferDataViewModel transferDataViewModel =
-      await instanciateTransferDataViewModel(deleteAppDir);
+      await instanciateTransferDataViewModel(isAppDirToBeDeleted: deleteAppDir);
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }
 
 /// Async main method which instanciates and loads the
 /// TransferDataViewModel.
-Future<TransferDataViewModel> instanciateTransferDataViewModel(
-    bool deleteAppDir) async {
+Future<TransferDataViewModel> instanciateTransferDataViewModel({
+  bool isAppDirToBeDeleted = false,
+}) async {
   String path = kDownloadAppDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
-  if (deleteAppDir) {
+  if (isAppDirToBeDeleted) {
     if (directoryExists) {
       TransferDataViewModel.deleteFilesInDir(path);
     }

@@ -1,12 +1,50 @@
+import 'dart:io';
 import 'package:test/test.dart';
 
+import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
+
+const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
 
 class TestClassWithScreenMixin with ScreenMixin {}
 
-void main() {
+Future<TransferDataViewModel> instanciateTransferDataViewModel({
+  bool mustAppDirBeDeleted = false,
+}) async {
+  String path = kCircadianAppDataDir;
+  final Directory directory = Directory(path);
+  bool directoryExists = await directory.exists();
+
+  if (mustAppDirBeDeleted) {
+    if (directoryExists) {
+      TransferDataViewModel.deleteFilesInDir(path);
+    }
+  }
+
+  if (!directoryExists) {
+    await directory.create();
+  }
+
+  String transferDataJsonFilePathName =
+      '$path${Platform.pathSeparator}circadian.json';
+  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathName);
+
+  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
+
+  if (jsonFileExists) {
+    transferDataViewModel.loadTransferData();
+  }
+
+  return transferDataViewModel;
+}
+
+Future<void> main() async {
   final TestClassWithScreenMixin testClassWithSreenMixin =
       TestClassWithScreenMixin();
+
+  final TransferDataViewModel transferDataViewModel =
+      await instanciateTransferDataViewModel();
 
   group(
     'Test ScreenMixin',
@@ -42,8 +80,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapRegular,
-                  mostRecentFirst: false);
+            transferDataMap: transferDataMapRegular,
+            mostRecentFirst: false,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:12',
             '01-06-2022 23:42',
@@ -62,8 +102,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapRegular,
-                  mostRecentFirst: true);
+            transferDataMap: transferDataMapRegular,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '03-06-2022 06:42',
             '03-06-2022 03:42',
@@ -96,8 +138,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapTimeOnly,
-                  mostRecentFirst: false);
+            transferDataMap: transferDataMapTimeOnly,
+            mostRecentFirst: false,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -109,8 +153,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapTimeOnly,
-                  mostRecentFirst: true);
+            transferDataMap: transferDataMapTimeOnly,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -124,8 +170,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapEmpty,
-                  mostRecentFirst: false);
+            transferDataMap: transferDataMapEmpty,
+            mostRecentFirst: false,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -137,7 +185,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapEmpty, mostRecentFirst: true);
+            transferDataMap: transferDataMapEmpty,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -154,8 +205,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapOneDateTime,
-                  mostRecentFirst: false);
+            transferDataMap: transferDataMapOneDateTime,
+            mostRecentFirst: false,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
           ];
@@ -169,8 +222,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapOneDateTime,
-                  mostRecentFirst: true);
+            transferDataMap: transferDataMapOneDateTime,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
           ];
@@ -226,8 +281,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapInvalidFormat,
-                  mostRecentFirst: false);
+            transferDataMap: transferDataMapInvalidFormat,
+            mostRecentFirst: false,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
             '03-06-2022 03:42',
@@ -243,8 +300,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapInvalidFormat,
-                  mostRecentFirst: true);
+            transferDataMap: transferDataMapInvalidFormat,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '03-06-2022 06:42',
             '03-06-2022 03:42',
@@ -271,8 +330,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapEnglishAndFrenchDateTime,
-                  mostRecentFirst: false);
+            transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+            mostRecentFirst: false,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
             '02-06-2022 23:42',
@@ -289,8 +350,10 @@ void main() {
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-                  transferDataMap: transferDataMapEnglishAndFrenchDateTime,
-                  mostRecentFirst: true);
+            transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
           List<String> expectedDateTimeStrLst = [
             '11-06-2022 22:30',
             '10-06-2022 00:30',
