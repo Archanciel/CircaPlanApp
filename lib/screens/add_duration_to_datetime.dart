@@ -127,15 +127,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
     _startDateTimePickerController = TextEditingController(
-        text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimePickerStr);
+        text:
+            _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimePickerStr);
     _firstDurationTextFieldController = TextEditingController(
         text: _transferDataMap['firstDurationStr'] ?? '00:00');
-    _firstEndDateTimeStr = _transferDataMap['firstEndDateTimeStr'] ?? nowDateTimeStr;
+    _firstEndDateTimeStr =
+        _transferDataMap['firstEndDateTimeStr'] ?? nowDateTimeStr;
     _firstEndDateTimeTextFieldController =
         TextEditingController(text: _firstEndDateTimeStr);
     _secondDurationTextFieldController = TextEditingController(
         text: _transferDataMap['secondDurationStr'] ?? '00:00');
-    _secondEndDateTimeStr = _transferDataMap['secondEndDateTimeStr'] ?? nowDateTimeStr;
+    _secondEndDateTimeStr =
+        _transferDataMap['secondEndDateTimeStr'] ?? nowDateTimeStr;
     _secondEndDateTimeTextFieldController =
         TextEditingController(text: _secondEndDateTimeStr);
     _thirdDurationTextFieldController = TextEditingController(
@@ -315,7 +318,28 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     if (secondEndDateTime != null && thirdEndDateTime != null) {
       Duration thirdDuration = thirdEndDateTime.difference(secondEndDateTime);
-      print(thirdDuration.inHours);
+      _thirdDurationStr = thirdDuration.HHmm().replaceAll('-', '');
+      _thirdDurationTextFieldController.text = _thirdDurationStr;
+
+      if (thirdDuration.isNegative) {
+        _thirdDurationIcon = Icons.remove;
+        _thirdDurationIconColor =
+            AddSubtractDuration.durationNegativeColor;
+        _thirdDurationSign = -1;
+        _thirdDurationTextColor =
+            AddSubtractDuration.durationNegativeColor;
+      } else {
+        _thirdDurationIcon = Icons.add;
+        _thirdDurationIconColor =
+            AddSubtractDuration.durationPositiveColor;
+        _thirdDurationSign = 1;
+        _thirdDurationTextColor =
+            AddSubtractDuration.durationPositiveColor;
+      }
+
+      setState(() {});
+
+      _updateTransferDataMap();
     }
   }
 
