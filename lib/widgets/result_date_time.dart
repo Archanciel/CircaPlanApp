@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
-/// Widget included in AddSubtractDuration widget.
+/// Widget displaying date time value in a TextField.
+/// 
+/// This widget ios included in the AddSubtractDuration widget.
 class ResultDateTime extends StatelessWidget with ScreenMixin {
   final TextEditingController _resultDateTimeController;
 

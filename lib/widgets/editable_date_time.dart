@@ -5,13 +5,16 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 
-/// Widget which displays DateTimePicker as well as a 'Now' and a
+/// Widget which displays a DateTimePicker as well as a 'Now' and a
 /// 'Sel' button.
 ///
 /// Clicking on the DateTimePicker field opens the date time
 /// selection dialog. 'Now' button sets the DateTimePicker to now,
 /// 'Sel' button displays a date time selection menu in order to
 /// choose the date time value to set in the DateTimePicker field.
+/// 
+/// This widget is included in the AddSubtractResultableDuration
+/// widget.
 class EditableDateTime extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _dateTimePickerController;
