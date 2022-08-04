@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 /// Widget included in AddSubtractDuration widget.
@@ -12,7 +13,7 @@ class ResultDateTime extends StatelessWidget with ScreenMixin {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, kVerticalFieldDistance, 0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

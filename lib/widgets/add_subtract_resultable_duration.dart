@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -162,8 +163,8 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
           ],
         ),
         const SizedBox(
-          height: 25, //  required for correct Now and Sel buttons
-          //              positioning.
+          height: kVerticalFieldDistance, // required for correct Now and Sel
+          //                                 buttons positioning.
         ),
         EditableDateTime(
           dateTimeTitle: _dateTimeTitle,

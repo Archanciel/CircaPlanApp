@@ -1,15 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/add_subtract_duration.dart';
 import 'package:circa_plan/widgets/add_subtract_resultable_duration.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import 'package:flutter/material.dart';
-import 'package:date_time_picker/date_time_picker.dart';
-
-import 'package:intl/intl.dart';
-
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
@@ -395,9 +394,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
-                    //                  include a SizedBox of 25
+                    //                  include a SizedBox of kVerticalFieldDistance
                     //                  height ...
-                    height: 25,
+                    height: kVerticalFieldDistance,
                   ),
                   // Second duration addition/subtraction
                   AddSubtractDuration(
@@ -415,9 +414,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
-                    //                  include a SizedBox of 25
+                    //                  include a SizedBox of kVerticalFieldDistance
                     //                  height ...
-                    height: 25,
+                    height: kVerticalFieldDistance,
                   ),
                   // Second duration addition/subtraction
                   AddSubtractResultableDuration(

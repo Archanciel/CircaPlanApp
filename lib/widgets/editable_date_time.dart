@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 
@@ -83,8 +84,9 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
               ),
             ),
             const SizedBox(
-              height: 25, //  required for correct Now and Sel buttons
-              //              positioning.
+              height: kVerticalFieldDistance, // required for correct
+              //                                 Now and Sel buttons
+              //                                 positioning.
             ),
           ],
         ),

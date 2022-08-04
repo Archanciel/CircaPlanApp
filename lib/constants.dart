@@ -3,6 +3,7 @@ enum FirstDurationIconType {
   add,
   subtract,
 }
+
 enum SecondDurationIconType {
   add,
   subtract,
@@ -16,4 +17,5 @@ enum Status {
 
 const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';
 const String kDefaultJsonFileName = 'circadian.json';
-
+const double kVerticalFieldDistance = 23.0;
+const double kResetButtonBottomDistance = 5.0;

@@ -651,7 +651,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ),
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: kVerticalFieldDistance,
                   ),
                   Row(
                     children: [
@@ -725,7 +725,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     ],
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: kVerticalFieldDistance,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Sleep duration',
