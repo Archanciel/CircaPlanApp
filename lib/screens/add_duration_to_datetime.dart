@@ -301,7 +301,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     DateTime? secondEndDateTime;
 
     try {
-      secondEndDateTime = englishDateTimeFormat.parse(secondEndDateTimeStr);
+      secondEndDateTime = frenchDateTimeFormat.parse(secondEndDateTimeStr);
     } on FormatException {}
 
     final String thirdEndDateTimeStr = _thirdEndDateTimePickerController.text;
