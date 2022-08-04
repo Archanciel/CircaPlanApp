@@ -4,11 +4,10 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:circa_plan/widgets/result_date_time.dart';
 
 /// HH:MM editable widget with a '+' button changeable to '-'
 /// button. Adds or subtracts the defined duration value to
-/// the included ResultDateTime widget.
+/// the included ResultDateTime widget. Additionally, 
 class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
