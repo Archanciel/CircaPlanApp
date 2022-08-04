@@ -272,7 +272,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedEndDateTimeStr,
-                    topSelMenuPosition: 200.0,
+                    topSelMenuPosition: 203.0,
                     transferDataViewModel: _transferDataViewModel,
                   ),
                   EditableDuration(
