@@ -202,20 +202,28 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _startDateTimeStr = nowDateTimePickerStr;
     _startDateTimePickerController.text = _startDateTimeStr;
     _firstDurationStr = '00:00';
+    _firstDurationSign = 1;
     _firstDurationTextFieldController.text = _firstDurationStr;
     _firstEndDateTimeStr = nowDateTimeStr;
     _firstEndDateTimeTextFieldController.text = _firstEndDateTimeStr;
+    _setFirstDurationAppearance(isNegative: false);
+
     _secondDurationStr = '00:00';
+    _secondDurationSign = 1;
     _secondDurationTextFieldController.text = _secondDurationStr;
     _secondEndDateTimeStr = nowDateTimeStr;
     _secondEndDateTimeTextFieldController.text = _secondEndDateTimeStr;
+    _setSecondDurationAppearance(isNegative: false);
+
+
     _thirdDurationStr = '00:00';
+    _thirdDurationSign = 1;
     _thirdDurationTextFieldController.text = _thirdDurationStr;
     _thirdEndDateTimeEnglishFormatStr = nowDateTimePickerStr;
     _thirdEndDateTimePickerController.text = _thirdEndDateTimeEnglishFormatStr;
+    _setThirdDurationAppearance(isNegative: false);
 
     setState(() {});
-
     _updateTransferDataMap();
   }
 
@@ -320,26 +328,52 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       Duration thirdDuration = thirdEndDateTime.difference(secondEndDateTime);
       _thirdDurationStr = thirdDuration.HHmm().replaceAll('-', '');
       _thirdDurationTextFieldController.text = _thirdDurationStr;
-
-      if (thirdDuration.isNegative) {
-        _thirdDurationIcon = Icons.remove;
-        _thirdDurationIconColor =
-            AddSubtractDuration.durationNegativeColor;
-        _thirdDurationSign = -1;
-        _thirdDurationTextColor =
-            AddSubtractDuration.durationNegativeColor;
-      } else {
-        _thirdDurationIcon = Icons.add;
-        _thirdDurationIconColor =
-            AddSubtractDuration.durationPositiveColor;
-        _thirdDurationSign = 1;
-        _thirdDurationTextColor =
-            AddSubtractDuration.durationPositiveColor;
-      }
+      _setThirdDurationAppearance(isNegative: thirdDuration.isNegative);
 
       setState(() {});
-
       _updateTransferDataMap();
+    }
+  }
+
+  void _setFirstDurationAppearance({required bool isNegative}) {
+    if (isNegative) {
+      _firstDurationIcon = Icons.remove;
+      _firstDurationIconColor = AddSubtractDuration.durationNegativeColor;
+      _firstDurationSign = -1;
+      _firstDurationTextColor = AddSubtractDuration.durationNegativeColor;
+    } else {
+      _firstDurationIcon = Icons.add;
+      _firstDurationIconColor = AddSubtractDuration.durationPositiveColor;
+      _firstDurationSign = 1;
+      _firstDurationTextColor = AddSubtractDuration.durationPositiveColor;
+    }
+  }
+
+  void _setSecondDurationAppearance({required bool isNegative}) {
+    if (isNegative) {
+      _secondDurationIcon = Icons.remove;
+      _secondDurationIconColor = AddSubtractDuration.durationNegativeColor;
+      _secondDurationSign = -1;
+      _secondDurationTextColor = AddSubtractDuration.durationNegativeColor;
+    } else {
+      _secondDurationIcon = Icons.add;
+      _secondDurationIconColor = AddSubtractDuration.durationPositiveColor;
+      _secondDurationSign = 1;
+      _secondDurationTextColor = AddSubtractDuration.durationPositiveColor;
+    }
+  }
+
+  void _setThirdDurationAppearance({required bool isNegative}) {
+    if (isNegative) {
+      _thirdDurationIcon = Icons.remove;
+      _thirdDurationIconColor = AddSubtractDuration.durationNegativeColor;
+      _thirdDurationSign = -1;
+      _thirdDurationTextColor = AddSubtractDuration.durationNegativeColor;
+    } else {
+      _thirdDurationIcon = Icons.add;
+      _thirdDurationIconColor = AddSubtractDuration.durationPositiveColor;
+      _thirdDurationSign = 1;
+      _thirdDurationTextColor = AddSubtractDuration.durationPositiveColor;
     }
   }
 
@@ -401,7 +435,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               _thirdEndDateTimeEnglishFormatStr;
 
           setState(() {});
-
           _updateTransferDataMap();
         }
       }
