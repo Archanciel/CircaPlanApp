@@ -100,7 +100,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   String _thirdDurationStr = '';
   String _thirdEndDateTimeEnglishFormatStr = '';
 
-  late TextEditingController _startDateTimeController;
+  late TextEditingController _startDateTimePickerController;
 
   late TextEditingController _firstDurationTextFieldController;
   late TextEditingController _firstEndDateTimeTextFieldController;
@@ -119,31 +119,36 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = dateTimeNow.toString();
 
-    _startDateTimeController = TextEditingController(
-        text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimeStr);
+    // String value used to initialize DateTimePicker field
+    String nowDateTimePickerStr = dateTimeNow.toString();
+
+    // String value used to initialize TextField field
+    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
+
+    _startDateTimePickerController = TextEditingController(
+        text: _transferDataMap['addDurStartDateTimeStr'] ?? nowDateTimePickerStr);
     _firstDurationTextFieldController = TextEditingController(
         text: _transferDataMap['firstDurationStr'] ?? '00:00');
-    _firstEndDateTimeStr = _transferDataMap['firstEndDateTimeStr'] ?? '';
+    _firstEndDateTimeStr = _transferDataMap['firstEndDateTimeStr'] ?? nowDateTimeStr;
     _firstEndDateTimeTextFieldController =
         TextEditingController(text: _firstEndDateTimeStr);
     _secondDurationTextFieldController = TextEditingController(
         text: _transferDataMap['secondDurationStr'] ?? '00:00');
-    _secondEndDateTimeStr = _transferDataMap['secondEndDateTimeStr'] ?? '';
+    _secondEndDateTimeStr = _transferDataMap['secondEndDateTimeStr'] ?? nowDateTimeStr;
     _secondEndDateTimeTextFieldController =
         TextEditingController(text: _secondEndDateTimeStr);
     _thirdDurationTextFieldController = TextEditingController(
         text: _transferDataMap['thirdDurationStr'] ?? '00:00');
     _thirdEndDateTimeEnglishFormatStr =
-        _transferDataMap['thirdEndDateTimeStr'] ?? '';
+        _transferDataMap['thirdEndDateTimeStr'] ?? nowDateTimePickerStr;
     _thirdEndDateTimePickerController =
         TextEditingController(text: _thirdEndDateTimeEnglishFormatStr);
   }
 
   @override
   void dispose() {
-    _startDateTimeController.dispose();
+    _startDateTimePickerController.dispose();
     _firstDurationTextFieldController.dispose();
     _firstEndDateTimeTextFieldController.dispose();
     _secondDurationTextFieldController.dispose();
@@ -185,19 +190,25 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _resetScreen() {
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = dateTimeNow.toString();
-    _startDateTimeStr = nowDateTimeStr;
-    _startDateTimeController.text = _startDateTimeStr;
+    // String value used to initialize DateTimePicker field
+    String nowDateTimePickerStr = dateTimeNow.toString();
+
+    // String value used to initialize TextField field
+    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
+
+    _startDateTimeStr = nowDateTimePickerStr;
+    _startDateTimePickerController.text = _startDateTimeStr;
     _firstDurationStr = '00:00';
     _firstDurationTextFieldController.text = _firstDurationStr;
-    _firstEndDateTimeStr = '';
+    _firstEndDateTimeStr = nowDateTimeStr;
     _firstEndDateTimeTextFieldController.text = _firstEndDateTimeStr;
     _secondDurationStr = '00:00';
     _secondDurationTextFieldController.text = _secondDurationStr;
-    _secondEndDateTimeStr = '';
+    _secondEndDateTimeStr = nowDateTimeStr;
     _secondEndDateTimeTextFieldController.text = _secondEndDateTimeStr;
+    _thirdDurationStr = '00:00';
     _thirdDurationTextFieldController.text = _thirdDurationStr;
-    _thirdEndDateTimeEnglishFormatStr = '';
+    _thirdEndDateTimeEnglishFormatStr = nowDateTimePickerStr;
     _thirdEndDateTimePickerController.text = _thirdEndDateTimeEnglishFormatStr;
 
     setState(() {});
@@ -207,16 +218,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _startDateTimeController.text = selectedDateTime.toString();
+    _startDateTimePickerController.text = selectedDateTime.toString();
 
     _computeEndDateTimes();
   }
 
-  void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
+  void _handleSelectedThirdEndDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _thirdEndDateTimePickerController.text = selectedDateTime.toString();
 
-    _computeEndDateTimes();
+    _updateThirdDuration();
   }
 
   /// Method passed to the first DurationResultDateTime widget
@@ -282,11 +293,37 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _computeEndDateTimes();
   }
 
+  /// Private method called each time when the third End date
+  /// time value is changed.
+  void _updateThirdDuration() {
+    final String secondEndDateTimeStr =
+        _secondEndDateTimeTextFieldController.text;
+    DateTime? secondEndDateTime;
+
+    try {
+      secondEndDateTime = englishDateTimeFormat.parse(secondEndDateTimeStr);
+    } on FormatException {}
+
+    final String thirdEndDateTimeStr = _thirdEndDateTimePickerController.text;
+    DateTime? thirdEndDateTime;
+
+    try {
+      thirdEndDateTime = englishDateTimeFormat.parse(thirdEndDateTimeStr);
+    } on FormatException {}
+
+    Duration thirdDuration;
+
+    if (secondEndDateTime != null && thirdEndDateTime != null) {
+      Duration thirdDuration = thirdEndDateTime.difference(secondEndDateTime);
+      print(thirdDuration.inHours);
+    }
+  }
+
   /// Private method called each time one of the elements
   /// implied in calculating the first an the second End date
   /// time values is changed.
   void _computeEndDateTimes() {
-    _startDateTimeStr = _startDateTimeController.text;
+    _startDateTimeStr = _startDateTimePickerController.text;
     DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
 
     _firstDurationStr = _firstDurationTextFieldController.text;
@@ -370,7 +407,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'Start date time',
-                    dateTimePickerController: _startDateTimeController,
+                    dateTimePickerController: _startDateTimePickerController,
                     handleDateTimeModificationFunction: _computeEndDateTimes,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
@@ -422,10 +459,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   AddSubtractResultableDuration(
                     dateTimeTitle: 'End date time',
                     endDateTimeController: _thirdEndDateTimePickerController,
-                    handleDateTimeModificationFunction: _computeEndDateTimes,
+                    handleDateTimeModificationFunction: _updateThirdDuration,
                     transferDataMap: _transferDataMap,
                     handleSelectedEndDateTimeStrFunction:
-                        _handleSelectedEndDateTimeStr,
+                        _handleSelectedThirdEndDateTimeStr,
                     topSelMenuPosition: 550.0,
                     transferDataViewModel: _transferDataViewModel,
                     durationTextFieldController:
