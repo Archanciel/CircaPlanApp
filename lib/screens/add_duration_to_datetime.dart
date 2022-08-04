@@ -236,9 +236,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _handleSelectedThirdEndDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _thirdEndDateTimePickerController.text = selectedDateTime.toString();
+    _thirdEndDateTimeEnglishFormatStr = englishDateTimeFormat.format(selectedDateTime);
+    _thirdEndDateTimePickerController.text = _thirdEndDateTimeEnglishFormatStr;
 
-    _updateThirdDuration();
+    _updateThirdDuration(_thirdEndDateTimeEnglishFormatStr);
   }
 
   /// Method passed to the first DurationResultDateTime widget
@@ -306,7 +307,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   /// Private method called each time when the third End date
   /// time value is changed.
-  void _updateThirdDuration() {
+  void _updateThirdDuration(String thirdEndDateTimeEnglishFormatStr) {
     final String secondEndDateTimeStr =
         _secondEndDateTimeTextFieldController.text;
     DateTime? secondEndDateTime;
@@ -315,11 +316,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       secondEndDateTime = frenchDateTimeFormat.parse(secondEndDateTimeStr);
     } on FormatException {}
 
-    final String thirdEndDateTimeStr = _thirdEndDateTimePickerController.text;
+    _thirdEndDateTimeEnglishFormatStr = thirdEndDateTimeEnglishFormatStr;
     DateTime? thirdEndDateTime;
 
     try {
-      thirdEndDateTime = englishDateTimeFormat.parse(thirdEndDateTimeStr);
+      thirdEndDateTime = englishDateTimeFormat.parse(_thirdEndDateTimeEnglishFormatStr);
     } on FormatException {}
 
     Duration thirdDuration;

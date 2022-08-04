@@ -206,6 +206,16 @@ class TransferDataViewModel {
         _transferDataMap!['secondDurationStr'];
     addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
         _transferDataMap!['secondEndDateTimeStr'];
+
+    int thirdDurationSign = _transferDataMap!['thirdDurationSign'];
+
+    addDurationToDateTimeData.thirdDurationIconType = (thirdDurationSign > 0)
+        ? ThirdDurationIconType.add
+        : ThirdDurationIconType.subtract;
+    addDurationToDateTimeData.thirdAddDurationDurationStr =
+        _transferDataMap!['thirdDurationStr'];
+    addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
+        _transferDataMap!['thirdEndDateTimeStr'];
   }
 
   void updateCalculateSleepDurationData() {
@@ -359,6 +369,24 @@ class TransferDataViewModel {
           addDurationToDateTimeData.secondAddDurationDurationStr;
       _transferDataMap!["secondEndDateTimeStr"] =
           addDurationToDateTimeData.secondAddDurationEndDateTimeStr;
+
+      if (addDurationToDateTimeData.thirdDurationIconType ==
+          ThirdDurationIconType.add) {
+        _transferDataMap!["thirdDurationIconData"] = Icons.add;
+        _transferDataMap!["thirdDurationIconColor"] = Colors.green.shade200;
+        _transferDataMap!["thirdDurationSign"] = 1;
+        _transferDataMap!["thirdDurationTextColor"] = Colors.green.shade200;
+      } else {
+        _transferDataMap!["thirdDurationIconData"] = Icons.remove;
+        _transferDataMap!["thirdDurationIconColor"] = Colors.red.shade200;
+        _transferDataMap!["thirdDurationSign"] = -1;
+        _transferDataMap!["thirdDurationTextColor"] = Colors.red.shade200;
+      }
+
+      _transferDataMap!["thirdDurationStr"] =
+          addDurationToDateTimeData.thirdAddDurationDurationStr;
+      _transferDataMap!["thirdEndDateTimeStr"] =
+          addDurationToDateTimeData.thirdAddDurationEndDateTimeStr;
     }
 
     CalculateSleepDurationData calculateSleepDurationData =

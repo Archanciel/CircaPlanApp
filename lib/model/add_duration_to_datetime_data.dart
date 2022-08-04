@@ -17,6 +17,10 @@ class AddDurationToDateTimeData extends ScreenData {
         value is SecondDurationIconType
             ? value.index
             : SecondDurationIconType.values[value];
+    transformers['thirdDurationIconType'] = (value) =>
+        value is ThirdDurationIconType
+            ? value.index
+            : ThirdDurationIconType.values[value];
     screenDataType = ScreenDataType.addDurationToDateTimeData;
   }
 
@@ -61,6 +65,18 @@ class AddDurationToDateTimeData extends ScreenData {
   set secondAddDurationEndDateTimeStr(String value) =>
       attributes['secondAddDurationEndDateTimeStr'] = value;
 
+  ThirdDurationIconType get thirdDurationIconType => attributes['thirdDurationIconType'];
+  set thirdDurationIconType(ThirdDurationIconType value) =>
+      attributes['thirdDurationIconType'] = value;
+
+  String get thirdAddDurationDurationStr => attributes['thirdAddDurationDurationStr'];
+  set thirdAddDurationDurationStr(String value) => attributes['thirdAddDurationDurationStr'] = value;
+
+  String get thirdAddDurationEndDateTimeStr =>
+      attributes['thirdAddDurationEndDateTimeStr'];
+  set thirdAddDurationEndDateTimeStr(String value) =>
+      attributes['thirdAddDurationEndDateTimeStr'] = value;
+
   @override
   String toString() {
     FirstDurationIconType? firstDurationIconType = getFirstDurationIconType();
@@ -68,7 +84,7 @@ class AddDurationToDateTimeData extends ScreenData {
     if (firstDurationIconType == null) {
       return '';
     } else {
-      return 'firstDurationIconType: $firstDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationStr: $firstAddDurationDurationStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nsecondDurationIconType: $secondDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nsecondDurationStr: $secondAddDurationDurationStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr';
+      return 'firstDurationIconType: $firstDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationStr: $firstAddDurationDurationStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nsecondDurationIconType: $secondDurationIconType\nsecondDurationStr: $secondAddDurationDurationStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr\nthirdDurationIconType: $thirdDurationIconType\nthirdDurationStr: $thirdAddDurationDurationStr\nthirdEndDateTimeStr: $thirdAddDurationEndDateTimeStr';
     }
   }
 }

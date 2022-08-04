@@ -82,7 +82,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   ),
                   decoration: const InputDecoration.collapsed(hintText: ''),
                   style: valueTextStyle,
-                  onChanged: (val) => _handleDateTimeModification(),
+                  onChanged: (val) => _handleDateTimeModification(val),
                 ),
               ),
             ),
@@ -100,8 +100,9 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   backgroundColor: appElevatedButtonBackgroundColor,
                   shape: appElevatedButtonRoundedShape),
               onPressed: () {
-                _dateTimePickerController.text = DateTime.now().toString();
-                _handleDateTimeModification();
+                String nowStr = DateTime.now().toString();
+                _dateTimePickerController.text = nowStr;
+                _handleDateTimeModification(nowStr);
               },
               child: const Text(
                 'Now',

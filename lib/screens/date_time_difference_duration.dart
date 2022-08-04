@@ -135,7 +135,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
-  void _setStateDiffDuration() {
+  void _setStateDiffDuration(_) {
     /// Private method called each time one of the elements
     /// implied in calculating the Duration value is changed.
     _startDateTimeStr = _startDateTimeController.text;
@@ -224,14 +224,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTime.toString();
 
-    _setStateDiffDuration();
+    _setStateDiffDuration(selectedDateTimeStr);
   }
 
   void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _endDateTimeController.text = selectedDateTime.toString();
 
-    _setStateDiffDuration();
+    _setStateDiffDuration(selectedDateTimeStr);
   }
 
   @override

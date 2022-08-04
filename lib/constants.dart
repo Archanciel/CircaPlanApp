@@ -9,6 +9,11 @@ enum SecondDurationIconType {
   subtract,
 }
 
+enum ThirdDurationIconType {
+  add,
+  subtract,
+}
+
 /// CalculateSleepDuration screen enum
 enum Status {
   wakeUp,
