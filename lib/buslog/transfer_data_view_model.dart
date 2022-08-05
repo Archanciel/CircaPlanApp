@@ -190,8 +190,8 @@ class TransferDataViewModel {
         _transferDataMap!['addDurStartDateTimeStr'];
 
     addDurationToDateTimeData.firstDurationIconType = (firstDurationSign > 0)
-        ? FirstDurationIconType.add
-        : FirstDurationIconType.subtract;
+        ? DurationIconType.add
+        : DurationIconType.subtract;
     addDurationToDateTimeData.firstAddDurationDurationStr =
         _transferDataMap!['firstDurationStr'];
     addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
@@ -210,8 +210,8 @@ class TransferDataViewModel {
     int thirdDurationSign = _transferDataMap!['thirdDurationSign'];
 
     addDurationToDateTimeData.thirdDurationIconType = (thirdDurationSign > 0)
-        ? ThirdDurationIconType.add
-        : ThirdDurationIconType.subtract;
+        ? DurationIconType.add
+        : DurationIconType.subtract;
     addDurationToDateTimeData.thirdAddDurationDurationStr =
         _transferDataMap!['thirdDurationStr'];
     addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
@@ -327,7 +327,7 @@ class TransferDataViewModel {
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
 
-    FirstDurationIconType? durationIconType =
+    DurationIconType? durationIconType =
         addDurationToDateTimeData.getFirstDurationIconType();
 
     if (durationIconType != null) {
@@ -335,7 +335,7 @@ class TransferDataViewModel {
           addDurationToDateTimeData.addDurationStartDateTimeStr;
 
       if (addDurationToDateTimeData.firstDurationIconType ==
-          FirstDurationIconType.add) {
+          DurationIconType.add) {
         _transferDataMap!["firstDurationIconData"] = Icons.add;
         _transferDataMap!["firstDurationIconColor"] = Colors.green.shade200;
         _transferDataMap!["firstDurationSign"] = 1;
@@ -371,7 +371,7 @@ class TransferDataViewModel {
           addDurationToDateTimeData.secondAddDurationEndDateTimeStr;
 
       if (addDurationToDateTimeData.thirdDurationIconType ==
-          ThirdDurationIconType.add) {
+          DurationIconType.add) {
         _transferDataMap!["thirdDurationIconData"] = Icons.add;
         _transferDataMap!["thirdDurationIconColor"] = Colors.green.shade200;
         _transferDataMap!["thirdDurationSign"] = 1;

@@ -64,7 +64,7 @@ void main() {
           expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
           expect(addDurationToDateTimeData.firstDurationIconType,
-              FirstDurationIconType.add);
+              DurationIconType.add);
           expect(
               addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
@@ -295,7 +295,7 @@ void main() {
           expect(addDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
           expect(addDurationToDateTimeData.firstDurationIconType,
-              FirstDurationIconType.add);
+              DurationIconType.add);
           expect(
               addDurationToDateTimeData.firstAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
@@ -440,7 +440,7 @@ void main() {
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
               '2022-07-12 16:00:26.486627');
           expect(loadedAddDurationToDateTimeData.firstDurationIconType,
-              FirstDurationIconType.add);
+              DurationIconType.add);
           expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
               '00:50');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
@@ -488,9 +488,12 @@ void main() {
           expect(loadedCalculateSleepDurationData.sleepDurationStr, '12:36');
           expect(loadedCalculateSleepDurationData.wakeUpDurationStr, '0:02');
           expect(loadedCalculateSleepDurationData.totalDurationStr, '12:38');
-          expect(loadedCalculateSleepDurationData.sleepDurationPercentStr, '99.74 %');
-          expect(loadedCalculateSleepDurationData.wakeUpDurationPercentStr, '0.26 %');
-          expect(loadedCalculateSleepDurationData.totalDurationPercentStr, '100 %');
+          expect(loadedCalculateSleepDurationData.sleepDurationPercentStr,
+              '99.74 %');
+          expect(loadedCalculateSleepDurationData.wakeUpDurationPercentStr,
+              '0.26 %');
+          expect(loadedCalculateSleepDurationData.totalDurationPercentStr,
+              '100 %');
           expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,

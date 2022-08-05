@@ -1,15 +1,10 @@
 /// AddDurationToDateTime screen enum
-enum FirstDurationIconType {
+enum DurationIconType {
   add,
   subtract,
 }
 
 enum SecondDurationIconType {
-  add,
-  subtract,
-}
-
-enum ThirdDurationIconType {
   add,
   subtract,
 }
