@@ -70,7 +70,7 @@ void main() {
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '12-07-2022 16:00');
           expect(addDurationToDateTimeData.secondDurationIconType,
-              SecondDurationIconType.subtract);
+              DurationIconType.subtract);
           expect(
               addDurationToDateTimeData.secondAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.secondAddDurationEndDateTimeStr,
@@ -301,7 +301,7 @@ void main() {
           expect(addDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '12-07-2022 16:00');
           expect(addDurationToDateTimeData.secondDurationIconType,
-              SecondDurationIconType.subtract);
+              DurationIconType.subtract);
           expect(
               addDurationToDateTimeData.secondAddDurationDurationStr, '00:00');
           expect(addDurationToDateTimeData.secondAddDurationEndDateTimeStr,
@@ -446,7 +446,7 @@ void main() {
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '12-07-2022 16:50');
           expect(loadedAddDurationToDateTimeData.secondDurationIconType,
-              SecondDurationIconType.subtract);
+              DurationIconType.subtract);
           expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
               '02:00');
           expect(

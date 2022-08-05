@@ -13,9 +13,9 @@ class AddDurationToDateTimeData extends ScreenData {
         ? value.index
         : DurationIconType.values[value];
     transformers['secondDurationIconType'] = (value) =>
-        value is SecondDurationIconType
+        value is DurationIconType
             ? value.index
-            : SecondDurationIconType.values[value];
+            : DurationIconType.values[value];
     transformers['thirdDurationIconType'] = (value) =>
         value is DurationIconType
             ? value.index
@@ -52,9 +52,9 @@ class AddDurationToDateTimeData extends ScreenData {
   set firstAddDurationEndDateTimeStr(String value) =>
       attributes['firstAddDurationEndDateTimeStr'] = value;
 
-  SecondDurationIconType get secondDurationIconType =>
+  DurationIconType get secondDurationIconType =>
       attributes['secondDurationIconType'];
-  set secondDurationIconType(SecondDurationIconType value) =>
+  set secondDurationIconType(DurationIconType value) =>
       attributes['secondDurationIconType'] = value;
 
   String get secondAddDurationDurationStr =>

@@ -200,8 +200,8 @@ class TransferDataViewModel {
     int secondDurationSign = _transferDataMap!['secondDurationSign'];
 
     addDurationToDateTimeData.secondDurationIconType = (secondDurationSign > 0)
-        ? SecondDurationIconType.add
-        : SecondDurationIconType.subtract;
+        ? DurationIconType.add
+        : DurationIconType.subtract;
     addDurationToDateTimeData.secondAddDurationDurationStr =
         _transferDataMap!['secondDurationStr'];
     addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
@@ -353,7 +353,7 @@ class TransferDataViewModel {
           addDurationToDateTimeData.firstAddDurationEndDateTimeStr;
 
       if (addDurationToDateTimeData.secondDurationIconType ==
-          SecondDurationIconType.add) {
+          DurationIconType.add) {
         _transferDataMap!["secondDurationIconData"] = Icons.add;
         _transferDataMap!["secondDurationIconColor"] = Colors.green.shade200;
         _transferDataMap!["secondDurationSign"] = 1;
