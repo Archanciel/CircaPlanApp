@@ -8,7 +8,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 /// HH:MM editable widget with a '+' button changeable to '-'
 /// button. Adds or subtracts the defined duration value to
 /// the included ResultDateTime widget. Additionally, 
-class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
+class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
 
@@ -77,13 +77,18 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
         _durationSign = durationSign;
 
   @override
+  State<AddSubtractResultableDuration> createState() => _AddSubtractResultableDurationState();
+}
+
+class _AddSubtractResultableDurationState extends State<AddSubtractResultableDuration> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Duration',
-          style: labelTextStyle,
+          style: widget.labelTextStyle,
         ),
         Stack(
           children: [
@@ -92,32 +97,32 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
               top: -10,
               child: TextButton.icon(
                 icon: Icon(
-                  _durationIcon,
+                  widget._durationIcon,
                   size: 30,
-                  color: _durationIconColor,
+                  color: widget._durationIconColor,
                 ),
                 label: const Text(''),
                 onPressed: () {
-                  if (_durationIcon == Icons.add) {
-                    _durationIcon = Icons.remove;
-                    _durationIconColor =
+                  if (widget._durationIcon == Icons.add) {
+                    widget._durationIcon = Icons.remove;
+                    widget._durationIconColor =
                         AddSubtractResultableDuration.durationNegativeColor;
-                    _durationSign = -1;
-                    _durationTextColor =
+                    widget._durationSign = -1;
+                    widget._durationTextColor =
                         AddSubtractResultableDuration.durationNegativeColor;
                   } else {
-                    _durationIcon = Icons.add;
-                    _durationIconColor =
+                    widget._durationIcon = Icons.add;
+                    widget._durationIconColor =
                         AddSubtractResultableDuration.durationPositiveColor;
-                    _durationSign = 1;
-                    _durationTextColor =
+                    widget._durationSign = 1;
+                    widget._durationTextColor =
                         AddSubtractResultableDuration.durationPositiveColor;
                   }
-                  _durationChangeFunction(
-                    _durationSign,
-                    _durationIcon,
-                    _durationIconColor,
-                    _durationTextColor,
+                  widget._durationChangeFunction(
+                    widget._durationSign,
+                    widget._durationIcon,
+                    widget._durationIconColor,
+                    widget._durationTextColor,
                   );
                 },
               ),
@@ -129,7 +134,7 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
               child: Theme(
                 data: Theme.of(context).copyWith(
                   textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: selectionColor,
+                    selectionColor: widget.selectionColor,
                     cursorColor: ScreenMixin.appTextAndIconColor,
                   ),
                 ),
@@ -137,24 +142,24 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
                   child: TextField(
                     decoration: const InputDecoration.collapsed(hintText: ''),
                     style: TextStyle(
-                        color: _durationTextColor,
+                        color: widget._durationTextColor,
                         fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                     keyboardType: TextInputType.datetime,
-                    controller: _durationTextFieldController,
+                    controller: widget._durationTextFieldController,
                     onChanged: (val) {
-                      _durationChangeFunction(
-                        _durationSign,
-                        _durationIcon,
-                        _durationIconColor,
-                        _durationTextColor,
+                      widget._durationChangeFunction(
+                        widget._durationSign,
+                        widget._durationIcon,
+                        widget._durationIconColor,
+                        widget._durationTextColor,
                       );
                     },
                   ),
                   onDoubleTap: () async {
-                    await copyToClipboard(
+                    await widget.copyToClipboard(
                         context: context,
-                        controller: _durationTextFieldController);
+                        controller: widget._durationTextFieldController);
                   },
                 ),
               ),
@@ -166,14 +171,14 @@ class AddSubtractResultableDuration extends StatelessWidget with ScreenMixin {
           //                                 buttons positioning.
         ),
         EditableDateTime(
-          dateTimeTitle: _dateTimeTitle,
-          dateTimePickerController: _dateTimePickerController,
+          dateTimeTitle: widget._dateTimeTitle,
+          dateTimePickerController: widget._dateTimePickerController,
           handleDateTimeModificationFunction:
-              _handleDateTimeModificationFunction,
-          transferDataMap: _transferDataMap,
-          handleSelectedDateTimeStrFunction: _handleSelectedDateTimeStrFunction,
-          topSelMenuPosition: _topSelMenuPosition,
-          transferDataViewModel: _transferDataViewModel,
+              widget._handleDateTimeModificationFunction,
+          transferDataMap: widget._transferDataMap,
+          handleSelectedDateTimeStrFunction: widget._handleSelectedDateTimeStrFunction,
+          topSelMenuPosition: widget._topSelMenuPosition,
+          transferDataViewModel: widget._transferDataViewModel,
         ),
       ],
     );
