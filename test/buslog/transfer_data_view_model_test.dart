@@ -38,6 +38,12 @@ void main() {
             "secondDurationTextColor": Colors.red.shade200,
             "secondDurationStr": "00:00",
             "secondEndDateTimeStr": "12-07-2022 16:00",
+            "thirdDurationIconData": Icons.remove,
+            "thirdDurationIconColor": Colors.red.shade200,
+            "thirdDurationSign": -1,
+            "thirdDurationTextColor": Colors.red.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdEndDateTimeStr": "12-07-2022 16:00",
           };
 
           String path = kCircadianAppDataDir;
@@ -241,6 +247,12 @@ void main() {
             "secondDurationTextColor": Colors.red.shade200,
             "secondDurationStr": "00:00",
             "secondEndDateTimeStr": "12-07-2022 16:00",
+            "thirdDurationIconData": Icons.remove,
+            "thirdDurationIconColor": Colors.red.shade200,
+            "thirdDurationSign": -1,
+            "thirdDurationTextColor": Colors.red.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdEndDateTimeStr": "12-07-2022 16:00",
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
             "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -375,6 +387,12 @@ void main() {
             "secondDurationTextColor": Colors.red.shade200,
             "secondDurationStr": "02:00",
             "secondEndDateTimeStr": "12-07-2022 14:00",
+            "thirdDurationIconData": Icons.remove,
+            "thirdDurationIconColor": Colors.red.shade200,
+            "thirdDurationSign": -1,
+            "thirdDurationTextColor": Colors.red.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdEndDateTimeStr": "12-07-2022 16:00",
             "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
             "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
             "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -434,7 +452,7 @@ void main() {
           AddDurationToDateTimeData loadedAddDurationToDateTimeData =
               loadedTransferDataViewModel.addDurationToDateTimeData;
           expect(loadedAddDurationToDateTimeData.toString(),
-              'firstDurationIconType: FirstDurationIconType.add\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationStr: 00:50\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: SecondDurationIconType.subtract\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nsecondDurationStr: 02:00\nsecondEndDateTimeStr: 12-07-2022 14:00');
+              'firstDurationIconType: DurationIconType.add\naddDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationStr: 00:50\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: DurationIconType.subtract\nsecondDurationStr: 02:00\nsecondEndDateTimeStr: 12-07-2022 14:00\nthirdDurationIconType: DurationIconType.subtract\nthirdDurationStr: 00:00\nthirdEndDateTimeStr: 12-07-2022 16:00');
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
