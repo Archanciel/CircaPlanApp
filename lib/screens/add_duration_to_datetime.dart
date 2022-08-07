@@ -280,7 +280,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimePickerController.text = selectedDateTime.toString();
 
-    _computeEndDateTimes();
+    _computeEndDateTimes('');
   }
 
   void _handleSelectedThirdEndDateTimeStr(String selectedDateTimeStr) {
@@ -310,7 +310,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationIconColor = durationIconColor;
     _firstDurationTextColor = durationTextColor;
 
-    _computeEndDateTimes();
+    _computeEndDateTimes('');
   }
 
   /// Method passed to the second DurationResultDateTime widget
@@ -331,7 +331,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _secondDurationIconColor = durationIconColor;
     _secondDurationTextColor = durationTextColor;
 
-    _computeEndDateTimes();
+    _computeEndDateTimes('');
   }
 
   /// Method passed to the third DurationResultDateTime widget
@@ -352,7 +352,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _thirdDurationIconColor = durationIconColor;
     _thirdDurationTextColor = durationTextColor;
 
-    _computeEndDateTimes();
+    _computeEndDateTimes('');
   }
 
   /// Private method called each time when the third End date
@@ -432,7 +432,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// Private method called each time one of the elements
   /// implied in calculating the first an the second End date
   /// time values is changed.
-  void _computeEndDateTimes() {
+  void _computeEndDateTimes(String endDatimeStr) {
     _startDateTimeStr = _startDateTimePickerController.text;
     DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
 
