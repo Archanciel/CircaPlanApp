@@ -1,8 +1,8 @@
-import 'package:circa_plan/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
 
@@ -127,11 +127,15 @@ mixin ScreenMixin {
 
     final String lastCreatedJsonFileNameDateTimeStr =
         getLastCreatedJsonFileNameDateTimeStr(transferDataViewModel);
-    final DateTime lastCreatedJsonFileNameDateTime =
-        parseDateTime(lastCreatedJsonFileNameDateTimeStr)!;
 
-    if (!appDateTimeList.contains(lastCreatedJsonFileNameDateTime)) {
-      appDateTimeList.add(lastCreatedJsonFileNameDateTime);
+    if (!lastCreatedJsonFileNameDateTimeStr.isEmpty) {
+      // else, the app dir contains no yyyy-MM.dd HH.mm.json file !
+      final DateTime lastCreatedJsonFileNameDateTime =
+          parseDateTime(lastCreatedJsonFileNameDateTimeStr)!;
+
+      if (!appDateTimeList.contains(lastCreatedJsonFileNameDateTime)) {
+        appDateTimeList.add(lastCreatedJsonFileNameDateTime);
+      }
     }
 
     // now sorting the DateTime list
@@ -145,7 +149,7 @@ mixin ScreenMixin {
     }
 
     // and converting it to String list
-    
+
     List<String> sortedAppDateTimeStrLst =
         appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
 
@@ -292,9 +296,9 @@ mixin ScreenMixin {
   /// files located in the app data dir.
   List<String> getSortedFileNameLstInDir(
       {required TransferDataViewModel transferDataViewModel,
-      bool addCircadianJsonFileNameToLst = false}) {
-    List<String?> nullablefileNameLst =
-        transferDataViewModel.getFileNameInDirLst(kDownloadAppDir);
+      required bool addCircadianJsonFileNameToLst}) {
+    List<String?> nullablefileNameLst = transferDataViewModel
+        .getFileNameInDirLst(transferDataViewModel.getTransferDataJsonPath());
 
     List<String> nonNullablefileNameLst =
         nullablefileNameLst.whereType<String>().toList();
@@ -315,10 +319,21 @@ mixin ScreenMixin {
     return sortedFileNameLst;
   }
 
+  /// Returns the date time string component of the most recently
+  /// created yyyy-MM.dd HH.mm.json file in french format
+  /// dd-MM-yyyy HH:mm.
+  ///
+  /// If the app data dir contains no yyyy-MM.dd HH.mm.json file,
+  /// empty String '' is returned.
   String getLastCreatedJsonFileNameDateTimeStr(
       TransferDataViewModel transferDataViewModel) {
-    final List<String> jsonFileNameLst =
-        getSortedFileNameLstInDir(transferDataViewModel: transferDataViewModel);
+    final List<String> jsonFileNameLst = getSortedFileNameLstInDir(
+        transferDataViewModel: transferDataViewModel,
+        addCircadianJsonFileNameToLst: false);
+
+    if (jsonFileNameLst.isEmpty) {
+      return '';
+    }
 
     final String lastCreatedJsonFileNameDateTime =
         jsonFileNameLst.first.replaceFirst('.json', '');

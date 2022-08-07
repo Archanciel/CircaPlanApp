@@ -87,6 +87,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
 
 class MyApp extends StatelessWidget with ScreenMixin {
   final TransferDataViewModel _transferDataViewModel;
+  
   MyApp({Key? key, required TransferDataViewModel transferDataViewModel})
       : _transferDataViewModel = transferDataViewModel,
         super(key: key);

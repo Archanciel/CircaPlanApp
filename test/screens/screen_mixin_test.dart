@@ -1,16 +1,16 @@
 import 'dart:io';
+import 'package:circa_plan/utils/dir_util.dart';
 import 'package:test/test.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-
-const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
 
 class TestClassWithScreenMixin with ScreenMixin {}
 
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool mustAppDirBeDeleted = false,
 }) async {
+  const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
   String path = kCircadianAppDataDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
@@ -35,6 +35,8 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
   if (jsonFileExists) {
     transferDataViewModel.loadTransferData();
   }
+
+  transferDataViewModel.transferDataMap = {};
 
   return transferDataViewModel;
 }
@@ -346,7 +348,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first',
+        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first. App dir contains no yyyy-MM.dd HH.mm.json file.',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -360,6 +362,35 @@ Future<void> main() async {
             '02-06-2022 23:42',
             '01-06-2022 23:42',
           ];
+
+          expect(actualDateTimeStrLst, expectedDateTimeStrLst);
+        },
+      );
+
+      test(
+        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first. App dir contains 1 yyyy-MM.dd HH.mm.json file.',
+        () {
+          DirUtil.renameFile(
+              filePathNameStr:
+                  transferDataViewModel.transferDataJsonFilePathName,
+              newFileNameStr: '2022-08-07 02.30.json');
+          List<String> actualDateTimeStrLst =
+              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
+            transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+            mostRecentFirst: true,
+            transferDataViewModel: transferDataViewModel,
+          );
+          List<String> expectedDateTimeStrLst = [
+            '07-08-2022 02:30',
+            '11-06-2022 22:30',
+            '10-06-2022 00:30',
+            '02-06-2022 23:42',
+            '01-06-2022 23:42',
+          ];
+          DirUtil.renameFile(
+              filePathNameStr:
+                  '${transferDataViewModel.getTransferDataJsonPath()}${Platform.pathSeparator}2022-08-07 02.30.json',
+              newFileNameStr: 'circadian.json');
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
         },

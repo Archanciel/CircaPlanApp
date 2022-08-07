@@ -165,6 +165,8 @@ class TransferDataViewModel {
     return transferDataJsonPath;
   }
 
+  String get transferDataJsonFilePathName => _transferDataJsonFilePathName;
+
   void printScreenData() {
     print(_transferData.addDurationToDateTimeData);
     print(_transferData.calculateSleepDurationData);
