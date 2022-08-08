@@ -196,10 +196,21 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
 
     stateInstance.callSetState();
   }
+
+  void deleteDuration() {
+    _durationStr = '00:00';
+    _durationSign = 1;
+    _durationTextFieldController.text = _durationStr;
+    _durationIcon = Icons.add;
+    _durationIconColor = AddSubtractResultableDuration.durationPositiveColor;
+    _durationTextColor = AddSubtractResultableDuration.durationPositiveColor;
+
+    stateInstance.callSetState();
+  }
 }
 
 class _AddSubtractResultableDurationState
-    extends State<AddSubtractResultableDuration> {
+    extends State<AddSubtractResultableDuration> with ScreenMixin {
   void callSetState() {
     setState(() {});
   }
@@ -255,32 +266,59 @@ class _AddSubtractResultableDurationState
               padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
 //                                          4 is compliant with current value 5
 //                                          of APP_LABEL_TO_TEXT_DISTANCE
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: widget.selectionColor,
-                    cursorColor: ScreenMixin.appTextAndIconColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 75,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: widget.selectionColor,
+                          cursorColor: ScreenMixin.appTextAndIconColor,
+                        ),
+                      ),
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: TextStyle(
+                              color: widget._durationTextColor,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          keyboardType: TextInputType.datetime,
+                          controller: widget._durationTextFieldController,
+                          onChanged: (val) {
+                            widget.handleDurationChange(durationStr: val);
+                          },
+                        ),
+                        onDoubleTap: () async {
+                          await widget.copyToClipboard(
+                              context: context,
+                              controller: widget._durationTextFieldController);
+                        },
+                      ),
+                    ),
                   ),
-                ),
-                child: GestureDetector(
-                  child: TextField(
-                    decoration: const InputDecoration.collapsed(hintText: ''),
-                    style: TextStyle(
-                        color: widget._durationTextColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    keyboardType: TextInputType.datetime,
-                    controller: widget._durationTextFieldController,
-                    onChanged: (val) {
-                      widget.handleDurationChange(durationStr: val);
-                    },
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: appElevatedButtonBackgroundColor,
+                            shape: appElevatedButtonRoundedShape),
+                        onPressed: () {
+                          widget.deleteDuration();
+                        },
+                        child: const Text(
+                          'Del',
+                          style: TextStyle(
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  onDoubleTap: () async {
-                    await widget.copyToClipboard(
-                        context: context,
-                        controller: widget._durationTextFieldController);
-                  },
-                ),
+                ],
               ),
             ),
           ],
