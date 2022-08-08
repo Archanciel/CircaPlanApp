@@ -22,9 +22,11 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   Color _durationTextColor =
       AddSubtractResultableDuration.durationPositiveColor;
 
+  final String _widgetName;
   final String _dateTimeTitle;
   final double _topSelMenuPosition;
   String _startDateTimeStr;
+  String _endDateTimeStr;
   String _durationStr;
   int _durationSign;
   final TransferDataViewModel _transferDataViewModel;
@@ -54,22 +56,31 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   ///                               popup menu
 
   AddSubtractResultableDuration({
+    required String widgetName,
     required String dateTimeTitle,
     required double topSelMenuPosition,
     required String startDateTimeStr,
-    required String durationStr,
-    required int durationSign,
     required TransferDataViewModel transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
     required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
-  })  : _dateTimeTitle = dateTimeTitle,
+  })  : _widgetName = widgetName,
+        _dateTimeTitle = dateTimeTitle,
         _topSelMenuPosition = topSelMenuPosition,
         _startDateTimeStr = startDateTimeStr,
-        _durationStr = durationStr,
-        _durationSign = durationSign,
         _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataMap,
-        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration;
+        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
+        _durationIcon =
+            transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
+        _durationIconColor =
+            transferDataMap['${widgetName}DurationIconColor'] ??
+                AddSubtractResultableDuration.durationPositiveColor,
+        _durationSign = transferDataMap['${widgetName}DurationSign'] ?? 1,
+        _durationTextColor =
+            transferDataMap['${widgetName}DurationTextColor'] ??
+                AddSubtractResultableDuration.durationPositiveColor,
+        _durationStr = transferDataMap['${widgetName}DurationStr'] ?? '00:00',
+        _endDateTimeStr = transferDataMap['${widgetName}EndDateTimeStr'] ?? '';
 
   /// this variable enables the CustomStatefullWidget instance to
   /// call the updateWidgetValues() method of its
@@ -86,10 +97,32 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
 
   String get endDateTimeStr => _dateTimePickerController.text;
 
+  void reset() {
+    final DateTime dateTimeNow = DateTime.now();
+    // String value used to initialize DateTimePicker field
+    String nowDateTimePickerStr = dateTimeNow.toString();
+
+    // String value used to initialize TextField field
+    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
+
+    _startDateTimeStr = nowDateTimePickerStr;
+    _dateTimePickerController.text = _startDateTimeStr;
+    _durationStr = '00:00';
+    _durationSign = 1;
+    _durationTextFieldController.text = _durationStr;
+
+    if (_nextAddSubtractResultableDuration != null) {
+      _nextAddSubtractResultableDuration!.reset();
+    }
+
+    updateTransferDataMap();
+
+    stateInstance.callSetState();
+  }
+
   void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
     _startDateTimeStr = englishFormatStartDateTimeStr;
 
-//    handleEndDateTimeChange(_dateTimePickerController.text);
     handleDurationChange(
       durationStr: _durationStr,
       durationSign: _durationSign,
@@ -101,12 +134,19 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
       _durationSign = durationSign;
     }
 
-    DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
+    DateTime? startDateTime;
+
+    try {
+      startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
+    } on FormatException {}
+
+    if (startDateTime == null) {
+      return;
+    }
 
     _durationStr = _durationTextFieldController.text;
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
     DateTime endDateTime;
-    String endDateTimeStr = '';
 
     if (duration != null) {
       if (_durationSign > 0) {
@@ -115,16 +155,16 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
         endDateTime = startDateTime.subtract(duration);
       }
 
-      endDateTimeStr = englishDateTimeFormat.format(endDateTime);
-      _dateTimePickerController.text = endDateTimeStr;
+      _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
+      _dateTimePickerController.text = _endDateTimeStr;
     }
-
-    print('handleDurationChange() $_durationStr $endDateTimeStr');
 
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
           .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
     }
+
+    updateTransferDataMap();
 
     stateInstance.callSetState();
   }
@@ -137,13 +177,14 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     } on FormatException {}
 
     if (endDateTime != null) {
-      _dateTimePickerController.text =
-          englishDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
+      _dateTimePickerController.text = _endDateTimeStr;
       processEndDateTimeChange(endDateTime);
     }
   }
 
   void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+    _endDateTimeStr = endDateTimeEnglishFormatStr;
     DateTime? endDateTime;
 
     try {
@@ -187,14 +228,23 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
       }
     }
 
-    print('handleEndDateTimeChange() ${endDateTime.toString()}');
-
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
           .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
     }
 
+    updateTransferDataMap();
+
     stateInstance.callSetState();
+  }
+
+  void updateTransferDataMap() {
+    _transferDataMap['${_widgetName}DurationIconData'] = _durationIcon;
+    _transferDataMap['${_widgetName}DurationIconColor'] = _durationIconColor;
+    _transferDataMap['${_widgetName}DurationSign'] = _durationSign;
+    _transferDataMap['${_widgetName}DurationTextColor'] = _durationTextColor;
+    _transferDataMap['${_widgetName}DurationStr'] = _durationStr;
+    _transferDataMap['${_widgetName}EndDateTimeStr'] = _endDateTimeStr;
   }
 }
 
@@ -202,6 +252,11 @@ class _AddSubtractResultableDurationState
     extends State<AddSubtractResultableDuration> {
   void callSetState() {
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    widget._dateTimePickerController.text = widget._endDateTimeStr;
   }
 
   @override
