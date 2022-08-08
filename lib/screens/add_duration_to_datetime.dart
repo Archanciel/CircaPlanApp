@@ -167,35 +167,35 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 550.0,
       startDateTimeStr: _secondEndDateTimeStr,
-      nextAddSubtractResultableDuration: null,
       durationStr: thirdDurationStr,
       durationSign: _thirdDurationSign,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration: null,
     );
 
     _secondAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
       startDateTimeStr: _firstEndDateTimeStr,
-      nextAddSubtractResultableDuration:
-          _thirdAddSubtractResultableDurationWidget,
       durationStr: secondDurationStr,
       durationSign: _secondDurationSign,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration:
+          _thirdAddSubtractResultableDurationWidget,
     );
 
     _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 250.0,
       startDateTimeStr: startDateTimeStr,
-      nextAddSubtractResultableDuration:
-          _secondAddSubtractResultableDurationWidget,
       durationStr: firstDurationStr,
       durationSign: _firstDurationSign,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration:
+          _secondAddSubtractResultableDurationWidget,
     );
   }
 
@@ -278,7 +278,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _startDateTimePickerController.text = selectedDateTime.toString();
+    String englishFormatStartDateTimeStr = selectedDateTime.toString();
+
+    _startDateTimePickerController.text = englishFormatStartDateTimeStr;
+    _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
+        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
 
     _computeEndDateTimes('');
   }
@@ -429,6 +433,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     }
   }
 
+  void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
+    _startDateTimeStr = englishFormatStartDateTimeStr;
+    _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
+        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
+
+    setState(() {});
+    _updateTransferDataMap();
+  }
+
   /// Private method called each time one of the elements
   /// implied in calculating the first an the second End date
   /// time values is changed.
@@ -517,7 +530,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   EditableDateTime(
                     dateTimeTitle: 'Start date time',
                     dateTimePickerController: _startDateTimePickerController,
-                    handleDateTimeModificationFunction: _computeEndDateTimes,
+                    handleDateTimeModificationFunction:
+                        handleStartDateTimeChange,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedStartDateTimeStr,
