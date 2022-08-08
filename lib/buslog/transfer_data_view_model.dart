@@ -189,11 +189,13 @@ class TransferDataViewModel {
         _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.addDurationStartDateTimeStr =
-        _transferDataMap!['addDurStartDateTimeStr'];
+        _transferDataMap!['addDurStartDateTimeStr'] ?? '';
 
     addDurationToDateTimeData.firstDurationIconType = (firstDurationSign > 0)
         ? DurationIconType.add
         : DurationIconType.subtract;
+    addDurationToDateTimeData.firstAddDurationStartDateTimeStr =
+        _transferDataMap!['firstStartDateTimeStr'];
     addDurationToDateTimeData.firstAddDurationDurationStr =
         _transferDataMap!['firstDurationStr'];
     addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
@@ -204,6 +206,8 @@ class TransferDataViewModel {
     addDurationToDateTimeData.secondDurationIconType = (secondDurationSign > 0)
         ? DurationIconType.add
         : DurationIconType.subtract;
+    addDurationToDateTimeData.secondAddDurationStartDateTimeStr =
+        _transferDataMap!['secondStartDateTimeStr'];
     addDurationToDateTimeData.secondAddDurationDurationStr =
         _transferDataMap!['secondDurationStr'];
     addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
@@ -214,6 +218,8 @@ class TransferDataViewModel {
     addDurationToDateTimeData.thirdDurationIconType = (thirdDurationSign > 0)
         ? DurationIconType.add
         : DurationIconType.subtract;
+    addDurationToDateTimeData.thirdAddDurationStartDateTimeStr =
+        _transferDataMap!['thirdStartDateTimeStr'];
     addDurationToDateTimeData.thirdAddDurationDurationStr =
         _transferDataMap!['thirdDurationStr'];
     addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
@@ -349,6 +355,8 @@ class TransferDataViewModel {
         _transferDataMap!["firstDurationTextColor"] = Colors.red.shade200;
       }
 
+      _transferDataMap!["firstStartDateTimeStr"] =
+          addDurationToDateTimeData.firstAddDurationStartDateTimeStr;
       _transferDataMap!["firstDurationStr"] =
           addDurationToDateTimeData.firstAddDurationDurationStr;
       _transferDataMap!["firstEndDateTimeStr"] =
@@ -367,6 +375,8 @@ class TransferDataViewModel {
         _transferDataMap!["secondDurationTextColor"] = Colors.red.shade200;
       }
 
+      _transferDataMap!["secondStartDateTimeStr"] =
+          addDurationToDateTimeData.secondAddDurationStartDateTimeStr;
       _transferDataMap!["secondDurationStr"] =
           addDurationToDateTimeData.secondAddDurationDurationStr;
       _transferDataMap!["secondEndDateTimeStr"] =
@@ -385,6 +395,8 @@ class TransferDataViewModel {
         _transferDataMap!["thirdDurationTextColor"] = Colors.red.shade200;
       }
 
+      _transferDataMap!["thirdStartDateTimeStr"] =
+          addDurationToDateTimeData.thirdAddDurationStartDateTimeStr;
       _transferDataMap!["thirdDurationStr"] =
           addDurationToDateTimeData.thirdAddDurationDurationStr;
       _transferDataMap!["thirdEndDateTimeStr"] =

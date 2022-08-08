@@ -100,12 +100,9 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   void reset() {
     final DateTime dateTimeNow = DateTime.now();
     // String value used to initialize DateTimePicker field
-    String nowDateTimePickerStr = dateTimeNow.toString();
+    String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
 
-    // String value used to initialize TextField field
-    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
-
-    _startDateTimeStr = nowDateTimePickerStr;
+    _startDateTimeStr = nowDateTimeEnglishFormatStr;
     _dateTimePickerController.text = _startDateTimeStr;
     _durationStr = '00:00';
     _durationSign = 1;
@@ -243,8 +240,11 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     _transferDataMap['${_widgetName}DurationIconColor'] = _durationIconColor;
     _transferDataMap['${_widgetName}DurationSign'] = _durationSign;
     _transferDataMap['${_widgetName}DurationTextColor'] = _durationTextColor;
+    _transferDataMap['${_widgetName}StartDateTimeStr'] = _startDateTimeStr;
     _transferDataMap['${_widgetName}DurationStr'] = _durationStr;
     _transferDataMap['${_widgetName}EndDateTimeStr'] = _endDateTimeStr;
+
+    _transferDataViewModel.updateAndSaveTransferData();
   }
 }
 

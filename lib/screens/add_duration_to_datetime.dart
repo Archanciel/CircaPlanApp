@@ -163,11 +163,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _thirdEndDateTimePickerController =
         TextEditingController(text: _thirdEndDateTimeEnglishFormatStr);
 
+   String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
+
     _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
       widgetName: 'third',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 550.0,
-      startDateTimeStr: _secondEndDateTimeStr,
+      startDateTimeStr: nowDateTimeEnglishFormatStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: null,
@@ -177,7 +179,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       widgetName: 'second',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
-      startDateTimeStr: _firstEndDateTimeStr,
+      startDateTimeStr: nowDateTimeEnglishFormatStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration:
@@ -188,7 +190,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       widgetName: 'first',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 250.0,
-      startDateTimeStr: startDateTimeStr,
+      startDateTimeStr: nowDateTimeEnglishFormatStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration:
@@ -211,27 +213,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   Map<String, dynamic> _updateTransferDataMap() {
     _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
-
-    _transferDataMap['firstDurationIconData'] = _firstDurationIcon;
-    _transferDataMap['firstDurationIconColor'] = _firstDurationIconColor;
-    _transferDataMap['firstDurationSign'] = _firstDurationSign;
-    _transferDataMap['firstDurationTextColor'] = _firstDurationTextColor;
-    _transferDataMap['firstDurationStr'] = _firstDurationStr;
-    _transferDataMap['firstEndDateTimeStr'] = _firstEndDateTimeStr;
-
-    _transferDataMap['secondDurationIconData'] = _secondDurationIcon;
-    _transferDataMap['secondDurationIconColor'] = _secondDurationIconColor;
-    _transferDataMap['secondDurationSign'] = _secondDurationSign;
-    _transferDataMap['secondDurationTextColor'] = _secondDurationTextColor;
-    _transferDataMap['secondDurationStr'] = _secondDurationStr;
-    _transferDataMap['secondEndDateTimeStr'] = _secondEndDateTimeStr;
-
-    _transferDataMap['thirdDurationIconData'] = _thirdDurationIcon;
-    _transferDataMap['thirdDurationIconColor'] = _thirdDurationIconColor;
-    _transferDataMap['thirdDurationSign'] = _thirdDurationSign;
-    _transferDataMap['thirdDurationTextColor'] = _thirdDurationTextColor;
-    _transferDataMap['thirdDurationStr'] = _thirdDurationStr;
-    _transferDataMap['thirdEndDateTimeStr'] = _thirdEndDateTimeEnglishFormatStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
 
@@ -522,18 +503,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistance
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
                     //                  height ...
-                    height: kVerticalFieldDistance,
+                    height: kVerticalFieldDistanceAddSubScreen,
                   ),
                   // Second duration addition/subtraction
                   _secondAddSubtractResultableDurationWidget,
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistance
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
                     //                  height ...
-                    height: kVerticalFieldDistance,
+                    height: kVerticalFieldDistanceAddSubScreen,
                   ),
                   // Second duration addition/subtraction
                   _thirdAddSubtractResultableDurationWidget,
