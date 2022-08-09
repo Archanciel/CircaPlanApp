@@ -172,6 +172,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _startDateTimePickerController.text = englishFormatStartDateTimeStr;
     _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
+
+    setState(() {});
+    _updateTransferDataMap();
   }
 
   /// Private method called each time when the third End date
