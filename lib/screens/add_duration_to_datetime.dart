@@ -225,18 +225,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistance
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
                     //                  height ...
-                    height: kVerticalFieldDistance,
+                    height: kVerticalFieldDistanceAddSubScreen,
                   ),
                   // Second duration addition/subtraction
                   _secondAddSubtractResultableDurationWidget,
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistance
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
                     //                  height ...
-                    height: kVerticalFieldDistance,
+                    height: kVerticalFieldDistanceAddSubScreen,
                   ),
                   // Second duration addition/subtraction
                   _thirdAddSubtractResultableDurationWidget,
