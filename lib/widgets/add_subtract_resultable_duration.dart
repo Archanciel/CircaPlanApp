@@ -109,6 +109,9 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     _dateTimePickerController.text = _startDateTimeStr;
     _durationStr = '00:00';
     _durationSign = 1;
+    _durationIcon = Icons.add;
+    _durationIconColor = AddSubtractResultableDuration.durationPositiveColor;
+    _durationTextColor = AddSubtractResultableDuration.durationPositiveColor;
     _durationTextFieldController.text = _durationStr;
 
     if (_nextAddSubtractResultableDuration != null) {
@@ -283,9 +286,7 @@ class _AddSubtractResultableDurationState
                 ),
                 label: const Text(''),
                 onPressed: () {
-                  int durationSign;
-
-                  if (widget._durationIcon == Icons.add) {
+                  if (widget._durationSign > 0) {
                     widget._durationIcon = Icons.remove;
                     widget._durationIconColor =
                         AddSubtractResultableDuration.durationNegativeColor;
