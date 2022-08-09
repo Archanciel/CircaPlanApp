@@ -42,6 +42,11 @@ class AddDurationToDateTimeData extends ScreenData {
   set firstDurationIconType(DurationIconType value) =>
       attributes['firstDurationIconType'] = value;
 
+  String get firstAddDurationStartDateTimeStr =>
+      attributes['firstAddDurationStartDateTimeStr'];
+  set firstAddDurationStartDateTimeStr(String value) =>
+      attributes['firstAddDurationStartDateTimeStr'] = value;
+
   String get firstAddDurationDurationStr =>
       attributes['firstAddDurationDurationStr'];
   set firstAddDurationDurationStr(String value) =>
@@ -57,6 +62,11 @@ class AddDurationToDateTimeData extends ScreenData {
   set secondDurationIconType(DurationIconType value) =>
       attributes['secondDurationIconType'] = value;
 
+  String get secondAddDurationStartDateTimeStr =>
+      attributes['secondAddDurationStartDateTimeStr'];
+  set secondAddDurationStartDateTimeStr(String value) =>
+      attributes['secondAddDurationStartDateTimeStr'] = value;
+
   String get secondAddDurationDurationStr =>
       attributes['secondAddDurationDurationStr'];
   set secondAddDurationDurationStr(String value) =>
@@ -71,6 +81,11 @@ class AddDurationToDateTimeData extends ScreenData {
       attributes['thirdDurationIconType'];
   set thirdDurationIconType(DurationIconType value) =>
       attributes['thirdDurationIconType'] = value;
+
+  String get thirdAddDurationStartDateTimeStr =>
+      attributes['thirdAddDurationStartDateTimeStr'];
+  set thirdAddDurationStartDateTimeStr(String value) =>
+      attributes['thirdAddDurationStartDateTimeStr'] = value;
 
   String get thirdAddDurationDurationStr =>
       attributes['thirdAddDurationDurationStr'];
