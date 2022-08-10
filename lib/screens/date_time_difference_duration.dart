@@ -135,9 +135,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _updateTransferDataMap();
   }
 
+  /// Private method called each time one of the elements
+  /// implied in calculating the Duration value is changed.
   void _setStateDiffDuration(_) {
-    /// Private method called each time one of the elements
-    /// implied in calculating the Duration value is changed.
     _startDateTimeStr = _startDateTimeController.text;
     DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
     _endDateTimeStr = _endDateTimeController.text;
@@ -280,8 +280,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     durationTextFieldController: _durationTextFieldController,
                     addTimeTextFieldController: _addTimeTextFieldController,
                     addTimeDialogController: _addTimeDialogController,
-                    finalDurationTextFieldController: _finalDurationTextFieldController,
-                    addPosOrNegTimeToCurrentDurationFunction: _addPosOrNegTimeToCurrentDuration,
+                    finalDurationTextFieldController:
+                        _finalDurationTextFieldController,
+                    addPosOrNegTimeToCurrentDurationFunction:
+                        _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
                   ),
                 ],

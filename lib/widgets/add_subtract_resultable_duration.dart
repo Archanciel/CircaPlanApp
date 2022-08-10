@@ -82,10 +82,11 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
         _durationStr = transferDataMap['${widgetName}DurationStr'] ?? '00:00',
         _endDateTimeStr = transferDataMap['${widgetName}EndDateTimeStr'] ?? '';
 
-  /// this variable enables the CustomStatefullWidget instance to
-  /// call the updateWidgetValues() method of its
-  /// _CustomStatefullWidgetState instance in order to transmit
-  /// to this instance the modified widget data.
+  /// This variable enables the AddSubtractResultableDuration
+  /// instance to execute the callSetState() method of its
+  /// _AddSubtractResultableDurationState instance in order
+  /// redraw the widget to display the value modified by the
+  /// user.
   late final _AddSubtractResultableDurationState stateInstance;
 
   @override
@@ -100,12 +101,9 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   void reset() {
     final DateTime dateTimeNow = DateTime.now();
     // String value used to initialize DateTimePicker field
-    String nowDateTimePickerStr = dateTimeNow.toString();
+    String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
 
-    // String value used to initialize TextField field
-    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
-
-    _startDateTimeStr = nowDateTimePickerStr;
+    _startDateTimeStr = nowDateTimeEnglishFormatStr;
     _dateTimePickerController.text = _startDateTimeStr;
     _durationStr = '00:00';
     _durationSign = 1;
