@@ -261,6 +261,37 @@ class _AddSubtractResultableDurationState
     setState(() {});
   }
 
+  IconData _durationIcon = Icons.add;
+  Color _durationIconColor =
+      AddSubtractResultableDuration.durationPositiveColor;
+  Color _durationTextColor =
+      AddSubtractResultableDuration.durationPositiveColor;
+
+  String _startDateTimeStr;
+  String _endDateTimeStr;
+  String _durationStr;
+  int _durationSign;
+
+  _AddSubtractResultableDurationState({
+    required String widgetName,
+    required String nowDateTimeEnglishFormatStr,
+    required Map<String, dynamic> transferDataMap,
+    required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
+  })  : _durationIcon =
+            transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
+        _durationIconColor =
+            transferDataMap['${widgetName}DurationIconColor'] ??
+                AddSubtractResultableDuration.durationPositiveColor,
+        _durationSign = transferDataMap['${widgetName}DurationSign'] ?? 1,
+        _durationTextColor =
+            transferDataMap['${widgetName}DurationTextColor'] ??
+                AddSubtractResultableDuration.durationPositiveColor,
+        _durationStr = transferDataMap['${widgetName}DurationStr'] ?? '00:00',
+        _startDateTimeStr = transferDataMap['${widgetName}StartDateTimeStr'] ??
+            nowDateTimeEnglishFormatStr,
+        _endDateTimeStr = transferDataMap['${widgetName}EndDateTimeStr'] ??
+            nowDateTimeEnglishFormatStr;
+
   @override
   void initState() {
     widget._dateTimePickerController.text = widget._endDateTimeStr;
