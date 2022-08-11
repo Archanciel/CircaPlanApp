@@ -34,7 +34,6 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   // used to fill the display selection popup menu
   final Map<String, dynamic> _transferDataMap;
 
-  AddSubtractResultableDuration? _previousAddSubtractResultableDuration;
   AddSubtractResultableDuration? _nextAddSubtractResultableDuration;
 
   final TextEditingController _durationTextFieldController =
