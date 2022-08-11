@@ -104,7 +104,7 @@ class AddDurationToDateTimeData extends ScreenData {
     if (firstDurationIconType == null) {
       return '';
     } else {
-      return 'firstDurationIconType: $firstDurationIconType\naddDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationStr: $firstAddDurationDurationStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nsecondDurationIconType: $secondDurationIconType\nsecondDurationStr: $secondAddDurationDurationStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr\nthirdDurationIconType: $thirdDurationIconType\nthirdDurationStr: $thirdAddDurationDurationStr\nthirdEndDateTimeStr: $thirdAddDurationEndDateTimeStr';
+      return 'addDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationIconType: $firstDurationIconType\nfirstDurationStr: $firstAddDurationDurationStr\nfirstStartDateTimeStr: $firstAddDurationStartDateTimeStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nsecondDurationIconType: $secondDurationIconType\nsecondDurationStr: $secondAddDurationDurationStr\nsecondStartDateTimeStr: $secondAddDurationStartDateTimeStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr\nthirdDurationIconType: $thirdDurationIconType\nthirdDurationStr: $thirdAddDurationDurationStr\nthirdStartDateTimeStr: $thirdAddDurationStartDateTimeStr\nthirdEndDateTimeStr: $thirdAddDurationEndDateTimeStr';
     }
   }
 }
