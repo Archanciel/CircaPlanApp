@@ -331,7 +331,7 @@ class _AddSubtractResultableDurationState
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                     keyboardType: TextInputType.datetime,
                     controller: widget._durationTextFieldController,
-                    onChanged: (val) {
+                    onSubmitted: (val) {
                       widget.handleDurationChange(durationStr: val);
                     },
                   ),
