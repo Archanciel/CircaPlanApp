@@ -300,6 +300,7 @@ class _AddSubtractResultableDurationState
               left: -18,
               top: -10,
               child: TextButton.icon(
+                key: Key('durationSignButton'),
                 icon: Icon(
                   _durationIcon,
                   size: 30,
@@ -340,6 +341,7 @@ class _AddSubtractResultableDurationState
                 ),
                 child: GestureDetector(
                   child: TextField(
+                    key: Key('durationTextField'),
                     decoration: const InputDecoration.collapsed(hintText: ''),
                     style: TextStyle(
                         color: _durationTextColor,
