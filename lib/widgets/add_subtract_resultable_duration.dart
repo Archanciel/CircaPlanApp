@@ -16,9 +16,9 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   static Color durationPositiveColor = Colors.green.shade200;
   static Color durationNegativeColor = Colors.red.shade200;
 
-  final String _dateTimeTitle;
-  final double _topSelMenuPosition;
-  final TransferDataViewModel _transferDataViewModel;
+  final String dateTimeTitle;
+  final double topSelMenuPosition;
+  final TransferDataViewModel transferDataViewModel;
 
   // instance variables used to pass values to the
   // _AddSubtractResultableDurationState constructor
@@ -29,40 +29,58 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
 
   AddSubtractResultableDuration({
     required String widgetName,
-    required String dateTimeTitle,
-    required double topSelMenuPosition,
+    required this.dateTimeTitle,
+    required this.topSelMenuPosition,
     required String nowDateTimeEnglishFormatStr,
-    required TransferDataViewModel transferDataViewModel,
+    required this.transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
     required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
   })  : _widgetName = widgetName,
-        _dateTimeTitle = dateTimeTitle,
-        _topSelMenuPosition = topSelMenuPosition,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
-        _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataMap,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration;
 
+  /// This variable enables the AddSubtractResultableDuration
+  /// instance to execute the callSetState() method of its
+  /// _AddSubtractResultableDurationState instance in order
+  /// redraw the widget to display the value modified by the
+  /// user.
+  late final _AddSubtractResultableDurationState stateInstance;
+
   @override
   State<AddSubtractResultableDuration> createState() {
-    return _AddSubtractResultableDurationState(
+    stateInstance = _AddSubtractResultableDurationState(
       widgetName: _widgetName,
       nowDateTimeEnglishFormatStr: _nowDateTimeEnglishFormatStr,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _nextAddSubtractResultableDuration,
     );
+
+    return stateInstance;
+  }
+
+  /// Calls the _AddSubtractResultableDurationState.reset() method.
+  void reset() {
+    stateInstance.reset();
+  }
+
+  /// Calls the _AddSubtractResultableDurationState.setStartDateTimeStr() method.
+  void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
+    stateInstance.setStartDateTimeStr(
+        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 }
 
 class _AddSubtractResultableDurationState
     extends State<AddSubtractResultableDuration> {
-
   IconData _durationIcon = Icons.add;
   Color _durationIconColor =
       AddSubtractResultableDuration.durationPositiveColor;
   Color _durationTextColor =
       AddSubtractResultableDuration.durationPositiveColor;
 
+  final String _widgetName;
+  final Map<String, dynamic> _transferDataMap;
   String _durationStr;
   int _durationSign;
   String _startDateTimeStr;
@@ -79,7 +97,9 @@ class _AddSubtractResultableDurationState
     required String nowDateTimeEnglishFormatStr,
     required Map<String, dynamic> transferDataMap,
     required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
-  })  : _durationIcon =
+  })  : _widgetName = widgetName,
+        _transferDataMap = transferDataMap,
+        _durationIcon =
             transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
         _durationIconColor =
             transferDataMap['${widgetName}DurationIconColor'] ??
@@ -99,7 +119,6 @@ class _AddSubtractResultableDurationState
   void initState() {
     _dateTimePickerController.text = _endDateTimeStr;
   }
-
 
   String get endDateTimeStr => _dateTimePickerController.text;
 
@@ -123,7 +142,7 @@ class _AddSubtractResultableDurationState
 
     updateTransferDataMap();
 
-    stateInstance.callSetState();
+    setState(() {});
   }
 
   void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
@@ -143,7 +162,7 @@ class _AddSubtractResultableDurationState
     DateTime? startDateTime;
 
     try {
-      startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = widget.englishDateTimeFormat.parse(_startDateTimeStr);
     } on FormatException {}
 
     if (startDateTime == null) {
@@ -161,7 +180,7 @@ class _AddSubtractResultableDurationState
         endDateTime = startDateTime.subtract(duration);
       }
 
-      _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
       _dateTimePickerController.text = _endDateTimeStr;
     }
 
@@ -172,18 +191,19 @@ class _AddSubtractResultableDurationState
 
     updateTransferDataMap();
 
-    stateInstance.callSetState();
+    setState(() {});
   }
 
   void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
     DateTime? endDateTime;
 
     try {
-      endDateTime = frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
+      endDateTime =
+          widget.frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
-      _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
       _dateTimePickerController.text = _endDateTimeStr;
       processEndDateTimeChange(endDateTime);
     }
@@ -194,7 +214,8 @@ class _AddSubtractResultableDurationState
     DateTime? endDateTime;
 
     try {
-      endDateTime = englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
+      endDateTime =
+          widget.englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -206,7 +227,7 @@ class _AddSubtractResultableDurationState
     DateTime? startDateTime;
 
     try {
-      startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = widget.englishDateTimeFormat.parse(_startDateTimeStr);
     } on FormatException {}
 
     Duration duration;
@@ -241,24 +262,30 @@ class _AddSubtractResultableDurationState
 
     updateTransferDataMap();
 
-    stateInstance.callSetState();
+    setState(() {});
   }
 
   void updateTransferDataMap() {
-    _transferDataMap['${_widgetName}DurationIconData'] = _durationIcon;
-    _transferDataMap['${_widgetName}DurationIconColor'] = _durationIconColor;
-    _transferDataMap['${_widgetName}DurationSign'] = _durationSign;
-    _transferDataMap['${_widgetName}DurationTextColor'] = _durationTextColor;
+    _transferDataMap['${_widgetName}DurationIconData'] =
+        _durationIcon;
+    _transferDataMap['${_widgetName}DurationIconColor'] =
+        _durationIconColor;
+    _transferDataMap['${_widgetName}DurationSign'] =
+        _durationSign;
+    _transferDataMap['${_widgetName}DurationTextColor'] =
+        _durationTextColor;
     _transferDataMap['${_widgetName}DurationStr'] = _durationStr;
-    _transferDataMap['${_widgetName}StartDateTimeStr'] = _startDateTimeStr;
-    _transferDataMap['${_widgetName}EndDateTimeStr'] = _endDateTimeStr;
+    _transferDataMap['${_widgetName}StartDateTimeStr'] =
+        _startDateTimeStr;
+    _transferDataMap['${_widgetName}EndDateTimeStr'] =
+        _endDateTimeStr;
 
-    _transferDataViewModel.updateAndSaveTransferData();
+    widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget._durationTextFieldController.text = widget._durationStr;
+    _durationTextFieldController.text = _durationStr;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,30 +301,29 @@ class _AddSubtractResultableDurationState
               top: -10,
               child: TextButton.icon(
                 icon: Icon(
-                  widget._durationIcon,
+                  _durationIcon,
                   size: 30,
-                  color: widget._durationIconColor,
+                  color: _durationIconColor,
                 ),
                 label: const Text(''),
                 onPressed: () {
-                  if (widget._durationSign > 0) {
-                    widget._durationIcon = Icons.remove;
-                    widget._durationIconColor =
+                  if (_durationSign > 0) {
+                    _durationIcon = Icons.remove;
+                    _durationIconColor =
                         AddSubtractResultableDuration.durationNegativeColor;
-                    widget._durationSign = -1;
-                    widget._durationTextColor =
+                    _durationSign = -1;
+                    _durationTextColor =
                         AddSubtractResultableDuration.durationNegativeColor;
                   } else {
-                    widget._durationIcon = Icons.add;
-                    widget._durationIconColor =
+                    _durationIcon = Icons.add;
+                    _durationIconColor =
                         AddSubtractResultableDuration.durationPositiveColor;
-                    widget._durationSign = 1;
-                    widget._durationTextColor =
+                    _durationSign = 1;
+                    _durationTextColor =
                         AddSubtractResultableDuration.durationPositiveColor;
                   }
 
-                  widget.handleDurationChange(
-                      durationSign: widget._durationSign);
+                  handleDurationChange(durationSign: _durationSign);
                 },
               ),
             ),
@@ -316,19 +342,19 @@ class _AddSubtractResultableDurationState
                   child: TextField(
                     decoration: const InputDecoration.collapsed(hintText: ''),
                     style: TextStyle(
-                        color: widget._durationTextColor,
+                        color: _durationTextColor,
                         fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                     keyboardType: TextInputType.datetime,
-                    controller: widget._durationTextFieldController,
+                    controller: _durationTextFieldController,
                     onChanged: (val) {
-                      widget.handleDurationChange(durationStr: val);
+                      handleDurationChange(durationStr: val);
                     },
                   ),
                   onDoubleTap: () async {
                     await widget.copyToClipboard(
                         context: context,
-                        controller: widget._durationTextFieldController);
+                        controller: _durationTextFieldController);
                   },
                 ),
               ),
@@ -340,13 +366,13 @@ class _AddSubtractResultableDurationState
           //                                 buttons positioning.
         ),
         EditableDateTime(
-          dateTimeTitle: widget._dateTimeTitle,
-          dateTimePickerController: widget._dateTimePickerController,
-          handleDateTimeModificationFunction: widget.handleEndDateTimeChange,
+          dateTimeTitle: widget.dateTimeTitle,
+          dateTimePickerController: _dateTimePickerController,
+          handleDateTimeModificationFunction: handleEndDateTimeChange,
           transferDataMap: widget._transferDataMap,
-          handleSelectedDateTimeStrFunction: widget.handleEndDateTimeSelected,
-          topSelMenuPosition: widget._topSelMenuPosition,
-          transferDataViewModel: widget._transferDataViewModel,
+          handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
+          topSelMenuPosition: widget.topSelMenuPosition,
+          transferDataViewModel: widget.transferDataViewModel,
         ),
       ],
     );

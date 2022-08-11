@@ -96,7 +96,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
       widgetName: 'first',
       dateTimeTitle: 'End date time',
-      topSelMenuPosition: 250.0,
+      topSelMenuPosition: 210.0,
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
