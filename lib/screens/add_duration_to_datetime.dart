@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
-import 'package:circa_plan/widgets/add_subtract_duration.dart';
 import 'package:circa_plan/widgets/add_subtract_resultable_duration.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
@@ -41,13 +40,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _transferDataViewModel = transferDataViewModel,
         _startDateTimeStr = transferDataMap['addDurStartDateTimeStr'] ??
             DateTime.now().toString(),
-        _firstDurationSign = transferDataMap['firstDurationSign'] ?? 1,
-        _firstDurationStr = transferDataMap['firstDurationStr'] ?? '00:00',
-        _firstEndDateTimeStr = transferDataMap['firstEndDateTimeStr'] ?? '',
-        _secondDurationSign = transferDataMap['secondDurationSign'] ?? 1,
-        _secondDurationStr = transferDataMap['secondDurationStr'] ?? '00:00',
-        _thirdDurationSign = transferDataMap['thirdDurationSign'] ?? 1,
-        _thirdDurationStr = transferDataMap['thirdDurationStr'] ?? '00:00',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -56,18 +48,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   final TransferDataViewModel _transferDataViewModel;
 
   String _startDateTimeStr = '';
-
-  int _firstDurationSign;
-  String _firstDurationStr = '';
-  String _firstEndDateTimeStr = '';
-
-  int _secondDurationSign;
-  String _secondDurationStr = '';
-  String _secondEndDateTimeStr = '';
-
-  int _thirdDurationSign;
-  String _thirdDurationStr = '';
-  String _thirdEndDateTimeEnglishFormatStr = '';
 
   late TextEditingController _startDateTimePickerController;
 
@@ -93,17 +73,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _startDateTimePickerController =
         TextEditingController(text: startDateTimeStr);
 
-    String firstDurationStr = _transferDataMap['firstDurationStr'] ?? '00:00';
-    String secondDurationStr = _transferDataMap['secondDurationStr'] ?? '00:00';
-    String thirdDurationStr = _transferDataMap['thirdDurationStr'] ?? '00:00';
-
-    _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
-      widgetName: 'first',
+    _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      widgetName: 'third',
       dateTimeTitle: 'End date time',
-      topSelMenuPosition: 250.0,
+      topSelMenuPosition: 550.0,
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration: null,
     );
 
     _secondAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
@@ -113,37 +90,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration: _thirdAddSubtractResultableDurationWidget,
     );
 
-    _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
-      widgetName: 'third',
+    _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      widgetName: 'first',
       dateTimeTitle: 'End date time',
-      topSelMenuPosition: 550.0,
+      topSelMenuPosition: 250.0,
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration: _secondAddSubtractResultableDurationWidget,
     );
-
-    _firstAddSubtractResultableDurationWidget
-            .nextAddSubtractResultableDuration =
-        _secondAddSubtractResultableDurationWidget;
-    _firstAddSubtractResultableDurationWidget
-            .previousAddSubtractResultableDuration =
-        null;
-
-    _secondAddSubtractResultableDurationWidget
-            .nextAddSubtractResultableDuration =
-        _thirdAddSubtractResultableDurationWidget;
-    _secondAddSubtractResultableDurationWidget
-            .previousAddSubtractResultableDuration =
-        _firstAddSubtractResultableDurationWidget;
-
-    _thirdAddSubtractResultableDurationWidget
-            .nextAddSubtractResultableDuration =
-        null;
-    _thirdAddSubtractResultableDurationWidget
-            .previousAddSubtractResultableDuration =
-        _secondAddSubtractResultableDurationWidget;
   }
 
   @override

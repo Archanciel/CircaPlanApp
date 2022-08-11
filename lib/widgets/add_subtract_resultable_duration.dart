@@ -63,11 +63,13 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     required String nowDateTimeEnglishFormatStr,
     required TransferDataViewModel transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
+    required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
   })  : _widgetName = widgetName,
         _dateTimeTitle = dateTimeTitle,
         _topSelMenuPosition = topSelMenuPosition,
         _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataMap,
+        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
         _durationIcon =
             transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
         _durationIconColor =
@@ -95,17 +97,6 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     stateInstance = _AddSubtractResultableDurationState();
 
     return stateInstance;
-  }
-
-  set previousAddSubtractResultableDuration(
-      AddSubtractResultableDuration? previousAddSubtractResultableDuration) {
-    _previousAddSubtractResultableDuration =
-        previousAddSubtractResultableDuration;
-  }
-
-  set nextAddSubtractResultableDuration(
-      AddSubtractResultableDuration? nextAddSubtractResultableDuration) {
-    _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration;
   }
 
   String get endDateTimeStr => _dateTimePickerController.text;
