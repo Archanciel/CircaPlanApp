@@ -347,7 +347,9 @@ class _AddSubtractResultableDurationState
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                     keyboardType: TextInputType.datetime,
                     controller: _durationTextFieldController,
-                    onChanged: (val) {
+                    onSubmitted: (val) {
+                      // solve the unsolvable problem of onChange()
+                      // which set cursor at TextField start position !
                       handleDurationChange(durationStr: val);
                     },
                   ),
