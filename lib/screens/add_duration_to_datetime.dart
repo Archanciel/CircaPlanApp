@@ -87,11 +87,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // String value used to initialize DateTimePicker field
     String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
 
-    // String value used to initialize TextField field
-    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
-
-    String startDateTimeStr =
-        _transferDataMap['addDurStartDateTimeStr'] ?? nowEnglishFormatDateTimeStr;
+    String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
+        nowEnglishFormatDateTimeStr;
 
     _startDateTimePickerController =
         TextEditingController(text: startDateTimeStr);
@@ -100,37 +97,53 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String secondDurationStr = _transferDataMap['secondDurationStr'] ?? '00:00';
     String thirdDurationStr = _transferDataMap['thirdDurationStr'] ?? '00:00';
 
-    _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
-      widgetName: 'third',
+    _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      widgetName: 'first',
       dateTimeTitle: 'End date time',
-      topSelMenuPosition: 550.0,
-      startDateTimeStr: _secondEndDateTimeStr,
+      topSelMenuPosition: 250.0,
+      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration: null,
     );
 
     _secondAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
       widgetName: 'second',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
-      startDateTimeStr: _firstEndDateTimeStr,
+      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration:
-          _thirdAddSubtractResultableDurationWidget,
     );
 
-    _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
-      widgetName: 'first',
+    _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      widgetName: 'third',
       dateTimeTitle: 'End date time',
-      topSelMenuPosition: 250.0,
-      startDateTimeStr: startDateTimeStr,
+      topSelMenuPosition: 550.0,
+      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration:
-          _secondAddSubtractResultableDurationWidget,
     );
+
+    _firstAddSubtractResultableDurationWidget
+            .nextAddSubtractResultableDuration =
+        _secondAddSubtractResultableDurationWidget;
+    _firstAddSubtractResultableDurationWidget
+            .previousAddSubtractResultableDuration =
+        null;
+
+    _secondAddSubtractResultableDurationWidget
+            .nextAddSubtractResultableDuration =
+        _thirdAddSubtractResultableDurationWidget;
+    _secondAddSubtractResultableDurationWidget
+            .previousAddSubtractResultableDuration =
+        _firstAddSubtractResultableDurationWidget;
+
+    _thirdAddSubtractResultableDurationWidget
+            .nextAddSubtractResultableDuration =
+        null;
+    _thirdAddSubtractResultableDurationWidget
+            .previousAddSubtractResultableDuration =
+        _secondAddSubtractResultableDurationWidget;
   }
 
   @override
@@ -179,8 +192,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   /// Private method called each time when the third End date
   /// time value is changed.
-  void _updateThirdDuration(String thirdEndDateTimeEnglishFormatStr) {
-  }
+  void _updateThirdDuration(String thirdEndDateTimeEnglishFormatStr) {}
 
   void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
     _startDateTimeStr = englishFormatStartDateTimeStr;
