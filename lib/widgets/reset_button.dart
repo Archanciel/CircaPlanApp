@@ -5,7 +5,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 
 /// 'Reset' button widget included in all Circadian Calculator
 /// screens.
-/// 
+///
 /// The widget has the advantage that the 'Reset' button is located
 /// at the same position in all screens.
 class ResetButton extends StatelessWidget with ScreenMixin {
@@ -23,6 +23,7 @@ class ResetButton extends StatelessWidget with ScreenMixin {
       right: 0,
       bottom: kResetButtonBottomDistance,
       child: ElevatedButton(
+        key: const Key('resetButton'),
         style: ButtonStyle(
             backgroundColor: appElevatedButtonBackgroundColor,
             shape: appElevatedButtonRoundedShape),

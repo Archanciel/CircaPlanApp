@@ -54,7 +54,6 @@ class TransferDataViewModel {
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
     updateTimeCalculatorData();
-
     _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName);
   }

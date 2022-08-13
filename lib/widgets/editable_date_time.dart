@@ -12,7 +12,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 /// selection dialog. 'Now' button sets the DateTimePicker to now,
 /// 'Sel' button displays a date time selection menu in order to
 /// choose the date time value to set in the DateTimePicker field.
-/// 
+///
 /// This widget is included in the AddSubtractResultableDuration
 /// widget.
 class EditableDateTime extends StatelessWidget with ScreenMixin {
@@ -69,6 +69,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   ),
                 ),
                 child: DateTimePicker(
+                  key: const Key('editableDateTimePickerValue'),
                   type: DateTimePickerType.dateTime,
                   dateMask: 'dd-MM-yyyy HH:mm',
                   use24HourFormat: true,
@@ -96,6 +97,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
         Row(
           children: [
             ElevatedButton(
+              key: const Key('editableDateTimeNowButton'),
               style: ButtonStyle(
                   backgroundColor: appElevatedButtonBackgroundColor,
                   shape: appElevatedButtonRoundedShape),
@@ -115,6 +117,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
               width: 20,
             ),
             ElevatedButton(
+              key: const Key('editableDateTimeSelButton'),
               style: ButtonStyle(
                   backgroundColor: appElevatedButtonBackgroundColor,
                   shape: appElevatedButtonRoundedShape),

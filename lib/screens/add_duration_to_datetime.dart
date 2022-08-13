@@ -81,6 +81,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: null,
+      saveTransferDataIfModified: true,
     );
 
     _secondAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
@@ -111,41 +112,49 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     super.dispose();
   }
 
-  Map<String, dynamic> _updateTransferDataMap() {
+  void _updateTransferDataMap() {
     _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
 
-    _transferDataViewModel.updateAndSaveTransferData();
+    setState(() {});
 
-    return _transferDataMap;
+//    _transferDataViewModel.updateAndSaveTransferData(); saving the
+//                           transfer data is performed by the third
+//                            AddSubtractResultableDuration widget !
   }
 
   void _resetScreen() {
     final DateTime dateTimeNow = DateTime.now();
     // String value used to initialize DateTimePicker field
-    String nowDateTimePickerStr = dateTimeNow.toString();
+    String nowDateTimePickerEnglishFormatStr = dateTimeNow.toString();
 
-    // String value used to initialize TextField field
-    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
-
-    _startDateTimeStr = nowDateTimePickerStr;
+    _startDateTimeStr = nowDateTimePickerEnglishFormatStr;
     _startDateTimePickerController.text = _startDateTimeStr;
 
-    _firstAddSubtractResultableDurationWidget.reset();
+    _updateTransferDataMap(); // must be executed before calling
+    // the AddSubtractResultableDuration widget reset method in order
+    // for the transfer data map to be updated before the last linked
+    // third AddSubtractResultableDuration widget calls the 
+    // TransferDataViewModel.updateAndSaveTransferData() method !
 
-    setState(() {});
-    _updateTransferDataMap();
+    _firstAddSubtractResultableDurationWidget.reset();
   }
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
 
-    _startDateTimePickerController.text = englishFormatStartDateTimeStr;
+    _startDateTimeStr = englishFormatStartDateTimeStr;
+    _startDateTimePickerController.text = _startDateTimeStr;
+
+    _updateTransferDataMap(); // must be executed before calling
+    // the AddSubtractResultableDuration widget reset method in order
+    // for the transfer data map to be updated before the last linked
+    // third AddSubtractResultableDuration widget calls the 
+    // TransferDataViewModel.updateAndSaveTransferData() method !
+
     _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
 
-    setState(() {});
-    _updateTransferDataMap();
   }
 
   /// Private method called each time when the third End date
@@ -154,11 +163,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
     _startDateTimeStr = englishFormatStartDateTimeStr;
+
+    _updateTransferDataMap(); // must be executed before calling
+    // the AddSubtractResultableDuration widget reset method in order
+    // for the transfer data map to be updated before the last linked
+    // third AddSubtractResultableDuration widget calls the 
+    // TransferDataViewModel.updateAndSaveTransferData() method !
+
     _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
-
-    setState(() {});
-    _updateTransferDataMap();
   }
 
   @override

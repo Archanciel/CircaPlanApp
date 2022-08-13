@@ -26,6 +26,7 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
   final AddSubtractResultableDuration? _nextAddSubtractResultableDuration;
+  final bool saveTransferDataIfModified; // is true only for last widget
 
   AddSubtractResultableDuration({
     required String widgetName,
@@ -35,6 +36,7 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     required this.transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
     required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
+    bool this.saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
@@ -54,6 +56,7 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
       nowDateTimeEnglishFormatStr: _nowDateTimeEnglishFormatStr,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _nextAddSubtractResultableDuration,
+      saveTransferDataIfModified: saveTransferDataIfModified,
     );
 
     return stateInstance;
@@ -85,7 +88,8 @@ class _AddSubtractResultableDurationState
   int _durationSign;
   String _startDateTimeStr;
   String _endDateTimeStr;
-  AddSubtractResultableDuration? _nextAddSubtractResultableDuration;
+  final AddSubtractResultableDuration? _nextAddSubtractResultableDuration;
+  final bool _saveTransferDataIfModified; // is true only for last widget
 
   final TextEditingController _durationTextFieldController =
       TextEditingController();
@@ -97,6 +101,7 @@ class _AddSubtractResultableDurationState
     required String nowDateTimeEnglishFormatStr,
     required Map<String, dynamic> transferDataMap,
     required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
+    bool saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _transferDataMap = transferDataMap,
         _durationIcon =
@@ -113,7 +118,8 @@ class _AddSubtractResultableDurationState
             nowDateTimeEnglishFormatStr,
         _endDateTimeStr = transferDataMap['${widgetName}EndDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
-        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration;
+        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
+        _saveTransferDataIfModified = saveTransferDataIfModified;
 
   @override
   void initState() {
@@ -128,7 +134,8 @@ class _AddSubtractResultableDurationState
     String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
 
     _startDateTimeStr = nowDateTimeEnglishFormatStr;
-    _dateTimePickerController.text = _startDateTimeStr;
+    _endDateTimeStr = nowDateTimeEnglishFormatStr;
+    _dateTimePickerController.text = _endDateTimeStr;
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
@@ -136,13 +143,15 @@ class _AddSubtractResultableDurationState
     _durationTextColor = AddSubtractResultableDuration.durationPositiveColor;
     _durationTextFieldController.text = _durationStr;
 
+    _updateTransferDataMap(); // must be executed before calling
+    // the next AddSubtractResultableDuration widget reset method in
+    // order for the transfer data map to be updated before the last
+    // linked third AddSubtractResultableDuration widget calls the
+    // TransferDataViewModel.updateAndSaveTransferData() method !
+
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!.reset();
     }
-
-    updateTransferDataMap();
-
-    setState(() {});
   }
 
   void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
@@ -184,14 +193,18 @@ class _AddSubtractResultableDurationState
       _dateTimePickerController.text = _endDateTimeStr;
     }
 
+    _updateTransferDataMap(); // must be executed before calling
+    // the next AddSubtractResultableDuration widget
+    // setStartDateTimeStr() method in order for the transfer data
+    // map to be updated before the last linked third
+    // AddSubtractResultableDuration widget _updateTransferDataMap()
+    // method calls the TransferDataViewModel.updateAndSaveTransferData()
+    // method !
+
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
           .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
     }
-
-    updateTransferDataMap();
-
-    setState(() {});
   }
 
   void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
@@ -255,32 +268,42 @@ class _AddSubtractResultableDurationState
       }
     }
 
+    _updateTransferDataMap(); // must be executed before calling
+    // the next AddSubtractResultableDuration widget
+    // setStartDateTimeStr() method in order for the transfer data
+    // map to be updated before the last linked third
+    // AddSubtractResultableDuration widget _updateTransferDataMap()
+    // method calls the TransferDataViewModel.updateAndSaveTransferData()
+    // method !
+
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
           .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
     }
-
-    updateTransferDataMap();
-
-    setState(() {});
   }
 
-  void updateTransferDataMap() {
-    _transferDataMap['${_widgetName}DurationIconData'] =
-        _durationIcon;
-    _transferDataMap['${_widgetName}DurationIconColor'] =
-        _durationIconColor;
-    _transferDataMap['${_widgetName}DurationSign'] =
-        _durationSign;
-    _transferDataMap['${_widgetName}DurationTextColor'] =
-        _durationTextColor;
+  /// This method must be executed before calling the next
+  /// AddSubtractResultableDuration widget setStartDateTimeStr() or
+  /// reset() method in order for the transfer data map to be updated
+  /// before the last linked third AddSubtractResultableDuration
+  /// widget _updateTransferDataMap() method calls the
+  /// TransferDataViewModel.updateAndSaveTransferData() method !
+  void _updateTransferDataMap() {
+    _transferDataMap['${_widgetName}DurationIconData'] = _durationIcon;
+    _transferDataMap['${_widgetName}DurationIconColor'] = _durationIconColor;
+    _transferDataMap['${_widgetName}DurationSign'] = _durationSign;
+    _transferDataMap['${_widgetName}DurationTextColor'] = _durationTextColor;
     _transferDataMap['${_widgetName}DurationStr'] = _durationStr;
-    _transferDataMap['${_widgetName}StartDateTimeStr'] =
-        _startDateTimeStr;
-    _transferDataMap['${_widgetName}EndDateTimeStr'] =
-        _endDateTimeStr;
+    _transferDataMap['${_widgetName}StartDateTimeStr'] = _startDateTimeStr;
+    _transferDataMap['${_widgetName}EndDateTimeStr'] = _endDateTimeStr;
 
-    widget.transferDataViewModel.updateAndSaveTransferData();
+    setState(() {});
+
+    if (_saveTransferDataIfModified) {
+      // is true only for last widget in order to avoid unuseful
+      // multiple transfer data saving.
+      widget.transferDataViewModel.updateAndSaveTransferData();
+    }
   }
 
   @override
@@ -300,7 +323,7 @@ class _AddSubtractResultableDurationState
               left: -18,
               top: -10,
               child: TextButton.icon(
-                key: Key('durationSignButton'),
+                key: const Key('durationSignButton'),
                 icon: Icon(
                   _durationIcon,
                   size: 30,
@@ -341,7 +364,7 @@ class _AddSubtractResultableDurationState
                 ),
                 child: GestureDetector(
                   child: TextField(
-                    key: Key('durationTextField'),
+                    key: const Key('durationTextField'),
                     decoration: const InputDecoration.collapsed(hintText: ''),
                     style: TextStyle(
                         color: _durationTextColor,
