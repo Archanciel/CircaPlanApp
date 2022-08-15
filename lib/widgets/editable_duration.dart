@@ -44,7 +44,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
         title: const Text('Time to add'),
         content: TextField(
           autofocus: true,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
           decoration: const InputDecoration(hintText: '(-)HH:mm'),
@@ -92,7 +92,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       child: TextField(
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
@@ -120,7 +120,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       child: TextField(
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
@@ -148,7 +148,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       child: TextField(
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
