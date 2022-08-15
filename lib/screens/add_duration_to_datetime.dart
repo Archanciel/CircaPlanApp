@@ -74,6 +74,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         TextEditingController(text: startDateTimeStr);
 
     _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      key: const Key('thirdAddSubtractResultableDuration'),
       widgetName: 'third',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 550.0,
@@ -85,6 +86,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     );
 
     _secondAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      key: const Key('secondAddSubtractResultableDuration'),
       widgetName: 'second',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
@@ -95,6 +97,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     );
 
     _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+      key: const Key('firstAddSubtractResultableDuration'),
       widgetName: 'first',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 210.0,

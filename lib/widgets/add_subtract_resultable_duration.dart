@@ -29,6 +29,7 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   final bool saveTransferDataIfModified; // is true only for last widget
 
   AddSubtractResultableDuration({
+    Key? key,
     required String widgetName,
     required this.dateTimeTitle,
     required this.topSelMenuPosition,
@@ -40,7 +41,8 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   })  : _widgetName = widgetName,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
-        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration;
+        _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
+        super(key: key);
 
   /// This variable enables the AddSubtractResultableDuration
   /// instance to execute the callSetState() method of its
@@ -120,7 +122,6 @@ class _AddSubtractResultableDurationState
             nowDateTimeEnglishFormatStr,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
         _saveTransferDataIfModified = saveTransferDataIfModified;
-
   @override
   void initState() {
     _dateTimePickerController.text = _endDateTimeStr;
