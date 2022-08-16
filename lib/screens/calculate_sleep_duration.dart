@@ -65,6 +65,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [],
         _wakeUpTimeStrHistory =
             transferDataMap['calcSlDurWakeUpTimeStrHistory'] ?? [],
+        _currentSleepPrevDayTotalPercentStr =
+            transferDataMap['calcSlDurCurrSleepPrevDayTotalPercentStr'] ?? '',
+        _currentWakeUpPrevDayTotalPercentStr =
+            transferDataMap['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] ?? '',
+        _currentTotalPrevDayTotalPercentStr =
+            transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] ?? '',
         super();
 
   final Map<String, dynamic> _transferDataMap;
@@ -83,6 +89,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   List<String> _sleepTimeStrHistory = [];
   List<String> _wakeUpTimeStrHistory = [];
 
+  String _currentSleepPrevDayTotalPercentStr;
+  String _currentWakeUpPrevDayTotalPercentStr;
+  String _currentTotalPrevDayTotalPercentStr;
+  String _prevDayTotalWakeUpStr = '';
+
   late TextEditingController _newDateTimeController;
   late TextEditingController _previousDateTimeController;
   late TextEditingController _beforePreviousDateTimeController;
@@ -94,6 +105,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _currentWakeUpDurationPercentController;
   late TextEditingController _currentTotalDurationPercentController;
   late TextEditingController _sleepWakeUpHistoryController;
+
+  late TextEditingController _currentSleepPrevDayTotalPercentController;
+  late TextEditingController _currentWakeUpPrevDayTotalPercentController;
+  late TextEditingController _currentTotalPrevDayTotalPercentController;
+  late TextEditingController _prevDayTotalController;
+  late TextEditingController _prevDayEmptyTotalController;
 
   String _buildSleepWakeUpHistoryStr() {
     List<String>? sleepTimeHistoryLst =
@@ -156,6 +173,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           _currentWakeUpDurationPercentStr;
       _currentTotalDurationPercentController.text =
           _currentTotalDurationPercentStr;
+
+      _currentSleepPrevDayTotalPercentController.text =
+          _currentSleepPrevDayTotalPercentStr;
+      _currentWakeUpPrevDayTotalPercentController.text =
+          _currentWakeUpPrevDayTotalPercentStr;
+      _currentTotalPrevDayTotalPercentController.text =
+          _currentTotalPrevDayTotalPercentStr;
     }
   }
 
@@ -194,6 +218,21 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentTotalDurationPercentController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '');
     _addTimeDialogController = TextEditingController();
+    _currentSleepPrevDayTotalPercentController = TextEditingController(
+        text:
+            _transferDataMap['calcSlDurCurrSleepPrevDayTotalPercentStr'] ?? '');
+    _currentWakeUpPrevDayTotalPercentController = TextEditingController(
+        text: _transferDataMap['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] ??
+            '');
+    _currentTotalPrevDayTotalPercentController = TextEditingController(
+        text:
+            _transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] ?? '');
+    _prevDayTotalController = TextEditingController(
+        text:
+            _transferDataMap['calcSlDurPrevDayTotalWakeUpStr'] ?? '25:25');
+    _prevDayEmptyTotalController = TextEditingController(
+        text: '');
+    _prevDayTotalWakeUpStr = '25:25';
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
   }
@@ -211,6 +250,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentTotalDurationPercentController.dispose();
     _addTimeDialogController.dispose();
     _sleepWakeUpHistoryController.dispose();
+    _currentSleepPrevDayTotalPercentController.dispose();
+    _currentWakeUpPrevDayTotalPercentController.dispose();
+    _currentTotalPrevDayTotalPercentController.dispose();
+    _prevDayTotalController.dispose();
+    _prevDayEmptyTotalController.dispose();
 
     super.dispose();
   }
@@ -224,12 +268,21 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
-    map['calcSlDurCurrSleepDurationPercentStr'] = _currentSleepDurationPercentStr;
-    map['calcSlDurCurrWakeUpDurationPercentStr'] = _currentWakeUpDurationPercentStr;
-    map['calcSlDurCurrTotalDurationPercentStr'] = _currentTotalDurationPercentStr;
+    map['calcSlDurCurrSleepDurationPercentStr'] =
+        _currentSleepDurationPercentStr;
+    map['calcSlDurCurrWakeUpDurationPercentStr'] =
+        _currentWakeUpDurationPercentStr;
+    map['calcSlDurCurrTotalDurationPercentStr'] =
+        _currentTotalDurationPercentStr;
     map['calcSlDurStatus'] = _status;
     map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
     map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
+    map['calcSlDurCurrSleepPrevDayTotalPercentStr'] =
+        _currentSleepPrevDayTotalPercentStr;
+    map['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] =
+        _currentWakeUpPrevDayTotalPercentStr;
+    map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
+        _currentTotalPrevDayTotalPercentStr;
 
     _buildSleepWakeUpHistoryStr();
 
@@ -348,6 +401,18 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepTimeStrHistory = [];
     _wakeUpTimeStrHistory = [];
     _sleepWakeUpHistoryController.text = '';
+
+    _currentSleepPrevDayTotalPercentStr = '';
+    _currentSleepPrevDayTotalPercentController.text =
+        _currentSleepPrevDayTotalPercentStr;
+    _currentWakeUpPrevDayTotalPercentStr = '';
+    _currentWakeUpPrevDayTotalPercentController.text =
+        _currentWakeUpPrevDayTotalPercentStr;
+    _currentTotalPrevDayTotalPercentStr = '';
+    _currentTotalPrevDayTotalPercentController.text =
+        _currentTotalPrevDayTotalPercentStr;
+    _prevDayTotalController.text = _prevDayTotalWakeUpStr;
+    _prevDayEmptyTotalController.text = '';
 
     setState(() {});
 
@@ -732,18 +797,28 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     resultDurationController: _currentSleepDurationController,
                     resultDurationPercentController:
                         _currentSleepDurationPercentController,
+                    previousDayPercentTitle: 'Prev day %',
+                    prevDayTotalPercentController:
+                        _currentSleepPrevDayTotalPercentController,
+                    prevDayTotalController: _prevDayTotalController,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Wake up duration',
                     resultDurationController: _currentWakeUpDurationController,
                     resultDurationPercentController:
                         _currentWakeUpDurationPercentController,
+                    prevDayTotalPercentController:
+                        _currentWakeUpPrevDayTotalPercentController,
+                    prevDayTotalController: _prevDayEmptyTotalController,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Total duration',
                     resultDurationController: _currentTotalDurationController,
                     resultDurationPercentController:
                         _currentTotalDurationPercentController,
+                    prevDayTotalPercentController:
+                        _currentTotalPrevDayTotalPercentController,
+                    prevDayTotalController: _prevDayEmptyTotalController,
                   ),
                   Text(
                     'Sleep and wake up history',
