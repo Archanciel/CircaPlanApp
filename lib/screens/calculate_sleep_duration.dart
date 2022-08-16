@@ -883,7 +883,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   Row(
                     children: [
                       const SizedBox(
-                        width: 55,
+                        width: 265,
                       ),
                       Tooltip(
                         message: 'Add siesta or sleep reduction time.',
