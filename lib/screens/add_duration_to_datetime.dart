@@ -93,7 +93,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration: _thirdAddSubtractResultableDurationWidget,
+      nextAddSubtractResultableDuration:
+          _thirdAddSubtractResultableDurationWidget,
     );
 
     _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
@@ -104,7 +105,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration: _secondAddSubtractResultableDurationWidget,
+      nextAddSubtractResultableDuration:
+          _secondAddSubtractResultableDurationWidget,
     );
   }
 
@@ -136,7 +138,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
     // for the transfer data map to be updated before the last linked
-    // third AddSubtractResultableDuration widget calls the 
+    // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     _firstAddSubtractResultableDurationWidget.reset();
@@ -152,12 +154,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
     // for the transfer data map to be updated before the last linked
-    // third AddSubtractResultableDuration widget calls the 
+    // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
-
   }
 
   /// Private method called each time when the third End date
@@ -170,7 +171,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
     // for the transfer data map to be updated before the last linked
-    // third AddSubtractResultableDuration widget calls the 
+    // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
