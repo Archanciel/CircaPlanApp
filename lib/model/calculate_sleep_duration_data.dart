@@ -54,14 +54,28 @@ class CalculateSleepDurationData extends ScreenData {
   set totalDurationStr(String value) => attributes['totalDurationStr'] = value;
 
   String get sleepDurationPercentStr => attributes['sleepDurationPercentStr'];
-  set sleepDurationPercentStr(String value) => attributes['sleepDurationPercentStr'] = value;
+  set sleepDurationPercentStr(String value) =>
+      attributes['sleepDurationPercentStr'] = value;
 
   String get wakeUpDurationPercentStr => attributes['wakeUpDurationPercentStr'];
   set wakeUpDurationPercentStr(String value) =>
       attributes['wakeUpDurationPercentStr'] = value;
 
   String get totalDurationPercentStr => attributes['totalDurationPercentStr'];
-  set totalDurationPercentStr(String value) => attributes['totalDurationPercentStr'] = value;
+  set totalDurationPercentStr(String value) =>
+      attributes['totalDurationPercentStr'] = value;
+
+  String get sleepPrevDayTotalPercentStr => attributes['sleepPrevDayTotalPercentStr'];
+  set sleepPrevDayTotalPercentStr(String value) =>
+      attributes['sleepPrevDayTotalPercentStr'] = value;
+
+  String get wakeUpPrevDayTotalPercentStr => attributes['wakeUpPrevDayTotalPercentStr'];
+  set wakeUpPrevDayTotalPercentStr(String value) =>
+      attributes['wakeUpPrevDayTotalPercentStr'] = value;
+
+  String get totalPrevDayTotalPercentStr => attributes['totalPrevDayTotalPercentStr'];
+  set totalPrevDayTotalPercentStr(String value) =>
+      attributes['totalPrevDayTotalPercentStr'] = value;
 
   List<String> get sleepHistoryDateTimeStrLst =>
       attributes['sleepHistoryDateTimeStrLst'];

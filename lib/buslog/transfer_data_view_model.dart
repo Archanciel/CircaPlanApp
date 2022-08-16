@@ -258,6 +258,12 @@ class TransferDataViewModel {
         _transferDataMap!['calcSlDurCurrWakeUpDurationPercentStr'];
     calculateSleepDurationData.totalDurationPercentStr =
         _transferDataMap!['calcSlDurCurrTotalDurationPercentStr'];
+    calculateSleepDurationData.sleepPrevDayTotalPercentStr =
+        _transferDataMap!['calcSlDurCurrSleepPrevDayTotalPercentStr'];
+    calculateSleepDurationData.wakeUpPrevDayTotalPercentStr =
+        _transferDataMap!['calcSlDurCurrWakeUpPrevDayTotalPercentStr'];
+    calculateSleepDurationData.totalPrevDayTotalPercentStr =
+        _transferDataMap!['calcSlDurCurrTotalPrevDayTotalPercentStr'];
     calculateSleepDurationData.sleepHistoryDateTimeStrLst =
         _transferDataMap!['calcSlDurSleepTimeStrHistory'];
     calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
@@ -423,6 +429,12 @@ class TransferDataViewModel {
         calculateSleepDurationData.wakeUpDurationPercentStr;
     _transferDataMap!["calcSlDurCurrTotalDurationPercentStr"] =
         calculateSleepDurationData.totalDurationPercentStr;
+    _transferDataMap!["calcSlDurCurrSleepPrevDayTotalPercentStr"] =
+        calculateSleepDurationData.sleepPrevDayTotalPercentStr;
+    _transferDataMap!["calcSlDurCurrWakeUpPrevDayTotalPercentStr"] =
+        calculateSleepDurationData.wakeUpPrevDayTotalPercentStr;
+    _transferDataMap!["calcSlDurCurrTotalPrevDayTotalPercentStr"] =
+        calculateSleepDurationData.totalPrevDayTotalPercentStr;
     _transferDataMap!["calcSlDurStatus"] = calculateSleepDurationData.status;
     _transferDataMap!["calcSlDurSleepTimeStrHistory"] =
         calculateSleepDurationData.sleepHistoryDateTimeStrLst;
