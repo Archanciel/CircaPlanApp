@@ -174,6 +174,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentTotalDurationPercentController.text =
           _currentTotalDurationPercentStr;
 
+      final int prevDayTotalWakeUpDurationInMinutes =
+          DateTimeParser.parseHHmmDuration(_prevDayTotalWakeUpStr)!.inMinutes;
+      final double currentSleepPrevDayTotalPercent =
+          currentSleepDurationMinutes * 100 / prevDayTotalWakeUpDurationInMinutes;
+      final double currentWakeUpPrevDayTotalPercent =
+          currentWakeUpDurationMinutes * 100 / prevDayTotalWakeUpDurationInMinutes;
+      final double currentTotalPrevDayTotalPercent =
+          currentTotalDurationMinutes * 100 / prevDayTotalWakeUpDurationInMinutes;
+      _currentSleepPrevDayTotalPercentStr = '${currentSleepPrevDayTotalPercent.toStringAsFixed(1)} %';
+      _currentWakeUpPrevDayTotalPercentStr = '${currentWakeUpPrevDayTotalPercent.toStringAsFixed(1)} %';
+      _currentTotalPrevDayTotalPercentStr = '${currentTotalPrevDayTotalPercent.toStringAsFixed(1)} %';
       _currentSleepPrevDayTotalPercentController.text =
           _currentSleepPrevDayTotalPercentStr;
       _currentWakeUpPrevDayTotalPercentController.text =
