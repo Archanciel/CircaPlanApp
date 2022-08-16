@@ -42,7 +42,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                 ),
               ),
               const SizedBox(
-                width: 15,
+                width: 0,
               ),
               SizedBox(
                 width: 140,
@@ -113,7 +113,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                 ),
               ),
               const SizedBox(
-                width: 40,
+                width: 25,
               ),
               SizedBox(
                 width: 70,
