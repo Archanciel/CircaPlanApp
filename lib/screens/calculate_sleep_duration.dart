@@ -837,7 +837,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             padding: const EdgeInsets.all(0),
                             onPressed: () => _incDecNewDateTimeMinute(
                                 context: context, minuteNb: 1),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.add,
                               color: ScreenMixin.appTextAndIconColor,
                             ),
@@ -850,7 +850,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             padding: const EdgeInsets.all(0),
                             onPressed: () => _incDecNewDateTimeMinute(
                                 context: context, minuteNb: -1),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.remove,
                               color: ScreenMixin.appTextAndIconColor,
                             ),
