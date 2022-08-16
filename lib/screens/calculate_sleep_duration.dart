@@ -227,12 +227,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentTotalPrevDayTotalPercentController = TextEditingController(
         text:
             _transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] ?? '');
-    _prevDayTotalController = TextEditingController(
-        text:
-            _transferDataMap['calcSlDurPrevDayTotalWakeUpStr'] ?? '25:25');
-    _prevDayEmptyTotalController = TextEditingController(
-        text: '');
-    _prevDayTotalWakeUpStr = '25:25';
+    _prevDayTotalWakeUpStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
+
+    if (_prevDayTotalWakeUpStr.isEmpty) {
+      _prevDayTotalWakeUpStr = _transferDataMap['dtDiffDurationStr'] ?? '';
+    }
+
+    _prevDayTotalController =
+        TextEditingController(text: _prevDayTotalWakeUpStr);
+    _prevDayEmptyTotalController = TextEditingController(text: '');
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
   }
