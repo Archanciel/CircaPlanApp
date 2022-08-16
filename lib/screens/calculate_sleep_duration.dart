@@ -143,8 +143,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       }
     }
 
-    _computeSleepWakeUpPercentDuration();
-
     return '$sleepTimeHistoryStr\n$wakeUpTimeHistoryStr';
   }
 
@@ -174,17 +172,32 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentTotalDurationPercentController.text =
           _currentTotalDurationPercentStr;
 
+      if (_prevDayTotalWakeUpStr.isEmpty) {
+        // the case if Date Time Difference Duration screen
+        // duration has no value
+        _prevDayTotalWakeUpStr = '00:01';
+      }
+
       final int prevDayTotalWakeUpDurationInMinutes =
           DateTimeParser.parseHHmmDuration(_prevDayTotalWakeUpStr)!.inMinutes;
       final double currentSleepPrevDayTotalPercent =
-          currentSleepDurationMinutes * 100 / prevDayTotalWakeUpDurationInMinutes;
+          currentSleepDurationMinutes *
+              100 /
+              prevDayTotalWakeUpDurationInMinutes;
       final double currentWakeUpPrevDayTotalPercent =
-          currentWakeUpDurationMinutes * 100 / prevDayTotalWakeUpDurationInMinutes;
+          currentWakeUpDurationMinutes *
+              100 /
+              prevDayTotalWakeUpDurationInMinutes;
       final double currentTotalPrevDayTotalPercent =
-          currentTotalDurationMinutes * 100 / prevDayTotalWakeUpDurationInMinutes;
-      _currentSleepPrevDayTotalPercentStr = '${currentSleepPrevDayTotalPercent.toStringAsFixed(1)} %';
-      _currentWakeUpPrevDayTotalPercentStr = '${currentWakeUpPrevDayTotalPercent.toStringAsFixed(1)} %';
-      _currentTotalPrevDayTotalPercentStr = '${currentTotalPrevDayTotalPercent.toStringAsFixed(1)} %';
+          currentTotalDurationMinutes *
+              100 /
+              prevDayTotalWakeUpDurationInMinutes;
+      _currentSleepPrevDayTotalPercentStr =
+          '${currentSleepPrevDayTotalPercent.toStringAsFixed(1)} %';
+      _currentWakeUpPrevDayTotalPercentStr =
+          '${currentWakeUpPrevDayTotalPercent.toStringAsFixed(1)} %';
+      _currentTotalPrevDayTotalPercentStr =
+          '${currentTotalPrevDayTotalPercent.toStringAsFixed(1)} %';
       _currentSleepPrevDayTotalPercentController.text =
           _currentSleepPrevDayTotalPercentStr;
       _currentWakeUpPrevDayTotalPercentController.text =
@@ -192,6 +205,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentTotalPrevDayTotalPercentController.text =
           _currentTotalPrevDayTotalPercentStr;
     }
+
+    _updateTransferDataMap();
   }
 
   String _removeYear(dateTimeStr) {
@@ -247,6 +262,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _prevDayTotalController =
         TextEditingController(text: _prevDayTotalWakeUpStr);
     _prevDayEmptyTotalController = TextEditingController(text: '');
+
+    _computeSleepWakeUpPercentDuration();
+
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
   }
@@ -298,7 +316,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
 
-    _buildSleepWakeUpHistoryStr();
+    //_buildSleepWakeUpHistoryStr();
 
     _transferDataViewModel.updateAndSaveTransferData();
 
