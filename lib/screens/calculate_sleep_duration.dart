@@ -241,7 +241,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _prevDayTotalWakeUpStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
 
     if (_prevDayTotalWakeUpStr.isEmpty) {
-      _prevDayTotalWakeUpStr = _transferDataMap['dtDiffDurationStr'] ?? '';
+      _prevDayTotalWakeUpStr = _transferDataMap['dtDiffDurationStr'] ?? '00:01';
     }
 
     _prevDayTotalController =
