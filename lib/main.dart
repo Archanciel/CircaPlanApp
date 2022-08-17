@@ -321,7 +321,11 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           applicationName: kApplicationName,
                           applicationVersion: kApplicationVersion,
-                          applicationIcon: Image.asset('images/circadian_app_icon.png')
+                          applicationIcon: Image.asset('images/circadian_app_icon.png'),
+                          children: [
+                            const Text('Author:'),
+                            const Text('Jean-Pierre Schnyder / Switzerland'),
+                          ],
                         );
                         break;
                       }
