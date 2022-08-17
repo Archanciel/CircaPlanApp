@@ -10,6 +10,8 @@ enum Status {
   sleep,
 }
 
+const String kApplicationName = "Circadian Calculator";
+const String kApplicationVersion = '1.0.0';
 const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';
 const String kDefaultJsonFileName = 'circadian.json';
 const double kVerticalFieldDistance = 23.0;
