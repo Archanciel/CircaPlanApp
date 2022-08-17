@@ -321,6 +321,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           applicationName: kApplicationName,
                           applicationVersion: kApplicationVersion,
+                          applicationIcon: Image.asset('images/circadian_app_icon.png')
                         );
                         break;
                       }
