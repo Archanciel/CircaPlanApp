@@ -147,61 +147,83 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   void _computeSleepWakeUpPercentDuration() {
-    if (_currentSleepDurationStr.isNotEmpty &&
-        _currentWakeUpDurationStr.isNotEmpty) {
-      final int currentSleepDurationMinutes =
+    int? currentSleepDurationMinutes;
+    int? currentWakeUpDurationMinutes;
+    int? currentTotalDurationMinutes;
+
+    if (_currentSleepDurationStr.isNotEmpty) {
+      currentSleepDurationMinutes =
           DateTimeParser.parseHHmmDuration(_currentSleepDurationStr)!.inMinutes;
-      final int currentWakeUpDurationMinutes =
+    }
+
+    if (_currentWakeUpDurationStr.isNotEmpty) {
+      currentWakeUpDurationMinutes =
           DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr)!
               .inMinutes;
-      final int currentTotalDurationMinutes =
+    }
+
+    if (currentSleepDurationMinutes != null &&
+        currentWakeUpDurationMinutes != null) {
+      currentTotalDurationMinutes =
           currentSleepDurationMinutes + currentWakeUpDurationMinutes;
+
       final double currentSleepDurationPercent =
           currentSleepDurationMinutes * 100 / currentTotalDurationMinutes;
-      final double currentWakeUpDurationPercent =
-          currentWakeUpDurationMinutes * 100 / currentTotalDurationMinutes;
       _currentSleepDurationPercentStr =
           '${currentSleepDurationPercent.toStringAsFixed(1)} %';
-      _currentWakeUpDurationPercentStr =
-          '${currentWakeUpDurationPercent.toStringAsFixed(1)} %';
-      _currentTotalDurationPercentStr = '100 %';
       _currentSleepDurationPercentController.text =
           _currentSleepDurationPercentStr;
+
+      final double currentWakeUpDurationPercent =
+          currentWakeUpDurationMinutes * 100 / currentTotalDurationMinutes;
+      _currentWakeUpDurationPercentStr =
+          '${currentWakeUpDurationPercent.toStringAsFixed(1)} %';
       _currentWakeUpDurationPercentController.text =
           _currentWakeUpDurationPercentStr;
+
+      _currentTotalDurationPercentStr = '100 %';
       _currentTotalDurationPercentController.text =
           _currentTotalDurationPercentStr;
+    }
 
-      if (_prevDayTotalWakeUpStr.isEmpty) {
-        // the case if Date Time Difference Duration screen
-        // duration has no value
-        _prevDayTotalWakeUpStr = '00:01';
-      }
+    if (_prevDayTotalWakeUpStr.isEmpty) {
+      // the case if Date Time Difference Duration screen
+      // duration has no value
+      _prevDayTotalWakeUpStr = '00:01';
+    }
 
-      final int prevDayTotalWakeUpDurationInMinutes =
-          DateTimeParser.parseHHmmDuration(_prevDayTotalWakeUpStr)!.inMinutes;
+    final int prevDayTotalWakeUpDurationInMinutes =
+        DateTimeParser.parseHHmmDuration(_prevDayTotalWakeUpStr)!.inMinutes;
+
+    if (currentSleepDurationMinutes != null) {
       final double currentSleepPrevDayTotalPercent =
           currentSleepDurationMinutes *
               100 /
               prevDayTotalWakeUpDurationInMinutes;
+      _currentSleepPrevDayTotalPercentStr =
+          '${currentSleepPrevDayTotalPercent.toStringAsFixed(1)} %';
+      _currentSleepPrevDayTotalPercentController.text =
+          _currentSleepPrevDayTotalPercentStr;
+    }
+
+    if (currentWakeUpDurationMinutes != null) {
       final double currentWakeUpPrevDayTotalPercent =
           currentWakeUpDurationMinutes *
               100 /
               prevDayTotalWakeUpDurationInMinutes;
+      _currentWakeUpPrevDayTotalPercentStr =
+          '${currentWakeUpPrevDayTotalPercent.toStringAsFixed(1)} %';
+      _currentWakeUpPrevDayTotalPercentController.text =
+          _currentWakeUpPrevDayTotalPercentStr;
+    }
+
+    if (currentTotalDurationMinutes != null) {
       final double currentTotalPrevDayTotalPercent =
           currentTotalDurationMinutes *
               100 /
               prevDayTotalWakeUpDurationInMinutes;
-      _currentSleepPrevDayTotalPercentStr =
-          '${currentSleepPrevDayTotalPercent.toStringAsFixed(1)} %';
-      _currentWakeUpPrevDayTotalPercentStr =
-          '${currentWakeUpPrevDayTotalPercent.toStringAsFixed(1)} %';
       _currentTotalPrevDayTotalPercentStr =
           '${currentTotalPrevDayTotalPercent.toStringAsFixed(1)} %';
-      _currentSleepPrevDayTotalPercentController.text =
-          _currentSleepPrevDayTotalPercentStr;
-      _currentWakeUpPrevDayTotalPercentController.text =
-          _currentWakeUpPrevDayTotalPercentStr;
       _currentTotalPrevDayTotalPercentController.text =
           _currentTotalPrevDayTotalPercentStr;
     }
