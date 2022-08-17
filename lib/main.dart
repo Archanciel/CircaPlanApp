@@ -87,7 +87,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
 
 class MyApp extends StatelessWidget with ScreenMixin {
   final TransferDataViewModel _transferDataViewModel;
-  
+
   MyApp({Key? key, required TransferDataViewModel transferDataViewModel})
       : _transferDataViewModel = transferDataViewModel,
         super(key: key);
@@ -253,6 +253,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       value: 4,
                       child: Text("Settings"),
                     ),
+                    const PopupMenuItem<int>(
+                      value: 5,
+                      child: Text("About ..."),
+                    ),
                   ];
                 },
                 onSelected: (value) async {
@@ -309,6 +313,16 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     case 4:
                       {
                         print("Settings is selected.");
+                        break;
+                      }
+                    case 5:
+                      {
+                        showAboutDialog(
+                          context: context,
+                          applicationName: kApplicationName,
+                          applicationVersion: kApplicationVersion,
+                          applicationIcon: Image.asset('images/circadian_app_icon.png')
+                        );
                         break;
                       }
                     default:
