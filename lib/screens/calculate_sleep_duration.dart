@@ -205,8 +205,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentTotalPrevDayTotalPercentController.text =
           _currentTotalPrevDayTotalPercentStr;
     }
-
-    _updateTransferDataMap();
   }
 
   String _removeYear(dateTimeStr) {
@@ -267,6 +265,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
+
+    _updateTransferDataMap();
   }
 
   @override
@@ -477,8 +477,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeStr = newDateTimeStr;
         _previousDateTimeController.text = _previousDateTimeStr;
         _status = Status.sleep;
-
-        setState(() {});
       } else {
         DateTime? previousDateTime;
 
@@ -531,8 +529,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _status = Status.sleep;
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
-
-        setState(() {});
       }
     } else {
       // status == status.sleep
@@ -575,11 +571,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _sleepTimeStrHistory.add(sleepDuration.HHmm());
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       _status = Status.wakeUp;
-
-      setState(() {});
     }
 
+    _computeSleepWakeUpPercentDuration();
+
     _updateTransferDataMap();
+    setState(() {});
   }
 
   bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
