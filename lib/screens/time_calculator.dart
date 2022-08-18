@@ -66,7 +66,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   void callSetState() {
-    print('callSetState()');
+    _updateWidgets();
+
     setState(() {});
   }
 
@@ -74,8 +75,11 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   void initState() {
     super.initState();
     _transferDataMap['currentScreenState'] = this;
-    final DateTime dateTimeNow = DateTime.now();
 
+    _updateWidgets();
+  }
+
+  void _updateWidgets() {
     _firstTimeTextFieldController = TextEditingController(
         text: _transferDataMap['firstTimeStr'] ?? '00:00:00');
     _secondTimeTextFieldController = TextEditingController(
@@ -90,7 +94,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _firstTimeTextFieldController.dispose();
     _secondTimeTextFieldController.dispose();
     _resultTextFieldController.dispose();
-    
+
     if (_transferDataMap['currentScreenState'] == this) {
       _transferDataMap['currentScreenState'] = null;
     }
