@@ -142,6 +142,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
 
+    _screenNavigTransData.transferDataMap['currentScreenState'].callSetState();
+
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -321,7 +323,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           applicationName: kApplicationName,
                           applicationVersion: kApplicationVersion,
-                          applicationIcon: Image.asset('images/circadian_app_icon.png'),
+                          applicationIcon:
+                              Image.asset('images/circadian_app_icon.png'),
                           children: [
                             const Text('Author:'),
                             const Text('Jean-Pierre Schnyder / Switzerland'),

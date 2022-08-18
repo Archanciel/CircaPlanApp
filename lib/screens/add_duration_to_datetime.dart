@@ -59,9 +59,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   // constructor where accessing to mixin data is not possible !
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
+  void callSetState() {
+    print('callSetState()');
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _transferDataMap['currentScreenState'] = this;
     final DateTime dateTimeNow = DateTime.now();
 
     // String value used to initialize DateTimePicker field
