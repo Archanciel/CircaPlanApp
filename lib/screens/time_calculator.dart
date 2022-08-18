@@ -65,9 +65,15 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
+  void callSetState() {
+    print('callSetState()');
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _transferDataMap['currentScreenState'] = this;
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
 
