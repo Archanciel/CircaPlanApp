@@ -239,9 +239,24 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return dateTimeNoYearStr;
   }
 
+  /// method called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected
+  /// in the AppBar load ... sub menu.
+  void callSetState() {
+    print('CalcSleepD...callSetState');
+    _updateWidgets();
+
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _transferDataMap['currentScreenState'] = this;
+    _updateWidgets();
+  }
+
+  void _updateWidgets() {
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
@@ -309,6 +324,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentTotalPrevDayTotalPercentController.dispose();
     _prevDayTotalController.dispose();
     _prevDayEmptyTotalController.dispose();
+
+    if (_transferDataMap['currentScreenState'] == this) {
+      _transferDataMap['currentScreenState'] = null;
+    }
 
     super.dispose();
   }
