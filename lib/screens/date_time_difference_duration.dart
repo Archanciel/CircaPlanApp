@@ -65,9 +65,24 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
 
+  /// method called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected
+  /// in the AppBar load ... sub menu.
+  void callSetState() {
+    _updateWidgets();
+
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _transferDataMap['currentScreenState'] = this;
+
+    _updateWidgets();
+  }
+
+  void _updateWidgets() {
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
 
@@ -92,6 +107,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _addTimeDialogController.dispose();
     _addTimeTextFieldController.dispose();
     _finalDurationTextFieldController.dispose();
+
+    if (_transferDataMap['currentScreenState'] == this) {
+      _transferDataMap['currentScreenState'] = null;
+    }
 
     super.dispose();
   }
