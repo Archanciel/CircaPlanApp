@@ -69,7 +69,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   void initState() {
     super.initState();
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = dateTimeNow.toString();
 
     _firstTimeTextFieldController = TextEditingController(
         text: _transferDataMap['firstTimeStr'] ?? '00:00:00');
