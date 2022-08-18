@@ -65,6 +65,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
+  /// method called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected
+  /// in the AppBar load ... sub menu.
   void callSetState() {
     _updateWidgets();
 
