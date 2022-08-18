@@ -473,9 +473,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
+  /// Private method called when clicking on 'Add' button located at right of
+  /// new date time TextField.
   void _handleAddButton(BuildContext context) {
-    /// Private method called when clicking on 'Add' button located at right of
-    /// new date time TextField.
     DateTime? newDateTime;
 
     newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
@@ -636,11 +636,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
+  /// Private method called when clicking on 'Add' button located at right
+  /// of current sleep duration TextField.
   void _addTimeToCurrentSleepAndWakeUpDuration(
       BuildContext context, String durationStr) {
-    /// Private method called when clicking on 'Add' button located at right
-    /// of current sleep duration TextField.
-
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
@@ -685,6 +684,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentTotalDurationController.text = _currentTotalDurationStr;
       _sleepTimeStrHistory.add(durationStr);
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
+
+      _computeSleepWakeUpPercentDuration();
 
       setState(() {});
 
