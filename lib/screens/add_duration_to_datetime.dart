@@ -59,8 +59,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   // constructor where accessing to mixin data is not possible !
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
+  /// method called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected
+  /// in the AppBar load ... sub menu.
   void callSetState() {
-    print('_AddDurationToDateTimeState.callSetState()');
+    _updateWidgets();
+
+    _firstAddSubtractResultableDurationWidget.callSetState();
+    _secondAddSubtractResultableDurationWidget.callSetState();
+    _thirdAddSubtractResultableDurationWidget.callSetState();
+
     setState(() {});
   }
 
@@ -68,16 +76,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void initState() {
     super.initState();
     _transferDataMap['currentScreenState'] = this;
-    final DateTime dateTimeNow = DateTime.now();
 
-    // String value used to initialize DateTimePicker field
-    String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
-
-    String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
-        nowEnglishFormatDateTimeStr;
-
-    _startDateTimePickerController =
-        TextEditingController(text: startDateTimeStr);
+    String nowEnglishFormatDateTimeStr = _updateWidgets();
 
     _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
       key: const Key('thirdAddSubtractResultableDuration'),
@@ -116,14 +116,29 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     );
   }
 
+  String _updateWidgets() {
+    final DateTime dateTimeNow = DateTime.now();
+
+    // String value used to initialize DateTimePicker field
+    String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
+
+    String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
+        nowEnglishFormatDateTimeStr;
+
+    _startDateTimePickerController =
+        TextEditingController(text: startDateTimeStr);
+
+    return nowEnglishFormatDateTimeStr;
+  }
+
   @override
   void dispose() {
     _startDateTimePickerController.dispose();
-    
+
     if (_transferDataMap['currentScreenState'] == this) {
       _transferDataMap['currentScreenState'] = null;
     }
- 
+
     super.dispose();
   }
 

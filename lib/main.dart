@@ -137,7 +137,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
-  Future<void> _handleSelectedFileName(String selectedFileNameStr) async {
+  Future<void> handleSelectedLoadFileName(String selectedFileNameStr) async {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
@@ -297,7 +297,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItem: _handleSelectedFileName,
+                          handleSelectedItem: handleSelectedLoadFileName,
                         );
 // not working                              setState(() {});
                         break;

@@ -51,6 +51,13 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   /// user.
   late final _AddSubtractResultableDurationState stateInstance;
 
+  /// method called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected
+  /// in the AppBar load ... sub menu.
+  void callSetState() {
+    stateInstance.callSetState();
+  }
+
   @override
   State<AddSubtractResultableDuration> createState() {
     stateInstance = _AddSubtractResultableDurationState(
@@ -122,6 +129,33 @@ class _AddSubtractResultableDurationState
             nowDateTimeEnglishFormatStr,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
         _saveTransferDataIfModified = saveTransferDataIfModified;
+
+  /// method called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected
+  /// in the AppBar load ... sub menu.
+  void callSetState() {
+    final DateTime dateTimeNow = DateTime.now();
+
+    // String value used to initialize DateTimePicker field
+    String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
+
+    _durationIcon =
+        _transferDataMap['${_widgetName}DurationIconData'] ?? Icons.add;
+    _durationIconColor = _transferDataMap['${_widgetName}DurationIconColor'] ??
+        AddSubtractResultableDuration.durationPositiveColor;
+    _durationSign = _transferDataMap['${_widgetName}DurationSign'] ?? 1;
+    _durationTextColor = _transferDataMap['${_widgetName}DurationTextColor'] ??
+        AddSubtractResultableDuration.durationPositiveColor;
+    _durationStr = _transferDataMap['${_widgetName}DurationStr'] ?? '00:00';
+    _startDateTimeStr = _transferDataMap['${_widgetName}StartDateTimeStr'] ??
+        nowDateTimeEnglishFormatStr;
+    _endDateTimeStr = _transferDataMap['${_widgetName}EndDateTimeStr'] ??
+        nowDateTimeEnglishFormatStr;
+    _dateTimePickerController.text = _endDateTimeStr;
+
+    setState(() {});
+  }
+
   @override
   void initState() {
     _dateTimePickerController.text = _endDateTimeStr;
