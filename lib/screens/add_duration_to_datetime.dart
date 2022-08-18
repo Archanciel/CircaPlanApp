@@ -119,7 +119,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   @override
   void dispose() {
     _startDateTimePickerController.dispose();
-
+    
+    if (_transferDataMap['currentScreenState'] == this) {
+      _transferDataMap['currentScreenState'] = null;
+    }
+ 
     super.dispose();
   }
 
