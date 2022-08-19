@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 class DirUtil {
@@ -21,24 +22,32 @@ class DirUtil {
 
     return file.renameSync(newPath);
   }
+
+  /// Returns a formatted String which can be printed to
+  /// dislay a readable view of the passed json file path
+  /// name.
+  /// 
+  /// Usage example:
+  /// 
+  /// String printableJsonFileContent = 
+  ///   await DirUtil.formatJsonFileContent(
+  ///     jsonFilePathName: 'c:\\temp\\CircadianData\\circadian.json');
+  /// print(printableJsonFileContent);
+  static Future<String> formatJsonFileContent ({
+    required String jsonFilePathName,
+  }) async {
+    final String jsonString = await File(jsonFilePathName).readAsString();
+    final Map<String, dynamic> parsedJson = json.decode(jsonString);
+
+    JsonEncoder encoder = JsonEncoder.withIndent('  ');
+
+    return encoder.convert(parsedJson);
+  }
 }
 
-void main() {
-  File? renamedFile = DirUtil.renameFile(
-      filePathNameStr: 'c:\\temp\\circadian.json',
-      newFileNameStr: '2022-08-07 02.30.json');
+Future<void> main() async {
+  String printableJsonFileContent = await DirUtil.formatJsonFileContent(
+      jsonFilePathName: 'c:\\temp\\CircadianData\\circadian.json');
 
-  print(renamedFile);
-
-  renamedFile = DirUtil.renameFile(
-      filePathNameStr: 'c:\\temp\\CircadianData\\circadian.json',
-      newFileNameStr: '2022-08-07 02.30.json');
-
-  print(renamedFile);
-
-  renamedFile = DirUtil.renameFile(
-      filePathNameStr: 'c:\\temp\\CircadianData\\2022-08-07 02.30.json',
-      newFileNameStr: 'circadian.json');
-
-  print(renamedFile);
+  print(printableJsonFileContent);
 }
