@@ -252,7 +252,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   void initState() {
     super.initState();
-    _transferDataMap['currentScreenState'] = this;
+    _transferDataMap['currentScreenStateInstance'] = this;
     _updateWidgets();
   }
 
@@ -264,8 +264,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
     _previousDateTimeController = TextEditingController(
         text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
-    _beforePreviousDateTimeController = TextEditingController(
-        text: _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '');
+
+    // setting _beforePreviousDateTimeStr value here fixes a
+    // bug which happens when switching to another screen and 
+    // back to this screen !
+    _beforePreviousDateTimeStr =
+        _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '';
+    _beforePreviousDateTimeController =
+        TextEditingController(text: _beforePreviousDateTimeStr);
+        
     _currentSleepDurationController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '');
     _currentWakeUpDurationController = TextEditingController(
@@ -325,8 +332,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _prevDayTotalController.dispose();
     _prevDayEmptyTotalController.dispose();
 
-    if (_transferDataMap['currentScreenState'] == this) {
-      _transferDataMap['currentScreenState'] = null;
+    if (_transferDataMap['currentScreenStateInstance'] == this) {
+      _transferDataMap['currentScreenStateInstance'] = null;
     }
 
     super.dispose();
@@ -364,29 +371,41 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return map;
   }
 
+  /// Private method called each time the New date time TextField
+  /// is nanually modified.
+  ///
+  /// dateTimeStr format is not validated here in order to
+  /// avoid preventing new date time manual modification. The
+  /// new date time string format will be validated right
+  /// before it is used.
   void _setStateNewDateTimeDependentFields(String dateTimeStr) {
-    /// Private method called each time the New date time TextField
-    /// is nanually modified.
-
-    /// dateTimeStr format is not validated here in order to avoid preventing
-    /// new date time manual modification. The new date time string format will
-    /// be validated right before it is used.
     DateTime dateTime;
 
-    // reformatting the entered dateTimeStr in order for the previous date time
-    // string to be set at a fully conform format. For eample, if the user
-    // entered 23-05-2022 2:57, dateTimeStr is reformated to 23-05-2022 02:57.
-    // In case of FormatException, nothing is done (see method description).
+    // reformatting the entered dateTimeStr in order for the
+    // previous date time string to be set at a fully conform
+    // format. For eample, if the user entered 23-05-2022 2:57,
+    // dateTimeStr is reformated to 23-05-2022 02:57.
+    //
+    // In case of FormatException, nothing is done (see method
+    // description).
     try {
       dateTime = frenchDateTimeFormat.parse(dateTimeStr);
       dateTimeStr = frenchDateTimeFormat.format(dateTime);
-    } on FormatException catch (_) {}
+    } on FormatException catch (_) {
+      // since the method is called each time the New date
+      // time TextField is modified, if the date time format
+      // is incomplete, returning is more efficient than
+      // updating and saving the transfer data map !
+      dateTimeStr = '';
+    }
 
     _newDateTimeStr = dateTimeStr;
 
     setState(() {});
 
-    _updateTransferDataMap();
+    if (dateTimeStr.isNotEmpty) {
+      _updateTransferDataMap();
+    }
   }
 
   void _incDecNewDateTimeMinute(
@@ -497,6 +516,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void _handleAddButton(BuildContext context) {
     DateTime? newDateTime;
 
+    _newDateTimeStr = _newDateTimeController.text;
     newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
 
     if (newDateTime == null) {
@@ -778,11 +798,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         controller: _newDateTimeController, // links the
                         //                         TextField content to pressing
                         //                         the button 'Now'. '+' or '-'
-                        onChanged: (val) {
+//                        onChanged: (val) {
                           // called when manually updating the TextField
                           // content or when pasting
-                          _setStateNewDateTimeDependentFields(val);
-                        },
+                          //_setStateNewDateTimeDependentFields(val);
+//                        },
                       ),
                     ),
                   ),
