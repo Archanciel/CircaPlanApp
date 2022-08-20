@@ -26,22 +26,26 @@ class DirUtil {
   /// Returns a formatted String which can be printed to
   /// dislay a readable view of the passed json file path
   /// name.
-  /// 
+  ///
   /// Usage example:
-  /// 
-  /// String printableJsonFileContent = 
+  ///
+  /// String printableJsonFileContent =
   ///   await DirUtil.formatJsonFileContent(
   ///     jsonFilePathName: 'c:\\temp\\CircadianData\\circadian.json');
   /// print(printableJsonFileContent);
-  static Future<String> formatJsonFileContent ({
+  static Future<String> formatJsonFileContent({
     required String jsonFilePathName,
   }) async {
     final String jsonString = await File(jsonFilePathName).readAsString();
-    final Map<String, dynamic> parsedJson = json.decode(jsonString);
+    final Map<String, dynamic> parsedJsonMap = json.decode(jsonString);
 
+    return formatMapContent(map: parsedJsonMap);
+  }
+
+  static String formatMapContent({required Map<String, dynamic> map}) {
     JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
-    return encoder.convert(parsedJson);
+    return encoder.convert(map);
   }
 }
 

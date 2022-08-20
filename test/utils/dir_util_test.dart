@@ -106,6 +106,35 @@ void main() {
           expect(expectedFormattedJsonFileCont, printableJsonFileContent);
         },
       );
+
+      test(
+        'formatMapContent()',
+        () async {
+          Map<String, dynamic> map = {
+            'one': 1,
+            'doubleTwo': 2.2,
+            'hello': 'Hello world !',
+            'sub map': {'waouh': 111, 'grr': 37},
+            'coucou': 'Coucou world !',
+          };
+
+          String printableFormattedMap = await DirUtil.formatMapContent(
+              map: map);
+
+          String expectedFormattedMap = '''
+{
+  "one": 1,
+  "doubleTwo": 2.2,
+  "hello": "Hello world !",
+  "sub map": {
+    "waouh": 111,
+    "grr": 37
+  },
+  "coucou": "Coucou world !"
+}''';
+          expect(expectedFormattedMap, printableFormattedMap);
+        },
+      );
     },
   );
 }
