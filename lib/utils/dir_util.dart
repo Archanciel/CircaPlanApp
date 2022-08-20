@@ -37,6 +37,11 @@ class DirUtil {
     required String jsonFilePathName,
   }) async {
     final String jsonString = await File(jsonFilePathName).readAsString();
+
+    return formatJsonString(jsonString: jsonString);
+  }
+
+  static String formatJsonString({required String jsonString}) {
     final Map<String, dynamic> parsedJsonMap = json.decode(jsonString);
 
     return formatMapContent(map: parsedJsonMap);
@@ -50,8 +55,12 @@ class DirUtil {
 }
 
 Future<void> main() async {
-  String printableJsonFileContent = await DirUtil.formatJsonFileContent(
-      jsonFilePathName: 'c:\\temp\\CircadianData\\circadian.json');
+  final String jsonFilePathName = 'c:\\temp\\CircadianData\\circadian.json';
+  final String jsonString = await File(jsonFilePathName).readAsString();
 
-  print(printableJsonFileContent);
+  print(jsonString);
+
+  String printableJsonString = DirUtil.formatJsonString(jsonString: jsonString);
+
+  print(printableJsonString);
 }
