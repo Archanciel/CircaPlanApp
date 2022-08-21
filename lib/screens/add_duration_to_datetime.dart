@@ -67,13 +67,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// 
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
-  /// $AppBar load ... sub menu.
+  /// AppBar load ... sub menu.
   void callSetState() {
     _updateWidgets();
 
     // calling the callSetState() method of the three custom
     // AddSubtractResultableDuration widgets
-    
+
     _firstAddSubtractResultableDurationWidget.callSetState();
     _secondAddSubtractResultableDurationWidget.callSetState();
     _thirdAddSubtractResultableDurationWidget.callSetState();
@@ -84,6 +84,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   @override
   void initState() {
     super.initState();
+
+   // The reference to the stateful widget State instance stored in
+   // the transfer data map is used in the
+   // _MainAppState.handleSelectedLoadFileName() method executed after 
+   // the file to load has been selected in the AppBar load ... sub menu
+   // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
 
     String nowEnglishFormatDateTimeStr = _updateWidgets();

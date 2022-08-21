@@ -239,11 +239,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return dateTimeNoYearStr;
   }
 
-  /// method called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected
-  /// in the AppBar load ... sub menu.
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data are
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  ///
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// AppBar load ... sub menu.
   void callSetState() {
-    _updateWidgets();
+    _updateWidgets(isAfterLoading: true);
 
     setState(() {});
   }
@@ -251,11 +257,18 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   void initState() {
     super.initState();
+
+    // The reference to the stateful widget State instance stored in
+    // the transfer data map is used in the
+    // _MainAppState.handleSelectedLoadFileName() method executed after
+    // the file to load has been selected in the AppBar load ... sub menu
+    // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
+
     _updateWidgets();
   }
 
-  void _updateWidgets() {
+  void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
@@ -265,22 +278,25 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
 
     // setting _beforePreviousDateTimeStr value here fixes a
-    // bug which happens when switching to another screen and 
+    // bug which happens when switching to another screen and
     // back to this screen !
     _beforePreviousDateTimeStr =
         _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '';
     _beforePreviousDateTimeController =
         TextEditingController(text: _beforePreviousDateTimeStr);
 
-    _currentSleepDurationStr = _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '';    
-    _currentSleepDurationController = TextEditingController(
-        text: _currentSleepDurationStr);
-    _currentWakeUpDurationStr = _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '';
-    _currentWakeUpDurationController = TextEditingController(
-        text: _currentWakeUpDurationStr);
-    _currentTotalDurationStr = _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '';
-    _currentTotalDurationController = TextEditingController(
-        text: _currentTotalDurationStr);
+    _currentSleepDurationStr =
+        _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '';
+    _currentSleepDurationController =
+        TextEditingController(text: _currentSleepDurationStr);
+    _currentWakeUpDurationStr =
+        _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '';
+    _currentWakeUpDurationController =
+        TextEditingController(text: _currentWakeUpDurationStr);
+    _currentTotalDurationStr =
+        _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '';
+    _currentTotalDurationController =
+        TextEditingController(text: _currentTotalDurationStr);
     _currentSleepDurationPercentController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '');
     _currentWakeUpDurationPercentController = TextEditingController(
@@ -312,7 +328,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
 
-    _updateTransferDataMap();
+    _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
 
   @override
@@ -341,7 +357,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     super.dispose();
   }
 
-  Map<String, dynamic> _updateTransferDataMap() {
+  Map<String, dynamic> _updateTransferDataMap({bool isAfterLoading = false}) {
     Map<String, dynamic> map = _transferDataMap;
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
@@ -366,48 +382,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
 
-    //_buildSleepWakeUpHistoryStr();
-
-    _transferDataViewModel.updateAndSaveTransferData();
+    if (!isAfterLoading) {
+      _transferDataViewModel.updateAndSaveTransferData();
+    }
 
     return map;
-  }
-
-  /// Private method called each time the New date time TextField
-  /// is nanually modified.
-  ///
-  /// dateTimeStr format is not validated here in order to
-  /// avoid preventing new date time manual modification. The
-  /// new date time string format will be validated right
-  /// before it is used.
-  void _setStateNewDateTimeDependentFields(String dateTimeStr) {
-    DateTime dateTime;
-
-    // reformatting the entered dateTimeStr in order for the
-    // previous date time string to be set at a fully conform
-    // format. For eample, if the user entered 23-05-2022 2:57,
-    // dateTimeStr is reformated to 23-05-2022 02:57.
-    //
-    // In case of FormatException, nothing is done (see method
-    // description).
-    try {
-      dateTime = frenchDateTimeFormat.parse(dateTimeStr);
-      dateTimeStr = frenchDateTimeFormat.format(dateTime);
-    } on FormatException catch (_) {
-      // since the method is called each time the New date
-      // time TextField is modified, if the date time format
-      // is incomplete, returning is more efficient than
-      // updating and saving the transfer data map !
-      dateTimeStr = '';
-    }
-
-    _newDateTimeStr = dateTimeStr;
-
-    setState(() {});
-
-    if (dateTimeStr.isNotEmpty) {
-      _updateTransferDataMap();
-    }
   }
 
   void _incDecNewDateTimeMinute(
@@ -800,11 +779,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         controller: _newDateTimeController, // links the
                         //                         TextField content to pressing
                         //                         the button 'Now'. '+' or '-'
-//                        onChanged: (val) {
-                          // called when manually updating the TextField
-                          // content or when pasting
-                          //_setStateNewDateTimeDependentFields(val);
-//                        },
                       ),
                     ),
                   ),

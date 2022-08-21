@@ -59,7 +59,7 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   /// 
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
-  /// $AppBar load ... sub menu.
+  /// AppBar load ... sub menu.
   void callSetState() {
     stateInstance.callSetState();
   }
@@ -144,7 +144,7 @@ class _AddSubtractResultableDurationState
   /// 
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
-  /// $AppBar load ... sub menu.
+  /// AppBar load ... sub menu.
   void callSetState() {
     final DateTime dateTimeNow = DateTime.now();
 

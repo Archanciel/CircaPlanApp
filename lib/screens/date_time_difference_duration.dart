@@ -65,9 +65,15 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
 
-  /// method called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected
-  /// in the AppBar load ... sub menu.
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data are
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  ///
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// AppBar load ... sub menu.
   void callSetState() {
     _updateWidgets();
 
@@ -77,6 +83,12 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   @override
   void initState() {
     super.initState();
+
+    // The reference to the stateful widget State instance stored in
+    // the transfer data map is used in the
+    // _MainAppState.handleSelectedLoadFileName() method executed after
+    // the file to load has been selected in the AppBar load ... sub menu
+    // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
