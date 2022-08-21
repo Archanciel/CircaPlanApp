@@ -479,7 +479,7 @@ class TransferDataViewModel {
           timeCalculatorData.timeCalculatorResultTimeStr;
     }
 
-    print('\nTRANSFER DATA MAP AFTER LOADING IT');
-    print(DirUtil.formatMapContent(map: _transferDataMap!));
+    // print('\nTRANSFER DATA MAP AFTER LOADING IT');
+    // print(DirUtil.formatMapContent(map: _transferDataMap!));
   }
 }

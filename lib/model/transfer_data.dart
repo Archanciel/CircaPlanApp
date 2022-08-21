@@ -84,8 +84,9 @@ class TransferData extends SerializableObject {
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
-    print('\nJSON CONTENT AFTER SAVING IT TO $jsonFilePathName');
-    DirUtil.formatJsonFileContent(jsonFilePathName: jsonFilePathName).then((value) => print(value));
+    // print('\nJSON CONTENT AFTER SAVING IT TO $jsonFilePathName');
+
+    //DirUtil.formatJsonFileContent(jsonFilePathName: jsonFilePathName).then((value) => print(value));
   }
 }
 
