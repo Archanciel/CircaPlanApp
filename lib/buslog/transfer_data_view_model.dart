@@ -55,8 +55,10 @@ class TransferDataViewModel {
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
     updateTimeCalculatorData();
-    print('\nTRANSFER DATA MAP BEFORE SAVING IT');
-    print(DirUtil.formatMapContent(map: _transferDataMap!));
+
+    // print('\nTRANSFER DATA MAP BEFORE SAVING IT');
+    // print(DirUtil.formatMapContent(map: _transferDataMap!));
+    
     _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName);
   }

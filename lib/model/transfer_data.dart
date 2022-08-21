@@ -66,8 +66,8 @@ class TransferData extends SerializableObject {
     final Serializer serializer = Serializer();
     final String inputJsonStr = await File(jsonFilePathName).readAsString();
 
-    print('\nJSON CONTENT AFTER LOADING JSON FILE $jsonFilePathName');
-    print(DirUtil.formatJsonString(jsonString: inputJsonStr));
+    // print('\nJSON CONTENT AFTER LOADING JSON FILE $jsonFilePathName');
+    // print(DirUtil.formatJsonString(jsonString: inputJsonStr));
 
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
@@ -79,8 +79,8 @@ class TransferData extends SerializableObject {
     final Serializer serializer = Serializer();
     final String outputJsonStr = serializer.serialize(this);
 
-    print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
-    print(DirUtil.formatJsonString(jsonString: outputJsonStr));
+    // print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
+    // print(DirUtil.formatJsonString(jsonString: outputJsonStr));
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
