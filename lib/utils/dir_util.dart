@@ -52,15 +52,48 @@ class DirUtil {
 
     //print(map);
 
-    // avoiding Exception Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'
+    // next code avoids JsonUnsupportedObjectError Exception 
+    // Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'
+    // or (Converting object to an encodable object failed: Instance of 'IconData')
+    // or (Converting object to an encodable object failed: Instance of 'Color')
     var currentScreenStateInstance = map['currentScreenStateInstance'];
     var status = map['calcSlDurStatus'];
+    var firstDurationIconData = map['firstDurationIconData'];
+    var firstDurationIconColor = map['firstDurationIconColor'];
+    var secondDurationIconData = map['secondDurationIconData'];
+    var secondDurationIconColor = map['secondDurationIconColor'];
+    var thirdDurationIconData = map['thirdDurationIconData'];
+    var thirdDurationIconColor = map['thirdDurationIconColor'];
+    var firstDurationTextColor = map['firstDurationTextColor'];
+    var secondDurationTextColor = map['secondDurationTextColor'];
+    var thirdDurationTextColor = map['thirdDurationTextColor'];
+
 
     map['currentScreenStateInstance'] = null;
     map['calcSlDurStatus'] = null;
+    map['firstDurationIconData'] = null;
+    map['firstDurationIconColor'] = null;
+    map['secondDurationIconData'] = null;
+    map['secondDurationIconColor'] = null;
+    map['thirdDurationIconData'] = null;
+    map['thirdDurationIconColor'] = null;
+    map['firstDurationTextColor'] = null;
+    map['secondDurationTextColor'] = null;
+    map['thirdDurationTextColor'] = null;
+
     String formattedMapStr = encoder.convert(map);
+
     map['currentScreenStateInstance'] = currentScreenStateInstance;
     map['calcSlDurStatus'] = status;
+    map['firstDurationIconData'] = firstDurationIconData;
+    map['firstDurationIconColor'] = firstDurationIconColor;
+    map['secondDurationIconData'] = secondDurationIconData;
+    map['secondDurationIconColor'] = secondDurationIconColor;
+    map['thirdDurationIconData'] = thirdDurationIconData;
+    map['thirdDurationIconColor'] = thirdDurationIconColor;
+    map['firstDurationTextColor'] = firstDurationTextColor;
+    map['secondDurationTextColor'] = secondDurationTextColor;
+    map['thirdDurationTextColor'] = thirdDurationTextColor;
 
     return formattedMapStr;
   }
