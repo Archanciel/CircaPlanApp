@@ -51,9 +51,15 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   /// user.
   late final _AddSubtractResultableDurationState stateInstance;
 
-  /// method called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected
-  /// in the AppBar load ... sub menu.
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data are
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  /// 
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// $AppBar load ... sub menu.
   void callSetState() {
     stateInstance.callSetState();
   }
@@ -130,9 +136,15 @@ class _AddSubtractResultableDurationState
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
         _saveTransferDataIfModified = saveTransferDataIfModified;
 
-  /// method called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected
-  /// in the AppBar load ... sub menu.
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data are
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  /// 
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// $AppBar load ... sub menu.
   void callSetState() {
     final DateTime dateTimeNow = DateTime.now();
 

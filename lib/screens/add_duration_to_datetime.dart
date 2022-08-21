@@ -59,12 +59,21 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   // constructor where accessing to mixin data is not possible !
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
-  /// method called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected
-  /// in the AppBar load ... sub menu.
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data are
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  /// 
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// $AppBar load ... sub menu.
   void callSetState() {
     _updateWidgets();
 
+    // calling the callSetState() method of the three custom
+    // AddSubtractResultableDuration widgets
+    
     _firstAddSubtractResultableDurationWidget.callSetState();
     _secondAddSubtractResultableDurationWidget.callSetState();
     _thirdAddSubtractResultableDurationWidget.callSetState();

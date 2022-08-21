@@ -23,15 +23,15 @@ class DirUtil {
     return file.renameSync(newPath);
   }
 
-  /// Returns a formatted String which can be printed to
-  /// dislay a readable view of the passed json file path
-  /// name.
+  /// Returns a formatted String which can be printed to dislay a 
+  /// readable view of the passed json file path name.
   ///
   /// Usage example:
   ///
   /// String printableJsonFileContent =
   ///   await DirUtil.formatJsonFileContent(
   ///     jsonFilePathName: 'c:\\temp\\CircadianData\\circadian.json');
+  /// 
   /// print(printableJsonFileContent);
   static Future<String> formatJsonFileContent({
     required String jsonFilePathName,
@@ -41,16 +41,32 @@ class DirUtil {
     return formatJsonString(jsonString: jsonString);
   }
 
+  /// Returns a formatted String which can be printed to dislay a 
+  /// readable view of the passed json string.
+  ///
+  /// Usage example:
+  ///
+  /// String printableJsonString =
+  ///   DirUtil.formatJsonString(jsonString: loadedJsonStr);
+  /// 
+  /// print(printableJsonFileContent);
   static String formatJsonString({required String jsonString}) {
     final Map<String, dynamic> parsedJsonMap = json.decode(jsonString);
 
     return formatMapContent(map: parsedJsonMap);
   }
 
+  /// Returns a formatted String which can be printed to dislay a 
+  /// readable view of the passed Map<String, dynamic> map.
+  ///
+  /// Usage example:
+  ///
+  /// String printableMapString =
+  ///   DirUtil.formatMapContent(map: loadedMap);
+  /// 
+  /// print(printableJsonFileContent);
   static String formatMapContent({required Map<String, dynamic> map}) {
-    JsonEncoder encoder = JsonEncoder.withIndent('  ');
-
-    //print(map);
+    const JsonEncoder encoder = const JsonEncoder.withIndent('  ');
 
     // next code avoids JsonUnsupportedObjectError Exception 
     // Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'
@@ -67,7 +83,6 @@ class DirUtil {
     var firstDurationTextColor = map['firstDurationTextColor'];
     var secondDurationTextColor = map['secondDurationTextColor'];
     var thirdDurationTextColor = map['thirdDurationTextColor'];
-
 
     map['currentScreenStateInstance'] = null;
     map['calcSlDurStatus'] = null;
