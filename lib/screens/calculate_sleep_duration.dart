@@ -243,7 +243,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// method is executed after the file to load has been selected
   /// in the AppBar load ... sub menu.
   void callSetState() {
-    print('CalcSleepD...callSetState');
     _updateWidgets();
 
     setState(() {});
@@ -272,13 +271,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '';
     _beforePreviousDateTimeController =
         TextEditingController(text: _beforePreviousDateTimeStr);
-        
+
+    _currentSleepDurationStr = _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '';    
     _currentSleepDurationController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '');
+        text: _currentSleepDurationStr);
+    _currentWakeUpDurationStr = _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '';
     _currentWakeUpDurationController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrWakeUpDurationStr'] ?? '');
+        text: _currentWakeUpDurationStr);
+    _currentTotalDurationStr = _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '';
     _currentTotalDurationController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '');
+        text: _currentTotalDurationStr);
     _currentSleepDurationPercentController = TextEditingController(
         text: _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '');
     _currentWakeUpDurationPercentController = TextEditingController(
