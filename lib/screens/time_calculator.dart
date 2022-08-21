@@ -77,7 +77,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   @override
   void initState() {
     super.initState();
-    _transferDataMap['currentScreenState'] = this;
+    _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
   }
@@ -98,8 +98,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _secondTimeTextFieldController.dispose();
     _resultTextFieldController.dispose();
 
-    if (_transferDataMap['currentScreenState'] == this) {
-      _transferDataMap['currentScreenState'] = null;
+    if (_transferDataMap['currentScreenStateInstance'] == this) {
+      _transferDataMap['currentScreenStateInstance'] = null;
     }
 
     super.dispose();

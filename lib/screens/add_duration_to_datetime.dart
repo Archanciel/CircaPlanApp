@@ -75,7 +75,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   @override
   void initState() {
     super.initState();
-    _transferDataMap['currentScreenState'] = this;
+    _transferDataMap['currentScreenStateInstance'] = this;
 
     String nowEnglishFormatDateTimeStr = _updateWidgets();
 
@@ -135,8 +135,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void dispose() {
     _startDateTimePickerController.dispose();
 
-    if (_transferDataMap['currentScreenState'] == this) {
-      _transferDataMap['currentScreenState'] = null;
+    if (_transferDataMap['currentScreenStateInstance'] == this) {
+      _transferDataMap['currentScreenStateInstance'] = null;
     }
 
     super.dispose();

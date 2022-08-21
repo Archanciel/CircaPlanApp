@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:circa_plan/utils/dir_util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -54,6 +55,8 @@ class TransferDataViewModel {
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
     updateTimeCalculatorData();
+    print('\nTRANSFER DATA MAP BEFORE SAVING IT');
+    print(DirUtil.formatMapContent(map: _transferDataMap!));
     _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName);
   }
@@ -473,5 +476,8 @@ class TransferDataViewModel {
       _transferDataMap!["resultTimeStr"] =
           timeCalculatorData.timeCalculatorResultTimeStr;
     }
+
+    print('\nTRANSFER DATA MAP AFTER LOADING IT');
+    print(DirUtil.formatMapContent(map: _transferDataMap!));
   }
 }

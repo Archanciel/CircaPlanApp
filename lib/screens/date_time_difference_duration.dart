@@ -77,7 +77,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   @override
   void initState() {
     super.initState();
-    _transferDataMap['currentScreenState'] = this;
+    _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
   }
@@ -108,8 +108,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _addTimeTextFieldController.dispose();
     _finalDurationTextFieldController.dispose();
 
-    if (_transferDataMap['currentScreenState'] == this) {
-      _transferDataMap['currentScreenState'] = null;
+    if (_transferDataMap['currentScreenStateInstance'] == this) {
+      _transferDataMap['currentScreenStateInstance'] = null;
     }
 
     super.dispose();

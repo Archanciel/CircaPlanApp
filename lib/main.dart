@@ -31,11 +31,11 @@ Future<void> main(List<String> args) async {
     //                            app dir
   }
 
-  bool deleteAppDir = false;
+  bool deleteAppDir = true;
 
   if (myArgs.isNotEmpty) {
     if (myArgs.contains("delAppDir")) {
-      deleteAppDir = true;
+      deleteAppDir = false;
     }
   }
   // It was necessary to place here the asynchronous
@@ -142,7 +142,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
 
-    _screenNavigTransData.transferDataMap['currentScreenState']?.callSetState();
+    _screenNavigTransData.transferDataMap['currentScreenStateInstance']?.callSetState();
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');

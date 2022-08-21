@@ -50,7 +50,19 @@ class DirUtil {
   static String formatMapContent({required Map<String, dynamic> map}) {
     JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
-    return encoder.convert(map);
+    //print(map);
+
+    // avoiding Exception Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'
+    var currentScreenStateInstance = map['currentScreenStateInstance'];
+    var status = map['calcSlDurStatus'];
+
+    map['currentScreenStateInstance'] = null;
+    map['calcSlDurStatus'] = null;
+    String formattedMapStr = encoder.convert(map);
+    map['currentScreenStateInstance'] = currentScreenStateInstance;
+    map['calcSlDurStatus'] = status;
+
+    return formattedMapStr;
   }
 }
 

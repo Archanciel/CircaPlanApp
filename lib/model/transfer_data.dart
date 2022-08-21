@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/utils/dir_util.dart';
 import 'package:enough_serialization/enough_serialization.dart';
 
 import '../constants.dart';
@@ -64,6 +65,10 @@ class TransferData extends SerializableObject {
       {required String jsonFilePathName}) async {
     final Serializer serializer = Serializer();
     final String inputJsonStr = await File(jsonFilePathName).readAsString();
+
+    print('\nJSON CONTENT AFTER LOADING JSON FILE $jsonFilePathName');
+    print(DirUtil.formatJsonString(jsonString: inputJsonStr));
+
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
@@ -74,7 +79,13 @@ class TransferData extends SerializableObject {
     final Serializer serializer = Serializer();
     final String outputJsonStr = serializer.serialize(this);
 
+    print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
+    print(DirUtil.formatJsonString(jsonString: outputJsonStr));
+
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
+
+    print('\nJSON CONTENT AFTER SAVING IT TO $jsonFilePathName');
+    DirUtil.formatJsonFileContent(jsonFilePathName: jsonFilePathName).then((value) => print(value));
   }
 }
 
