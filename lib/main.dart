@@ -142,7 +142,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
 
-    _screenNavigTransData.transferDataMap['currentScreenStateInstance']?.callSetState();
+    _screenNavigTransData.transferDataMap['currentScreenStateInstance']
+        ?.callSetState();
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
@@ -154,8 +155,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     final screenHeight = MediaQuery.of(context).size.height;
     ScreenMixin.setAppVerticalTopMargin(screenHeight);
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
-    transferDataViewModel.transferDataMap =
-        _screenNavigTransData.transferDataMap;
+    // transferDataViewModel.transferDataMap =
+    //     _screenNavigTransData.transferDataMap;
 
     // data for CurvedNavigationBar
 
