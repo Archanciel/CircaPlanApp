@@ -272,10 +272,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
+    _newDateTimeStr = _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
     _newDateTimeController = TextEditingController(
-        text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
+        text: _newDateTimeStr);
+    _previousDateTimeStr = _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
     _previousDateTimeController = TextEditingController(
-        text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
+        text: _previousDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
     // bug which happens when switching to another screen and
@@ -297,12 +299,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '';
     _currentTotalDurationController =
         TextEditingController(text: _currentTotalDurationStr);
+    _currentSleepDurationPercentStr = _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '';
     _currentSleepDurationPercentController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '');
+        text: _currentSleepDurationPercentStr);
+    _currentWakeUpDurationPercentStr = _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] ?? '';
     _currentWakeUpDurationPercentController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] ?? '');
+        text: _currentWakeUpDurationPercentStr);
+    _currentTotalDurationPercentStr = _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '';
     _currentTotalDurationPercentController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '');
+        text: _currentTotalDurationPercentStr);
     _addTimeDialogController = TextEditingController();
     _currentSleepPrevDayTotalPercentController = TextEditingController(
         text:
