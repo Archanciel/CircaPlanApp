@@ -272,10 +272,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
+    _newDateTimeStr = _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
     _newDateTimeController = TextEditingController(
-        text: _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr);
+        text: _newDateTimeStr);
+    _previousDateTimeStr = _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
     _previousDateTimeController = TextEditingController(
-        text: _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '');
+        text: _previousDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
     // bug which happens when switching to another screen and
@@ -297,12 +299,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '';
     _currentTotalDurationController =
         TextEditingController(text: _currentTotalDurationStr);
+    _currentSleepDurationPercentStr = _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '';
     _currentSleepDurationPercentController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '');
+        text: _currentSleepDurationPercentStr);
+    _currentWakeUpDurationPercentStr = _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] ?? '';
     _currentWakeUpDurationPercentController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] ?? '');
+        text: _currentWakeUpDurationPercentStr);
+    _currentTotalDurationPercentStr = _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '';
     _currentTotalDurationPercentController = TextEditingController(
-        text: _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '');
+        text: _currentTotalDurationPercentStr);
     _addTimeDialogController = TextEditingController();
     _currentSleepPrevDayTotalPercentController = TextEditingController(
         text:
@@ -357,36 +362,32 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     super.dispose();
   }
 
-  Map<String, dynamic> _updateTransferDataMap({bool isAfterLoading = false}) {
-    Map<String, dynamic> map = _transferDataMap;
-
-    map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
-    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
-    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
-    map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
-    map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
-    map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
-    map['calcSlDurCurrSleepDurationPercentStr'] =
+  void _updateTransferDataMap({bool isAfterLoading = false}) {
+    _transferDataMap['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
+    _transferDataMap['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
+    _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
+    _transferDataMap['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
+    _transferDataMap['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
+    _transferDataMap['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
+    _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] =
         _currentSleepDurationPercentStr;
-    map['calcSlDurCurrWakeUpDurationPercentStr'] =
+    _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] =
         _currentWakeUpDurationPercentStr;
-    map['calcSlDurCurrTotalDurationPercentStr'] =
+    _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] =
         _currentTotalDurationPercentStr;
-    map['calcSlDurStatus'] = _status;
-    map['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
-    map['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
-    map['calcSlDurCurrSleepPrevDayTotalPercentStr'] =
+    _transferDataMap['calcSlDurStatus'] = _status;
+    _transferDataMap['calcSlDurSleepTimeStrHistory'] = _sleepTimeStrHistory;
+    _transferDataMap['calcSlDurWakeUpTimeStrHistory'] = _wakeUpTimeStrHistory;
+    _transferDataMap['calcSlDurCurrSleepPrevDayTotalPercentStr'] =
         _currentSleepPrevDayTotalPercentStr;
-    map['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] =
+    _transferDataMap['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] =
         _currentWakeUpPrevDayTotalPercentStr;
-    map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
+    _transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
 
     if (!isAfterLoading) {
       _transferDataViewModel.updateAndSaveTransferData();
     }
-
-    return map;
   }
 
   void _incDecNewDateTimeMinute(
