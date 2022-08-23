@@ -127,18 +127,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     super.dispose();
   }
 
-  Map<String, dynamic> _updateTransferDataMap() {
-    Map<String, dynamic> map = _transferDataMap;
-
-    map['dtDiffStartDateTimeStr'] = _startDateTimeStr;
-    map['dtDiffEndDateTimeStr'] = _endDateTimeStr;
-    map['dtDiffDurationStr'] = _durationStr;
-    map['dtDiffAddTimeStr'] = _addTimeStr;
-    map['dtDiffFinalDurationStr'] = _finalDurationStr;
+  void _updateTransferDataMap() {
+    _transferDataMap['dtDiffStartDateTimeStr'] = _startDateTimeStr;
+    _transferDataMap['dtDiffEndDateTimeStr'] = _endDateTimeStr;
+    _transferDataMap['dtDiffDurationStr'] = _durationStr;
+    _transferDataMap['dtDiffAddTimeStr'] = _addTimeStr;
+    _transferDataMap['dtDiffFinalDurationStr'] = _finalDurationStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
-
-    return map;
   }
 
   void _resetScreen() {
