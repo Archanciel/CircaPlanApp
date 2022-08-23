@@ -117,16 +117,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     super.dispose();
   }
 
-  Map<String, dynamic> _updateTransferDataMap() {
-    Map<String, dynamic> map = _transferDataMap;
-
-    map['firstTimeStr'] = _firstTimeStr;
-    map['secondTimeStr'] = _secondTimeStr;
-    map['resultTimeStr'] = _resultTimeStr;
+  void _updateTransferDataMap() {
+    _transferDataMap['firstTimeStr'] = _firstTimeStr;
+    _transferDataMap['secondTimeStr'] = _secondTimeStr;
+    _transferDataMap['resultTimeStr'] = _resultTimeStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
-
-    return map;
   }
 
   void _resetScreen() {
