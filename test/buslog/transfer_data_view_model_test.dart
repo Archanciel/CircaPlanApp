@@ -99,6 +99,9 @@ void main() {
             "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
             "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
             "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
             "calcSlDurStatus": Status.sleep,
             "calcSlDurSleepTimeStrHistory": [
               '10_07_2022 00:58',
@@ -147,6 +150,9 @@ void main() {
           expect(calculateSleepDurationData.sleepDurationPercentStr, '99.74 %');
           expect(calculateSleepDurationData.wakeUpDurationPercentStr, '0.26 %');
           expect(calculateSleepDurationData.totalDurationPercentStr, '100 %');
+          expect(calculateSleepDurationData.sleepPrevDayTotalPercentStr, '79.74 %');
+          expect(calculateSleepDurationData.wakeUpPrevDayTotalPercentStr, '1.26 %');
+          expect(calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
@@ -268,6 +274,9 @@ void main() {
             "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
             "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
             "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
             "calcSlDurStatus": Status.sleep,
             "calcSlDurSleepTimeStrHistory": [
               '10_07_2022 00:58',
@@ -344,6 +353,9 @@ void main() {
           expect(calculateSleepDurationData.sleepDurationPercentStr, '99.74 %');
           expect(calculateSleepDurationData.wakeUpDurationPercentStr, '0.26 %');
           expect(calculateSleepDurationData.totalDurationPercentStr, '100 %');
+          expect(calculateSleepDurationData.sleepPrevDayTotalPercentStr, '79.74 %');
+          expect(calculateSleepDurationData.wakeUpPrevDayTotalPercentStr, '1.26 %');
+          expect(calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
@@ -411,6 +423,9 @@ void main() {
             "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
             "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
             "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
             "calcSlDurStatus": Status.sleep,
             "calcSlDurSleepTimeStrHistory": [
               '10_07_2022 00:58',
@@ -521,6 +536,9 @@ void main() {
               '0.26 %');
           expect(loadedCalculateSleepDurationData.totalDurationPercentStr,
               '100 %');
+          expect(loadedCalculateSleepDurationData.sleepPrevDayTotalPercentStr, '79.74 %');
+          expect(loadedCalculateSleepDurationData.wakeUpPrevDayTotalPercentStr, '1.26 %');
+          expect(loadedCalculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,

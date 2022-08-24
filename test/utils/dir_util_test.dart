@@ -46,7 +46,7 @@ void main() {
               'c:\\temp\\CircadianData\\circadian.json';
           String printableJsonFileContent = await DirUtil.formatJsonFileContent(
               jsonFilePathName: jsonFilePathNameStr);
-
+          print(printableJsonFileContent);
           String expectedFormattedJsonFileCont = '''
 {
   "addDurationToDateTimeData": {
@@ -77,6 +77,9 @@ void main() {
     "sleepDurationPercentStr": "99.74 %",
     "wakeUpDurationPercentStr": "0.26 %",
     "totalDurationPercentStr": "100 %",
+    "sleepPrevDayTotalPercentStr": "79.74 %",
+    "wakeUpPrevDayTotalPercentStr": "1.26 %",
+    "totalPrevDayTotalPercentStr": "81 %",
     "sleepHistoryDateTimeStrLst": [
       "10_07_2022 00:58",
       "05:35",
@@ -101,7 +104,18 @@ void main() {
     "timeCalculatorFirstTimeStr": "00:10:00",
     "timeCalculatorSecondTimeStr": "00:05:00",
     "timeCalculatorResultTimeStr": "00:15:00"
-  }
+  },
+  "currentScreenStateInstance": null,
+  "calcSlDurStatus": null,
+  "firstDurationIconData": null,
+  "firstDurationIconColor": null,
+  "secondDurationIconData": null,
+  "secondDurationIconColor": null,
+  "thirdDurationIconData": null,
+  "thirdDurationIconColor": null,
+  "firstDurationTextColor": null,
+  "secondDurationTextColor": null,
+  "thirdDurationTextColor": null
 }''';
           expect(expectedFormattedJsonFileCont, printableJsonFileContent);
         },
@@ -130,7 +144,18 @@ void main() {
     "waouh": 111,
     "grr": 37
   },
-  "coucou": "Coucou world !"
+  "coucou": "Coucou world !",
+  "currentScreenStateInstance": null,
+  "calcSlDurStatus": null,
+  "firstDurationIconData": null,
+  "firstDurationIconColor": null,
+  "secondDurationIconData": null,
+  "secondDurationIconColor": null,
+  "thirdDurationIconData": null,
+  "thirdDurationIconColor": null,
+  "firstDurationTextColor": null,
+  "secondDurationTextColor": null,
+  "thirdDurationTextColor": null
 }''';
           expect(expectedFormattedMap, printableFormattedMap);
         },
@@ -198,7 +223,18 @@ void main() {
     "timeCalculatorFirstTimeStr": "00:10:00",
     "timeCalculatorSecondTimeStr": "00:05:00",
     "timeCalculatorResultTimeStr": "00:15:00"
-  }
+  },
+  "currentScreenStateInstance": null,
+  "calcSlDurStatus": null,
+  "firstDurationIconData": null,
+  "firstDurationIconColor": null,
+  "secondDurationIconData": null,
+  "secondDurationIconColor": null,
+  "thirdDurationIconData": null,
+  "thirdDurationIconColor": null,
+  "firstDurationTextColor": null,
+  "secondDurationTextColor": null,
+  "thirdDurationTextColor": null
 }''';
           expect(expectedFormattedJsonString, printableJsonString);
         },
