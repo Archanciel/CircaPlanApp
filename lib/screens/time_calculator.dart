@@ -95,13 +95,15 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   }
 
   void _updateWidgets() {
+    _firstTimeStr = _transferDataMap['firstTimeStr'] ?? '00:00:00';
     _firstTimeTextFieldController = TextEditingController(
-        text: _transferDataMap['firstTimeStr'] ?? '00:00:00');
+        text: _firstTimeStr);
+    _secondTimeStr = _transferDataMap['secondTimeStr'] ?? '00:00:00';
     _secondTimeTextFieldController = TextEditingController(
-        text: _transferDataMap['secondTimeStr'] ?? '00:00:00');
-    _resultTextFieldController =
-        TextEditingController(text: _transferDataMap['resultTimeStr'] ?? '');
+        text: _secondTimeStr);
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
+    _resultTextFieldController =
+        TextEditingController(text: _resultTimeStr);
   }
 
   @override

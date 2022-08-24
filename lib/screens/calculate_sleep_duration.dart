@@ -272,12 +272,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
-    _newDateTimeStr = _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
-    _newDateTimeController = TextEditingController(
-        text: _newDateTimeStr);
-    _previousDateTimeStr = _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
-    _previousDateTimeController = TextEditingController(
-        text: _previousDateTimeStr);
+    _newDateTimeStr =
+        _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
+    _newDateTimeController = TextEditingController(text: _newDateTimeStr);
+    _previousDateTimeStr =
+        _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
+    _previousDateTimeController =
+        TextEditingController(text: _previousDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
     // bug which happens when switching to another screen and
@@ -299,15 +300,18 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataMap['calcSlDurCurrTotalDurationStr'] ?? '';
     _currentTotalDurationController =
         TextEditingController(text: _currentTotalDurationStr);
-    _currentSleepDurationPercentStr = _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '';
-    _currentSleepDurationPercentController = TextEditingController(
-        text: _currentSleepDurationPercentStr);
-    _currentWakeUpDurationPercentStr = _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] ?? '';
-    _currentWakeUpDurationPercentController = TextEditingController(
-        text: _currentWakeUpDurationPercentStr);
-    _currentTotalDurationPercentStr = _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '';
-    _currentTotalDurationPercentController = TextEditingController(
-        text: _currentTotalDurationPercentStr);
+    _currentSleepDurationPercentStr =
+        _transferDataMap['calcSlDurCurrSleepDurationPercentStr'] ?? '';
+    _currentSleepDurationPercentController =
+        TextEditingController(text: _currentSleepDurationPercentStr);
+    _currentWakeUpDurationPercentStr =
+        _transferDataMap['calcSlDurCurrWakeUpDurationPercentStr'] ?? '';
+    _currentWakeUpDurationPercentController =
+        TextEditingController(text: _currentWakeUpDurationPercentStr);
+    _currentTotalDurationPercentStr =
+        _transferDataMap['calcSlDurCurrTotalDurationPercentStr'] ?? '';
+    _currentTotalDurationPercentController =
+        TextEditingController(text: _currentTotalDurationPercentStr);
     _addTimeDialogController = TextEditingController();
     _currentSleepPrevDayTotalPercentController = TextEditingController(
         text:
@@ -445,6 +449,25 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
   }
 
+  /// Returns the english formatted passed french formatted date
+  /// time string. In case the passed date time string format
+  /// is invalid, null is returned.
+  String? _convertFrenchFormatToEnglishFormatDateTimeStr(
+      {required String frenchFormatDateTimeStr}) {
+    DateTime? endDateTime;
+    String? englishFormatDateTimeStr;
+
+    try {
+      endDateTime = frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
+    } on FormatException {}
+
+    if (endDateTime != null) {
+      englishFormatDateTimeStr = englishDateTimeFormat.format(endDateTime);
+    }
+
+    return englishFormatDateTimeStr;
+  }
+
   /// Private method called when 'Reset' is confirmed.
   void _applyReset() {
     // before resetting the current new date time string, its
@@ -452,7 +475,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // date time difference duration start date time map entry.
     // The effect is not updating the screen field, but adding
     // the value to the Sel available values.
-    _transferDataMap['dtDiffStartDateTimeStr'] = _newDateTimeStr;
+    _transferDataMap['dtDiffStartDateTimeStr'] =
+        _convertFrenchFormatToEnglishFormatDateTimeStr(
+            frenchFormatDateTimeStr: _newDateTimeStr);
 
     _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
