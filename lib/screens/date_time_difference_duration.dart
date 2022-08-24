@@ -98,17 +98,22 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
 
+    _startDateTimeStr = _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr;
     _startDateTimeController = TextEditingController(
-        text: _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr);
+        text: _startDateTimeStr);
+    _endDateTimeStr = _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr;
     _endDateTimeController = TextEditingController(
-        text: _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr);
+        text: _endDateTimeStr);
+    _durationStr = _transferDataMap['dtDiffDurationStr'] ?? '';
     _durationTextFieldController = TextEditingController(
-        text: _transferDataMap['dtDiffDurationStr'] ?? '');
+        text: _durationStr);
     _addTimeDialogController = TextEditingController();
+    _addTimeStr = _transferDataMap['dtDiffAddTimeStr'] ?? '';
     _addTimeTextFieldController =
-        TextEditingController(text: _transferDataMap['dtDiffAddTimeStr'] ?? '');
+        TextEditingController(text: _addTimeStr);
+    _finalDurationStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
     _finalDurationTextFieldController = TextEditingController(
-        text: _transferDataMap['dtDiffFinalDurationStr'] ?? '');
+        text: _finalDurationStr);
   }
 
   @override
