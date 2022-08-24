@@ -69,6 +69,11 @@ class TransferData extends SerializableObject {
     // print('\nJSON CONTENT AFTER LOADING JSON FILE $jsonFilePathName');
     // print(DirUtil.formatJsonString(jsonString: inputJsonStr));
 
+    // print('\ncircadian.json CONTENT AFTER LOADING $jsonFilePathName');
+    // String circadianJsonFilePathName = '/storage/emulated/0/Download/CircadianData/circadian.json';
+    // String circadianJsonContent = await DirUtil.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName);
+    // print('$circadianJsonFilePathName\n$circadianJsonContent');
+
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
@@ -84,9 +89,9 @@ class TransferData extends SerializableObject {
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
-    // print('\nJSON CONTENT AFTER SAVING IT TO $jsonFilePathName');
-
-    //DirUtil.formatJsonFileContent(jsonFilePathName: jsonFilePathName).then((value) => print(value));
+    // print('\ncircadian.json CONTENT AFTER SAVING $jsonFilePathName');
+    // String circadianJsonFilePathName = '/storage/emulated/0/Download/CircadianData/circadian.json';
+    // DirUtil.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName).then((value) => print('$circadianJsonFilePathName\n$value'));
   }
 }
 
