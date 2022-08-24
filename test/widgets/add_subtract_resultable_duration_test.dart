@@ -4,7 +4,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:circa_plan/widgets/add_subtract_resultable_duration.dart';
+import 'package:circa_plan/widgets/add_subtract_duration.dart';
 
 Future<void> main() async {
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
@@ -32,13 +32,12 @@ Future<void> main() async {
         (tester) async {
           final durationSignButton =
               find.byKey(const Key('durationSignButton'));
-          final durationTextField =
-              find.byKey(const Key('durationTextField'));
+          final durationTextField = find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: AddSubtractResultableDuration(
+                body: AddSubtractDuration(
                   widgetName: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
@@ -66,13 +65,12 @@ Future<void> main() async {
         (tester) async {
           final durationSignButton =
               find.byKey(const Key('durationSignButton'));
-          final durationTextField =
-              find.byKey(const Key('durationTextField'));
+          final durationTextField = find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: AddSubtractResultableDuration(
+                body: AddSubtractDuration(
                   widgetName: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,

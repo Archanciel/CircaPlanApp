@@ -9,7 +9,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 /// HH:MM editable widget with a '+' button changeable to '-'
 /// button. Adds or subtracts the defined duration value to
 /// the included ResultDateTime widget. Additionally,
-class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
+class AddSubtractDuration extends StatefulWidget with ScreenMixin {
   /// Function passed to this DurationResultDateTime widget.
   //final Function _durationChangeFunction;
 
@@ -25,10 +25,10 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   final String _widgetName;
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
-  final AddSubtractResultableDuration? _nextAddSubtractResultableDuration;
+  final AddSubtractDuration? _nextAddSubtractResultableDuration;
   final bool saveTransferDataIfModified; // is true only for last widget
 
-  AddSubtractResultableDuration({
+  AddSubtractDuration({
     Key? key,
     required String widgetName,
     required this.dateTimeTitle,
@@ -36,7 +36,7 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
     required String nowDateTimeEnglishFormatStr,
     required this.transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
-    required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
+    required AddSubtractDuration? nextAddSubtractResultableDuration,
     bool this.saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
@@ -49,14 +49,14 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   /// _AddSubtractResultableDurationState instance in order
   /// redraw the widget to display the value modified by the
   /// user.
-  late final _AddSubtractResultableDurationState stateInstance;
+  late final _AddSubtractDurationState stateInstance;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
   /// is performed after selecting a item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
-  /// 
+  ///
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
   /// AppBar load ... sub menu.
@@ -65,8 +65,8 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   }
 
   @override
-  State<AddSubtractResultableDuration> createState() {
-    stateInstance = _AddSubtractResultableDurationState(
+  State<AddSubtractDuration> createState() {
+    stateInstance = _AddSubtractDurationState(
       widgetName: _widgetName,
       nowDateTimeEnglishFormatStr: _nowDateTimeEnglishFormatStr,
       transferDataMap: _transferDataMap,
@@ -89,13 +89,10 @@ class AddSubtractResultableDuration extends StatefulWidget with ScreenMixin {
   }
 }
 
-class _AddSubtractResultableDurationState
-    extends State<AddSubtractResultableDuration> {
+class _AddSubtractDurationState extends State<AddSubtractDuration> {
   IconData _durationIcon = Icons.add;
-  Color _durationIconColor =
-      AddSubtractResultableDuration.durationPositiveColor;
-  Color _durationTextColor =
-      AddSubtractResultableDuration.durationPositiveColor;
+  Color _durationIconColor = AddSubtractDuration.durationPositiveColor;
+  Color _durationTextColor = AddSubtractDuration.durationPositiveColor;
 
   final String _widgetName;
   final Map<String, dynamic> _transferDataMap;
@@ -103,7 +100,7 @@ class _AddSubtractResultableDurationState
   int _durationSign;
   String _startDateTimeStr;
   String _endDateTimeStr;
-  final AddSubtractResultableDuration? _nextAddSubtractResultableDuration;
+  final AddSubtractDuration? _nextAddSubtractResultableDuration;
   final bool _saveTransferDataIfModified; // is true only for last widget
 
   final TextEditingController _durationTextFieldController =
@@ -111,11 +108,11 @@ class _AddSubtractResultableDurationState
   final TextEditingController _dateTimePickerController =
       TextEditingController();
 
-  _AddSubtractResultableDurationState({
+  _AddSubtractDurationState({
     required String widgetName,
     required String nowDateTimeEnglishFormatStr,
     required Map<String, dynamic> transferDataMap,
-    required AddSubtractResultableDuration? nextAddSubtractResultableDuration,
+    required AddSubtractDuration? nextAddSubtractResultableDuration,
     bool saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _transferDataMap = transferDataMap,
@@ -123,11 +120,11 @@ class _AddSubtractResultableDurationState
             transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
         _durationIconColor =
             transferDataMap['${widgetName}DurationIconColor'] ??
-                AddSubtractResultableDuration.durationPositiveColor,
+                AddSubtractDuration.durationPositiveColor,
         _durationSign = transferDataMap['${widgetName}DurationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['${widgetName}DurationTextColor'] ??
-                AddSubtractResultableDuration.durationPositiveColor,
+                AddSubtractDuration.durationPositiveColor,
         _durationStr = transferDataMap['${widgetName}DurationStr'] ?? '00:00',
         _startDateTimeStr = transferDataMap['${widgetName}StartDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
@@ -141,7 +138,7 @@ class _AddSubtractResultableDurationState
   /// displayed. Calling this method is necessary since the load function
   /// is performed after selecting a item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
-  /// 
+  ///
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
   /// AppBar load ... sub menu.
@@ -154,10 +151,10 @@ class _AddSubtractResultableDurationState
     _durationIcon =
         _transferDataMap['${_widgetName}DurationIconData'] ?? Icons.add;
     _durationIconColor = _transferDataMap['${_widgetName}DurationIconColor'] ??
-        AddSubtractResultableDuration.durationPositiveColor;
+        AddSubtractDuration.durationPositiveColor;
     _durationSign = _transferDataMap['${_widgetName}DurationSign'] ?? 1;
     _durationTextColor = _transferDataMap['${_widgetName}DurationTextColor'] ??
-        AddSubtractResultableDuration.durationPositiveColor;
+        AddSubtractDuration.durationPositiveColor;
     _durationStr = _transferDataMap['${_widgetName}DurationStr'] ?? '00:00';
     _startDateTimeStr = _transferDataMap['${_widgetName}StartDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
@@ -186,8 +183,8 @@ class _AddSubtractResultableDurationState
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
-    _durationIconColor = AddSubtractResultableDuration.durationPositiveColor;
-    _durationTextColor = AddSubtractResultableDuration.durationPositiveColor;
+    _durationIconColor = AddSubtractDuration.durationPositiveColor;
+    _durationTextColor = AddSubtractDuration.durationPositiveColor;
     _durationTextFieldController.text = _durationStr;
 
     _updateTransferDataMap(); // must be executed before calling
@@ -301,17 +298,13 @@ class _AddSubtractResultableDurationState
       if (duration.isNegative) {
         _durationSign = -1;
         _durationIcon = Icons.remove;
-        _durationIconColor =
-            AddSubtractResultableDuration.durationNegativeColor;
-        _durationTextColor =
-            AddSubtractResultableDuration.durationNegativeColor;
+        _durationIconColor = AddSubtractDuration.durationNegativeColor;
+        _durationTextColor = AddSubtractDuration.durationNegativeColor;
       } else {
         _durationSign = 1;
         _durationIcon = Icons.add;
-        _durationIconColor =
-            AddSubtractResultableDuration.durationPositiveColor;
-        _durationTextColor =
-            AddSubtractResultableDuration.durationPositiveColor;
+        _durationIconColor = AddSubtractDuration.durationPositiveColor;
+        _durationTextColor = AddSubtractDuration.durationPositiveColor;
       }
     }
 
@@ -381,17 +374,17 @@ class _AddSubtractResultableDurationState
                   if (_durationSign > 0) {
                     _durationIcon = Icons.remove;
                     _durationIconColor =
-                        AddSubtractResultableDuration.durationNegativeColor;
+                        AddSubtractDuration.durationNegativeColor;
                     _durationSign = -1;
                     _durationTextColor =
-                        AddSubtractResultableDuration.durationNegativeColor;
+                        AddSubtractDuration.durationNegativeColor;
                   } else {
                     _durationIcon = Icons.add;
                     _durationIconColor =
-                        AddSubtractResultableDuration.durationPositiveColor;
+                        AddSubtractDuration.durationPositiveColor;
                     _durationSign = 1;
                     _durationTextColor =
-                        AddSubtractResultableDuration.durationPositiveColor;
+                        AddSubtractDuration.durationPositiveColor;
                   }
 
                   handleDurationChange(durationSign: _durationSign);

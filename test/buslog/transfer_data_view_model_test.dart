@@ -3,7 +3,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/model/calculate_sleep_duration_data.dart';
 import 'package:circa_plan/model/date_time_difference_duration_data.dart';
 import 'package:circa_plan/model/time_calculator_data.dart';
-import 'package:circa_plan/widgets/add_subtract_resultable_duration.dart';
+import 'package:circa_plan/widgets/add_subtract_duration.dart';
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
@@ -150,9 +150,12 @@ void main() {
           expect(calculateSleepDurationData.sleepDurationPercentStr, '99.74 %');
           expect(calculateSleepDurationData.wakeUpDurationPercentStr, '0.26 %');
           expect(calculateSleepDurationData.totalDurationPercentStr, '100 %');
-          expect(calculateSleepDurationData.sleepPrevDayTotalPercentStr, '79.74 %');
-          expect(calculateSleepDurationData.wakeUpPrevDayTotalPercentStr, '1.26 %');
-          expect(calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
+          expect(calculateSleepDurationData.sleepPrevDayTotalPercentStr,
+              '79.74 %');
+          expect(calculateSleepDurationData.wakeUpPrevDayTotalPercentStr,
+              '1.26 %');
+          expect(
+              calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
@@ -353,9 +356,12 @@ void main() {
           expect(calculateSleepDurationData.sleepDurationPercentStr, '99.74 %');
           expect(calculateSleepDurationData.wakeUpDurationPercentStr, '0.26 %');
           expect(calculateSleepDurationData.totalDurationPercentStr, '100 %');
-          expect(calculateSleepDurationData.sleepPrevDayTotalPercentStr, '79.74 %');
-          expect(calculateSleepDurationData.wakeUpPrevDayTotalPercentStr, '1.26 %');
-          expect(calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
+          expect(calculateSleepDurationData.sleepPrevDayTotalPercentStr,
+              '79.74 %');
+          expect(calculateSleepDurationData.wakeUpPrevDayTotalPercentStr,
+              '1.26 %');
+          expect(
+              calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
@@ -501,15 +507,15 @@ void main() {
               loadedTransferDataViewModel.getTransferDataMap()!;
 
           expect(loadedTransferDataMap['firstDurationIconColor'],
-              AddSubtractResultableDuration.durationPositiveColor);
+              AddSubtractDuration.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationTextColor'],
-              AddSubtractResultableDuration.durationPositiveColor);
+              AddSubtractDuration.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationSign'], 1);
 
           expect(loadedTransferDataMap['secondDurationIconColor'],
-              AddSubtractResultableDuration.durationNegativeColor);
+              AddSubtractDuration.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationTextColor'],
-              AddSubtractResultableDuration.durationNegativeColor);
+              AddSubtractDuration.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
@@ -536,9 +542,12 @@ void main() {
               '0.26 %');
           expect(loadedCalculateSleepDurationData.totalDurationPercentStr,
               '100 %');
-          expect(loadedCalculateSleepDurationData.sleepPrevDayTotalPercentStr, '79.74 %');
-          expect(loadedCalculateSleepDurationData.wakeUpPrevDayTotalPercentStr, '1.26 %');
-          expect(loadedCalculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
+          expect(loadedCalculateSleepDurationData.sleepPrevDayTotalPercentStr,
+              '79.74 %');
+          expect(loadedCalculateSleepDurationData.wakeUpPrevDayTotalPercentStr,
+              '1.26 %');
+          expect(loadedCalculateSleepDurationData.totalPrevDayTotalPercentStr,
+              '81 %');
           expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
               ['10_07_2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,

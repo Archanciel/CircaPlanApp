@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
-import 'package:circa_plan/widgets/add_subtract_resultable_duration.dart';
+import 'package:circa_plan/widgets/add_subtract_duration.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -51,9 +51,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   late TextEditingController _startDateTimePickerController;
 
-  late AddSubtractResultableDuration _firstAddSubtractResultableDurationWidget;
-  late AddSubtractResultableDuration _secondAddSubtractResultableDurationWidget;
-  late AddSubtractResultableDuration _thirdAddSubtractResultableDurationWidget;
+  late AddSubtractDuration _firstAddSubtractResultableDurationWidget;
+  late AddSubtractDuration _secondAddSubtractResultableDurationWidget;
+  late AddSubtractDuration _thirdAddSubtractResultableDurationWidget;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -64,7 +64,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// displayed. Calling this method is necessary since the load function
   /// is performed after selecting a item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
-  /// 
+  ///
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
   /// AppBar load ... sub menu.
@@ -85,16 +85,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void initState() {
     super.initState();
 
-   // The reference to the stateful widget State instance stored in
-   // the transfer data map is used in the
-   // _MainAppState.handleSelectedLoadFileName() method executed after 
-   // the file to load has been selected in the AppBar load ... sub menu
-   // in order to call the current instance callSetState() method.
+    // The reference to the stateful widget State instance stored in
+    // the transfer data map is used in the
+    // _MainAppState.handleSelectedLoadFileName() method executed after
+    // the file to load has been selected in the AppBar load ... sub menu
+    // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
 
     String nowEnglishFormatDateTimeStr = _updateWidgets();
 
-    _thirdAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+    _thirdAddSubtractResultableDurationWidget = AddSubtractDuration(
       key: const Key('thirdAddSubtractResultableDuration'),
       widgetName: 'third',
       dateTimeTitle: 'End date time',
@@ -106,7 +106,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       saveTransferDataIfModified: true,
     );
 
-    _secondAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+    _secondAddSubtractResultableDurationWidget = AddSubtractDuration(
       key: const Key('secondAddSubtractResultableDuration'),
       widgetName: 'second',
       dateTimeTitle: 'End date time',
@@ -118,7 +118,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
           _thirdAddSubtractResultableDurationWidget,
     );
 
-    _firstAddSubtractResultableDurationWidget = AddSubtractResultableDuration(
+    _firstAddSubtractResultableDurationWidget = AddSubtractDuration(
       key: const Key('firstAddSubtractResultableDuration'),
       widgetName: 'first',
       dateTimeTitle: 'End date time',
