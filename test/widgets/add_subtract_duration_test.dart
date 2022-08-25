@@ -25,7 +25,7 @@ Future<void> main() async {
   transferDataViewModel.transferDataMap = transferDataMap;
 
   group(
-    'AddSubtractResultableDuration widget testing',
+    'AddSubtractDuration widget testing',
     () {
       testWidgets(
         'Adding valid duration',
