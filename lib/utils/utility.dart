@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-class DirUtil {
+class Utility {
   /// If the filePathNameStr file exists, it is renamed and the
   /// renamed File is returned. Otherwise, null is returned.
   static File? renameFile({
@@ -23,7 +23,7 @@ class DirUtil {
     return file.renameSync(newPath);
   }
 
-  /// Returns a formatted String which can be printed to dislay a 
+  /// Returns a formatted String which can be printed to dislay a
   /// readable view of the passed json file path name.
   ///
   /// Usage example:
@@ -31,7 +31,7 @@ class DirUtil {
   /// String printableJsonFileContent =
   ///   await DirUtil.formatJsonFileContent(
   ///     jsonFilePathName: 'c:\\temp\\CircadianData\\circadian.json');
-  /// 
+  ///
   /// print(printableJsonFileContent);
   static Future<String> formatJsonFileContent({
     required String jsonFilePathName,
@@ -41,14 +41,14 @@ class DirUtil {
     return formatJsonString(jsonString: jsonString);
   }
 
-  /// Returns a formatted String which can be printed to dislay a 
+  /// Returns a formatted String which can be printed to dislay a
   /// readable view of the passed json string.
   ///
   /// Usage example:
   ///
   /// String printableJsonString =
   ///   DirUtil.formatJsonString(jsonString: loadedJsonStr);
-  /// 
+  ///
   /// print(printableJsonFileContent);
   static String formatJsonString({required String jsonString}) {
     final Map<String, dynamic> parsedJsonMap = json.decode(jsonString);
@@ -56,19 +56,19 @@ class DirUtil {
     return formatMapContent(map: parsedJsonMap);
   }
 
-  /// Returns a formatted String which can be printed to dislay a 
+  /// Returns a formatted String which can be printed to dislay a
   /// readable view of the passed Map<String, dynamic> map.
   ///
   /// Usage example:
   ///
   /// String printableMapString =
   ///   DirUtil.formatMapContent(map: loadedMap);
-  /// 
+  ///
   /// print(printableJsonFileContent);
   static String formatMapContent({required Map<String, dynamic> map}) {
     const JsonEncoder encoder = const JsonEncoder.withIndent('  ');
 
-    // next code avoids JsonUnsupportedObjectError Exception 
+    // next code avoids JsonUnsupportedObjectError Exception
     // Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'
     // or (Converting object to an encodable object failed: Instance of 'IconData')
     // or (Converting object to an encodable object failed: Instance of 'Color')
@@ -112,6 +112,32 @@ class DirUtil {
 
     return formattedMapStr;
   }
+
+  /// Method used to enable entering a int duration value
+  /// instead of a HH:mm duration. For example, 2 or 24
+  /// instead of 02:00 or 24:00.
+  /// 
+  /// If the removeMinusSign parm is false, entering -2
+  /// converts the duration string to -2:00, which is
+  /// useful in the Add dialog accepting adding a positive
+  /// or negative duration.
+  static String convertIntDuration({
+    required String durationStr,
+    bool removeMinusSign = true,
+  }) {
+    if (removeMinusSign) {
+      durationStr = durationStr.replaceAll(RegExp(r'[+\-]+'), '');
+    } else {
+      durationStr = durationStr.replaceAll(RegExp(r'[+]+'), '');
+    }
+
+    if (int.tryParse(durationStr) != null) {
+      // the case if a one or two digits duration was entered ...
+      durationStr = '$durationStr:00';
+    }
+
+    return durationStr;
+  }
 }
 
 Future<void> main() async {
@@ -120,7 +146,7 @@ Future<void> main() async {
 
   print(jsonString);
 
-  String printableJsonString = DirUtil.formatJsonString(jsonString: jsonString);
+  String printableJsonString = Utility.formatJsonString(jsonString: jsonString);
 
   print(printableJsonString);
 }

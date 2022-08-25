@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:circa_plan/utils/dir_util.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:enough_serialization/enough_serialization.dart';
 
 import '../constants.dart';

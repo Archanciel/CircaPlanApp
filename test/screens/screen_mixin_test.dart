@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:circa_plan/utils/dir_util.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:test/test.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
@@ -370,7 +370,7 @@ Future<void> main() async {
       test(
         'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first. App dir contains 1 yyyy-MM.dd HH.mm.json file.',
         () {
-          DirUtil.renameFile(
+          Utility.renameFile(
               filePathNameStr:
                   transferDataViewModel.transferDataJsonFilePathName,
               newFileNameStr: '2022-08-07 02.30.json');
@@ -387,7 +387,7 @@ Future<void> main() async {
             '02-06-2022 23:42',
             '01-06-2022 23:42',
           ];
-          DirUtil.renameFile(
+          Utility.renameFile(
               filePathNameStr:
                   '${transferDataViewModel.getTransferDataJsonPath()}${Platform.pathSeparator}2022-08-07 02.30.json',
               newFileNameStr: 'circadian.json');
