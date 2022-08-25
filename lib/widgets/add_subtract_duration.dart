@@ -223,6 +223,12 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
     }
 
     _durationStr = _durationTextFieldController.text;
+
+    if (int.tryParse(_durationStr) != null) {
+      // the case if a one or two digits duration was entered ...
+      _durationStr = '$durationStr:00';
+    }
+
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
     DateTime endDateTime;
 
