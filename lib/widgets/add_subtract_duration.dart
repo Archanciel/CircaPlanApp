@@ -222,13 +222,7 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
       return;
     }
 
-    _durationStr = _durationTextFieldController.text;
-    _durationStr = _durationStr.replaceAll(RegExp(r'[+\-]+'), '');
-
-    if (int.tryParse(_durationStr) != null) {
-      // the case if a one or two digits duration was entered ...
-      _durationStr = '$_durationStr:00';
-    }
+    _durationStr = convertIntDuration(_durationTextFieldController.text);
 
     // necessary in case the _durationStr was modified
     _durationTextFieldController.text = _durationStr;
@@ -259,6 +253,17 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
       _nextAddSubtractResultableDuration!
           .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
     }
+  }
+
+  String convertIntDuration(String durationStr) {
+    durationStr = durationStr.replaceAll(RegExp(r'[+\-]+'), '');
+
+    if (int.tryParse(durationStr) != null) {
+      // the case if a one or two digits duration was entered ...
+      durationStr = '$durationStr:00';
+    }
+
+    return durationStr;
   }
 
   void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
