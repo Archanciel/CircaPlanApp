@@ -1,4 +1,5 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:flutter/material.dart';
@@ -524,7 +525,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Private method called when clicking on 'Add' button located at right of
   /// new date time TextField.
-  void _handleAddButton(BuildContext context) {
+  void _handleAddNewDateTimeButton(BuildContext context) {
     DateTime? newDateTime;
 
     _newDateTimeStr = _newDateTimeController.text;
@@ -689,7 +690,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Private method called when clicking on 'Add' button located at right
   /// of current sleep duration TextField.
   void _addTimeToCurrentSleepAndWakeUpDuration(
-      BuildContext context, String durationStr) {
+    BuildContext context,
+    String durationStr,
+  ) {
+    durationStr = Utility.convertIntDuration(
+      durationStr: durationStr,
+      removeMinusSign: false,
+    );
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
@@ -1039,7 +1046,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
-                        onPressed: () => _handleAddButton(context),
+                        onPressed: () => _handleAddNewDateTimeButton(context),
                         child: const Text(
                           'Add',
                           style: TextStyle(

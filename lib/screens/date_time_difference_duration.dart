@@ -1,5 +1,6 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/editable_duration.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
@@ -98,22 +99,20 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
 
-    _startDateTimeStr = _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr;
-    _startDateTimeController = TextEditingController(
-        text: _startDateTimeStr);
-    _endDateTimeStr = _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr;
-    _endDateTimeController = TextEditingController(
-        text: _endDateTimeStr);
+    _startDateTimeStr =
+        _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr;
+    _startDateTimeController = TextEditingController(text: _startDateTimeStr);
+    _endDateTimeStr =
+        _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr;
+    _endDateTimeController = TextEditingController(text: _endDateTimeStr);
     _durationStr = _transferDataMap['dtDiffDurationStr'] ?? '';
-    _durationTextFieldController = TextEditingController(
-        text: _durationStr);
+    _durationTextFieldController = TextEditingController(text: _durationStr);
     _addTimeDialogController = TextEditingController();
     _addTimeStr = _transferDataMap['dtDiffAddTimeStr'] ?? '';
-    _addTimeTextFieldController =
-        TextEditingController(text: _addTimeStr);
+    _addTimeTextFieldController = TextEditingController(text: _addTimeStr);
     _finalDurationStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
-    _finalDurationTextFieldController = TextEditingController(
-        text: _finalDurationStr);
+    _finalDurationTextFieldController =
+        TextEditingController(text: _finalDurationStr);
   }
 
   @override
@@ -202,9 +201,13 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void _addPosOrNegTimeToCurrentDuration(
 
       /// Private method called when clicking on 'Add' button located at right
-      /// of the 3 duration TextField's.
+      /// of the duration TextField.
       BuildContext context,
       String dialogTimeStr) {
+    dialogTimeStr = Utility.convertIntDuration(
+      durationStr: dialogTimeStr,
+      removeMinusSign: false,
+    );
     Duration? dialogTimeDuration =
         DateTimeParser.parseHHmmDuration(dialogTimeStr);
 

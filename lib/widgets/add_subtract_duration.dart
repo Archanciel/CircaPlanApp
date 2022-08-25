@@ -6,6 +6,8 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
+import '../utils/utility.dart';
+
 /// HH:MM editable widget with a '+' button changeable to '-'
 /// button. Adds or subtracts the defined duration value to
 /// the included ResultDateTime widget. Additionally,
@@ -222,7 +224,8 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
       return;
     }
 
-    _durationStr = convertIntDuration(_durationTextFieldController.text);
+    _durationStr = Utility.convertIntDuration(
+        durationStr: _durationTextFieldController.text);
 
     // necessary in case the _durationStr was modified
     _durationTextFieldController.text = _durationStr;
@@ -253,17 +256,6 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
       _nextAddSubtractResultableDuration!
           .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
     }
-  }
-
-  String convertIntDuration(String durationStr) {
-    durationStr = durationStr.replaceAll(RegExp(r'[+\-]+'), '');
-
-    if (int.tryParse(durationStr) != null) {
-      // the case if a one or two digits duration was entered ...
-      durationStr = '$durationStr:00';
-    }
-
-    return durationStr;
   }
 
   void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
