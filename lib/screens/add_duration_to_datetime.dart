@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
-import 'package:circa_plan/widgets/add_subtract_duration.dart';
+import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -51,9 +51,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   late TextEditingController _startDateTimePickerController;
 
-  late AddSubtractDuration _firstAddSubtractResultableDurationWidget;
-  late AddSubtractDuration _secondAddSubtractResultableDurationWidget;
-  late AddSubtractDuration _thirdAddSubtractResultableDurationWidget;
+  late DurationDateTimeEditor _firstAddSubtractResultableDurationWidget;
+  late DurationDateTimeEditor _secondAddSubtractResultableDurationWidget;
+  late DurationDateTimeEditor _thirdAddSubtractResultableDurationWidget;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -94,7 +94,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     String nowEnglishFormatDateTimeStr = _updateWidgets();
 
-    _thirdAddSubtractResultableDurationWidget = AddSubtractDuration(
+    _thirdAddSubtractResultableDurationWidget = DurationDateTimeEditor(
       key: const Key('thirdAddSubtractResultableDuration'),
       widgetName: 'third',
       dateTimeTitle: 'End date time',
@@ -106,7 +106,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       saveTransferDataIfModified: true,
     );
 
-    _secondAddSubtractResultableDurationWidget = AddSubtractDuration(
+    _secondAddSubtractResultableDurationWidget = DurationDateTimeEditor(
       key: const Key('secondAddSubtractResultableDuration'),
       widgetName: 'second',
       dateTimeTitle: 'End date time',
@@ -118,7 +118,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
           _thirdAddSubtractResultableDurationWidget,
     );
 
-    _firstAddSubtractResultableDurationWidget = AddSubtractDuration(
+    _firstAddSubtractResultableDurationWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
       widgetName: 'first',
       dateTimeTitle: 'End date time',

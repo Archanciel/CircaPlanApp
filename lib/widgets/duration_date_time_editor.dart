@@ -11,7 +11,7 @@ import '../utils/utility.dart';
 /// HH:MM editable widget with a '+' button changeable to '-'
 /// button. Adds or subtracts the defined duration value to
 /// the included ResultDateTime widget. Additionally,
-class AddSubtractDuration extends StatefulWidget with ScreenMixin {
+class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// Function passed to this DurationResultDateTime widget.
   //final Function _durationChangeFunction;
 
@@ -27,10 +27,10 @@ class AddSubtractDuration extends StatefulWidget with ScreenMixin {
   final String _widgetName;
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
-  final AddSubtractDuration? _nextAddSubtractResultableDuration;
+  final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
   final bool saveTransferDataIfModified; // is true only for last widget
 
-  AddSubtractDuration({
+  DurationDateTimeEditor({
     Key? key,
     required String widgetName,
     required this.dateTimeTitle,
@@ -38,7 +38,7 @@ class AddSubtractDuration extends StatefulWidget with ScreenMixin {
     required String nowDateTimeEnglishFormatStr,
     required this.transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
-    required AddSubtractDuration? nextAddSubtractResultableDuration,
+    required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     bool this.saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
@@ -51,7 +51,7 @@ class AddSubtractDuration extends StatefulWidget with ScreenMixin {
   /// _AddSubtractResultableDurationState instance in order
   /// redraw the widget to display the value modified by the
   /// user.
-  late final _AddSubtractDurationState stateInstance;
+  late final _DurationDateTimeEditorState stateInstance;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
@@ -67,8 +67,8 @@ class AddSubtractDuration extends StatefulWidget with ScreenMixin {
   }
 
   @override
-  State<AddSubtractDuration> createState() {
-    stateInstance = _AddSubtractDurationState(
+  State<DurationDateTimeEditor> createState() {
+    stateInstance = _DurationDateTimeEditorState(
       widgetName: _widgetName,
       nowDateTimeEnglishFormatStr: _nowDateTimeEnglishFormatStr,
       transferDataMap: _transferDataMap,
@@ -91,10 +91,10 @@ class AddSubtractDuration extends StatefulWidget with ScreenMixin {
   }
 }
 
-class _AddSubtractDurationState extends State<AddSubtractDuration> {
+class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   IconData _durationIcon = Icons.add;
-  Color _durationIconColor = AddSubtractDuration.durationPositiveColor;
-  Color _durationTextColor = AddSubtractDuration.durationPositiveColor;
+  Color _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
+  Color _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
 
   final String _widgetName;
   final Map<String, dynamic> _transferDataMap;
@@ -102,7 +102,7 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
   int _durationSign;
   String _startDateTimeStr;
   String _endDateTimeStr;
-  final AddSubtractDuration? _nextAddSubtractResultableDuration;
+  final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
   final bool _saveTransferDataIfModified; // is true only for last widget
 
   final TextEditingController _durationTextFieldController =
@@ -110,11 +110,11 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
   final TextEditingController _dateTimePickerController =
       TextEditingController();
 
-  _AddSubtractDurationState({
+  _DurationDateTimeEditorState({
     required String widgetName,
     required String nowDateTimeEnglishFormatStr,
     required Map<String, dynamic> transferDataMap,
-    required AddSubtractDuration? nextAddSubtractResultableDuration,
+    required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     bool saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _transferDataMap = transferDataMap,
@@ -122,11 +122,11 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
             transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
         _durationIconColor =
             transferDataMap['${widgetName}DurationIconColor'] ??
-                AddSubtractDuration.durationPositiveColor,
+                DurationDateTimeEditor.durationPositiveColor,
         _durationSign = transferDataMap['${widgetName}DurationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['${widgetName}DurationTextColor'] ??
-                AddSubtractDuration.durationPositiveColor,
+                DurationDateTimeEditor.durationPositiveColor,
         _durationStr = transferDataMap['${widgetName}DurationStr'] ?? '00:00',
         _startDateTimeStr = transferDataMap['${widgetName}StartDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
@@ -153,10 +153,10 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
     _durationIcon =
         _transferDataMap['${_widgetName}DurationIconData'] ?? Icons.add;
     _durationIconColor = _transferDataMap['${_widgetName}DurationIconColor'] ??
-        AddSubtractDuration.durationPositiveColor;
+        DurationDateTimeEditor.durationPositiveColor;
     _durationSign = _transferDataMap['${_widgetName}DurationSign'] ?? 1;
     _durationTextColor = _transferDataMap['${_widgetName}DurationTextColor'] ??
-        AddSubtractDuration.durationPositiveColor;
+        DurationDateTimeEditor.durationPositiveColor;
     _durationStr = _transferDataMap['${_widgetName}DurationStr'] ?? '00:00';
     _startDateTimeStr = _transferDataMap['${_widgetName}StartDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
@@ -185,8 +185,8 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
-    _durationIconColor = AddSubtractDuration.durationPositiveColor;
-    _durationTextColor = AddSubtractDuration.durationPositiveColor;
+    _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
+    _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
     _durationTextFieldController.text = _durationStr;
 
     _updateTransferDataMap(); // must be executed before calling
@@ -305,13 +305,13 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
       if (duration.isNegative) {
         _durationSign = -1;
         _durationIcon = Icons.remove;
-        _durationIconColor = AddSubtractDuration.durationNegativeColor;
-        _durationTextColor = AddSubtractDuration.durationNegativeColor;
+        _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
+        _durationTextColor = DurationDateTimeEditor.durationNegativeColor;
       } else {
         _durationSign = 1;
         _durationIcon = Icons.add;
-        _durationIconColor = AddSubtractDuration.durationPositiveColor;
-        _durationTextColor = AddSubtractDuration.durationPositiveColor;
+        _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
+        _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
       }
     }
 
@@ -381,17 +381,17 @@ class _AddSubtractDurationState extends State<AddSubtractDuration> {
                   if (_durationSign > 0) {
                     _durationIcon = Icons.remove;
                     _durationIconColor =
-                        AddSubtractDuration.durationNegativeColor;
+                        DurationDateTimeEditor.durationNegativeColor;
                     _durationSign = -1;
                     _durationTextColor =
-                        AddSubtractDuration.durationNegativeColor;
+                        DurationDateTimeEditor.durationNegativeColor;
                   } else {
                     _durationIcon = Icons.add;
                     _durationIconColor =
-                        AddSubtractDuration.durationPositiveColor;
+                        DurationDateTimeEditor.durationPositiveColor;
                     _durationSign = 1;
                     _durationTextColor =
-                        AddSubtractDuration.durationPositiveColor;
+                        DurationDateTimeEditor.durationPositiveColor;
                   }
 
                   handleDurationChange(durationSign: _durationSign);

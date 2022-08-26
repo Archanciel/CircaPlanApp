@@ -4,7 +4,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:circa_plan/widgets/add_subtract_duration.dart';
+import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 
 Future<void> main() async {
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
@@ -37,7 +37,7 @@ Future<void> main() async {
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: AddSubtractDuration(
+                body: DurationDateTimeEditor(
                   widgetName: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
@@ -70,7 +70,7 @@ Future<void> main() async {
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: AddSubtractDuration(
+                body: DurationDateTimeEditor(
                   widgetName: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
