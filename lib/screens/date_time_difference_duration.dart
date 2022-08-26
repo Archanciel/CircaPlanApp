@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
 
+import '../widgets/editable_duration_percent.dart';
+
 class DateTimeDifferenceDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
   final TransferDataViewModel _transferDataViewModel;
@@ -312,6 +314,17 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   EditableDuration(
                     dateTimeTitle: 'Duration',
+                    durationTextFieldController: _durationTextFieldController,
+                    addTimeTextFieldController: _addTimeTextFieldController,
+                    addTimeDialogController: _addTimeDialogController,
+                    finalDurationTextFieldController:
+                        _finalDurationTextFieldController,
+                    addPosOrNegTimeToCurrentDurationFunction:
+                        _addPosOrNegTimeToCurrentDuration,
+                    deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
+                  ),
+                  EditableDurationPercent(
+                    dateTimeTitle: 'Duration %',
                     durationTextFieldController: _durationTextFieldController,
                     addTimeTextFieldController: _addTimeTextFieldController,
                     addTimeDialogController: _addTimeDialogController,
