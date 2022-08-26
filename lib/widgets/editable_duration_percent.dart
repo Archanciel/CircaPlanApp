@@ -5,7 +5,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 
 /// Widget enabling to add or subtract a HH:MM value to the
 /// duration field.
-class EditableDurationPercent extends StatelessWidget with ScreenMixin {
+class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _durationTextFieldController;
   final TextEditingController _addTimeTextFieldController;
@@ -31,11 +31,16 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
             addPosOrNegTimeToCurrentDurationFunction,
         _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
 
+  @override
+  State<EditableDurationPercent> createState() => _EditableDurationPercentState();
+}
+
+class _EditableDurationPercentState extends State<EditableDurationPercent> {
   Future<String?> openTextInputDialog({required BuildContext context}) {
     void submit() {
-      Navigator.of(context).pop(_addTimeDialogController.text);
+      Navigator.of(context).pop(widget._addTimeDialogController.text);
 
-      _addTimeDialogController.clear();
+      widget._addTimeDialogController.clear();
     }
 
     return showDialog<String>(
@@ -48,7 +53,7 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
           decoration: const InputDecoration(hintText: '(-)HH:mm'),
-          controller: _addTimeDialogController,
+          controller: widget._addTimeDialogController,
           onSubmitted: (_) => submit(),
           keyboardType: TextInputType.datetime,
         ),
@@ -71,8 +76,8 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _dateTimeTitle,
-              style: labelTextStyle,
+              widget._dateTimeTitle,
+              style: widget.labelTextStyle,
             ),
             const SizedBox(
               height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
@@ -84,7 +89,7 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
+                        selectionColor: widget.selectionColor,
                         cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
@@ -96,13 +101,13 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _durationTextFieldController,
+                        controller: widget._durationTextFieldController,
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
-                        await copyToClipboard(
+                        await widget.copyToClipboard(
                             context: context,
-                            controller: _durationTextFieldController);
+                            controller: widget._durationTextFieldController);
                       },
                     ),
                   ),
@@ -112,7 +117,7 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
+                        selectionColor: widget.selectionColor,
                         cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
@@ -124,13 +129,13 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _addTimeTextFieldController,
+                        controller: widget._addTimeTextFieldController,
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
-                        await copyToClipboard(
+                        await widget.copyToClipboard(
                             context: context,
-                            controller: _addTimeTextFieldController);
+                            controller: widget._addTimeTextFieldController);
                       },
                     ),
                   ),
@@ -140,7 +145,7 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: selectionColor,
+                        selectionColor: widget.selectionColor,
                         cursorColor: ScreenMixin.appTextAndIconColor,
                       ),
                     ),
@@ -152,13 +157,13 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _finalDurationTextFieldController,
+                        controller: widget._finalDurationTextFieldController,
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
-                        await copyToClipboard(
+                        await widget.copyToClipboard(
                             context: context,
-                            controller: _finalDurationTextFieldController);
+                            controller: widget._finalDurationTextFieldController);
                       },
                     ),
                   ),
@@ -175,15 +180,15 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
           children: [
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: appElevatedButtonBackgroundColor,
-                  shape: appElevatedButtonRoundedShape),
+                  backgroundColor: widget.appElevatedButtonBackgroundColor,
+                  shape: widget.appElevatedButtonRoundedShape),
               onPressed: () async {
                 final timeStr = await openTextInputDialog(
                   context: context,
                 );
                 if (timeStr == null || timeStr.isEmpty) return;
 
-                _addPosOrNegTimeToCurrentDuration(context, timeStr);
+                widget._addPosOrNegTimeToCurrentDuration(context, timeStr);
               },
               child: const Text(
                 'Add',
@@ -197,10 +202,10 @@ class EditableDurationPercent extends StatelessWidget with ScreenMixin {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: appElevatedButtonBackgroundColor,
-                  shape: appElevatedButtonRoundedShape),
+                  backgroundColor: widget.appElevatedButtonBackgroundColor,
+                  shape: widget.appElevatedButtonRoundedShape),
               onPressed: () {
-                _deleteAddedTimeDuration();
+                widget._deleteAddedTimeDuration();
               },
               child: const Text(
                 'Del',
