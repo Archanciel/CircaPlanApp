@@ -46,7 +46,6 @@ void main() {
               'c:\\temp\\CircadianData\\circadian.json';
           String printableJsonFileContent = await Utility.formatJsonFileContent(
               jsonFilePathName: jsonFilePathNameStr);
-          print(printableJsonFileContent);
           String expectedFormattedJsonFileCont = '''
 {
   "addDurationToDateTimeData": {
