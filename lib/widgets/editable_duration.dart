@@ -167,7 +167,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
             ),
             const SizedBox(
               height: kVerticalFieldDistance, //  required for correct
-              //                       Now and Sel buttons positioning.
+              //                       Add and Del buttons positioning.
             ),
           ],
         ),
