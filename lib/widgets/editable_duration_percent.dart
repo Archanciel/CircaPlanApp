@@ -13,6 +13,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final TextEditingController _finalDurationTextFieldController;
   final Function _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
+  final double topSelMenuPosition = 300.0;
 
   EditableDurationPercent({
     required String dateTimeTitle,
@@ -32,7 +33,8 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
         _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
 
   @override
-  State<EditableDurationPercent> createState() => _EditableDurationPercentState();
+  State<EditableDurationPercent> createState() =>
+      _EditableDurationPercentState();
 }
 
 class _EditableDurationPercentState extends State<EditableDurationPercent> {
@@ -65,6 +67,10 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
         ],
       ),
     );
+  }
+
+  void handleSelectedPercentStr(String percentStr) {
+    print(percentStr);
   }
 
   @override
@@ -163,7 +169,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                       onDoubleTap: () async {
                         await widget.copyToClipboard(
                             context: context,
-                            controller: widget._finalDurationTextFieldController);
+                            controller:
+                                widget._finalDurationTextFieldController);
                       },
                     ),
                   ),
@@ -172,7 +179,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
             ),
             const SizedBox(
               height: kVerticalFieldDistance, //  required for correct
-              //                       Now and Sel buttons positioning.
+              //                       Del and Sel buttons positioning.
             ),
           ],
         ),
@@ -191,7 +198,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                 widget._addPosOrNegTimeToCurrentDuration(context, timeStr);
               },
               child: const Text(
-                'Add',
+                'Del',
                 style: TextStyle(
                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                 ),
@@ -205,10 +212,27 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   backgroundColor: widget.appElevatedButtonBackgroundColor,
                   shape: widget.appElevatedButtonRoundedShape),
               onPressed: () {
-                widget._deleteAddedTimeDuration();
+                widget.displaySelPopupMenu(
+                  context: context,
+                  selectableStrItemLst: [
+                    '40 %',
+                    '50 %',
+                    '60 %',
+                    '70 %',
+                    '80 %',
+                    '90 %',
+                  ],
+                  posRectangleLTRB: RelativeRect.fromLTRB(
+                    1.0,
+                    widget.topSelMenuPosition,
+                    0.0,
+                    0.0,
+                  ),
+                  handleSelectedItem: handleSelectedPercentStr,
+                );
               },
               child: const Text(
-                'Del',
+                'Sel',
                 style: TextStyle(
                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                 ),
