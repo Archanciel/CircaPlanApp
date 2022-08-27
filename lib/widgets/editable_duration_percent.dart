@@ -13,7 +13,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final TextEditingController _finalDurationTextFieldController;
   final Function _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
-  final double topSelMenuPosition = 300.0;
+  final double topSelMenuPosition;
 
   EditableDurationPercent({
     required String dateTimeTitle,
@@ -23,6 +23,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
     required TextEditingController finalDurationTextFieldController,
     required Function addPosOrNegTimeToCurrentDurationFunction,
     required Function deleteAddedTimeDurationFunction,
+    required this.topSelMenuPosition,
   })  : _dateTimeTitle = dateTimeTitle,
         _durationTextFieldController = durationTextFieldController,
         _addTimeTextFieldController = addTimeTextFieldController,

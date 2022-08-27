@@ -333,6 +333,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     addPosOrNegTimeToCurrentDurationFunction:
                         _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
+                    topSelMenuPosition: 343.0,
                   ),
                 ],
               ),
