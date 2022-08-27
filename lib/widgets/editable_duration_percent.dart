@@ -76,6 +76,9 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   }
 
   void handleSelectedPercentStr(String percentStr) {
+    if (percentStr == null) {
+      percentStr = '100 %';
+    }
     widget.selectedPercentTextFieldController.text = percentStr;
     int percentValueInt = int.parse(percentStr.replaceFirst(' %', ''));
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
@@ -90,7 +93,11 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
 
   @override
   void initState() {
-    handleSelectedPercentStr(widget.transferDataMap['dtDurationPercentStr']);
+    String? durationPercentStr = widget.transferDataMap['dtDurationPercentStr'];
+
+    durationPercentStr ??= '100 %';
+
+    handleSelectedPercentStr(durationPercentStr);
   }
 
   @override
