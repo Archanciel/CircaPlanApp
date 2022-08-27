@@ -325,15 +325,15 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   EditableDurationPercent(
                     dateTimeTitle: 'Duration %',
-                    durationTextFieldController: _durationTextFieldController,
+                    durationStr: _durationStr,
                     addTimeTextFieldController: _addTimeTextFieldController,
                     addTimeDialogController: _addTimeDialogController,
-                    finalDurationTextFieldController:
-                        _finalDurationTextFieldController,
                     addPosOrNegTimeToCurrentDurationFunction:
                         _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
                     topSelMenuPosition: 343.0,
+                    transferDataViewModel: _transferDataViewModel,
+                    transferDataMap: _transferDataMap,
                   ),
                 ],
               ),

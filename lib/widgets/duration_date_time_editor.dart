@@ -23,7 +23,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   final TransferDataViewModel transferDataViewModel;
 
   // instance variables used to pass values to the
-  // _AddSubtractResultableDurationState constructor
+  // _DurationDateTimeEditorState constructor
   final String _widgetName;
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;

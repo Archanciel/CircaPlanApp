@@ -1,34 +1,39 @@
+import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
+import '../buslog/transfer_data_view_model.dart';
+
 /// Widget enabling to add or subtract a HH:MM value to the
 /// duration field.
 class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String _dateTimeTitle;
-  final TextEditingController _durationTextFieldController;
-  final TextEditingController _addTimeTextFieldController;
+  final TextEditingController durationPercentTextFieldController =
+      TextEditingController();
+  final TextEditingController selectedPercentTextFieldController =
+      TextEditingController();
   final TextEditingController _addTimeDialogController;
-  final TextEditingController _finalDurationTextFieldController;
   final Function _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
   final double topSelMenuPosition;
+  final String durationStr;
+  final TransferDataViewModel transferDataViewModel;
+  final Map<String, dynamic> transferDataMap;
 
   EditableDurationPercent({
     required String dateTimeTitle,
-    required TextEditingController durationTextFieldController,
+    required this.durationStr,
     required TextEditingController addTimeTextFieldController,
     required TextEditingController addTimeDialogController,
-    required TextEditingController finalDurationTextFieldController,
     required Function addPosOrNegTimeToCurrentDurationFunction,
     required Function deleteAddedTimeDurationFunction,
     required this.topSelMenuPosition,
+    required this.transferDataViewModel,
+    required this.transferDataMap,
   })  : _dateTimeTitle = dateTimeTitle,
-        _durationTextFieldController = durationTextFieldController,
-        _addTimeTextFieldController = addTimeTextFieldController,
         _addTimeDialogController = addTimeDialogController,
-        _finalDurationTextFieldController = finalDurationTextFieldController,
         _addPosOrNegTimeToCurrentDuration =
             addPosOrNegTimeToCurrentDurationFunction,
         _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
@@ -71,7 +76,21 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   }
 
   void handleSelectedPercentStr(String percentStr) {
-    print(percentStr);
+    widget.selectedPercentTextFieldController.text = percentStr;
+    int percentValueInt = int.parse(percentStr.replaceFirst(' %', ''));
+    Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
+    int percentDurationMicrosecondsInt =
+        (duration!.inMicroseconds * percentValueInt / 100).round();
+    Duration percentDuration =
+        Duration(microseconds: percentDurationMicrosecondsInt);
+    widget.durationPercentTextFieldController.text = percentDuration.HHmm();
+    widget.transferDataMap['dtDurationPercentStr'] = percentStr;
+    widget.transferDataViewModel.updateAndSaveTransferData();
+  }
+
+  @override
+  void initState() {
+    handleSelectedPercentStr(widget.transferDataMap['dtDurationPercentStr']);
   }
 
   @override
@@ -108,73 +127,75 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                             color: ScreenMixin.appTextAndIconColor,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: widget._durationTextFieldController,
-                        readOnly: true,
-                      ),
-                      onDoubleTap: () async {
-                        await widget.copyToClipboard(
-                            context: context,
-                            controller: widget._durationTextFieldController);
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 55,
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: widget.selectionColor,
-                        cursorColor: ScreenMixin.appTextAndIconColor,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: widget._addTimeTextFieldController,
-                        readOnly: true,
-                      ),
-                      onDoubleTap: () async {
-                        await widget.copyToClipboard(
-                            context: context,
-                            controller: widget._addTimeTextFieldController);
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 55,
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: widget.selectionColor,
-                        cursorColor: ScreenMixin.appTextAndIconColor,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.appTextAndIconColor,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: widget._finalDurationTextFieldController,
+                        controller: widget.durationPercentTextFieldController,
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
                         await widget.copyToClipboard(
                             context: context,
                             controller:
-                                widget._finalDurationTextFieldController);
+                                widget.durationPercentTextFieldController);
                       },
                     ),
                   ),
+                ),
+                SizedBox(
+                  width: 55,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: TextSelectionThemeData(
+                        selectionColor: widget.selectionColor,
+                        cursorColor: ScreenMixin.appTextAndIconColor,
+                      ),
+                    ),
+                    child: GestureDetector(
+                      child: TextField(
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        style: const TextStyle(
+                            color: ScreenMixin.appTextAndIconColor,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                        controller: widget.selectedPercentTextFieldController,
+                        readOnly: true,
+                      ),
+                      onDoubleTap: () async {
+                        await widget.copyToClipboard(
+                            context: context,
+                            controller:
+                                widget.selectedPercentTextFieldController);
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 55,
+                  // child: Theme( // field not used currently
+                  //   data: Theme.of(context).copyWith(
+                  //     textSelectionTheme: TextSelectionThemeData(
+                  //       selectionColor: widget.selectionColor,
+                  //       cursorColor: ScreenMixin.appTextAndIconColor,
+                  //     ),
+                  //   ),
+                  //   child: GestureDetector(
+                  //     child: TextField(
+                  //       decoration:
+                  //           const InputDecoration.collapsed(hintText: ''),
+                  //       style: const TextStyle(
+                  //           color: ScreenMixin.appTextAndIconColor,
+                  //           fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                  //           fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                  //       controller: widget._finalDurationTextFieldController,
+                  //       readOnly: true,
+                  //     ),
+                  //     onDoubleTap: () async {
+                  //       await widget.copyToClipboard(
+                  //           context: context,
+                  //           controller:
+                  //               widget._finalDurationTextFieldController);
+                  //     },
+                  //   ),
+                  // ),
                 ),
               ],
             ),

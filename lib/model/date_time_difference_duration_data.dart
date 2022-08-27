@@ -34,6 +34,9 @@ class DateTimeDifferenceDurationData extends ScreenData {
   String get dateTimeDifferenceFinalDurationStr => attributes['dateTimeDifferenceFinalDurationStr'];
   set dateTimeDifferenceFinalDurationStr(String value) => attributes['dateTimeDifferenceFinalDurationStr'] = value;
 
+  String get dateTimeDurationPercentStr => attributes['dtDurationPercentStr'];
+  set dateTimeDurationPercentStr(String value) => attributes['dtDurationPercentStr'] = value;
+
   @override
   String toString() {
     String? dateTimeDifferenceStartDateTimeStr = getDateTimeDifferenceStartDateTimeStr();
