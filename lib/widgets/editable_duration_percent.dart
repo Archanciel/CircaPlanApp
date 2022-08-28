@@ -228,34 +228,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 55,
-                  // child: Theme( // field not used currently
-                  //   data: Theme.of(context).copyWith(
-                  //     textSelectionTheme: TextSelectionThemeData(
-                  //       selectionColor: widget.selectionColor,
-                  //       cursorColor: ScreenMixin.appTextAndIconColor,
-                  //     ),
-                  //   ),
-                  //   child: GestureDetector(
-                  //     child: TextField(
-                  //       decoration:
-                  //           const InputDecoration.collapsed(hintText: ''),
-                  //       style: const TextStyle(
-                  //           color: ScreenMixin.appTextAndIconColor,
-                  //           fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                  //           fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                  //       controller: widget._finalDurationTextFieldController,
-                  //       readOnly: true,
-                  //     ),
-                  //     onDoubleTap: () async {
-                  //       await widget.copyToClipboard(
-                  //           context: context,
-                  //           controller:
-                  //               widget._finalDurationTextFieldController);
-                  //     },
-                  //   ),
-                  // ),
                 ),
               ],
             ),
