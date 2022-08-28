@@ -142,7 +142,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
 
-    _screenNavigTransData.transferDataMap['currentScreenStateInstance']?.callSetState();
+    _screenNavigTransData.transferDataMap['currentScreenStateInstance']
+        ?.callSetState();
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
