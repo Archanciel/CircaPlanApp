@@ -82,6 +82,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void callSetState() {
     _updateWidgets();
 
+    _editableDurationPercentWidget.setDurationStr(_durationStr);
     _editableDurationPercentWidget.callSetState();
 
     setState(() {});
