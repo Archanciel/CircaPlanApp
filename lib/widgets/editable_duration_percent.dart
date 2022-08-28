@@ -110,6 +110,12 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
 
   void handleSelectedPercentStr(String percentStr) {
     widget.selectedPercentTextFieldController.text = percentStr;
+    if (percentStr.isEmpty) {
+      // the case if clicked on Reset button after clicked on Del
+      // button !
+      return;
+    }
+
     int percentValueInt = int.parse(percentStr.replaceFirst(' %', ''));
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
     String percentDurationStr = '';
@@ -123,9 +129,10 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
       percentDurationStr = percentDuration.HHmm();
     }
 
-    widget.durationPercentTextFieldController.text = percentDurationStr;
-    widget.transferDataMap['dtDurationPercentStr'] = percentStr;
-    widget.transferDataViewModel.updateAndSaveTransferData();
+    _updateDurationPercentStr(
+      percentStr: percentStr,
+      percentDurationStr: percentDurationStr,
+    );
   }
 
   /// The method ensures that the current widget (screen or custom widget)
@@ -144,6 +151,23 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     handleSelectedPercentStr(percentStr);
 
     setState(() {});
+  }
+
+  void _deleteDurationPercent() {
+    widget.selectedPercentTextFieldController.text = '';
+    _updateDurationPercentStr(
+      percentStr: '',
+      percentDurationStr: '',
+    );
+  }
+
+  void _updateDurationPercentStr({
+    required String percentStr,
+    required String percentDurationStr,
+  }) {
+    widget.durationPercentTextFieldController.text = percentDurationStr;
+    widget.transferDataMap['dtDurationPercentStr'] = percentStr;
+    widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
@@ -245,13 +269,10 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
               style: ButtonStyle(
                   backgroundColor: widget.appElevatedButtonBackgroundColor,
                   shape: widget.appElevatedButtonRoundedShape),
-              onPressed: () async {
-                final timeStr = await openTextInputDialog(
-                  context: context,
-                );
-                if (timeStr == null || timeStr.isEmpty) return;
+              onPressed: () {
+                _deleteDurationPercent();
 
-                widget._addPosOrNegTimeToCurrentDuration(context, timeStr);
+                setState(() {});
               },
               child: const Text(
                 'Del',
