@@ -51,9 +51,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   late TextEditingController _startDateTimePickerController;
 
-  late DurationDateTimeEditor _firstAddSubtractResultableDurationWidget;
-  late DurationDateTimeEditor _secondAddSubtractResultableDurationWidget;
-  late DurationDateTimeEditor _thirdAddSubtractResultableDurationWidget;
+  late DurationDateTimeEditor _firstDurationDateTimeEditorWidget;
+  late DurationDateTimeEditor _secondDurationDateTimeEditorWidget;
+  late DurationDateTimeEditor _thirdDurationDateTimeEditorWidget;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -72,11 +72,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _updateWidgets();
 
     // calling the callSetState() method of the three custom
-    // AddSubtractResultableDuration widgets
+    // DurationDateTimeEditor widgets
 
-    _firstAddSubtractResultableDurationWidget.callSetState();
-    _secondAddSubtractResultableDurationWidget.callSetState();
-    _thirdAddSubtractResultableDurationWidget.callSetState();
+    _firstDurationDateTimeEditorWidget.callSetState();
+    _secondDurationDateTimeEditorWidget.callSetState();
+    _thirdDurationDateTimeEditorWidget.callSetState();
 
     setState(() {});
   }
@@ -94,7 +94,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     String nowEnglishFormatDateTimeStr = _updateWidgets();
 
-    _thirdAddSubtractResultableDurationWidget = DurationDateTimeEditor(
+    _thirdDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('thirdAddSubtractResultableDuration'),
       widgetName: 'third',
       dateTimeTitle: 'End date time',
@@ -106,7 +106,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       saveTransferDataIfModified: true,
     );
 
-    _secondAddSubtractResultableDurationWidget = DurationDateTimeEditor(
+    _secondDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('secondAddSubtractResultableDuration'),
       widgetName: 'second',
       dateTimeTitle: 'End date time',
@@ -115,10 +115,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration:
-          _thirdAddSubtractResultableDurationWidget,
+          _thirdDurationDateTimeEditorWidget,
     );
 
-    _firstAddSubtractResultableDurationWidget = DurationDateTimeEditor(
+    _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
       widgetName: 'first',
       dateTimeTitle: 'End date time',
@@ -127,7 +127,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration:
-          _secondAddSubtractResultableDurationWidget,
+          _secondDurationDateTimeEditorWidget,
     );
   }
 
@@ -181,7 +181,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
-    _firstAddSubtractResultableDurationWidget.reset();
+    _firstDurationDateTimeEditorWidget.reset();
   }
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
@@ -197,7 +197,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
-    _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
+    _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
@@ -214,7 +214,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
-    _firstAddSubtractResultableDurationWidget.setStartDateTimeStr(
+    _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
@@ -251,7 +251,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     transferDataViewModel: _transferDataViewModel,
                   ),
                   // First duration addition/subtraction
-                  _firstAddSubtractResultableDurationWidget,
+                  _firstDurationDateTimeEditorWidget,
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
@@ -260,7 +260,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     height: kVerticalFieldDistanceAddSubScreen,
                   ),
                   // Second duration addition/subtraction
-                  _secondAddSubtractResultableDurationWidget,
+                  _secondDurationDateTimeEditorWidget,
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
@@ -269,7 +269,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     height: kVerticalFieldDistanceAddSubScreen,
                   ),
                   // Second duration addition/subtraction
-                  _thirdAddSubtractResultableDurationWidget,
+                  _thirdDurationDateTimeEditorWidget,
                 ],
               ),
             ),
