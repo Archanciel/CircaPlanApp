@@ -68,6 +68,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
 
+  late EditableDurationPercent _editableDurationPercentWidget;
+
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
@@ -79,6 +81,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   /// AppBar load ... sub menu.
   void callSetState() {
     _updateWidgets();
+
+    _editableDurationPercentWidget.callSetState();
 
     setState(() {});
   }
@@ -95,6 +99,19 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
+
+    _editableDurationPercentWidget = EditableDurationPercent(
+      dateTimeTitle: 'Duration %',
+      durationStr: _durationStr,
+      addTimeTextFieldController: _addTimeTextFieldController,
+      addTimeDialogController: _addTimeDialogController,
+      addPosOrNegTimeToCurrentDurationFunction:
+          _addPosOrNegTimeToCurrentDuration,
+      deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
+      topSelMenuPosition: 343.0,
+      transferDataViewModel: _transferDataViewModel,
+      transferDataMap: _transferDataMap,
+    );
   }
 
   void _updateWidgets() {
@@ -323,18 +340,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
                   ),
-                  EditableDurationPercent(
-                    dateTimeTitle: 'Duration %',
-                    durationStr: _durationStr,
-                    addTimeTextFieldController: _addTimeTextFieldController,
-                    addTimeDialogController: _addTimeDialogController,
-                    addPosOrNegTimeToCurrentDurationFunction:
-                        _addPosOrNegTimeToCurrentDuration,
-                    deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
-                    topSelMenuPosition: 343.0,
-                    transferDataViewModel: _transferDataViewModel,
-                    transferDataMap: _transferDataMap,
-                  ),
+                  _editableDurationPercentWidget,
                 ],
               ),
             ),

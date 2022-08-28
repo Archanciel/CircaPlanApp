@@ -21,6 +21,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String durationStr;
   final TransferDataViewModel transferDataViewModel;
   final Map<String, dynamic> transferDataMap;
+  late final _EditableDurationPercentState stateInstance;
 
   EditableDurationPercent({
     required String dateTimeTitle,
@@ -38,9 +39,16 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
             addPosOrNegTimeToCurrentDurationFunction,
         _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
 
+  void callSetState() {
+    stateInstance.callSetState();
+  }
+
   @override
-  State<EditableDurationPercent> createState() =>
-      _EditableDurationPercentState();
+  State<EditableDurationPercent> createState() {
+    stateInstance = _EditableDurationPercentState();
+
+    return stateInstance;
+  }
 }
 
 class _EditableDurationPercentState extends State<EditableDurationPercent> {
@@ -86,6 +94,15 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     widget.durationPercentTextFieldController.text = percentDuration.HHmm();
     widget.transferDataMap['dtDurationPercentStr'] = percentStr;
     widget.transferDataViewModel.updateAndSaveTransferData();
+  }
+
+  void callSetState() {
+    String percentStr =
+        widget.transferDataMap['dtDurationPercentStr'] ?? '100 %';
+
+    handleSelectedPercentStr(percentStr);
+    
+    setState(() {});
   }
 
   @override
