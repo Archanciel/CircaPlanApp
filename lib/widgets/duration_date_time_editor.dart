@@ -170,6 +170,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
   @override
   void initState() {
+    super.initState();
+
     _dateTimePickerController.text = _endDateTimeStr;
   }
 

@@ -141,6 +141,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
 
   @override
   void initState() {
+    super.initState();
+
     handleSelectedPercentStr(widget.transferDataMap['dtDurationPercentStr']);
   }
 
