@@ -212,6 +212,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = finalDuration?.HHmm() ?? '';
     _finalDurationTextFieldController.text = _finalDurationStr;
 
+    _editableDurationPercentWidget.setDurationStr(_durationStr);
+
     setState(() {});
 
     _updateTransferDataMap();
