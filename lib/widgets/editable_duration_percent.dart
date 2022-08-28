@@ -21,6 +21,12 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   String durationStr;
   final TransferDataViewModel transferDataViewModel;
   final Map<String, dynamic> transferDataMap;
+
+  /// This variable enables the EditableDurationPercent
+  /// instance to execute the callSetState() method of its
+  /// _EditableDurationPercentState instance in order to
+  /// redraw the widget to display the values modified by
+  /// loading a json file.
   late final _EditableDurationPercentState stateInstance;
 
   EditableDurationPercent({
@@ -39,10 +45,22 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
             addPosOrNegTimeToCurrentDurationFunction,
         _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
 
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data to be
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  ///
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// AppBar load ... sub menu.
   void callSetState() {
     stateInstance.callSetState();
   }
 
+  /// Method called by DateTimeDifferenceDuration screen when
+  /// the start or end date time value is changed, which changes
+  /// the duration value.
   void setDurationStr(String changedDurationStr) {
     durationStr = changedDurationStr;
 
@@ -103,6 +121,15 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data to be
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting an item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  ///
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// AppBar load ... sub menu.
   void callSetState() {
     String percentStr =
         widget.transferDataMap['dtDurationPercentStr'] ?? '100 %';

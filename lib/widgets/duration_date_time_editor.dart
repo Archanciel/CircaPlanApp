@@ -46,15 +46,15 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
         super(key: key);
 
-  /// This variable enables the AddSubtractResultableDuration
+  /// This variable enables the DurationDateTimeEditor
   /// instance to execute the callSetState() method of its
-  /// _AddSubtractResultableDurationState instance in order
-  /// redraw the widget to display the value modified by the
-  /// user.
+  /// _DurationDateTimeEditorState instance in order to
+  /// redraw the widget to display the values modified by
+  /// loading a json file.
   late final _DurationDateTimeEditorState stateInstance;
 
   /// The method ensures that the current widget (screen or custom widget)
-  /// setState() method is called in order for the loaded data are
+  /// setState() method is called in order for the loaded data to be
   /// displayed. Calling this method is necessary since the load function
   /// is performed after selecting a item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
@@ -136,9 +136,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         _saveTransferDataIfModified = saveTransferDataIfModified;
 
   /// The method ensures that the current widget (screen or custom widget)
-  /// setState() method is called in order for the loaded data are
+  /// setState() method is called in order for the loaded data to be
   /// displayed. Calling this method is necessary since the load function
-  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// is performed after selecting an item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
   ///
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
