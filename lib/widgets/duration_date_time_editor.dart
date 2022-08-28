@@ -158,6 +158,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationTextColor = _transferDataMap['${_widgetName}DurationTextColor'] ??
         DurationDateTimeEditor.durationPositiveColor;
     _durationStr = _transferDataMap['${_widgetName}DurationStr'] ?? '00:00';
+    _durationTextFieldController.text = _durationStr;
     _startDateTimeStr = _transferDataMap['${_widgetName}StartDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
     _endDateTimeStr = _transferDataMap['${_widgetName}EndDateTimeStr'] ??
