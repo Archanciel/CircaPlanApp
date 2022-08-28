@@ -112,11 +112,18 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     widget.selectedPercentTextFieldController.text = percentStr;
     int percentValueInt = int.parse(percentStr.replaceFirst(' %', ''));
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
-    int percentDurationMicrosecondsInt =
-        (duration!.inMicroseconds * percentValueInt / 100).round();
-    Duration percentDuration =
-        Duration(microseconds: percentDurationMicrosecondsInt);
-    widget.durationPercentTextFieldController.text = percentDuration.HHmm();
+    String percentDurationStr = '';
+
+    if (duration != null) {
+      // is null after clicking on Reset button !
+      int percentDurationMicrosecondsInt =
+          (duration.inMicroseconds * percentValueInt / 100).round();
+      Duration percentDuration =
+          Duration(microseconds: percentDurationMicrosecondsInt);
+      percentDurationStr = percentDuration.HHmm();
+    }
+
+    widget.durationPercentTextFieldController.text = percentDurationStr;
     widget.transferDataMap['dtDurationPercentStr'] = percentStr;
     widget.transferDataViewModel.updateAndSaveTransferData();
   }

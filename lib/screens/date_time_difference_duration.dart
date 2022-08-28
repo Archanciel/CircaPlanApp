@@ -174,6 +174,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _startDateTimeController.text = _startDateTimeStr;
     _durationStr = '';
     _durationTextFieldController.text = _durationStr;
+    _editableDurationPercentWidget.setDurationStr(_durationStr);
     _addTimeStr = '';
     _addTimeTextFieldController.text = _addTimeStr;
     _finalDurationStr = '';
