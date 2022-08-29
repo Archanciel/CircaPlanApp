@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:test/test.dart';
 
@@ -116,10 +115,9 @@ void main() {
   "secondDurationTextColor": null,
   "thirdDurationTextColor": null
 }''';
-          expect(expectedFormattedJsonFileCont, printableJsonFileContent);
+          expect(printableJsonFileContent, expectedFormattedJsonFileCont);
         },
       );
-
       test(
         'formatMapContent()',
         () async {

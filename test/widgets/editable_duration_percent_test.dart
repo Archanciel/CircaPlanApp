@@ -19,8 +19,14 @@ Future<void> main() async {
 
   Map<String, dynamic> transferDataMap = {};
   String pathSeparator = Platform.pathSeparator;
+
+  // accessing to a unit test specific json file is necessary
+  // since the 'Clicking on Del button' unit test updates
+  // the json file with a "dateTimeDurationPercentStr": ""
+  // instead of "70 %", which then prevents running
+  // utility_test.dart separately.
   String transferDataJsonFilePathName =
-      '${directory.path}${pathSeparator}circadian.json';
+      '${directory.path}${pathSeparator}circadian_edt.json';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
