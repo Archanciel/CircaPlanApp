@@ -14,9 +14,6 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
       TextEditingController();
   final TextEditingController selectedPercentTextFieldController =
       TextEditingController();
-  final TextEditingController _addTimeDialogController;
-  final Function _addPosOrNegTimeToCurrentDuration;
-  final Function _deleteAddedTimeDuration;
   final double topSelMenuPosition;
   String durationStr;
   final TransferDataViewModel transferDataViewModel;
@@ -32,18 +29,10 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   EditableDurationPercent({
     required String dateTimeTitle,
     required this.durationStr,
-    required TextEditingController addTimeTextFieldController,
-    required TextEditingController addTimeDialogController,
-    required Function addPosOrNegTimeToCurrentDurationFunction,
-    required Function deleteAddedTimeDurationFunction,
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
     required this.transferDataMap,
-  })  : _dateTimeTitle = dateTimeTitle,
-        _addTimeDialogController = addTimeDialogController,
-        _addPosOrNegTimeToCurrentDuration =
-            addPosOrNegTimeToCurrentDurationFunction,
-        _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
+  }) : _dateTimeTitle = dateTimeTitle;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data to be
@@ -77,37 +66,6 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
 }
 
 class _EditableDurationPercentState extends State<EditableDurationPercent> {
-  Future<String?> openTextInputDialog({required BuildContext context}) {
-    void submit() {
-      Navigator.of(context).pop(widget._addTimeDialogController.text);
-
-      widget._addTimeDialogController.clear();
-    }
-
-    return showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Time to add'),
-        content: TextField(
-          autofocus: true,
-          style: const TextStyle(
-              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-          decoration: const InputDecoration(hintText: '(-)HH:mm'),
-          controller: widget._addTimeDialogController,
-          onSubmitted: (_) => submit(),
-          keyboardType: TextInputType.datetime,
-        ),
-        actions: [
-          TextButton(
-            child: const Text('Add time'),
-            onPressed: submit,
-          ),
-        ],
-      ),
-    );
-  }
-
   void handleSelectedPercentStr(String percentStr) {
     widget.selectedPercentTextFieldController.text = percentStr;
     if (percentStr.isEmpty) {
@@ -206,7 +164,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     ),
                     child: GestureDetector(
                       child: TextField(
-                        key: const Key('edpDurationPercentComputedValueTextField'),
+                        key: const Key(
+                            'edpDurationPercentComputedValueTextField'),
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(
@@ -235,8 +194,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                       ),
                     ),
                     child: GestureDetector(
-                      key: const Key('edpDurationPercentTextField'),
                       child: TextField(
+                        key: const Key('edpDurationPercentTextField'),
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(

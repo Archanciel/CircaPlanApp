@@ -171,6 +171,7 @@ void main() {
             "dtDiffDurationStr": "24:00",
             "dtDiffAddTimeStr": "1:00",
             "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %"
           };
 
           String path = kCircadianAppDataDir;
@@ -205,6 +206,8 @@ void main() {
           expect(
               dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
+          expect(dateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+              "70 %");
         },
       );
       test(
@@ -296,6 +299,7 @@ void main() {
             "dtDiffDurationStr": "24:00",
             "dtDiffAddTimeStr": "1:00",
             "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %",
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
@@ -383,6 +387,8 @@ void main() {
           expect(
               dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
+          expect(dateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+              "70 %");
 
           TimeCalculatorData timeCalculatorData =
               transferDataViewModel.timeCalculatorData;
@@ -448,6 +454,7 @@ void main() {
             "dtDiffDurationStr": "24:00",
             "dtDiffAddTimeStr": "1:00",
             "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %",
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
@@ -574,6 +581,8 @@ void main() {
               loadedDateTimeDifferenceDurationData
                   .dateTimeDifferenceFinalDurationStr,
               "25:00");
+          expect(loadedDateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+              "70 %");
 
           TimeCalculatorData loadedTimeCalculatorData =
               loadedTransferDataViewModel.timeCalculatorData;
