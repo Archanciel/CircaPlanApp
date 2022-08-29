@@ -186,6 +186,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
+              key: const Key('edpTitleText'),
               widget._dateTimeTitle,
               style: widget.labelTextStyle,
             ),
@@ -205,6 +206,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     ),
                     child: GestureDetector(
                       child: TextField(
+                        key: const Key('edpDurationPercentComputedValueTextField'),
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(
@@ -233,6 +235,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                       ),
                     ),
                     child: GestureDetector(
+                      key: const Key('edpDurationPercentTextField'),
                       child: TextField(
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
@@ -266,6 +269,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
         Row(
           children: [
             ElevatedButton(
+              key: const Key('edpDelButton'),
               style: ButtonStyle(
                   backgroundColor: widget.appElevatedButtonBackgroundColor,
                   shape: widget.appElevatedButtonRoundedShape),
@@ -285,6 +289,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
               width: 20,
             ),
             ElevatedButton(
+              key: const Key('edpSelButton'),
               style: ButtonStyle(
                   backgroundColor: widget.appElevatedButtonBackgroundColor,
                   shape: widget.appElevatedButtonRoundedShape),
