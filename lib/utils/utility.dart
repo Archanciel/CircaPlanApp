@@ -116,7 +116,7 @@ class Utility {
   /// Method used to enable entering a int duration value
   /// instead of a HH:mm duration. For example, 2 or 24
   /// instead of 02:00 or 24:00.
-  /// 
+  ///
   /// If the removeMinusSign parm is false, entering -2
   /// converts the duration string to -2:00, which is
   /// useful in the Add dialog accepting adding a positive
@@ -124,6 +124,7 @@ class Utility {
   static String convertIntDuration({
     required String durationStr,
     bool removeMinusSign = true,
+    bool dayHourMinFormat = false,
   }) {
     if (removeMinusSign) {
       durationStr = durationStr.replaceAll(RegExp(r'[+\-]+'), '');
@@ -132,8 +133,13 @@ class Utility {
     }
 
     if (int.tryParse(durationStr) != null) {
-      // the case if a one or two digits duration was entered ...
-      durationStr = '$durationStr:00';
+      if (dayHourMinFormat) {
+        // the case if used on TimeCalculator screen
+        durationStr = '00:$durationStr:00';
+      } else {
+        // the case if a one or two digits duration was entered ...
+        durationStr = '$durationStr:00';
+      }
     }
 
     return durationStr;

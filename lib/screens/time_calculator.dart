@@ -10,6 +10,8 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
+import '../utils/utility.dart';
+
 enum status { wakeUp, sleep }
 
 final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
@@ -96,14 +98,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   void _updateWidgets() {
     _firstTimeStr = _transferDataMap['firstTimeStr'] ?? '00:00:00';
-    _firstTimeTextFieldController = TextEditingController(
-        text: _firstTimeStr);
+    _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
     _secondTimeStr = _transferDataMap['secondTimeStr'] ?? '00:00:00';
-    _secondTimeTextFieldController = TextEditingController(
-        text: _secondTimeStr);
+    _secondTimeTextFieldController =
+        TextEditingController(text: _secondTimeStr);
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
-    _resultTextFieldController =
-        TextEditingController(text: _resultTimeStr);
+    _resultTextFieldController = TextEditingController(text: _resultTimeStr);
   }
 
   @override
@@ -229,14 +229,17 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           style: valueTextStyle,
                           keyboardType: TextInputType.datetime,
                           controller: _firstTimeTextFieldController,
-                          onChanged: (val) {
+                          onSubmitted: (val) {
                             // called when manually updating the TextField
                             // content. onChanged must be defined in order for
                             // pasting a value to the TextField to really
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                            _firstTimeStr = val;
+                            _firstTimeStr =
+                                Utility.convertIntDuration(durationStr: val, dayHourMinFormat: true);
+                            _firstTimeTextFieldController.text = _firstTimeStr;
+                            setState(() {});
                             _updateTransferDataMap();
                           },
                         ),
@@ -273,14 +276,18 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           style: valueTextStyle,
                           keyboardType: TextInputType.datetime,
                           controller: _secondTimeTextFieldController,
-                          onChanged: (val) {
+                          onSubmitted: (val) {
                             // called when manually updating the TextField
                             // content. onChanged must be defined in order for
                             // pasting a value to the TextField to really
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                            _secondTimeStr = val;
+                            _secondTimeStr =
+                                Utility.convertIntDuration(durationStr: val, dayHourMinFormat: true);
+                            _secondTimeTextFieldController.text =
+                                _secondTimeStr;
+                            setState(() {});
                             _updateTransferDataMap();
                           },
                         ),
