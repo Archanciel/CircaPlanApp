@@ -96,7 +96,8 @@ void main() {
     "dateTimeDifferenceEndDateTimeStr": "2022-07-14 16:09:42.390753",
     "dateTimeDifferenceDurationStr": "24:00",
     "dateTimeDifferenceAddTimeStr": "1:00",
-    "dateTimeDifferenceFinalDurationStr": "25:00"
+    "dateTimeDifferenceFinalDurationStr": "25:00",
+    "dateTimeDurationPercentStr": "70 %"
   },
   "timeCalculatorData": {
     "screenDataType": 3,

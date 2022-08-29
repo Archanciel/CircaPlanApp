@@ -24,6 +24,7 @@ Future<void> main() async {
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
+  await transferDataViewModel.loadTransferData();
 
   group(
     'EditableDurationPercent widget testing',
@@ -43,11 +44,6 @@ Future<void> main() async {
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
                   durationStr: '24:00',
-                  addTimeTextFieldController: TextEditingController(),
-                  addTimeDialogController: TextEditingController(),
-                  addPosOrNegTimeToCurrentDurationFunction:
-                      () {},
-                  deleteAddedTimeDurationFunction: () {},
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
@@ -58,45 +54,159 @@ Future<void> main() async {
 
           await tester.enterText(
               edpDurationPercentComputedValueTextField, '12:00');
-          await tester.enterText(
-              edpDurationPercentTextField, '50 %');
+          await tester.enterText(edpDurationPercentTextField, '50 %');
           await tester.tap(edpDelButton);
 
           await tester.pumpAndSettle();
 
-          expect(find.text(''), findsNWidgets(2));
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '');
         },
       );
       testWidgets(
-        'Subtracting valid duration',
+        'Computing % duration',
         (tester) async {
-          final durationSignButton =
-              find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
+          final edpDelButton = find.byKey(const Key('edpDelButton'));
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          final EditableDurationPercent editableDurationPercentWidget =
+              EditableDurationPercent(
+            dateTimeTitle: 'Duration %',
+            durationStr: '13:00',
+            topSelMenuPosition: 343.0,
+            transferDataViewModel: transferDataViewModel,
+            transferDataMap: transferDataMap,
+          );
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
+                body: editableDurationPercentWidget,
+              ),
+            ),
+          );
+
+          editableDurationPercentWidget.stateInstance.handleSelectedPercentStr('70 %');
+
+          await tester.pumpAndSettle();
+
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '9:06');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '70 %');
+        },
+      );
+      testWidgets(
+        'Change duration',
+        (tester) async {
+          final edpDelButton = find.byKey(const Key('edpDelButton'));
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          final EditableDurationPercent editableDurationPercentWidget =
+              EditableDurationPercent(
+            dateTimeTitle: 'Duration %',
+            durationStr: '13:00',
+            topSelMenuPosition: 343.0,
+            transferDataViewModel: transferDataViewModel,
+            transferDataMap: transferDataMap,
+          );
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: editableDurationPercentWidget,
+              ),
+            ),
+          );
+
+          editableDurationPercentWidget.stateInstance.handleSelectedPercentStr('70 %');
+
+          await tester.pumpAndSettle();
+
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '9:06');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '70 %');
+
+          editableDurationPercentWidget.setDurationStr('24:00');
+
+          expect(durationPercentComputedValueTextFieldController.text, '16:48');
+        },
+      );
+      testWidgets(
+        'Clicking on Sel button',
+        (tester) async {
+          final edpDelButton = find.byKey(const Key('edpDelButton'));
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDurationPercent(
+                  dateTimeTitle: 'Duration %',
+                  durationStr: '24:00',
+                  topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
                 ),
               ),
             ),
           );
 
-          await tester.enterText(durationTextField, '02:30');
-          await tester.tap(durationSignButton);
+          await tester.enterText(
+              edpDurationPercentComputedValueTextField, '12:00');
+          await tester.enterText(edpDurationPercentTextField, '50 %');
+          await tester.tap(edpDelButton);
 
           await tester.pumpAndSettle();
 
-          expect(find.text('02:30'), findsOneWidget);
-          expect(find.text('11-08-2022 07:30'), findsOneWidget);
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '');
         },
       );
     },
