@@ -6,8 +6,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 
 import '../buslog/transfer_data_view_model.dart';
 
-/// Widget enabling to add or subtract a HH:MM value to the
-/// duration field.
+/// Widget enabling to select and compute a duration percent value.
 class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController durationPercentTextFieldController =
