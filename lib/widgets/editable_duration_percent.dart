@@ -9,6 +9,7 @@ import '../buslog/transfer_data_view_model.dart';
 /// Widget enabling to select and compute a duration percent value.
 class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String _dateTimeTitle;
+  final String transferDataMapPercentKey;
   final TextEditingController durationPercentTextFieldController =
       TextEditingController();
   final TextEditingController selectedPercentTextFieldController =
@@ -27,6 +28,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
 
   EditableDurationPercent({
     required String dateTimeTitle,
+    required this.transferDataMapPercentKey,
     required this.durationStr,
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
@@ -53,7 +55,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
     durationStr = changedDurationStr;
 
     stateInstance.handleSelectedPercentStr(
-        transferDataMap['dtDurationPercentStr'] ?? '100 %');
+        transferDataMap[transferDataMapPercentKey] ?? '100 %');
   }
 
   @override
@@ -103,7 +105,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   /// AppBar load ... sub menu.
   void callSetState() {
     String percentStr =
-        widget.transferDataMap['dtDurationPercentStr'] ?? '100 %';
+        widget.transferDataMap[widget.transferDataMapPercentKey] ?? '100 %';
 
     handleSelectedPercentStr(percentStr);
 
@@ -123,7 +125,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     required String percentDurationStr,
   }) {
     widget.durationPercentTextFieldController.text = percentDurationStr;
-    widget.transferDataMap['dtDurationPercentStr'] = percentStr;
+    widget.transferDataMap[widget.transferDataMapPercentKey] = percentStr;
     widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
@@ -131,7 +133,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   void initState() {
     super.initState();
 
-    handleSelectedPercentStr(widget.transferDataMap['dtDurationPercentStr']);
+    handleSelectedPercentStr(widget.transferDataMap[widget.transferDataMapPercentKey]);
   }
 
   @override

@@ -103,6 +103,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     _editableDurationPercentWidget = EditableDurationPercent(
       dateTimeTitle: 'Duration %',
+      transferDataMapPercentKey: 'dtDurationPercentStr',
       durationStr: _durationStr,
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,

@@ -322,6 +322,8 @@ class TransferDataViewModel {
         _transferDataMap!['secondTimeStr'];
     timeCalculatorData.timeCalculatorResultTimeStr =
         _transferDataMap!['resultTimeStr'];
+    timeCalculatorData.timeCalculatorResultPercentStr =
+        _transferDataMap!['resultPercentStr'];
   }
 
   /// Loads the application screen data json file and sets
@@ -481,6 +483,8 @@ class TransferDataViewModel {
           timeCalculatorData.timeCalculatorSecondTimeStr;
       _transferDataMap!["resultTimeStr"] =
           timeCalculatorData.timeCalculatorResultTimeStr;
+      _transferDataMap!["resultPercentStr"] =
+          timeCalculatorData.timeCalculatorResultPercentStr;
     }
 
     // print('\nTRANSFER DATA MAP AFTER LOADING IT');

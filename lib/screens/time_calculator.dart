@@ -11,6 +11,7 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 import '../utils/utility.dart';
+import '../widgets/editable_duration_percent.dart';
 
 enum status { wakeUp, sleep }
 
@@ -67,6 +68,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
+  late EditableDurationPercent _editableDurationPercentWidget;
+
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
@@ -78,6 +81,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   /// AppBar load ... sub menu.
   void callSetState() {
     _updateWidgets();
+
+    _editableDurationPercentWidget.setDurationStr(_extractHHmm(_resultTimeStr));
+    _editableDurationPercentWidget.callSetState();
 
     setState(() {});
   }
@@ -94,6 +100,21 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
+
+    _editableDurationPercentWidget = EditableDurationPercent(
+      dateTimeTitle: 'Result %',
+      transferDataMapPercentKey: 'resultPercentStr',
+      durationStr: _extractHHmm(_resultTimeStr),
+      topSelMenuPosition: 343.0,
+      transferDataViewModel: _transferDataViewModel,
+      transferDataMap: _transferDataMap,
+    );
+  }
+
+  String _extractHHmm(String ddHHmmStr) {
+    RegExp regExp = RegExp(r'(\d+:\d+)$');
+
+    return regExp.firstMatch(ddHHmmStr)!.group(1) ?? '';
   }
 
   void _updateWidgets() {
@@ -134,6 +155,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _secondTimeTextFieldController.text = _secondTimeStr;
     _resultTimeStr = '';
     _resultTextFieldController.text = _resultTimeStr;
+    _editableDurationPercentWidget.setDurationStr(_resultTimeStr);
 
     setState(() {});
 
@@ -180,6 +202,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     _resultTimeStr = resultTimeStr;
     _resultTextFieldController.text = resultTimeStr;
+
+    _editableDurationPercentWidget.setDurationStr(_extractHHmm(_resultTimeStr));
 
     setState(() {});
 
@@ -236,8 +260,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                            _firstTimeStr =
-                                Utility.convertIntDuration(durationStr: val, dayHourMinFormat: true);
+                            _firstTimeStr = Utility.convertIntDuration(
+                                durationStr: val, dayHourMinFormat: true);
                             _firstTimeTextFieldController.text = _firstTimeStr;
                             setState(() {});
                             _updateTransferDataMap();
@@ -283,8 +307,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                            _secondTimeStr =
-                                Utility.convertIntDuration(durationStr: val, dayHourMinFormat: true);
+                            _secondTimeStr = Utility.convertIntDuration(
+                                durationStr: val, dayHourMinFormat: true);
                             _secondTimeTextFieldController.text =
                                 _secondTimeStr;
                             setState(() {});
@@ -334,6 +358,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       },
                     ),
                   ),
+                  const SizedBox(
+                    height: kVerticalFieldDistance,
+                  ),
+                  _editableDurationPercentWidget,
                 ],
               ),
             ),

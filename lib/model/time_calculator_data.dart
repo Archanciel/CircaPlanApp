@@ -28,6 +28,20 @@ class TimeCalculatorData extends ScreenData {
   String get timeCalculatorResultTimeStr => attributes['timeCalculatorResultTimeStr'];
   set timeCalculatorResultTimeStr(String value) => attributes['timeCalculatorResultTimeStr'] = value;
 
+  /// Checking if the timeCalculatorResultPercentStr == null 
+  /// solves the problem of starting the app on a physical device
+  /// where the json files do not yet have the 
+  /// 'timeCalculatorResultPercentStr' entry !
+  String get timeCalculatorResultPercentStr {
+    String? timeCalculatorResultPercentStr = attributes['timeCalculatorResultPercentStr'];
+
+    timeCalculatorResultPercentStr ??= '100 %';
+
+    return timeCalculatorResultPercentStr;
+  }
+
+  set timeCalculatorResultPercentStr(String value) => attributes['timeCalculatorResultPercentStr'] = value;
+
   @override
   String toString() {
     String? timeCalculatorFirstTimeStr = getTimeCalculatorFirstTimeStr();
@@ -35,7 +49,7 @@ class TimeCalculatorData extends ScreenData {
     if (timeCalculatorFirstTimeStr == null) {
       return '';
     } else {
-      return 'timeCalculatorFirstTimeStr: $timeCalculatorFirstTimeStr\ntimeCalculatorSecondTimeStr: $timeCalculatorSecondTimeStr\ntimeCalculatorResultTimeStr: $timeCalculatorResultTimeStr';
+      return 'timeCalculatorFirstTimeStr: $timeCalculatorFirstTimeStr\ntimeCalculatorSecondTimeStr: $timeCalculatorSecondTimeStr\ntimeCalculatorResultTimeStr: $timeCalculatorResultTimeStr\ntimeCalculatorResultPercentStr: $timeCalculatorResultPercentStr';
     }
   }
 }

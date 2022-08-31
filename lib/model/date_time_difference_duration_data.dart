@@ -67,7 +67,7 @@ class DateTimeDifferenceDurationData extends ScreenData {
     if (dateTimeDifferenceStartDateTimeStr == null) {
       return '';
     } else {
-      return 'dateTimeDifferenceStartDateTimeStr: $dateTimeDifferenceStartDateTimeStr\ndateTimeDifferenceEndDateTimeStr: $dateTimeDifferenceEndDateTimeStr\ndateTimeDifferenceDurationStr: $dateTimeDifferenceDurationStr\ndateTimeDifferenceAddTimeStr: $dateTimeDifferenceAddTimeStr\ndateTimeDifferenceFinalDurationStr: $dateTimeDifferenceFinalDurationStr';
+      return 'dateTimeDifferenceStartDateTimeStr: $dateTimeDifferenceStartDateTimeStr\ndateTimeDifferenceEndDateTimeStr: $dateTimeDifferenceEndDateTimeStr\ndateTimeDifferenceDurationStr: $dateTimeDifferenceDurationStr\ndateTimeDifferenceAddTimeStr: $dateTimeDifferenceAddTimeStr\ndateTimeDifferenceFinalDurationStr: $dateTimeDifferenceFinalDurationStr\ndateTimeDurationPercentStr: $dateTimeDurationPercentStr';
     }
   }
 }
