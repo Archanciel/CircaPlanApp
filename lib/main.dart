@@ -136,7 +136,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
-  bool _performUndo = true;
 
   /// Method called after choosing a file to load in the load
   /// file popup menu opened after selecting the Load ... AppBar
@@ -301,13 +300,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   switch (value) {
                     case 0:
                       {
-                        if (_performUndo) {
-                          loadFileNameNoMsg('circadian.json-1');
-                          _performUndo = false;
-                        } else {
-                          loadFileNameNoMsg('circadian.json');
-                          _performUndo = true;
-                        }
+                        loadFileNameNoMsg('circadian.json-1');
+                        widget.transferDataViewModel
+                            .updateAndSaveTransferData();
 
                         break;
                       }
