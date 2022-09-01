@@ -58,9 +58,10 @@ class TransferDataViewModel {
 
     // print('\nTRANSFER DATA MAP BEFORE SAVING IT');
     // print(DirUtil.formatMapContent(map: _transferDataMap!));
-    
+
     _transferData.saveTransferDataToFile(
-        jsonFilePathName: _transferDataJsonFilePathName);
+        jsonFilePathName: _transferDataJsonFilePathName,
+        jsonUndoFileName: '${Utility.extractFileName(filePathName: _transferDataJsonFilePathName)}-1');
   }
 
   /// Saves the screens app transfer data to a json file and return
@@ -90,11 +91,6 @@ class TransferDataViewModel {
           !await File(saveAsTransferDataJsonFilePathName).exists();
       _transferData.saveTransferDataToFile(
           jsonFilePathName: saveAsTransferDataJsonFilePathName);
-//
-//      final List<String?> fileNameLst =
-//          getFileNameInDirLst(transferDataJsonPath);
-
-//      print(fileNameLst);
     }
 
     return transferDataJsonFileCreated;

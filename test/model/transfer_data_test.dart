@@ -30,7 +30,8 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+              jsonFilePathName: jsonFilePathName,
+              jsonUndoFileName: '$jsonFilePathName-1');
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -85,7 +86,9 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -142,7 +145,9 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -187,7 +192,9 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -269,12 +276,15 @@ void main() {
           timeCalculatorData.timeCalculatorFirstTimeStr = '00:10:00';
           timeCalculatorData.timeCalculatorSecondTimeStr = '00:05:00';
           timeCalculatorData.timeCalculatorResultTimeStr = '00:15:00';
+          timeCalculatorData.timeCalculatorResultPercentStr = '40 %';
 
           transferData.timeCalculatorData = timeCalculatorData;
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(

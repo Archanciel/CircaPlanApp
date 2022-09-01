@@ -23,6 +23,10 @@ class Utility {
     return file.renameSync(newPath);
   }
 
+  static String extractFileName({required String filePathName}) {
+    return filePathName.split(Platform.pathSeparator).last;
+  }
+
   /// Returns a formatted String which can be printed to dislay a
   /// readable view of the passed json file path name.
   ///

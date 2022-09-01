@@ -80,7 +80,19 @@ class TransferData extends SerializableObject {
     return deserializedTransferData;
   }
 
-  void saveTransferDataToFile({required String jsonFilePathName}) {
+  Future<void> saveTransferDataToFile({
+    required String jsonFilePathName,
+    String? jsonUndoFileName,
+  }) async {
+    final bool jsonFileExist = !await File(jsonFilePathName).exists();
+
+    if (jsonFileExist && jsonUndoFileName != null) {
+      Utility.renameFile(
+        filePathNameStr: jsonFilePathName,
+        newFileNameStr: jsonUndoFileName,
+      );
+    }
+
     final Serializer serializer = Serializer();
     final String outputJsonStr = serializer.serialize(this);
 
@@ -107,7 +119,8 @@ Future<void> main() async {
   transferData.addDurationToDateTimeData = addDurationToDateTimeData;
 
   String jsonFilePathName = 'transfer_data.json';
-  transferData.saveTransferDataToFile(jsonFilePathName: jsonFilePathName);
+  transferData.saveTransferDataToFile(jsonFilePathName: jsonFilePathName,
+  jsonUndoFileName: 'transfer_data.json-1');
 
   TransferData loadedTransferData = TransferData();
   await loadedTransferData.loadTransferDataFromFile(
