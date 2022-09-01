@@ -238,26 +238,30 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   return [
                     PopupMenuItem<int>(
                       value: 0,
+                      child: Text("Undo"),
+                    ),
+                    PopupMenuItem<int>(
+                      value: 1,
                       child: Text("Save as $saveAsFileName"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 1,
+                      value: 2,
                       child: Text("Load ..."),
                     ),
                     const PopupMenuItem<int>(
-                      value: 2,
+                      value: 3,
                       child: Text("Upload to cloud"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 3,
+                      value: 4,
                       child: Text("Download from cloud"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 4,
+                      value: 5,
                       child: Text("Settings"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 5,
+                      value: 6,
                       child: Text("About ..."),
                     ),
                   ];
@@ -265,6 +269,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 onSelected: (value) async {
                   switch (value) {
                     case 0:
+                      {
+                        print('Undo slected');
+
+                        break;
+                      }
+                    case 1:
                       {
                         bool transferDataJsonFileCreated =
                             await transferDataViewModel.saveAsTransferData();
@@ -282,7 +292,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
                         break;
                       }
-                    case 1:
+                    case 2:
                       {
                         List<String> nonNullablefileNameLst =
                             getSortedFileNameLstInDir(
@@ -303,22 +313,22 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 // not working                              setState(() {});
                         break;
                       }
-                    case 2:
+                    case 3:
                       {
                         print("Upload is selected.");
                         break;
                       }
-                    case 3:
+                    case 4:
                       {
                         print("Download is selected.");
                         break;
                       }
-                    case 4:
+                    case 5:
                       {
                         print("Settings is selected.");
                         break;
                       }
-                    case 5:
+                    case 6:
                       {
                         showAboutDialog(
                           context: context,
