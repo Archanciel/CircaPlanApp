@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
       theme: ThemeData(
         primarySwatch:
             ScreenMixin.APP_LIGHT_BLUE_COLOR, // var untyped ScreenMixin const !
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           cursorColor:
               ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !
         ),
@@ -148,23 +148,27 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   /// Finally, the method is called when starting the
   /// application in order for the first screen to display the
   /// current circadian.json transfer data.
-  Future<void> loadFileName(String selectedFileNameStr) async {
-    TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
-    await transferDataViewModel.loadTransferData(
-        jsonFileName: selectedFileNameStr);
-
-    _screenNavigTransData.transferDataMap['currentScreenStateInstance']
-        ?.callSetState();
+  void loadFileName(String selectedFileNameStr) {
+    loadFileNameNoMsg(selectedFileNameStr);
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
+    TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
+    await transferDataViewModel.loadTransferData(
+        jsonFileName: selectedFileNameStr);
+
+    _screenNavigTransData.transferDataMap['currentScreenStateInstance']
+        ?.callSetState();
+  }
+
   @override
   void initState() {
     super.initState();
- 
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Adds a call back function called after the _MainAppState
       // build() method has been executed. This solves the problem of
@@ -173,7 +177,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       //
       // This anonymous function is called only once, when the app
       // is launched (or restarted).
-      loadFileName('circadian.json');
+      loadFileNameNoMsg('circadian.json');
     });
   }
 
@@ -298,10 +302,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     case 0:
                       {
                         if (_performUndo) {
-                          loadFileName('circadian.json-1');
+                          loadFileNameNoMsg('circadian.json-1');
                           _performUndo = false;
                         } else {
-                          loadFileName('circadian.json');
+                          loadFileNameNoMsg('circadian.json');
                           _performUndo = true;
                         }
 
