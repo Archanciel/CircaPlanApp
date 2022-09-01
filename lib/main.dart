@@ -144,6 +144,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   ///
   /// The method is also called when selecting the Undo AppBar
   /// menu item.
+  ///
+  /// Finally, the method is called when starting the
+  /// application in order for the first screen to display the
+  /// current circadian.json transfer data.
   Future<void> loadFileName(String selectedFileNameStr) async {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
@@ -159,7 +163,16 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
   @override
   void initState() {
+    super.initState();
+ 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Adds a call back function called after the _MainAppState
+      // build() method has been executed. This solves the problem of
+      // the first screen not displaying the values contained in the
+      // circadian.json file.
+      //
+      // This anonymous function is called only once, when the app
+      // is launched (or restarted).
       loadFileName('circadian.json');
     });
   }
