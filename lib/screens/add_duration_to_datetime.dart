@@ -114,8 +114,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration:
-          _thirdDurationDateTimeEditorWidget,
+      nextAddSubtractResultableDuration: _thirdDurationDateTimeEditorWidget,
     );
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
@@ -126,8 +125,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration:
-          _secondDurationDateTimeEditorWidget,
+      nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
     );
   }
 

@@ -59,9 +59,12 @@ class TransferDataViewModel {
     // print('\nTRANSFER DATA MAP BEFORE SAVING IT');
     // print(DirUtil.formatMapContent(map: _transferDataMap!));
 
+    String jsonUndoFileNameOne =
+        '${Utility.extractFileName(filePathName: _transferDataJsonFilePathName)}-1';
+
     _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName,
-        jsonUndoFileName: '${Utility.extractFileName(filePathName: _transferDataJsonFilePathName)}-1');
+        jsonUndoFileName: jsonUndoFileNameOne);
   }
 
   /// Saves the screens app transfer data to a json file and return
@@ -296,7 +299,7 @@ class TransferDataViewModel {
         _transferDataMap!['dtDiffAddTimeStr'];
     dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
         _transferDataMap!['dtDiffFinalDurationStr'];
-    dateTimeDifferenceDurationData.dateTimeDurationPercentStr =
+    dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
         _transferDataMap!['dtDurationPercentStr'];
   }
 
@@ -464,7 +467,7 @@ class TransferDataViewModel {
       _transferDataMap!["dtDiffFinalDurationStr"] =
           dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr;
       _transferDataMap!["dtDurationPercentStr"] =
-          dateTimeDifferenceDurationData.dateTimeDurationPercentStr;
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr;
     }
 
     TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;

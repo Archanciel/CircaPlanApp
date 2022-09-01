@@ -136,8 +136,15 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
+  bool _performUndo = true;
 
-  Future<void> handleSelectedLoadFileName(String selectedFileNameStr) async {
+  /// Method called after choosing a file to load in the load
+  /// file popup menu opened after selecting the Load ... AppBar
+  /// menu item.
+  ///
+  /// The method is also called when selecting the Undo AppBar
+  /// menu item.
+  Future<void> loadFileName(String selectedFileNameStr) async {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
@@ -148,6 +155,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadFileName('circadian.json');
+    });
   }
 
   @override
@@ -270,7 +284,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   switch (value) {
                     case 0:
                       {
-                        print('Undo slected');
+                        if (_performUndo) {
+                          loadFileName('circadian.json-1');
+                          _performUndo = false;
+                        } else {
+                          loadFileName('circadian.json');
+                          _performUndo = true;
+                        }
 
                         break;
                       }
@@ -308,24 +328,27 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItem: handleSelectedLoadFileName,
+                          handleSelectedItem: loadFileName,
                         );
-// not working                              setState(() {});
+
                         break;
                       }
                     case 3:
                       {
                         print("Upload is selected.");
+
                         break;
                       }
                     case 4:
                       {
                         print("Download is selected.");
+
                         break;
                       }
                     case 5:
                       {
                         print("Settings is selected.");
+
                         break;
                       }
                     case 6:
@@ -341,6 +364,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             const Text('Jean-Pierre Schnyder / Switzerland'),
                           ],
                         );
+
                         break;
                       }
                     default:

@@ -206,7 +206,9 @@ void main() {
           expect(
               dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
-          expect(dateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+          expect(
+              dateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
               "70 %");
         },
       );
@@ -389,7 +391,9 @@ void main() {
           expect(
               dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
-          expect(dateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+          expect(
+              dateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
               "70 %");
 
           TimeCalculatorData timeCalculatorData =
@@ -585,7 +589,8 @@ void main() {
                   .dateTimeDifferenceFinalDurationStr,
               "25:00");
           expect(
-              loadedDateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
               "70 %");
 
           TimeCalculatorData loadedTimeCalculatorData =

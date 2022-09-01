@@ -84,7 +84,7 @@ class TransferData extends SerializableObject {
     required String jsonFilePathName,
     String? jsonUndoFileName,
   }) async {
-    final bool jsonFileExist = !await File(jsonFilePathName).exists();
+    final bool jsonFileExist = await File(jsonFilePathName).exists();
 
     if (jsonFileExist && jsonUndoFileName != null) {
       Utility.renameFile(
