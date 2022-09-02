@@ -26,6 +26,10 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   /// loading a json file.
   late final _EditableDurationPercentState stateInstance;
 
+  /// transferDataMapPercentKey: since the EditableDurationPercent
+  /// widget is included in different screens, it is necessary to
+  /// store the percent string value with a key specific to the
+  /// concerned EditableDurationPercent widget instance.
   EditableDurationPercent({
     required String dateTimeTitle,
     required this.transferDataMapPercentKey,
@@ -133,7 +137,16 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   void initState() {
     super.initState();
 
-    handleSelectedPercentStr(widget.transferDataMap[widget.transferDataMapPercentKey]);
+    String? percentStrValue =
+        widget.transferDataMap[widget.transferDataMapPercentKey];
+
+    if (percentStrValue == null) {
+      // the case if the app is launched after deleting all json
+      // files.
+      return;
+    }
+
+    handleSelectedPercentStr(percentStrValue);
   }
 
   @override

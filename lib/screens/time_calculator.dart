@@ -101,10 +101,18 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     _updateWidgets();
 
+    String extractedHHmm = '';
+
+    if (_resultTimeStr.isNotEmpty) {
+      // _resultTimeStr is empty in case the app is launched
+      // after deleting all json files.
+      _extractHHmm(_resultTimeStr);
+    }
+
     _editableDurationPercentWidget = EditableDurationPercent(
       dateTimeTitle: 'Result %',
       transferDataMapPercentKey: 'resultPercentStr',
-      durationStr: _extractHHmm(_resultTimeStr),
+      durationStr: extractedHHmm,
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
