@@ -342,6 +342,12 @@ class TransferDataViewModel {
           '${getTransferDataJsonPath()}${Platform.pathSeparator}$jsonFileName';
     }
 
+    if (!Utility.fileExist(jsonFilePathName)) {
+      // the case if the app is launched after deleting all json
+      // files. In this case, the transfer data map remains empty.
+      return;
+    }
+
     await _transferData.loadTransferDataFromFile(
         jsonFilePathName: jsonFilePathName);
 

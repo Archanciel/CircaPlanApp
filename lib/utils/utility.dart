@@ -2,6 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 class Utility {
+
+  /// Returns true if the passed file path name exists, false
+  /// otherwise.
+  static bool fileExist(String filePathNameStr) {
+    File file = File(filePathNameStr);
+
+    return file.existsSync();
+  }
+
   /// If the filePathNameStr file exists, it is renamed and the
   /// renamed File is returned. Otherwise, null is returned.
   static File? renameFile({

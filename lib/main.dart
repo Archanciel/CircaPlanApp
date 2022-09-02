@@ -170,9 +170,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Adds a call back function called after the _MainAppState
-      // build() method has been executed. This solves the problem of
-      // the first screen not displaying the values contained in the
-      // circadian.json file.
+      // build() method has been executed. This solves the problem
+      // of the first screen not displaying the values contained in
+      // the circadian.json file.
       //
       // This anonymous function is called only once, when the app
       // is launched (or restarted).
