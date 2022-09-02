@@ -31,7 +31,7 @@ Future<void> main(List<String> args) async {
     //                            app dir
   }
 
-  bool deleteAppDir = false;
+  bool deleteAppDir = true;
 
   if (myArgs.isNotEmpty) {
     if (myArgs.contains("delAppDir")) {
