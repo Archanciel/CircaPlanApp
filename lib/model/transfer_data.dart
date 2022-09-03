@@ -77,7 +77,7 @@ class TransferData extends SerializableObject {
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
-    print('loadTransferDataFromFile() sleepDurationStr: ${calculateSleepDurationData.sleepDurationStr} sleepHistoryDateTimeStrLst: \n${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+    print('loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     return deserializedTransferData;
   }
@@ -101,7 +101,7 @@ class TransferData extends SerializableObject {
     // print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
     // print(Utility.formatJsonString(jsonString: outputJsonStr));
 
-    print('saveTransferDataToFile() sleepDurationStr: ${calculateSleepDurationData.sleepDurationStr} sleepHistoryDateTimeStrLst: \n${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+    print('saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 

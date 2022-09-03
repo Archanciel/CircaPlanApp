@@ -333,6 +333,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         TextEditingController(text: _prevDayTotalWakeUpStr);
     _prevDayEmptyTotalController = TextEditingController(text: '');
 
+    _sleepTimeStrHistory = _transferDataMap['calcSlDurSleepTimeStrHistory'];
+    _wakeUpTimeStrHistory = _transferDataMap['calcSlDurWakeUpTimeStrHistory'];
+    
     _computeSleepWakeUpPercentDuration();
 
     _sleepWakeUpHistoryController =
