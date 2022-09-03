@@ -79,7 +79,7 @@ class Utility {
   ///
   /// print(printableJsonFileContent);
   static String formatMapContent({required Map<String, dynamic> map}) {
-    const JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     // next code avoids JsonUnsupportedObjectError Exception
     // Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'
