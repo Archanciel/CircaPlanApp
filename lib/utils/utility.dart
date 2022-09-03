@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 class Utility {
-
   /// Returns true if the passed file path name exists, false
   /// otherwise.
   static bool fileExist(String filePathNameStr) {
@@ -54,6 +53,18 @@ class Utility {
     return formatJsonString(jsonString: jsonString);
   }
 
+  static Future<String> formatScreenDataSubMapFromJsonFileContent({
+    required String jsonFilePathName,
+    required String screenDataSubMapKey,
+  }) async {
+    final String jsonString = await File(jsonFilePathName).readAsString();
+
+    return formatScreenDataSubMapFromJsonString(
+      jsonString: jsonString,
+      screenDataSubMapKey: screenDataSubMapKey,
+    );
+  }
+
   /// Returns a formatted String which can be printed to dislay a
   /// readable view of the passed json string.
   ///
@@ -67,6 +78,15 @@ class Utility {
     final Map<String, dynamic> parsedJsonMap = json.decode(jsonString);
 
     return formatMapContent(map: parsedJsonMap);
+  }
+
+  static String formatScreenDataSubMapFromJsonString({
+    required String jsonString,
+    required String screenDataSubMapKey,
+  }) {
+    final Map<String, dynamic> parsedJsonMap = json.decode(jsonString);
+
+    return formatMapContentNoNull(map: parsedJsonMap[screenDataSubMapKey]);
   }
 
   /// Returns a formatted String which can be printed to dislay a
@@ -122,6 +142,14 @@ class Utility {
     map['firstDurationTextColor'] = firstDurationTextColor;
     map['secondDurationTextColor'] = secondDurationTextColor;
     map['thirdDurationTextColor'] = thirdDurationTextColor;
+
+    return formattedMapStr;
+  }
+
+  static String formatMapContentNoNull({required Map<String, dynamic> map}) {
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+
+    String formattedMapStr = encoder.convert(map);
 
     return formattedMapStr;
   }

@@ -43,14 +43,15 @@ void main() {
         () {
           // renaming circadian.json to circadian.json-1
 
-          String jsonFilePathNameStr = 'c:\\temp\\CircadianData\\circadian.json';
+          String jsonFilePathNameStr =
+              'c:\\temp\\CircadianData\\circadian.json';
 
           File? renamedFile = Utility.renameFile(
               filePathNameStr: jsonFilePathNameStr,
               newFileNameStr: 'circadian.json-1');
 
           // renaming circadian.json-1 to circadian.json-1
-          
+
           String renamedFilePathNameStr =
               'c:\\temp\\CircadianData\\circadian.json-1';
 
@@ -60,15 +61,15 @@ void main() {
               filePathNameStr: renamedFilePathNameStr,
               newFileNameStr: 'circadian.json-1');
 
-          expect(renamedFile!.path, renamedFilePathNameStr);          
+          expect(renamedFile!.path, renamedFilePathNameStr);
 
           // renaming circadian.json-1 to circadian.json
-          
+
           renamedFile = Utility.renameFile(
               filePathNameStr: renamedFilePathNameStr,
               newFileNameStr: 'circadian.json');
 
-          expect(renamedFile!.path, jsonFilePathNameStr);          
+          expect(renamedFile!.path, jsonFilePathNameStr);
         },
       );
 
@@ -76,7 +77,7 @@ void main() {
         'formatJsonFileContent()',
         () async {
           String jsonFilePathNameStr =
-              'c:\\temp\\CircadianData\\circadian.json';
+              'c:\\temp\\CircadianData\\circadian_formatJsonFileContent.json';
           String printableJsonFileContent = await Utility.formatJsonFileContent(
               jsonFilePathName: jsonFilePathNameStr);
           String expectedFormattedJsonFileCont = '''
@@ -84,15 +85,15 @@ void main() {
   "addDurationToDateTimeData": {
     "screenDataType": 0,
     "addDurationStartDateTimeStr": "2022-07-12 16:00:26.486627",
-    "firstDurationIconType": 0,
-    "firstAddDurationStartDateTimeStr": "12-07-2022 16:00",
+    "firstDurationIconType": 1,
+    "firstAddDurationStartDateTimeStr": "12-07-2022 16:50",
     "firstAddDurationDurationStr": "00:50",
-    "firstAddDurationEndDateTimeStr": "12-07-2022 16:50",
+    "firstAddDurationEndDateTimeStr": "12-07-2022 16:00",
     "secondDurationIconType": 1,
     "secondAddDurationStartDateTimeStr": "12-07-2022 16:00",
     "secondAddDurationDurationStr": "02:00",
     "secondAddDurationEndDateTimeStr": "12-07-2022 14:00",
-    "thirdDurationIconType": 1,
+    "thirdDurationIconType": 0,
     "thirdAddDurationStartDateTimeStr": "12-07-2022 16:00",
     "thirdAddDurationDurationStr": "00:00",
     "thirdAddDurationEndDateTimeStr": "12-07-2022 16:00"
@@ -130,7 +131,7 @@ void main() {
     "dateTimeDifferenceDurationStr": "24:00",
     "dateTimeDifferenceAddTimeStr": "1:00",
     "dateTimeDifferenceFinalDurationStr": "25:00",
-    "dateTimeDurationPercentStr": "70 %"
+    "dateTimeDifferenceDurationPercentStr": "70 %"
   },
   "timeCalculatorData": {
     "screenDataType": 3,
@@ -152,6 +153,120 @@ void main() {
   "thirdDurationTextColor": null
 }''';
           expect(printableJsonFileContent, expectedFormattedJsonFileCont);
+        },
+      );
+      test(
+        'formatScreenDataSubMapFromJsonFileContent() addDurationToDateTimeData',
+        () async {
+          String jsonFilePathNameStr =
+              'c:\\temp\\CircadianData\\circadian_formatJsonFileContent.json';
+          String printableScreenDataSubMapFromJsonFileContent =
+              await Utility.formatScreenDataSubMapFromJsonFileContent(
+                  jsonFilePathName: jsonFilePathNameStr,
+                  screenDataSubMapKey: "addDurationToDateTimeData");
+          String expectedFormattedScreenDataSubMapFromJsonFileCont = '''
+{
+  "screenDataType": 0,
+  "addDurationStartDateTimeStr": "2022-07-12 16:00:26.486627",
+  "firstDurationIconType": 1,
+  "firstAddDurationStartDateTimeStr": "12-07-2022 16:50",
+  "firstAddDurationDurationStr": "00:50",
+  "firstAddDurationEndDateTimeStr": "12-07-2022 16:00",
+  "secondDurationIconType": 1,
+  "secondAddDurationStartDateTimeStr": "12-07-2022 16:00",
+  "secondAddDurationDurationStr": "02:00",
+  "secondAddDurationEndDateTimeStr": "12-07-2022 14:00",
+  "thirdDurationIconType": 0,
+  "thirdAddDurationStartDateTimeStr": "12-07-2022 16:00",
+  "thirdAddDurationDurationStr": "00:00",
+  "thirdAddDurationEndDateTimeStr": "12-07-2022 16:00"
+}''';
+          expect(printableScreenDataSubMapFromJsonFileContent,
+              expectedFormattedScreenDataSubMapFromJsonFileCont);
+        },
+      );
+      test(
+        'formatScreenDataSubMapFromJsonFileContent() calculateSleepDurationData',
+        () async {
+          String jsonFilePathNameStr =
+              'c:\\temp\\CircadianData\\circadian_formatJsonFileContent.json';
+          String printableScreenDataSubMapFromJsonFileContent =
+              await Utility.formatScreenDataSubMapFromJsonFileContent(
+                  jsonFilePathName: jsonFilePathNameStr,
+                  screenDataSubMapKey: "calculateSleepDurationData");
+          String expectedFormattedScreenDataSubMapFromJsonFileCont = '''
+{
+  "screenDataType": 1,
+  "status": 1,
+  "sleepDurationNewDateTimeStr": "14-07-2022 13:09",
+  "sleepDurationPreviousDateTimeStr": "14-07-2022 13:13",
+  "sleepDurationBeforePreviousDateTimeStr": "14-07-2022 13:12",
+  "sleepDurationStr": "12:36",
+  "wakeUpDurationStr": "0:02",
+  "totalDurationStr": "12:38",
+  "sleepDurationPercentStr": "99.74 %",
+  "wakeUpDurationPercentStr": "0.26 %",
+  "totalDurationPercentStr": "100 %",
+  "sleepPrevDayTotalPercentStr": "79.74 %",
+  "wakeUpPrevDayTotalPercentStr": "1.26 %",
+  "totalPrevDayTotalPercentStr": "81 %",
+  "sleepHistoryDateTimeStrLst": [
+    "10_07_2022 00:58",
+    "05:35",
+    "04:00"
+  ],
+  "wakeUpHistoryDateTimeStrLst": [
+    "10_07_2022 05:58",
+    "00:35",
+    "01:00"
+  ]
+}''';
+          expect(printableScreenDataSubMapFromJsonFileContent,
+              expectedFormattedScreenDataSubMapFromJsonFileCont);
+        },
+      );
+      test(
+        'formatScreenDataSubMapFromJsonFileContent() dateTimeDifferenceDurationData',
+        () async {
+          String jsonFilePathNameStr =
+              'c:\\temp\\CircadianData\\circadian_formatJsonFileContent.json';
+          String printableScreenDataSubMapFromJsonFileContent =
+              await Utility.formatScreenDataSubMapFromJsonFileContent(
+                  jsonFilePathName: jsonFilePathNameStr,
+                  screenDataSubMapKey: "dateTimeDifferenceDurationData");
+          String expectedFormattedScreenDataSubMapFromJsonFileCont = '''
+{
+  "screenDataType": 2,
+  "dateTimeDifferenceStartDateTimeStr": "2022-07-13 16:09",
+  "dateTimeDifferenceEndDateTimeStr": "2022-07-14 16:09:42.390753",
+  "dateTimeDifferenceDurationStr": "24:00",
+  "dateTimeDifferenceAddTimeStr": "1:00",
+  "dateTimeDifferenceFinalDurationStr": "25:00",
+  "dateTimeDifferenceDurationPercentStr": "70 %"
+}''';
+          expect(printableScreenDataSubMapFromJsonFileContent,
+              expectedFormattedScreenDataSubMapFromJsonFileCont);
+        },
+      );
+      test(
+        'formatScreenDataSubMapFromJsonFileContent() timeCalculatorData',
+        () async {
+          String jsonFilePathNameStr =
+              'c:\\temp\\CircadianData\\circadian_formatJsonFileContent.json';
+          String printableScreenDataSubMapFromJsonFileContent =
+              await Utility.formatScreenDataSubMapFromJsonFileContent(
+                  jsonFilePathName: jsonFilePathNameStr,
+                  screenDataSubMapKey: "timeCalculatorData");
+          String expectedFormattedScreenDataSubMapFromJsonFileCont = '''
+{
+  "screenDataType": 3,
+  "timeCalculatorFirstTimeStr": "00:10:00",
+  "timeCalculatorSecondTimeStr": "00:05:00",
+  "timeCalculatorResultTimeStr": "00:15:00",
+  "timeCalculatorResultPercentStr": "40 %"
+}''';
+          expect(printableScreenDataSubMapFromJsonFileContent,
+              expectedFormattedScreenDataSubMapFromJsonFileCont);
         },
       );
       test(
