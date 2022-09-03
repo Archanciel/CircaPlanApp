@@ -348,8 +348,7 @@ class TransferDataViewModel {
       return;
     }
 
-    _transferData.loadTransferDataFromFile(
-        jsonFilePathName: jsonFilePathName);
+    _transferData.loadTransferDataFromFile(jsonFilePathName: jsonFilePathName);
 
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;
@@ -357,6 +356,8 @@ class TransferDataViewModel {
     DurationIconType? durationIconType =
         addDurationToDateTimeData.getFirstDurationIconType();
 
+    _transferDataMap ??= {};
+    
     if (durationIconType != null) {
       _transferDataMap!["addDurStartDateTimeStr"] =
           addDurationToDateTimeData.addDurationStartDateTimeStr;

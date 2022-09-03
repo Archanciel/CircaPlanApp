@@ -186,8 +186,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     final screenHeight = MediaQuery.of(context).size.height;
     ScreenMixin.setAppVerticalTopMargin(screenHeight);
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
-    transferDataViewModel.transferDataMap =
-        _screenNavigTransData.transferDataMap;
+    // transferDataViewModel.transferDataMap =
+    //     _screenNavigTransData.transferDataMap;
 
     // data for CurvedNavigationBar
 
