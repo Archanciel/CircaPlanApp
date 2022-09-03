@@ -46,18 +46,18 @@ class DateTimeDifferenceDurationData extends ScreenData {
 
   /// Checking if the durationPercentStr == null solves the
   /// problem of starting the app on a physical device where
-  /// the json files do not yet have the 
+  /// the json files do not yet have the
   /// 'dateTimeDurationPercentStr' entry !
-  String get dateTimeDurationPercentStr {
-    String? durationPercentStr = attributes['dateTimeDurationPercentStr'];
+  String get dateTimeDifferenceDurationPercentStr {
+    String? durationPercentStr = attributes['dateTimeDifferenceDurationPercentStr'];
 
     durationPercentStr ??= '100 %';
 
     return durationPercentStr;
   }
 
-  set dateTimeDurationPercentStr(String value) =>
-      attributes['dateTimeDurationPercentStr'] = value;
+  set dateTimeDifferenceDurationPercentStr(String value) =>
+      attributes['dateTimeDifferenceDurationPercentStr'] = value;
 
   @override
   String toString() {
@@ -67,7 +67,7 @@ class DateTimeDifferenceDurationData extends ScreenData {
     if (dateTimeDifferenceStartDateTimeStr == null) {
       return '';
     } else {
-      return 'dateTimeDifferenceStartDateTimeStr: $dateTimeDifferenceStartDateTimeStr\ndateTimeDifferenceEndDateTimeStr: $dateTimeDifferenceEndDateTimeStr\ndateTimeDifferenceDurationStr: $dateTimeDifferenceDurationStr\ndateTimeDifferenceAddTimeStr: $dateTimeDifferenceAddTimeStr\ndateTimeDifferenceFinalDurationStr: $dateTimeDifferenceFinalDurationStr\ndateTimeDurationPercentStr: $dateTimeDurationPercentStr';
+      return 'dateTimeDifferenceStartDateTimeStr: $dateTimeDifferenceStartDateTimeStr\ndateTimeDifferenceEndDateTimeStr: $dateTimeDifferenceEndDateTimeStr\ndateTimeDifferenceDurationStr: $dateTimeDifferenceDurationStr\ndateTimeDifferenceAddTimeStr: $dateTimeDifferenceAddTimeStr\ndateTimeDifferenceFinalDurationStr: $dateTimeDifferenceFinalDurationStr\ndateTimeDurationPercentStr: $dateTimeDifferenceDurationPercentStr';
     }
   }
 }

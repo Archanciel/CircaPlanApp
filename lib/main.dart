@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
       theme: ThemeData(
         primarySwatch:
             ScreenMixin.APP_LIGHT_BLUE_COLOR, // var untyped ScreenMixin const !
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           cursorColor:
               ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !
         ),
@@ -137,17 +137,47 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
 
-  Future<void> handleSelectedLoadFileName(String selectedFileNameStr) async {
+  /// Method called after choosing a file to load in the load
+  /// file popup menu opened after selecting the Load ... AppBar
+  /// menu item.
+  ///
+  /// The method is also called when selecting the Undo AppBar
+  /// menu item.
+  ///
+  /// Finally, the method is called when starting the
+  /// application in order for the first screen to display the
+  /// current circadian.json transfer data.
+  void loadFileName(String selectedFileNameStr) {
+    loadFileNameNoMsg(selectedFileNameStr);
+
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: '$selectedFileNameStr loaded');
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
 
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']
         ?.callSetState();
+  }
 
-    final CircadianSnackBar snackBar =
-        CircadianSnackBar(message: '$selectedFileNameStr loaded');
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Adds a call back function called after the _MainAppState
+      // build() method has been executed. This solves the problem
+      // of the first screen not displaying the values contained in
+      // the circadian.json file.
+      //
+      // This anonymous function is called only once, when the app
+      // is launched (or restarted).
+      loadFileNameNoMsg('circadian.json');
+    });
   }
 
   @override
@@ -238,26 +268,30 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   return [
                     PopupMenuItem<int>(
                       value: 0,
+                      child: Text("Undo"),
+                    ),
+                    PopupMenuItem<int>(
+                      value: 1,
                       child: Text("Save as $saveAsFileName"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 1,
+                      value: 2,
                       child: Text("Load ..."),
                     ),
                     const PopupMenuItem<int>(
-                      value: 2,
+                      value: 3,
                       child: Text("Upload to cloud"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 3,
+                      value: 4,
                       child: Text("Download from cloud"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 4,
+                      value: 5,
                       child: Text("Settings"),
                     ),
                     const PopupMenuItem<int>(
-                      value: 5,
+                      value: 6,
                       child: Text("About ..."),
                     ),
                   ];
@@ -265,6 +299,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 onSelected: (value) async {
                   switch (value) {
                     case 0:
+                      {
+                        loadFileNameNoMsg('circadian.json-1');
+                        widget.transferDataViewModel
+                            .updateAndSaveTransferData();
+
+                        break;
+                      }
+                    case 1:
                       {
                         bool transferDataJsonFileCreated =
                             await transferDataViewModel.saveAsTransferData();
@@ -282,7 +324,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
                         break;
                       }
-                    case 1:
+                    case 2:
                       {
                         List<String> nonNullablefileNameLst =
                             getSortedFileNameLstInDir(
@@ -298,27 +340,30 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItem: handleSelectedLoadFileName,
+                          handleSelectedItem: loadFileName,
                         );
-// not working                              setState(() {});
-                        break;
-                      }
-                    case 2:
-                      {
-                        print("Upload is selected.");
+
                         break;
                       }
                     case 3:
                       {
-                        print("Download is selected.");
+                        print("Upload is selected.");
+
                         break;
                       }
                     case 4:
                       {
-                        print("Settings is selected.");
+                        print("Download is selected.");
+
                         break;
                       }
                     case 5:
+                      {
+                        print("Settings is selected.");
+
+                        break;
+                      }
+                    case 6:
                       {
                         showAboutDialog(
                           context: context,
@@ -331,6 +376,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             const Text('Jean-Pierre Schnyder / Switzerland'),
                           ],
                         );
+
                         break;
                       }
                     default:

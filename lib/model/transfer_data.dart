@@ -67,31 +67,50 @@ class TransferData extends SerializableObject {
     final String inputJsonStr = await File(jsonFilePathName).readAsString();
 
     // print('\nJSON CONTENT AFTER LOADING JSON FILE $jsonFilePathName');
-    // print(DirUtil.formatJsonString(jsonString: inputJsonStr));
+    // print(Utility.formatJsonString(jsonString: inputJsonStr));
 
     // print('\ncircadian.json CONTENT AFTER LOADING $jsonFilePathName');
     // String circadianJsonFilePathName = '/storage/emulated/0/Download/CircadianData/circadian.json';
-    // String circadianJsonContent = await DirUtil.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName);
+    // String circadianJsonContent = await Utility.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName);
     // print('$circadianJsonFilePathName\n$circadianJsonContent');
 
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
+    // print(
+    //     'loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+
     return deserializedTransferData;
   }
 
-  void saveTransferDataToFile({required String jsonFilePathName}) {
+  Future<void> saveTransferDataToFile({
+    required String jsonFilePathName,
+    String? jsonUndoFileName,
+  }) async {
+    final bool jsonFileExist = await File(jsonFilePathName).exists();
+
+    if (jsonFileExist && jsonUndoFileName != null) {
+      Utility.renameFile(
+        filePathNameStr: jsonFilePathName,
+        newFileNameStr: jsonUndoFileName,
+      );
+      // print("json renamed to json-1");
+    }
+
     final Serializer serializer = Serializer();
     final String outputJsonStr = serializer.serialize(this);
 
     // print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
-    // print(DirUtil.formatJsonString(jsonString: outputJsonStr));
+    // print(Utility.formatJsonString(jsonString: outputJsonStr));
+
+    // print(
+    //     'saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
     // print('\ncircadian.json CONTENT AFTER SAVING $jsonFilePathName');
     // String circadianJsonFilePathName = '/storage/emulated/0/Download/CircadianData/circadian.json';
-    // DirUtil.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName).then((value) => print('$circadianJsonFilePathName\n$value'));
+    // Utility.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName).then((value) => print('$circadianJsonFilePathName\n$value'));
   }
 }
 
@@ -107,7 +126,9 @@ Future<void> main() async {
   transferData.addDurationToDateTimeData = addDurationToDateTimeData;
 
   String jsonFilePathName = 'transfer_data.json';
-  transferData.saveTransferDataToFile(jsonFilePathName: jsonFilePathName);
+  transferData.saveTransferDataToFile(
+      jsonFilePathName: jsonFilePathName,
+      jsonUndoFileName: 'transfer_data.json-1');
 
   TransferData loadedTransferData = TransferData();
   await loadedTransferData.loadTransferDataFromFile(

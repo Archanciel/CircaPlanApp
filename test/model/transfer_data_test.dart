@@ -30,7 +30,8 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+              jsonFilePathName: jsonFilePathName,
+              jsonUndoFileName: '$jsonFilePathName-1');
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -85,7 +86,9 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -142,7 +145,9 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -187,7 +192,9 @@ void main() {
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -261,6 +268,8 @@ void main() {
           dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr = '02:00';
           dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
               '01:00';
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
+              '70 %';
 
           transferData.dateTimeDifferenceDurationData =
               dateTimeDifferenceDurationData;
@@ -269,12 +278,15 @@ void main() {
           timeCalculatorData.timeCalculatorFirstTimeStr = '00:10:00';
           timeCalculatorData.timeCalculatorSecondTimeStr = '00:05:00';
           timeCalculatorData.timeCalculatorResultTimeStr = '00:15:00';
+          timeCalculatorData.timeCalculatorResultPercentStr = '40 %';
 
           transferData.timeCalculatorData = timeCalculatorData;
 
           String jsonFilePathName = 'transfer_data.json';
           transferData.saveTransferDataToFile(
-              jsonFilePathName: jsonFilePathName);
+            jsonFilePathName: jsonFilePathName,
+            jsonUndoFileName: '$jsonFilePathName-1',
+          );
 
           TransferData loadedTransferData = TransferData();
           await loadedTransferData.loadTransferDataFromFile(
@@ -347,6 +359,10 @@ void main() {
               loadedDateTimeDifferenceDurationData
                   .dateTimeDifferenceFinalDurationStr,
               '01:00');
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
+              '70 %');
 
           TimeCalculatorData loadedTimeCalculatorData =
               loadedTransferData.timeCalculatorData;
@@ -359,6 +375,8 @@ void main() {
               loadedTimeCalculatorData.timeCalculatorSecondTimeStr, '00:05:00');
           expect(
               loadedTimeCalculatorData.timeCalculatorResultTimeStr, '00:15:00');
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultPercentStr, '40 %');
         },
       );
     },

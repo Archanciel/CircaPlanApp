@@ -49,6 +49,7 @@ Future<void> main() async {
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
+                  transferDataMapPercentKey: 'dtDurationPercentStr',
                   durationStr: '24:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -91,6 +92,7 @@ Future<void> main() async {
           final EditableDurationPercent editableDurationPercentWidget =
               EditableDurationPercent(
             dateTimeTitle: 'Duration %',
+            transferDataMapPercentKey: 'dtDurationPercentStr',
             durationStr: '13:00',
             topSelMenuPosition: 343.0,
             transferDataViewModel: transferDataViewModel,
@@ -105,7 +107,8 @@ Future<void> main() async {
             ),
           );
 
-          editableDurationPercentWidget.stateInstance.handleSelectedPercentStr('70 %');
+          editableDurationPercentWidget.stateInstance
+              .handleSelectedPercentStr('70 %');
 
           await tester.pumpAndSettle();
 
@@ -135,6 +138,7 @@ Future<void> main() async {
           final EditableDurationPercent editableDurationPercentWidget =
               EditableDurationPercent(
             dateTimeTitle: 'Duration %',
+            transferDataMapPercentKey: 'dtDurationPercentStr',
             durationStr: '13:00',
             topSelMenuPosition: 343.0,
             transferDataViewModel: transferDataViewModel,
@@ -149,7 +153,8 @@ Future<void> main() async {
             ),
           );
 
-          editableDurationPercentWidget.stateInstance.handleSelectedPercentStr('70 %');
+          editableDurationPercentWidget.stateInstance
+              .handleSelectedPercentStr('70 %');
 
           await tester.pumpAndSettle();
 
@@ -185,6 +190,7 @@ Future<void> main() async {
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
+                  transferDataMapPercentKey: 'dtDurationPercentStr',
                   durationStr: '15:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -211,7 +217,6 @@ Future<void> main() async {
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '60 %');
-
 
           await tester.tap(edpSelButton);
           await tester.pumpAndSettle();

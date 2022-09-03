@@ -8,7 +8,7 @@ void main() {
     'Utility()',
     () {
       test(
-        'renameFile()',
+        'renameFile() to not existing file name',
         () {
           String notExistfilePathNameStr = 'c:\\temp\\circadian.json';
 
@@ -35,6 +35,40 @@ void main() {
               newFileNameStr: 'circadian.json');
 
           expect(originalFilePathNameStr, renamedFile!.path);
+        },
+      );
+
+      test(
+        'renameFile() to existing file name',
+        () {
+          // renaming circadian.json to circadian.json-1
+
+          String jsonFilePathNameStr = 'c:\\temp\\CircadianData\\circadian.json';
+
+          File? renamedFile = Utility.renameFile(
+              filePathNameStr: jsonFilePathNameStr,
+              newFileNameStr: 'circadian.json-1');
+
+          // renaming circadian.json-1 to circadian.json-1
+          
+          String renamedFilePathNameStr =
+              'c:\\temp\\CircadianData\\circadian.json-1';
+
+          expect(renamedFile!.path, renamedFilePathNameStr);
+
+          renamedFile = Utility.renameFile(
+              filePathNameStr: renamedFilePathNameStr,
+              newFileNameStr: 'circadian.json-1');
+
+          expect(renamedFile!.path, renamedFilePathNameStr);          
+
+          // renaming circadian.json-1 to circadian.json
+          
+          renamedFile = Utility.renameFile(
+              filePathNameStr: renamedFilePathNameStr,
+              newFileNameStr: 'circadian.json');
+
+          expect(renamedFile!.path, jsonFilePathNameStr);          
         },
       );
 
@@ -102,7 +136,8 @@ void main() {
     "screenDataType": 3,
     "timeCalculatorFirstTimeStr": "00:10:00",
     "timeCalculatorSecondTimeStr": "00:05:00",
-    "timeCalculatorResultTimeStr": "00:15:00"
+    "timeCalculatorResultTimeStr": "00:15:00",
+    "timeCalculatorResultPercentStr": "40 %"
   },
   "currentScreenStateInstance": null,
   "calcSlDurStatus": null,

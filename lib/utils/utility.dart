@@ -2,6 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 class Utility {
+
+  /// Returns true if the passed file path name exists, false
+  /// otherwise.
+  static bool fileExist(String filePathNameStr) {
+    File file = File(filePathNameStr);
+
+    return file.existsSync();
+  }
+
   /// If the filePathNameStr file exists, it is renamed and the
   /// renamed File is returned. Otherwise, null is returned.
   static File? renameFile({
@@ -21,6 +30,10 @@ class Utility {
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
     return file.renameSync(newPath);
+  }
+
+  static String extractFileName({required String filePathName}) {
+    return filePathName.split(Platform.pathSeparator).last;
   }
 
   /// Returns a formatted String which can be printed to dislay a
@@ -66,7 +79,7 @@ class Utility {
   ///
   /// print(printableJsonFileContent);
   static String formatMapContent({required Map<String, dynamic> map}) {
-    const JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     // next code avoids JsonUnsupportedObjectError Exception
     // Converting object to an encodable object failed: Instance of '_CalculateSleepDurationState'

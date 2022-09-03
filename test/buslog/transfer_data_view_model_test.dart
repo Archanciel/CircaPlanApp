@@ -206,7 +206,9 @@ void main() {
           expect(
               dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
-          expect(dateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+          expect(
+              dateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
               "70 %");
         },
       );
@@ -217,6 +219,7 @@ void main() {
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -303,6 +306,7 @@ void main() {
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -387,7 +391,9 @@ void main() {
           expect(
               dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr,
               "25:00");
-          expect(dateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+          expect(
+              dateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
               "70 %");
 
           TimeCalculatorData timeCalculatorData =
@@ -458,6 +464,7 @@ void main() {
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -581,7 +588,9 @@ void main() {
               loadedDateTimeDifferenceDurationData
                   .dateTimeDifferenceFinalDurationStr,
               "25:00");
-          expect(loadedDateTimeDifferenceDurationData.dateTimeDurationPercentStr,
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
               "70 %");
 
           TimeCalculatorData loadedTimeCalculatorData =
