@@ -77,7 +77,8 @@ class TransferData extends SerializableObject {
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
-    print('loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+    // print(
+    //     'loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     return deserializedTransferData;
   }
@@ -93,6 +94,7 @@ class TransferData extends SerializableObject {
         filePathNameStr: jsonFilePathName,
         newFileNameStr: jsonUndoFileName,
       );
+      // print("json renamed to json-1");
     }
 
     final Serializer serializer = Serializer();
@@ -101,7 +103,8 @@ class TransferData extends SerializableObject {
     // print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
     // print(Utility.formatJsonString(jsonString: outputJsonStr));
 
-    print('saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+    // print(
+    //     'saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
