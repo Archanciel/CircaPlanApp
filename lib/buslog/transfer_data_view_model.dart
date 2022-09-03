@@ -332,7 +332,7 @@ class TransferDataViewModel {
   /// used to store all the screen field values. Each time
   /// a screen field is modified, the app json file is
   /// updated.
-  Future<void> loadTransferData({String? jsonFileName}) async {
+  void loadTransferData({String? jsonFileName}) {
     String jsonFilePathName;
 
     if (jsonFileName == null) {
@@ -348,7 +348,7 @@ class TransferDataViewModel {
       return;
     }
 
-    await _transferData.loadTransferDataFromFile(
+    _transferData.loadTransferDataFromFile(
         jsonFilePathName: jsonFilePathName);
 
     AddDurationToDateTimeData addDurationToDateTimeData =

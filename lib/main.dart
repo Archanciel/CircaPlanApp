@@ -155,9 +155,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
+  void loadFileNameNoMsg(String selectedFileNameStr) {
+    print('loadFileNameNoMsg');
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
-    await transferDataViewModel.loadTransferData(
+    transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
 
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']

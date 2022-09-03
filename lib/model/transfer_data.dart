@@ -61,10 +61,10 @@ class TransferData extends SerializableObject {
   set timeCalculatorData(TimeCalculatorData value) =>
       attributes['timeCalculatorData'] = value;
 
-  Future<TransferData> loadTransferDataFromFile(
-      {required String jsonFilePathName}) async {
+  TransferData loadTransferDataFromFile(
+      {required String jsonFilePathName}) {
     final Serializer serializer = Serializer();
-    final String inputJsonStr = await File(jsonFilePathName).readAsString();
+    final String inputJsonStr = File(jsonFilePathName).readAsStringSync();
 
     // print('\nJSON CONTENT AFTER LOADING JSON FILE $jsonFilePathName');
     // print(Utility.formatJsonString(jsonString: inputJsonStr));
@@ -77,8 +77,8 @@ class TransferData extends SerializableObject {
     final TransferData deserializedTransferData = this;
     serializer.deserialize(inputJsonStr, deserializedTransferData);
 
-    // print(
-    //     'loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+    print(
+        'loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     return deserializedTransferData;
   }
@@ -94,7 +94,7 @@ class TransferData extends SerializableObject {
         filePathNameStr: jsonFilePathName,
         newFileNameStr: jsonUndoFileName,
       );
-      // print("json renamed to json-1");
+      print("json renamed to json-1");
     }
 
     final Serializer serializer = Serializer();
@@ -103,8 +103,8 @@ class TransferData extends SerializableObject {
     // print('\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName');
     // print(Utility.formatJsonString(jsonString: outputJsonStr));
 
-    // print(
-    //     'saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
+    print(
+        'saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
