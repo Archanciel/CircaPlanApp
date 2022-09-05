@@ -322,7 +322,7 @@ class TransferDataViewModel {
     timeCalculatorData.timeCalculatorResultTimeStr =
         _transferDataMap!['resultTimeStr'];
     timeCalculatorData.timeCalculatorResultPercentStr =
-        _transferDataMap!['resultPercentStr'];
+        _transferDataMap!['resultPercentStr'] ?? '';
   }
 
   /// Loads the application screen data json file and sets
