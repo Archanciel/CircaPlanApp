@@ -163,6 +163,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']
         ?.callSetState();
+
+    // fix the Undo bug after loading another json file
+    transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
