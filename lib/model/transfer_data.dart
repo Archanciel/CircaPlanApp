@@ -90,23 +90,30 @@ class TransferData extends SerializableObject {
     final bool jsonFileExist = await File(jsonFilePathName).exists();
 
     if (jsonFileExist && jsonUndoFileName != null) {
-      String circadianJsonFilePathName =
+      String jsonUndoFilePathName =
           '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
 
-      String formattedScreenDataSubMap = await Utility.formatScreenDataSubMapFromJsonFileContent(
-          jsonFilePathName: circadianJsonFilePathName,
-          screenDataSubMapKey: 'dateTimeDifferenceDurationData');
-      print('\n$jsonUndoFileName CONTENT BEFORE RENAMING circadian.json$circadianJsonFilePathName\n$formattedScreenDataSubMap');
+      // String screenDataSubMapKey = 'dateTimeDifferenceDurationData';
+      String screenDataSubMapKey = 'calculateSleepDurationData';
+
+      String formattedScreenDataSubMap =
+          await Utility.formatScreenDataSubMapFromJsonFileContent(
+              jsonFilePathName: jsonUndoFilePathName,
+              screenDataSubMapKey: screenDataSubMapKey);
+      print(
+          '\n$jsonUndoFileName CONTENT BEFORE RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
 
       Utility.renameFile(
         filePathNameStr: jsonFilePathName,
         newFileNameStr: jsonUndoFileName,
       );
 
-      formattedScreenDataSubMap = await Utility.formatScreenDataSubMapFromJsonFileContent(
-          jsonFilePathName: circadianJsonFilePathName,
-          screenDataSubMapKey: 'dateTimeDifferenceDurationData');
-      print('\n$jsonUndoFileName CONTENT AFTER RENAMING circadian.json$circadianJsonFilePathName\n$formattedScreenDataSubMap');
+      formattedScreenDataSubMap =
+          await Utility.formatScreenDataSubMapFromJsonFileContent(
+              jsonFilePathName: jsonUndoFilePathName,
+              screenDataSubMapKey: screenDataSubMapKey);
+      print(
+          '\n$jsonUndoFileName CONTENT AFTER RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
     }
 
     final Serializer serializer = Serializer();
@@ -124,34 +131,4 @@ class TransferData extends SerializableObject {
     // String circadianJsonFilePathName = '/storage/emulated/0/Download/CircadianData/circadian.json';
     // Utility.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName).then((value) => print('$circadianJsonFilePathName\n$value'));
   }
-}
-
-Future<void> main() async {
-  AddDurationToDateTimeData addDurationToDateTimeData =
-      AddDurationToDateTimeData();
-  addDurationToDateTimeData.firstDurationIconType = DurationIconType.add;
-  addDurationToDateTimeData.addDurationStartDateTimeStr = '09_07_2022 23:58';
-  addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
-  addDurationToDateTimeData.firstAddDurationEndDateTimeStr = '10_07_2022 00:58';
-
-  TransferData transferData = TransferData();
-  transferData.addDurationToDateTimeData = addDurationToDateTimeData;
-
-  String jsonFilePathName = 'transfer_data.json';
-  transferData.saveTransferDataToFile(
-      jsonFilePathName: jsonFilePathName,
-      jsonUndoFileName: 'transfer_data.json-1');
-
-  TransferData loadedTransferData = TransferData();
-  await loadedTransferData.loadTransferDataFromFile(
-      jsonFilePathName: jsonFilePathName);
-
-  AddDurationToDateTimeData loadedAddDurationToDateTimeData =
-      loadedTransferData.addDurationToDateTimeData;
-
-  print(loadedAddDurationToDateTimeData.screenDataType);
-  print(loadedAddDurationToDateTimeData.firstDurationIconType);
-  print(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr);
-  print(loadedAddDurationToDateTimeData.firstAddDurationDurationStr);
-  print(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr);
 }
