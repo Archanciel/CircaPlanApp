@@ -93,20 +93,20 @@ class TransferData extends SerializableObject {
       String circadianJsonFilePathName =
           '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
 
-      String screenDataSubMap = await Utility.formatScreenDataSubMapFromJsonFileContent(
+      String formattedScreenDataSubMap = await Utility.formatScreenDataSubMapFromJsonFileContent(
           jsonFilePathName: circadianJsonFilePathName,
           screenDataSubMapKey: 'dateTimeDifferenceDurationData');
-      print('\n$jsonUndoFileName CONTENT BEFORE RENAMING circadian.json$circadianJsonFilePathName\n$screenDataSubMap');
+      print('\n$jsonUndoFileName CONTENT BEFORE RENAMING circadian.json$circadianJsonFilePathName\n$formattedScreenDataSubMap');
 
       Utility.renameFile(
         filePathNameStr: jsonFilePathName,
         newFileNameStr: jsonUndoFileName,
       );
 
-      screenDataSubMap = await Utility.formatScreenDataSubMapFromJsonFileContent(
+      formattedScreenDataSubMap = await Utility.formatScreenDataSubMapFromJsonFileContent(
           jsonFilePathName: circadianJsonFilePathName,
           screenDataSubMapKey: 'dateTimeDifferenceDurationData');
-      print('\n$jsonUndoFileName CONTENT AFTER RENAMING circadian.json$circadianJsonFilePathName\n$screenDataSubMap');
+      print('\n$jsonUndoFileName CONTENT AFTER RENAMING circadian.json$circadianJsonFilePathName\n$formattedScreenDataSubMap');
     }
 
     final Serializer serializer = Serializer();
