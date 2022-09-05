@@ -57,6 +57,10 @@ class Utility {
     required String jsonFilePathName,
     required String screenDataSubMapKey,
   }) async {
+    if (!fileExist(jsonFilePathName)) {
+      return '${extractFileName(filePathName: jsonFilePathName)} not exist !';
+    }
+
     final String jsonString = await File(jsonFilePathName).readAsString();
 
     return formatScreenDataSubMapFromJsonString(
