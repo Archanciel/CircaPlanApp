@@ -90,7 +90,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       extractedHHmm = _extractHHmm(_resultTimeStr);
     }
 
-    _editableDurationPercentWidget.setDurationStr(_extractHHmm(_resultTimeStr));
+    _editableDurationPercentWidget.setDurationStr(extractedHHmm);
     _editableDurationPercentWidget.callSetState();
 
     setState(() {});
@@ -141,6 +141,11 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         TextEditingController(text: _secondTimeStr);
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
     _resultTextFieldController = TextEditingController(text: _resultTimeStr);
+
+    // fixed Undo bug: after Add or Subtr button pressed,
+    // now Undo works. I don't know why, but this solution
+    // is no longer necessary !!!
+    // _editableDurationPercentWidget.setDurationStr(_resultTimeStr);
   }
 
   @override
