@@ -28,7 +28,7 @@ mixin ScreenMixin {
   static const String APP_DURATION_TO_DATE_TIME_TITLE =
       'Add Duration To Date Time';
   static const String DATE_TIME_DIFF_DURATION_TITLE =
-      'Date Time Difference Duration';
+      'Wake Up Duration';
   static const String CALCULATR_SLEEP_DURATION_TITLE =
       'Calculate Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
