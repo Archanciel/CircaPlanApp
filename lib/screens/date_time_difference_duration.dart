@@ -129,6 +129,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
     _finalDurationTextFieldController =
         TextEditingController(text: _finalDurationStr);
+
+    _updateTransferDataMap();
   }
 
   @override

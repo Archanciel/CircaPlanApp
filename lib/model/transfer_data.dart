@@ -80,6 +80,32 @@ class TransferData extends SerializableObject {
     // print(
     //     'loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
+    String loadedJsonFileName =
+        Utility.extractFileName(filePathName: jsonFilePathName);
+    String jsonUndoFileName = '$kDefaultJsonFileName-1';
+    String jsonUndoFilePathName =
+        '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
+    String screenDataSubMapKey = 'calculateSleepDurationData';
+
+    String formattedScreenDataSubMap =
+        await Utility.formatScreenDataSubMapFromJsonFileContent(
+            jsonFilePathName: jsonUndoFilePathName,
+            screenDataSubMapKey: screenDataSubMapKey);
+    print(
+        '\n$jsonUndoFileName CONTENT BEFORE COPYING $loadedJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
+
+    Utility.copyFile(
+      filePathNameStr: jsonFilePathName,
+      copyFileNameStr: jsonUndoFileName,
+    );
+
+    formattedScreenDataSubMap =
+        await Utility.formatScreenDataSubMapFromJsonFileContent(
+            jsonFilePathName: jsonUndoFilePathName,
+            screenDataSubMapKey: screenDataSubMapKey);
+    print(
+        '\n$jsonUndoFileName CONTENT AFTER COPYING $loadedJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
+
     return deserializedTransferData;
   }
 

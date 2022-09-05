@@ -31,7 +31,7 @@ Future<void> main(List<String> args) async {
     //                            app dir
   }
 
-  bool deleteAppDir = true;
+  bool deleteAppDir = false;
 
   if (myArgs.isNotEmpty) {
     if (myArgs.contains("delAppDir")) {
@@ -77,11 +77,11 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
 
-  bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
+  // bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
 
-  if (jsonFileExists) {
-    transferDataViewModel.loadTransferData();
-  }
+  // if (jsonFileExists) {
+  //   transferDataViewModel.loadTransferData();
+  // }
 
   return transferDataViewModel;
 }

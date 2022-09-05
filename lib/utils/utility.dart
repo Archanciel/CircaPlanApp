@@ -16,7 +16,8 @@ class Utility {
     required String filePathNameStr,
     required String newFileNameStr,
   }) {
-    File file = File(filePathNameStr);
+  print('***** Utility.renameFile() ******');
+  File file = File(filePathNameStr);
 
     bool fileExist = file.existsSync();
 
@@ -29,6 +30,26 @@ class Utility {
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
     return file.renameSync(newPath);
+  }
+
+  static File? copyFile({
+    required String filePathNameStr,
+    required String copyFileNameStr,
+  }) {
+    print('***** Utility.copyFile() ******');
+    File file = File(filePathNameStr);
+
+    bool fileExist = file.existsSync();
+
+    if (!fileExist) {
+      return null;
+    }
+
+    var lastSeparator = filePathNameStr.lastIndexOf(Platform.pathSeparator);
+    var copyPath =
+        filePathNameStr.substring(0, lastSeparator + 1) + copyFileNameStr;
+
+    return file.copySync(copyPath);
   }
 
   static String extractFileName({required String filePathName}) {
@@ -62,6 +83,10 @@ class Utility {
     }
 
     final String jsonString = await File(jsonFilePathName).readAsString();
+
+    if (jsonString.isEmpty) {
+      return '${extractFileName(filePathName: jsonFilePathName)} is empty !';
+    }
 
     return formatScreenDataSubMapFromJsonString(
       jsonString: jsonString,

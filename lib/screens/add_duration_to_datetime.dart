@@ -141,6 +141,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _startDateTimePickerController =
         TextEditingController(text: startDateTimeStr);
 
+    _updateTransferDataMap();
+
     return nowEnglishFormatDateTimeStr;
   }
 

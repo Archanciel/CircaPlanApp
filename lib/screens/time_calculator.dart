@@ -90,7 +90,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       extractedHHmm = _extractHHmm(_resultTimeStr);
     }
 
-    _editableDurationPercentWidget.setDurationStr(_extractHHmm(_resultTimeStr));
+    _editableDurationPercentWidget.setDurationStr(extractedHHmm);
     _editableDurationPercentWidget.callSetState();
 
     setState(() {});
@@ -141,6 +141,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         TextEditingController(text: _secondTimeStr);
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
     _resultTextFieldController = TextEditingController(text: _resultTimeStr);
+
+    _updateTransferDataMap();
   }
 
   @override

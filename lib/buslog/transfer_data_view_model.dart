@@ -306,7 +306,7 @@ class TransferDataViewModel {
     dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
         _transferDataMap!['dtDiffFinalDurationStr'];
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
-        _transferDataMap!['dtDurationPercentStr'];
+        _transferDataMap!['dtDurationPercentStr'] ?? '';
   }
 
   void updateTimeCalculatorData() {
@@ -326,9 +326,9 @@ class TransferDataViewModel {
     timeCalculatorData.timeCalculatorSecondTimeStr =
         _transferDataMap!['secondTimeStr'];
     timeCalculatorData.timeCalculatorResultTimeStr =
-        _transferDataMap!['resultTimeStr'];
+        _transferDataMap!['resultTimeStr'] ?? '';
     timeCalculatorData.timeCalculatorResultPercentStr =
-        _transferDataMap!['resultPercentStr'];
+        _transferDataMap!['resultPercentStr'] ?? '';
   }
 
   /// Loads the application screen data json file and sets
