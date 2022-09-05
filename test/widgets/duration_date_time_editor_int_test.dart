@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 
 /// This DurationDateTimeEditor widget unit test tests
-/// specifically handling integer duration setting in place of 
+/// specifically handling integer duration setting in place of
 /// defining HH:mm durations.
 Future<void> main() async {
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';

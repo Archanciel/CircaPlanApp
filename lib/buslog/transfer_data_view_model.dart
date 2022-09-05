@@ -87,13 +87,19 @@ class TransferDataViewModel {
           reformatDateTimeStrToCompatibleEnglishFormattedFileName(
               sleepDurationNewDateTimeStr);
 
+      transferDataJsonFileName = '$englishDateTimeStr.json';
+
       final String saveAsTransferDataJsonFilePathName =
-          '$transferDataJsonPath${Platform.pathSeparator}$englishDateTimeStr.json';
+          '$transferDataJsonPath${Platform.pathSeparator}$transferDataJsonFileName';
 
       transferDataJsonFileCreated =
           !await File(saveAsTransferDataJsonFilePathName).exists();
+
+      String jsonUndoFileNameOne = '$kDefaultJsonFileName-1';
+
       _transferData.saveTransferDataToFile(
-          jsonFilePathName: saveAsTransferDataJsonFilePathName);
+          jsonFilePathName: saveAsTransferDataJsonFilePathName,
+          jsonUndoFileName: jsonUndoFileNameOne);
     }
 
     return transferDataJsonFileCreated;
@@ -349,7 +355,8 @@ class TransferDataViewModel {
     }
 
     await _transferData.loadTransferDataFromFile(
-        jsonFilePathName: jsonFilePathName);
+      jsonFilePathName: jsonFilePathName,
+    );
 
     AddDurationToDateTimeData addDurationToDateTimeData =
         _transferData.addDurationToDateTimeData;

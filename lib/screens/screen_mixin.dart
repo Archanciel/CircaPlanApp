@@ -307,7 +307,7 @@ mixin ScreenMixin {
 
     if (addCircadianJsonFileNameToLst) {
       sortedFileNameLst.add(nonNullablefileNameLst
-          .firstWhere((element) => element == 'circadian.json'));
+          .firstWhere((element) => element == kDefaultJsonFileName));
     }
 
     RegExp regExp = RegExp(r'^[\d\- \.]+json');
