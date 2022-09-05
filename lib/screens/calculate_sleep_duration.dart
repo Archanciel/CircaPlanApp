@@ -273,7 +273,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
-    _status = _transferDataMap['calcSlDurStatus'];
+    _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newDateTimeStr =
         _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
     _newDateTimeController = TextEditingController(text: _newDateTimeStr);
@@ -334,8 +334,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         TextEditingController(text: _prevDayTotalWakeUpStr);
     _prevDayEmptyTotalController = TextEditingController(text: '');
 
-    _sleepTimeStrHistory = _transferDataMap['calcSlDurSleepTimeStrHistory'];
-    _wakeUpTimeStrHistory = _transferDataMap['calcSlDurWakeUpTimeStrHistory'];
+    _sleepTimeStrHistory = _transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [];
+    _wakeUpTimeStrHistory = _transferDataMap['calcSlDurWakeUpTimeStrHistory'] ?? [];
 
     _computeSleepWakeUpPercentDuration();
 
