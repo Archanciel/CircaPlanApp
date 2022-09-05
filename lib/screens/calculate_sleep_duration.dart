@@ -828,14 +828,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   Row(
                     children: [
                       Text(
-                        'Previous date time',
+                        'Last date time',
                         style: labelTextStyle,
                       ),
                       const SizedBox(
-                        width: 6,
+                        width: 41,
                       ),
                       Text(
-                        'Date time before prev',
+                        'Previous date time',
                         style: labelTextStyle,
                       ),
                     ],
