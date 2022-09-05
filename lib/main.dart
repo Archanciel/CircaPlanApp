@@ -212,7 +212,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     final List<String> screenTitlesLst = [
       ScreenMixin.APP_DURATION_TO_DATE_TIME_TITLE,
       ScreenMixin.DATE_TIME_DIFF_DURATION_TITLE,
-      ScreenMixin.CALCULATE_SLEEP_DURATION_TITLE,
+      ScreenMixin.CALCULATR_SLEEP_DURATION_TITLE,
       ScreenMixin.TIME_CALCULATOR_TITLE,
     ];
 

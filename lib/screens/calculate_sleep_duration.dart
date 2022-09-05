@@ -826,21 +826,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     height: kVerticalFieldDistance,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH,
-                        child: Text(
-                          'Last date time',
-                          style: labelTextStyle,
-                        ),
+                      Text(
+                        'Last date time',
+                        style: labelTextStyle,
                       ),
-                      SizedBox(
-                        width: ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH,
-                        child: Text(
-                          'Previous date time',
-                          style: labelTextStyle,
-                        ),
+                      const SizedBox(
+                        width: 41,
+                      ),
+                      Text(
+                        'Previous date time',
+                        style: labelTextStyle,
                       ),
                     ],
                   ),
@@ -852,7 +848,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 //                                            compliant with current value 5 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
-                          width: ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH,
+                          width: 156,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(
@@ -878,7 +874,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         //                                            compliant with current value 5 of
                         //                                            APP_LABEL_TO_TEXT_DISTANCE
                         child: SizedBox(
-                          width: ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH,
+                          width: 155,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(

@@ -35,7 +35,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
           Row(
             children: [
               SizedBox(
-                width: ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH,
+                width: 140,
                 child: Text(
                   _resultDurationTitle,
                   style: labelTextStyle,
@@ -45,7 +45,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                 width: 0,
               ),
               SizedBox(
-                width: ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH,
+                width: 140,
                 child: Text(
                   _previousDayPercentTitle,
                   style: labelTextStyle,
@@ -86,7 +86,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                 ),
               ),
               SizedBox(
-                width: 101, // 55 + 101 = 156 (ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH) !
+                width: 60,
                 child: Theme(
                   data: Theme.of(context).copyWith(
                     textSelectionTheme: TextSelectionThemeData(
@@ -111,6 +111,9 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     },
                   ),
                 ),
+              ),
+              const SizedBox(
+                width: 25,
               ),
               SizedBox(
                 width: 70,
@@ -140,7 +143,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                 ),
               ),
               SizedBox(
-                width: 86,  // 70 + 86 = 156 (ScreenMixin.CALCULATE_SLEEP_DURATION_COL_WIDTH)
+                width: 55,
                 child: Theme(
                   data: Theme.of(context).copyWith(
                     textSelectionTheme: TextSelectionThemeData(
