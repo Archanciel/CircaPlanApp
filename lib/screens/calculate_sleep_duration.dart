@@ -250,6 +250,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// method is executed after the file to load has been selected in the
   /// AppBar load ... sub menu.
   void callSetState() {
+    // setting isAfterLoading to true avoids saving the transfer data map
+    // as well as updating the undo json file, two actions which are not
+    // useful and would not impact the success of the Undo action.
     _updateWidgets(isAfterLoading: true);
 
     setState(() {});
@@ -397,6 +400,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalPrevDayTotalPercentStr;
 
     if (!isAfterLoading) {
+      // necessary so that Undo works. In case of executing 
+      // _updateTransferDataMap() after a json file was loaded, the
+      // calling _updateTransferDataMap() is not useful.
       _transferDataViewModel.updateAndSaveTransferData();
     }
 
