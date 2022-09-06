@@ -136,20 +136,19 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
-  bool _undoState = true;
 
   /// Method called after choosing a file to load in the load
   /// file popup menu opened after selecting the Load ... AppBar
   /// menu item.
   ///
-  /// The method is also called when selecting the Undo AppBar
-  /// menu item.
-  ///
-  /// Finally, the method is called when starting the
+  /// The method is also called when starting the
   /// application in order for the first screen to display the
   /// current circadian.json transfer data.
   void loadFileName(String selectedFileNameStr) {
-    loadFileNameNoMsg(selectedFileNameStr);
+    loadFileNameNoMsg(
+      selectedFileNameStr: selectedFileNameStr,
+      loadMenuItemSelected: true,
+    );
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
@@ -160,7 +159,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   ///
   /// 1/ directly, when selecting Undo AppBar menu item
   /// 2/ indirectly, when loading a json file
-  Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
+  Future<void> loadFileNameNoMsg({
+    required String selectedFileNameStr,
+    required bool loadMenuItemSelected,
+  }) async {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
         jsonFileName: selectedFileNameStr);
@@ -174,7 +176,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     // 1/ Undo repeated 3rd time had no effect and
     // 2/ first Undo after loading another json file
     //    twice had no effect
-    transferDataViewModel.updateAndSaveTransferData();
+    transferDataViewModel.updateAndSaveTransferData(
+      loadMenuItemSelected: loadMenuItemSelected,
+    );
   }
 
   @override
@@ -189,8 +193,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       //
       // This anonymous function is called only once, when the app
       // is launched (or restarted).
-      loadFileNameNoMsg('circadian.json');
+      loadFileNameNoMsg(
+          selectedFileNameStr: kDefaultJsonFileName,
+          loadMenuItemSelected: true);
     });
+
+    _screenNavigTransData.transferDataMap['undoState'] = true;
+    _screenNavigTransData.transferDataMap['loadedState'] = false;
   }
 
   @override
@@ -279,7 +288,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   }
                   String undoMenuItemStr;
 
-                  if (_undoState) {
+                  if (_screenNavigTransData.transferDataMap['undoState']) {
                     undoMenuItemStr = 'Undo';
                   } else {
                     undoMenuItemStr = 'Redo';
@@ -321,15 +330,24 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     case 0:
                       {
                         // Undo selected ...
-                        if (_undoState) {
-                          _undoState = false;
+                        if (_screenNavigTransData
+                            .transferDataMap['undoState']) {
+                          _screenNavigTransData.transferDataMap['undoState'] =
+                              false;
                         } else {
-                          _undoState = true;
+                          _screenNavigTransData.transferDataMap['undoState'] =
+                              true;
                         }
 
-                        loadFileNameNoMsg('$kDefaultJsonFileName-1');
-                        widget.transferDataViewModel
-                            .updateAndSaveTransferData();
+                        loadFileNameNoMsg(
+                          selectedFileNameStr: '$kDefaultJsonFileName-1',
+                          loadMenuItemSelected: _screenNavigTransData
+                              .transferDataMap['loadedState'],
+                        );
+                        widget.transferDataViewModel.updateAndSaveTransferData(
+                          loadMenuItemSelected: _screenNavigTransData
+                              .transferDataMap['loadedState'],
+                        );
 
                         break;
                       }
@@ -372,7 +390,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           handleSelectedItem: loadFileName,
                         );
 
-                        _undoState = true;
+                        _screenNavigTransData.transferDataMap['undoState'] =
+                            true;
+                        _screenNavigTransData.transferDataMap['loadedState'] =
+                            true;
 
                         break;
                       }

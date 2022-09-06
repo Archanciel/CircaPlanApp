@@ -50,7 +50,9 @@ class TransferDataViewModel {
 
   /// Copy transferDataMap values to TransferData instance in order to
   /// then update the json file.
-  void updateAndSaveTransferData() {
+  void updateAndSaveTransferData({
+    bool loadMenuItemSelected = false,
+  }) {
     updateAddDurationToDateTimeData();
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
@@ -65,6 +67,25 @@ class TransferDataViewModel {
     _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName,
         jsonUndoFileName: jsonUndoFileNameOne);
+
+    if (!loadMenuItemSelected) {
+      if (_transferDataMap!['loadedState']) {
+        _transferDataMap!['loadedState'] = false;
+        _transferDataMap!['undoState'] = true;
+      } else {
+        if (_transferDataMap!['undoState']) {
+          _transferDataMap!['undoState'] = true;
+        } else {
+          _transferDataMap!['undoState'] = false;
+        }
+      }
+    } else {
+        if (_transferDataMap!['undoState']) {
+          _transferDataMap!['undoState'] = true;
+        } else {
+          _transferDataMap!['undoState'] = false;
+        }
+    }
   }
 
   /// Saves the screens app transfer data to a json file and return
