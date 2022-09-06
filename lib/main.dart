@@ -155,6 +155,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  /// Method called in two situations:
+  /// 
+  /// 1/ directly, when selecting Undo AppBar menu item
+  /// 2/ indirectly, when loading a json file
   Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
     TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
     await transferDataViewModel.loadTransferData(
@@ -163,7 +167,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']
         ?.callSetState();
 
-    // fix the Undo bug after loading another json file
+    // fixes two Undo bugs which in fact have the same
+    // cause:
+    //
+    // 1/ Undo repeated 3rd time had no effect and
+    // 2/ first Undo after loading another json file 
+    //    twice had no effect
     transferDataViewModel.updateAndSaveTransferData();
   }
 
