@@ -175,6 +175,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     // 2/ first Undo after loading another json file
     //    twice had no effect
     transferDataViewModel.updateAndSaveTransferData();
+    transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
@@ -325,10 +326,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         } else {
                           _undoMode = true;
                         }
-                        
+
                         loadFileNameNoMsg('$kDefaultJsonFileName-1');
-                        widget.transferDataViewModel
-                            .updateAndSaveTransferData();
+                        // widget.transferDataViewModel
+                        //     .updateAndSaveTransferData();
 
                         break;
                       }
