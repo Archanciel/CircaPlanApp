@@ -136,7 +136,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
-  bool _undoMode = true;
+  bool _undoState = true;
 
   /// Method called after choosing a file to load in the load
   /// file popup menu opened after selecting the Load ... AppBar
@@ -279,7 +279,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   }
                   String undoMenuItemStr;
 
-                  if (_undoMode) {
+                  if (_undoState) {
                     undoMenuItemStr = 'Undo';
                   } else {
                     undoMenuItemStr = 'Redo';
@@ -320,12 +320,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   switch (value) {
                     case 0:
                       {
-                        if (_undoMode) {
-                          _undoMode = false;
+                        // Undo selected ...
+                        if (_undoState) {
+                          _undoState = false;
                         } else {
-                          _undoMode = true;
+                          _undoState = true;
                         }
-                        
+
                         loadFileNameNoMsg('$kDefaultJsonFileName-1');
                         widget.transferDataViewModel
                             .updateAndSaveTransferData();
@@ -334,6 +335,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       }
                     case 1:
                       {
+                        // Save as yyyy-mm-dd HH.mm.json selected ...
                         bool transferDataJsonFileCreated =
                             await transferDataViewModel.saveAsTransferData();
                         String snackBarMsg;
@@ -351,6 +353,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         break;
                       }
                     case 2:
+                      // Load selected ...
                       {
                         List<String> nonNullablefileNameLst =
                             getSortedFileNameLstInDir(
@@ -369,28 +372,34 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           handleSelectedItem: loadFileName,
                         );
 
+                        _undoState = true;
+
                         break;
                       }
                     case 3:
                       {
+                        // Uploadv to cloud selected ...
                         print("Upload is selected.");
 
                         break;
                       }
                     case 4:
                       {
+                        // Download from cloud selected ...
                         print("Download is selected.");
 
                         break;
                       }
                     case 5:
                       {
+                        // Settings selected ...
                         print("Settings is selected.");
 
                         break;
                       }
                     case 6:
                       {
+                        // About selected ...
                         showAboutDialog(
                           context: context,
                           applicationName: kApplicationName,
