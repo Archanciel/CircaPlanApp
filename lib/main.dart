@@ -136,7 +136,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
-  bool _undoMode = true;
 
   /// Method called after choosing a file to load in the load
   /// file popup menu opened after selecting the Load ... AppBar
@@ -157,7 +156,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   }
 
   /// Method called in two situations:
-  ///
+  /// 
   /// 1/ directly, when selecting Undo AppBar menu item
   /// 2/ indirectly, when loading a json file
   Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
@@ -172,7 +171,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     // cause:
     //
     // 1/ Undo repeated 3rd time had no effect and
-    // 2/ first Undo after loading another json file
+    // 2/ first Undo after loading another json file 
     //    twice had no effect
     transferDataViewModel.updateAndSaveTransferData();
   }
@@ -277,18 +276,11 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   if (saveAsFileName == '') {
                     saveAsFileName = kDefaultJsonFileName;
                   }
-                  String undoMenuItemStr;
-
-                  if (_undoMode) {
-                    undoMenuItemStr = 'Undo';
-                  } else {
-                    undoMenuItemStr = 'Redo';
-                  }
 
                   return [
                     PopupMenuItem<int>(
                       value: 0,
-                      child: Text(undoMenuItemStr),
+                      child: Text("Undo"),
                     ),
                     PopupMenuItem<int>(
                       value: 1,
@@ -320,13 +312,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   switch (value) {
                     case 0:
                       {
-                        if (_undoMode) {
-                          _undoMode = false;
-                        } else {
-                          _undoMode = true;
-                        }
-                        
-                        loadFileNameNoMsg('$kDefaultJsonFileName-1');
+                        loadFileNameNoMsg('circadian.json-1');
                         widget.transferDataViewModel
                             .updateAndSaveTransferData();
 
