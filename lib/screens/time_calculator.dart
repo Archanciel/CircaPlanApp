@@ -128,9 +128,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   }
 
   String _extractHHmm(String ddHHmmStr) {
-    RegExp regExp = RegExp(r'(\d+:\d+)$');
+    RegExp regExp = RegExp(r'(\-?)(\d+:\d+)$');
 
-    return regExp.firstMatch(ddHHmmStr)!.group(1) ?? '';
+    String sign = regExp.firstMatch(ddHHmmStr)!.group(1) ?? '';
+    String value = regExp.firstMatch(ddHHmmStr)!.group(2) ?? '';
+    
+    return '$sign$value';
   }
 
   void _updateWidgets() {
@@ -215,16 +218,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     String resultTimeStr;
 
-    if (resultDuration.inDays > 0) {
-      resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
-    } else {
-      resultTimeStr = '${resultDuration.ddHHmm()}';
-    }
+    _resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
+    _resultTextFieldController.text = _resultTimeStr;
 
-    _resultTimeStr = resultTimeStr;
-    _resultTextFieldController.text = resultTimeStr;
+    String extractedHHmm = _extractHHmm(_resultTimeStr);
 
-    _editableDurationPercentWidget.setDurationStr(_extractHHmm(_resultTimeStr));
+    _editableDurationPercentWidget.setDurationStr(extractedHHmm);
 
     setState(() {});
 
