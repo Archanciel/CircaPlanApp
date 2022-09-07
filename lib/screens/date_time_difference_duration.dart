@@ -82,7 +82,12 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void callSetState() {
     _updateWidgets();
 
-    _editableDurationPercentWidget.setDurationStr(_durationStr);
+    if (_finalDurationStr.isNotEmpty) {
+      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+    } else {
+      _editableDurationPercentWidget.setDurationStr(_durationStr);
+    }
+
     _editableDurationPercentWidget.callSetState();
 
     setState(() {});
@@ -210,7 +215,11 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = finalDuration?.HHmm() ?? '';
     _finalDurationTextFieldController.text = _finalDurationStr;
 
-    _editableDurationPercentWidget.setDurationStr(_durationStr);
+    if (_finalDurationStr.isNotEmpty) {
+      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+    } else {
+      _editableDurationPercentWidget.setDurationStr(_durationStr);
+    }
 
     setState(() {});
 
@@ -257,6 +266,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       _finalDurationStr = finalDuration?.HHmm() ?? '';
       _finalDurationTextFieldController.text = _finalDurationStr;
 
+      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+
       setState(() {});
 
       _updateTransferDataMap();
@@ -268,6 +279,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _addTimeTextFieldController.text = _addTimeStr;
     _finalDurationStr = '';
     _finalDurationTextFieldController.text = _finalDurationStr;
+
+    _editableDurationPercentWidget.setDurationStr(_durationStr);
 
     setState(() {});
 
