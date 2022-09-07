@@ -337,8 +337,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         TextEditingController(text: _prevDayTotalWakeUpStr);
     _prevDayEmptyTotalController = TextEditingController(text: '');
 
-    _sleepTimeStrHistory = _transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [];
-    _wakeUpTimeStrHistory = _transferDataMap['calcSlDurWakeUpTimeStrHistory'] ?? [];
+    _sleepTimeStrHistory =
+        _transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [];
+    _wakeUpTimeStrHistory =
+        _transferDataMap['calcSlDurWakeUpTimeStrHistory'] ?? [];
 
     _computeSleepWakeUpPercentDuration();
 
@@ -374,7 +376,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     super.dispose();
   }
 
-  Map<String, dynamic> _updateTransferDataMap({bool isAfterLoading = false}) {
+  Map<String, dynamic> _updateTransferDataMap({
+    bool isAfterLoading = false,
+  }) {
     Map<String, dynamic> map = _transferDataMap;
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
@@ -400,7 +404,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalPrevDayTotalPercentStr;
 
     if (!isAfterLoading) {
-      // necessary so that Undo works. In case of executing 
+      // necessary so that Undo works. In case of executing
       // _updateTransferDataMap() after a json file was loaded, the
       // calling _updateTransferDataMap() is not useful.
       _transferDataViewModel.updateAndSaveTransferData();
