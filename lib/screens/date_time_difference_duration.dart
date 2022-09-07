@@ -82,6 +82,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void callSetState() {
     _updateWidgets();
 
+    // Re-enabling the next five lines of code no longer prevent
+    // Undo to work since _editableDurationPercentWidget line
+    // 135 has been commented out !
     if (_finalDurationStr.isNotEmpty) {
       _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
     } else {
@@ -106,10 +109,17 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     _updateWidgets();
 
+    // The next instruction enables updating duration % value
+    // when going back to the date time difference screen.
+    // As a consequence, the duration % value does not need to 
+    // be stored in the transfer data map !
+    String editableDurationPercentWidgetDurationStr =
+        (_finalDurationStr.isNotEmpty) ? _finalDurationStr : _durationStr;
+
     _editableDurationPercentWidget = EditableDurationPercent(
       dateTimeTitle: 'Duration %',
       transferDataMapPercentKey: 'dtDurationPercentStr',
-      durationStr: _durationStr,
+      durationStr: editableDurationPercentWidgetDurationStr,
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
@@ -215,6 +225,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = finalDuration?.HHmm() ?? '';
     _finalDurationTextFieldController.text = _finalDurationStr;
 
+    // Re-enabling the next five lines of code no longer prevent
+    // Undo to work since _editableDurationPercentWidget line
+    // 135 has been commented out !
     if (_finalDurationStr.isNotEmpty) {
       _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
     } else {

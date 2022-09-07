@@ -90,6 +90,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       extractedHHmm = _extractHHmm(_resultTimeStr);
     }
 
+    // Re-enabling the next two lines of code no longer prevent
+    // Undo to work since _editableDurationPercentWidget line
+    // 135 has been commented out !
     _editableDurationPercentWidget.setDurationStr(extractedHHmm);
     _editableDurationPercentWidget.callSetState();
 
@@ -111,6 +114,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     String extractedHHmm = '';
 
+    // The next instruction enables updating result % value
+    // when going back to the time calculator screen.
+    // As a consequence, the result % value does not need to 
+    // be stored in the transfer data map !
     if (_resultTimeStr.isNotEmpty) {
       // _resultTimeStr is empty in case the app is launched
       // after deleting all json files.
@@ -127,12 +134,15 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     );
   }
 
+  /// For example, extract '263:00' from '10:23:00 = 263:00' or
+  /// '-103:00' ftom '-04:07:00 = -103:00' or '-2:00' from
+  /// '-00:02:00 = -2:00'.
   String _extractHHmm(String ddHHmmStr) {
     RegExp regExp = RegExp(r'(\-?)(\d+:\d+)$');
 
     String sign = regExp.firstMatch(ddHHmmStr)!.group(1) ?? '';
     String value = regExp.firstMatch(ddHHmmStr)!.group(2) ?? '';
-    
+
     return '$sign$value';
   }
 
@@ -148,6 +158,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     // fixed Undo bug: after Add or Subtr button pressed,
     // now Undo works. I don't know why, but this solution
     // is no longer necessary !!!
+    //
+    // in fact, the next expression raises this exception:
+    //
+    // Exception has occurred.
+    // LateError (LateInitializationError: Field '_editableDurationPercentWidget@37463065' 
+    // has not been initialized.)
+    //
     // _editableDurationPercentWidget.setDurationStr(_resultTimeStr);
   }
 

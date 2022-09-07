@@ -131,7 +131,9 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   }) {
     widget.durationPercentTextFieldController.text = percentDurationStr;
     widget.transferDataMap[widget.transferDataMapPercentKey] = percentStr;
-    widget.transferDataViewModel.updateAndSaveTransferData();
+
+    // Commenting out next line avoids disabling Undo ...
+    // widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
