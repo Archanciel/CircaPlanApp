@@ -73,6 +73,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
 class _EditableDurationPercentState extends State<EditableDurationPercent> {
   void handleSelectedPercentStr(String percentStr) {
     widget.selectedPercentTextFieldController.text = percentStr;
+
     if (percentStr.isEmpty) {
       // the case if clicked on Reset button after clicked on Del
       // button !
