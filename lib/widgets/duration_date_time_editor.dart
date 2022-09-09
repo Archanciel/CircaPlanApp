@@ -230,7 +230,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationStr = Utility.convertIntDuration(
         durationStr: _durationTextFieldController.text);
 
-    // necessary in case the _durationStr was modified
+    // necessary in case the _durationStr was set to an
+    // int value, like 2 instead of 2:00 !
     _durationTextFieldController.text = _durationStr;
 
     Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
