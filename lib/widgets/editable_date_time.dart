@@ -83,7 +83,10 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   ),
                   decoration: const InputDecoration.collapsed(hintText: ''),
                   style: valueTextStyle,
-                  onChanged: (val) => _handleDateTimeModification(val),
+                  onChanged: (val) {
+                    // print('editableDateTimePickerValue: $val');
+                    _handleDateTimeModification(val);
+                  },
                 ),
               ),
             ),

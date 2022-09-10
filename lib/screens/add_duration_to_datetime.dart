@@ -167,8 +167,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _resetScreen() {
     final DateTime dateTimeNow = DateTime.now();
+  
     // String value used to initialize DateTimePicker field
-    String nowDateTimePickerEnglishFormatStr = dateTimeNow.toString();
+    String nowDateTimePickerEnglishFormatStr =
+        englishDateTimeFormat.format(dateTimeNow);
 
     _startDateTimeStr = nowDateTimePickerEnglishFormatStr;
     _startDateTimePickerController.text = _startDateTimeStr;

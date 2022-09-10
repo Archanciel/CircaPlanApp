@@ -180,7 +180,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   void reset() {
     final DateTime dateTimeNow = DateTime.now();
     // String value used to initialize DateTimePicker field
-    String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
+    String nowDateTimeEnglishFormatStr =
+        widget.englishDateTimeFormat.format(dateTimeNow);
 
     _startDateTimeStr = nowDateTimeEnglishFormatStr;
     _endDateTimeStr = nowDateTimeEnglishFormatStr;
@@ -213,6 +214,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   }
 
   void handleDurationChange({String? durationStr, int? durationSign}) {
+      printDebugData(
+        methodName: 'handleDurationChange',
+        isAtStart: true,
+      );
     if (durationSign != null) {
       _durationSign = durationSign;
     }
@@ -246,6 +251,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
       _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
       _dateTimePickerController.text = _endDateTimeStr;
+      printDebugData(
+        methodName: 'handleDurationChange',
+        isAtStart: false,
+      );
     }
 
     _updateTransferDataMap(); // must be executed before calling
@@ -278,6 +287,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   }
 
   void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+    printDebugData(
+      methodName: 'handleEndDateTimeChange',
+      isAtStart: true,
+    );
     _endDateTimeStr = endDateTimeEnglishFormatStr;
     DateTime? endDateTime;
 
@@ -289,6 +302,26 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     if (endDateTime != null) {
       processEndDateTimeChange(endDateTime);
     }
+    printDebugData(
+      methodName: 'handleEndDateTimeChange',
+      isAtStart: false,
+    );
+  }
+
+  void printDebugData({
+    required String methodName,
+    required bool isAtStart,
+  }) {
+    print('Name: ${widget._widgetName}');
+    if (isAtStart) {
+      print('Start $methodName():');
+    } else {
+      print('End $methodName():');
+    }
+
+    print('Start date time: $_startDateTimeStr');
+    print('Duration: ${(_durationSign > 0) ? '' : '-'}$_durationStr');
+    print('End date time: $_endDateTimeStr');
   }
 
   void processEndDateTimeChange(DateTime endDateTime) {
