@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
 class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   FlutterEditableDateTimeScreen({Key? key}) : super(key: key);
 
-  String dateTimeTitle = 'Start date time';
   TextEditingController editableDateTimeController =
       TextEditingController(text: '');
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
@@ -74,87 +73,7 @@ class _FlutterEditableDateTimeScreenState
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.dateTimeTitle,
-                      style: widget.labelTextStyle,
-                    ),
-                    const SizedBox(
-                      height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                    ),
-                    SizedBox(
-                      // Required to fix Row exception
-                      // layoutConstraints.maxWidth < double.infinity.
-                      width: 155,
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          textSelectionTheme: TextSelectionThemeData(
-                            selectionColor: widget.selectionColor,
-                          ),
-                        ),
-                        child: EditableDateTime(),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: kVerticalFieldDistance, // required for correct
-                      //                                 Now and Sel buttons
-                      //                                 positioning.
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      key: const Key('editableDateTimeNowButton'),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              widget.appElevatedButtonBackgroundColor,
-                          shape: widget.appElevatedButtonRoundedShape),
-                      onPressed: () {
-                        String nowStr = DateTime.now().toString();
-                        widget.editableDateTimeController.text = nowStr;
-                        widget.handleDateTimeModification(nowStr);
-                      },
-                      child: const Text(
-                        'Now',
-                        style: TextStyle(
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    ElevatedButton(
-                      key: const Key('editableDateTimeSelButton'),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              widget.appElevatedButtonBackgroundColor,
-                          shape: widget.appElevatedButtonRoundedShape),
-                      onPressed: () {
-                        widget.displaySelPopupMenu(
-                          context: context,
-                          selectableStrItemLst:
-                              widget.buildSortedAppDateTimeStrList(
-                                  transferDataMap: widget.transferDataMap,
-                                  mostRecentFirst: true,
-                                  transferDataViewModel:
-                                      widget.transferDataViewModel),
-                          posRectangleLTRB: RelativeRect.fromLTRB(
-                            1.0,
-                            widget.topSelMenuPosition,
-                            0.0,
-                            0.0,
-                          ),
-                          handleSelectedItem: widget.handleSelectedDateTimeStr,
-                        );
-                      },
-                      child: const Text(
-                        'Sel',
-                        style: TextStyle(
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        ),
-                      ),
-                    ),
+                    EditableDateTime(),
                   ],
                 ),
               ],
@@ -171,8 +90,25 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     Key? key,
   }) : super(key: key);
 
+  String dateTimeTitle = 'Start date time';
+  TextEditingController editableDateTimeController =
+      TextEditingController(text: '');
+  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+      transferDataJsonFilePathName:
+          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
+
+  // used to fill the display select = ion popup menu
+  final Map<String, dynamic> transferDataMap = {};
+  final Function(String) handleSelectedDateTimeStr = (String val) => print(val);
+
+  double topSelMenuPosition = 200;
+
   @override
   State<EditableDateTime> createState() => _EditableDateTimeState();
+
+  void handleDateTimeModification(String nowStr) {
+    print(nowStr);
+  }
 }
 
 class _EditableDateTimeState extends State<EditableDateTime> {
@@ -267,29 +203,99 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: 155,
-          child: GestureDetector(
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                textSelectionTheme: TextSelectionThemeData(
-                  selectionColor: widget.selectionColor,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.dateTimeTitle,
+              style: widget.labelTextStyle,
+            ),
+            const SizedBox(
+              height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
+            ),
+            SizedBox(
+              // Required to fix Row exception
+              // layoutConstraints.maxWidth < double.infinity.
+              width: 155,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  textSelectionTheme: TextSelectionThemeData(
+                    selectionColor: widget.selectionColor,
+                  ),
+                ),
+                child: GestureDetector(
+                  child: Text(
+                    getDateTime(),
+                    style: widget.valueTextStyle,
+                  ),
+                  onTap: () {
+                    _selectDateTime(context);
+                  },
                 ),
               ),
-              child: Text(
-                getDateTime(),
-                style: widget.valueTextStyle,
+            ),
+            const SizedBox(
+              height: kVerticalFieldDistance, // required for correct
+              //                                 Now and Sel buttons
+              //                                 positioning.
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            ElevatedButton(
+              key: const Key('editableDateTimeNowButton'),
+              style: ButtonStyle(
+                  backgroundColor: widget.appElevatedButtonBackgroundColor,
+                  shape: widget.appElevatedButtonRoundedShape),
+              onPressed: () {
+                String nowStr = DateTime.now().toString();
+                widget.editableDateTimeController.text = nowStr;
+                widget.handleDateTimeModification(nowStr);
+              },
+              child: const Text(
+                'Now',
+                style: TextStyle(
+                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                ),
               ),
             ),
-            onTap: () {
-              _selectDateTime(context);
-            },
-          ),
-        )
+            const SizedBox(
+              width: 20,
+            ),
+            ElevatedButton(
+              key: const Key('editableDateTimeSelButton'),
+              style: ButtonStyle(
+                  backgroundColor: widget.appElevatedButtonBackgroundColor,
+                  shape: widget.appElevatedButtonRoundedShape),
+              onPressed: () {
+                widget.displaySelPopupMenu(
+                  context: context,
+                  selectableStrItemLst: widget.buildSortedAppDateTimeStrList(
+                      transferDataMap: widget.transferDataMap,
+                      mostRecentFirst: true,
+                      transferDataViewModel: widget.transferDataViewModel),
+                  posRectangleLTRB: RelativeRect.fromLTRB(
+                    1.0,
+                    widget.topSelMenuPosition,
+                    0.0,
+                    0.0,
+                  ),
+                  handleSelectedItem: widget.handleSelectedDateTimeStr,
+                );
+              },
+              child: const Text(
+                'Sel',
+                style: TextStyle(
+                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                ),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
