@@ -54,29 +54,31 @@ class _FlutterEditableDateTimeScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
         title: const Text('Date Timer Picker'),
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
+        margin: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: ScreenMixin.app_computed_vertical_top_margin),
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    EditableDateTime(),
-                  ],
-                ),
-              ],
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  EditableDateTime(),
+                ],
+              ),
             ),
           ],
         ),
