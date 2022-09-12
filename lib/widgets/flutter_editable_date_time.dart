@@ -1,7 +1,13 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
+import 'dart:io';
+
+import 'package:circa_plan/constants.dart';
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../buslog/transfer_data_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,19 +18,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FlutterEditableDateTimeScreen(),
     );
   }
 }
 
-class FlutterEditableDateTimeScreen extends StatefulWidget {
-  const FlutterEditableDateTimeScreen({Key? key}) : super(key: key);
+class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
+  FlutterEditableDateTimeScreen({Key? key}) : super(key: key);
+
+  String dateTimeTitle = 'Start date time';
+  TextEditingController editableDateTimeController =
+      TextEditingController(text: '');
+  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+      transferDataJsonFilePathName:
+          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
+
+  // used to fill the display select = ion popup menu
+  final Map<String, dynamic> transferDataMap = {};
+  final Function(String) handleSelectedDateTimeStr = (String val) => print(val);
+
+  double topSelMenuPosition = 200;
 
   @override
   State<FlutterEditableDateTimeScreen> createState() =>
       _FlutterEditableDateTimeScreenState();
+
+  void handleDateTimeModification(String nowStr) {
+    print(nowStr);
+  }
 }
 
 class _FlutterEditableDateTimeScreenState
@@ -38,10 +61,104 @@ class _FlutterEditableDateTimeScreenState
         backgroundColor: Colors.teal,
       ),
       body: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            EditableDateTime(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.dateTimeTitle,
+                      style: widget.labelTextStyle,
+                    ),
+                    const SizedBox(
+                      height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
+                    ),
+                    SizedBox(
+                      // Required to fix Row exception
+                      // layoutConstraints.maxWidth < double.infinity.
+                      width: 155,
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          textSelectionTheme: TextSelectionThemeData(
+                            selectionColor: widget.selectionColor,
+                          ),
+                        ),
+                        child: EditableDateTime(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: kVerticalFieldDistance, // required for correct
+                      //                                 Now and Sel buttons
+                      //                                 positioning.
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      key: const Key('editableDateTimeNowButton'),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              widget.appElevatedButtonBackgroundColor,
+                          shape: widget.appElevatedButtonRoundedShape),
+                      onPressed: () {
+                        String nowStr = DateTime.now().toString();
+                        widget.editableDateTimeController.text = nowStr;
+                        widget.handleDateTimeModification(nowStr);
+                      },
+                      child: const Text(
+                        'Now',
+                        style: TextStyle(
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    ElevatedButton(
+                      key: const Key('editableDateTimeSelButton'),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              widget.appElevatedButtonBackgroundColor,
+                          shape: widget.appElevatedButtonRoundedShape),
+                      onPressed: () {
+                        widget.displaySelPopupMenu(
+                          context: context,
+                          selectableStrItemLst:
+                              widget.buildSortedAppDateTimeStrList(
+                                  transferDataMap: widget.transferDataMap,
+                                  mostRecentFirst: true,
+                                  transferDataViewModel:
+                                      widget.transferDataViewModel),
+                          posRectangleLTRB: RelativeRect.fromLTRB(
+                            1.0,
+                            widget.topSelMenuPosition,
+                            0.0,
+                            0.0,
+                          ),
+                          handleSelectedItem: widget.handleSelectedDateTimeStr,
+                        );
+                      },
+                      child: const Text(
+                        'Sel',
+                        style: TextStyle(
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -49,8 +166,8 @@ class _FlutterEditableDateTimeScreenState
   }
 }
 
-class EditableDateTime extends StatefulWidget {
-  const EditableDateTime({
+class EditableDateTime extends StatefulWidget with ScreenMixin {
+  EditableDateTime({
     Key? key,
   }) : super(key: key);
 
@@ -154,13 +271,18 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
+        SizedBox(
+          width: 155,
           child: GestureDetector(
-            child: Text(
-              getDateTime(),
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                textSelectionTheme: TextSelectionThemeData(
+                  selectionColor: widget.selectionColor,
+                ),
+              ),
+              child: Text(
+                getDateTime(),
+                style: widget.valueTextStyle,
               ),
             ),
             onTap: () {
