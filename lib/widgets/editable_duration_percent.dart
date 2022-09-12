@@ -275,8 +275,11 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   selectableStrItemLst: [
                     '40 %',
                     '50 %',
+                    '55 %',
                     '60 %',
+                    '65 %',
                     '70 %',
+                    '75 %',
                     '80 %',
                     '90 %',
                   ],
