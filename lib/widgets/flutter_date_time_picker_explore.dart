@@ -14,21 +14,51 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TextScreen(),
+      home: FlutterEditableDateTimeScreen(),
     );
   }
 }
 
-class TextScreen extends StatefulWidget {
-  const TextScreen({
+class FlutterEditableDateTimeScreen extends StatefulWidget {
+  const FlutterEditableDateTimeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<FlutterEditableDateTimeScreen> createState() =>
+      _FlutterEditableDateTimeScreenState();
+}
+
+class _FlutterEditableDateTimeScreenState
+    extends State<FlutterEditableDateTimeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Date Timer Picker'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            EditableDateTime(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditableDateTime extends StatefulWidget {
+  const EditableDateTime({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<TextScreen> createState() => _TextScreenState();
+  State<EditableDateTime> createState() => _EditableDateTimeState();
 }
 
-class _TextScreenState extends State<TextScreen> {
+class _EditableDateTimeState extends State<EditableDateTime> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime dateTime = DateTime.now();
@@ -120,73 +150,25 @@ class _TextScreenState extends State<TextScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Date Timer Picker'),
-        centerTitle: true,
-        backgroundColor: Colors.teal,
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _selectDate(context);
-                  showDate = true;
-                },
-                child: const Text('Date Picker'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: GestureDetector(
+            child: Text(
+              getDateTime(),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            showDate ? Center(child: Text(getDate())) : const SizedBox(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _selectTime(context);
-                  showTime = true;
-                },
-                child: const Text('Timer Picker'),
-              ),
-            ),
-            showTime
-                ? Center(child: Text(getTime(selectedTime)))
-                : const SizedBox(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _selectDateTime(context);
-                },
-                child: const Text('Select Date and Time Picker'),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: GestureDetector(
-                child: Text(
-                  getDateTime(),
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onTap: () {
-                  _selectDateTime(context);
-                },
-              ),
-            )
-          ],
-        ),
-      ),
+            onTap: () {
+              _selectDateTime(context);
+            },
+          ),
+        )
+      ],
     );
   }
 }
