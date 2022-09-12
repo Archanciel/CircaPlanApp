@@ -72,7 +72,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
   }
 
   String transferDataJsonFilePathName =
-      '$path${Platform.pathSeparator}circadian.json';
+      '$path${Platform.pathSeparator}$kDefaultJsonFileName';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
 
