@@ -28,17 +28,52 @@ class MyApp extends StatelessWidget {
 class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   FlutterEditableDateTimeScreen({Key? key}) : super(key: key);
 
-  TextEditingController editableDateTimeController =
+  final TextEditingController editableDateTimeController =
       TextEditingController(text: '');
-  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+  final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
           '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
-
+  Map<String, dynamic> transferDataMap = {
+    "firstDurationIconData": Icons.add,
+    "firstDurationIconColor": Colors.green.shade200,
+    "firstDurationSign": 1,
+    "firstDurationTextColor": Colors.green.shade200,
+    "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
+    "firstDurationStr": "00:50",
+    "firstStartDateTimeStr": "12-07-2022 16:00",
+    "firstEndDateTimeStr": "12-07-2022 16:50",
+    "secondDurationIconData": Icons.remove,
+    "secondDurationIconColor": Colors.red.shade200,
+    "secondDurationSign": -1,
+    "secondDurationTextColor": Colors.red.shade200,
+    "secondDurationStr": "02:00",
+    "secondStartDateTimeStr": "12-07-2022 16:00",
+    "secondEndDateTimeStr": "12-07-2022 14:00",
+    "thirdDurationIconData": Icons.remove,
+    "thirdDurationIconColor": Colors.red.shade200,
+    "thirdDurationSign": -1,
+    "thirdDurationTextColor": Colors.red.shade200,
+    "thirdDurationStr": "00:00",
+    "thirdStartDateTimeStr": "12-07-2022 16:00",
+    "thirdEndDateTimeStr": "12-07-2022 16:00",
+    "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
+    "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+    "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+    "calcSlDurCurrSleepDurationStr": '12:36',
+    "calcSlDurCurrWakeUpDurationStr": '0:02',
+    "calcSlDurCurrTotalDurationStr": '12:38',
+    "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+    "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+    "calcSlDurCurrTotalDurationPercentStr": '100 %',
+    "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+    "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+    "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+    "calcSlDurStatus": Status.sleep,
+    "calcSlDurSleepTimeStrHistory": ['10_07_2022 00:58', '05:35', '04:00'],
+    "calcSlDurWakeUpTimeStrHistory": ['10_07_2022 05:58', '00:35', '01:00'],
+  };
   // used to fill the display select = ion popup menu
-  final Map<String, dynamic> transferDataMap = {};
   final Function(String) handleSelectedDateTimeStr = (String val) => print(val);
-
-  double topSelMenuPosition = 200;
 
   @override
   State<FlutterEditableDateTimeScreen> createState() =>
@@ -61,7 +96,7 @@ class _FlutterEditableDateTimeScreenState
         backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
       ),
       body: Container(
-      color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
+        color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
         margin: EdgeInsets.symmetric(
             horizontal: 15,
             vertical: ScreenMixin.app_computed_vertical_top_margin),
@@ -76,7 +111,12 @@ class _FlutterEditableDateTimeScreenState
                   const SizedBox(
                     height: 15,
                   ),
-                  EditableDateTime(),
+                  EditableDateTime(
+                    dateTimeTitle: 'Start date time',
+                    topSelMenuPosition: 120,
+                    transferDataViewModel: widget.transferDataViewModel,
+                    transferDataMap: widget.transferDataMap,
+                  ),
                 ],
               ),
             ),
@@ -90,20 +130,25 @@ class _FlutterEditableDateTimeScreenState
 class EditableDateTime extends StatefulWidget with ScreenMixin {
   EditableDateTime({
     Key? key,
+    required this.dateTimeTitle,
+    required this.topSelMenuPosition,
+    required this.transferDataViewModel,
+    required this.transferDataMap,
   }) : super(key: key);
 
-  String dateTimeTitle = 'Start date time';
-  TextEditingController editableDateTimeController =
+  final String dateTimeTitle;
+  final TextEditingController editableDateTimeController =
       TextEditingController(text: '');
-  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
-      transferDataJsonFilePathName:
-          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
+  final TransferDataViewModel transferDataViewModel;
+  // final TransferDataViewModel transferDataViewModel;
+  //     transferDataJsonFilePathName:
+  //         '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
 
   // used to fill the display select = ion popup menu
-  final Map<String, dynamic> transferDataMap = {};
+  final Map<String, dynamic> transferDataMap;
   final Function(String) handleSelectedDateTimeStr = (String val) => print(val);
 
-  double topSelMenuPosition = 200;
+  final double topSelMenuPosition;
 
   @override
   State<EditableDateTime> createState() => _EditableDateTimeState();
@@ -114,32 +159,30 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
 }
 
 class _EditableDateTimeState extends State<EditableDateTime> {
-  DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now();
-  DateTime dateTime = DateTime.now();
-  bool showDate = false;
-  bool showTime = false;
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  DateTime _dateTime = DateTime.now();
 
   // Select for Date
   Future<DateTime> _selectDate(BuildContext context) async {
     final selected = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2100),
     );
-    if (selected != null && selected != selectedDate) {
+    if (selected != null && selected != _selectedDate) {
       setState(() {
-        selectedDate = selected;
+        _selectedDate = selected;
       });
     }
-    return selectedDate;
+    return _selectedDate;
   }
 
   Future<TimeOfDay> _selectTime(BuildContext context) async {
     final selected = await showTimePicker(
       context: context,
-      initialTime: selectedTime,
+      initialTime: _selectedTime,
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(
@@ -150,13 +193,13 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       },
     );
 
-    if (selected != null && selected != selectedTime) {
+    if (selected != null && selected != _selectedTime) {
       setState(() {
-        selectedTime = selected;
+        _selectedTime = selected;
       });
     }
 
-    return selectedTime;
+    return _selectedTime;
   }
 
   Future _selectDateTime(BuildContext context) async {
@@ -167,7 +210,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
     if (time == null) return;
     setState(() {
-      dateTime = DateTime(
+      _dateTime = DateTime(
         date.year,
         date.month,
         date.day,
@@ -179,19 +222,19 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
   String getDate() {
     // ignore: unnecessary_null_comparison
-    if (selectedDate == null) {
+    if (_selectedDate == null) {
       return 'select date';
     } else {
-      return DateFormat('MMM d, yyyy').format(selectedDate);
+      return DateFormat('MMM d, yyyy').format(_selectedDate);
     }
   }
 
   String getDateTime() {
     // ignore: unnecessary_null_comparison
-    if (dateTime == null) {
+    if (_dateTime == null) {
       return 'select date timer';
     } else {
-      return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+      return DateFormat('yyyy-MM-dd HH:mm').format(_dateTime);
     }
   }
 
