@@ -177,7 +177,8 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
   }
 
   void handleDateTimeModification(String nowStr) {
-    print(nowStr);
+    stateInstance._dateTime = englishDateTimeFormat.parse(nowStr);
+    stateInstance.callSetState();
   }
 }
 
