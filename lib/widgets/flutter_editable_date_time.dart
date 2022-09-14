@@ -72,8 +72,6 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
     "calcSlDurSleepTimeStrHistory": ['10_07_2022 00:58', '05:35', '04:00'],
     "calcSlDurWakeUpTimeStrHistory": ['10_07_2022 05:58', '00:35', '01:00'],
   };
-  // used to fill the display select = ion popup menu
-  final Function(String) handleSelectedDateTimeStr = (String val) => print(val);
 
   @override
   State<FlutterEditableDateTimeScreen> createState() =>
@@ -140,18 +138,43 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
   final TextEditingController editableDateTimeController =
       TextEditingController(text: '');
   final TransferDataViewModel transferDataViewModel;
-  // final TransferDataViewModel transferDataViewModel;
-  //     transferDataJsonFilePathName:
-  //         '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
 
-  // used to fill the display select = ion popup menu
+  // used to fill the display select date time popup menu
   final Map<String, dynamic> transferDataMap;
-  final Function(String) handleSelectedDateTimeStr = (String val) => print(val);
 
   final double topSelMenuPosition;
 
+  /// This variable enables the DurationDateTimeEditor
+  /// instance to execute the callSetState() method of its
+  /// _DurationDateTimeEditorState instance in order to
+  /// redraw the widget to display the values modified by
+  /// loading a json file.
+  late final _EditableDateTimeState stateInstance;
+
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data to be
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting a item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  ///
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// AppBar load ... sub menu.
+  void callSetState() {
+    stateInstance.callSetState();
+  }
+
   @override
-  State<EditableDateTime> createState() => _EditableDateTimeState();
+  State<EditableDateTime> createState() {
+    stateInstance = _EditableDateTimeState();
+
+    return stateInstance;
+  }
+
+  void handleSelectedDateTimeStr(String selectedDateTimeStr) {
+    stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    stateInstance.callSetState();
+  }
 
   void handleDateTimeModification(String nowStr) {
     print(nowStr);
@@ -162,6 +185,19 @@ class _EditableDateTimeState extends State<EditableDateTime> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
   DateTime _dateTime = DateTime.now();
+
+  /// The method ensures that the current widget (screen or custom widget)
+  /// setState() method is called in order for the loaded data to be
+  /// displayed. Calling this method is necessary since the load function
+  /// is performed after selecting an item in a menu displayed by the AppBar
+  /// menu defined not by the current screen, but by the main app screen.
+  ///
+  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
+  /// method is executed after the file to load has been selected in the
+  /// AppBar load ... sub menu.
+  void callSetState() {
+    setState(() {});
+  }
 
   // Select for Date
   Future<DateTime> _selectDate(BuildContext context) async {
