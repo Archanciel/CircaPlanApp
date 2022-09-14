@@ -232,9 +232,9 @@ class _EditableDateTimeState extends State<EditableDateTime> {
   String getDateTime() {
     // ignore: unnecessary_null_comparison
     if (_dateTime == null) {
-      return 'select date timer';
+      return 'Click to sel date time';
     } else {
-      return DateFormat('yyyy-MM-dd HH:mm').format(_dateTime);
+      return DateFormat('dd-MM-yyyy HH:mm').format(_dateTime);
     }
   }
 
@@ -264,7 +264,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
             SizedBox(
               // Required to fix Row exception
               // layoutConstraints.maxWidth < double.infinity.
-              width: 155,
+              width: 170,
               child: Theme(
                 data: Theme.of(context).copyWith(
                   textSelectionTheme: TextSelectionThemeData(
