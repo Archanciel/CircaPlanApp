@@ -89,7 +89,7 @@ class _FlutterEditableDateTimeScreenState
     return Scaffold(
       backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
-        title: const Text('Date Timer Picker'),
+        title: const Text('Flutter Date Timer Picker'),
         centerTitle: true,
         backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
       ),
