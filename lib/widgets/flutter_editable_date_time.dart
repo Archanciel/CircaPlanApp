@@ -318,6 +318,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
                 ),
                 child: GestureDetector(
                   child: Text(
+                    key: const Key('editableDateTimeText'),
                     _getDateTimeStr(),
                     style: widget.valueTextStyle,
                   ),
