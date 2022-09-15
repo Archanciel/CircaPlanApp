@@ -173,12 +173,23 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
 
   void handleSelectedDateTimeStr(String selectedDateTimeStr) {
     stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _updateDateTimePickerValues();
+
     stateInstance.callSetState();
   }
 
   void handleDateTimeModification(String nowStr) {
     stateInstance._dateTime = englishDateTimeFormat.parse(nowStr);
+    _updateDateTimePickerValues();
+
     stateInstance.callSetState();
+  }
+
+  void _updateDateTimePickerValues() {
+    stateInstance._selectedDate = stateInstance._dateTime;
+    stateInstance._selectedTime = TimeOfDay(
+        hour: stateInstance._dateTime.hour,
+        minute: stateInstance._dateTime.minute);
   }
 }
 
@@ -202,19 +213,19 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
   // Select for Date
   Future<DateTime?> _selectDatePickerDate(BuildContext context) async {
-    final selected = await showDatePicker(
+    final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2100),
     );
 
-    if (selected == null) {
+    if (selectedDate == null) {
       // User clicked on Cancel button
       return null;
     } else {
-      if (selected != _selectedDate) {
-        _selectedDate = selected;
+      if (selectedDate != _selectedDate) {
+        _selectedDate = selectedDate;
       }
     }
 
@@ -222,7 +233,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
   }
 
   Future<TimeOfDay> _selectDatePickerTime(BuildContext context) async {
-    final selected = await showTimePicker(
+    final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
       builder: (BuildContext context, Widget? child) {
@@ -235,8 +246,8 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       },
     );
 
-    if (selected != null && selected != _selectedTime) {
-      _selectedTime = selected;
+    if (selectedTime != null && selectedTime != _selectedTime) {
+      _selectedTime = selectedTime;
     }
 
     return _selectedTime;
@@ -251,7 +262,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       return;
     }
 
-    final time = await _selectDatePickerTime(context);
+    final TimeOfDay time = await _selectDatePickerTime(context);
 
     setState(() {
       _dateTime = DateTime(
