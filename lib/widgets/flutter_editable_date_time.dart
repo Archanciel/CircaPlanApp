@@ -202,22 +202,22 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
   // Select for Date
   Future<DateTime> _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
+    final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2100),
     );
-    if (selected != null && selected != _selectedDate) {
+    if (selectedDate != null && selectedDate != _selectedDate) {
       setState(() {
-        _selectedDate = selected;
+        _selectedDate = selectedDate;
       });
     }
     return _selectedDate;
   }
 
   Future<TimeOfDay> _selectTime(BuildContext context) async {
-    final selected = await showTimePicker(
+    final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
       builder: (BuildContext context, Widget? child) {
@@ -230,9 +230,9 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       },
     );
 
-    if (selected != null && selected != _selectedTime) {
+    if (selectedTime != null && selectedTime != _selectedTime) {
       setState(() {
-        _selectedTime = selected;
+        _selectedTime = selectedTime;
       });
     }
 
