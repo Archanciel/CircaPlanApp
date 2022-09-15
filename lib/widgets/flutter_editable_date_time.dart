@@ -201,22 +201,27 @@ class _EditableDateTimeState extends State<EditableDateTime> {
   }
 
   // Select for Date
-  Future<DateTime> _selectDate(BuildContext context) async {
+  Future<DateTime?> _selectDatePickerDate(BuildContext context) async {
     final selected = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2100),
     );
-    if (selected != null && selected != _selectedDate) {
-      setState(() {
+
+    if (selected == null) {
+      // User clicked on Cancel button
+      return null;
+    } else {
+      if (selected != _selectedDate) {
         _selectedDate = selected;
-      });
+      }
     }
+
     return _selectedDate;
   }
 
-  Future<TimeOfDay> _selectTime(BuildContext context) async {
+  Future<TimeOfDay> _selectDatePickerTime(BuildContext context) async {
     final selected = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
@@ -231,21 +236,23 @@ class _EditableDateTimeState extends State<EditableDateTime> {
     );
 
     if (selected != null && selected != _selectedTime) {
-      setState(() {
-        _selectedTime = selected;
-      });
+      _selectedTime = selected;
     }
 
     return _selectedTime;
   }
 
-  Future _selectDateTime(BuildContext context) async {
-    final date = await _selectDate(context);
-    if (date == null) return;
+  Future _selectDatePickerDateTime(BuildContext context) async {
+    final DateTime? date = await _selectDatePickerDate(context);
 
-    final time = await _selectTime(context);
+    if (date == null) {
+      // User clicked on Cancel button. In this case, the time
+      // picker dialog is not displayed.
+      return;
+    }
 
-    if (time == null) return;
+    final time = await _selectDatePickerTime(context);
+
     setState(() {
       _dateTime = DateTime(
         date.year,
@@ -257,30 +264,8 @@ class _EditableDateTimeState extends State<EditableDateTime> {
     });
   }
 
-  String getDate() {
-    // ignore: unnecessary_null_comparison
-    if (_selectedDate == null) {
-      return 'select date';
-    } else {
-      return DateFormat('MMM d, yyyy').format(_selectedDate);
-    }
-  }
-
   String _getDateTimeStr() {
-    // ignore: unnecessary_null_comparison
-    if (_dateTime == null) {
-      return 'Click to sel date time';
-    } else {
-      return widget.frenchDateTimeFormat.format(_dateTime);
-    }
-  }
-
-  String getTime(TimeOfDay tod) {
-    final now = DateTime.now();
-
-    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.jm();
-    return format.format(dt);
+    return widget.frenchDateTimeFormat.format(_dateTime);
   }
 
   @override
@@ -314,7 +299,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
                     style: widget.valueTextStyle,
                   ),
                   onTap: () {
-                    _selectDateTime(context);
+                    _selectDatePickerDateTime(context);
                   },
                 ),
               ),
