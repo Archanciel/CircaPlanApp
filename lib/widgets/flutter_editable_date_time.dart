@@ -232,7 +232,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
     return _selectedDate;
   }
 
-  Future<TimeOfDay> _selectDatePickerTime(BuildContext context) async {
+  Future<TimeOfDay?> _selectDatePickerTime(BuildContext context) async {
     final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
@@ -246,8 +246,13 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       },
     );
 
-    if (selectedTime != null && selectedTime != _selectedTime) {
-      _selectedTime = selectedTime;
+    if (selectedTime == null) {
+      // User clicked on Cancel button
+      return null;
+    } else {
+      if (selectedTime != _selectedTime) {
+        _selectedTime = selectedTime;
+      }
     }
 
     return _selectedTime;
@@ -257,12 +262,19 @@ class _EditableDateTimeState extends State<EditableDateTime> {
     final DateTime? date = await _selectDatePickerDate(context);
 
     if (date == null) {
-      // User clicked on Cancel button. In this case, the time
-      // picker dialog is not displayed.
+      // User clicked on date picker dialog Cancel button. In
+      // this case, the time picker dialog is not displayed and
+      // the _dateTime value is not modified.
       return;
     }
 
-    final TimeOfDay time = await _selectDatePickerTime(context);
+    final TimeOfDay? time = await _selectDatePickerTime(context);
+
+    if (time == null) {
+      // User clicked on time picker dialog Cancel button. In
+      // this case, the _dateTime value is not modified.
+      return;
+    }
 
     setState(() {
       _dateTime = DateTime(
