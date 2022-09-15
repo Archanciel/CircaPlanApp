@@ -266,12 +266,12 @@ class _EditableDateTimeState extends State<EditableDateTime> {
     }
   }
 
-  String getDateTime() {
+  String _getDateTimeStr() {
     // ignore: unnecessary_null_comparison
     if (_dateTime == null) {
       return 'Click to sel date time';
     } else {
-      return DateFormat('dd-MM-yyyy HH:mm').format(_dateTime);
+      return widget.frenchDateTimeFormat.format(_dateTime);
     }
   }
 
@@ -310,7 +310,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
                 ),
                 child: GestureDetector(
                   child: Text(
-                    getDateTime(),
+                    _getDateTimeStr(),
                     style: widget.valueTextStyle,
                   ),
                   onTap: () {
