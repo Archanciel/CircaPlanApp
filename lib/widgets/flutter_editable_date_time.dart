@@ -1,12 +1,10 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
 import 'dart:io';
+import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import '../buslog/transfer_data_view_model.dart';
 
 void main() {
@@ -113,15 +111,20 @@ class _FlutterEditableDateTimeScreenState
                   const SizedBox(
                     height: 15,
                   ),
-                  editableDateTimeWidget,
-                  TwoButtonsWidget(
-                    topSelMenuPosition: 120,
-                    transferDataViewModel: widget.transferDataViewModel,
-                    transferDataMap: widget.transferDataMap,
-                    handleDateTimeModification:
-                        editableDateTimeWidget.handleDateTimeModification,
-                    handleSelectedDateTimeStr:
-                        editableDateTimeWidget.handleSelectedDateTimeStr,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      editableDateTimeWidget,
+                      TwoButtonsWidget(
+                        topSelMenuPosition: 120,
+                        transferDataViewModel: widget.transferDataViewModel,
+                        transferDataMap: widget.transferDataMap,
+                        handleDateTimeModification:
+                            editableDateTimeWidget.handleDateTimeModification,
+                        handleSelectedDateTimeStr:
+                            editableDateTimeWidget.handleSelectedDateTimeStr,
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -302,47 +305,42 @@ class _EditableDateTimeState extends State<EditableDateTime> {
   @override
   Widget build(BuildContext context) {
     print('_EditableDateTimeState.build()');
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.dateTimeTitle,
-              style: widget.labelTextStyle,
-            ),
-            const SizedBox(
-              height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-            ),
-            SizedBox(
-              // Required to fix Row exception
-              // layoutConstraints.maxWidth < double.infinity.
-              width: 170,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: widget.selectionColor,
-                  ),
-                ),
-                child: GestureDetector(
-                  child: Text(
-                    key: const Key('editableDateTimeText'),
-                    _getDateTimeStr(),
-                    style: widget.valueTextStyle,
-                  ),
-                  onTap: () {
-                    _selectDatePickerDateTime(context);
-                  },
-                ),
+        Text(
+          widget.dateTimeTitle,
+          style: widget.labelTextStyle,
+        ),
+        const SizedBox(
+          height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
+        ),
+        SizedBox(
+          // Required to fix Row exception
+          // layoutConstraints.maxWidth < double.infinity.
+          width: 170,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              textSelectionTheme: TextSelectionThemeData(
+                selectionColor: widget.selectionColor,
               ),
             ),
-            const SizedBox(
-              height: kVerticalFieldDistance, // required for correct
-              //                                 Now and Sel buttons
-              //                                 positioning.
+            child: GestureDetector(
+              child: Text(
+                key: const Key('editableDateTimeText'),
+                _getDateTimeStr(),
+                style: widget.valueTextStyle,
+              ),
+              onTap: () {
+                _selectDatePickerDateTime(context);
+              },
             ),
-          ],
+          ),
+        ),
+        const SizedBox(
+          height: kVerticalFieldDistance, // required for correct
+          //                                 Now and Sel buttons
+          //                                 positioning.
         ),
       ],
     );
