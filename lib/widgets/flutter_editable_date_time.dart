@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('MyApp.build()');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FlutterEditableDateTimeScreen(),
@@ -82,6 +83,7 @@ class _FlutterEditableDateTimeScreenState
     extends State<FlutterEditableDateTimeScreen> {
   @override
   Widget build(BuildContext context) {
+    print('_FlutterEditableDateTimeScreenState.build()');
     return Scaffold(
       backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
@@ -289,6 +291,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
   @override
   Widget build(BuildContext context) {
+    print('_EditableDateTimeState.build()');
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -331,57 +334,12 @@ class _EditableDateTimeState extends State<EditableDateTime> {
             ),
           ],
         ),
-        Row(
-          children: [
-            ElevatedButton(
-              key: const Key('editableDateTimeNowButton'),
-              style: ButtonStyle(
-                  backgroundColor: widget.appElevatedButtonBackgroundColor,
-                  shape: widget.appElevatedButtonRoundedShape),
-              onPressed: () {
-                String nowStr = DateTime.now().toString();
-                widget.editableDateTimeController.text = nowStr;
-                widget.handleDateTimeModification(nowStr);
-              },
-              child: const Text(
-                'Now',
-                style: TextStyle(
-                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            ElevatedButton(
-              key: const Key('editableDateTimeSelButton'),
-              style: ButtonStyle(
-                  backgroundColor: widget.appElevatedButtonBackgroundColor,
-                  shape: widget.appElevatedButtonRoundedShape),
-              onPressed: () {
-                widget.displaySelPopupMenu(
-                  context: context,
-                  selectableStrItemLst: widget.buildSortedAppDateTimeStrList(
-                      transferDataMap: widget.transferDataMap,
-                      mostRecentFirst: true,
-                      transferDataViewModel: widget.transferDataViewModel),
-                  posRectangleLTRB: RelativeRect.fromLTRB(
-                    1.0,
-                    widget.topSelMenuPosition,
-                    0.0,
-                    0.0,
-                  ),
-                  handleSelectedItem: widget.handleSelectedDateTimeStr,
-                );
-              },
-              child: const Text(
-                'Sel',
-                style: TextStyle(
-                  fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                ),
-              ),
-            ),
-          ],
+        TwoButtonsWidget(
+          topSelMenuPosition: widget.topSelMenuPosition,
+          transferDataViewModel: widget.transferDataViewModel,
+          transferDataMap: widget.transferDataMap,
+          handleDateTimeModification: widget.handleDateTimeModification,
+          handleSelectedDateTimeStr: widget.handleSelectedDateTimeStr,
         ),
       ],
     );
@@ -394,6 +352,8 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
     required this.transferDataMap,
+    required this.handleDateTimeModification,
+    required this.handleSelectedDateTimeStr,
   }) : super(key: key);
 
   final TextEditingController editableDateTimeController =
@@ -404,7 +364,8 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final Map<String, dynamic> transferDataMap;
 
   final double topSelMenuPosition;
-
+  final void Function(String) handleDateTimeModification;
+  final void Function(String) handleSelectedDateTimeStr;
 
   @override
   State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();
@@ -413,6 +374,7 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
 class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
   @override
   Widget build(BuildContext context) {
+    print('_TwoButtonsWidgetState.build()');
     return Row(
       children: [
         ElevatedButton(
