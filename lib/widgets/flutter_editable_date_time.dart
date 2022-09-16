@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('MyApp.build()');
+    // print('MyApp.build()');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FlutterEditableDateTimeScreen(),
@@ -83,7 +83,7 @@ class _FlutterEditableDateTimeScreenState
     extends State<FlutterEditableDateTimeScreen> {
   @override
   Widget build(BuildContext context) {
-    print('_FlutterEditableDateTimeScreenState.build()');
+    // print('_FlutterEditableDateTimeScreenState.build()');
     return Scaffold(
       backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
@@ -291,7 +291,7 @@ class _EditableDateTimeState extends State<EditableDateTime> {
 
   @override
   Widget build(BuildContext context) {
-    print('_EditableDateTimeState.build()');
+    // print('_EditableDateTimeState.build()');
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -374,7 +374,7 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
 class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
   @override
   Widget build(BuildContext context) {
-    print('_TwoButtonsWidgetState.build()');
+    // print('_TwoButtonsWidgetState.build()');
     return Row(
       children: [
         ElevatedButton(
