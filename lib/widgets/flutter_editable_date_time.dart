@@ -84,6 +84,12 @@ class _FlutterEditableDateTimeScreenState
   @override
   Widget build(BuildContext context) {
     print('_FlutterEditableDateTimeScreenState.build()');
+    EditableDateTime editableDateTimeWidget = EditableDateTime(
+      dateTimeTitle: 'Start date time',
+      topSelMenuPosition: 120,
+      transferDataViewModel: widget.transferDataViewModel,
+      transferDataMap: widget.transferDataMap,
+    );
     return Scaffold(
       backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
@@ -107,11 +113,15 @@ class _FlutterEditableDateTimeScreenState
                   const SizedBox(
                     height: 15,
                   ),
-                  EditableDateTime(
-                    dateTimeTitle: 'Start date time',
+                  editableDateTimeWidget,
+                  TwoButtonsWidget(
                     topSelMenuPosition: 120,
                     transferDataViewModel: widget.transferDataViewModel,
                     transferDataMap: widget.transferDataMap,
+                    handleDateTimeModification:
+                        editableDateTimeWidget.handleDateTimeModification,
+                    handleSelectedDateTimeStr:
+                        editableDateTimeWidget.handleSelectedDateTimeStr,
                   ),
                 ],
               ),
@@ -333,13 +343,6 @@ class _EditableDateTimeState extends State<EditableDateTime> {
               //                                 positioning.
             ),
           ],
-        ),
-        TwoButtonsWidget(
-          topSelMenuPosition: widget.topSelMenuPosition,
-          transferDataViewModel: widget.transferDataViewModel,
-          transferDataMap: widget.transferDataMap,
-          handleDateTimeModification: widget.handleDateTimeModification,
-          handleSelectedDateTimeStr: widget.handleSelectedDateTimeStr,
         ),
       ],
     );
