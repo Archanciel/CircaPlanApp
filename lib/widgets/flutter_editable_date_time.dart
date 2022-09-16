@@ -76,10 +76,6 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   @override
   State<FlutterEditableDateTimeScreen> createState() =>
       _FlutterEditableDateTimeScreenState();
-
-  void handleDateTimeModification(String nowStr) {
-    print(nowStr);
-  }
 }
 
 class _FlutterEditableDateTimeScreenState
