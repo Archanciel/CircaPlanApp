@@ -1,12 +1,10 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
 import 'dart:io';
+import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import '../buslog/transfer_data_view_model.dart';
 
 void main() {
@@ -372,10 +370,20 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
 }
 
 class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
+  Widget? _widgetBody;
+
   @override
   Widget build(BuildContext context) {
+    if (_widgetBody != null) {
+      // Since the TwoButtonsWidget layout is not modified
+      // after it has been built, avoiding rebuilding it
+      // each time its including widget is rebuilt improves
+      // app performance
+      return _widgetBody!;
+    }
+
     // print('_TwoButtonsWidgetState.build()');
-    return Row(
+    _widgetBody = Row(
       children: [
         ElevatedButton(
           key: const Key('editableDateTimeNowButton'),
@@ -427,5 +435,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
         ),
       ],
     );
+
+    return _widgetBody!;
   }
 }
