@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
-import 'package:circa_plan/widgets/editable_date_time.dart';
+import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -239,14 +239,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'Start date time',
-                    dateTimePickerController: _startDateTimePickerController,
-                    handleDateTimeModificationFunction:
-                        handleStartDateTimeChange,
-                    transferDataMap: _transferDataMap,
-                    handleSelectedDateTimeStrFunction:
-                        _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
+                    transferDataMap: _transferDataMap,
+                    handleDateTimeModificationFunction:
+                        handleStartDateTimeChange,
+                    handleSelectedDateTimeStrFunction:
+                        _handleSelectedStartDateTimeStr,
                   ),
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,
