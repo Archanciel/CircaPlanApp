@@ -15,7 +15,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 ///
 /// This widget is included in the AddSubtractResultableDuration
 /// widget.
-class EditableDateTime extends StatelessWidget with ScreenMixin {
+class EditableDateTimeToDel extends StatelessWidget with ScreenMixin {
   final String _dateTimeTitle;
   final TextEditingController _dateTimePickerController;
   final Function _handleDateTimeModification;
@@ -27,7 +27,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final Function(String) _handleSelectedDateTimeStr;
   final double _topSelMenuPosition;
 
-  EditableDateTime({
+  EditableDateTimeToDel({
     required String dateTimeTitle,
     required TextEditingController dateTimePickerController,
     required Function handleDateTimeModificationFunction,
