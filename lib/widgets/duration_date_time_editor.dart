@@ -39,7 +39,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     required this.transferDataViewModel,
     required Map<String, dynamic> transferDataMap,
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
-    bool this.saveTransferDataIfModified = false,
+    this.saveTransferDataIfModified = false,
   })  : _widgetName = widgetName,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
@@ -193,9 +193,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationTextFieldController.text = _durationStr;
 
     _updateTransferDataMap(); // must be executed before calling
-    // the next AddSubtractResultableDuration widget reset method in
+    // the next DurationDateTimeEditor widget reset method in
     // order for the transfer data map to be updated before the last
-    // linked third AddSubtractResultableDuration widget calls the
+    // linked third DurationDateTimeEditor widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     if (_nextAddSubtractResultableDuration != null) {
@@ -249,11 +249,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
 
     _updateTransferDataMap(); // must be executed before calling
-    // the next AddSubtractResultableDuration widget
-    // setStartDateTimeStr() method in order for the transfer data
-    // map to be updated before the last linked third
-    // AddSubtractResultableDuration widget _updateTransferDataMap()
-    // method calls the TransferDataViewModel.updateAndSaveTransferData()
+    // the next DurationDateTimeEditor widget
+    // setStartDateTimeStr() method in order for the transfer
+    // data map to be updated before the last linked third
+    // DurationDateTimeEditor widget
+    // _updateTransferDataMap() method calls the
+    // TransferDataViewModel.updateAndSaveTransferData()
     // method !
 
     if (_nextAddSubtractResultableDuration != null) {
@@ -320,12 +321,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
 
     _updateTransferDataMap(); // must be executed before calling
-    // the next AddSubtractResultableDuration widget
-    // setStartDateTimeStr() method in order for the transfer data
-    // map to be updated before the last linked third
-    // AddSubtractResultableDuration widget _updateTransferDataMap()
-    // method calls the TransferDataViewModel.updateAndSaveTransferData()
-    // method !
+    // the next DurationDateTimeEditor widget
+    // setStartDateTimeStr() method in order for the transfer
+    // data map to be updated before the last linked third
+    // DurationDateTimeEditor widget _updateTransferDataMap()
+    // method calls the
+    // TransferDataViewModel.updateAndSaveTransferData() method.
 
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
@@ -334,11 +335,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   }
 
   /// This method must be executed before calling the next
-  /// AddSubtractResultableDuration widget setStartDateTimeStr() or
-  /// reset() method in order for the transfer data map to be updated
-  /// before the last linked third AddSubtractResultableDuration
-  /// widget _updateTransferDataMap() method calls the
-  /// TransferDataViewModel.updateAndSaveTransferData() method !
+  /// DurationDateTimeEditor widget setStartDateTimeStr()
+  /// or reset() method in order for the transfer data map to be
+  /// updated before the last linked third
+  /// DurationDateTimeEditor widget _updateTransferDataMap()
+  /// method calls the
+  /// TransferDataViewModel.updateAndSaveTransferData() method.
   void _updateTransferDataMap() {
     _transferDataMap['${_widgetName}DurationIconData'] = _durationIcon;
     _transferDataMap['${_widgetName}DurationIconColor'] = _durationIconColor;
