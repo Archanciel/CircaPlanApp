@@ -7,6 +7,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import '../buslog/transfer_data_view_model.dart';
+import 'duration_date_time_editor.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,6 +87,25 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
 
 class _FlutterEditableDateTimeScreenState
     extends State<FlutterEditableDateTimeScreen> {
+  late DurationDateTimeEditor _firstDurationDateTimeEditorWidget;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
+      key: const Key('firstAddSubtractResultableDuration'),
+      widgetName: 'first',
+      dateTimeTitle: 'End date time',
+      topSelMenuPosition: 210.0,
+      nowDateTimeEnglishFormatStr: DateTime.now().toString(),
+      transferDataViewModel: widget.transferDataViewModel,
+      transferDataMap: widget.transferDataMap,
+      nextAddSubtractResultableDuration: null,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // print('_FlutterEditableDateTimeScreenState.build()');
@@ -122,6 +142,14 @@ class _FlutterEditableDateTimeScreenState
                     handleSelectedDateTimeStrFunction:
                         widget.handleEndDateTimeSelected,
                   ),
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                    //                  height ...
+                    height: kVerticalFieldDistanceAddSubScreen,
+                  ),
+                  _firstDurationDateTimeEditorWidget,
                 ],
               ),
             ),
