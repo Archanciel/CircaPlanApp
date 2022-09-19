@@ -183,7 +183,7 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
 
-    handleDateTimeModificationFunction(selectedDateTimeStr);
+    handleSelectedDateTimeStrFunction(selectedDateTimeStr);
 
     stateInstance.callSetState();
   }
@@ -192,7 +192,7 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     stateInstance._dateTime = englishDateTimeFormat.parse(nowStr);
     _updateDateTimePickerValues();
 
-    handleSelectedDateTimeStrFunction(nowStr);
+    handleDateTimeModificationFunction(nowStr);
 
     stateInstance.callSetState();
   }
