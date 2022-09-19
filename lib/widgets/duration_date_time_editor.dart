@@ -110,6 +110,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   final TextEditingController _dateTimePickerController =
       TextEditingController();
 
+  late EditableDateTime _editableDateTime;
+
   _DurationDateTimeEditorState({
     required String widgetName,
     required String nowDateTimeEnglishFormatStr,
@@ -173,6 +175,20 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     super.initState();
 
     _dateTimePickerController.text = _endDateTimeStr;
+
+    // EditableDateTime must be instanciated here and not in
+    // _DurationDateTimeEditorState.build() method, otherwise
+    // EditableDateTime.stateInstance will not be initialized,
+    // which will throw an Exception when clicking on Now or
+    // Sel button.
+    _editableDateTime = EditableDateTime(
+      dateTimeTitle: widget.dateTimeTitle,
+      topSelMenuPosition: widget.topSelMenuPosition,
+      transferDataViewModel: widget.transferDataViewModel,
+      transferDataMap: widget._transferDataMap,
+      handleDateTimeModificationFunction: handleEndDateTimeChange,
+      handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
+    );
   }
 
   String get endDateTimeStr => _dateTimePickerController.text;
@@ -445,14 +461,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           height: kVerticalFieldDistance, // required for correct Now and Sel
           //                                 buttons positioning.
         ),
-        EditableDateTime(
-          dateTimeTitle: widget.dateTimeTitle,
-          topSelMenuPosition: widget.topSelMenuPosition,
-          transferDataViewModel: widget.transferDataViewModel,
-          transferDataMap: widget._transferDataMap,
-          handleDateTimeModificationFunction: handleEndDateTimeChange,
-          handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
-        ),
+        _editableDateTime,
       ],
     );
   }
