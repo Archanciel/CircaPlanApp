@@ -73,6 +73,14 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   @override
   State<FlutterEditableDateTimeScreen> createState() =>
       _FlutterEditableDateTimeScreenState();
+
+  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+    print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
+  }
+
+  void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
+    print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
+  }
 }
 
 class _FlutterEditableDateTimeScreenState
@@ -108,6 +116,10 @@ class _FlutterEditableDateTimeScreenState
                     topSelMenuPosition: 120,
                     transferDataViewModel: widget.transferDataViewModel,
                     transferDataMap: widget.transferDataMap,
+                    handleDateTimeModificationFunction:
+                        widget.handleEndDateTimeChange,
+                    handleSelectedDateTimeStrFunction:
+                        widget.handleEndDateTimeSelected,
                   ),
                 ],
               ),
@@ -126,6 +138,8 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
     required this.transferDataMap,
+    required this.handleDateTimeModificationFunction,
+    required this.handleSelectedDateTimeStrFunction,
   }) : super(key: key);
 
   final String dateTimeTitle;
@@ -135,6 +149,8 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
   final Map<String, dynamic> transferDataMap;
 
   final double topSelMenuPosition;
+  final Function handleDateTimeModificationFunction;
+  final Function(String) handleSelectedDateTimeStrFunction;
 
   /// This variable enables the DurationDateTimeEditor
   /// instance to execute the callSetState() method of its
@@ -167,12 +183,16 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
 
+    handleDateTimeModificationFunction(selectedDateTimeStr);
+
     stateInstance.callSetState();
   }
 
   void handleDateTimeNowButtonPressed(String nowStr) {
     stateInstance._dateTime = englishDateTimeFormat.parse(nowStr);
     _updateDateTimePickerValues();
+
+    handleSelectedDateTimeStrFunction(nowStr);
 
     stateInstance.callSetState();
   }
@@ -277,6 +297,9 @@ class _EditableDateTimeState extends State<EditableDateTime> {
         time.minute,
       );
     });
+
+    widget.handleDateTimeModificationFunction(
+        widget.englishDateTimeFormat.format(_dateTime));
   }
 
   String _getDateTimeStr() {
