@@ -163,14 +163,14 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     return stateInstance;
   }
 
-  void handleSelectedDateTimeStr(String selectedDateTimeStr) {
+  void handleSelectDateTimeButtonPressed(String selectedDateTimeStr) {
     stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
 
     stateInstance.callSetState();
   }
 
-  void handleDateTimeModification(String nowStr) {
+  void handleDateTimeNowButtonPressed(String nowStr) {
     stateInstance._dateTime = englishDateTimeFormat.parse(nowStr);
     _updateDateTimePickerValues();
 
@@ -332,8 +332,8 @@ class _EditableDateTimeState extends State<EditableDateTime> {
           topSelMenuPosition: widget.topSelMenuPosition,
           transferDataViewModel: widget.transferDataViewModel,
           transferDataMap: widget.transferDataMap,
-          handleDateTimeModification: widget.handleDateTimeModification,
-          handleSelectedDateTimeStr: widget.handleSelectedDateTimeStr,
+          handleDateTimeModification: widget.handleDateTimeNowButtonPressed,
+          handleSelectedDateTimeStr: widget.handleSelectDateTimeButtonPressed,
         ),
       ],
     );
