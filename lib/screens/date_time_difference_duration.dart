@@ -1,7 +1,7 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/utils/utility.dart';
-import 'package:circa_plan/widgets/editable_date_time.dart';
+import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import 'package:circa_plan/widgets/editable_duration.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -337,7 +337,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'Start date time',
-                    dateTimePickerController: _startDateTimeController,
                     handleDateTimeModificationFunction: _setStateDiffDuration,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
@@ -347,7 +346,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'End date time',
-                    dateTimePickerController: _endDateTimeController,
                     handleDateTimeModificationFunction: _setStateDiffDuration,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
