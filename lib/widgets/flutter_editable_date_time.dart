@@ -27,8 +27,6 @@ class MyApp extends StatelessWidget {
 class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   FlutterEditableDateTimeScreen({Key? key}) : super(key: key);
 
-  final TextEditingController editableDateTimeController =
-      TextEditingController(text: '');
   final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
           '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
@@ -131,8 +129,6 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
   }) : super(key: key);
 
   final String dateTimeTitle;
-  final TextEditingController editableDateTimeController =
-      TextEditingController(text: '');
   final TransferDataViewModel transferDataViewModel;
 
   // used to fill the display select date time popup menu
@@ -354,8 +350,6 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
     required this.handleSelectedDateTimeStr,
   }) : super(key: key);
 
-  final TextEditingController editableDateTimeController =
-      TextEditingController(text: '');
   final TransferDataViewModel transferDataViewModel;
 
   // used to fill the display select date time popup menu
@@ -392,7 +386,6 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               shape: widget.appElevatedButtonRoundedShape),
           onPressed: () {
             String nowStr = DateTime.now().toString();
-            widget.editableDateTimeController.text = nowStr;
             widget.handleDateTimeModification(nowStr);
           },
           child: const Text(
