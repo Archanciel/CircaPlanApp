@@ -70,6 +70,9 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   late EditableDurationPercent _editableDurationPercentWidget;
 
+  late EditableDateTime _editableDateTimeStart;
+  late EditableDateTime _editableDateTimeEnd;
+
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
@@ -100,6 +103,24 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void initState() {
     super.initState();
 
+    _editableDateTimeStart = EditableDateTime(
+      dateTimeTitle: 'Start date time',
+      handleDateTimeModificationFunction: _setStateDiffDurationStartDateTime,
+      transferDataMap: _transferDataMap,
+      handleSelectedDateTimeStrFunction: _handleSelectedStartDateTimeStr,
+      topSelMenuPosition: 135.0,
+      transferDataViewModel: _transferDataViewModel,
+    );
+
+    _editableDateTimeEnd = EditableDateTime(
+      dateTimeTitle: 'End date time',
+      handleDateTimeModificationFunction: _setStateDiffDurationEndDateTime,
+      transferDataMap: _transferDataMap,
+      handleSelectedDateTimeStrFunction: _handleSelectedEndDateTimeStr,
+      topSelMenuPosition: 203.0,
+      transferDataViewModel: _transferDataViewModel,
+    );
+
     // The reference to the stateful widget State instance stored in
     // the transfer data map is used in the
     // _MainAppState.handleSelectedLoadFileName() method executed after
@@ -111,7 +132,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     // The next instruction enables updating duration % value
     // when going back to the date time difference screen.
-    // As a consequence, the duration % value does not need to 
+    // As a consequence, the duration % value does not need to
     // be stored in the transfer data map !
     String editableDurationPercentWidgetDurationStr =
         (_finalDurationStr.isNotEmpty) ? _finalDurationStr : _durationStr;
@@ -200,8 +221,51 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   /// Private method called each time one of the elements
   /// implied in calculating the Duration value is changed.
-  void _setStateDiffDuration(_) {
+  void _setStateDiffDurationEndDateTime(String englishFormatEndDateTime) {
     _startDateTimeStr = _startDateTimeController.text;
+    DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
+    _endDateTimeStr = englishFormatEndDateTime;
+    _endDateTimeController.text = _endDateTimeStr;
+    DateTime endDateTime = englishDateTimeFormat.parse(_endDateTimeStr);
+    Duration diffDuration;
+
+    if (endDateTime.isAfter(startDateTime)) {
+      diffDuration = endDateTime.difference(startDateTime);
+    } else {
+      diffDuration = startDateTime.difference(endDateTime);
+    }
+
+    Duration? finalDuration;
+    Duration? addTimeDuration = DateTimeParser.parseHHmmDuration(_addTimeStr);
+
+    if (addTimeDuration != null) {
+      finalDuration = diffDuration + addTimeDuration;
+    }
+
+    _durationStr = diffDuration.HHmm();
+    _durationTextFieldController.text = _durationStr;
+    _finalDurationStr = finalDuration?.HHmm() ?? '';
+    _finalDurationTextFieldController.text = _finalDurationStr;
+
+    // Re-enabling the next five lines of code no longer prevent
+    // Undo to work since _editableDurationPercentWidget line
+    // 135 has been commented out !
+    if (_finalDurationStr.isNotEmpty) {
+      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+    } else {
+      _editableDurationPercentWidget.setDurationStr(_durationStr);
+    }
+
+    setState(() {});
+
+    _updateTransferDataMap();
+  }
+
+  /// Private method called each time one of the elements
+  /// implied in calculating the Duration value is changed.
+  void _setStateDiffDurationStartDateTime(String englishFormatStartDateTime) {
+    _startDateTimeStr = englishFormatStartDateTime;
+    _startDateTimeController.text = _startDateTimeStr;
     DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
     _endDateTimeStr = _endDateTimeController.text;
     DateTime endDateTime = englishDateTimeFormat.parse(_endDateTimeStr);
@@ -304,14 +368,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTime.toString();
 
-    _setStateDiffDuration(selectedDateTimeStr);
+    _setStateDiffDurationStartDateTime(selectedDateTimeStr);
   }
 
   void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _endDateTimeController.text = selectedDateTime.toString();
 
-    _setStateDiffDuration(selectedDateTimeStr);
+    _setStateDiffDurationEndDateTime(selectedDateTimeStr);
   }
 
   @override
@@ -335,24 +399,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   const SizedBox(
                     height: 15,
                   ),
-                  EditableDateTime(
-                    dateTimeTitle: 'Start date time',
-                    handleDateTimeModificationFunction: _setStateDiffDuration,
-                    transferDataMap: _transferDataMap,
-                    handleSelectedDateTimeStrFunction:
-                        _handleSelectedStartDateTimeStr,
-                    topSelMenuPosition: 135.0,
-                    transferDataViewModel: _transferDataViewModel,
-                  ),
-                  EditableDateTime(
-                    dateTimeTitle: 'End date time',
-                    handleDateTimeModificationFunction: _setStateDiffDuration,
-                    transferDataMap: _transferDataMap,
-                    handleSelectedDateTimeStrFunction:
-                        _handleSelectedEndDateTimeStr,
-                    topSelMenuPosition: 203.0,
-                    transferDataViewModel: _transferDataViewModel,
-                  ),
+                  _editableDateTimeStart,
+                  _editableDateTimeEnd,
                   EditableDuration(
                     dateTimeTitle: 'Duration',
                     durationTextFieldController: _durationTextFieldController,
