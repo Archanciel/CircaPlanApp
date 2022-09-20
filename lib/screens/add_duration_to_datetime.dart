@@ -55,6 +55,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   late DurationDateTimeEditor _secondDurationDateTimeEditorWidget;
   late DurationDateTimeEditor _thirdDurationDateTimeEditorWidget;
 
+  late EditableDateTime _editableDateTime;
+
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
@@ -84,6 +86,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   @override
   void initState() {
     super.initState();
+
+    // EditableDateTime must be instanciated here and not in
+    // _DurationDateTimeEditorState.build() method, otherwise
+    // EditableDateTime.stateInstance will not be initialized,
+    // which will throw an Exception when clicking on Now or
+    // Sel button.
+    _editableDateTime = EditableDateTime(
+      dateTimeTitle: 'Start date time',
+      topSelMenuPosition: 135.0,
+      transferDataViewModel: _transferDataViewModel,
+      transferDataMap: _transferDataMap,
+      handleDateTimeModificationFunction: handleStartDateTimeChange,
+      handleSelectedDateTimeStrFunction: _handleSelectedStartDateTimeStr,
+    );
 
     // The reference to the stateful widget State instance stored in
     // the transfer data map is used in the
@@ -237,16 +253,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     height: 15,
                   ),
-                  EditableDateTime(
-                    dateTimeTitle: 'Start date time',
-                    topSelMenuPosition: 135.0,
-                    transferDataViewModel: _transferDataViewModel,
-                    transferDataMap: _transferDataMap,
-                    handleDateTimeModificationFunction:
-                        handleStartDateTimeChange,
-                    handleSelectedDateTimeStrFunction:
-                        _handleSelectedStartDateTimeStr,
-                  ),
+                  _editableDateTime,
+
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,
                   const SizedBox(

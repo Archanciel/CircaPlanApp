@@ -107,8 +107,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
   final TextEditingController _durationTextFieldController =
       TextEditingController();
-  final TextEditingController _dateTimePickerController =
-      TextEditingController();
 
   late EditableDateTime _editableDateTime;
 
@@ -165,7 +163,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         nowDateTimeEnglishFormatStr;
     _endDateTimeStr = _transferDataMap['${_widgetName}EndDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
-    _dateTimePickerController.text = _endDateTimeStr;
+    _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
 
     setState(() {});
   }
@@ -173,8 +171,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   @override
   void initState() {
     super.initState();
-
-    _dateTimePickerController.text = _endDateTimeStr;
 
     // EditableDateTime must be instanciated here and not in
     // _DurationDateTimeEditorState.build() method, otherwise
@@ -189,9 +185,20 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       handleDateTimeModificationFunction: handleEndDateTimeChange,
       handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Adds a call back function called after the _MainAppState
+      // build() method has been executed. This solves the problem
+      // of the first screen not displaying the values contained in
+      // the circadian.json file.
+      //
+      // This anonymous function is called only once, when the app
+      // is launched (or restarted).
+      _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
+    });
   }
 
-  String get endDateTimeStr => _dateTimePickerController.text;
+  String get endDateTimeStr => _editableDateTime.getEnglishFormatDateTimeStr();
 
   void reset() {
     final DateTime dateTimeNow = DateTime.now();
@@ -200,7 +207,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     _startDateTimeStr = nowDateTimeEnglishFormatStr;
     _endDateTimeStr = nowDateTimeEnglishFormatStr;
-    _dateTimePickerController.text = _endDateTimeStr;
+    _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
@@ -261,7 +268,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       }
 
       _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
-      _dateTimePickerController.text = _endDateTimeStr;
+      _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
     }
 
     _updateTransferDataMap(); // must be executed before calling
@@ -289,7 +296,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     if (endDateTime != null) {
       _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
-      _dateTimePickerController.text = _endDateTimeStr;
+      _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
+
       processEndDateTimeChange(endDateTime);
     }
   }

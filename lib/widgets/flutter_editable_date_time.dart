@@ -55,6 +55,15 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     return stateInstance;
   }
 
+  String getEnglishFormatDateTimeStr() {
+    return englishDateTimeFormat.format(stateInstance._dateTime);
+  }
+
+  void setDateTime({required String englishFormatDateTimeStr}) {
+    stateInstance._dateTime =
+        englishDateTimeFormat.parse(englishFormatDateTimeStr);
+  }
+
   void handleSelectDateTimeButtonPressed(String selectedDateTimeStr) {
     stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
