@@ -366,14 +366,16 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _startDateTimeController.text = selectedDateTime.toString();
+    _startDateTimeStr = selectedDateTime.toString();
+    _startDateTimeController.text = _startDateTimeStr;
 
     _setStateDiffDurationStartDateTime(selectedDateTimeStr);
   }
 
   void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _endDateTimeController.text = selectedDateTime.toString();
+    _endDateTimeStr = selectedDateTime.toString();
+    _endDateTimeController.text = _endDateTimeStr;
 
     _setStateDiffDurationEndDateTime(selectedDateTimeStr);
   }
