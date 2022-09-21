@@ -45,6 +45,8 @@ Future<void> main() async {
                   topSelMenuPosition: 120,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                 ),
               ),
             ),
@@ -70,6 +72,8 @@ Future<void> main() async {
                   topSelMenuPosition: 120,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                 ),
               ),
             ),
@@ -98,6 +102,8 @@ Future<void> main() async {
                   topSelMenuPosition: 120,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                 ),
               ),
             ),
@@ -130,6 +136,8 @@ Future<void> main() async {
                   topSelMenuPosition: 120,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                 ),
               ),
             ),
@@ -155,4 +163,12 @@ Future<void> main() async {
       );
     },
   );
+}
+
+void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+  // print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
+}
+
+void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
+  // print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
 }
