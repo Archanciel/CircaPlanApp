@@ -1,4 +1,5 @@
 {
     "github.gitAuthentication": false,
-    "git.allowNoVerifyCommit": true
+    "git.allowNoVerifyCommit": true,
+    "editor.codeActionsOnSave": {"source.fixAll": true},
 }
