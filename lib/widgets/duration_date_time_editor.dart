@@ -194,7 +194,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       //
       // This anonymous function is called only once, when the app
       // is launched (or restarted).
-      _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
+      // _editableDateTime.setDateTime(englishFormatDateTimeStr: _endDateTimeStr);
     });
   }
 
