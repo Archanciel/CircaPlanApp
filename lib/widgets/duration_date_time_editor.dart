@@ -195,7 +195,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _dateTimePickerController.text = _convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: _endDateTimeStr)!;
   }
 
-  String get endDateTimeStr => _dateTimePickerController.text;
+  String get frenchFormatEndDateTimeStr => _dateTimePickerController.text;
 
   void reset() {
     final DateTime dateTimeNow = DateTime.now();
@@ -279,7 +279,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
-          .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
+          .setStartDateTimeStr(englishFormatStartDateTimeStr: _endDateTimeStr);
     }
   }
 
@@ -349,7 +349,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!
-          .setStartDateTimeStr(englishFormatStartDateTimeStr: endDateTimeStr);
+          .setStartDateTimeStr(englishFormatStartDateTimeStr: frenchFormatEndDateTimeStr);
     }
   }
 
