@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/widgets/editable_date_time.dart';
+import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 import '../utils/utility.dart';
@@ -220,7 +220,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = widget.englishDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = widget.frenchDateTimeFormat.parse(_startDateTimeStr);
     } on FormatException {}
 
     if (startDateTime == null) {
@@ -245,7 +245,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       }
 
       _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
-      _dateTimePickerController.text = _endDateTimeStr;
+      _dateTimePickerController.text = widget.frenchDateTimeFormat.format(endDateTime);
     }
 
     _updateTransferDataMap(); // must be executed before calling
@@ -272,8 +272,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     } on FormatException {}
 
     if (endDateTime != null) {
-      _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
-      _dateTimePickerController.text = _endDateTimeStr;
+      _endDateTimeStr = widget.frenchDateTimeFormat.format(endDateTime);
+//      _dateTimePickerController.text = _endDateTimeStr; // is done in EditableDateTime.handleSelectDateTimeButtonPressed()
       processEndDateTimeChange(endDateTime);
     }
   }
@@ -296,7 +296,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = widget.englishDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = widget.frenchDateTimeFormat.parse(_startDateTimeStr);
     } on FormatException {}
 
     Duration duration;

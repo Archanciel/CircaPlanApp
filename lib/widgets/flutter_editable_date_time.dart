@@ -14,6 +14,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
     required this.transferDataMap,
+    required this.dateTimePickerController,
     required this.handleDateTimeModificationFunction,
     required this.handleSelectedDateTimeStrFunction,
   }) : super(key: key);
@@ -29,6 +30,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final Map<String, dynamic> transferDataMap;
 
   final double topSelMenuPosition;
+  final TextEditingController dateTimePickerController;
   final Function handleDateTimeModificationFunction;
   final Function(String) handleSelectedDateTimeStrFunction;
 
@@ -49,6 +51,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   void _updateDateTimePickerValues() {
     _selectedDate = _dateTime;
     _selectedTime = TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
+    dateTimePickerController.text = frenchDateTimeFormat.format(_dateTime);
   }
 
   // Select for Date
@@ -126,11 +129,9 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     );
     //  });
 
-    handleDateTimeModificationFunction(englishDateTimeFormat.format(_dateTime));
-  }
+    dateTimePickerController.text = frenchDateTimeFormat.format(_dateTime);
 
-  String _getDateTimeStr() {
-    return frenchDateTimeFormat.format(_dateTime);
+    handleDateTimeModificationFunction(englishDateTimeFormat.format(_dateTime));
   }
 
   @override
@@ -159,12 +160,15 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                     selectionColor: selectionColor,
                   ),
                 ),
-                child: GestureDetector(
-                  child: Text(
-                    key: const Key('editableDateTimeText'),
-                    _getDateTimeStr(),
-                    style: valueTextStyle,
-                  ),
+                child: TextField(
+                  key: const Key('editableDateTimeText'),
+                  decoration: const InputDecoration.collapsed(hintText: ''),
+                  style: const TextStyle(
+                      color: ScreenMixin.appTextAndIconColor,
+                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                  controller: dateTimePickerController,
+                  readOnly: true,
                   onTap: () {
                     _selectDatePickerDateTime(context);
                   },

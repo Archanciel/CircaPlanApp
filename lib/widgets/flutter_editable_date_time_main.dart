@@ -1,6 +1,7 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
 import 'dart:io';
+import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
@@ -37,10 +38,7 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
     "firstDurationIconColor": Colors.green.shade200,
     "firstDurationSign": 1,
     "firstDurationTextColor": Colors.green.shade200,
-    "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
-    "firstDurationStr": "00:50",
-    "firstStartDateTimeStr": "12-07-2022 16:00",
-    "firstEndDateTimeStr": "12-07-2022 16:50",
+    "firstDurationStr": "00:00",
     "secondDurationIconData": Icons.remove,
     "secondDurationIconColor": Colors.red.shade200,
     "secondDurationSign": -1,
@@ -55,21 +53,6 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
     "thirdDurationStr": "00:00",
     "thirdStartDateTimeStr": "12-07-2022 16:00",
     "thirdEndDateTimeStr": "12-07-2022 16:00",
-    "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
-    "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
-    "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
-    "calcSlDurCurrSleepDurationStr": '12:36',
-    "calcSlDurCurrWakeUpDurationStr": '0:02',
-    "calcSlDurCurrTotalDurationStr": '12:38',
-    "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
-    "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
-    "calcSlDurCurrTotalDurationPercentStr": '100 %',
-    "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
-    "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
-    "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
-    "calcSlDurStatus": Status.sleep,
-    "calcSlDurSleepTimeStrHistory": ['10_07_2022 00:58', '05:35', '04:00'],
-    "calcSlDurWakeUpTimeStrHistory": ['10_07_2022 05:58', '00:35', '01:00'],
   };
 
   @override
@@ -88,11 +71,15 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
 class _FlutterEditableDateTimeScreenState
     extends State<FlutterEditableDateTimeScreen> {
   late DurationDateTimeEditor _firstDurationDateTimeEditorWidget;
+  late TextEditingController dateTimePickerController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    dateTimePickerController = TextEditingController(
+        text: widget.frenchDateTimeFormat.format(DateTime.now()));
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
@@ -104,6 +91,11 @@ class _FlutterEditableDateTimeScreenState
       transferDataMap: widget.transferDataMap,
       nextAddSubtractResultableDuration: null,
     );
+
+    String nowStr = frenchDateTimeFormat.format(DateTime.now());
+    widget.transferDataMap["addDurStartDateTimeStr"] = nowStr;
+    widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
+    widget.transferDataMap["firstEndDateTimeStr"] = nowStr;
   }
 
   @override
@@ -137,6 +129,7 @@ class _FlutterEditableDateTimeScreenState
                     topSelMenuPosition: 120,
                     transferDataViewModel: widget.transferDataViewModel,
                     transferDataMap: widget.transferDataMap,
+                    dateTimePickerController: dateTimePickerController,
                     handleDateTimeModificationFunction:
                         widget.handleEndDateTimeChange,
                     handleSelectedDateTimeStrFunction:

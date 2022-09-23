@@ -57,6 +57,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
+  @override
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   /// The method ensures that the current widget (screen or custom widget)
@@ -99,7 +100,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       widgetName: 'third',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 550.0,
-      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      nowDateTimeFrenchFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: null,
@@ -111,7 +112,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       widgetName: 'second',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
-      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      nowDateTimeFrenchFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _thirdDurationDateTimeEditorWidget,
@@ -122,7 +123,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       widgetName: 'first',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 210.0,
-      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      nowDateTimeFrenchFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
@@ -274,7 +275,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             Positioned(
               right: 0,
               child: Column(
-                children: [],
+                children: const [],
               ),
             ),
             SizedBox(
