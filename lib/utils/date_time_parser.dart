@@ -1,4 +1,5 @@
 // adding method HHmm which returns the Duration formatted as HH:mm
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:intl/intl.dart';
 
 extension FormattedDayHourMinute on Duration {
@@ -212,6 +213,48 @@ class DateTimeParser {
     }
 
     return null;
+  }
+
+  /// Returns the english formatted passed french formatted date
+  /// time string. In case the passed date time string format
+  /// is invalid, null is returned.
+  static String? convertFrenchFormatToEnglishFormatDateTimeStr(
+      {required String frenchFormatDateTimeStr}) {
+    DateTime? endDateTime;
+    String? englishFormatDateTimeStr;
+
+    try {
+      endDateTime =
+          ScreenMixin.frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
+    } on FormatException {}
+
+    if (endDateTime != null) {
+      englishFormatDateTimeStr =
+          ScreenMixin.englishDateTimeFormat.format(endDateTime);
+    }
+
+    return englishFormatDateTimeStr;
+  }
+
+  /// Returns the french formatted passed english formatted date
+  /// time string. In case the passed date time string format
+  /// is invalid, null is returned.
+  static String? convertEnglishFormatToFrenchFormatDateTimeStr(
+      {required String englishFormatDateTimeStr}) {
+    DateTime? endDateTime;
+    String? frenchFormatDateTimeStr;
+
+    try {
+      endDateTime =
+          ScreenMixin.englishDateTimeFormat.parse(englishFormatDateTimeStr);
+    } on FormatException {}
+
+    if (endDateTime != null) {
+      frenchFormatDateTimeStr =
+          ScreenMixin.frenchDateTimeFormat.format(endDateTime);
+    }
+
+    return frenchFormatDateTimeStr;
   }
 }
 

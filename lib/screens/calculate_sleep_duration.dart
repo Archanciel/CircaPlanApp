@@ -464,25 +464,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
   }
 
-  /// Returns the english formatted passed french formatted date
-  /// time string. In case the passed date time string format
-  /// is invalid, null is returned.
-  String? _convertFrenchFormatToEnglishFormatDateTimeStr(
-      {required String frenchFormatDateTimeStr}) {
-    DateTime? endDateTime;
-    String? englishFormatDateTimeStr;
-
-    try {
-      endDateTime = frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
-    } on FormatException {}
-
-    if (endDateTime != null) {
-      englishFormatDateTimeStr = englishDateTimeFormat.format(endDateTime);
-    }
-
-    return englishFormatDateTimeStr;
-  }
-
   /// Private method called when 'Reset' is confirmed.
   void _applyReset() {
     // before resetting the current new date time string, its
@@ -491,7 +472,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // The effect is not updating the screen field, but adding
     // the value to the Sel available values.
     _transferDataMap['dtDiffStartDateTimeStr'] =
-        _convertFrenchFormatToEnglishFormatDateTimeStr(
+        DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr: _newDateTimeStr);
 
     _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());

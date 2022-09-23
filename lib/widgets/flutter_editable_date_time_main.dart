@@ -64,7 +64,7 @@ class _FlutterEditableDateTimeScreenState
     super.initState();
 
     dateTimePickerController = TextEditingController(
-        text: widget.frenchDateTimeFormat.format(DateTime.now()));
+        text: ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
@@ -77,7 +77,7 @@ class _FlutterEditableDateTimeScreenState
       nextAddSubtractResultableDuration: null,
     );
 
-    String nowStr = widget.englishDateTimeFormat.format(DateTime.now());
+    String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());
     widget.transferDataMap["addDurStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstEndDateTimeStr"] = nowStr;

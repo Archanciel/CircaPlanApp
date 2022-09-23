@@ -1,7 +1,7 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/utils/utility.dart';
-import 'package:circa_plan/widgets/editable_date_time.dart';
+import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import 'package:circa_plan/widgets/editable_duration.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -111,7 +111,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     // The next instruction enables updating duration % value
     // when going back to the date time difference screen.
-    // As a consequence, the duration % value does not need to 
+    // As a consequence, the duration % value does not need to
     // be stored in the transfer data map !
     String editableDurationPercentWidgetDurationStr =
         (_finalDurationStr.isNotEmpty) ? _finalDurationStr : _durationStr;
@@ -132,10 +132,16 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     _startDateTimeStr =
         _transferDataMap['dtDiffStartDateTimeStr'] ?? nowDateTimeStr;
-    _startDateTimeController = TextEditingController(text: _startDateTimeStr);
+    _startDateTimeController = TextEditingController(
+        text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr: _startDateTimeStr) ??
+            '');
     _endDateTimeStr =
         _transferDataMap['dtDiffEndDateTimeStr'] ?? nowDateTimeStr;
-    _endDateTimeController = TextEditingController(text: _endDateTimeStr);
+    _endDateTimeController = TextEditingController(
+        text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr: _endDateTimeStr) ??
+            '');
     _durationStr = _transferDataMap['dtDiffDurationStr'] ?? '';
     _durationTextFieldController = TextEditingController(text: _durationStr);
     _addTimeDialogController = TextEditingController();
@@ -182,7 +188,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     final DateTime dateTimeNow = DateTime.now();
     String nowDateTimeStr = dateTimeNow.toString();
     _startDateTimeStr = nowDateTimeStr;
-    _startDateTimeController.text = _startDateTimeStr;
+    _startDateTimeController.text =
+        DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr: _startDateTimeStr) ??
+            '';
     _durationStr = '';
     _durationTextFieldController.text = _durationStr;
     _editableDurationPercentWidget.setDurationStr(_durationStr);
@@ -191,7 +200,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = '';
     _finalDurationTextFieldController.text = _finalDurationStr;
     _endDateTimeStr = nowDateTimeStr;
-    _endDateTimeController.text = _endDateTimeStr;
+    _endDateTimeController.text =
+        DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr: _endDateTimeStr) ??
+            '';
 
     setState(() {});
 
@@ -201,10 +213,20 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   /// Private method called each time one of the elements
   /// implied in calculating the Duration value is changed.
   void _setStateDiffDuration(_) {
-    _startDateTimeStr = _startDateTimeController.text;
-    DateTime startDateTime = englishDateTimeFormat.parse(_startDateTimeStr);
-    _endDateTimeStr = _endDateTimeController.text;
-    DateTime endDateTime = englishDateTimeFormat.parse(_endDateTimeStr);
+    String frenchFormatStartDateTimeStr = _startDateTimeController.text;
+    _startDateTimeStr =
+        DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                frenchFormatDateTimeStr: frenchFormatStartDateTimeStr) ??
+            '';
+    DateTime startDateTime =
+        frenchDateTimeFormat.parse(frenchFormatStartDateTimeStr);
+    String frenchFormatEndDateTimeStr = _endDateTimeController.text;
+    _endDateTimeStr =
+        DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                frenchFormatDateTimeStr: frenchFormatEndDateTimeStr) ??
+            '';
+    DateTime endDateTime =
+        frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
     Duration diffDuration;
 
     if (endDateTime.isAfter(startDateTime)) {
@@ -302,14 +324,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _startDateTimeController.text = selectedDateTime.toString();
+    _startDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);
   }
 
   void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
     DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
-    _endDateTimeController.text = selectedDateTime.toString();
+    _endDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);
   }

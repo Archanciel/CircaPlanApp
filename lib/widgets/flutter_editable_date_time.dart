@@ -35,14 +35,14 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final Function(String) handleSelectedDateTimeStrFunction;
 
   void handleSelectDateTimeButtonPressed(String selectedDateTimeStr) {
-    _dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _dateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
 
     handleSelectedDateTimeStrFunction(selectedDateTimeStr);
   }
 
   void handleDateTimeNowButtonPressed(String nowStr) {
-    _dateTime = englishDateTimeFormat.parse(nowStr);
+    _dateTime = ScreenMixin.englishDateTimeFormat.parse(nowStr);
     _updateDateTimePickerValues();
 
     handleDateTimeModificationFunction(nowStr);
@@ -51,7 +51,8 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   void _updateDateTimePickerValues() {
     _selectedDate = _dateTime;
     _selectedTime = TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
-    dateTimePickerController.text = frenchDateTimeFormat.format(_dateTime);
+    dateTimePickerController.text =
+        ScreenMixin.frenchDateTimeFormat.format(_dateTime);
   }
 
   // Select for Date
@@ -129,9 +130,11 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     );
     //  });
 
-    dateTimePickerController.text = frenchDateTimeFormat.format(_dateTime);
+    dateTimePickerController.text =
+        ScreenMixin.frenchDateTimeFormat.format(_dateTime);
 
-    handleDateTimeModificationFunction(englishDateTimeFormat.format(_dateTime));
+    handleDateTimeModificationFunction(
+        ScreenMixin.englishDateTimeFormat.format(_dateTime));
   }
 
   @override
