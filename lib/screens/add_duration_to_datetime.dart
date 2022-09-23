@@ -49,13 +49,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   String _startDateTimeStr = '';
 
-  late TextEditingController _startDateTimePickerController;
-
   late DurationDateTimeEditor _firstDurationDateTimeEditorWidget;
   late DurationDateTimeEditor _secondDurationDateTimeEditorWidget;
   late DurationDateTimeEditor _thirdDurationDateTimeEditorWidget;
 
-  late EditableDateTime _editableDateTime;
+  late EditableDateTime _editableStartDateTime;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -92,7 +90,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // EditableDateTime.stateInstance will not be initialized,
     // which will throw an Exception when clicking on Now or
     // Sel button.
-    _editableDateTime = EditableDateTime(
+    _editableStartDateTime = EditableDateTime(
       dateTimeTitle: 'Start date time',
       topSelMenuPosition: 135.0,
       transferDataViewModel: _transferDataViewModel,
@@ -108,7 +106,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
 
-    String nowEnglishFormatDateTimeStr = _updateWidgets();
+    // String nowEnglishFormatDateTimeStr = _updateWidgets();
+    final DateTime dateTimeNow = DateTime.now();
+
+    // String value used to initialize DateTimePicker field
+    String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
 
     _thirdDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('thirdAddSubtractResultableDuration'),
@@ -143,6 +145,17 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Adds a call back function called after the _MainAppState
+      // build() method has been executed. This solves the problem
+      // of the first screen not displaying the values contained in
+      // the circadian.json file.
+      //
+      // This anonymous function is called only once, when the app
+      // is launched (or restarted).
+      _updateWidgets();
+    });
   }
 
   String _updateWidgets() {
@@ -151,19 +164,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // String value used to initialize DateTimePicker field
     String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
 
-    String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
-        nowEnglishFormatDateTimeStr;
-
-    _startDateTimePickerController =
-        TextEditingController(text: startDateTimeStr);
+    _editableStartDateTime.setDateTime(
+        englishFormatDateTimeStr: _transferDataMap['addDurStartDateTimeStr'] ??
+            nowEnglishFormatDateTimeStr);
 
     return nowEnglishFormatDateTimeStr;
   }
 
   @override
   void dispose() {
-    _startDateTimePickerController.dispose();
-
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
     }
@@ -187,7 +196,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String nowDateTimePickerEnglishFormatStr = dateTimeNow.toString();
 
     _startDateTimeStr = nowDateTimePickerEnglishFormatStr;
-    _startDateTimePickerController.text = _startDateTimeStr;
+    _editableStartDateTime.setDateTime(
+        englishFormatDateTimeStr: _startDateTimeStr);
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
@@ -203,7 +213,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
 
     _startDateTimeStr = englishFormatStartDateTimeStr;
-    _startDateTimePickerController.text = _startDateTimeStr;
+    _editableStartDateTime.setDateTime(
+        englishFormatDateTimeStr: _startDateTimeStr);
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
@@ -253,7 +264,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   const SizedBox(
                     height: 15,
                   ),
-                  _editableDateTime,
+                  _editableStartDateTime,
 
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,
