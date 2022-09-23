@@ -163,16 +163,36 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         nowDateTimeEnglishFormatStr;
     _endDateTimeStr = _transferDataMap['${_widgetName}EndDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
-    _dateTimePickerController.text = _endDateTimeStr;
+    _dateTimePickerController.text = _convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: _endDateTimeStr)!;
 
     setState(() {});
   }
+
+    /// Returns the english formatted passed french formatted date
+  /// time string. In case the passed date time string format
+  /// is invalid, null is returned.
+  String? _convertEnglishFormatToFrenchFormatDateTimeStr(
+      {required String englishFormatDateTimeStr}) {
+    DateTime? endDateTime;
+    String? frenchFormatDateTimeStr;
+
+    try {
+      endDateTime = widget.englishDateTimeFormat.parse(englishFormatDateTimeStr);
+    } on FormatException {}
+
+    if (endDateTime != null) {
+      frenchFormatDateTimeStr = widget.frenchDateTimeFormat.format(endDateTime);
+    }
+
+    return frenchFormatDateTimeStr;
+  }
+
 
   @override
   void initState() {
     super.initState();
 
-    _dateTimePickerController.text = _endDateTimeStr;
+    _dateTimePickerController.text = _convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: _endDateTimeStr)!;
   }
 
   String get endDateTimeStr => _dateTimePickerController.text;
@@ -184,7 +204,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     _startDateTimeStr = nowDateTimeEnglishFormatStr;
     _endDateTimeStr = nowDateTimeEnglishFormatStr;
-    _dateTimePickerController.text = _endDateTimeStr;
+    _dateTimePickerController.text = _convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr:_endDateTimeStr)!;
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
@@ -220,7 +240,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = widget.frenchDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = widget.englishDateTimeFormat.parse(_startDateTimeStr);
     } on FormatException {}
 
     if (startDateTime == null) {
@@ -272,8 +292,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     } on FormatException {}
 
     if (endDateTime != null) {
-      _endDateTimeStr = widget.frenchDateTimeFormat.format(endDateTime);
-//      _dateTimePickerController.text = _endDateTimeStr; // is done in EditableDateTime.handleSelectDateTimeButtonPressed()
+      _endDateTimeStr = widget.englishDateTimeFormat.format(endDateTime);
       processEndDateTimeChange(endDateTime);
     }
   }
@@ -296,7 +315,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = widget.frenchDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = widget.englishDateTimeFormat.parse(_startDateTimeStr);
     } on FormatException {}
 
     Duration duration;

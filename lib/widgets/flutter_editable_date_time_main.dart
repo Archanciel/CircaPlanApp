@@ -1,7 +1,6 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
 import 'dart:io';
-import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
@@ -39,20 +38,6 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
     "firstDurationSign": 1,
     "firstDurationTextColor": Colors.green.shade200,
     "firstDurationStr": "00:00",
-    "secondDurationIconData": Icons.remove,
-    "secondDurationIconColor": Colors.red.shade200,
-    "secondDurationSign": -1,
-    "secondDurationTextColor": Colors.red.shade200,
-    "secondDurationStr": "02:00",
-    "secondStartDateTimeStr": "12-07-2022 16:00",
-    "secondEndDateTimeStr": "12-07-2022 14:00",
-    "thirdDurationIconData": Icons.remove,
-    "thirdDurationIconColor": Colors.red.shade200,
-    "thirdDurationSign": -1,
-    "thirdDurationTextColor": Colors.red.shade200,
-    "thirdDurationStr": "00:00",
-    "thirdStartDateTimeStr": "12-07-2022 16:00",
-    "thirdEndDateTimeStr": "12-07-2022 16:00",
   };
 
   @override
@@ -92,7 +77,7 @@ class _FlutterEditableDateTimeScreenState
       nextAddSubtractResultableDuration: null,
     );
 
-    String nowStr = frenchDateTimeFormat.format(DateTime.now());
+    String nowStr = widget.englishDateTimeFormat.format(DateTime.now());
     widget.transferDataMap["addDurStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstEndDateTimeStr"] = nowStr;
