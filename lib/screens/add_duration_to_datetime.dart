@@ -108,39 +108,46 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     // String nowEnglishFormatDateTimeStr = _updateWidgets();
     final DateTime dateTimeNow = DateTime.now();
+    final String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
 
-    // String value used to initialize DateTimePicker field
-    String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
+    final String thirdStartDateTimeStr = _transferDataMap['thirdStartDateTimeStr'] ??
+        nowEnglishFormatDateTimeStr;
 
     _thirdDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('thirdAddSubtractResultableDuration'),
       widgetName: 'third',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 550.0,
-      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      nowDateTimeEnglishFormatStr: thirdStartDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: null,
       saveTransferDataIfModified: true,
     );
 
+    final String secondStartDateTimeStr = _transferDataMap['secondStartDateTimeStr'] ??
+        nowEnglishFormatDateTimeStr;
+
     _secondDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('secondAddSubtractResultableDuration'),
       widgetName: 'second',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
-      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      nowDateTimeEnglishFormatStr: secondStartDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _thirdDurationDateTimeEditorWidget,
     );
+
+    final String firstStartDateTimeStr = _transferDataMap['firstStartDateTimeStr'] ??
+        nowEnglishFormatDateTimeStr;
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
       widgetName: 'first',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 210.0,
-      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      nowDateTimeEnglishFormatStr: firstStartDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
@@ -158,17 +165,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     });
   }
 
-  String _updateWidgets() {
+  void _updateWidgets() {
     final DateTime dateTimeNow = DateTime.now();
-
-    // String value used to initialize DateTimePicker field
-    String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
+    final String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
+    final String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
+        nowEnglishFormatDateTimeStr;
 
     _editableStartDateTime.setDateTime(
         englishFormatDateTimeStr: _transferDataMap['addDurStartDateTimeStr'] ??
-            nowEnglishFormatDateTimeStr);
-
-    return nowEnglishFormatDateTimeStr;
+            startDateTimeStr);
   }
 
   @override
