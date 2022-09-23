@@ -31,71 +31,18 @@ Future<void> main() async {
   transferDataViewModel.transferDataMap = transferDataMap;
   await transferDataViewModel.loadTransferData();
 
-  TextEditingController dateTimePickerController =
-      TextEditingController(text: DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now()));
+  TextEditingController dateTimePickerController = TextEditingController(
+      text: DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now()));
 
   group(
     'EditableDateTime widget testing',
     () {
       testWidgets(
-        'testing default date time set to now',
-        (tester) async {
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: EditableDateTime(
-                  dateTimeTitle: 'Start date time',
-                  topSelMenuPosition: 120,
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataViewModel.getTransferDataMap()!,
-                  handleDateTimeModificationFunction: handleEndDateTimeChange,
-                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
-                  dateTimePickerController: dateTimePickerController,
-                ),
-              ),
-            ),
-          );
-
-          await tester.pumpAndSettle();
-
-          String nowStr = DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now());
-          expect(find.text(nowStr), findsOneWidget);
-        },
-      );
-      testWidgets(
-        'Clicking on Now button',
+        'Clicking on Sel, then Now button', // fails if located in
+        //              flutter_editable_date_time_test.dart file !
         (tester) async {
           final edtNowButton =
               find.byKey(const Key('editableDateTimeNowButton'));
-
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: EditableDateTime(
-                  dateTimeTitle: 'Start date time',
-                  topSelMenuPosition: 120,
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataViewModel.getTransferDataMap()!,
-                  handleDateTimeModificationFunction: handleEndDateTimeChange,
-                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
-                  dateTimePickerController: dateTimePickerController,
-                ),
-              ),
-            ),
-          );
-
-          await tester.tap(edtNowButton);
-          await tester.pumpAndSettle();
-
-          String nowStr = DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now());
-          TextField text =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
-          expect(text.controller!.text, nowStr);
-        },
-      );
-      testWidgets(
-        'Clicking on Sel button',
-        (tester) async {
           final edtSelButton =
               find.byKey(const Key('editableDateTimeSelButton'));
 
@@ -124,10 +71,16 @@ Future<void> main() async {
           TextField textField =
               tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           expect(textField.controller!.text, selectedDateTimeStr);
-        },
-      );
+
+          await tester.tap(edtNowButton);
+          await tester.pumpAndSettle();
+
+          String nowStr = DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now());
           // textField =
           //     tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          expect(textField.controller!.text, nowStr);
+        },
+      );
     },
   );
 }
