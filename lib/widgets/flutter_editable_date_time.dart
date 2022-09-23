@@ -7,7 +7,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import '../buslog/transfer_data_view_model.dart';
 
-class EditableDateTime extends StatefulWidget with ScreenMixin {
+class EditableDateTime extends StatelessWidget with ScreenMixin {
   EditableDateTime({
     Key? key,
     required this.dateTimeTitle,
@@ -17,6 +17,10 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     required this.handleDateTimeModificationFunction,
     required this.handleSelectedDateTimeStrFunction,
   }) : super(key: key);
+
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  DateTime _dateTime = DateTime.now();
 
   final String dateTimeTitle;
   final TransferDataViewModel transferDataViewModel;
@@ -28,75 +32,23 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
   final Function handleDateTimeModificationFunction;
   final Function(String) handleSelectedDateTimeStrFunction;
 
-  /// This variable enables the DurationDateTimeEditor
-  /// instance to execute the callSetState() method of its
-  /// _DurationDateTimeEditorState instance in order to
-  /// redraw the widget to display the values modified by
-  /// loading a json file.
-  late final _EditableDateTimeState stateInstance;
-
-  /// The method ensures that the current widget (screen or custom widget)
-  /// setState() method is called in order for the loaded data to be
-  /// displayed. Calling this method is necessary since the load function
-  /// is performed after selecting a item in a menu displayed by the AppBar
-  /// menu defined not by the current screen, but by the main app screen.
-  ///
-  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected in the
-  /// AppBar load ... sub menu.
-  void callSetState() {
-    stateInstance.callSetState();
-  }
-
-  @override
-  State<EditableDateTime> createState() {
-    stateInstance = _EditableDateTimeState();
-
-    return stateInstance;
-  }
-
   void handleSelectDateTimeButtonPressed(String selectedDateTimeStr) {
-    stateInstance._dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _dateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
 
     handleSelectedDateTimeStrFunction(selectedDateTimeStr);
-
-    stateInstance.callSetState();
   }
 
   void handleDateTimeNowButtonPressed(String nowStr) {
-    stateInstance._dateTime = englishDateTimeFormat.parse(nowStr);
+    _dateTime = englishDateTimeFormat.parse(nowStr);
     _updateDateTimePickerValues();
 
     handleDateTimeModificationFunction(nowStr);
-
-    stateInstance.callSetState();
   }
 
   void _updateDateTimePickerValues() {
-    stateInstance._selectedDate = stateInstance._dateTime;
-    stateInstance._selectedTime = TimeOfDay(
-        hour: stateInstance._dateTime.hour,
-        minute: stateInstance._dateTime.minute);
-  }
-}
-
-class _EditableDateTimeState extends State<EditableDateTime> {
-  DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
-  DateTime _dateTime = DateTime.now();
-
-  /// The method ensures that the current widget (screen or custom widget)
-  /// setState() method is called in order for the loaded data to be
-  /// displayed. Calling this method is necessary since the load function
-  /// is performed after selecting an item in a menu displayed by the AppBar
-  /// menu defined not by the current screen, but by the main app screen.
-  ///
-  /// The method is called when the _MainAppState.handleSelectedLoadFileName()
-  /// method is executed after the file to load has been selected in the
-  /// AppBar load ... sub menu.
-  void callSetState() {
-    setState(() {});
+    _selectedDate = _dateTime;
+    _selectedTime = TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
   }
 
   // Select for Date
@@ -164,22 +116,21 @@ class _EditableDateTimeState extends State<EditableDateTime> {
       return;
     }
 
-    setState(() {
-      _dateTime = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-    });
+//    setState(() {
+    _dateTime = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
+    //  });
 
-    widget.handleDateTimeModificationFunction(
-        widget.englishDateTimeFormat.format(_dateTime));
+    handleDateTimeModificationFunction(englishDateTimeFormat.format(_dateTime));
   }
 
   String _getDateTimeStr() {
-    return widget.frenchDateTimeFormat.format(_dateTime);
+    return frenchDateTimeFormat.format(_dateTime);
   }
 
   @override
@@ -192,8 +143,8 @@ class _EditableDateTimeState extends State<EditableDateTime> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.dateTimeTitle,
-              style: widget.labelTextStyle,
+              dateTimeTitle,
+              style: labelTextStyle,
             ),
             const SizedBox(
               height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
@@ -205,14 +156,14 @@ class _EditableDateTimeState extends State<EditableDateTime> {
               child: Theme(
                 data: Theme.of(context).copyWith(
                   textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: widget.selectionColor,
+                    selectionColor: selectionColor,
                   ),
                 ),
                 child: GestureDetector(
                   child: Text(
                     key: const Key('editableDateTimeText'),
                     _getDateTimeStr(),
-                    style: widget.valueTextStyle,
+                    style: valueTextStyle,
                   ),
                   onTap: () {
                     _selectDatePickerDateTime(context);
@@ -228,11 +179,11 @@ class _EditableDateTimeState extends State<EditableDateTime> {
           ],
         ),
         TwoButtonsWidget(
-          topSelMenuPosition: widget.topSelMenuPosition,
-          transferDataViewModel: widget.transferDataViewModel,
-          transferDataMap: widget.transferDataMap,
-          handleDateTimeModification: widget.handleDateTimeNowButtonPressed,
-          handleSelectedDateTimeStr: widget.handleSelectDateTimeButtonPressed,
+          topSelMenuPosition: topSelMenuPosition,
+          transferDataViewModel: transferDataViewModel,
+          transferDataMap: transferDataMap,
+          handleDateTimeModification: handleDateTimeNowButtonPressed,
+          handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
         ),
       ],
     );
