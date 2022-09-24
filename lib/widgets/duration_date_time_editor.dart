@@ -338,7 +338,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!.setStartDateTimeStr(
-          englishFormatStartDateTimeStr: frenchFormatEndDateTimeStr);
+          englishFormatStartDateTimeStr:
+              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                  frenchFormatDateTimeStr: frenchFormatEndDateTimeStr)!);
     }
   }
 
