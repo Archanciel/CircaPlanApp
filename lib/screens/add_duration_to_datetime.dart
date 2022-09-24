@@ -140,8 +140,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
         nowEnglishFormatDateTimeStr;
 
-    _startDateTimePickerController =
-        TextEditingController(text: startDateTimeStr);
+    _startDateTimePickerController = TextEditingController(
+        text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+            englishFormatDateTimeStr: startDateTimeStr)!);
 
     return nowEnglishFormatDateTimeStr;
   }
