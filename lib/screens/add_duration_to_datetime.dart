@@ -187,12 +187,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.reset();
   }
 
-  void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
-    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+  void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {
+    DateTime selectedDateTime = frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
 
     _startDateTimeStr = englishFormatStartDateTimeStr;
-    _startDateTimePickerController.text = _startDateTimeStr;
+    _startDateTimePickerController.text = frenchFormatSelectedDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
