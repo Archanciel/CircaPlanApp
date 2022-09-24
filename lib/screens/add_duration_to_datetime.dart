@@ -1,3 +1,4 @@
+import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -172,7 +173,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     String nowDateTimePickerEnglishFormatStr = dateTimeNow.toString();
 
     _startDateTimeStr = nowDateTimePickerEnglishFormatStr;
-    _startDateTimePickerController.text = _startDateTimeStr;
+    _startDateTimePickerController.text =
+        DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+            englishFormatDateTimeStr: _startDateTimeStr)!;
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
