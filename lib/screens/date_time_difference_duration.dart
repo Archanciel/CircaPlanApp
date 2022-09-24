@@ -1,5 +1,4 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import 'package:circa_plan/widgets/editable_duration.dart';
@@ -219,14 +218,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 frenchFormatDateTimeStr: frenchFormatStartDateTimeStr) ??
             '';
     DateTime startDateTime =
-        frenchDateTimeFormat.parse(frenchFormatStartDateTimeStr);
+        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatStartDateTimeStr);
     String frenchFormatEndDateTimeStr = _endDateTimeController.text;
     _endDateTimeStr =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
                 frenchFormatDateTimeStr: frenchFormatEndDateTimeStr) ??
             '';
     DateTime endDateTime =
-        frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
+        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
     Duration diffDuration;
 
     if (endDateTime.isAfter(startDateTime)) {
@@ -323,14 +322,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   }
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
-    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    DateTime selectedDateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);
   }
 
   void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
-    DateTime selectedDateTime = frenchDateTimeFormat.parse(selectedDateTimeStr);
+    DateTime selectedDateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _endDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);

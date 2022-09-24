@@ -12,10 +12,6 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 
 import '../constants.dart';
 
-// Although defined in ScreenMixin, must be defined here since it is used in the
-// constructor where accessing to mixin data is not possible !
-final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-
 class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
   final TransferDataViewModel _transferDataViewModel;
@@ -46,7 +42,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       : _transferDataMap = transferDataMap,
         _transferDataViewModel = transferDataViewModel,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
-            frenchDateTimeFormat.format(DateTime.now()),
+            ScreenMixin.frenchDateTimeFormat.format(DateTime.now()),
         _previousDateTimeStr =
             transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
@@ -274,7 +270,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
+    String nowDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(dateTimeNow);
 
     _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newDateTimeStr =
@@ -433,7 +429,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       newDateTime = newDateTime.add(Duration(minutes: minuteNb));
     }
 
-    _newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
+    _newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(newDateTime);
 
     _newDateTimeController.text = _newDateTimeStr;
 
@@ -475,7 +471,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr: _newDateTimeStr);
 
-    _newDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
+    _newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
     _previousDateTimeStr = '';
     _previousDateTimeController.text = _previousDateTimeStr;
@@ -536,7 +532,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
-        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
+        String newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
         // Without using applying ! bang operator to the newDateTime variable,
@@ -548,7 +544,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       } else {
         DateTime? previousDateTime;
 
-        previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
+        previousDateTime = ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
@@ -602,7 +598,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       // status == status.sleep
       DateTime? previousDateTime;
 
-      previousDateTime = frenchDateTimeFormat.parse(_previousDateTimeStr);
+      previousDateTime = ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
 
       if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
@@ -980,7 +976,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
                           String dateTimeStr =
-                              frenchDateTimeFormat.format(DateTime.now());
+                              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
                           _newDateTimeController.text = dateTimeStr;
                           _newDateTimeStr = dateTimeStr;
 
