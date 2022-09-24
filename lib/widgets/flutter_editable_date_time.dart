@@ -173,6 +173,8 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   controller: dateTimePickerController,
                   readOnly: true,
                   onTap: () {
+                    // initializing the date and time dialogs with the
+                    // currently displayed date time value ...
                     String frenchFormatDateTimeStr =
                         dateTimePickerController.text;
                     DateTime dateTime =
