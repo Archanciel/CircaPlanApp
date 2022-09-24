@@ -1,6 +1,7 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
 import 'dart:io';
+import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
@@ -173,6 +174,12 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   controller: dateTimePickerController,
                   readOnly: true,
                   onTap: () {
+                    String frenchFormatDateTimeStr =
+                        dateTimePickerController.text;
+                    DateTime dateTime =
+                        frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
+                    _selectedTime = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+                    _selectedDate = dateTime;
                     _selectDatePickerDateTime(context);
                   },
                 ),
