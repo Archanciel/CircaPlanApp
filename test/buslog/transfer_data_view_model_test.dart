@@ -481,9 +481,14 @@ void main() {
           TransferDataViewModel transferDataViewModel = TransferDataViewModel(
               transferDataJsonFilePathName: transferDataJsonFilePathName);
           transferDataViewModel.transferDataMap = transferDataMap;
-          transferDataViewModel
-              .updateAndSaveTransferData(); // saves to json file
 
+          // if not using await on next expression, 
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not 
+          // available error !
+          await transferDataViewModel
+              .updateAndSaveTransferData(); // saves to json file
+      
           TransferDataViewModel loadedTransferDataViewModel =
               TransferDataViewModel(
                   transferDataJsonFilePathName: transferDataJsonFilePathName);

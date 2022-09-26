@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/screens/screen_mixin.dart';
 
 Future<void> main() async {
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
@@ -19,11 +20,6 @@ Future<void> main() async {
   Map<String, dynamic> transferDataMap = {};
   String pathSeparator = Platform.pathSeparator;
 
-  // accessing to a unit test specific json file is necessary
-  // since the 'Clicking on Del button' unit test updates
-  // the json file with a "dateTimeDurationPercentStr": ""
-  // instead of "70 %", which then prevents running
-  // utility_test.dart separately.
   String transferDataJsonFilePathName =
       '${directory.path}${pathSeparator}circadian_edt.json';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
@@ -32,7 +28,7 @@ Future<void> main() async {
   await transferDataViewModel.loadTransferData();
 
   TextEditingController dateTimePickerController = TextEditingController(
-      text: DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now()));
+      text: ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
 
   group(
     'EditableDateTime widget testing',

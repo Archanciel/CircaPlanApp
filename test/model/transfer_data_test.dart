@@ -29,7 +29,12 @@ void main() {
           transferData.addDurationToDateTimeData = addDurationToDateTimeData;
 
           String jsonFilePathName = 'transfer_data.json';
-          transferData.saveTransferDataToFile(
+
+          // if not using await on next expression,
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
+          // available error !
+          await transferData.saveTransferDataToFile(
               jsonFilePathName: jsonFilePathName,
               jsonUndoFileName: '$jsonFilePathName-1');
 
@@ -85,7 +90,12 @@ void main() {
           transferData.calculateSleepDurationData = calculateSleepDurationData;
 
           String jsonFilePathName = 'transfer_data.json';
-          transferData.saveTransferDataToFile(
+
+          // if not using await on next expression,
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
+          // available error !
+          await transferData.saveTransferDataToFile(
             jsonFilePathName: jsonFilePathName,
             jsonUndoFileName: '$jsonFilePathName-1',
           );
@@ -144,7 +154,12 @@ void main() {
               dateTimeDifferenceDurationData;
 
           String jsonFilePathName = 'transfer_data.json';
-          transferData.saveTransferDataToFile(
+
+          // if not using await on next expression,
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
+          // available error !
+          await transferData.saveTransferDataToFile(
             jsonFilePathName: jsonFilePathName,
             jsonUndoFileName: '$jsonFilePathName-1',
           );
@@ -191,7 +206,12 @@ void main() {
           transferData.timeCalculatorData = timeCalculatorData;
 
           String jsonFilePathName = 'transfer_data.json';
-          transferData.saveTransferDataToFile(
+
+          // if not using await on next expression,
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
+          // available error !
+          await transferData.saveTransferDataToFile(
             jsonFilePathName: jsonFilePathName,
             jsonUndoFileName: '$jsonFilePathName-1',
           );
@@ -283,7 +303,12 @@ void main() {
           transferData.timeCalculatorData = timeCalculatorData;
 
           String jsonFilePathName = 'transfer_data.json';
-          transferData.saveTransferDataToFile(
+
+          // if not using await on next expression,
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
+          // available error !
+          await transferData.saveTransferDataToFile(
             jsonFilePathName: jsonFilePathName,
             jsonUndoFileName: '$jsonFilePathName-1',
           );

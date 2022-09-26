@@ -50,7 +50,11 @@ class TransferDataViewModel {
 
   /// Copy transferDataMap values to TransferData instance in order to
   /// then update the json file.
-  void updateAndSaveTransferData() {
+  /// 
+  /// Returns a Future<void> which enables the caller code to use await
+  /// on the updateAndSaveTransferData() method. This is necessary in
+  /// the transfer_data_view_model_test.dart unit tests ...
+  Future<void> updateAndSaveTransferData() {
     updateAddDurationToDateTimeData();
     updateCalculateSleepDurationData();
     updateDateTimeDifferenceDurationData();
@@ -62,7 +66,7 @@ class TransferDataViewModel {
     String jsonUndoFileNameOne =
         '${Utility.extractFileName(filePathName: _transferDataJsonFilePathName)}-1';
 
-    _transferData.saveTransferDataToFile(
+    return _transferData.saveTransferDataToFile(
         jsonFilePathName: _transferDataJsonFilePathName,
         jsonUndoFileName: jsonUndoFileNameOne);
   }
