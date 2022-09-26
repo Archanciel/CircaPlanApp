@@ -1,6 +1,6 @@
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/utils/utility.dart';
-import 'package:circa_plan/widgets/flutter_editable_date_time.dart';
+import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/editable_duration.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
