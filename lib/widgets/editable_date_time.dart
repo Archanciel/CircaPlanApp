@@ -1,6 +1,5 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
@@ -17,7 +16,11 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     required this.dateTimePickerController,
     required this.handleDateTimeModificationFunction,
     required this.handleSelectedDateTimeStrFunction,
-  }) : super(key: key);
+  }) : super(key: key) {
+    if (dateTimePickerController.text == '') {
+      dateTimePickerController.text = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+    }
+  }
 
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
@@ -177,9 +180,10 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                     // currently displayed date time value ...
                     String frenchFormatDateTimeStr =
                         dateTimePickerController.text;
-                    DateTime dateTime =
-                        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
-                    _selectedTime = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+                    DateTime dateTime = ScreenMixin.frenchDateTimeFormat
+                        .parse(frenchFormatDateTimeStr);
+                    _selectedTime =
+                        TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
                     _selectedDate = dateTime;
                     _selectDatePickerDateTime(context);
                   },
@@ -245,7 +249,6 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
       return _widgetBody!;
     }
 
-    print('_TwoButtonsWidgetState.build()');
     _widgetBody = Row(
       children: [
         ElevatedButton(

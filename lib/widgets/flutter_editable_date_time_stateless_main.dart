@@ -63,8 +63,7 @@ class _FlutterEditableDateTimeScreenState
     // TODO: implement initState
     super.initState();
 
-    dateTimePickerController = TextEditingController(
-        text: ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+    dateTimePickerController = TextEditingController();
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),

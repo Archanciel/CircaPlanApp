@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/screens/screen_mixin.dart';
 
 Future<void> main() async {
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
@@ -27,8 +26,7 @@ Future<void> main() async {
   transferDataViewModel.transferDataMap = transferDataMap;
   await transferDataViewModel.loadTransferData();
 
-  TextEditingController dateTimePickerController = TextEditingController(
-      text: ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+  TextEditingController dateTimePickerController = TextEditingController();
 
   group(
     'EditableDateTime widget testing',
@@ -60,6 +58,7 @@ Future<void> main() async {
 
           await tester.tap(edtSelButton);
           await tester.pumpAndSettle();
+
           String selectedDateTimeStr = '12-07-2022 16:00';
           await tester.tap(find.text(selectedDateTimeStr));
           await tester.pumpAndSettle();
@@ -72,8 +71,6 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           String nowStr = DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now());
-          // textField =
-          //     tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           expect(textField.controller!.text, nowStr);
         },
       );
@@ -101,6 +98,7 @@ Future<void> main() async {
 
           await tester.tap(edtSelButton);
           await tester.pumpAndSettle();
+
           String selectedDateTimeStr = '12-07-2022 16:00';
           await tester.tap(find.text(selectedDateTimeStr));
           await tester.pumpAndSettle();
