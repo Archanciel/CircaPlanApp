@@ -205,7 +205,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   }
 }
 
-class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
+class TwoButtonsWidget extends StatelessWidget with ScreenMixin {
   TwoButtonsWidget({
     Key? key,
     required this.topSelMenuPosition,
@@ -224,11 +224,6 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final void Function(String) handleDateTimeModification;
   final void Function(String) handleSelectedDateTimeStr;
 
-  @override
-  State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();
-}
-
-class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
   Widget? _widgetBody;
 
   @override
@@ -247,11 +242,11 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
         ElevatedButton(
           key: const Key('editableDateTimeNowButton'),
           style: ButtonStyle(
-              backgroundColor: widget.appElevatedButtonBackgroundColor,
-              shape: widget.appElevatedButtonRoundedShape),
+              backgroundColor: appElevatedButtonBackgroundColor,
+              shape: appElevatedButtonRoundedShape),
           onPressed: () {
             String nowStr = DateTime.now().toString();
-            widget.handleDateTimeModification(nowStr);
+            handleDateTimeModification(nowStr);
           },
           child: const Text(
             'Now',
@@ -266,22 +261,22 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
         ElevatedButton(
           key: const Key('editableDateTimeSelButton'),
           style: ButtonStyle(
-              backgroundColor: widget.appElevatedButtonBackgroundColor,
-              shape: widget.appElevatedButtonRoundedShape),
+              backgroundColor: appElevatedButtonBackgroundColor,
+              shape: appElevatedButtonRoundedShape),
           onPressed: () {
-            widget.displaySelPopupMenu(
+            displaySelPopupMenu(
               context: context,
-              selectableStrItemLst: widget.buildSortedAppDateTimeStrList(
-                  transferDataMap: widget.transferDataMap,
+              selectableStrItemLst: buildSortedAppDateTimeStrList(
+                  transferDataMap: transferDataMap,
                   mostRecentFirst: true,
-                  transferDataViewModel: widget.transferDataViewModel),
+                  transferDataViewModel: transferDataViewModel),
               posRectangleLTRB: RelativeRect.fromLTRB(
                 1.0,
-                widget.topSelMenuPosition,
+                topSelMenuPosition,
                 0.0,
                 0.0,
               ),
-              handleSelectedItem: widget.handleSelectedDateTimeStr,
+              handleSelectedItem: handleSelectedDateTimeStr,
             );
           },
           child: const Text(
