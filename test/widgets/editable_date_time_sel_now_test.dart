@@ -80,7 +80,7 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'Selecting date day only',
+        'Setting date day only',
         (tester) async {
           final edtSelButton =
               find.byKey(const Key('editableDateTimeSelButton'));
@@ -122,7 +122,7 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'Selecting previous date month and day',
+        'Selecting previous date month and setting day only',
         (tester) async {
           final edtSelButton =
               find.byKey(const Key('editableDateTimeSelButton'));
@@ -163,7 +163,7 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'Selecting next date month and day',
+        'Selecting next date month and setting day only',
         (tester) async {
           final edtSelButton =
               find.byKey(const Key('editableDateTimeSelButton'));
