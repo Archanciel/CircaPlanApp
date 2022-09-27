@@ -32,6 +32,7 @@ mixin ScreenMixin {
       'Calculate Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
   static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
+  static const double SNACKBAR_BOTTOM_MARGIN = 55.0;
 
   static DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   static DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
