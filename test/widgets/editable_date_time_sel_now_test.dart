@@ -7,6 +7,11 @@ import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 
 Future<void> main() async {
+  final Finder nextMonthIcon = find.byWidgetPredicate((Widget w) =>
+      w is IconButton && (w.tooltip?.startsWith('Next month') ?? false));
+  final Finder previousMonthIcon = find.byWidgetPredicate((Widget w) =>
+      w is IconButton && (w.tooltip?.startsWith('Previous month') ?? false));
+
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
   String path = kCircadianAppDataDir;
   final Directory directory = Directory(path);
@@ -75,7 +80,7 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'Selecting date only',
+        'Selecting date day only',
         (tester) async {
           final edtSelButton =
               find.byKey(const Key('editableDateTimeSelButton'));
@@ -114,6 +119,88 @@ Future<void> main() async {
           await tester.pumpAndSettle();
           await tester.tap(find.text('OK'));
           expect(textField.controller!.text, '14-07-2022 16:00');
+        },
+      );
+      testWidgets(
+        'Selecting previous date month and day',
+        (tester) async {
+          final edtSelButton =
+              find.byKey(const Key('editableDateTimeSelButton'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDateTime(
+                  dateTimeTitle: 'Start date time',
+                  topSelMenuPosition: 120,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
+                  dateTimePickerController: dateTimePickerController,
+                ),
+              ),
+            ),
+          );
+
+          dateTimePickerController.text = '20-09-2022 12:45';
+
+          TextField textField =
+              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+
+          expect(textField.controller!.text, '20-09-2022 12:45');
+
+          await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
+          await tester.pumpAndSettle();
+          await tester.tap(previousMonthIcon);
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+          await tester.tap(find.text('6')); // set day
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('OK'));
+
+          expect(textField.controller!.text, '06-08-2022 12:45');
+        },
+      );
+      testWidgets(
+        'Selecting next date month and day',
+        (tester) async {
+          final edtSelButton =
+              find.byKey(const Key('editableDateTimeSelButton'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDateTime(
+                  dateTimeTitle: 'Start date time',
+                  topSelMenuPosition: 120,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
+                  dateTimePickerController: dateTimePickerController,
+                ),
+              ),
+            ),
+          );
+
+          dateTimePickerController.text = '20-09-2022 12:45';
+
+          TextField textField =
+              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+
+          expect(textField.controller!.text, '20-09-2022 12:45');
+
+          await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
+          await tester.pumpAndSettle();
+          await tester.tap(nextMonthIcon);
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+          await tester.tap(find.text('6')); // set day
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('OK'));
+
+          expect(textField.controller!.text, '06-10-2022 12:45');
         },
       );
     },
