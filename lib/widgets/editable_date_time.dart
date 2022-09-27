@@ -205,6 +205,9 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   }
 }
 
+/// TwoButtonsWidget remains stateful only for the reason that it
+/// can so improve performance with avoiding rebuilding it each
+/// time its including widget is rebuilt !
 class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   TwoButtonsWidget({
     Key? key,
@@ -237,11 +240,12 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
       // Since the TwoButtonsWidget layout is not modified
       // after it has been built, avoiding rebuilding it
       // each time its including widget is rebuilt improves
-      // app performance
+      // app performance. This is not possible if the widget
+      // is stateless !
       return _widgetBody!;
     }
 
-    // print('_TwoButtonsWidgetState.build()');
+    print('_TwoButtonsWidgetState.build()');
     _widgetBody = Row(
       children: [
         ElevatedButton(
