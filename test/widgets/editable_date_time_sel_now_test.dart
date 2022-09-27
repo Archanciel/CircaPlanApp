@@ -77,6 +77,47 @@ Future<void> main() async {
           expect(textField.controller!.text, nowStr);
         },
       );
+      testWidgets(
+        'Selecting date only',
+        (tester) async {
+          final edtSelButton =
+              find.byKey(const Key('editableDateTimeSelButton'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDateTime(
+                  dateTimeTitle: 'Start date time',
+                  topSelMenuPosition: 120,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataViewModel.getTransferDataMap()!,
+                  handleDateTimeModificationFunction: handleEndDateTimeChange,
+                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
+                  dateTimePickerController: dateTimePickerController,
+                ),
+              ),
+            ),
+          );
+
+          await tester.tap(edtSelButton);
+          await tester.pumpAndSettle();
+          String selectedDateTimeStr = '12-07-2022 16:00';
+          await tester.tap(find.text(selectedDateTimeStr));
+          await tester.pumpAndSettle();
+
+          TextField textField =
+              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          expect(textField.controller!.text, selectedDateTimeStr);
+
+          await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('14')); // set day
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('OK'));
+          expect(textField.controller!.text, '14-07-2022 16:00');
+        },
+      );
     },
   );
 }
