@@ -241,7 +241,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
       return _widgetBody!;
     }
 
-    // print('_TwoButtonsWidgetState.build()');
+    print('_TwoButtonsWidgetState.build()');
     _widgetBody = Row(
       children: [
         ElevatedButton(
