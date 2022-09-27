@@ -27,8 +27,8 @@ Future<void> main() async {
   transferDataViewModel.transferDataMap = transferDataMap;
   await transferDataViewModel.loadTransferData();
 
-  TextEditingController dateTimePickerController =
-      TextEditingController(text: ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+  TextEditingController dateTimePickerController = TextEditingController(
+      text: ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
 
   group(
     'EditableDateTime widget testing',
@@ -122,8 +122,6 @@ Future<void> main() async {
           expect(textField.controller!.text, selectedDateTimeStr);
         },
       );
-          // textField =
-          //     tester.widget(find.byKey(const Key('editableDateTimeTextField')));
     },
   );
 }
