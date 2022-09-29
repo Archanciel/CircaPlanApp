@@ -35,7 +35,8 @@ Future<void> main() async {
         (tester) async {
           final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
-          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder =
+              find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -62,7 +63,7 @@ Future<void> main() async {
 
           expect(find.text('02:30'), findsOneWidget);
           expect(find.text('11-08-2022 12:30'), findsOneWidget);
-  
+
           // testing the duration text field color
           final TextField durationTextField =
               tester.widget(find.byKey(const Key('durationTextField')));
@@ -76,14 +77,15 @@ Future<void> main() async {
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationPositiveColor);
-      },
+        },
       );
       testWidgets(
         'Subtracting valid duration',
         (tester) async {
           final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
-          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder =
+              find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
