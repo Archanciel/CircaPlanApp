@@ -234,9 +234,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       return;
     }
 
-    if (_durationTextFieldController.text.contains('-', 0)) {
-      setDurationSignIconAndColor(durationIsNegative: true);
-    }
+    setDurationSignIconAndColor(
+        durationIsNegative: _durationTextFieldController.text.contains('-'));
 
     _durationStr = Utility.convertIntDuration(
         durationStr: _durationTextFieldController.text);
