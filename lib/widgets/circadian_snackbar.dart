@@ -21,7 +21,5 @@ class CircadianSnackBar extends SnackBar with ScreenMixin {
             ),
           ),
           backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.only(bottom: ScreenMixin.SNACKBAR_BOTTOM_MARGIN),
         );
 }
