@@ -704,4 +704,50 @@ void main() {
       );
     },
   );
+  group(
+    'DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr()',
+    () {
+      test(
+        'valid date time string',
+        () {
+          final String? englishFormatDdateTimeStr =
+              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(frenchFormatDateTimeStr: '14-12-2022 13:35');
+
+          expect(englishFormatDdateTimeStr, '2022-12-14 13:35');
+        },
+      );
+      test(
+        'invalid date time string',
+        () {
+          final String? englishFormatDdateTimeStr =
+              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(frenchFormatDateTimeStr: '14-12_022 13:35');
+
+          expect(englishFormatDdateTimeStr, null);
+        },
+      );
+    },
+  );
+  group(
+    'DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr()',
+    () {
+      test(
+        'valid date time string',
+        () {
+          final String? frenchFormatDdateTimeStr =
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: '2022-12-14 13:35');
+
+          expect(frenchFormatDdateTimeStr, '14-12-2022 13:35');
+        },
+      );
+      test(
+        'invalid date time string',
+        () {
+          final String? frenchFormatDdateTimeStr =
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: '202212-14 13:35');
+
+          expect(frenchFormatDdateTimeStr, null);
+        },
+      );
+    },
+  );
 }
