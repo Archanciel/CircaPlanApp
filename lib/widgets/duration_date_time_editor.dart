@@ -234,6 +234,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       return;
     }
 
+    if (_durationTextFieldController.text.contains('-', 0)) {
+      setDurationSignIconAndColor(durationIsNegative: true);
+    }
+
     _durationStr = Utility.convertIntDuration(
         durationStr: _durationTextFieldController.text);
 
@@ -315,17 +319,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       //                                                 if duration is negative
       _durationTextFieldController.text = _durationStr;
 
-      if (duration.isNegative) {
-        _durationSign = -1;
-        _durationIcon = Icons.remove;
-        _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
-        _durationTextColor = DurationDateTimeEditor.durationNegativeColor;
-      } else {
-        _durationSign = 1;
-        _durationIcon = Icons.add;
-        _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
-        _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
-      }
+      setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
     }
 
     _updateTransferDataMap(); // must be executed before calling
@@ -341,6 +335,20 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           englishFormatStartDateTimeStr:
               DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
                   frenchFormatDateTimeStr: frenchFormatEndDateTimeStr)!);
+    }
+  }
+
+  void setDurationSignIconAndColor({required bool durationIsNegative}) {
+    if (durationIsNegative) {
+      _durationSign = -1;
+      _durationIcon = Icons.remove;
+      _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
+      _durationTextColor = DurationDateTimeEditor.durationNegativeColor;
+    } else {
+      _durationSign = 1;
+      _durationIcon = Icons.add;
+      _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
+      _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
     }
   }
 

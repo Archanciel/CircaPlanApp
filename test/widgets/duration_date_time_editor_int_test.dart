@@ -27,15 +27,19 @@ Future<void> main() async {
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
 
+  const IconData positiveDurationIcon = Icons.add;
+  const IconData negativeDurationIcon = Icons.remove;
+
   group(
     'DurationDateTimeEditor int duration widget testing',
     () {
       testWidgets(
         'Adding one digit duration',
         (tester) async {
-          final durationSignButton =
+          final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder =
+              find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -53,22 +57,37 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(durationTextField, '2');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
+          await tester.enterText(durationTextFieldFinder, '2');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
 
           await tester.pumpAndSettle();
 
           expect(find.text('2:00'), findsOneWidget);
           expect(find.text('11-08-2022 12:00'), findsOneWidget);
+
+          // testing the duration text field color
+          final TextField durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationPositiveColor);
+
+          // testing the duration sign button icon and color
+          final dynamic textButtonWithIconWidget = tester.widget(
+              find.byWidgetPredicate((Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationPositiveColor);
         },
       );
       testWidgets(
         'Adding two digits duration',
         (tester) async {
-          final durationSignButton =
+          final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -86,22 +105,37 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(durationTextField, '24');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
+          await tester.enterText(durationTextFieldFinder, '24');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
 
           await tester.pumpAndSettle();
 
           expect(find.text('24:00'), findsOneWidget);
           expect(find.text('12-08-2022 10:00'), findsOneWidget);
+
+          // testing the duration text field color
+          final TextField durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationPositiveColor);
+
+          // testing the duration sign button icon and color
+          final dynamic textButtonWithIconWidget = tester.widget(
+              find.byWidgetPredicate((Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationPositiveColor);
         },
       );
       testWidgets(
         'Adding one digit with - sign duration',
         (tester) async {
-          final durationSignButton =
+          final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -119,22 +153,37 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(durationTextField, '-2');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
+          await tester.enterText(durationTextFieldFinder, '-2');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
 
           await tester.pumpAndSettle();
 
           expect(find.text('2:00'), findsOneWidget);
-          expect(find.text('11-08-2022 12:00'), findsOneWidget);
+          expect(find.text('11-08-2022 08:00'), findsOneWidget);
+
+          // testing the duration text field color
+          final TextField durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationNegativeColor);
+
+          // testing the duration sign button icon and color
+          final dynamic textButtonWithIconWidget = tester.widget(
+              find.byWidgetPredicate((Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationNegativeColor);
         },
       );
       testWidgets(
-        'Adding one digit with + sign duration',
+        'Adding two digits with - signs duration',
         (tester) async {
-          final durationSignButton =
+          final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -152,113 +201,36 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(durationTextField, '+2');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
+          TextField editableDateTimeTextField =
+              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          await tester.enterText(durationTextFieldFinder, '-24');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
 
           await tester.pumpAndSettle();
 
-          expect(find.text('2:00'), findsOneWidget);
-          expect(find.text('11-08-2022 12:00'), findsOneWidget);
-        },
-      );
-      testWidgets(
-        'Adding one digit with -- signs duration',
-        (tester) async {
-          final durationSignButton =
-              find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
+          TextField durationTextF =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          // expect(durationTextF.controller!.text, '2:00');
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
-                ),
-              ),
-            ),
-          );
+          editableDateTimeTextField =
+              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          expect(find.text('10-08-2022 10:00'), findsOneWidget);
 
-          await tester.enterText(durationTextField, '--2');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
+          // testing the duration text field color
+          final TextField durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationNegativeColor);
 
-          await tester.pumpAndSettle();
-
-          expect(find.text('2:00'), findsOneWidget);
-          expect(find.text('11-08-2022 12:00'), findsOneWidget);
-        },
-      );
-      testWidgets(
-        'Adding one digit with +- signduration',
-        (tester) async {
-          final durationSignButton =
-              find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
-
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
-                ),
-              ),
-            ),
-          );
-
-          await tester.enterText(durationTextField, '+-2');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
-
-          await tester.pumpAndSettle();
-
-          expect(find.text('2:00'), findsOneWidget);
-          expect(find.text('11-08-2022 12:00'), findsOneWidget);
-        },
-      );
-      testWidgets(
-        'Adding two digit with ++- signs duration',
-        (tester) async {
-          final durationSignButton =
-              find.byKey(const Key('durationSignButton'));
-          final durationTextField = find.byKey(const Key('durationTextField'));
-
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
-                ),
-              ),
-            ),
-          );
-
-          await tester.enterText(durationTextField, '++-48');
-          await tester.tap(durationSignButton);
-          await tester.tap(durationSignButton);
-
-          await tester.pumpAndSettle();
-
-          expect(find.text('48:00'), findsOneWidget);
-          expect(find.text('13-08-2022 10:00'), findsOneWidget);
+          // testing the duration sign button icon and color
+          final dynamic textButtonWithIconWidget = tester.widget(
+              find.byWidgetPredicate((Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationNegativeColor);
         },
       );
     },
