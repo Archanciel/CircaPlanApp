@@ -42,8 +42,8 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data to be
   /// displayed. Calling this method is necessary since the load function
-  /// is performed after selecting a item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
+  /// is performed after selecting a item in a menu displayed by the AppBar
   ///
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
