@@ -171,7 +171,8 @@ void main() {
             "dtDiffDurationStr": "24:00",
             "dtDiffAddTimeStr": "1:00",
             "dtDiffFinalDurationStr": "25:00",
-            "dtDurationPercentStr": "70 %"
+            "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -210,6 +211,10 @@ void main() {
               dateTimeDifferenceDurationData
                   .dateTimeDifferenceDurationPercentStr,
               "70 %");
+          expect(
+              dateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationTotalPercentStr,
+              "90 %");
         },
       );
       test(
@@ -220,6 +225,7 @@ void main() {
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
             "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -246,6 +252,9 @@ void main() {
           expect(timeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
           expect(timeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
           expect(timeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+          expect(timeCalculatorData.timeCalculatorResultPercentStr, "40 %");
+          expect(
+              timeCalculatorData.timeCalculatorResultSecondPercentStr, "90 %");
         },
       );
       test(
@@ -303,10 +312,12 @@ void main() {
             "dtDiffAddTimeStr": "1:00",
             "dtDiffFinalDurationStr": "25:00",
             "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
             "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -395,6 +406,10 @@ void main() {
               dateTimeDifferenceDurationData
                   .dateTimeDifferenceDurationPercentStr,
               "70 %");
+          expect(
+              dateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationTotalPercentStr,
+              "90 %");
 
           TimeCalculatorData timeCalculatorData =
               transferDataViewModel.timeCalculatorData;
@@ -404,6 +419,9 @@ void main() {
           expect(timeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
           expect(timeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
           expect(timeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+          expect(timeCalculatorData.timeCalculatorResultPercentStr, "40 %");
+          expect(
+              timeCalculatorData.timeCalculatorResultSecondPercentStr, "90 %");
         },
       );
       test(
@@ -461,10 +479,12 @@ void main() {
             "dtDiffAddTimeStr": "1:00",
             "dtDiffFinalDurationStr": "25:00",
             "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
             "firstTimeStr": "00:10:00",
             "secondTimeStr": "00:05:00",
             "resultTimeStr": "00:15:00",
             "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
           };
 
           String path = kCircadianAppDataDir;
@@ -482,13 +502,13 @@ void main() {
               transferDataJsonFilePathName: transferDataJsonFilePathName);
           transferDataViewModel.transferDataMap = transferDataMap;
 
-          // if not using await on next expression, 
+          // if not using await on next expression,
           // loadedTransferDataViewModel.loadTransferData() will fail with
-          // dart Could not load source 'dart:io/file_impl.dart': <source not 
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
           // available error !
           await transferDataViewModel
               .updateAndSaveTransferData(); // saves to json file
-      
+
           TransferDataViewModel loadedTransferDataViewModel =
               TransferDataViewModel(
                   transferDataJsonFilePathName: transferDataJsonFilePathName);
@@ -597,6 +617,10 @@ void main() {
               loadedDateTimeDifferenceDurationData
                   .dateTimeDifferenceDurationPercentStr,
               "70 %");
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationTotalPercentStr,
+              "90 %");
 
           TimeCalculatorData loadedTimeCalculatorData =
               loadedTransferDataViewModel.timeCalculatorData;
@@ -609,6 +633,10 @@ void main() {
               loadedTimeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
           expect(
               loadedTimeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultPercentStr, "40 %");
+          expect(loadedTimeCalculatorData.timeCalculatorResultSecondPercentStr,
+              "90 %");
 
           expect(loadedTransferDataViewModel.getTransferDataMap(),
               transferDataMap);

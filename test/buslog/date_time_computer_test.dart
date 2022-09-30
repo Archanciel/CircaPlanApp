@@ -147,7 +147,7 @@ void main() {
       );
 
       test(
-        'computeWakeUpDuration invalid params goToSleepDateTimeStr before wakeUpDateTime',
+        'computeWakeUpDuration invalid params goToSleepDateTimeStr equal to wakeUpDateTime',
         () {
           const String wakeUpDateTime = '15-04-2022 18:15';
           const String goToSleepDateTimeStr = '15-04-2022 18:15';
