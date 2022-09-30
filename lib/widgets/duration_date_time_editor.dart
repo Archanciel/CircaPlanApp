@@ -218,7 +218,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     );
   }
 
-  void handleDurationChange({String? durationStr, int? durationSign}) {
+  void handleDurationChange({
+    String? durationStr,
+    int? durationSign,
+    bool wasDurationSignButtonPressed = false,
+  }) {
     if (durationSign != null) {
       _durationSign = durationSign;
     }
@@ -234,8 +238,14 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       return;
     }
 
-    setDurationSignIconAndColor(
-        durationIsNegative: _durationTextFieldController.text.contains('-'));
+    // if (_durationTextFieldController.text.contains('-', 0)) {
+    //   setDurationSignIconAndColor(durationIsNegative: true);
+    // }
+
+    if (!wasDurationSignButtonPressed) {
+      setDurationSignIconAndColor(
+          durationIsNegative: _durationTextFieldController.text.contains('-'));
+    }
 
     _durationStr = Utility.convertIntDuration(
         durationStr: _durationTextFieldController.text);
@@ -417,7 +427,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                         DurationDateTimeEditor.durationPositiveColor;
                   }
 
-                  handleDurationChange(durationSign: _durationSign);
+                  handleDurationChange(
+                      durationSign: _durationSign,
+                      wasDurationSignButtonPressed: true);
                 },
               ),
             ),
