@@ -133,7 +133,10 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     widget.transferDataMap[widget.transferDataMapPercentKey] = percentStr;
 
     // Commenting out next line avoids disabling Redo (Undo + Undo !),
-    //but it also prevents saving the changed percent value !!!
+    // but it also prevents saving the changed percent value
+    // unless Undo was done or start or end date time were changed,
+    // which caused DateTimeDifferenceDuration screen to call
+    // transferDataViewModel.updateAndSaveTransferData() !!!
     // widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
