@@ -305,6 +305,8 @@ class TransferDataViewModel {
         _transferDataMap!['dtDiffFinalDurationStr'];
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
         _transferDataMap!['dtDurationPercentStr'];
+    dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr =
+        _transferDataMap!['dtDurationTotalPercentStr'];
   }
 
   void updateTimeCalculatorData() {
@@ -478,6 +480,8 @@ class TransferDataViewModel {
           dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr;
       _transferDataMap!["dtDurationPercentStr"] =
           dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr;
+      _transferDataMap!["dtDurationTotalPercentStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr;
     }
 
     TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;
