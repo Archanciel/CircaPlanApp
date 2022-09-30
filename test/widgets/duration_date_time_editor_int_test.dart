@@ -31,13 +31,11 @@ Future<void> main() async {
   const IconData negativeDurationIcon = Icons.remove;
 
   group(
-    'DurationDateTimeEditor int duration widget testing',
+    'DurationDateTimeEditor adding one int duration',
     () {
       testWidgets(
         'Adding one digit duration',
         (tester) async {
-          final Finder durationSignButtonFinder =
-              find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
               find.byKey(const Key('durationTextField'));
 
@@ -85,9 +83,8 @@ Future<void> main() async {
       testWidgets(
         'Adding two digits duration',
         (tester) async {
-          final Finder durationSignButtonFinder =
-              find.byKey(const Key('durationSignButton'));
-          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder =
+              find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -133,9 +130,8 @@ Future<void> main() async {
       testWidgets(
         'Adding one digit with - sign duration',
         (tester) async {
-          final Finder durationSignButtonFinder =
-              find.byKey(const Key('durationSignButton'));
-          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder =
+              find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -181,9 +177,8 @@ Future<void> main() async {
       testWidgets(
         'Adding two digits with - signs duration',
         (tester) async {
-          final Finder durationSignButtonFinder =
-              find.byKey(const Key('durationSignButton'));
-          final Finder durationTextFieldFinder = find.byKey(const Key('durationTextField'));
+          final Finder durationTextFieldFinder =
+              find.byKey(const Key('durationTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -201,8 +196,6 @@ Future<void> main() async {
             ),
           );
 
-          TextField editableDateTimeTextField =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           await tester.enterText(durationTextFieldFinder, '-24');
 
           // typing on Done button
@@ -210,12 +203,6 @@ Future<void> main() async {
 
           await tester.pumpAndSettle();
 
-          TextField durationTextF =
-              tester.widget(find.byKey(const Key('durationTextField')));
-          // expect(durationTextF.controller!.text, '2:00');
-
-          editableDateTimeTextField =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           expect(find.text('10-08-2022 10:00'), findsOneWidget);
 
           // testing the duration text field color

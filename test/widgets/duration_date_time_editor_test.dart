@@ -33,8 +33,6 @@ Future<void> main() async {
       testWidgets(
         'Adding valid duration',
         (tester) async {
-          final Finder durationSignButtonFinder =
-              find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
               find.byKey(const Key('durationTextField'));
 
@@ -82,8 +80,6 @@ Future<void> main() async {
       testWidgets(
         'Subtracting valid duration',
         (tester) async {
-          final Finder durationSignButtonFinder =
-              find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
               find.byKey(const Key('durationTextField'));
 
