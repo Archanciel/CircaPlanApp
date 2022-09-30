@@ -225,6 +225,7 @@ Future<void> main() async {
   group(
     'DurationDateTimeEditor adding multiple int durations',
     () {
+      /// This test validate duration icon and color bug fix
       testWidgets(
         'Positive and negative durations',
         (tester) async {
