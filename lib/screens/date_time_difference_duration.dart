@@ -262,7 +262,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     // Re-enabling the next five lines of code no longer prevent
     // Undo to work since _editableDurationPercentWidget line
-    // 135 has been commented out !
+    // 145 has been commented out !
     if (_finalDurationStr.isNotEmpty) {
       _editableDurationPercentSleep.setDurationStr(_finalDurationStr);
       _editableDurationPercentTotal.setDurationStr(_finalDurationStr);
