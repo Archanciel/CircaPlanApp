@@ -80,7 +80,16 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
       return;
     }
 
-    double percentValueDouble = double.parse(percentStr.replaceFirst(' %', ''));
+    double percentValueDouble = 0.0;
+
+    try {
+      percentValueDouble = double.parse(percentStr.replaceFirst(' %', ''));
+    } catch (e) {
+      // in case the user enter a non double parsable percent
+      // value, the invalid value is replaced by 0 % !
+      widget.selectedPercentTextFieldController.text = '0 %';
+    }
+
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
     String percentDurationStr = '';
 
@@ -137,8 +146,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     //
     // But it also prevents saving the changed percent value
     // unless after changing the percent value Undo and Redo were
-    // done or start or end date time were changed, which caused 
-    // DateTimeDifferenceDuration screen to call 
+    // done or start or end date time were changed, which caused
+    // DateTimeDifferenceDuration screen to call
     // transferDataViewModel.updateAndSaveTransferData() or another
     // screen was selected !!!
     //
@@ -238,11 +247,10 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                           // in the screen navigation transfer
                           // data map.
 
-                          if (val == '') {
-                            val = '0';
+                          if (!val.contains('%')) {
+                            val = '$val %';
                           }
 
-                          widget.selectedPercentTextFieldController.text = val;
                           handleSelectedPercentStr(val);
                           setState(() {});
                         },

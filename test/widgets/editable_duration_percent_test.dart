@@ -270,7 +270,7 @@ Future<void> main() async {
               tester.firstWidget(edpDurationPercentTextField);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
-          expect(durationPercentTextFieldController.text, '73.2');
+          expect(durationPercentTextFieldController.text, '73.2 %');
         },
       );
       testWidgets(
@@ -295,8 +295,6 @@ Future<void> main() async {
               ),
             ),
           );
-          // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
 
           await tester.enterText(edpDurationPercentTextField, '');
 
@@ -316,7 +314,99 @@ Future<void> main() async {
               tester.firstWidget(edpDurationPercentTextField);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
-          expect(durationPercentTextFieldController.text, '0');
+          expect(durationPercentTextFieldController.text, '0 %');
+        },
+      );
+      testWidgets(
+        'Entering invalid percent value no % symbol',
+        (tester) async {
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDurationPercent(
+                  dateTimeTitle: 'Duration %',
+                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  durationStr: '15:00',
+                  topSelMenuPosition: 343.0,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataMap,
+                ),
+              ),
+            ),
+          );
+          // await tester.enterText(
+          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+
+          await tester.enterText(edpDurationPercentTextField, 'iiii');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+
+          await tester.pumpAndSettle();
+
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '0:00');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '0 %');
+        },
+      );
+      testWidgets(
+        'Entering invalid percent value with % symbol',
+        (tester) async {
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDurationPercent(
+                  dateTimeTitle: 'Duration %',
+                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  durationStr: '15:00',
+                  topSelMenuPosition: 343.0,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataMap,
+                ),
+              ),
+            ),
+          );
+          // await tester.enterText(
+          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+
+          await tester.enterText(edpDurationPercentTextField, 'iiii %');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+
+          await tester.pumpAndSettle();
+
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '0:00');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '0 %');
         },
       );
     },
