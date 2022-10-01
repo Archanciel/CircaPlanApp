@@ -94,28 +94,28 @@ class TransferData extends SerializableObject {
           '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
 
       // String screenDataSubMapKey = 'addDurationToDateTimeData';
-      // String screenDataSubMapKey = 'dateTimeDifferenceDurationData';
+      String screenDataSubMapKey = 'dateTimeDifferenceDurationData';
       // String screenDataSubMapKey = 'calculateSleepDurationData';
       // String screenDataSubMapKey = 'timeCalculatorData';
 
-      // String formattedScreenDataSubMap =
-      //     await Utility.formatScreenDataSubMapFromJsonFileContent(
-      //         jsonFilePathName: jsonUndoFilePathName,
-      //         screenDataSubMapKey: screenDataSubMapKey);
-      // print(
-      //     '\n$jsonUndoFileName CONTENT BEFORE RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
+      String formattedScreenDataSubMap =
+          await Utility.formatScreenDataSubMapFromJsonFileContent(
+              jsonFilePathName: jsonUndoFilePathName,
+              screenDataSubMapKey: screenDataSubMapKey);
+      print(
+          '\n$jsonUndoFileName CONTENT BEFORE RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
 
       Utility.renameFile(
         filePathNameStr: jsonFilePathName,
         newFileNameStr: jsonUndoFileName,
       );
 
-      // formattedScreenDataSubMap =
-      //     await Utility.formatScreenDataSubMapFromJsonFileContent(
-      //         jsonFilePathName: jsonUndoFilePathName,
-      //         screenDataSubMapKey: screenDataSubMapKey);
-      // print(
-      //     '\n$jsonUndoFileName CONTENT AFTER RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
+      formattedScreenDataSubMap =
+          await Utility.formatScreenDataSubMapFromJsonFileContent(
+              jsonFilePathName: jsonUndoFilePathName,
+              screenDataSubMapKey: screenDataSubMapKey);
+      print(
+          '\n$jsonUndoFileName CONTENT AFTER RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
     }
 
     final Serializer serializer = Serializer();
@@ -127,10 +127,28 @@ class TransferData extends SerializableObject {
     // print(
     //     'saveTransferDataToFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
 
+    String jsonUndoFilePathName =
+        '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
+
+    // String screenDataSubMapKey = 'addDurationToDateTimeData';
+    String screenDataSubMapKey = 'dateTimeDifferenceDurationData';
+    // String screenDataSubMapKey = 'calculateSleepDurationData';
+    // String screenDataSubMapKey = 'timeCalculatorData';
+
+    String formattedScreenDataSubMap =
+        await Utility.formatScreenDataSubMapFromJsonFileContent(
+            jsonFilePathName: jsonUndoFilePathName,
+            screenDataSubMapKey: screenDataSubMapKey);
+    print(
+        '\nJSON CONTENT BEFORE SAVING IT TO $jsonFilePathName\n$formattedScreenDataSubMap');
+
     File(jsonFilePathName).writeAsStringSync(outputJsonStr);
 
-    // print('\ncircadian.json CONTENT AFTER SAVING $jsonFilePathName');
-    // String circadianJsonFilePathName = '/storage/emulated/0/Download/CircadianData/circadian.json';
-    // Utility.formatJsonFileContent(jsonFilePathName: circadianJsonFilePathName).then((value) => print('$circadianJsonFilePathName\n$value'));
+    formattedScreenDataSubMap =
+        await Utility.formatScreenDataSubMapFromJsonFileContent(
+            jsonFilePathName: jsonUndoFilePathName,
+            screenDataSubMapKey: screenDataSubMapKey);
+    print(
+        '\nJSON CONTENT AFTER SAVING IT TO $jsonFilePathName\n$formattedScreenDataSubMap');
   }
 }

@@ -151,7 +151,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     // transferDataViewModel.updateAndSaveTransferData() or another
     // screen was selected !!!
     //
-    // widget.transferDataViewModel.updateAndSaveTransferData();
+    widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
