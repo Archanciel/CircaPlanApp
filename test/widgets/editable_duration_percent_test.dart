@@ -227,6 +227,98 @@ Future<void> main() async {
           expect(durationPercentTextFieldController.text, '70 %');
         },
       );
+      testWidgets(
+        'Entering double percent value',
+        (tester) async {
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDurationPercent(
+                  dateTimeTitle: 'Duration %',
+                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  durationStr: '15:00',
+                  topSelMenuPosition: 343.0,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataMap,
+                ),
+              ),
+            ),
+          );
+          // await tester.enterText(
+          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+
+          await tester.enterText(edpDurationPercentTextField, '73.2');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+
+          await tester.pumpAndSettle();
+
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '10:58');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '73.2');
+        },
+      );
+      testWidgets(
+        'Entering empty percent value',
+        (tester) async {
+          final edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+          final edpDurationPercentTextField =
+              find.byKey(const Key('edpDurationPercentTextField'));
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: EditableDurationPercent(
+                  dateTimeTitle: 'Duration %',
+                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  durationStr: '15:00',
+                  topSelMenuPosition: 343.0,
+                  transferDataViewModel: transferDataViewModel,
+                  transferDataMap: transferDataMap,
+                ),
+              ),
+            ),
+          );
+          // await tester.enterText(
+          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+
+          await tester.enterText(edpDurationPercentTextField, '');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+
+          await tester.pumpAndSettle();
+
+          TextField durationPercentComputedValueTextField =
+              tester.firstWidget(edpDurationPercentComputedValueTextField);
+          TextEditingController
+              durationPercentComputedValueTextFieldController =
+              durationPercentComputedValueTextField.controller!;
+          expect(durationPercentComputedValueTextFieldController.text, '0:00');
+
+          TextField durationPercentTextField =
+              tester.firstWidget(edpDurationPercentTextField);
+          TextEditingController durationPercentTextFieldController =
+              durationPercentTextField.controller!;
+          expect(durationPercentTextFieldController.text, '0');
+        },
+      );
     },
   );
 }
