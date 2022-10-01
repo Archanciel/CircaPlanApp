@@ -80,14 +80,14 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
       return;
     }
 
-    int percentValueInt = int.parse(percentStr.replaceFirst(' %', ''));
+    double percentValueDouble = double.parse(percentStr.replaceFirst(' %', ''));
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
     String percentDurationStr = '';
 
     if (duration != null) {
       // is null after clicking on Reset button !
       int percentDurationMicrosecondsInt =
-          (duration.inMicroseconds * percentValueInt / 100).round();
+          (duration.inMicroseconds * percentValueDouble / 100).round();
       Duration percentDuration =
           Duration(microseconds: percentDurationMicrosecondsInt);
       percentDurationStr = percentDuration.HHmm();
@@ -132,11 +132,16 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     widget.durationPercentTextFieldController.text = percentDurationStr;
     widget.transferDataMap[widget.transferDataMapPercentKey] = percentStr;
 
-    // Commenting out next line avoids disabling Redo (Undo + Undo !),
-    // but it also prevents saving the changed percent value
-    // unless Undo was done or start or end date time were changed,
-    // which caused DateTimeDifferenceDuration screen to call
-    // transferDataViewModel.updateAndSaveTransferData() !!!
+    // Commenting out last method line avoids making Redo (Undo +
+    // Undo !) not working.
+    //
+    // But it also prevents saving the changed percent value
+    // unless after changing the percent value Undo and Redo were
+    // done or start or end date time were changed, which caused
+    // DateTimeDifferenceDuration screen to call
+    // transferDataViewModel.updateAndSaveTransferData() or another
+    // screen was selected !!!
+    //
     // widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
@@ -224,7 +229,23 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: widget.selectedPercentTextFieldController,
-                        readOnly: true,
+                        readOnly: false,
+                        onSubmitted: (val) {
+                          // called when manually updating the TextField
+                          // content. onChanged must be defined in order for
+                          // pasting a value to the TextField to really
+                          // modify the TextField value and store it
+                          // in the screen navigation transfer
+                          // data map.
+
+                          if (val == '') {
+                            val = '0';
+                          }
+
+                          widget.selectedPercentTextFieldController.text = val;
+                          handleSelectedPercentStr(val);
+                          setState(() {});
+                        },
                       ),
                       onDoubleTap: () async {
                         await widget.copyToClipboard(
