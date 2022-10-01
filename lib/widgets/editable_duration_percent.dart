@@ -278,6 +278,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   context: context,
                   selectableStrItemLst: [
                     '40 %',
+                    '45 %',
                     '50 %',
                     '55 %',
                     '60 %',
@@ -285,6 +286,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     '70 %',
                     '75 %',
                     '80 %',
+                    '85 %',
                     '90 %',
                   ],
                   posRectangleLTRB: RelativeRect.fromLTRB(
