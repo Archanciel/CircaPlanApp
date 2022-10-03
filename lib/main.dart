@@ -156,7 +156,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   }
 
   /// Method called in two situations:
-  /// 
+  ///
   /// 1/ directly, when selecting Undo AppBar menu item
   /// 2/ indirectly, when loading a json file
   Future<void> loadFileNameNoMsg(String selectedFileNameStr) async {
@@ -171,7 +171,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     // cause:
     //
     // 1/ Undo repeated 3rd time had no effect and
-    // 2/ first Undo after loading another json file 
+    // 2/ first Undo after loading another json file
     //    twice had no effect
     transferDataViewModel.updateAndSaveTransferData();
   }
@@ -268,6 +268,11 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             centerTitle: true,
             actions: [
               PopupMenuButton(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+                  ),
+                ),
                 // add icon, by default "3 dot" icon
                 // icon: Icon(Icons.book)
                 itemBuilder: (context) {
@@ -278,7 +283,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   }
 
                   return [
-                    PopupMenuItem<int>(
+                    const PopupMenuItem<int>(
                       value: 0,
                       child: Text("Undo"),
                     ),
