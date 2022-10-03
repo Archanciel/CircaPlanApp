@@ -50,10 +50,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         _resultTimeStr = transferDataMap['resultTimeStr'] ?? '',
         super();
 
-  static Color durationPositiveColor = Colors.green.shade200;
-  static Color durationNegativeColor = Colors.red.shade200;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static const double LARGER_BUTTON_WIDTH = 82.0;
 
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
@@ -116,7 +113,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     // The next instruction enables updating result % value
     // when going back to the time calculator screen.
-    // As a consequence, the result % value does not need to 
+    // As a consequence, the result % value does not need to
     // be stored in the transfer data map !
     if (_resultTimeStr.isNotEmpty) {
       // _resultTimeStr is empty in case the app is launched
@@ -162,7 +159,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     // in fact, the next expression raises this exception:
     //
     // Exception has occurred.
-    // LateError (LateInitializationError: Field '_editableDurationPercentWidget@37463065' 
+    // LateError (LateInitializationError: Field '_editableDurationPercentWidget@37463065'
     // has not been initialized.)
     //
     // _editableDurationPercentWidget.setDurationStr(_resultTimeStr);
@@ -241,6 +238,51 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     String extractedHHmm = _extractHHmm(_resultTimeStr);
 
     _editableDurationPercentWidget.setDurationStr(extractedHHmm);
+
+    setState(() {});
+
+    _updateTransferDataMap();
+  }
+
+  void _divMultTimeDuration(
+      {required BuildContext context, required bool isDiv}) {
+    /// Private method called when pressing the 'Plus' or 'Minus' buttons.
+    _firstTimeStr = _firstTimeTextFieldController.text;
+    _secondTimeStr = _secondTimeTextFieldController.text;
+    Duration? firstTimeDuration =
+        DateTimeParser.parseDDHHMMorHHMMDuration(_firstTimeStr);
+    Duration? secondTimeDuration =
+        DateTimeParser.parseDDHHMMorHHMMDuration(_secondTimeStr);
+
+    Duration resultDuration;
+
+    if (firstTimeDuration == null) {
+      openWarningDialog(context,
+          'You are trying to add/subtract time to an incorrectly formated dd:hh:mm time ($_firstTimeStr). Please correct it and retry !');
+      return;
+    }
+
+    if (secondTimeDuration == null) {
+      openWarningDialog(context,
+          'You are trying to add/subtract an incorrectly formated dd:hh:mm time ($_secondTimeStr). Please correct it and retry !');
+      return;
+    }
+
+    if (isDiv) {
+      resultDuration = firstTimeDuration + secondTimeDuration;
+    } else {
+      resultDuration = firstTimeDuration - secondTimeDuration;
+    }
+
+    String resultTimeStr;
+
+    _resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
+    _resultTextFieldController.text = _resultTimeStr;
+
+    String extractedHHmm = _extractHHmm(_resultTimeStr);
+
+    _editableDurationPercentWidgetFirst.setDurationStr(extractedHHmm);
+    _editableDurationPercentWidgetSecond.setDurationStr(extractedHHmm);
 
     setState(() {});
 
@@ -407,7 +449,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 96, // val 97 is compliant with current value 6
+                    height: 80, // val 97 is compliant with current value 6
 //                                 of APP_LABEL_TO_TEXT_DISTANCE
                   ),
                   Row(
@@ -432,19 +474,65 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       const SizedBox(
                         width: 20,
                       ),
+                      Container(
+                        width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () {
+                            //  _startDateTimeController.text = DateTime.now().toString();
+                            _addSubtractTimeDuration(
+                                context: context, isPlus: false);
+                          },
+                          child: const Text(
+                            'Subtr',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
                           //  _startDateTimeController.text = DateTime.now().toString();
-                          _addSubtractTimeDuration(
-                              context: context, isPlus: false);
+                          _divMultTimeDuration(
+                              context: context, isDiv: true);
                         },
                         child: const Text(
-                          'Subtr',
+                          'Div',
                           style: TextStyle(
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () {
+                            //  _startDateTimeController.text = DateTime.now().toString();
+                            _divMultTimeDuration(
+                                context: context, isDiv: false);
+                          },
+                          child: const Text(
+                            '%Mult',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            ),
                           ),
                         ),
                       ),
