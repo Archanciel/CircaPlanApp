@@ -270,7 +270,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(dateTimeNow);
+    String nowDateTimeStr =
+        ScreenMixin.frenchDateTimeFormat.format(dateTimeNow);
 
     _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newDateTimeStr =
@@ -532,7 +533,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (_previousDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
-        String newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(newDateTime);
+        String newDateTimeStr =
+            ScreenMixin.frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
         // Without using applying ! bang operator to the newDateTime variable,
@@ -544,7 +546,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       } else {
         DateTime? previousDateTime;
 
-        previousDateTime = ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
+        previousDateTime =
+            ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
@@ -598,7 +601,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       // status == status.sleep
       DateTime? previousDateTime;
 
-      previousDateTime = ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
+      previousDateTime =
+          ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
 
       if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
@@ -975,8 +979,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          String dateTimeStr =
-                              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+                          String dateTimeStr = ScreenMixin.frenchDateTimeFormat
+                              .format(DateTime.now());
                           _newDateTimeController.text = dateTimeStr;
                           _newDateTimeStr = dateTimeStr;
 
@@ -1091,9 +1095,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Time to add'),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+            ),
+          ),
           content: TextField(
             autofocus: true,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                 fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
             decoration: const InputDecoration(hintText: '(-)HH:mm'),

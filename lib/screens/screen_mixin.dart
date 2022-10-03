@@ -35,14 +35,16 @@ mixin ScreenMixin {
 
   static DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   static DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+  static const double APP_ROUNDED_BOARDER_RADIUS = 18.0;
   final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
   final Color selectionColor = ScreenMixin.APP_DARK_BLUE_COLOR;
   final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
       MaterialStateProperty.all(ScreenMixin.APP_DARK_BLUE_COLOR);
   final MaterialStateProperty<RoundedRectangleBorder>
       appElevatedButtonRoundedShape =
-      MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)));
+      MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS)));
   final TextStyle labelTextStyle = TextStyle(
     color: ScreenMixin.APP_LIGHT_YELLOW_COLOR,
     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
@@ -64,6 +66,11 @@ mixin ScreenMixin {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('WARNING'),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+          ),
+        ),
         content: Text(
           message,
           style: const TextStyle(
@@ -247,6 +254,11 @@ mixin ScreenMixin {
 
     showMenu<String>(
       context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+        ),
+      ),
       position:
           posRectangleLTRB, // position where you want to show the menu on screen
       items: itemLst,
