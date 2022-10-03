@@ -59,6 +59,21 @@ class DateTimeDifferenceDurationData extends ScreenData {
   set dateTimeDifferenceDurationPercentStr(String value) =>
       attributes['dateTimeDifferenceDurationPercentStr'] = value;
 
+  /// Checking if the durationTotalPercentStr == null solves the
+  /// problem of starting the app on a physical device where
+  /// the json files do not yet have the
+  /// 'dateTimeDurationTotalPercentStr' entry !
+  String get dateTimeDifferenceDurationTotalPercentStr {
+    String? durationPercentStr = attributes['dateTimeDifferenceDurationTotalPercentStr'];
+
+    durationPercentStr ??= '100 %';
+
+    return durationPercentStr;
+  }
+
+  set dateTimeDifferenceDurationTotalPercentStr(String value) =>
+      attributes['dateTimeDifferenceDurationTotalPercentStr'] = value;
+
   @override
   String toString() {
     String? dateTimeDifferenceStartDateTimeStr =

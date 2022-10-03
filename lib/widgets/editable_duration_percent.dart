@@ -42,8 +42,8 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data to be
   /// displayed. Calling this method is necessary since the load function
-  /// is performed after selecting a item in a menu displayed by the AppBar
   /// menu defined not by the current screen, but by the main app screen.
+  /// is performed after selecting a item in a menu displayed by the AppBar
   ///
   /// The method is called when the _MainAppState.handleSelectedLoadFileName()
   /// method is executed after the file to load has been selected in the
@@ -80,7 +80,16 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
       return;
     }
 
-    double percentValueDouble = double.parse(percentStr.replaceFirst(' %', ''));
+    double percentValueDouble = 0.0;
+
+    try {
+      percentValueDouble = double.parse(percentStr.replaceFirst(' %', ''));
+    } catch (e) {
+      // in case the user enter a non double parsable percent
+      // value, the invalid value is replaced by 0 % !
+      widget.selectedPercentTextFieldController.text = '0 %';
+    }
+
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
     String percentDurationStr = '';
 
@@ -211,7 +220,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   ),
                 ),
                 SizedBox(
-                  width: 55,
+                  width: 75,
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
@@ -238,11 +247,10 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                           // in the screen navigation transfer
                           // data map.
 
-                          if (val == '') {
-                            val = '0';
+                          if (!val.contains('%')) {
+                            val = '$val %';
                           }
 
-                          widget.selectedPercentTextFieldController.text = val;
                           handleSelectedPercentStr(val);
                           setState(() {});
                         },

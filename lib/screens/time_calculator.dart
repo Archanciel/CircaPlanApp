@@ -65,7 +65,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
-  late EditableDurationPercent _editableDurationPercentWidget;
+  late EditableDurationPercent _editableDurationPercentWidgetFirst;
+  late EditableDurationPercent _editableDurationPercentWidgetSecond;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
@@ -89,9 +90,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     // Re-enabling the next two lines of code no longer prevent
     // Undo to work since _editableDurationPercentWidget line
-    // 135 has been commented out !
-    _editableDurationPercentWidget.setDurationStr(extractedHHmm);
-    _editableDurationPercentWidget.callSetState();
+    // 145 has been commented out !
+    _editableDurationPercentWidgetFirst.setDurationStr(extractedHHmm);
+    _editableDurationPercentWidgetFirst.callSetState();
+
+    _editableDurationPercentWidgetSecond.setDurationStr(extractedHHmm);
+    _editableDurationPercentWidgetSecond.callSetState();
 
     setState(() {});
   }
@@ -121,11 +125,20 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       extractedHHmm = _extractHHmm(_resultTimeStr);
     }
 
-    _editableDurationPercentWidget = EditableDurationPercent(
+    _editableDurationPercentWidgetFirst = EditableDurationPercent(
       dateTimeTitle: 'Result %',
       transferDataMapPercentKey: 'resultPercentStr',
       durationStr: extractedHHmm,
       topSelMenuPosition: 343.0,
+      transferDataViewModel: _transferDataViewModel,
+      transferDataMap: _transferDataMap,
+    );
+
+    _editableDurationPercentWidgetSecond = EditableDurationPercent(
+      dateTimeTitle: 'Result %',
+      transferDataMapPercentKey: 'resultSecondPercentStr',
+      durationStr: extractedHHmm,
+      topSelMenuPosition: 411.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
     );
@@ -193,7 +206,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _secondTimeTextFieldController.text = _secondTimeStr;
     _resultTimeStr = '';
     _resultTextFieldController.text = _resultTimeStr;
-    _editableDurationPercentWidget.setDurationStr(_resultTimeStr);
+    _editableDurationPercentWidgetFirst.setDurationStr(_resultTimeStr);
+    _editableDurationPercentWidgetSecond.setDurationStr(_resultTimeStr);
 
     setState(() {});
 
@@ -237,7 +251,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
     String extractedHHmm = _extractHHmm(_resultTimeStr);
 
-    _editableDurationPercentWidget.setDurationStr(extractedHHmm);
+    _editableDurationPercentWidgetFirst.setDurationStr(extractedHHmm);
+    _editableDurationPercentWidgetSecond.setDurationStr(extractedHHmm);
 
     setState(() {});
 
@@ -440,7 +455,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   const SizedBox(
                     height: kVerticalFieldDistance,
                   ),
-                  _editableDurationPercentWidget,
+                  _editableDurationPercentWidgetFirst,
+                  _editableDurationPercentWidgetSecond,
                 ],
               ),
             ),

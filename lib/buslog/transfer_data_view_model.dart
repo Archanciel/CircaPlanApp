@@ -305,6 +305,8 @@ class TransferDataViewModel {
         _transferDataMap!['dtDiffFinalDurationStr'];
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
         _transferDataMap!['dtDurationPercentStr'];
+    dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr =
+        _transferDataMap!['dtDurationTotalPercentStr'];
   }
 
   void updateTimeCalculatorData() {
@@ -327,6 +329,8 @@ class TransferDataViewModel {
         _transferDataMap!['resultTimeStr'];
     timeCalculatorData.timeCalculatorResultPercentStr =
         _transferDataMap!['resultPercentStr'] ?? '';
+    timeCalculatorData.timeCalculatorResultSecondPercentStr =
+        _transferDataMap!['resultSecondPercentStr'] ?? '';
   }
 
   /// Loads the application screen data json file and sets
@@ -478,6 +482,8 @@ class TransferDataViewModel {
           dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr;
       _transferDataMap!["dtDurationPercentStr"] =
           dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr;
+      _transferDataMap!["dtDurationTotalPercentStr"] =
+          dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr;
     }
 
     TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;
@@ -494,6 +500,8 @@ class TransferDataViewModel {
           timeCalculatorData.timeCalculatorResultTimeStr;
       _transferDataMap!["resultPercentStr"] =
           timeCalculatorData.timeCalculatorResultPercentStr;
+      _transferDataMap!["resultSecondPercentStr"] =
+          timeCalculatorData.timeCalculatorResultSecondPercentStr;
     }
 
     // print('\nTRANSFER DATA MAP AFTER LOADING IT');

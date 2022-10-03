@@ -67,7 +67,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
 
-  late EditableDurationPercent _editableDurationPercentWidget;
+  late EditableDurationPercent _editableDurationPercentSleep;
+  late EditableDurationPercent _editableDurationPercentTotal;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
@@ -85,12 +86,15 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     // Undo to work since _editableDurationPercentWidget line
     // 135 has been commented out !
     if (_finalDurationStr.isNotEmpty) {
-      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+      _editableDurationPercentSleep.setDurationStr(_finalDurationStr);
+      _editableDurationPercentTotal.setDurationStr(_finalDurationStr);
     } else {
-      _editableDurationPercentWidget.setDurationStr(_durationStr);
+      _editableDurationPercentSleep.setDurationStr(_durationStr);
+      _editableDurationPercentTotal.setDurationStr(_durationStr);
     }
 
-    _editableDurationPercentWidget.callSetState();
+    _editableDurationPercentSleep.callSetState();
+    _editableDurationPercentTotal.callSetState();
 
     setState(() {});
   }
@@ -115,11 +119,20 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     String editableDurationPercentWidgetDurationStr =
         (_finalDurationStr.isNotEmpty) ? _finalDurationStr : _durationStr;
 
-    _editableDurationPercentWidget = EditableDurationPercent(
+    _editableDurationPercentSleep = EditableDurationPercent(
       dateTimeTitle: 'Duration %',
       transferDataMapPercentKey: 'dtDurationPercentStr',
       durationStr: editableDurationPercentWidgetDurationStr,
       topSelMenuPosition: 343.0,
+      transferDataViewModel: _transferDataViewModel,
+      transferDataMap: _transferDataMap,
+    );
+
+    _editableDurationPercentTotal = EditableDurationPercent(
+      dateTimeTitle: 'Duration %',
+      transferDataMapPercentKey: 'dtDurationTotalPercentStr',
+      durationStr: editableDurationPercentWidgetDurationStr,
+      topSelMenuPosition: 411.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
     );
@@ -193,7 +206,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
             '';
     _durationStr = '';
     _durationTextFieldController.text = _durationStr;
-    _editableDurationPercentWidget.setDurationStr(_durationStr);
+    _editableDurationPercentSleep.setDurationStr(_durationStr);
+    _editableDurationPercentTotal.setDurationStr(_durationStr);
     _addTimeStr = '';
     _addTimeTextFieldController.text = _addTimeStr;
     _finalDurationStr = '';
@@ -248,11 +262,13 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
     // Re-enabling the next five lines of code no longer prevent
     // Undo to work since _editableDurationPercentWidget line
-    // 135 has been commented out !
+    // 145 has been commented out !
     if (_finalDurationStr.isNotEmpty) {
-      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+      _editableDurationPercentSleep.setDurationStr(_finalDurationStr);
+      _editableDurationPercentTotal.setDurationStr(_finalDurationStr);
     } else {
-      _editableDurationPercentWidget.setDurationStr(_durationStr);
+      _editableDurationPercentSleep.setDurationStr(_durationStr);
+      _editableDurationPercentTotal.setDurationStr(_durationStr);
     }
 
     setState(() {});
@@ -300,7 +316,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       _finalDurationStr = finalDuration?.HHmm() ?? '';
       _finalDurationTextFieldController.text = _finalDurationStr;
 
-      _editableDurationPercentWidget.setDurationStr(_finalDurationStr);
+      _editableDurationPercentSleep.setDurationStr(_finalDurationStr);
+      _editableDurationPercentTotal.setDurationStr(_finalDurationStr);
 
       setState(() {});
 
@@ -314,7 +331,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = '';
     _finalDurationTextFieldController.text = _finalDurationStr;
 
-    _editableDurationPercentWidget.setDurationStr(_durationStr);
+    _editableDurationPercentSleep.setDurationStr(_durationStr);
+    _editableDurationPercentTotal.setDurationStr(_durationStr);
 
     setState(() {});
 
@@ -387,7 +405,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
                   ),
-                  _editableDurationPercentWidget,
+                  _editableDurationPercentSleep,
+                  _editableDurationPercentTotal,
                 ],
               ),
             ),
