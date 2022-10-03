@@ -1095,11 +1095,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Time to add'),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
-            ),
-          ),
           content: TextField(
             autofocus: true,
             style: const TextStyle(
