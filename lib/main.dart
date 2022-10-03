@@ -104,6 +104,13 @@ class MyApp extends StatelessWidget with ScreenMixin {
           cursorColor:
               ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !
         ),
+        dialogTheme: const DialogTheme(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+            ),
+          ),
+        ),
       ),
       home: MainApp(transferDataViewModel: _transferDataViewModel),
       localizationsDelegates: const [
@@ -390,7 +397,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       }
                     case 6:
                       {
-                        // About selected ...
                         showAboutDialog(
                           context: context,
                           applicationName: kApplicationName,
