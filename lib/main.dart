@@ -268,6 +268,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             centerTitle: true,
             actions: [
               PopupMenuButton(
+                constraints:
+                    const BoxConstraints.expand(width: 255, height: 350),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
