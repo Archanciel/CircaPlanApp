@@ -66,11 +66,6 @@ mixin ScreenMixin {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('WARNING'),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
-          ),
-        ),
         content: Text(
           message,
           style: const TextStyle(
