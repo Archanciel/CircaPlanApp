@@ -150,8 +150,14 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   String _extractHHmm(String ddHHmmStr) {
     RegExp regExp = RegExp(r'(\-?)(\d+:\d+)$');
 
-    String sign = regExp.firstMatch(ddHHmmStr)!.group(1) ?? '';
-    String value = regExp.firstMatch(ddHHmmStr)!.group(2) ?? '';
+    RegExpMatch? firstMatch = regExp.firstMatch(ddHHmmStr);
+    
+    if (firstMatch == null) {
+      return '';
+    }
+
+    String sign = firstMatch.group(1) ?? '';
+    String value = firstMatch.group(2) ?? '';
 
     return '$sign$value';
   }
@@ -225,16 +231,33 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         DateTimeParser.parseDDHHMMorHHMMDuration(_secondTimeStr);
 
     Duration resultDuration;
+    String warningMsg;
 
     if (firstTimeDuration == null) {
-      openWarningDialog(context,
-          'You are trying to add/subtract time to an incorrectly formated dd:hh:mm time ($_firstTimeStr). Please correct it and retry !');
+      if (isPlus) {
+        warningMsg =
+            'You are trying to add time to an incorrectly formated dd:hh:mm time $_firstTimeStr. Please correct it and retry !';
+      } else {
+        warningMsg =
+            'You are trying to subtract time from an incorrectly formated dd:hh:mm time $_firstTimeStr. Please correct it and retry !';
+      }
+
+      openWarningDialog(context, warningMsg);
+
       return;
     }
 
     if (secondTimeDuration == null) {
-      openWarningDialog(context,
-          'You are trying to add/subtract an incorrectly formated dd:hh:mm time ($_secondTimeStr). Please correct it and retry !');
+      if (isPlus) {
+        warningMsg =
+            'You are trying to add an incorrectly formated dd:hh:mm time $_secondTimeStr to $_firstTimeStr. Please correct it and retry !';
+      } else {
+        warningMsg =
+            'You are trying to subtract an incorrectly formated dd:hh:mm time $_secondTimeStr from $_firstTimeStr. Please correct it and retry !';
+      }
+
+      openWarningDialog(context, warningMsg);
+
       return;
     }
 
@@ -270,28 +293,87 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         DateTimeParser.parseDDHHMMorHHMMDuration(_secondTimeStr);
 
     Duration resultDuration;
+    String? warningMsg;
 
     if (firstTimeDuration == null) {
-      openWarningDialog(context,
-          'You are trying to add/subtract time to an incorrectly formated dd:hh:mm time ($_firstTimeStr). Please correct it and retry !');
+      if (isDiv) {
+        warningMsg =
+            'You are trying to divide an incorrectly formated dd:hh:mm time $_firstTimeStr. Please correct it and retry !';
+      } else {
+        warningMsg =
+            'You are trying to % multiply an incorrectly formated dd:hh:mm time $_firstTimeStr. Please correct it and retry !';
+      }
+
+      openWarningDialog(context, warningMsg);
+
       return;
     }
+
+    double percentValue = 0.0;
 
     if (secondTimeDuration == null) {
-      openWarningDialog(context,
-          'You are trying to add/subtract an incorrectly formated dd:hh:mm time ($_secondTimeStr). Please correct it and retry !');
-      return;
+      if (isDiv) {
+        warningMsg =
+            'You are trying to divide $_firstTimeStr by an incorrectly formated dd:hh:mm time $_secondTimeStr. Please correct it and retry !';
+      } else {
+        RegExp doubleRE = RegExp(r"-?(?:\d*\.)?\d+");
+        RegExpMatch? firstMatch = doubleRE.firstMatch(_secondTimeStr);
+        if (firstMatch != null) {
+          percentValue = double.parse(firstMatch.group(0)!);
+        } else {
+          warningMsg =
+              'You are trying to % multiply $_firstTimeStr by an incorrectly formated % value $_secondTimeStr. Please correct it and retry !';
+        }
+      }
+
+      if (warningMsg != null) {
+        openWarningDialog(context, warningMsg);
+
+        return;
+      }
+    } else {
+      // secondTimeDuration is not null
+      if (_secondTimeStr.contains('%')) {
+        warningMsg =
+            'Invalid second time or % value format $_secondTimeStr. Please correct it and retry !';
+        openWarningDialog(context, warningMsg);
+
+        return;
+      }
+
+      if (!isDiv) {
+        warningMsg =
+            'Invalid % value format $_secondTimeStr. Please correct it and retry !';
+        openWarningDialog(context, warningMsg);
+
+        return;
+      }
     }
+
+    double divisionResult = 0.0;
 
     if (isDiv) {
-      resultDuration = firstTimeDuration + secondTimeDuration;
+      // the smaller time is divided by the greater time since
+      // doing the contrary is not really useful in the Circadian
+      // app !
+      if (firstTimeDuration.inMicroseconds >
+          secondTimeDuration!.inMicroseconds) {
+        divisionResult = (secondTimeDuration.inMicroseconds /
+            firstTimeDuration.inMicroseconds *
+            100);
+      } else {
+        divisionResult = (firstTimeDuration.inMicroseconds /
+            secondTimeDuration.inMicroseconds *
+            100);
+      }
+      _resultTimeStr = '${divisionResult.toStringAsFixed(2)} %';
     } else {
-      resultDuration = firstTimeDuration - secondTimeDuration;
+      resultDuration = Duration(
+          microseconds:
+              (firstTimeDuration.inMicroseconds * percentValue / 100).round());
+      _resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
     }
 
-    String resultTimeStr;
-
-    _resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
     _resultTextFieldController.text = _resultTimeStr;
 
     String extractedHHmm = _extractHHmm(_resultTimeStr);
@@ -373,7 +455,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     height: kVerticalFieldDistance,
                   ),
                   Text(
-                    'Time (dd:hh:mm)',
+                    'Time (dd:hh:mm) or %',
                     style: labelTextStyle,
                   ),
                   Container(
@@ -465,8 +547,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 80, // val 97 is compliant with current value 6
-//                                 of APP_LABEL_TO_TEXT_DISTANCE
+                    height: 78,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -476,7 +557,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          //  _startDateTimeController.text = DateTime.now().toString();
                           _addSubtractTimeDuration(
                               context: context, isPlus: true);
                         },
@@ -497,7 +577,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
                           onPressed: () {
-                            //  _startDateTimeController.text = DateTime.now().toString();
                             _addSubtractTimeDuration(
                                 context: context, isPlus: false);
                           },
@@ -519,9 +598,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          //  _startDateTimeController.text = DateTime.now().toString();
-                          _divMultTimeDuration(
-                              context: context, isDiv: true);
+                          _divMultTimeDuration(context: context, isDiv: true);
                         },
                         child: const Text(
                           'Div',
@@ -540,7 +617,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
                           onPressed: () {
-                            //  _startDateTimeController.text = DateTime.now().toString();
                             _divMultTimeDuration(
                                 context: context, isDiv: false);
                           },
