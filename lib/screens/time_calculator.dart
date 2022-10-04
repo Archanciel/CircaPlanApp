@@ -151,7 +151,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     RegExp regExp = RegExp(r'(\-?)(\d+:\d+)$');
 
     RegExpMatch? firstMatch = regExp.firstMatch(ddHHmmStr);
-    
+
     if (firstMatch == null) {
       return '';
     }
@@ -455,7 +455,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     height: kVerticalFieldDistance,
                   ),
                   Text(
-                    'Time (dd:hh:mm) or %',
+                    'Time (dd:hh:mm|%)',
                     style: labelTextStyle,
                   ),
                   Container(
