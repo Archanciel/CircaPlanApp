@@ -440,6 +440,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       ),
                       child: GestureDetector(
                         child: TextField(
+                          key: const Key('firstTimeTextField'),
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: valueTextStyle,
@@ -487,6 +488,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       ),
                       child: GestureDetector(
                         child: TextField(
+                          key: const Key('secondTimeTextField'),
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: valueTextStyle,
@@ -536,6 +538,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                     child: GestureDetector(
                       child: TextField(
+                        key: const Key('resultTextField'),
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: valueTextStyle,
@@ -572,6 +575,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         width: 46,
                       ),
                       ElevatedButton(
+                        key: const Key('addButton'),
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
@@ -592,6 +596,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       SizedBox(
                         width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
                         child: ElevatedButton(
+                          key: const Key('subtractButton'),
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
@@ -627,6 +632,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                       ),
                       ElevatedButton(
+                        key: const Key('divButton'),
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
@@ -646,6 +652,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       SizedBox(
                         width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
                         child: ElevatedButton(
+                          key: const Key('multButton'),
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
