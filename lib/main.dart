@@ -98,8 +98,6 @@ class MyApp extends StatelessWidget with ScreenMixin {
       debugShowCheckedModeBanner: false,
       title: ScreenMixin.APP_TITLE,
       theme: ThemeData(
-        primarySwatch:
-            ScreenMixin.APP_LIGHT_BLUE_COLOR, // var untyped ScreenMixin const !
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor:
               ScreenMixin.appTextAndIconColor, // requires with ScreenMixin !

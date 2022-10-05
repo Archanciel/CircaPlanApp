@@ -68,6 +68,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   late EditableDurationPercent _editableDurationPercentWidgetFirst;
   late EditableDurationPercent _editableDurationPercentWidgetSecond;
 
+  bool _isChecked = false;
+
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
@@ -593,6 +595,19 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Theme(
+                        data: ThemeData(
+                          unselectedWidgetColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                        ),
+                        child: Checkbox(
+                          value: _isChecked,
+                          onChanged: (value) {
+                            setState(() {
+                              _isChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
