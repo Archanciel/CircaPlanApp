@@ -68,7 +68,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   late EditableDurationPercent _editableDurationPercentWidgetFirst;
   late EditableDurationPercent _editableDurationPercentWidgetSecond;
 
-  bool _isChecked = false;
+  bool _divideFirstBySecond = false;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
@@ -355,18 +355,26 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     double divisionResult = 0.0;
 
     if (isDiv) {
-      // the smaller time is divided by the greater time since
-      // doing the contrary is not really useful in the Circadian
-      // app !
-      if (firstTimeDuration.inMicroseconds >
-          secondTimeDuration!.inMicroseconds) {
-        divisionResult = (secondTimeDuration.inMicroseconds /
-            firstTimeDuration.inMicroseconds *
+      if (_divideFirstBySecond) {
+        // if the divideFirstBySecond checkbox is checked, the
+        // smaller time is not divided by the greater time, which
+        // is the default
+        divisionResult = (firstTimeDuration.inMicroseconds /
+            secondTimeDuration!.inMicroseconds *
             100);
       } else {
-        divisionResult = (firstTimeDuration.inMicroseconds /
-            secondTimeDuration.inMicroseconds *
-            100);
+        // the smaller time is divided by the greater time since
+        // doing the contrary is less useful in the Circadian app !
+        if (firstTimeDuration.inMicroseconds >
+            secondTimeDuration!.inMicroseconds) {
+          divisionResult = (secondTimeDuration.inMicroseconds /
+              firstTimeDuration.inMicroseconds *
+              100);
+        } else {
+          divisionResult = (firstTimeDuration.inMicroseconds /
+              secondTimeDuration.inMicroseconds *
+              100);
+        }
       }
       _resultTimeStr = '${divisionResult.toStringAsFixed(2)} %';
     } else {
@@ -548,12 +556,15 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
               right: 0,
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 78,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      const SizedBox(
+                        width: 46,
+                      ),
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
@@ -572,7 +583,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       const SizedBox(
                         width: 20,
                       ),
-                      Container(
+                      SizedBox(
                         width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
                         child: ElevatedButton(
                           style: ButtonStyle(
@@ -597,13 +608,14 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     children: [
                       Theme(
                         data: ThemeData(
-                          unselectedWidgetColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                          unselectedWidgetColor: Colors.white70,
                         ),
                         child: Checkbox(
-                          value: _isChecked,
+                          key: const Key('divideFirstBySecond'),
+                          value: _divideFirstBySecond,
                           onChanged: (value) {
                             setState(() {
-                              _isChecked = value!;
+                              _divideFirstBySecond = value!;
                             });
                           },
                         ),
@@ -625,7 +637,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       const SizedBox(
                         width: 20,
                       ),
-                      Container(
+                      SizedBox(
                         width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
                         child: ElevatedButton(
                           style: ButtonStyle(
