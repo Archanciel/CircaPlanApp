@@ -357,11 +357,17 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     if (isDiv) {
       if (_divideFirstBySecond) {
         // if the divideFirstBySecond checkbox is checked, the
-        // smaller time is not divided by the greater time, which
-        // is the default
-        divisionResult = (firstTimeDuration.inMicroseconds /
-            secondTimeDuration!.inMicroseconds *
-            100);
+        // greater time is divided by the smaller time
+        if (firstTimeDuration.inMicroseconds <
+            secondTimeDuration!.inMicroseconds) {
+          divisionResult = (secondTimeDuration.inMicroseconds /
+              firstTimeDuration.inMicroseconds *
+              100);
+        } else {
+          divisionResult = (firstTimeDuration.inMicroseconds /
+              secondTimeDuration.inMicroseconds *
+              100);
+        }
       } else {
         // the smaller time is divided by the greater time since
         // doing the contrary is less useful in the Circadian app !
