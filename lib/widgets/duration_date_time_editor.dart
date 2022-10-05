@@ -441,7 +441,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                 data: Theme.of(context).copyWith(
                   textSelectionTheme: TextSelectionThemeData(
                     selectionColor: widget.selectionColor,
-                    cursorColor: ScreenMixin.appTextAndIconColor,
+                    cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                   ),
                 ),
                 child: GestureDetector(

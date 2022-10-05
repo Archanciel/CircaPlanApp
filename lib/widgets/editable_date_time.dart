@@ -170,7 +170,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   key: const Key('editableDateTimeTextField'),
                   decoration: const InputDecoration.collapsed(hintText: ''),
                   style: const TextStyle(
-                      color: ScreenMixin.appTextAndIconColor,
+                      color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                       fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                   controller: dateTimePickerController,

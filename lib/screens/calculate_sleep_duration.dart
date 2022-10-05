@@ -800,7 +800,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: selectionColor,
-                          cursorColor: ScreenMixin.appTextAndIconColor,
+                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
                       child: TextField(
@@ -847,7 +847,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 selectionColor: selectionColor,
                                 // commenting cursorColor discourage manually
                                 // editing the TextField !
-                                // cursorColor: ScreenMixin.appTextAndIconColor,
+                                // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               ),
                             ),
                             child: TextField(
@@ -873,7 +873,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 selectionColor: selectionColor,
                                 // commenting cursorColor discourage manually
                                 // editing the TextField !
-                                // cursorColor: ScreenMixin.appTextAndIconColor,
+                                // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               ),
                             ),
                             child: TextField(
@@ -933,7 +933,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           selectionColor: selectionColor,
                           // commenting cursorColor discourage manually
                           // editing the TextField !
-                          // cursorColor: ScreenMixin.appTextAndIconColor,
+                          // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
                       child: TextField(
@@ -1013,7 +1013,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 context: context, minuteNb: 1),
                             icon: const Icon(
                               Icons.add,
-                              color: ScreenMixin.appTextAndIconColor,
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                             ),
                           ),
                           IconButton(
@@ -1026,7 +1026,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 context: context, minuteNb: -1),
                             icon: const Icon(
                               Icons.remove,
-                              color: ScreenMixin.appTextAndIconColor,
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                             ),
                           ),
                           const SizedBox(

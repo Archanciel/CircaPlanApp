@@ -194,7 +194,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
                         selectionColor: widget.selectionColor,
-                        cursorColor: ScreenMixin.appTextAndIconColor,
+                        cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                       ),
                     ),
                     child: GestureDetector(
@@ -204,7 +204,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(
-                            color: ScreenMixin.appTextAndIconColor,
+                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: widget.durationPercentTextFieldController,
@@ -225,7 +225,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
                         selectionColor: widget.selectionColor,
-                        cursorColor: ScreenMixin.appTextAndIconColor,
+                        cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                       ),
                     ),
                     child: GestureDetector(
@@ -234,7 +234,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(
-                            color: ScreenMixin.appTextAndIconColor,
+                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                             fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                             fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                         controller: widget.selectedPercentTextFieldController,

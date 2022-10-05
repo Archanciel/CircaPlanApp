@@ -421,7 +421,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: selectionColor,
-                          cursorColor: ScreenMixin.appTextAndIconColor,
+                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
                       child: GestureDetector(
@@ -468,7 +468,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: selectionColor,
-                          cursorColor: ScreenMixin.appTextAndIconColor,
+                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
                       child: GestureDetector(
@@ -517,7 +517,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         selectionColor: selectionColor,
                         // commenting cursorColor discourage manually
                         // editing the TextField !
-                        // cursorColor: ScreenMixin.appTextAndIconColor,
+                        // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                       ),
                     ),
                     child: GestureDetector(

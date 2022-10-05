@@ -19,7 +19,6 @@ mixin ScreenMixin {
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
-  static const Color appTextAndIconColor = Colors.white;
   static const Color APP_TEXT_AND_ICON_COLOR = Colors.white;
   static const FontWeight APP_TEXT_FONT_WEIGHT = FontWeight.normal;
   static const double APP_LABEL_TO_TEXT_DISTANCE = 5;
@@ -50,7 +49,7 @@ mixin ScreenMixin {
     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
   );
   final TextStyle valueTextStyle = const TextStyle(
-    color: ScreenMixin.appTextAndIconColor,
+    color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
     fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
   );
