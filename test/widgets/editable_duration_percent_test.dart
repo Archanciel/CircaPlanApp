@@ -1,11 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_duration_percent.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 
 Future<void> main() async {
   const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
@@ -38,10 +36,10 @@ Future<void> main() async {
       testWidgets(
         'Clicking on Del button',
         (tester) async {
-          final edpDelButton = find.byKey(const Key('edpDelButton'));
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDelButtonFinder = find.byKey(const Key('edpDelButton'));
+          final Finder edpDurationPercentComputedValueTextFieldFinder =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           await tester.pumpWidget(
@@ -60,21 +58,21 @@ Future<void> main() async {
           );
 
           await tester.enterText(
-              edpDurationPercentComputedValueTextField, '12:00');
-          await tester.enterText(edpDurationPercentTextField, '50 %');
-          await tester.tap(edpDelButton);
+              edpDurationPercentComputedValueTextFieldFinder, '12:00');
+          await tester.enterText(edpDurationPercentTextFieldFinder, '50 %');
+          await tester.tap(edpDelButtonFinder);
 
           await tester.pumpAndSettle();
 
           TextField durationPercentComputedValueTextField =
-              tester.firstWidget(edpDurationPercentComputedValueTextField);
+              tester.firstWidget(edpDurationPercentComputedValueTextFieldFinder);
           TextEditingController
               durationPercentComputedValueTextFieldController =
               durationPercentComputedValueTextField.controller!;
           expect(durationPercentComputedValueTextFieldController.text, '');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '');
@@ -83,10 +81,9 @@ Future<void> main() async {
       testWidgets(
         'Computing % duration',
         (tester) async {
-          final edpDelButton = find.byKey(const Key('edpDelButton'));
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           final EditableDurationPercent editableDurationPercentWidget =
@@ -120,7 +117,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '9:06');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '70 %');
@@ -129,10 +126,9 @@ Future<void> main() async {
       testWidgets(
         'Change duration',
         (tester) async {
-          final edpDelButton = find.byKey(const Key('edpDelButton'));
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           final EditableDurationPercent editableDurationPercentWidget =
@@ -166,7 +162,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '9:06');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '70 %');
@@ -180,9 +176,9 @@ Future<void> main() async {
         'Clicking on Sel button',
         (tester) async {
           final edpSelButton = find.byKey(const Key('edpSelButton'));
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           await tester.pumpWidget(
@@ -213,7 +209,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '9:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '60 %');
@@ -230,9 +226,9 @@ Future<void> main() async {
       testWidgets(
         'Entering double percent value',
         (tester) async {
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           await tester.pumpWidget(
@@ -250,9 +246,9 @@ Future<void> main() async {
             ),
           );
           // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+          //     tester.firstWidget(edpDurationPercentTextFieldFinder), '73.2');
 
-          await tester.enterText(edpDurationPercentTextField, '73.2');
+          await tester.enterText(edpDurationPercentTextFieldFinder, '73.2');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -267,7 +263,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '10:58');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '73.2 %');
@@ -276,9 +272,9 @@ Future<void> main() async {
       testWidgets(
         'Entering empty percent value',
         (tester) async {
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           await tester.pumpWidget(
@@ -296,7 +292,7 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(edpDurationPercentTextField, '');
+          await tester.enterText(edpDurationPercentTextFieldFinder, '');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -311,7 +307,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '0:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '0 %');
@@ -320,9 +316,9 @@ Future<void> main() async {
       testWidgets(
         'Entering invalid percent value no % symbol',
         (tester) async {
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           await tester.pumpWidget(
@@ -340,9 +336,9 @@ Future<void> main() async {
             ),
           );
           // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+          //     tester.firstWidget(edpDurationPercentTextFieldFinder), '73.2');
 
-          await tester.enterText(edpDurationPercentTextField, 'iiii');
+          await tester.enterText(edpDurationPercentTextFieldFinder, 'iiii');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -357,7 +353,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '0:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '0 %');
@@ -366,9 +362,9 @@ Future<void> main() async {
       testWidgets(
         'Entering invalid percent value with % symbol',
         (tester) async {
-          final edpDurationPercentComputedValueTextField =
+          final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final edpDurationPercentTextField =
+          final Finder edpDurationPercentTextFieldFinder =
               find.byKey(const Key('edpDurationPercentTextField'));
 
           await tester.pumpWidget(
@@ -386,9 +382,9 @@ Future<void> main() async {
             ),
           );
           // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextField), '73.2');
+          //     tester.firstWidget(edpDurationPercentTextFieldFinder), '73.2');
 
-          await tester.enterText(edpDurationPercentTextField, 'iiii %');
+          await tester.enterText(edpDurationPercentTextFieldFinder, 'iiii %');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -403,7 +399,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '0:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextField);
+              tester.firstWidget(edpDurationPercentTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '0 %');
