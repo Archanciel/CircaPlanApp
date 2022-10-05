@@ -13,7 +13,7 @@ import 'package:circa_plan/widgets/circadian_snackbar.dart';
 /// widgets solves the problem.
 mixin ScreenMixin {
   static Color APP_DARK_BLUE_COLOR = Colors.blue.shade900;
-  static var APP_LIGHT_BLUE_COLOR = Colors.blue;
+  static Color APP_LIGHT_BLUE_COLOR = Colors.blue;
   static MaterialColor APP_MATERIAL_APP_LIGHT_BLUE_COLOR = Colors.blue;
   static Color APP_LIGHT_YELLOW_COLOR = Colors.yellow.shade300;
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
