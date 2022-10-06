@@ -577,9 +577,6 @@ void main() {
           expect(convertedStr, '20:34');
         },
       );
-
-
-
       test(
         'dayHourMinuteFormat==true pos int < 10',
         () {

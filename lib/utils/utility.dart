@@ -178,6 +178,7 @@ class Utility {
     }
 
     if (dayHourMinuteFormat) {
+      // the case if used on TimeCalculator screen
       int? durationInt = int.tryParse(durationStr);
 
       if (durationInt != null) {
@@ -187,13 +188,26 @@ class Utility {
           }
         } else {
           if (durationInt < 10) {
-            durationStr = '0$durationStr';
+            durationStr = '00:0$durationStr:00';
+          } else {
+            durationStr = '00:$durationStr:00';
+          }
+        }
+      } else {
+        RegExp re = RegExp(r"^\d{1}:\d{2}");
+
+        RegExpMatch? match = re.firstMatch(durationStr);
+
+        if (match != null) {
+          durationStr = '00:0${match.group(0)}';
+        } else {
+          RegExp re = RegExp(r"^\d{2}:\d{2}");
+          RegExpMatch? match = re.firstMatch(durationStr);
+          if (match != null) {
+            durationStr = '00:${match.group(0)}';
           }
         }
       }
-
-      // the case if used on TimeCalculator screen
-      durationStr = '00:$durationStr:00';
     } else {
       int? durationInt = int.tryParse(durationStr);
 
