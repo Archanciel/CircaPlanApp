@@ -189,7 +189,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
             Row(
               children: [
                 SizedBox(
-                  width: 55,
+                  width: 90,
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
