@@ -4,75 +4,75 @@ import 'package:circa_plan/utils/utility.dart';
 import 'package:test/test.dart';
 
 void main() {
+  group('File renaming', () {
+    test(
+      'renameFile() to not existing file name',
+      () {
+        String notExistfilePathNameStr = 'c:\\temp\\circadian.json';
+
+        File? renamedFile = Utility.renameFile(
+            filePathNameStr: notExistfilePathNameStr,
+            newFileNameStr: '2022-08-07 02.30.json');
+
+        expect(null, renamedFile);
+
+        String originalFilePathNameStr =
+            'c:\\temp\\CircadianData\\circadian.json';
+
+        renamedFile = Utility.renameFile(
+            filePathNameStr: originalFilePathNameStr,
+            newFileNameStr: '2022-08-07 02.30.json');
+
+        String renamedFilePathNameStr =
+            'c:\\temp\\CircadianData\\2022-08-07 02.30.json';
+
+        expect(renamedFilePathNameStr, renamedFile!.path);
+
+        renamedFile = Utility.renameFile(
+            filePathNameStr: renamedFilePathNameStr,
+            newFileNameStr: 'circadian.json');
+
+        expect(originalFilePathNameStr, renamedFile!.path);
+      },
+    );
+
+    test(
+      'renameFile() to existing file name',
+      () {
+        // renaming circadian.json to circadian.json-1
+
+        String jsonFilePathNameStr = 'c:\\temp\\CircadianData\\circadian.json';
+
+        File? renamedFile = Utility.renameFile(
+            filePathNameStr: jsonFilePathNameStr,
+            newFileNameStr: 'circadian.json-1');
+
+        // renaming circadian.json-1 to circadian.json-1
+
+        String renamedFilePathNameStr =
+            'c:\\temp\\CircadianData\\circadian.json-1';
+
+        expect(renamedFile!.path, renamedFilePathNameStr);
+
+        renamedFile = Utility.renameFile(
+            filePathNameStr: renamedFilePathNameStr,
+            newFileNameStr: 'circadian.json-1');
+
+        expect(renamedFile!.path, renamedFilePathNameStr);
+
+        // renaming circadian.json-1 to circadian.json
+
+        renamedFile = Utility.renameFile(
+            filePathNameStr: renamedFilePathNameStr,
+            newFileNameStr: 'circadian.json');
+
+        expect(renamedFile!.path, jsonFilePathNameStr);
+      },
+    );
+  });
   group(
-    'Utility()',
+    'Formatting',
     () {
-      test(
-        'renameFile() to not existing file name',
-        () {
-          String notExistfilePathNameStr = 'c:\\temp\\circadian.json';
-
-          File? renamedFile = Utility.renameFile(
-              filePathNameStr: notExistfilePathNameStr,
-              newFileNameStr: '2022-08-07 02.30.json');
-
-          expect(null, renamedFile);
-
-          String originalFilePathNameStr =
-              'c:\\temp\\CircadianData\\circadian.json';
-
-          renamedFile = Utility.renameFile(
-              filePathNameStr: originalFilePathNameStr,
-              newFileNameStr: '2022-08-07 02.30.json');
-
-          String renamedFilePathNameStr =
-              'c:\\temp\\CircadianData\\2022-08-07 02.30.json';
-
-          expect(renamedFilePathNameStr, renamedFile!.path);
-
-          renamedFile = Utility.renameFile(
-              filePathNameStr: renamedFilePathNameStr,
-              newFileNameStr: 'circadian.json');
-
-          expect(originalFilePathNameStr, renamedFile!.path);
-        },
-      );
-
-      test(
-        'renameFile() to existing file name',
-        () {
-          // renaming circadian.json to circadian.json-1
-
-          String jsonFilePathNameStr =
-              'c:\\temp\\CircadianData\\circadian.json';
-
-          File? renamedFile = Utility.renameFile(
-              filePathNameStr: jsonFilePathNameStr,
-              newFileNameStr: 'circadian.json-1');
-
-          // renaming circadian.json-1 to circadian.json-1
-
-          String renamedFilePathNameStr =
-              'c:\\temp\\CircadianData\\circadian.json-1';
-
-          expect(renamedFile!.path, renamedFilePathNameStr);
-
-          renamedFile = Utility.renameFile(
-              filePathNameStr: renamedFilePathNameStr,
-              newFileNameStr: 'circadian.json-1');
-
-          expect(renamedFile!.path, renamedFilePathNameStr);
-
-          // renaming circadian.json-1 to circadian.json
-
-          renamedFile = Utility.renameFile(
-              filePathNameStr: renamedFilePathNameStr,
-              newFileNameStr: 'circadian.json');
-
-          expect(renamedFile!.path, jsonFilePathNameStr);
-        },
-      );
-
       test(
         'formatJsonFileContent()',
         () async {
@@ -385,6 +385,289 @@ void main() {
   "thirdDurationTextColor": null
 }''';
           expect(expectedFormattedJsonString, printableJsonString);
+        },
+      );
+    },
+  );
+  group(
+    'convertIntDuration() removeMinusSign==false',
+    () {
+      test(
+        'dayHourMinuteFormat==false pos int < 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '2', removeMinusSign: false);
+
+          expect(convertedStr, '2:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg int < 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-2', removeMinusSign: false);
+
+          expect(convertedStr, '-2:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos int > 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '20', removeMinusSign: false);
+
+          expect(convertedStr, '20:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg int > 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-20', removeMinusSign: false);
+
+          expect(convertedStr, '-20:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos int 0',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '0', removeMinusSign: false);
+
+          expect(convertedStr, '0:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg int -0',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-0', removeMinusSign: false);
+
+          expect(convertedStr, '-0:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos H:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '2:34', removeMinusSign: false);
+
+          expect(convertedStr, '2:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos HH:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '20:34', removeMinusSign: false);
+
+          expect(convertedStr, '20:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg H:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-2:34', removeMinusSign: false);
+
+          expect(convertedStr, '-2:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg HH:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-20:34', removeMinusSign: false);
+
+          expect(convertedStr, '-20:34');
+        },
+      );
+    },
+  );
+  group(
+    'convertIntDuration() removeMinusSign==true',
+    () {
+      test(
+        'dayHourMinuteFormat==false pos int < 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '2');
+
+          expect(convertedStr, '2:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg int < 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-2');
+
+          expect(convertedStr, '2:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos int > 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '20');
+
+          expect(convertedStr, '20:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg int > 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-20');
+
+          expect(convertedStr, '20:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos int 0',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '0');
+
+          expect(convertedStr, '0:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg int -0',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-0');
+
+          expect(convertedStr, '0:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos H:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '2:34');
+
+          expect(convertedStr, '2:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false pos HH:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '20:34');
+
+          expect(convertedStr, '20:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg H:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-2:34');
+
+          expect(convertedStr, '2:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false neg HH:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-20:34');
+
+          expect(convertedStr, '20:34');
+        },
+      );
+
+
+
+      test(
+        'dayHourMinuteFormat==true pos int < 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '2', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:02:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true neg int < 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-2', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:02:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true pos int > 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '20', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:20:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true neg int > 10',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-20', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:20:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true pos int 0',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '0', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:00:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true neg int -0',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-0', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:00:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true pos H:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '2:34', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:02:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true pos HH:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '20:34', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:20:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true neg H:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-2:34', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:02:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true neg HH:mm',
+        () {
+          String convertedStr = Utility.convertIntDuration(
+              durationStr: '-20:34', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:20:34');
         },
       );
     },

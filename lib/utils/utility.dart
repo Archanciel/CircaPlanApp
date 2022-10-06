@@ -158,7 +158,7 @@ class Utility {
     return formattedMapStr;
   }
 
-  /// Method used to enable entering a int duration value
+  /// Method used to enable entering an int duration value
   /// instead of a HH:mm duration. For example, 2 or 24
   /// instead of 02:00 or 24:00.
   ///
@@ -169,7 +169,7 @@ class Utility {
   static String convertIntDuration({
     required String durationStr,
     bool removeMinusSign = true,
-    bool dayHourMinFormat = false,
+    bool dayHourMinuteFormat = false,
   }) {
     if (removeMinusSign) {
       durationStr = durationStr.replaceAll(RegExp(r'[+\-]+'), '');
@@ -177,11 +177,27 @@ class Utility {
       durationStr = durationStr.replaceAll(RegExp(r'[+]+'), '');
     }
 
-    if (int.tryParse(durationStr) != null) {
-      if (dayHourMinFormat) {
-        // the case if used on TimeCalculator screen
-        durationStr = '00:$durationStr:00';
-      } else {
+    if (dayHourMinuteFormat) {
+      int? durationInt = int.tryParse(durationStr);
+
+      if (durationInt != null) {
+        if (durationInt < 0) {
+          if (durationInt > -10) {
+            durationStr = '-0${durationInt * -1}';
+          }
+        } else {
+          if (durationInt < 10) {
+            durationStr = '0$durationStr';
+          }
+        }
+      }
+
+      // the case if used on TimeCalculator screen
+      durationStr = '00:$durationStr:00';
+    } else {
+      int? durationInt = int.tryParse(durationStr);
+
+      if (durationInt != null) {
         // the case if a one or two digits duration was entered ...
         durationStr = '$durationStr:00';
       }
@@ -189,15 +205,4 @@ class Utility {
 
     return durationStr;
   }
-}
-
-Future<void> main() async {
-  final String jsonFilePathName = 'c:\\temp\\CircadianData\\circadian.json';
-  final String jsonString = await File(jsonFilePathName).readAsString();
-
-  print(jsonString);
-
-  String printableJsonString = Utility.formatJsonString(jsonString: jsonString);
-
-  print(printableJsonString);
 }
