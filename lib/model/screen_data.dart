@@ -1,3 +1,5 @@
+// https://pub.dev/packages/enough_serialization
+
 import 'package:enough_serialization/enough_serialization.dart';
 
 // used to select ScreenData sub type

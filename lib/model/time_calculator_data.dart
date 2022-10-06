@@ -76,7 +76,7 @@ class TimeCalculatorData extends ScreenData {
 
     timeCalculatorDivideFirstBySecondCheckBox ??= 'false';
 
-    return bool.fromEnvironment(timeCalculatorDivideFirstBySecondCheckBox);
+    return timeCalculatorDivideFirstBySecondCheckBox == 'true';
   }
 
   set timeCalculatorDivideFirstBySecondCheckBox(bool value) =>
