@@ -80,7 +80,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
             Row(
               children: [
                 SizedBox(
-                  width: 55,
+                  width: 70,
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
@@ -108,7 +108,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                   ),
                 ),
                 SizedBox(
-                  width: 55,
+                  width: 70,
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       textSelectionTheme: TextSelectionThemeData(
