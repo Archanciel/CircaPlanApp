@@ -48,6 +48,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         _firstTimeStr = transferDataMap['firstTimeStr'] ?? '00:00:00',
         _secondTimeStr = transferDataMap['secondTimeStr'] ?? '00:00:00',
         _resultTimeStr = transferDataMap['resultTimeStr'] ?? '',
+        _divideFirstBySecond =
+            transferDataMap['divideFirstBySecondCheckBox'] ?? false,
         super();
 
   static const double LARGER_BUTTON_WIDTH = 82.0;
@@ -172,6 +174,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
         TextEditingController(text: _secondTimeStr);
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
     _resultTextFieldController = TextEditingController(text: _resultTimeStr);
+    _divideFirstBySecond =
+        _transferDataMap['divideFirstBySecondCheckBox'] ?? false;
 
     // fixed Undo bug: after Add or Subtr button pressed,
     // now Undo works. I don't know why, but this solution
@@ -203,6 +207,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _transferDataMap['firstTimeStr'] = _firstTimeStr;
     _transferDataMap['secondTimeStr'] = _secondTimeStr;
     _transferDataMap['resultTimeStr'] = _resultTimeStr;
+    _transferDataMap['divideFirstBySecondCheckBox'] = _divideFirstBySecond;
 
     _transferDataViewModel.updateAndSaveTransferData();
   }
@@ -216,6 +221,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _resultTextFieldController.text = _resultTimeStr;
     _editableDurationPercentWidgetFirst.setDurationStr(_resultTimeStr);
     _editableDurationPercentWidgetSecond.setDurationStr(_resultTimeStr);
+    _divideFirstBySecond = false;
 
     setState(() {});
 
@@ -384,6 +390,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       }
       _resultTimeStr = '${divisionResult.toStringAsFixed(2)} %';
     } else {
+      // here, % multiplication
+      _divideFirstBySecond = false; // deactivating the checkbox
+      //                whose value has no sense in this context !
       resultDuration = Duration(
           microseconds:
               (firstTimeDuration.inMicroseconds * percentValue / 100).round());

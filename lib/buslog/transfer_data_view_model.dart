@@ -50,7 +50,7 @@ class TransferDataViewModel {
 
   /// Copy transferDataMap values to TransferData instance in order to
   /// then update the json file.
-  /// 
+  ///
   /// Returns a Future<void> which enables the caller code to use await
   /// on the updateAndSaveTransferData() method. This is necessary in
   /// the transfer_data_view_model_test.dart unit tests ...
@@ -331,6 +331,8 @@ class TransferDataViewModel {
         _transferDataMap!['resultPercentStr'] ?? '';
     timeCalculatorData.timeCalculatorResultSecondPercentStr =
         _transferDataMap!['resultSecondPercentStr'] ?? '';
+    timeCalculatorData.timeCalculatorDivideFirstBySecondCheckBox =
+        _transferDataMap!['divideFirstBySecondCheckBox'] ?? false;
   }
 
   /// Loads the application screen data json file and sets
@@ -483,7 +485,8 @@ class TransferDataViewModel {
       _transferDataMap!["dtDurationPercentStr"] =
           dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr;
       _transferDataMap!["dtDurationTotalPercentStr"] =
-          dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr;
+          dateTimeDifferenceDurationData
+              .dateTimeDifferenceDurationTotalPercentStr;
     }
 
     TimeCalculatorData timeCalculatorData = _transferData.timeCalculatorData;
@@ -502,6 +505,8 @@ class TransferDataViewModel {
           timeCalculatorData.timeCalculatorResultPercentStr;
       _transferDataMap!["resultSecondPercentStr"] =
           timeCalculatorData.timeCalculatorResultSecondPercentStr;
+      _transferDataMap!['divideFirstBySecondCheckBox'] =
+          timeCalculatorData.timeCalculatorDivideFirstBySecondCheckBox;
     }
 
     // print('\nTRANSFER DATA MAP AFTER LOADING IT');

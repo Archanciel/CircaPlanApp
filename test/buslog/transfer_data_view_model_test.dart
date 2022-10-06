@@ -226,6 +226,7 @@ void main() {
             "resultTimeStr": "00:15:00",
             "resultPercentStr": "40 %",
             "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
           };
 
           String path = kCircadianAppDataDir;
@@ -318,6 +319,7 @@ void main() {
             "resultTimeStr": "00:15:00",
             "resultPercentStr": "40 %",
             "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
           };
 
           String path = kCircadianAppDataDir;
@@ -485,6 +487,7 @@ void main() {
             "resultTimeStr": "00:15:00",
             "resultPercentStr": "40 %",
             "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
           };
 
           String path = kCircadianAppDataDir;
