@@ -98,7 +98,6 @@ mixin ScreenMixin {
     required TransferDataViewModel transferDataViewModel,
   }) {
     final DateTime twoThousandDateTime = DateTime(2000);
-    List<String> appDateTimeStrList = [];
     List<DateTime> appDateTimeList = [];
 
     for (var value in transferDataMap.values) {

@@ -89,6 +89,10 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     stateInstance.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
+
+  void setDuration(String duration) {
+    stateInstance.setDuration(duration);
+  }
 }
 
 class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
@@ -218,6 +222,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     );
   }
 
+  void setDuration(String durationStr) {
+    _durationStr = durationStr;
+    _durationTextFieldController.text = _durationStr;
+    handleDurationChange(durationStr: durationStr, durationSign: _durationSign);
+  }
+
   void handleDurationChange({
     String? durationStr,
     int? durationSign,
@@ -237,10 +247,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     if (startDateTime == null) {
       return;
     }
-
-    // if (_durationTextFieldController.text.contains('-', 0)) {
-    //   setDurationSignIconAndColor(durationIsNegative: true);
-    // }
 
     if (!wasDurationSignButtonPressed) {
       setDurationSignIconAndColor(

@@ -1,7 +1,9 @@
-import 'package:circa_plan/utils/date_time_parser.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
@@ -162,10 +164,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
 
     setState(() {});
-
-//    _transferDataViewModel.updateAndSaveTransferData(); saving the
-//                           transfer data is performed by the third
-//                            AddSubtractResultableDuration widget !
   }
 
   void _resetScreen() {
@@ -187,8 +185,30 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.reset();
   }
 
-  void handleSelectedIdealItem(String frenchFormatSelectedDateTimeStr) {
-    print(frenchFormatSelectedDateTimeStr);
+  void _handleSelectedDurationItem(String selectedDurationItem) {
+    if (selectedDurationItem == 'Add') {
+      print('Add');
+
+      return;
+    }
+
+    if (selectedDurationItem == 'Delete') {
+      print('Delete');
+      
+      return;
+    }
+
+    RegExp exp = RegExp(r'(\d+:\d+)');
+    Iterable<Match> matches = exp.allMatches(selectedDurationItem);
+    List<String> durationStrLst = [];
+
+    for (final Match m in matches) {
+      durationStrLst.add(m[0]!);
+    }
+
+    _firstDurationDateTimeEditorWidget.setDuration(durationStrLst[0]);
+    _secondDurationDateTimeEditorWidget.setDuration(durationStrLst[1]);
+    _thirdDurationDateTimeEditorWidget.setDuration(durationStrLst[2]);
   }
 
   void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {
@@ -224,6 +244,32 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
+  }
+
+  List<String> _buildDurationPopupMenuItemLst() {
+    List<String> durationSelectableItemLst = [];
+    const String durationDefinedItemStr =
+        '{"short": ["7:00", "3:30", "7:30"], "good": ["12:00", "3:30", "10:30"]}';
+
+    Map<String, dynamic> durationDefinedItemMap =
+        jsonDecode(durationDefinedItemStr);
+
+    for (var entry in durationDefinedItemMap.entries) {
+      List<dynamic> durationLst = entry.value;
+
+      durationSelectableItemLst.add('${entry.key} ${durationLst.join(', ')}');
+    }
+
+    // now sorting the DateTime list
+
+    durationSelectableItemLst.sort();
+
+    // and adding 'Add' and 'Delete' items
+
+    durationSelectableItemLst.add("Add");
+    durationSelectableItemLst.add("Delete");
+
+    return durationSelectableItemLst;
   }
 
   @override
@@ -308,17 +354,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     onPressed: () {
                       displaySelPopupMenu(
                         context: context,
-                        selectableStrItemLst: buildSortedAppDateTimeStrList(
-                            transferDataMap: _transferDataMap,
-                            mostRecentFirst: true,
-                            transferDataViewModel: _transferDataViewModel),
-                        posRectangleLTRB: RelativeRect.fromLTRB(
+                        selectableStrItemLst: _buildDurationPopupMenuItemLst(),
+                        posRectangleLTRB: const RelativeRect.fromLTRB(
                           1.0,
                           125.0,
                           0.0,
                           0.0,
                         ),
-                        handleSelectedItem: handleSelectedIdealItem,
+                        handleSelectedItem: _handleSelectedDurationItem,
                       );
                     },
                     icon: Icon(
