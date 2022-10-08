@@ -13,10 +13,6 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import '../utils/utility.dart';
 import '../widgets/editable_duration_percent.dart';
 
-enum status { wakeUp, sleep }
-
-final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-
 class TimeCalculator extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
   final TransferDataViewModel _transferDataViewModel;
@@ -64,8 +60,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   late TextEditingController _firstTimeTextFieldController;
   late TextEditingController _secondTimeTextFieldController;
   late TextEditingController _resultTextFieldController;
-
-  final DateFormat _frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   late EditableDurationPercent _editableDurationPercentWidgetFirst;
   late EditableDurationPercent _editableDurationPercentWidgetSecond;
