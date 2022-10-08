@@ -188,7 +188,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {
-    DateTime selectedDateTime = frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
+    DateTime selectedDateTime =
+        frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
 
     _startDateTimeStr = englishFormatStartDateTimeStr;
@@ -288,6 +289,29 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             ),
             ResetButton(
               onPress: _resetScreen,
+            ),
+            Positioned(
+              right: 2,
+              top: -3,
+              child: Column(
+                children: [
+                  IconButton(
+                    constraints: const BoxConstraints(
+                      minHeight: 0,
+                      minWidth: 0,
+                    ),
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () => print('ideal'),
+                    icon: Icon(
+                      Icons.favorite,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                ],
+              ),
             ),
 /*            Align(
               alignment: Alignment.bottomLeft,
