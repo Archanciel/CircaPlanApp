@@ -14,7 +14,7 @@ class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
   final TransferDataViewModel _transferDataViewModel;
 
-  const AddDurationToDateTime({
+  AddDurationToDateTime({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
     required TransferDataViewModel transferDataViewModel,
@@ -187,6 +187,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.reset();
   }
 
+  void handleSelectedIdealItem(String frenchFormatSelectedDateTimeStr) {
+    print(frenchFormatSelectedDateTimeStr);
+  }
+
   void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {
     DateTime selectedDateTime =
         frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
@@ -301,10 +305,27 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       minWidth: 0,
                     ),
                     padding: const EdgeInsets.all(0),
-                    onPressed: () => print('ideal'),
+                    onPressed: () {
+                      displaySelPopupMenu(
+                        context: context,
+                        selectableStrItemLst: buildSortedAppDateTimeStrList(
+                            transferDataMap: _transferDataMap,
+                            mostRecentFirst: true,
+                            transferDataViewModel: _transferDataViewModel),
+                        posRectangleLTRB: RelativeRect.fromLTRB(
+                          1.0,
+                          125.0,
+                          0.0,
+                          0.0,
+                        ),
+                        handleSelectedItem: handleSelectedIdealItem,
+                      );
+                    },
                     icon: Icon(
                       Icons.favorite,
-                      color: Colors.yellow,
+                      // color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                      color: Colors.blue.shade900,
+                      size: 27,
                     ),
                   ),
                   const SizedBox(
