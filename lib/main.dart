@@ -99,8 +99,8 @@ class MyApp extends StatelessWidget with ScreenMixin {
       title: ScreenMixin.APP_TITLE,
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor:
-              ScreenMixin.APP_TEXT_AND_ICON_COLOR, // requires with ScreenMixin !
+          cursorColor: ScreenMixin
+              .APP_TEXT_AND_ICON_COLOR, // requires with ScreenMixin !
         ),
         dialogTheme: const DialogTheme(
           shape: RoundedRectangleBorder(
@@ -267,7 +267,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
             title: Text(
               screenTitlesLst[_currentIndex],
-              style: TextStyle(color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR),
+              style: TextStyle(
+                color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR,
+              ),
             ),
             elevation: 0,
             centerTitle: true,
