@@ -184,15 +184,25 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.reset();
   }
 
+  void _deleteDurationItem(String selectedDurationItem) {}
+
   void _handleSelectedDurationItem(String selectedDurationItem) {
     if (selectedDurationItem == 'Add') {
-      print('Add');
-
       return;
     }
 
     if (selectedDurationItem == 'Delete') {
-      print('Delete');
+      displayPopupMenu(
+        context: context,
+        selectableStrItemLst: _buildSelectableDurationItemLst(),
+        posRectangleLTRB: const RelativeRect.fromLTRB(
+          1.0,
+          130.0,
+          0.0,
+          0.0,
+        ),
+        handleSelectedItem: _deleteDurationItem,
+      );
 
       return;
     }
@@ -246,6 +256,17 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   List<String> _buildDurationPopupMenuItemLst() {
+    List<String> durationSelectableItemLst = _buildSelectableDurationItemLst();
+
+    // and adding 'Add' and 'Delete' items
+
+    durationSelectableItemLst.add("Add");
+    durationSelectableItemLst.add("Delete");
+
+    return durationSelectableItemLst;
+  }
+
+  List<String> _buildSelectableDurationItemLst() {
     List<String> durationSelectableItemLst = [];
     const String durationDefinedItemStr =
         '{"short": ["7:00", "3:30", "7:30"], "good": ["12:00", "3:30", "10:30"]}';
@@ -262,12 +283,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // now sorting the DateTime list
 
     durationSelectableItemLst.sort();
-
-    // and adding 'Add' and 'Delete' items
-
-    durationSelectableItemLst.add("Add");
-    durationSelectableItemLst.add("Delete");
-
     return durationSelectableItemLst;
   }
 
