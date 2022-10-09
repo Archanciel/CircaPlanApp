@@ -54,8 +54,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
         ),
         actions: [
           TextButton(
-            child: const Text('Add time'),
             onPressed: submit,
+            child: const Text('Add time'),
           ),
         ],
       ),

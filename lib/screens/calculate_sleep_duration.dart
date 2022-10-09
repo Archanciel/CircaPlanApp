@@ -1107,8 +1107,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           ),
           actions: [
             TextButton(
-              child: const Text('Add time'),
               onPressed: submit,
+              child: const Text('Add time'),
             ),
           ],
         ),
