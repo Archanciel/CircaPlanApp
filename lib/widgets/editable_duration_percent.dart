@@ -303,7 +303,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   backgroundColor: widget.appElevatedButtonBackgroundColor,
                   shape: widget.appElevatedButtonRoundedShape),
               onPressed: () {
-                widget.displaySelPopupMenu(
+                widget.displayPopupMenu(
                   context: context,
                   selectableStrItemLst: [
                     '40 %',

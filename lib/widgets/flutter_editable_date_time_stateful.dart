@@ -58,7 +58,8 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
   }
 
   void handleSelectDateTimeButtonPressed(String selectedDateTimeStr) {
-    stateInstance._dateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
+    stateInstance._dateTime =
+        ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
 
     handleSelectedDateTimeStrFunction(selectedDateTimeStr);
@@ -305,7 +306,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               backgroundColor: widget.appElevatedButtonBackgroundColor,
               shape: widget.appElevatedButtonRoundedShape),
           onPressed: () {
-            widget.displaySelPopupMenu(
+            widget.displayPopupMenu(
               context: context,
               selectableStrItemLst: widget.buildSortedAppDateTimeStrList(
                   transferDataMap: widget.transferDataMap,

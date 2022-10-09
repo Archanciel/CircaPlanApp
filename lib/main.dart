@@ -360,7 +360,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                                 transferDataViewModel: transferDataViewModel,
                                 addCircadianJsonFileNameToLst: true);
 
-                        displaySelPopupMenu(
+                        displayPopupMenu(
                           context: context,
                           selectableStrItemLst: nonNullablefileNameLst,
                           posRectangleLTRB: const RelativeRect.fromLTRB(

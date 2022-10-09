@@ -141,7 +141,7 @@ mixin ScreenMixin {
     final String lastCreatedJsonFileNameDateTimeStr =
         getLastCreatedJsonFileNameDateTimeStr(transferDataViewModel);
 
-    if (!lastCreatedJsonFileNameDateTimeStr.isEmpty) {
+    if (lastCreatedJsonFileNameDateTimeStr.isNotEmpty) {
       // else, the app dir contains no yyyy-MM.dd HH.mm.json file !
       final DateTime lastCreatedJsonFileNameDateTime =
           parseDateTime(lastCreatedJsonFileNameDateTimeStr)!;
@@ -236,7 +236,7 @@ mixin ScreenMixin {
   }
 
   /// Method called by the 'Sel' buttons.
-  void displaySelPopupMenu({
+  void displayPopupMenu({
     required BuildContext context,
     required List<String> selectableStrItemLst,
     required RelativeRect posRectangleLTRB,
@@ -252,8 +252,8 @@ mixin ScreenMixin {
     for (String selectableStrItem in selectableStrItemLst) {
       itemLst.add(
         PopupMenuItem<String>(
-          child: Text(selectableStrItem),
           value: i.toString(),
+          child: Text(selectableStrItem),
         ),
       );
       i++;

@@ -194,7 +194,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     if (selectedDurationItem == 'Delete') {
       print('Delete');
-      
+
       return;
     }
 
@@ -352,7 +352,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     ),
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      displaySelPopupMenu(
+                      displayPopupMenu(
                         context: context,
                         selectableStrItemLst: _buildDurationPopupMenuItemLst(),
                         posRectangleLTRB: const RelativeRect.fromLTRB(

@@ -18,7 +18,8 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     required this.handleSelectedDateTimeStrFunction,
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
-      dateTimePickerController.text = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+      dateTimePickerController.text =
+          ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     }
   }
 
@@ -276,7 +277,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               backgroundColor: widget.appElevatedButtonBackgroundColor,
               shape: widget.appElevatedButtonRoundedShape),
           onPressed: () {
-            widget.displaySelPopupMenu(
+            widget.displayPopupMenu(
               context: context,
               selectableStrItemLst: widget.buildSortedAppDateTimeStrList(
                   transferDataMap: widget.transferDataMap,
