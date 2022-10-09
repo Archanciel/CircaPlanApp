@@ -60,7 +60,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
-  @override
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   /// The method ensures that the current widget (screen or custom widget)
