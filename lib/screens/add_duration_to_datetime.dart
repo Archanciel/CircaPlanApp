@@ -367,7 +367,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     icon: Icon(
                       Icons.favorite,
                       // color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
-                      color: Colors.blue.shade900,
+                      color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
                       size: 27,
                     ),
                   ),

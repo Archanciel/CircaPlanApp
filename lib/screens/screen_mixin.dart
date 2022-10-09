@@ -25,6 +25,12 @@ mixin ScreenMixin {
   static MaterialColor APP_MATERIAL_APP_LIGHT_BLUE_COLOR = Colors.blue;
   static Color APP_LIGHT_YELLOW_COLOR = Colors.yellow.shade300;
   static Color APP_LIGHTER_YELLOW_COLOR = Colors.yellow.shade200;
+  static MaterialColor APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR = MaterialColor(
+    APP_LIGHTER_YELLOW_COLOR.value,
+    {
+      500: APP_LIGHTER_YELLOW_COLOR,
+    },
+  );
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
   static const Color APP_TEXT_AND_ICON_COLOR = Colors.white;
