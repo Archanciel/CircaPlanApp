@@ -265,7 +265,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   ),
                 ),
                 const SizedBox(
-                  width: 55,
+                  width: 15,
                 ),
               ],
             ),
