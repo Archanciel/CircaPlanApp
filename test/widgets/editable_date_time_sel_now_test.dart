@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 
@@ -12,8 +13,7 @@ Future<void> main() async {
   final Finder previousMonthIcon = find.byWidgetPredicate((Widget w) =>
       w is IconButton && (w.tooltip?.startsWith('Previous month') ?? false));
 
-  const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
-  String path = kCircadianAppDataDir;
+  String path = kCircadianAppDataDir_test;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 

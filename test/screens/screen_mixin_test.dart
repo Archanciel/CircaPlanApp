@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:circa_plan/utils/utility.dart';
 import 'package:test/test.dart';
 
+import 'package:circa_plan/constants.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
@@ -10,8 +11,7 @@ class TestClassWithScreenMixin with ScreenMixin {}
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool mustAppDirBeDeleted = false,
 }) async {
-  const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
-  String path = kCircadianAppDataDir;
+  String path = kCircadianAppDataDir_test;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 

@@ -17,7 +17,6 @@ class TestClassWithScreenMixin with ScreenMixin {}
 void main() {
   final TestClassWithScreenMixin testClassWithSreenMixin =
       TestClassWithScreenMixin();
-  const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
   group(
     'TransferDataViewModel',
     () {
@@ -49,7 +48,7 @@ void main() {
             "thirdEndDateTimeStr": "12-07-2022 16:00",
           };
 
-          String path = kCircadianAppDataDir;
+          String path = kCircadianAppDataDir_test;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -115,7 +114,7 @@ void main() {
             ],
           };
 
-          String path = kCircadianAppDataDir;
+          String path = kCircadianAppDataDir_test;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -175,7 +174,7 @@ void main() {
             "dtDurationTotalPercentStr": "90 %",
           };
 
-          String path = kCircadianAppDataDir;
+          String path = kCircadianAppDataDir_test;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -229,7 +228,7 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
-          String path = kCircadianAppDataDir;
+          String path = kCircadianAppDataDir_test;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -322,7 +321,7 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
-          String path = kCircadianAppDataDir;
+          String path = kCircadianAppDataDir_test;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -490,7 +489,7 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
-          String path = kCircadianAppDataDir;
+          String path = kCircadianAppDataDir_test;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 

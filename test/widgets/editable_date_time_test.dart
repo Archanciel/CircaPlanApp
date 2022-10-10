@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 Future<void> main() async {
-  const String kCircadianAppDataDir = 'c:\\temp\\CircadianData';
-  String path = kCircadianAppDataDir;
+  String path = kCircadianAppDataDir_test;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
