@@ -471,6 +471,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     await handleClipboardData(
                         context: context,
                         textEditingController: _durationTextFieldController,
+                        transferDataMap: widget._transferDataMap,
                         handleDataChangeFunc: handleDurationChange);
                   },
                 ),
@@ -498,7 +499,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   Future<void> handleClipboardData({
     required BuildContext context,
     required TextEditingController textEditingController,
-    required void Function({int? durationSign, String? durationStr, bool wasDurationSignButtonPressed}) handleDataChangeFunc,
+    required Map<String, dynamic> transferDataMap,
+    required void Function(
+            {int? durationSign,
+            String? durationStr,
+            bool wasDurationSignButtonPressed})
+        handleDataChangeFunc,
   }) async {
     var clipboardLastAction = widget._transferDataMap['clipboardLastAction'];
 
@@ -507,13 +513,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         controller: textEditingController,
       );
 
-      widget._transferDataMap['clipboardLastAction'] =
-          ClipboardLastAction.paste;
+      transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
     } else {
       await widget.copyToClipboard(
           context: context, controller: textEditingController);
 
-      widget._transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+      transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
     }
 
     handleDataChangeFunc(durationStr: textEditingController.text);
