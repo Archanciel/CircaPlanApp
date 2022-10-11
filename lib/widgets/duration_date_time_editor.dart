@@ -516,7 +516,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       widget._transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
     }
 
-    handleDurationChange(durationStr: textEditingController.text);
+    handleDataChangeFunc(durationStr: textEditingController.text);
   }
 
   Future<void> pasteFromClipboard(
