@@ -470,7 +470,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                   onDoubleTap: () async {
                     await handleClipboardData(
                         context: context,
-                        textEditingController: _durationTextFieldController);
+                        textEditingController: _durationTextFieldController,
+                        handleDataChangeFunc: handleDurationChange);
                   },
                 ),
               ),
@@ -497,6 +498,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   Future<void> handleClipboardData({
     required BuildContext context,
     required TextEditingController textEditingController,
+    required void Function({int? durationSign, String? durationStr, bool wasDurationSignButtonPressed}) handleDataChangeFunc,
   }) async {
     var clipboardLastAction = widget._transferDataMap['clipboardLastAction'];
 
