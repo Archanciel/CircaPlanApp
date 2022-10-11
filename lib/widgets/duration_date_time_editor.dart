@@ -468,8 +468,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     },
                   ),
                   onDoubleTap: () async {
-                    await handleClipboardData(context: context,
-                    textEditingController: _durationTextFieldController);
+                    await handleClipboardData(
+                        context: context,
+                        textEditingController: _durationTextFieldController);
                   },
                 ),
               ),
