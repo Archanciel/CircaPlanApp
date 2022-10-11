@@ -486,6 +486,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                       widget._transferDataMap['clipboardLastAction'] =
                           ClipboardLastAction.copy;
                     }
+
+                    handleDurationChange(
+                        durationStr: _durationTextFieldController.text);
                   },
                 ),
               ),
