@@ -92,8 +92,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _prevDayTotalWakeUpStr = '';
 
   late TextEditingController _newDateTimeController;
+  late TextEditingController _lastDateTimeController;
   late TextEditingController _previousDateTimeController;
-  late TextEditingController _beforePreviousDateTimeController;
   late TextEditingController _addTimeDialogController;
   late TextEditingController _currentSleepDurationController;
   late TextEditingController _currentWakeUpDurationController;
@@ -279,7 +279,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _newDateTimeController = TextEditingController(text: _newDateTimeStr);
     _previousDateTimeStr =
         _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
-    _previousDateTimeController =
+    _lastDateTimeController =
         TextEditingController(text: _previousDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
@@ -287,7 +287,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // back to this screen !
     _beforePreviousDateTimeStr =
         _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '';
-    _beforePreviousDateTimeController =
+    _previousDateTimeController =
         TextEditingController(text: _beforePreviousDateTimeStr);
 
     _currentSleepDurationStr =
@@ -350,8 +350,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   @override
   void dispose() {
     _newDateTimeController.dispose();
+    _lastDateTimeController.dispose();
     _previousDateTimeController.dispose();
-    _beforePreviousDateTimeController.dispose();
     _currentSleepDurationController.dispose();
     _currentWakeUpDurationController.dispose();
     _currentTotalDurationController.dispose();
@@ -475,9 +475,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
     _previousDateTimeStr = '';
-    _previousDateTimeController.text = _previousDateTimeStr;
+    _lastDateTimeController.text = _previousDateTimeStr;
     _beforePreviousDateTimeStr = '';
-    _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+    _previousDateTimeController.text = _beforePreviousDateTimeStr;
     _currentSleepDurationStr = '';
     _currentSleepDurationController.text = _currentSleepDurationStr;
     _currentWakeUpDurationStr = '';
@@ -541,7 +541,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // the compiler displays this error: 'The argument type 'DateTime?'
         // can't be assigned to the parameter type DateTime
         _previousDateTimeStr = newDateTimeStr;
-        _previousDateTimeController.text = _previousDateTimeStr;
+        _lastDateTimeController.text = _previousDateTimeStr;
         _status = Status.sleep;
       } else {
         DateTime? previousDateTime;
@@ -590,9 +590,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalDurationStr = currentTotalDuration.HHmm();
         _currentTotalDurationController.text = _currentTotalDurationStr;
         _beforePreviousDateTimeStr = _previousDateTimeStr;
-        _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+        _previousDateTimeController.text = _beforePreviousDateTimeStr;
         _previousDateTimeStr = _newDateTimeStr;
-        _previousDateTimeController.text = _previousDateTimeStr;
+        _lastDateTimeController.text = _previousDateTimeStr;
         _status = Status.sleep;
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
@@ -633,9 +633,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentTotalDurationStr = currentTotalDuration.HHmm();
       _currentTotalDurationController.text = _currentTotalDurationStr;
       _beforePreviousDateTimeStr = _previousDateTimeStr;
-      _beforePreviousDateTimeController.text = _beforePreviousDateTimeStr;
+      _previousDateTimeController.text = _beforePreviousDateTimeStr;
       _previousDateTimeStr = _newDateTimeStr;
-      _previousDateTimeController.text = _previousDateTimeStr;
+      _lastDateTimeController.text = _previousDateTimeStr;
       _sleepTimeStrHistory.add(sleepDuration.HHmm());
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       _status = Status.wakeUp;
@@ -854,7 +854,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               style: valueTextStyle,
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
-                              controller: _previousDateTimeController,
+                              controller: _lastDateTimeController,
                               readOnly: true,
                             ),
                           ),
@@ -880,7 +880,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               style: valueTextStyle,
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
-                              controller: _beforePreviousDateTimeController,
+                              controller: _previousDateTimeController,
                               readOnly: true,
                             ),
                           ),
