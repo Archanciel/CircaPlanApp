@@ -468,7 +468,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     },
                   ),
                   onDoubleTap: () async {
-                    await handleClipboardData(
+                    await widget.handleClipboardData(
                         context: context,
                         textEditingController: _durationTextFieldController,
                         transferDataMap: widget._transferDataMap,
@@ -494,42 +494,5 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         ),
       ],
     );
-  }
-
-  Future<void> handleClipboardData({
-    required BuildContext context,
-    required TextEditingController textEditingController,
-    required Map<String, dynamic> transferDataMap,
-    required void Function(
-            {int? durationSign,
-            String? durationStr,
-            bool wasDurationSignButtonPressed})
-        handleDataChangeFunc,
-  }) async {
-    var clipboardLastAction = widget._transferDataMap['clipboardLastAction'];
-
-    if (clipboardLastAction == ClipboardLastAction.copy) {
-      await pasteFromClipboard(
-        controller: textEditingController,
-      );
-
-      transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
-    } else {
-      await widget.copyToClipboard(
-          context: context, controller: textEditingController);
-
-      transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
-    }
-
-    handleDataChangeFunc(durationStr: textEditingController.text);
-  }
-
-  Future<void> pasteFromClipboard(
-      {required TextEditingController controller}) async {
-    controller.selection = TextSelection(
-        baseOffset: 0, extentOffset: controller.value.text.length);
-    ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
-    String copiedtext = (cdata != null) ? cdata.text ?? '' : '';
-    controller.text = copiedtext;
   }
 }
