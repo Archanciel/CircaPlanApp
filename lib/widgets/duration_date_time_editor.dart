@@ -468,27 +468,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     },
                   ),
                   onDoubleTap: () async {
-                    var clipboardLastAction =
-                        widget._transferDataMap['clipboardLastAction'];
-
-                    if (clipboardLastAction == ClipboardLastAction.copy) {
-                      await pasteFromClipboard(
-                        controller: _durationTextFieldController,
-                      );
-
-                      widget._transferDataMap['clipboardLastAction'] =
-                          ClipboardLastAction.paste;
-                    } else {
-                      await widget.copyToClipboard(
-                          context: context,
-                          controller: _durationTextFieldController);
-
-                      widget._transferDataMap['clipboardLastAction'] =
-                          ClipboardLastAction.copy;
-                    }
-
-                    handleDurationChange(
-                        durationStr: _durationTextFieldController.text);
+                    await handleClipboardData(context: context,
+                    textEditingController: _durationTextFieldController);
                   },
                 ),
               ),
@@ -510,6 +491,29 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         ),
       ],
     );
+  }
+
+  Future<void> handleClipboardData({
+    required BuildContext context,
+    required TextEditingController textEditingController,
+  }) async {
+    var clipboardLastAction = widget._transferDataMap['clipboardLastAction'];
+
+    if (clipboardLastAction == ClipboardLastAction.copy) {
+      await pasteFromClipboard(
+        controller: textEditingController,
+      );
+
+      widget._transferDataMap['clipboardLastAction'] =
+          ClipboardLastAction.paste;
+    } else {
+      await widget.copyToClipboard(
+          context: context, controller: textEditingController);
+
+      widget._transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+    }
+
+    handleDurationChange(durationStr: textEditingController.text);
   }
 
   Future<void> pasteFromClipboard(
