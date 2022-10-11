@@ -10,6 +10,12 @@ enum Status {
   sleep,
 }
 
+/// Enum used by GestureDetector.onDoubleTap enclosing TextField's
+enum ClipboardLastAction {
+  copy,
+  paste,
+}
+
 const String kApplicationName = "Circadian Calculator";
 const String kApplicationVersion = '1.7.4';
 const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';

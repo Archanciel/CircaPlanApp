@@ -5,6 +5,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/utility.dart';
 
@@ -467,9 +468,24 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     },
                   ),
                   onDoubleTap: () async {
-                    await widget.copyToClipboard(
-                        context: context,
-                        controller: _durationTextFieldController);
+                    var clipboardLastAction =
+                        widget._transferDataMap['clipboardLastAction'];
+
+                    if (clipboardLastAction == ClipboardLastAction.copy) {
+                      await pasteFromClipboard(
+                        controller: _durationTextFieldController,
+                      );
+
+                      widget._transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.paste;
+                    } else {
+                      await widget.copyToClipboard(
+                          context: context,
+                          controller: _durationTextFieldController);
+
+                      widget._transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
+                    }
                   },
                 ),
               ),
@@ -491,5 +507,14 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         ),
       ],
     );
+  }
+
+  Future<void> pasteFromClipboard(
+      {required TextEditingController controller}) async {
+    controller.selection = TextSelection(
+        baseOffset: 0, extentOffset: controller.value.text.length);
+    ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
+    String copiedtext = (cdata != null) ? cdata.text ?? '' : '';
+    controller.text = copiedtext;
   }
 }
