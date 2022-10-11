@@ -5,7 +5,6 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:flutter/services.dart';
 
 import '../utils/utility.dart';
 
@@ -468,7 +467,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     },
                   ),
                   onDoubleTap: () async {
-                    await widget.handleClipboardData(
+                    await widget.handleClipboardDataDurationDateTimeEditor(
                         context: context,
                         textEditingController: _durationTextFieldController,
                         transferDataMap: widget._transferDataMap,

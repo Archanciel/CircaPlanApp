@@ -11,18 +11,22 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
   final TextEditingController _addTimeTextFieldController;
   final TextEditingController _addTimeDialogController;
   final TextEditingController _finalDurationTextFieldController;
-  final Function _addPosOrNegTimeToCurrentDuration;
+  final void Function(BuildContext context, String dialogTimeStr)
+      _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
+  final Map<String, dynamic> _transferDataMap;
 
   EditableDuration({
     required String dateTimeTitle,
+    required Map<String, dynamic> transferDataMap,
     required TextEditingController durationTextFieldController,
     required TextEditingController addTimeTextFieldController,
     required TextEditingController addTimeDialogController,
     required TextEditingController finalDurationTextFieldController,
-    required Function addPosOrNegTimeToCurrentDurationFunction,
+    required void Function(BuildContext context, String dialogTimeStr) addPosOrNegTimeToCurrentDurationFunction,
     required Function deleteAddedTimeDurationFunction,
   })  : _dateTimeTitle = dateTimeTitle,
+        _transferDataMap = transferDataMap,
         _durationTextFieldController = durationTextFieldController,
         _addTimeTextFieldController = addTimeTextFieldController,
         _addTimeDialogController = addTimeDialogController,
@@ -103,6 +107,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         await copyToClipboard(
                             context: context,
                             controller: _durationTextFieldController);
+                        _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+
                       },
                     ),
                   ),
@@ -128,9 +134,12 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
-                        await copyToClipboard(
+                        await handleClipboardDataEditableDuration(
                             context: context,
-                            controller: _addTimeTextFieldController);
+                            textEditingController: _addTimeTextFieldController,
+                            transferDataMap: _transferDataMap,
+                            handleDataChangeFunc:
+                                _addPosOrNegTimeToCurrentDuration);
                       },
                     ),
                   ),
@@ -159,6 +168,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         await copyToClipboard(
                             context: context,
                             controller: _finalDurationTextFieldController);
+                        _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
                       },
                     ),
                   ),

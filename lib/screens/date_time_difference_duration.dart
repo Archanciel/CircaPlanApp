@@ -396,6 +396,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   EditableDuration(
                     dateTimeTitle: 'Duration',
+                    transferDataMap: _transferDataMap,
                     durationTextFieldController: _durationTextFieldController,
                     addTimeTextFieldController: _addTimeTextFieldController,
                     addTimeDialogController: _addTimeDialogController,

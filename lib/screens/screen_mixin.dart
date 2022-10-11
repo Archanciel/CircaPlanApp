@@ -361,7 +361,7 @@ mixin ScreenMixin {
     return frenchFornattedDateTimeStr;
   }
 
-  Future<void> handleClipboardData({
+  Future<void> handleClipboardDataDurationDateTimeEditor({
     required BuildContext context,
     required TextEditingController textEditingController,
     required Map<String, dynamic> transferDataMap,
@@ -379,14 +379,39 @@ mixin ScreenMixin {
       );
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
+
+      handleDataChangeFunc(durationStr: textEditingController.text);
     } else {
       await copyToClipboard(
           context: context, controller: textEditingController);
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
     }
+  }
 
-    handleDataChangeFunc(durationStr: textEditingController.text);
+  Future<void> handleClipboardDataEditableDuration({
+    required BuildContext context,
+    required TextEditingController textEditingController,
+    required Map<String, dynamic> transferDataMap,
+    required void Function(BuildContext context, String dialogTimeStr)
+        handleDataChangeFunc,
+  }) async {
+    var clipboardLastAction = transferDataMap['clipboardLastAction'];
+
+    if (clipboardLastAction == ClipboardLastAction.copy) {
+      await pasteFromClipboard(
+        controller: textEditingController,
+      );
+
+      transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
+
+      handleDataChangeFunc(context, textEditingController.text);
+    } else {
+      await copyToClipboard(
+          context: context, controller: textEditingController);
+
+      transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+    }
   }
 
   Future<void> pasteFromClipboard(
