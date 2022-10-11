@@ -893,6 +893,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Sleep duration',
+                    transferDataMap: _transferDataMap,
                     resultDurationController: _currentSleepDurationController,
                     resultDurationPercentController:
                         _currentSleepDurationPercentController,
@@ -903,6 +904,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Wake up duration',
+                    transferDataMap: _transferDataMap,
                     resultDurationController: _currentWakeUpDurationController,
                     resultDurationPercentController:
                         _currentWakeUpDurationPercentController,
@@ -912,6 +914,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Total duration',
+                    transferDataMap: _transferDataMap,
                     resultDurationController: _currentTotalDurationController,
                     resultDurationPercentController:
                         _currentTotalDurationPercentController,

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
 
+import '../constants.dart';
+
 /// Widget that displays duration HH:MM value as well as
 /// percentage.
 class ResultDuration extends StatelessWidget with ScreenMixin {
   final String _resultDurationTitle;
+  final Map<String, dynamic> _transferDataMap;
   final TextEditingController _resultDurationController;
   final TextEditingController _resultDurationPercentController;
   final String _previousDayPercentTitle;
@@ -14,12 +17,14 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
 
   ResultDuration({
     required String resultDurationTitle,
+    required Map<String, dynamic> transferDataMap,
     required TextEditingController resultDurationController,
     required TextEditingController resultDurationPercentController,
     String previousDayPercentTitle = '',
     required TextEditingController prevDayTotalPercentController,
     required TextEditingController prevDayTotalController,
   })  : _resultDurationTitle = resultDurationTitle,
+        _transferDataMap = transferDataMap,
         _resultDurationController = resultDurationController,
         _resultDurationPercentController = resultDurationPercentController,
         _previousDayPercentTitle = previousDayPercentTitle,
@@ -81,6 +86,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _resultDurationController);
+                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
                     },
                   ),
                 ),
@@ -108,6 +114,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _resultDurationPercentController);
+                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
                     },
                   ),
                 ),
@@ -138,6 +145,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _prevDayTotalPercentController);
+                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
                     },
                   ),
                 ),
