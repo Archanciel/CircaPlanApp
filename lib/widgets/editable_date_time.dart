@@ -269,7 +269,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
           ),
         ),
         const SizedBox(
-          width: 20,
+          width: ScreenMixin.BUTTON_SEP_WIDTH,
         ),
         ElevatedButton(
           key: const Key('editableDateTimeSelButton'),

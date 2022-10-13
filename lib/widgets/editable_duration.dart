@@ -203,7 +203,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
               ),
             ),
             const SizedBox(
-              width: 20,
+              width: ScreenMixin.BUTTON_SEP_WIDTH,
             ),
             ElevatedButton(
               style: ButtonStyle(

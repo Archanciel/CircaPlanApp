@@ -299,7 +299,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
               ),
             ),
             const SizedBox(
-              width: 20,
+              width: ScreenMixin.BUTTON_SEP_WIDTH,
             ),
             ElevatedButton(
               key: const Key('edpSelButton'),

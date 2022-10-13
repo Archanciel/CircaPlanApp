@@ -605,7 +605,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: ScreenMixin.BUTTON_SEP_WIDTH,
                       ),
                       SizedBox(
                         width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
@@ -661,7 +661,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: ScreenMixin.BUTTON_SEP_WIDTH,
                       ),
                       SizedBox(
                         width: _TimeCalculatorState.LARGER_BUTTON_WIDTH,
