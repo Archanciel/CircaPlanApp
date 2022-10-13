@@ -112,6 +112,7 @@ Future<void> main() async {
               tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           expect(textField.controller!.text, selectedDateTimeStr);
 
+          // await tester.pumpAndSettle();
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
           await tester.pumpAndSettle();
           await tester.tap(find.text('14')); // set day

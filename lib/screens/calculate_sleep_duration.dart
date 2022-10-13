@@ -279,8 +279,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _newDateTimeController = TextEditingController(text: _newDateTimeStr);
     _previousDateTimeStr =
         _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
-    _lastDateTimeController =
-        TextEditingController(text: _previousDateTimeStr);
+    _lastDateTimeController = TextEditingController(text: _previousDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
     // bug which happens when switching to another screen and
@@ -803,14 +802,25 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: valueTextStyle,
-                        keyboardType: TextInputType.datetime,
-                        controller: _newDateTimeController, // links the
-                        //                         TextField content to pressing
-                        //                         the button 'Now'. '+' or '-'
+                      child: GestureDetector(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: valueTextStyle,
+                          keyboardType: TextInputType.datetime,
+                          controller: _newDateTimeController, // links the
+                          //                         TextField content to pressing
+                          //                         the button 'Now'. '+' or '-'
+                        ),
+                        onDoubleTap: () async {
+                          await copyToClipboard(
+                            context: context,
+                            controller: _newDateTimeController,
+                            extractHHmmFromCopiedStr: true,
+                          );
+                          _transferDataMap['clipboardLastAction'] =
+                              ClipboardLastAction.copy;
+                        },
                       ),
                     ),
                   ),
@@ -850,12 +860,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               ),
                             ),
-                            child: TextField(
-                              style: valueTextStyle,
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              controller: _lastDateTimeController,
-                              readOnly: true,
+                            child: GestureDetector(
+                              child: TextField(
+                                style: valueTextStyle,
+                                decoration: const InputDecoration.collapsed(
+                                    hintText: ''),
+                                controller: _lastDateTimeController,
+                                readOnly: true,
+                              ),
+                              onDoubleTap: () async {
+                                await copyToClipboard(
+                                  context: context,
+                                  controller: _lastDateTimeController,
+                                  extractHHmmFromCopiedStr: true,
+                                );
+                                _transferDataMap['clipboardLastAction'] =
+                                    ClipboardLastAction.copy;
+                              },
                             ),
                           ),
                         ),
@@ -876,12 +897,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               ),
                             ),
-                            child: TextField(
-                              style: valueTextStyle,
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              controller: _previousDateTimeController,
-                              readOnly: true,
+                            child: GestureDetector(
+                              child: TextField(
+                                style: valueTextStyle,
+                                decoration:
+                                    const InputDecoration.collapsed(hintText: ''),
+                                controller: _previousDateTimeController,
+                                readOnly: true,
+                              ),
+                              onDoubleTap: () async {
+                                await copyToClipboard(
+                                  context: context,
+                                  controller: _previousDateTimeController,
+                                  extractHHmmFromCopiedStr: true,
+                                );
+                                _transferDataMap['clipboardLastAction'] =
+                                    ClipboardLastAction.copy;
+                              },
                             ),
                           ),
                         ),

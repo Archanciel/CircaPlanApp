@@ -191,8 +191,11 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                     },
                   ),
                   onDoubleTap: () async {
-                    await copyHHmmToClipboard(
-                        context: context, controller: dateTimePickerController);
+                    await copyToClipboard(
+                      context: context,
+                      controller: dateTimePickerController,
+                      extractHHmmFromCopiedStr: true,
+                    );
                     transferDataMap['clipboardLastAction'] =
                         ClipboardLastAction.copy;
                   },
