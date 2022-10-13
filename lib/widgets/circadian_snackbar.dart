@@ -21,6 +21,6 @@ class CircadianSnackBar extends SnackBar with ScreenMixin {
             ),
           ),
           backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
-          duration: Duration(milliseconds: 2000),
+          duration: const Duration(milliseconds: 2000),
         );
 }
