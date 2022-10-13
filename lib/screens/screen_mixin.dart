@@ -311,6 +311,34 @@ mixin ScreenMixin {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+
+  Future<void> copyHHmmToClipboard(
+      {required BuildContext context,
+      required TextEditingController controller}) async {
+    controller.selection = TextSelection(
+        baseOffset: 0, extentOffset: controller.value.text.length);
+
+    String selectedText = controller.text;
+
+    // useful in case copying Calculate Sleep Duration screen percent values
+    selectedText = selectedText.replaceAll(' %', '');
+
+    if (selectedText.contains('=')) {
+      // the case if copyToClipboard() was applied on result
+      // TextField of the TimeCalculator screen and that the field
+      // contained a string like 01:10:05 = 40:05. In this situation,
+      // 40.05 is copied to clipboard !
+      List<String> selectedTextLst = selectedText.split(' = ');
+      selectedText = selectedTextLst.last;
+    }
+
+    await Clipboard.setData(ClipboardData(text: selectedText));
+
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: '$selectedText copied to clipboard');
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   /// Method returning the sorted list of app data
   /// files located in the app data dir.
   List<String> getSortedFileNameLstInDir(

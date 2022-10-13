@@ -167,26 +167,34 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                     selectionColor: selectionColor,
                   ),
                 ),
-                child: TextField(
-                  key: const Key('editableDateTimeTextField'),
-                  decoration: const InputDecoration.collapsed(hintText: ''),
-                  style: const TextStyle(
-                      color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                      fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                      fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                  controller: dateTimePickerController,
-                  readOnly: true,
-                  onTap: () {
-                    // initializing the date and time dialogs with the
-                    // currently displayed date time value ...
-                    String frenchFormatDateTimeStr =
-                        dateTimePickerController.text;
-                    DateTime dateTime = ScreenMixin.frenchDateTimeFormat
-                        .parse(frenchFormatDateTimeStr);
-                    _selectedTime =
-                        TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
-                    _selectedDate = dateTime;
-                    _selectDatePickerDateTime(context);
+                child: GestureDetector(
+                  child: TextField(
+                    key: const Key('editableDateTimeTextField'),
+                    decoration: const InputDecoration.collapsed(hintText: ''),
+                    style: const TextStyle(
+                        color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                    controller: dateTimePickerController,
+                    readOnly: true,
+                    onTap: () {
+                      // initializing the date and time dialogs with the
+                      // currently displayed date time value ...
+                      String frenchFormatDateTimeStr =
+                          dateTimePickerController.text;
+                      DateTime dateTime = ScreenMixin.frenchDateTimeFormat
+                          .parse(frenchFormatDateTimeStr);
+                      _selectedTime = TimeOfDay(
+                          hour: dateTime.hour, minute: dateTime.minute);
+                      _selectedDate = dateTime;
+                      _selectDatePickerDateTime(context);
+                    },
+                  ),
+                  onDoubleTap: () async {
+                    await copyHHmmToClipboard(
+                        context: context, controller: dateTimePickerController);
+                    transferDataMap['clipboardLastAction'] =
+                        ClipboardLastAction.copy;
                   },
                 ),
               ),
