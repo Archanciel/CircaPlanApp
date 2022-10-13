@@ -464,9 +464,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           },
                         ),
                         onDoubleTap: () async {
-                          await pasteFromClipboard(
-                            controller: _firstTimeTextFieldController,
-                          );
+                          await handleClipboardDataEditableDuration(
+                              context: context,
+                              textEditingController:
+                                  _firstTimeTextFieldController,
+                              transferDataMap: _transferDataMap,
+                              handleDataChangeFunc:
+                                  (BuildContext c, String s) {});
                         },
                       ),
                     ),
@@ -513,9 +517,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           },
                         ),
                         onDoubleTap: () async {
-                          await pasteFromClipboard(
-                            controller: _secondTimeTextFieldController,
-                          );
+                          await handleClipboardDataEditableDuration(
+                              context: context,
+                              textEditingController:
+                                  _secondTimeTextFieldController,
+                              transferDataMap: _transferDataMap,
+                              handleDataChangeFunc:
+                                  (BuildContext c, String s) {});
                         },
                       ),
                     ),
@@ -550,9 +558,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
-                        await copyToClipboard(
+                        await handleClipboardDataEditableDuration(
                             context: context,
-                            controller: _resultTextFieldController);
+                            textEditingController: _resultTextFieldController,
+                            transferDataMap: _transferDataMap,
+                            handleDataChangeFunc:
+                                (BuildContext c, String s) {});
                       },
                     ),
                   ),

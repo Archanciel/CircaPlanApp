@@ -215,6 +215,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                             context: context,
                             controller:
                                 widget.durationPercentTextFieldController);
+                        widget.transferDataMap['clipboardLastAction'] =
+                            ClipboardLastAction.copy;
                       },
                     ),
                   ),
@@ -260,6 +262,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                             context: context,
                             controller:
                                 widget.selectedPercentTextFieldController);
+                        widget.transferDataMap['clipboardLastAction'] =
+                            ClipboardLastAction.copy;
                       },
                     ),
                   ),
