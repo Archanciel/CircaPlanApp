@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -114,7 +115,9 @@ Future<void> main() async {
 
           // await tester.pumpAndSettle();
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
-          await tester.pumpAndSettle();
+          await tester.pump(kDoubleTapTimeout); // required to avoid
+          //  GestureDetector.onDoubleTap: to be applied instead of 
+          //  TextField onTap: !
           await tester.tap(find.text('14')); // set day
           await tester.tap(find.text('OK'));
           await tester.pumpAndSettle();
@@ -152,7 +155,9 @@ Future<void> main() async {
           expect(textField.controller!.text, '20-09-2022 12:45');
 
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
-          await tester.pumpAndSettle();
+          await tester.pump(kDoubleTapTimeout); // required to avoid
+          //  GestureDetector.onDoubleTap: to be applied instead of 
+          //  TextField onTap: !
           await tester.tap(previousMonthIcon);
           await tester.pumpAndSettle(const Duration(seconds: 1));
           await tester.tap(find.text('6')); // set day
@@ -193,7 +198,9 @@ Future<void> main() async {
           expect(textField.controller!.text, '20-09-2022 12:45');
 
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
-          await tester.pumpAndSettle();
+          await tester.pump(kDoubleTapTimeout); // required to avoid
+          //  GestureDetector.onDoubleTap: to be applied instead of 
+          //  TextField onTap: !
           await tester.tap(nextMonthIcon);
           await tester.pumpAndSettle(const Duration(seconds: 1));
           await tester.tap(find.text('6')); // set day
