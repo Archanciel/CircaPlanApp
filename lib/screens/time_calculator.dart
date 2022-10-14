@@ -469,7 +469,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               textEditingController:
                                   _firstTimeTextFieldController,
                               transferDataMap: _transferDataMap,
-                              handleDataChangeFunc:
+                              handleDataChangeFunction:
                                   (BuildContext c, String s) {});
                         },
                       ),
@@ -522,7 +522,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               textEditingController:
                                   _secondTimeTextFieldController,
                               transferDataMap: _transferDataMap,
-                              handleDataChangeFunc:
+                              handleDataChangeFunction:
                                   (BuildContext c, String s) {});
                         },
                       ),
@@ -562,7 +562,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             context: context,
                             textEditingController: _resultTextFieldController,
                             transferDataMap: _transferDataMap,
-                            handleDataChangeFunc:
+                            handleDataChangeFunction:
                                 (BuildContext c, String s) {});
                       },
                     ),
@@ -723,6 +723,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     );
   }
 
+  @override
   Future<void> pasteFromClipboard(
       {required TextEditingController controller}) async {
     controller.selection = TextSelection(

@@ -471,7 +471,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                         context: context,
                         textEditingController: _durationTextFieldController,
                         transferDataMap: widget._transferDataMap,
-                        handleDataChangeFunc: handleDurationChange);
+                        handleDataChangeFunction: handleDurationChange);
                   },
                 ),
               ),

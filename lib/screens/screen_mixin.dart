@@ -367,6 +367,13 @@ mixin ScreenMixin {
     return frenchFornattedDateTimeStr;
   }
 
+  /// Code executed on double tapping a duration TextField located
+  /// in a DurationDateTimeEditor widget. This code paste from
+  /// clipboard or copy to clipboard according to the
+  /// transferDataMap['clipboardLastAction'] current value.
+  ///
+  /// The purpose is to enable to copy or paste the TextField
+  /// value in another editable TextField value.
   Future<void> handleClipboardDataDurationDateTimeEditor({
     required BuildContext context,
     required TextEditingController textEditingController,
@@ -375,7 +382,9 @@ mixin ScreenMixin {
             {int? durationSign,
             String? durationStr,
             bool wasDurationSignButtonPressed})
-        handleDataChangeFunc,
+        handleDataChangeFunction, // the unique difference with
+    //                               the other handleClipboardData
+    //                               method
   }) async {
     var clipboardLastAction = transferDataMap['clipboardLastAction'];
 
@@ -386,7 +395,7 @@ mixin ScreenMixin {
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
 
-      handleDataChangeFunc(durationStr: textEditingController.text);
+      handleDataChangeFunction(durationStr: textEditingController.text);
     } else {
       await copyToClipboard(
           context: context, controller: textEditingController);
@@ -395,12 +404,24 @@ mixin ScreenMixin {
     }
   }
 
+  /// Code executed on double tapping a duration TextField located
+  /// in an EditableDuration widget. This code paste from
+  /// clipboard or copy to clipboard according to the
+  /// transferDataMap['clipboardLastAction'] current value.
+  ///
+  /// The purpose is to enable to copy or paste the TextField
+  /// value in another editable TextField value.
   Future<void> handleClipboardDataEditableDuration({
     required BuildContext context,
     required TextEditingController textEditingController,
     required Map<String, dynamic> transferDataMap,
-    required void Function(BuildContext context, String dialogTimeStr)
-        handleDataChangeFunc,
+    required void Function(
+      BuildContext context,
+      String dialogTimeStr,
+    )
+        handleDataChangeFunction, // the unique difference with
+    //                               the other handleClipboardData
+    //                               method
   }) async {
     var clipboardLastAction = transferDataMap['clipboardLastAction'];
 
@@ -411,7 +432,7 @@ mixin ScreenMixin {
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
 
-      handleDataChangeFunc(context, textEditingController.text);
+      handleDataChangeFunction(context, textEditingController.text);
     } else {
       await copyToClipboard(
           context: context, controller: textEditingController);

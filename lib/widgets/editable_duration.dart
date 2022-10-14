@@ -23,7 +23,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
     required TextEditingController addTimeTextFieldController,
     required TextEditingController addTimeDialogController,
     required TextEditingController finalDurationTextFieldController,
-    required void Function(BuildContext context, String dialogTimeStr) addPosOrNegTimeToCurrentDurationFunction,
+    required void Function(BuildContext context, String dialogTimeStr)
+        addPosOrNegTimeToCurrentDurationFunction,
     required Function deleteAddedTimeDurationFunction,
   })  : _dateTimeTitle = dateTimeTitle,
         _transferDataMap = transferDataMap,
@@ -107,8 +108,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         await copyToClipboard(
                             context: context,
                             controller: _durationTextFieldController);
-                        _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
-
+                        _transferDataMap['clipboardLastAction'] =
+                            ClipboardLastAction.copy;
                       },
                     ),
                   ),
@@ -138,7 +139,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                             context: context,
                             textEditingController: _addTimeTextFieldController,
                             transferDataMap: _transferDataMap,
-                            handleDataChangeFunc:
+                            handleDataChangeFunction:
                                 _addPosOrNegTimeToCurrentDuration);
                       },
                     ),
@@ -168,7 +169,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         await copyToClipboard(
                             context: context,
                             controller: _finalDurationTextFieldController);
-                        _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                        _transferDataMap['clipboardLastAction'] =
+                            ClipboardLastAction.copy;
                       },
                     ),
                   ),
