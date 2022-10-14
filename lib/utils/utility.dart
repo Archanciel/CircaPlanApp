@@ -194,14 +194,14 @@ class Utility {
           }
         }
       } else {
-        RegExp re = RegExp(r"^\d{1}:\d{2}");
+        RegExp re = RegExp(r"^\d{1}:\d{2}$");
 
         RegExpMatch? match = re.firstMatch(durationStr);
 
         if (match != null) {
           durationStr = '00:0${match.group(0)}';
         } else {
-          RegExp re = RegExp(r"^\d{2}:\d{2}");
+          RegExp re = RegExp(r"^\d{2}:\d{2}$");
           RegExpMatch? match = re.firstMatch(durationStr);
           if (match != null) {
             durationStr = '00:${match.group(0)}';
