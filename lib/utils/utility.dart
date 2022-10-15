@@ -222,22 +222,27 @@ class Utility {
 
   static String extractHHmmAtPosition({
     required String dataStr,
-    required int position,
+    required int selStartPosition,
+    int selEndPosition = 0,
   }) {
-    if (position > dataStr.length) {
+    if (selStartPosition > dataStr.length) {
       return '';
+    }
+
+    if (selEndPosition != 0 && dataStr.substring(selStartPosition, selEndPosition) == 'Wake') {
+      selStartPosition += 5;
     }
 
     String extractedHHmmStr;
 
-    int leftIdx = dataStr.substring(0, position).lastIndexOf(' ');
+    int leftIdx = dataStr.substring(0, selStartPosition).lastIndexOf(' ');
 
     if (leftIdx == -1) {
       // the case if the position is on the last HH:mm value
       leftIdx = 0;
     }
 
-    int rightIdx = dataStr.indexOf(',', position);
+    int rightIdx = dataStr.indexOf(',', selStartPosition);
 
     if (rightIdx == -1) {
       // the case if the position is on the last HH:mm value
@@ -248,7 +253,7 @@ class Utility {
 
     extractedHHmmStr = dataStr.substring(leftIdx, rightIdx);
 
-    if (extractedHHmmStr.indexOf(RegExp(r'\D')) != -1) {
+    if (extractedHHmmStr.contains(RegExp(r'\D'))) {
       RegExpMatch? match = RegExp(r'\d+:\d+').firstMatch(extractedHHmmStr);
 
       if (match != null) {
@@ -265,52 +270,52 @@ void main() {
       'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
 
   print(histoStr);
-  
+
   String firstHHmmPos20 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 20,
+    selStartPosition: 20,
   );
 
   print('firstHHmmPos20 $firstHHmmPos20');
 
   String firstHHmmPos22 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 22,
+    selStartPosition: 22,
   );
 
   print('firstHHmmPos22 $firstHHmmPos22');
 
   String lastHHmmPos56 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 56,
+    selStartPosition: 56,
   );
 
   print('lastHHmmPos56 $lastHHmmPos56');
 
   String lastHHmmPos58 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 58,
+    selStartPosition: 58,
   );
 
   print('lastHHmmPos58 $lastHHmmPos58');
 
   String notHHmmPos3 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 3,
+    selStartPosition: 3,
   );
 
   print('notHHmmPos3 $notHHmmPos3');
 
   String notHHmmPos33 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 33,
+    selStartPosition: 33,
   );
 
   print('notHHmmPos33 $notHHmmPos33');
 
   String lastHHmmPos59 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 59,
+    selStartPosition: 59,
   );
 
   print('lastHHmmPos59 $lastHHmmPos59');

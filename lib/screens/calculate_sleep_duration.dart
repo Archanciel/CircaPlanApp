@@ -1171,10 +1171,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       required TextEditingController controller,
       bool extractHHmmFromCopiedStr = false}) async {
     String historyStr = controller.text;
-    int cursorPos = controller.selection.base.offset;
+    int selectionStartPosition = controller.selection.start;
+    int selectionEndPosition = controller.selection.end;
     String extractedHHmm = Utility.extractHHmmAtPosition(
       dataStr: historyStr,
-      position: cursorPos,
+      selStartPosition: selectionStartPosition,
+      selEndPosition: selectionEndPosition,
     );
 
     await Clipboard.setData(ClipboardData(text: extractedHHmm));

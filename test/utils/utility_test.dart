@@ -280,8 +280,7 @@ void main() {
             'coucou': 'Coucou world !',
           };
 
-          String printableFormattedMap =
-              await Utility.formatMapContent(map: map);
+          String printableFormattedMap = Utility.formatMapContent(map: map);
 
           String expectedFormattedMap = '''
 {
@@ -741,7 +740,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 20,
+            selStartPosition: 20,
           );
 
           expect(extractedHHmm, '6:12');
@@ -752,7 +751,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 22,
+            selStartPosition: 22,
           );
 
           expect(extractedHHmm, '6:12');
@@ -763,7 +762,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 56,
+            selStartPosition: 56,
           );
 
           expect(extractedHHmm, '0:20');
@@ -774,7 +773,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 58,
+            selStartPosition: 58,
           );
 
           expect(extractedHHmm, '0:20');
@@ -785,7 +784,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 59,
+            selStartPosition: 59,
           );
 
           expect(extractedHHmm, '');
@@ -796,7 +795,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 3,
+            selStartPosition: 3,
           );
 
           expect(extractedHHmm, '12:17');
@@ -807,7 +806,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 13,
+            selStartPosition: 13,
           );
 
           expect(extractedHHmm, '12:17');
@@ -818,7 +817,8 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 33,
+            selStartPosition: 30,
+            selEndPosition: 34,
           );
 
           expect(extractedHHmm, '18:29');
@@ -829,7 +829,7 @@ void main() {
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 40,
+            selStartPosition: 40,
           );
 
           expect(extractedHHmm, '18:29');
