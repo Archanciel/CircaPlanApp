@@ -223,13 +223,13 @@ class Utility {
   static String extractHHmmAtPosition({
     required String dataStr,
     required int selStartPosition,
-    int selEndPosition = 0,
+    required int selEndPosition,
   }) {
     if (selStartPosition > dataStr.length) {
       return '';
     }
 
-    if (selEndPosition != 0 && dataStr.substring(selStartPosition, selEndPosition) == 'Wake') {
+    if (dataStr.substring(selStartPosition, selEndPosition) == 'Wake') {
       selStartPosition += 5;
     }
 
@@ -265,58 +265,58 @@ class Utility {
   }
 }
 
-void main() {
-  String histoStr =
-      'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
+// void main() {
+//   String histoStr =
+//       'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
 
-  print(histoStr);
+//   print(histoStr);
 
-  String firstHHmmPos20 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 20,
-  );
+//   String firstHHmmPos20 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 20,
+//   );
 
-  print('firstHHmmPos20 $firstHHmmPos20');
+//   print('firstHHmmPos20 $firstHHmmPos20');
 
-  String firstHHmmPos22 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 22,
-  );
+//   String firstHHmmPos22 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 22,
+//   );
 
-  print('firstHHmmPos22 $firstHHmmPos22');
+//   print('firstHHmmPos22 $firstHHmmPos22');
 
-  String lastHHmmPos56 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 56,
-  );
+//   String lastHHmmPos56 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 56,
+//   );
 
-  print('lastHHmmPos56 $lastHHmmPos56');
+//   print('lastHHmmPos56 $lastHHmmPos56');
 
-  String lastHHmmPos58 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 58,
-  );
+//   String lastHHmmPos58 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 58,
+//   );
 
-  print('lastHHmmPos58 $lastHHmmPos58');
+//   print('lastHHmmPos58 $lastHHmmPos58');
 
-  String notHHmmPos3 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 3,
-  );
+//   String notHHmmPos3 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 3,
+//   );
 
-  print('notHHmmPos3 $notHHmmPos3');
+//   print('notHHmmPos3 $notHHmmPos3');
 
-  String notHHmmPos33 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 33,
-  );
+//   String notHHmmPos33 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 33,
+//   );
 
-  print('notHHmmPos33 $notHHmmPos33');
+//   print('notHHmmPos33 $notHHmmPos33');
 
-  String lastHHmmPos59 = Utility.extractHHmmAtPosition(
-    dataStr: histoStr,
-    selStartPosition: 59,
-  );
+//   String lastHHmmPos59 = Utility.extractHHmmAtPosition(
+//     dataStr: histoStr,
+//     selStartPosition: 59,
+//   );
 
-  print('lastHHmmPos59 $lastHHmmPos59');
-}
+//   print('lastHHmmPos59 $lastHHmmPos59');
+// }

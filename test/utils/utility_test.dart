@@ -741,6 +741,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 20,
+            selEndPosition: 22,
           );
 
           expect(extractedHHmm, '6:12');
@@ -752,6 +753,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 22,
+            selEndPosition: 23,
           );
 
           expect(extractedHHmm, '6:12');
@@ -763,6 +765,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 56,
+            selEndPosition: 58,
           );
 
           expect(extractedHHmm, '0:20');
@@ -774,6 +777,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 58,
+            selEndPosition: 58,
           );
 
           expect(extractedHHmm, '0:20');
@@ -785,6 +789,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 59,
+            selEndPosition: 59,
           );
 
           expect(extractedHHmm, '');
@@ -796,6 +801,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 3,
+            selEndPosition: 10,
           );
 
           expect(extractedHHmm, '12:17');
@@ -807,6 +813,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 13,
+            selEndPosition: 16,
           );
 
           expect(extractedHHmm, '12:17');
@@ -830,6 +837,7 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             selStartPosition: 40,
+            selEndPosition: 45,
           );
 
           expect(extractedHHmm, '18:29');
