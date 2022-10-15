@@ -3,6 +3,7 @@ import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 
@@ -11,6 +12,7 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 import '../constants.dart';
+import '../widgets/circadian_snackbar.dart';
 
 class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -900,8 +902,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             child: GestureDetector(
                               child: TextField(
                                 style: valueTextStyle,
-                                decoration:
-                                    const InputDecoration.collapsed(hintText: ''),
+                                decoration: const InputDecoration.collapsed(
+                                    hintText: ''),
                                 controller: _previousDateTimeController,
                                 readOnly: true,
                               ),
@@ -971,14 +973,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: TextField(
-                        maxLines: null, // must be set, otherwise multi lines
-//                                         not displayed
-                        style: valueTextStyle,
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        controller: _sleepWakeUpHistoryController,
-                        readOnly: true,
+                      child: GestureDetector(
+                        child: TextField(
+                          maxLines: null, // must be set, otherwise multi lines
+                          //                                         not displayed
+                          style: valueTextStyle,
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          controller: _sleepWakeUpHistoryController,
+                          readOnly: true,
+                        ),
+                        onDoubleTap: () async {
+                          await copyToClipboardHHmmExtractedFromHistoryDuration(
+                              context: context,
+                              controller: _sleepWakeUpHistoryController);
+                          _transferDataMap['clipboardLastAction'] =
+                              ClipboardLastAction.copy;
+                        },
                       ),
                     ),
                   ),
@@ -1153,5 +1164,24 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Navigator.of(context).pop(_addTimeDialogController.text);
 
     _addTimeDialogController.clear();
+  }
+
+  Future<void> copyToClipboardHHmmExtractedFromHistoryDuration(
+      {required BuildContext context,
+      required TextEditingController controller,
+      bool extractHHmmFromCopiedStr = false}) async {
+    String historyStr = controller.text;
+    int cursorPos = controller.selection.base.offset;
+    String extractedHHmm = Utility.extractHHmmAtPosition(
+      dataStr: historyStr,
+      position: cursorPos,
+    );
+
+    await Clipboard.setData(ClipboardData(text: extractedHHmm));
+
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: '$extractedHHmm copied to clipboard');
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -734,7 +734,7 @@ void main() {
     'extractHHmmAtPosition()',
     () {
       String histoStr =
-          'Sleep 11-10 12:17: 6:12, 3:00, Wake 11-10 18:29: 0:30, 0:20';
+          'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
 
       test(
         'first HH:mm, pos 20',
