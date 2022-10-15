@@ -770,22 +770,22 @@ void main() {
         },
       );
       test(
-        'last HH:mm, pos 59',
+        'last HH:mm, pos 58',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 59,
+            position: 58,
           );
 
           expect(extractedHHmm, '0:20');
         },
       );
       test(
-        'last HH:mm, pos 60 > histoStr length',
+        'last HH:mm, pos 59 > histoStr length',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
-            position: 60,
+            position: 59,
           );
 
           expect(extractedHHmm, '');
