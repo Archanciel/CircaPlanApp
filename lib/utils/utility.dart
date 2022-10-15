@@ -262,7 +262,7 @@ class Utility {
 
 void main() {
   String histoStr =
-      'Sleep 11-10 12:17: 6:12, 3:00, Wake 11-10 18:29: 0:30, 0:20';
+      'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
 
   print(histoStr);
   
@@ -287,12 +287,12 @@ void main() {
 
   print('lastHHmmPos56 $lastHHmmPos56');
 
-  String lastHHmmPos59 = Utility.extractHHmmAtPosition(
+  String lastHHmmPos58 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 59,
+    position: 58,
   );
 
-  print('lastHHmmPos59 $lastHHmmPos59');
+  print('lastHHmmPos58 $lastHHmmPos58');
 
   String notHHmmPos3 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
@@ -308,10 +308,10 @@ void main() {
 
   print('notHHmmPos33 $notHHmmPos33');
 
-  String lastHHmmPos60 = Utility.extractHHmmAtPosition(
+  String lastHHmmPos59 = Utility.extractHHmmAtPosition(
     dataStr: histoStr,
-    position: 60,
+    position: 59,
   );
 
-  print('lastHHmmPos60 $lastHHmmPos60');
+  print('lastHHmmPos59 $lastHHmmPos59');
 }
