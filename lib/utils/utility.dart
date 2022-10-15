@@ -229,8 +229,9 @@ class Utility {
       return '';
     }
 
-    if (dataStr.substring(selStartPosition, selEndPosition) == 'Wake') {
-      selStartPosition += 5;
+    if (dataStr.substring(selStartPosition - 1, selStartPosition) == '\n') {
+      // the case if 'Wake' is selected, which is after \n !
+      selStartPosition = selEndPosition + 1;
     }
 
     String extractedHHmmStr;
