@@ -219,4 +219,99 @@ class Utility {
 
     return durationStr;
   }
+
+  static String extractHHmmAtPosition({
+    required String dataStr,
+    required int position,
+  }) {
+    if (position > dataStr.length) {
+      return '';
+    }
+
+    String extractedHHmmStr;
+
+    int leftIdx = dataStr.substring(0, position).lastIndexOf(' ');
+
+    if (leftIdx == -1) {
+      // the case if the position is on the last HH:mm value
+      leftIdx = 0;
+    }
+
+    int rightIdx = dataStr.indexOf(',', position);
+
+    if (rightIdx == -1) {
+      // the case if the position is on the last HH:mm value
+      rightIdx = dataStr.lastIndexOf(RegExp(r'\d')) + 1;
+    }
+
+    print('$leftIdx, $rightIdx');
+
+    extractedHHmmStr = dataStr.substring(leftIdx, rightIdx);
+
+    if (extractedHHmmStr.indexOf(RegExp(r'\D')) != -1) {
+      RegExpMatch? match = RegExp(r'\d+:\d+').firstMatch(extractedHHmmStr);
+
+      if (match != null) {
+        extractedHHmmStr = match.group(0) ?? '';
+      }
+    }
+
+    return extractedHHmmStr;
+  }
+}
+
+void main() {
+  String histoStr =
+      'Sleep 11-10 12:17: 6:12, 3:00, Wake 11-10 18:29: 0:30, 0:20';
+
+  print(histoStr);
+  
+  String firstHHmmPos20 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 20,
+  );
+
+  print('firstHHmmPos20 $firstHHmmPos20');
+
+  String firstHHmmPos22 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 22,
+  );
+
+  print('firstHHmmPos22 $firstHHmmPos22');
+
+  String lastHHmmPos56 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 56,
+  );
+
+  print('lastHHmmPos56 $lastHHmmPos56');
+
+  String lastHHmmPos59 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 59,
+  );
+
+  print('lastHHmmPos59 $lastHHmmPos59');
+
+  String notHHmmPos3 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 3,
+  );
+
+  print('notHHmmPos3 $notHHmmPos3');
+
+  String notHHmmPos33 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 33,
+  );
+
+  print('notHHmmPos33 $notHHmmPos33');
+
+  String lastHHmmPos60 = Utility.extractHHmmAtPosition(
+    dataStr: histoStr,
+    position: 60,
+  );
+
+  print('lastHHmmPos60 $lastHHmmPos60');
 }
