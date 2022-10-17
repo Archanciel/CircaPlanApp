@@ -455,7 +455,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             // in the screen navigation transfer
                             // data map.
                             _firstTimeStr = Utility.formatStringDuration(
-                                durationStr: val, dayHourMinuteFormat: true);
+                              durationStr: val,
+                              dayHourMinuteFormat: true,
+                            );
                             _firstTimeTextFieldController.text = _firstTimeStr;
                             setState(() {});
                             _updateTransferDataMap();
@@ -469,11 +471,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             transferDataMap: _transferDataMap,
                             handleDataChangeFunction:
                                 (BuildContext c, String s) {
-                              _firstTimeTextFieldController.text =
-                                  Utility.formatStringDuration(
+                              _firstTimeStr = Utility.formatStringDuration(
                                 durationStr: s,
                                 dayHourMinuteFormat: true,
                               );
+                              _firstTimeTextFieldController.text =
+                                  _firstTimeStr;
+                              _updateTransferDataMap();
                             },
                           );
                         },
@@ -514,7 +518,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             // in the screen navigation transfer
                             // data map.
                             _secondTimeStr = Utility.formatStringDuration(
-                                durationStr: val, dayHourMinuteFormat: true);
+                              durationStr: val,
+                              dayHourMinuteFormat: true,
+                            );
                             _secondTimeTextFieldController.text =
                                 _secondTimeStr;
                             setState(() {});
@@ -529,11 +535,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             transferDataMap: _transferDataMap,
                             handleDataChangeFunction:
                                 (BuildContext c, String s) {
-                              _secondTimeTextFieldController.text =
-                                  Utility.formatStringDuration(
+                              _secondTimeStr = Utility.formatStringDuration(
                                 durationStr: s,
                                 dayHourMinuteFormat: true,
                               );
+                              _secondTimeTextFieldController.text =
+                                  _secondTimeStr;
+                              _updateTransferDataMap();
                             },
                           );
                         },
