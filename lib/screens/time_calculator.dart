@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:intl/intl.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
@@ -456,7 +455,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                            _firstTimeStr = Utility.convertIntDuration(
+                            _firstTimeStr = Utility.formatStringDuration(
                                 durationStr: val, dayHourMinuteFormat: true);
                             _firstTimeTextFieldController.text = _firstTimeStr;
                             setState(() {});
@@ -470,7 +469,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                                   _firstTimeTextFieldController,
                               transferDataMap: _transferDataMap,
                               handleDataChangeFunction:
-                                  (BuildContext c, String s) {});
+                                  (BuildContext c, String s) {
+                                print(s);
+                                _firstTimeTextFieldController.text = '00:$s';
+                              });
                         },
                       ),
                     ),
@@ -508,7 +510,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                            _secondTimeStr = Utility.convertIntDuration(
+                            _secondTimeStr = Utility.formatStringDuration(
                                 durationStr: val, dayHourMinuteFormat: true);
                             _secondTimeTextFieldController.text =
                                 _secondTimeStr;

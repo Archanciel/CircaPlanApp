@@ -158,15 +158,20 @@ class Utility {
     return formattedMapStr;
   }
 
-  /// Method used to enable entering an int duration value
-  /// instead of a HH:mm duration. For example, 2 or 24
-  /// instead of 02:00 or 24:00.
+  /// Method used to format the entered string duration
+  /// to the duration TextField format, either HH:mm or
+  /// dd:HH:mm. The method enables entering an int
+  /// duration value instead of an HH:mm duration. For
+  /// example, 2 or 24 instead of 02:00 or 24:00.
   ///
   /// If the removeMinusSign parm is false, entering -2
   /// converts the duration string to -2:00, which is
   /// useful in the Add dialog accepting adding a positive
   /// or negative duration.
-  static String convertIntDuration({
+  ///
+  /// If dayHourMinuteFormat is true, the returned string
+  /// duration for 2 is 00:02:00 or for 3:24 00:03:24.
+  static String formatStringDuration({
     required String durationStr,
     bool removeMinusSign = true,
     bool dayHourMinuteFormat = false,
@@ -184,7 +189,9 @@ class Utility {
       if (durationInt != null) {
         if (durationInt < 0) {
           if (durationInt > -10) {
-            durationStr = '-0${durationInt * -1}';
+            durationStr = '-00:0${durationInt * -1}:00';
+          } else {
+            durationStr = '-00:${durationInt * -1}:00';
           }
         } else {
           if (durationInt < 10) {
@@ -205,6 +212,12 @@ class Utility {
           RegExpMatch? match = re.firstMatch(durationStr);
           if (match != null) {
             durationStr = '00:${match.group(0)}';
+          } else {
+            RegExp re = RegExp(r"^\d{1}:\d{2}:\d{2}$");
+            RegExpMatch? match = re.firstMatch(durationStr);
+            if (match != null) {
+              durationStr = '0${match.group(0)}';
+            }
           }
         }
       }

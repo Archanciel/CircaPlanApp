@@ -253,7 +253,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           durationIsNegative: _durationTextFieldController.text.contains('-'));
     }
 
-    _durationStr = Utility.convertIntDuration(
+    _durationStr = Utility.formatStringDuration(
         durationStr: _durationTextFieldController.text);
 
     // necessary in case the _durationStr was set to an

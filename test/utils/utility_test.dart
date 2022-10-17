@@ -394,7 +394,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos int < 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '2',
             removeMinusSign: false,
           );
@@ -405,7 +405,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg int < 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-2',
             removeMinusSign: false,
           );
@@ -416,7 +416,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos int > 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '20',
             removeMinusSign: false,
           );
@@ -427,7 +427,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg int > 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-20',
             removeMinusSign: false,
           );
@@ -438,7 +438,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos int 0',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '0',
             removeMinusSign: false,
           );
@@ -449,7 +449,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg int -0',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-0',
             removeMinusSign: false,
           );
@@ -460,7 +460,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '2:34',
             removeMinusSign: false,
           );
@@ -471,7 +471,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos HH:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '20:34',
             removeMinusSign: false,
           );
@@ -482,7 +482,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-2:34',
             removeMinusSign: false,
           );
@@ -493,7 +493,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg HH:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-20:34',
             removeMinusSign: false,
           );
@@ -504,12 +504,41 @@ void main() {
     },
   );
   group(
-    'convertIntDuration() removeMinusSign==true',
+    'formatStringDuration() removeMinusSign==false',
+    () {
+      test(
+        'dayHourMinuteFormat==true neg int < 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '-2',
+            removeMinusSign: false,
+            dayHourMinuteFormat: true,
+          );
+
+          expect(convertedStr, '-00:02:00');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true pos int > 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '-20',
+            removeMinusSign: false,
+            dayHourMinuteFormat: true,
+          );
+
+          expect(convertedStr, '-00:20:00');
+        },
+      );
+    },
+  );
+  group(
+    'formatStringDuration() removeMinusSign==true',
     () {
       test(
         'dayHourMinuteFormat==false pos int < 10',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '2');
+          String convertedStr = Utility.formatStringDuration(durationStr: '2');
 
           expect(convertedStr, '2:00');
         },
@@ -517,7 +546,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg int < 10',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '-2');
+          String convertedStr = Utility.formatStringDuration(durationStr: '-2');
 
           expect(convertedStr, '2:00');
         },
@@ -525,7 +554,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos int > 10',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '20');
+          String convertedStr = Utility.formatStringDuration(durationStr: '20');
 
           expect(convertedStr, '20:00');
         },
@@ -533,7 +562,8 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg int > 10',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '-20');
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '-20');
 
           expect(convertedStr, '20:00');
         },
@@ -541,7 +571,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos int 0',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '0');
+          String convertedStr = Utility.formatStringDuration(durationStr: '0');
 
           expect(convertedStr, '0:00');
         },
@@ -549,7 +579,7 @@ void main() {
       test(
         'dayHourMinuteFormat==false neg int -0',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '-0');
+          String convertedStr = Utility.formatStringDuration(durationStr: '-0');
 
           expect(convertedStr, '0:00');
         },
@@ -557,7 +587,8 @@ void main() {
       test(
         'dayHourMinuteFormat==false pos H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(durationStr: '2:34');
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '2:34');
 
           expect(convertedStr, '2:34');
         },
@@ -566,7 +597,7 @@ void main() {
         'dayHourMinuteFormat==false pos HH:mm',
         () {
           String convertedStr =
-              Utility.convertIntDuration(durationStr: '20:34');
+              Utility.formatStringDuration(durationStr: '20:34');
 
           expect(convertedStr, '20:34');
         },
@@ -575,7 +606,7 @@ void main() {
         'dayHourMinuteFormat==false neg H:mm',
         () {
           String convertedStr =
-              Utility.convertIntDuration(durationStr: '-2:34');
+              Utility.formatStringDuration(durationStr: '-2:34');
 
           expect(convertedStr, '2:34');
         },
@@ -584,7 +615,7 @@ void main() {
         'dayHourMinuteFormat==false neg HH:mm',
         () {
           String convertedStr =
-              Utility.convertIntDuration(durationStr: '-20:34');
+              Utility.formatStringDuration(durationStr: '-20:34');
 
           expect(convertedStr, '20:34');
         },
@@ -592,7 +623,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos int < 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '2', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:02:00');
@@ -601,7 +632,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true neg int < 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '-2', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:02:00');
@@ -610,7 +641,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos int > 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '20', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:20:00');
@@ -619,7 +650,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true neg int > 10',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '-20', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:20:00');
@@ -628,7 +659,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos int 0',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '0', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:00:00');
@@ -637,7 +668,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true neg int -0',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '-0', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:00:00');
@@ -646,7 +677,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '2:34', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:02:34');
@@ -655,16 +686,34 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos HH:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '20:34', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:20:34');
         },
       );
       test(
+        'dayHourMinuteFormat==true pos d:HH:mm',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '5:20:34', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '05:20:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==true pos dd:HH:mm',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '35:20:34', dayHourMinuteFormat: true);
+
+          expect(convertedStr, '35:20:34');
+        },
+      );
+      test(
         'dayHourMinuteFormat==true pos 0H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '02:34',
             removeMinusSign: false,
             dayHourMinuteFormat: true,
@@ -676,7 +725,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos 00:0H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '00:02:34',
             removeMinusSign: false,
             dayHourMinuteFormat: true,
@@ -688,7 +737,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true neg H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '-2:34', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:02:34');
@@ -697,7 +746,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true neg HH:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
               durationStr: '-20:34', dayHourMinuteFormat: true);
 
           expect(convertedStr, '00:20:34');
@@ -706,7 +755,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos -0H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-02:34',
             removeMinusSign: false,
             dayHourMinuteFormat: true,
@@ -718,7 +767,7 @@ void main() {
       test(
         'dayHourMinuteFormat==true pos 00:0H:mm',
         () {
-          String convertedStr = Utility.convertIntDuration(
+          String convertedStr = Utility.formatStringDuration(
             durationStr: '-00:02:34',
             removeMinusSign: false,
             dayHourMinuteFormat: true,

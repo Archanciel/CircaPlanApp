@@ -689,7 +689,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     BuildContext context,
     String durationStr,
   ) {
-    durationStr = Utility.convertIntDuration(
+    durationStr = Utility.formatStringDuration(
       durationStr: durationStr,
       removeMinusSign: false,
     );

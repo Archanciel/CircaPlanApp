@@ -282,7 +282,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       /// of the duration TextField.
       BuildContext context,
       String dialogTimeStr) {
-    dialogTimeStr = Utility.convertIntDuration(
+    dialogTimeStr = Utility.formatStringDuration(
       durationStr: dialogTimeStr,
       removeMinusSign: false,
     );
@@ -340,14 +340,16 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   }
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
-    DateTime selectedDateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
+    DateTime selectedDateTime =
+        ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);
   }
 
   void _handleSelectedEndDateTimeStr(String selectedDateTimeStr) {
-    DateTime selectedDateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
+    DateTime selectedDateTime =
+        ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _endDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);
