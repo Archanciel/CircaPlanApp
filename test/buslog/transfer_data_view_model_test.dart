@@ -48,7 +48,7 @@ void main() {
             "thirdEndDateTimeStr": "12-07-2022 16:00",
           };
 
-          String path = kCircadianAppDataDir_test;
+          String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -114,7 +114,7 @@ void main() {
             ],
           };
 
-          String path = kCircadianAppDataDir_test;
+          String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -174,7 +174,7 @@ void main() {
             "dtDurationTotalPercentStr": "90 %",
           };
 
-          String path = kCircadianAppDataDir_test;
+          String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -228,7 +228,7 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
-          String path = kCircadianAppDataDir_test;
+          String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -321,7 +321,7 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
-          String path = kCircadianAppDataDir_test;
+          String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 
@@ -489,7 +489,7 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
-          String path = kCircadianAppDataDir_test;
+          String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
 

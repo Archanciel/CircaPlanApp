@@ -14,7 +14,7 @@ Future<void> main() async {
   final Finder previousMonthIcon = find.byWidgetPredicate((Widget w) =>
       w is IconButton && (w.tooltip?.startsWith('Previous month') ?? false));
 
-  String path = kCircadianAppDataDir_test;
+  String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -116,7 +116,7 @@ Future<void> main() async {
           // await tester.pumpAndSettle();
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
           await tester.pump(kDoubleTapTimeout); // required to avoid
-          //  GestureDetector.onDoubleTap: to be applied instead of 
+          //  GestureDetector.onDoubleTap: to be applied instead of
           //  TextField onTap: !
           await tester.tap(find.text('14')); // set day
           await tester.tap(find.text('OK'));
@@ -156,7 +156,7 @@ Future<void> main() async {
 
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
           await tester.pump(kDoubleTapTimeout); // required to avoid
-          //  GestureDetector.onDoubleTap: to be applied instead of 
+          //  GestureDetector.onDoubleTap: to be applied instead of
           //  TextField onTap: !
           await tester.tap(previousMonthIcon);
           await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -199,7 +199,7 @@ Future<void> main() async {
 
           await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
           await tester.pump(kDoubleTapTimeout); // required to avoid
-          //  GestureDetector.onDoubleTap: to be applied instead of 
+          //  GestureDetector.onDoubleTap: to be applied instead of
           //  TextField onTap: !
           await tester.tap(nextMonthIcon);
           await tester.pumpAndSettle(const Duration(seconds: 1));

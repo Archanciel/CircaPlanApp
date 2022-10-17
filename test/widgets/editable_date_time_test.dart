@@ -9,7 +9,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 Future<void> main() async {
-  String path = kCircadianAppDataDir_test;
+  String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -85,7 +85,8 @@ Future<void> main() async {
           await tester.tap(edtNowButton);
           await tester.pumpAndSettle();
 
-          String nowStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+          String nowStr =
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
           TextField text =
               tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           expect(text.controller!.text, nowStr);

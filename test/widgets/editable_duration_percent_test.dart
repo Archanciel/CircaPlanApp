@@ -7,7 +7,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_duration_percent.dart';
 
 Future<void> main() async {
-  String path = kCircadianAppDataDir_test;
+  String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -36,7 +36,8 @@ Future<void> main() async {
       testWidgets(
         'Clicking on Del button',
         (tester) async {
-          final Finder edpDelButtonFinder = find.byKey(const Key('edpDelButton'));
+          final Finder edpDelButtonFinder =
+              find.byKey(const Key('edpDelButton'));
           final Finder edpDurationPercentComputedValueTextFieldFinder =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
           final Finder edpDurationPercentTextFieldFinder =
@@ -64,8 +65,8 @@ Future<void> main() async {
 
           await tester.pumpAndSettle();
 
-          TextField durationPercentComputedValueTextField =
-              tester.firstWidget(edpDurationPercentComputedValueTextFieldFinder);
+          TextField durationPercentComputedValueTextField = tester
+              .firstWidget(edpDurationPercentComputedValueTextFieldFinder);
           TextEditingController
               durationPercentComputedValueTextFieldController =
               durationPercentComputedValueTextField.controller!;

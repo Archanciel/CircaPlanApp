@@ -11,7 +11,7 @@ import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 /// specifically handling integer duration setting in place of
 /// defining HH:mm durations.
 Future<void> main() async {
-  String path = kCircadianAppDataDir_test;
+  String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -220,7 +220,7 @@ Future<void> main() async {
               DurationDateTimeEditor.durationNegativeColor);
         },
       );
-        testWidgets(
+      testWidgets(
         'Adding valid duration',
         (tester) async {
           final Finder durationTextFieldFinder =
@@ -314,8 +314,9 @@ Future<void> main() async {
               DurationDateTimeEditor.durationNegativeColor);
         },
       );
-  },
+    },
   );
+
   /// This test group validate duration icon and color bug fix
   group(
     'DurationDateTimeEditor adding multiple int durations',
@@ -414,9 +415,9 @@ Future<void> main() async {
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationPositiveColor);
- 
+
           // Typing again on now positive duration sign button
-          
+
           await tester.tap(durationSignButtonFinder);
           await tester.pumpAndSettle();
 
@@ -433,7 +434,7 @@ Future<void> main() async {
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationNegativeColor);
-       },
+        },
       );
       testWidgets(
         'Negative then positive duration',
@@ -529,9 +530,9 @@ Future<void> main() async {
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationNegativeColor);
- 
+
           // Typing again on now negative duration sign button
-          
+
           await tester.tap(durationSignButtonFinder);
           await tester.pumpAndSettle();
 
@@ -548,7 +549,7 @@ Future<void> main() async {
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationPositiveColor);
-       },
+        },
       );
     },
   );

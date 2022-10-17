@@ -11,7 +11,7 @@ class TestClassWithScreenMixin with ScreenMixin {}
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool mustAppDirBeDeleted = false,
 }) async {
-  String path = kCircadianAppDataDir_test;
+  String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 

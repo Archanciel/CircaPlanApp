@@ -11,7 +11,7 @@ import 'package:circa_plan/screens/time_calculator.dart';
 /// specifically handling integer duration setting in place of
 /// defining HH:mm durations.
 Future<void> main() async {
-  String path = kCircadianAppDataDir_test;
+  String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -26,9 +26,8 @@ Future<void> main() async {
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
-    final ScreenNavigTransData screenNavigTransData =
+  final ScreenNavigTransData screenNavigTransData =
       ScreenNavigTransData(transferDataMap: transferDataMap);
-
 
   const IconData positiveDurationIcon = Icons.add;
   const IconData negativeDurationIcon = Icons.remove;
@@ -85,8 +84,7 @@ Future<void> main() async {
           await tester.tap(divButtonFinder);
           await tester.pumpAndSettle();
 
-          TextField resultTextField =
-              tester.firstWidget(resultTextFieldFinder);
+          TextField resultTextField = tester.firstWidget(resultTextFieldFinder);
           TextEditingController resultTextFieldController =
               resultTextField.controller!;
           expect(resultTextFieldController.text, '50.00 %');
@@ -141,8 +139,7 @@ Future<void> main() async {
           await tester.tap(divButtonFinder);
           await tester.pumpAndSettle();
 
-          TextField resultTextField =
-              tester.firstWidget(resultTextFieldFinder);
+          TextField resultTextField = tester.firstWidget(resultTextFieldFinder);
           TextEditingController resultTextFieldController =
               resultTextField.controller!;
           expect(resultTextFieldController.text, '50.00 %');
