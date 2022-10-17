@@ -30,6 +30,9 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
   final bool saveTransferDataIfModified; // is true only for last widget
 
+  /// saveTransferDataIfModified is set to true only for
+  /// the last DurationDateTimeEditor widget in order to
+  /// avoid unuseful transfer data saving's.
   DurationDateTimeEditor({
     Key? key,
     required String widgetName,
@@ -79,6 +82,10 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     return stateInstance;
   }
 
+  set saveTransferDataIfModified(bool doSave) {
+    stateInstance.saveTransferDataIfModified = doSave;
+  }
+
   /// Calls the _AddSubtractResultableDurationState.reset() method.
   void reset() {
     stateInstance.reset();
@@ -107,7 +114,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   String _startDateTimeStr;
   String _endDateTimeStr;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
-  final bool _saveTransferDataIfModified; // is true only for last widget
+  bool saveTransferDataIfModified; // is true only for last widget
 
   final TextEditingController _durationTextFieldController =
       TextEditingController();
@@ -137,7 +144,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         _endDateTimeStr = transferDataMap['${widgetName}EndDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
-        _saveTransferDataIfModified = saveTransferDataIfModified;
+        saveTransferDataIfModified = saveTransferDataIfModified;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data to be
@@ -385,7 +392,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     setState(() {});
 
-    if (_saveTransferDataIfModified) {
+    if (saveTransferDataIfModified) {
       // is true only for last widget in order to avoid unuseful
       // multiple transfer data saving.
       widget.transferDataViewModel.updateAndSaveTransferData();

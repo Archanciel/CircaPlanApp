@@ -220,8 +220,24 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       durationStrLst.add(m[0]!);
     }
 
+    // temporarily setting last DurationDateTimeEditor widget
+    // saveTransferDataIfModified to false avoids saving transfer
+    // data multiple times since setting the duration of a
+    // DurationDateTimeEditor causes the start date time of its
+    // next DurationDateTimeEditor, and so finaly the last one, to
+    // be updated. Saving transfer data multiple times trevents
+    // Undoing the application of the selected durations item.
+    _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = false;
+
     _firstDurationDateTimeEditorWidget.setDuration(durationStrLst[0]);
     _secondDurationDateTimeEditorWidget.setDuration(durationStrLst[1]);
+
+    // restoring the last DurationDateTimeEditor widget
+    // saveTransferDataIfModified to true is necessary to enable
+    // the last DurationDateTimeEditor duration field to be updated
+    // as well as saved, making Undo effective.
+    _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = true;
+
     _thirdDurationDateTimeEditorWidget.setDuration(durationStrLst[2]);
   }
 
