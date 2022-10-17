@@ -1,3 +1,5 @@
+// ignore_for_file: no_logic_in_create_state
+
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 
@@ -82,6 +84,14 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     return stateInstance;
   }
 
+  /// This setter enables to temporarily set the last
+  /// DurationDateTimeEditor widget saveTransferDataIfModified
+  /// value to false. This avoids saving transfer
+  /// data multiple times since setting the duration of a
+  /// DurationDateTimeEditor causes the start date time of its
+  /// next DurationDateTimeEditor, and so finaly the last one, to
+  /// be updated. Saving transfer data multiple times trevents
+  /// Undoing the application of the selected durations item.
   set saveTransferDataIfModified(bool doSave) {
     stateInstance.saveTransferDataIfModified = doSave;
   }
