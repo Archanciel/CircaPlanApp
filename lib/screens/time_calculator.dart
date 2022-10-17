@@ -488,7 +488,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     height: kVerticalFieldDistance,
                   ),
                   Text(
-                    'Time (dd:hh:mm|%)',
+                    'Time (dd:hh:mm | %)',
                     style: labelTextStyle,
                   ),
                   Container(
