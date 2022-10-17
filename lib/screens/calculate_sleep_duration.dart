@@ -111,6 +111,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _prevDayTotalController;
   late TextEditingController _prevDayEmptyTotalController;
 
+  final _textfieldFocusNode = new FocusNode();
+
   String _buildSleepWakeUpHistoryStr() {
     List<String>? sleepTimeHistoryLst =
         _transferDataMap['calcSlDurSleepTimeStrHistory'];
@@ -974,15 +976,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         ),
                       ),
                       child: GestureDetector(
-                        child: TextField(
-                          maxLines: null, // must be set, otherwise multi lines
-                          //                                         not displayed
-                          style: valueTextStyle,
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          controller: _sleepWakeUpHistoryController,
-                          readOnly: true,
-                        ),
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          FocusScope.of(context)
+                              .requestFocus(_textfieldFocusNode);
+                        },
                         onDoubleTap: () async {
                           await copyToClipboardHHmmExtractedFromHistoryDuration(
                               context: context,
@@ -990,6 +988,22 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           _transferDataMap['clipboardLastAction'] =
                               ClipboardLastAction.copy;
                         },
+                        onLongPress: () {
+                          print(_sleepWakeUpHistoryController.selection);
+                        },
+                        child: IgnorePointer(
+                          child: TextField(
+                            focusNode: _textfieldFocusNode,
+                            maxLines:
+                                null, // must be set, otherwise multi lines
+                            //                                         not displayed
+                            style: valueTextStyle,
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            controller: _sleepWakeUpHistoryController,
+                            // readOnly: true,
+                          ),
+                        ),
                       ),
                     ),
                   ),
