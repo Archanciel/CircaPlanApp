@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
@@ -464,15 +463,19 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                         onDoubleTap: () async {
                           await handleClipboardDataEditableDuration(
-                              context: context,
-                              textEditingController:
-                                  _firstTimeTextFieldController,
-                              transferDataMap: _transferDataMap,
-                              handleDataChangeFunction:
-                                  (BuildContext c, String s) {
-                                print(s);
-                                _firstTimeTextFieldController.text = '00:$s';
-                              });
+                            context: context,
+                            textEditingController:
+                                _firstTimeTextFieldController,
+                            transferDataMap: _transferDataMap,
+                            handleDataChangeFunction:
+                                (BuildContext c, String s) {
+                              _firstTimeTextFieldController.text =
+                                  Utility.formatStringDuration(
+                                durationStr: s,
+                                dayHourMinuteFormat: true,
+                              );
+                            },
+                          );
                         },
                       ),
                     ),
@@ -520,12 +523,19 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                         onDoubleTap: () async {
                           await handleClipboardDataEditableDuration(
-                              context: context,
-                              textEditingController:
-                                  _secondTimeTextFieldController,
-                              transferDataMap: _transferDataMap,
-                              handleDataChangeFunction:
-                                  (BuildContext c, String s) {});
+                            context: context,
+                            textEditingController:
+                                _secondTimeTextFieldController,
+                            transferDataMap: _transferDataMap,
+                            handleDataChangeFunction:
+                                (BuildContext c, String s) {
+                              _secondTimeTextFieldController.text =
+                                  Utility.formatStringDuration(
+                                durationStr: s,
+                                dayHourMinuteFormat: true,
+                              );
+                            },
+                          );
                         },
                       ),
                     ),
