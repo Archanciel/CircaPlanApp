@@ -263,8 +263,6 @@ class Utility {
       rightIdx = dataStr.lastIndexOf(RegExp(r'\d')) + 1;
     }
 
-    print('$leftIdx, $rightIdx');
-
     extractedHHmmStr = dataStr.substring(leftIdx, rightIdx);
 
     if (extractedHHmmStr.contains(RegExp(r'\D'))) {
