@@ -840,6 +840,17 @@ void main() {
         },
       );
       test(
+        'Sleep date time at pos 0',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 0,
+          );
+
+          expect(extractedHHmm, '12:17');
+        },
+      );
+      test(
         'Sleep date time at pos 3',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
@@ -892,28 +903,6 @@ void main() {
           'Sleep 11-10 12:17: 6:12, 23:00\nWake 11-10 18:29: 0:30, 10:20';
 
       test(
-        'first HH:mm, pos 20',
-        () {
-          String extractedHHmm = Utility.extractHHmmAtPosition(
-            dataStr: histoStr,
-            pos: 20,
-          );
-
-          expect(extractedHHmm, '6:12');
-        },
-      );
-      test(
-        'first HH:mm, pos 22',
-        () {
-          String extractedHHmm = Utility.extractHHmmAtPosition(
-            dataStr: histoStr,
-            pos: 22,
-          );
-
-          expect(extractedHHmm, '6:12');
-        },
-      );
-      test(
         'last HH:mm, pos 59',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
@@ -944,39 +933,6 @@ void main() {
           );
 
           expect(extractedHHmm, '');
-        },
-      );
-      test(
-        'Sleep date time at pos 3',
-        () {
-          String extractedHHmm = Utility.extractHHmmAtPosition(
-            dataStr: histoStr,
-            pos: 3,
-          );
-
-          expect(extractedHHmm, '12:17');
-        },
-      );
-      test(
-        'Sleep date time at pos 0',
-        () {
-          String extractedHHmm = Utility.extractHHmmAtPosition(
-            dataStr: histoStr,
-            pos: 0,
-          );
-
-          expect(extractedHHmm, '12:17');
-        },
-      );
-      test(
-        'Sleep date time at pos 13',
-        () {
-          String extractedHHmm = Utility.extractHHmmAtPosition(
-            dataStr: histoStr,
-            pos: 13,
-          );
-
-          expect(extractedHHmm, '12:17');
         },
       );
       test(
