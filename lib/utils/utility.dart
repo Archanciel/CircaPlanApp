@@ -233,30 +233,103 @@ class Utility {
     return durationStr;
   }
 
+  // static String extractHHmmAtPosition({
+  //   required String dataStr,
+  //   required int selStartPosition,
+  //   required int selEndPosition,
+  // }) {
+  //   if (selStartPosition > dataStr.length) {
+  //     return '';
+  //   }
+
+  //   if (dataStr.substring(selStartPosition - 1, selStartPosition) == '\n') {
+  //     // the case if 'Wake' is selected, which is after \n !
+  //     selStartPosition = selEndPosition + 1;
+  //   }
+
+  //   String extractedHHmmStr;
+
+  //   int leftIdx = dataStr.substring(0, selStartPosition).lastIndexOf(' ');
+
+  //   if (leftIdx == -1) {
+  //     // the case if the position is on the last HH:mm value
+  //     leftIdx = 0;
+  //   }
+
+  //   int rightIdx = dataStr.indexOf(',', selStartPosition);
+
+  //   if (rightIdx == -1) {
+  //     // the case if the position is on the last HH:mm value
+  //     rightIdx = dataStr.lastIndexOf(RegExp(r'\d')) + 1;
+  //   }
+
+  //   extractedHHmmStr = dataStr.substring(leftIdx, rightIdx);
+
+  //   if (extractedHHmmStr.contains(RegExp(r'\D'))) {
+  //     RegExpMatch? match = RegExp(r'\d+:\d+').firstMatch(extractedHHmmStr);
+
+  //     if (match != null) {
+  //       extractedHHmmStr = match.group(0) ?? '';
+  //     }
+  //   }
+
+  //   return extractedHHmmStr;
+  // }
+
+  static String extractHHmmAtPositionSimplified({
+    required String dataStr,
+    required int pos,
+  }) {
+    int dataStrLength = dataStr.length;
+    int endIdx = 0;
+    int endIdxLineEnd =
+        dataStr.substring(0, dataStrLength).indexOf(RegExp(r'[\n]'));
+    if (pos <= endIdxLineEnd) {
+      // the case if clicking on first line
+      int endIdxComma =
+          dataStr.substring(pos, dataStrLength).indexOf(RegExp(r'[,]')) + pos;
+      endIdx = (endIdxLineEnd < endIdxComma) ? endIdxLineEnd : endIdxComma;
+    } else {
+      // the case if clicking on second line
+      int endIdxComma =
+          dataStr.substring(pos, dataStrLength).indexOf(RegExp(r'[,]')) + pos;
+      endIdx = (endIdxComma <= dataStrLength - 5) ? endIdxComma : dataStrLength;
+    }
+
+    int startIdx = dataStr.substring(0, endIdx).lastIndexOf(' ') + 1;
+
+    String hhMmStr = dataStr.substring(startIdx, endIdx);
+
+    return hhMmStr;
+  }
+
   static String extractHHmmAtPosition({
     required String dataStr,
-    required int selStartPosition,
-    required int selEndPosition,
+    required int pos,
   }) {
-    if (selStartPosition > dataStr.length) {
+    if (pos > dataStr.length) {
       return '';
     }
 
-    if (dataStr.substring(selStartPosition - 1, selStartPosition) == '\n') {
-      // the case if 'Wake' is selected, which is after \n !
-      selStartPosition = selEndPosition + 1;
+    int newLineCharIdx = dataStr.lastIndexOf('\n');
+    int leftIdx;
+
+    if (pos > newLineCharIdx) {
+      // the case if clicking on second line
+      leftIdx = dataStr.substring(newLineCharIdx + 1, pos).lastIndexOf(' ') +
+          newLineCharIdx;
+    } else {
+      leftIdx = dataStr.substring(0, pos).lastIndexOf(' ');
     }
 
     String extractedHHmmStr;
 
-    int leftIdx = dataStr.substring(0, selStartPosition).lastIndexOf(' ');
-
     if (leftIdx == -1) {
-      // the case if the position is on the last HH:mm value
+      // the case if selStartPosition is before the first space position
       leftIdx = 0;
     }
 
-    int rightIdx = dataStr.indexOf(',', selStartPosition);
+    int rightIdx = dataStr.indexOf(',', pos);
 
     if (rightIdx == -1) {
       // the case if the position is on the last HH:mm value

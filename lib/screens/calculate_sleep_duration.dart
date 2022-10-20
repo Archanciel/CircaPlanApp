@@ -1175,8 +1175,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     int selectionEndPosition = controller.selection.end;
     String extractedHHmm = Utility.extractHHmmAtPosition(
       dataStr: historyStr,
-      selStartPosition: selectionStartPosition,
-      selEndPosition: selectionEndPosition,
+      pos: selectionStartPosition,
     );
 
     await Clipboard.setData(ClipboardData(text: extractedHHmm));
