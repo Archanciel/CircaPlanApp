@@ -990,13 +990,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 ClipboardLastAction.copy;
                           },
                         ),
-                        // onDoubleTap: () async {
+                        onDoubleTap: () async {
+                          // empty anonymous function disables double tap selection
                         //   await copyToClipboardHHmmExtractedFromHistoryDuration(
                         //       context: context,
                         //       controller: _sleepWakeUpHistoryController);
                         //   _transferDataMap['clipboardLastAction'] =
                         //       ClipboardLastAction.copy;
-                        // },
+                        },
                       ),
                     ),
                   ),
