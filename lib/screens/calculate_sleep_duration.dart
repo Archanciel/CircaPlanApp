@@ -982,14 +982,21 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               const InputDecoration.collapsed(hintText: ''),
                           controller: _sleepWakeUpHistoryController,
                           readOnly: true,
+                          onTap: () async {
+                            await copyToClipboardHHmmExtractedFromHistoryDuration(
+                                context: context,
+                                controller: _sleepWakeUpHistoryController);
+                            _transferDataMap['clipboardLastAction'] =
+                                ClipboardLastAction.copy;
+                          },
                         ),
-                        onDoubleTap: () async {
-                          await copyToClipboardHHmmExtractedFromHistoryDuration(
-                              context: context,
-                              controller: _sleepWakeUpHistoryController);
-                          _transferDataMap['clipboardLastAction'] =
-                              ClipboardLastAction.copy;
-                        },
+                        // onDoubleTap: () async {
+                        //   await copyToClipboardHHmmExtractedFromHistoryDuration(
+                        //       context: context,
+                        //       controller: _sleepWakeUpHistoryController);
+                        //   _transferDataMap['clipboardLastAction'] =
+                        //       ClipboardLastAction.copy;
+                        // },
                       ),
                     ),
                   ),
