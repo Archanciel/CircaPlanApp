@@ -86,7 +86,14 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _resultDurationController);
-                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                      _transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
+                    },
+                    onLongPress: () {
+                      _resultDurationController.selection = const TextSelection(
+                        baseOffset: -1,
+                        extentOffset: -1,
+                      );
                     },
                   ),
                 ),
@@ -114,7 +121,15 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _resultDurationPercentController);
-                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                      _transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
+                    },
+                    onLongPress: () {
+                      _resultDurationPercentController.selection =
+                          const TextSelection(
+                        baseOffset: -1,
+                        extentOffset: -1,
+                      );
                     },
                   ),
                 ),
@@ -145,7 +160,15 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _prevDayTotalPercentController);
-                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                      _transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
+                    },
+                    onLongPress: () {
+                      _prevDayTotalPercentController.selection =
+                          const TextSelection(
+                        baseOffset: -1,
+                        extentOffset: -1,
+                      );
                     },
                   ),
                 ),
@@ -173,6 +196,12 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                       await copyToClipboard(
                           context: context,
                           controller: _prevDayTotalController);
+                    },
+                    onLongPress: () {
+                      _prevDayTotalController.selection = const TextSelection(
+                        baseOffset: -1,
+                        extentOffset: -1,
+                      );
                     },
                   ),
                 ),
