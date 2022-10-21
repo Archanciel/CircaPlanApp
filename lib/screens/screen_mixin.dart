@@ -288,8 +288,9 @@ mixin ScreenMixin {
       {required BuildContext context,
       required TextEditingController controller,
       bool extractHHmmFromCopiedStr = false}) async {
-    controller.selection = TextSelection(
-        baseOffset: 0, extentOffset: controller.value.text.length);
+    // avoiding selecting the value copied to clipboard !
+    // controller.selection = TextSelection(
+    //     baseOffset: 0, extentOffset: controller.value.text.length);
 
     String selectedText = controller.text;
 
