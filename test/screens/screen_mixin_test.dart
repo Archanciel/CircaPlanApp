@@ -48,35 +48,34 @@ Future<void> main() async {
   final TransferDataViewModel transferDataViewModel =
       await instanciateTransferDataViewModel();
 
+  final Map<String, dynamic> transferDataMapRegular = {};
+
+  transferDataMapRegular['calcSlDurNewDateTimeStr'] = '01-06-2022 23:42';
+  transferDataMapRegular['calcSlDurLastWakeUpTimeStr'] = '02-06-2022 02:42';
+  transferDataMapRegular['calcSlDurPreviousDateTimeStr'] = '03-06-2022 03:42';
+  transferDataMapRegular['calcSlDurBeforePreviousDateTimeStr'] =
+      '02-06-2022 02:42';
+  transferDataMapRegular['calcSlDurCurrSleepDurationStr'] = '04:00';
+  transferDataMapRegular['calcSlDurCurrWakeUpDurationStr'] = '00:48';
+  transferDataMapRegular['calcSlDurCurrTotalDurationStr'] = '04:48';
+  transferDataMapRegular['calcSlDurSleepTimeStrHistory'] = [
+    '01-06-2022 23:12',
+    '06:00',
+  ];
+  transferDataMapRegular['calcSlDurWakeUpTimeStrHistory'] = [
+    '02-06-2022 02:22',
+    '04:00',
+  ];
+  transferDataMapRegular['addDurStartDateTimeStr'] = '03-06-2022 03:42';
+
+  transferDataMapRegular['firstTimeStr'] = '00:03:45';
+  transferDataMapRegular['secondTimeStr'] = '00:00:45';
+  transferDataMapRegular['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
+  transferDataMapRegular['dtDiffDurationStr'] = '02:53';
+
   group(
-    'Test ScreenMixin',
+    'Test ScreenMixin.buildSortedAppDateTimeStrList',
     () {
-      final Map<String, dynamic> transferDataMapRegular = {};
-
-      transferDataMapRegular['calcSlDurNewDateTimeStr'] = '01-06-2022 23:42';
-      transferDataMapRegular['calcSlDurLastWakeUpTimeStr'] = '02-06-2022 02:42';
-      transferDataMapRegular['calcSlDurPreviousDateTimeStr'] =
-          '03-06-2022 03:42';
-      transferDataMapRegular['calcSlDurBeforePreviousDateTimeStr'] =
-          '02-06-2022 02:42';
-      transferDataMapRegular['calcSlDurCurrSleepDurationStr'] = '04:00';
-      transferDataMapRegular['calcSlDurCurrWakeUpDurationStr'] = '00:48';
-      transferDataMapRegular['calcSlDurCurrTotalDurationStr'] = '04:48';
-      transferDataMapRegular['calcSlDurSleepTimeStrHistory'] = [
-        '01-06-2022 23:12',
-        '06:00',
-      ];
-      transferDataMapRegular['calcSlDurWakeUpTimeStrHistory'] = [
-        '02-06-2022 02:22',
-        '04:00',
-      ];
-      transferDataMapRegular['addDurStartDateTimeStr'] = '03-06-2022 03:42';
-
-      transferDataMapRegular['firstTimeStr'] = '00:03:45';
-      transferDataMapRegular['secondTimeStr'] = '00:00:45';
-      transferDataMapRegular['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
-      transferDataMapRegular['dtDiffDurationStr'] = '02:53';
-
       test(
         'buildSortedAppDateTimeStrList several and double date time str most late first',
         () {
