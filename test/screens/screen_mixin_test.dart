@@ -77,7 +77,7 @@ Future<void> main() async {
     'Test ScreenMixin.buildSortedAppDateTimeStrList',
     () {
       test(
-        'buildSortedAppDateTimeStrList several and double date time str most late first',
+        'several and double date time str most late first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -99,7 +99,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList several and double date time str most recent first',
+        'several and double date time str most recent first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -135,7 +135,7 @@ Future<void> main() async {
       ];
 
       test(
-        'buildSortedAppDateTimeStrList no date time str most late first',
+        'no date time str most late first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -150,7 +150,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList no date time str most recent first',
+        'no date time str most recent first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -167,7 +167,7 @@ Future<void> main() async {
       final Map<String, dynamic> transferDataMapEmpty = {};
 
       test(
-        'buildSortedAppDateTimeStrList map empty most late first',
+        'map empty most late first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -182,7 +182,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList map empty most recent first',
+        'map empty most recent first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -202,7 +202,7 @@ Future<void> main() async {
           '01-06-2022 23:42';
 
       test(
-        'buildSortedAppDateTimeStrList one date time str most late first',
+        'one date time str most late first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -219,7 +219,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList one date time str most recent first',
+        'one date time str most recent first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -278,7 +278,7 @@ Future<void> main() async {
           '04-06-2022 06-22';
 
       test(
-        'buildSortedAppDateTimeStrList several and double date time str most late first',
+        'several and double date time str most late first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -297,7 +297,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList several and double date time str most recent first',
+        'several and double date time str most recent first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -327,7 +327,7 @@ Future<void> main() async {
           '2022-06-10 00:30';
 
       test(
-        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most late first',
+        'english (DateTimePicker field) and french format date time str most late first',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -347,7 +347,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first. App dir contains no yyyy-MM.dd HH.mm.json file.',
+        'english (DateTimePicker field) and french format date time str most recent first. App dir contains no yyyy-MM.dd HH.mm.json file.',
         () {
           List<String> actualDateTimeStrLst =
               testClassWithSreenMixin.buildSortedAppDateTimeStrList(
@@ -367,7 +367,7 @@ Future<void> main() async {
       );
 
       test(
-        'buildSortedAppDateTimeStrList english (DateTimePicker field) and french format date time str most recent first. App dir contains 1 yyyy-MM.dd HH.mm.json file.',
+        'english (DateTimePicker field) and french format date time str most recent first. App dir contains 1 yyyy-MM.dd HH.mm.json file.',
         () {
           Utility.renameFile(
               filePathNameStr:
@@ -411,11 +411,32 @@ Future<void> main() async {
         '14-2-22 3:u5',
         '14-2-22 3:5',
       ];
-
+    },
+  );
+  group(
+    'Test ScreenMixin.isDateTimeStrValid',
+    () {
       test(
-        'isDateTimeStrValid french format date time str',
+        'french format date time str',
         () {
           List<bool> actualValidationResultLst = [];
+
+          const List<String> dateTimeFrenchYYYYStrLst = [
+            '14-12-2022 13:35',
+            '4-2-2022 3:05',
+            '04-02-2022 03:05',
+            '4-2-2022 3:00',
+            '4-2-2022 3:0',
+            'a4-2-2022 3:05',
+            '14-2-2022 3:u5',
+            '14-2-2022 3:5',
+            '14/2/2022 3:50',
+            '14-2-2022 3-50',
+            '4-2-22 3:05',
+            'a4-2-22 3:05',
+            '14-2-22 3:u5',
+            '14-2-22 3:5',
+          ];
 
           for (String str in dateTimeFrenchYYYYStrLst) {
             actualValidationResultLst
@@ -460,7 +481,7 @@ Future<void> main() async {
       ];
 
       test(
-        'isDateTimeStrValid english format date time str',
+        'english format date time str',
         () {
           List<bool> actualValidationResultLst = [];
 
