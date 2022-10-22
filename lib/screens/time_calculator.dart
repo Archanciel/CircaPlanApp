@@ -578,12 +578,13 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         readOnly: true,
                       ),
                       onDoubleTap: () async {
-                        await handleClipboardDataEditableDuration(
-                            context: context,
-                            textEditingController: _resultTextFieldController,
-                            transferDataMap: _transferDataMap,
-                            handleDataChangeFunction:
-                                (BuildContext c, String s) {});
+                        await copyToClipboard(
+                          context: context,
+                          controller: _resultTextFieldController,
+                          extractHHmmFromCopiedStr: true,
+                        );
+                        _transferDataMap['clipboardLastAction'] =
+                            ClipboardLastAction.copy;
                       },
                     ),
                   ),
