@@ -310,7 +310,7 @@ mixin ScreenMixin {
       }
     }
 
-    await Clipboard.setData(ClipboardData(text: selectedText));
+    // await Clipboard.setData(ClipboardData(text: selectedText));
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedText copied to clipboard');

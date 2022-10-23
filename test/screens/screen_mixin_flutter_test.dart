@@ -519,7 +519,7 @@ Future<void> main() async {
       TextEditingController textFieldController = TextEditingController();
 
       testWidgets(
-        'Greatest divided by smallest',
+        'extractHHmmFromCopiedStr = false',
         (tester) async {
           const String percentValue = '91.07';
           textFieldController.text = '$percentValue %';
@@ -553,11 +553,18 @@ Future<void> main() async {
 
           await tester.tap(find.byKey(tapTarget));
           await tester.pump(kDoubleTapTimeout); // schedule animation
-          expect(find.text(percentValue), findsOneWidget);
+          expect(find.text('$percentValue copied to clipboard'), findsOneWidget);
         },
       );
     },
   );
 }
 
-class WithScreenMixin with ScreenMixin {}
+class WithScreenMixin extends StatelessWidget with ScreenMixin {
+  WithScreenMixin({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
