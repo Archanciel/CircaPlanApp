@@ -581,7 +581,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         await copyToClipboard(
                           context: context,
                           controller: _resultTextFieldController,
-                          extractHHmmFromCopiedStr: true,
                         );
                         _transferDataMap['clipboardLastAction'] =
                             ClipboardLastAction.copy;
