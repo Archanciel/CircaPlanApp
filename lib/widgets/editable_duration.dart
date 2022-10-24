@@ -95,6 +95,10 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       ),
                     ),
                     child: GestureDetector(
+                      // intercept all pointer calls. Required, otherwise
+                      // GestureDetector.onTap:, onDoubleTap:, onLongPress:
+                      // not applied
+                      behavior: HitTestBehavior.opaque,
                       child: IgnorePointer(
                         // required for onLongPress selection to work
                         // Prevents displaying copy menu after selecting in TextField
@@ -109,9 +113,17 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                           controller: _durationTextFieldController,
-                          // readOnly: true,
+                          readOnly: true,
                         ),
                       ),
+                      onTap: () {
+                        // required, otherwise, field not focusable
+                        FocusScope.of(context).requestFocus(
+                          _durationTextfieldFocusNode,
+                        );
+                        _durationTextFieldController.selection =
+                            const TextSelection(baseOffset: 0, extentOffset: 0);
+                      },
                       onDoubleTap: () async {
                         // required, otherwise, field not focusable
                         FocusScope.of(context).requestFocus(
