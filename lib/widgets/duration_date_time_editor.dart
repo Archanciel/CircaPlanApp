@@ -130,7 +130,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       TextEditingController();
   final TextEditingController _dateTimePickerController =
       TextEditingController();
-  final _textfieldFocusNode = FocusNode();
+  final _durationTextfieldFocusNode = FocusNode();
 
   _DurationDateTimeEditorState({
     required String widgetName,
@@ -478,7 +478,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                       key: const Key('durationTextField'),
                       // Required, otherwise, field not focusable due to
                       // IgnorePointer wrapping
-                      focusNode: _textfieldFocusNode,
+                      focusNode: _durationTextfieldFocusNode,
                       decoration: const InputDecoration.collapsed(hintText: ''),
                       style: TextStyle(
                           color: _durationTextColor,
@@ -496,10 +496,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                   onTap: () {
                     // Required, otherwise, duration field not focusable
                     FocusScope.of(context).requestFocus(
-                      _textfieldFocusNode,
+                      _durationTextfieldFocusNode,
                     );
                     _durationTextFieldController.selection =
-                        TextSelection(baseOffset: 0, extentOffset: 0);
+                        const TextSelection(baseOffset: 0, extentOffset: 0);
                   },
                   onDoubleTap: () async {
                     await widget.handleClipboardDataDurationDateTimeEditor(
