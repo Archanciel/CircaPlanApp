@@ -94,13 +94,14 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       ),
                     ),
                     child: GestureDetector(
-                      // intercept all pointer calls. Required, otherwise
-                      // GestureDetector.onTap:, onDoubleTap:, onLongPress:
-                      // not applied
+                      // HitTestBehavior intercepts all pointer calls. Required,
+                      // otherwise GestureDetector.onTap:, onDoubleTap:,
+                      // onLongPress: not applied
                       behavior: HitTestBehavior.opaque,
+
+                      // IgnorePointer required to avoid TextField selection and
+                      // copy paste menu on long press
                       child: IgnorePointer(
-                        // required to avoid TextField selection and copy paste
-                        // menu on long press
                         child: TextField(
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
