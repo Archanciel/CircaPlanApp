@@ -130,6 +130,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       TextEditingController();
   final TextEditingController _dateTimePickerController =
       TextEditingController();
+  final _textfieldFocusNode = FocusNode();
 
   _DurationDateTimeEditorState({
     required String widgetName,
@@ -468,27 +469,49 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                   ),
                 ),
                 child: GestureDetector(
-                  child: TextField(
-                    key: const Key('durationTextField'),
-                    decoration: const InputDecoration.collapsed(hintText: ''),
-                    style: TextStyle(
-                        color: _durationTextColor,
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    keyboardType: TextInputType.datetime,
-                    controller: _durationTextFieldController,
-                    onSubmitted: (val) {
-                      // solve the unsolvable problem of onChange()
-                      // which set cursor at TextField start position !
-                      handleDurationChange(durationStr: val);
-                    },
+                  behavior: HitTestBehavior.opaque,
+                  child: IgnorePointer(
+                    // Prevents displaying copèy menu after selecting in
+                    // TextField.
+                    // Required for onLongPress selection to work
+                    child: TextField(
+                      key: const Key('durationTextField'),
+                      // Required, otherwise, field not focusable due to
+                      // IgnorePointer wrapping
+                      focusNode: _textfieldFocusNode,
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      style: TextStyle(
+                          color: _durationTextColor,
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                      keyboardType: TextInputType.datetime,
+                      controller: _durationTextFieldController,
+                      onSubmitted: (val) {
+                        // solve the unsolvable problem of onChange()
+                        // which set cursor at TextField start position !
+                        handleDurationChange(durationStr: val);
+                      },
+                    ),
                   ),
+                  onTap: () {
+                    // Required, otherwise, duration field not focusable
+                    FocusScope.of(context).requestFocus(
+                      _textfieldFocusNode,
+                    );
+                    _durationTextFieldController.selection =
+                        TextSelection(baseOffset: 0, extentOffset: 0);
+                  },
                   onDoubleTap: () async {
                     await widget.handleClipboardDataDurationDateTimeEditor(
                         context: context,
                         textEditingController: _durationTextFieldController,
                         transferDataMap: widget._transferDataMap,
                         handleDataChangeFunction: handleDurationChange);
+                  },
+                  onLongPress: () {
+                    _durationTextFieldController.selection = TextSelection(
+                        baseOffset: 0,
+                        extentOffset: _durationTextFieldController.text.length);
                   },
                 ),
               ),
