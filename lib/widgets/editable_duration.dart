@@ -15,6 +15,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
       _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
   final Map<String, dynamic> _transferDataMap;
+  final _durationTextfieldFocusNode = FocusNode();
 
   EditableDuration({
     required String dateTimeTitle,
@@ -94,22 +95,37 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       ),
                     ),
                     child: GestureDetector(
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _durationTextFieldController,
-                        readOnly: true,
+                      child: IgnorePointer(
+                        // required for onLongPress selection to work
+                        // Prevents displaying copy menu after selecting in TextField
+                        child: TextField(
+                          // Required, otherwise, field not focusable due to
+                          // IgnorePointer wrapping
+                          focusNode: _durationTextfieldFocusNode,
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: const TextStyle(
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: _durationTextFieldController,
+                          // readOnly: true,
+                        ),
                       ),
                       onDoubleTap: () async {
+                        // required, otherwise, field not focusable
+                        FocusScope.of(context).requestFocus(
+                          _durationTextfieldFocusNode,
+                        );
                         await copyToClipboard(
                             context: context,
                             controller: _durationTextFieldController);
                         _transferDataMap['clipboardLastAction'] =
                             ClipboardLastAction.copy;
+                      },
+                      onLongPress: () {
+                        _durationTextFieldController.selection =
+                            const TextSelection(baseOffset: 0, extentOffset: 0);
                       },
                     ),
                   ),
