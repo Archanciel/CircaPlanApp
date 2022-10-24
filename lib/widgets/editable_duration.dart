@@ -15,7 +15,6 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
       _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
   final Map<String, dynamic> _transferDataMap;
-  final _durationTextfieldFocusNode = FocusNode();
 
   EditableDuration({
     required String dateTimeTitle,
@@ -100,12 +99,9 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       // not applied
                       behavior: HitTestBehavior.opaque,
                       child: IgnorePointer(
-                        // required for onLongPress selection to work
-                        // Prevents displaying copy menu after selecting in TextField
+                        // required to avoid TextField selection and copy paste
+                        // menu on long press
                         child: TextField(
-                          // Required, otherwise, field not focusable due to
-                          // IgnorePointer wrapping
-                          focusNode: _durationTextfieldFocusNode,
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: const TextStyle(
@@ -117,10 +113,6 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                         ),
                       ),
                       onDoubleTap: () async {
-                        // required, otherwise, field not focusable
-                        FocusScope.of(context).requestFocus(
-                          _durationTextfieldFocusNode,
-                        );
                         await copyToClipboard(
                             context: context,
                             controller: _durationTextFieldController);
