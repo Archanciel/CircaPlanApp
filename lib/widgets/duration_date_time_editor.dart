@@ -509,6 +509,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                         handleDataChangeFunction: handleDurationChange);
                   },
                   onLongPress: () {
+                    // Requesting focus avoids necessity to first tap on
+                    // TextField before long pressing on it to select its
+                    // content !
+                    FocusScope.of(context).requestFocus(
+                      _durationTextfieldFocusNode,
+                    );
                     _durationTextFieldController.selection = TextSelection(
                         baseOffset: 0,
                         extentOffset: _durationTextFieldController.text.length);
