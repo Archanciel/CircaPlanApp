@@ -313,130 +313,129 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: ScreenMixin.app_computed_vertical_top_margin),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  EditableDateTime(
-                    dateTimeTitle: 'Start date time',
-                    dateTimePickerController: _startDateTimePickerController,
-                    handleDateTimeModificationFunction:
-                        handleStartDateTimeChange,
-                    transferDataMap: _transferDataMap,
-                    handleSelectedDateTimeStrFunction:
-                        _handleSelectedStartDateTimeStr,
-                    topSelMenuPosition: 135.0,
-                    transferDataViewModel: _transferDataViewModel,
-                  ),
-                  // First duration addition/subtraction
-                  _firstDurationDateTimeEditorWidget,
-                  const SizedBox(
-                    //  necessary since
-                    //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
-                    //                  height ...
-                    height: kVerticalFieldDistanceAddSubScreen,
-                  ),
-                  // Second duration addition/subtraction
-                  _secondDurationDateTimeEditorWidget,
-                  const SizedBox(
-                    //  necessary since
-                    //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
-                    //                  height ...
-                    height: kVerticalFieldDistanceAddSubScreen,
-                  ),
-                  // Second duration addition/subtraction
-                  _thirdDurationDateTimeEditorWidget,
-                ],
-              ),
-            ),
-            Positioned(
-              right: 0,
-              child: Column(
-                children: const [],
-              ),
-            ),
-            SizedBox(
-              height: screenHeight *
-                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
-            ),
-            ResetButton(
-              onPress: _resetScreen,
-            ),
-            Positioned(
-              right: 2,
-              top: -3,
-              child: Column(
-                children: [
-                  IconButton(
-                    constraints: const BoxConstraints(
-                      minHeight: 0,
-                      minWidth: 0,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 15,
                     ),
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      displayPopupMenu(
-                        context: context,
-                        selectableStrItemLst: _buildDurationPopupMenuItemLst(),
-                        posRectangleLTRB: const RelativeRect.fromLTRB(
-                          1.0,
-                          125.0,
-                          0.0,
-                          0.0,
-                        ),
-                        handleSelectedItem: _handleSelectedDurationItem,
-                      );
-                    },
-                    icon: Icon(
-                      Icons.favorite,
-                      // color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
-                      color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
-                      size: 27,
+                    EditableDateTime(
+                      dateTimeTitle: 'Start date time',
+                      dateTimePickerController: _startDateTimePickerController,
+                      handleDateTimeModificationFunction:
+                          handleStartDateTimeChange,
+                      transferDataMap: _transferDataMap,
+                      handleSelectedDateTimeStrFunction:
+                          _handleSelectedStartDateTimeStr,
+                      topSelMenuPosition: 135.0,
+                      transferDataViewModel: _transferDataViewModel,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                ],
+                    // First duration addition/subtraction
+                    _firstDurationDateTimeEditorWidget,
+                    const SizedBox(
+                      //  necessary since
+                      //                  EditableDateTime must
+                      //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                      //                  height ...
+                      height: kVerticalFieldDistanceAddSubScreen,
+                    ),
+                    // Second duration addition/subtraction
+                    _secondDurationDateTimeEditorWidget,
+                    const SizedBox(
+                      //  necessary since
+                      //                  EditableDateTime must
+                      //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                      //                  height ...
+                      height: kVerticalFieldDistanceAddSubScreen,
+                    ),
+                    // Second duration addition/subtraction
+                    _thirdDurationDateTimeEditorWidget,
+                  ],
+                ),
               ),
-            ),
+              Positioned(
+                right: 0,
+                child: Column(
+                  children: const [],
+                ),
+              ),
+              SizedBox(
+                height: screenHeight *
+                    ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
+              ),
+              ResetButton(
+                onPress: _resetScreen,
+              ),
+              Positioned(
+                right: 2,
+                top: -3,
+                child: Column(
+                  children: [
+                    IconButton(
+                      constraints: const BoxConstraints(
+                        minHeight: 0,
+                        minWidth: 0,
+                      ),
+                      padding: const EdgeInsets.all(0),
+                      onPressed: () {
+                        displayPopupMenu(
+                          context: context,
+                          selectableStrItemLst: _buildDurationPopupMenuItemLst(),
+                          posRectangleLTRB: const RelativeRect.fromLTRB(
+                            1.0,
+                            125.0,
+                            0.0,
+                            0.0,
+                          ),
+                          handleSelectedItem: _handleSelectedDurationItem,
+                        );
+                      },
+                      icon: Icon(
+                        Icons.favorite,
+                        // color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                        color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                        size: 27,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
+              ),
 /*            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: appElevatedButtonBackgroundColor,
-                      shape: appElevatedButtonRoundedShape),
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: ScreenMixin.appTextFontSize,
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: appElevatedButtonBackgroundColor,
+                        shape: appElevatedButtonRoundedShape),
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                      }
+                    },
+                    child: const Text(
+                      'Submit',
+                      style: TextStyle(
+                        fontSize: ScreenMixin.appTextFontSize,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),*/
-          ],
-        ),
+              ),*/
+            ],
+          ),
+        ],
       ),
     );
   }
