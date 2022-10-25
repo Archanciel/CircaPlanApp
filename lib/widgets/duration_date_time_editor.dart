@@ -498,8 +498,14 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     FocusScope.of(context).requestFocus(
                       _durationTextfieldFocusNode,
                     );
+
+                    // Positioning the cursor to the end of TextField content
                     _durationTextFieldController.selection =
-                        const TextSelection(baseOffset: 0, extentOffset: 0);
+                        TextSelection.fromPosition(
+                      TextPosition(
+                        offset: _durationTextFieldController.text.length,
+                      ),
+                    );
                   },
                   onDoubleTap: () async {
                     await widget.handleClipboardDataDurationDateTimeEditor(
@@ -516,8 +522,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                       _durationTextfieldFocusNode,
                     );
                     _durationTextFieldController.selection = TextSelection(
-                        baseOffset: 0,
-                        extentOffset: _durationTextFieldController.text.length);
+                      baseOffset: 0,
+                      extentOffset: _durationTextFieldController.text.length,
+                    );
                   },
                 ),
               ),
