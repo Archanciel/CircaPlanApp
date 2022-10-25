@@ -406,9 +406,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                       size: 27,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
                 ],
               ),
             ),
