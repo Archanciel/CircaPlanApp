@@ -75,18 +75,27 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     ),
                   ),
                   child: GestureDetector(
-                    child: TextField(
-                      style: valueTextStyle,
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      keyboardType: TextInputType.datetime,
-                      controller: _resultDurationController,
-                      readOnly: true,
+                    // HitTestBehavior intercepts all pointer calls. Required,
+                    // otherwise GestureDetector.onTap:, onDoubleTap:,
+                    // onLongPress: not applied
+                    behavior: HitTestBehavior.opaque,
+
+                    child: IgnorePointer(
+                      child: TextField(
+                        style: valueTextStyle,
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _resultDurationController,
+                        readOnly: true,
+                      ),
                     ),
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
                           controller: _resultDurationController);
-                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                      _transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
                     },
                   ),
                 ),
@@ -103,18 +112,27 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     ),
                   ),
                   child: GestureDetector(
-                    child: TextField(
-                      style: valueTextStyle,
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      keyboardType: TextInputType.datetime,
-                      controller: _resultDurationPercentController,
-                      readOnly: true,
+                    // HitTestBehavior intercepts all pointer calls. Required,
+                    // otherwise GestureDetector.onTap:, onDoubleTap:,
+                    // onLongPress: not applied
+                    behavior: HitTestBehavior.opaque,
+
+                    child: IgnorePointer(
+                      child: TextField(
+                        style: valueTextStyle,
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _resultDurationPercentController,
+                        readOnly: true,
+                      ),
                     ),
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
                           controller: _resultDurationPercentController);
-                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                      _transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
                     },
                   ),
                 ),
@@ -134,18 +152,27 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     ),
                   ),
                   child: GestureDetector(
-                    child: TextField(
-                      style: valueTextStyle,
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      keyboardType: TextInputType.datetime,
-                      controller: _prevDayTotalPercentController,
-                      readOnly: true,
+                    // HitTestBehavior intercepts all pointer calls. Required,
+                    // otherwise GestureDetector.onTap:, onDoubleTap:,
+                    // onLongPress: not applied
+                    behavior: HitTestBehavior.opaque,
+
+                    child: IgnorePointer(
+                      child: TextField(
+                        style: valueTextStyle,
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _prevDayTotalPercentController,
+                        readOnly: true,
+                      ),
                     ),
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
                           controller: _prevDayTotalPercentController);
-                      _transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
+                      _transferDataMap['clipboardLastAction'] =
+                          ClipboardLastAction.copy;
                     },
                   ),
                 ),
@@ -162,12 +189,20 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     ),
                   ),
                   child: GestureDetector(
-                    child: TextField(
-                      style: valueTextStyle,
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      keyboardType: TextInputType.datetime,
-                      controller: _prevDayTotalController,
-                      readOnly: true,
+                    // HitTestBehavior intercepts all pointer calls. Required,
+                    // otherwise GestureDetector.onTap:, onDoubleTap:,
+                    // onLongPress: not applied
+                    behavior: HitTestBehavior.opaque,
+
+                    child: IgnorePointer(
+                      child: TextField(
+                        style: valueTextStyle,
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        keyboardType: TextInputType.datetime,
+                        controller: _prevDayTotalController,
+                        readOnly: true,
+                      ),
                     ),
                     onDoubleTap: () async {
                       await copyToClipboard(

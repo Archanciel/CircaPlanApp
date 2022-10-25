@@ -198,17 +198,24 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                       ),
                     ),
                     child: GestureDetector(
-                      child: TextField(
-                        key: const Key(
-                            'edpDurationPercentComputedValueTextField'),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: widget.durationPercentTextFieldController,
-                        readOnly: true,
+                      // HitTestBehavior intercepts all pointer calls. Required,
+                      // otherwise GestureDetector.onTap:, onDoubleTap:,
+                      // onLongPress: not applied
+                      behavior: HitTestBehavior.opaque,
+
+                      child: IgnorePointer(
+                        child: TextField(
+                          key: const Key(
+                              'edpDurationPercentComputedValueTextField'),
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: const TextStyle(
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: widget.durationPercentTextFieldController,
+                          readOnly: true,
+                        ),
                       ),
                       onDoubleTap: () async {
                         await widget.copyToClipboard(
@@ -231,31 +238,38 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                       ),
                     ),
                     child: GestureDetector(
-                      child: TextField(
-                        key: const Key('edpDurationPercentTextField'),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: widget.selectedPercentTextFieldController,
-                        readOnly: false,
-                        onSubmitted: (val) {
-                          // called when manually updating the TextField
-                          // content. onChanged must be defined in order for
-                          // pasting a value to the TextField to really
-                          // modify the TextField value and store it
-                          // in the screen navigation transfer
-                          // data map.
+                      // HitTestBehavior intercepts all pointer calls. Required,
+                      // otherwise GestureDetector.onTap:, onDoubleTap:,
+                      // onLongPress: not applied
+                      behavior: HitTestBehavior.opaque,
 
-                          if (!val.contains('%')) {
-                            val = '$val %';
-                          }
-
-                          handleSelectedPercentStr(val);
-                          setState(() {});
-                        },
+                      child: IgnorePointer(
+                        child: TextField(
+                          key: const Key('edpDurationPercentTextField'),
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: const TextStyle(
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: widget.selectedPercentTextFieldController,
+                          readOnly: false,
+                          onSubmitted: (val) {
+                            // called when manually updating the TextField
+                            // content. onChanged must be defined in order for
+                            // pasting a value to the TextField to really
+                            // modify the TextField value and store it
+                            // in the screen navigation transfer
+                            // data map.
+                      
+                            if (!val.contains('%')) {
+                              val = '$val %';
+                            }
+                      
+                            handleSelectedPercentStr(val);
+                            setState(() {});
+                          },
+                        ),
                       ),
                       onDoubleTap: () async {
                         await widget.copyToClipboard(

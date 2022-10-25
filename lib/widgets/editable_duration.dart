@@ -106,9 +106,10 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: const TextStyle(
-                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+                          ),
                           controller: _durationTextFieldController,
                           readOnly: true,
                         ),
@@ -133,15 +134,24 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       ),
                     ),
                     child: GestureDetector(
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _addTimeTextFieldController,
-                        readOnly: true,
+                      // HitTestBehavior intercepts all pointer calls. Required,
+                      // otherwise GestureDetector.onTap:, onDoubleTap:,
+                      // onLongPress: not applied
+                      behavior: HitTestBehavior.opaque,
+
+                      // IgnorePointer required to avoid TextField selection and
+                      // copy paste menu on long press
+                      child: IgnorePointer(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: const TextStyle(
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: _addTimeTextFieldController,
+                          readOnly: true,
+                        ),
                       ),
                       onDoubleTap: () async {
                         await handleClipboardDataEditableDuration(
@@ -164,15 +174,22 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       ),
                     ),
                     child: GestureDetector(
-                      child: TextField(
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        style: const TextStyle(
-                            color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                            fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                            fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                        controller: _finalDurationTextFieldController,
-                        readOnly: true,
+                      // HitTestBehavior intercepts all pointer calls. Required,
+                      // otherwise GestureDetector.onTap:, onDoubleTap:,
+                      // onLongPress: not applied
+                      behavior: HitTestBehavior.opaque,
+
+                      child: IgnorePointer(
+                        child: TextField(
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: const TextStyle(
+                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          controller: _finalDurationTextFieldController,
+                          readOnly: true,
+                        ),
                       ),
                       onDoubleTap: () async {
                         await copyToClipboard(
