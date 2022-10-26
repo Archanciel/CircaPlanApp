@@ -57,6 +57,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   late DurationDateTimeEditor _firstDurationDateTimeEditorWidget;
   late DurationDateTimeEditor _secondDurationDateTimeEditorWidget;
   late DurationDateTimeEditor _thirdDurationDateTimeEditorWidget;
+  late DurationDateTimeEditor _fourthDurationDateTimeEditorWidget;
 
   // Although defined in ScreenMixin, must be defined here since it is used in the
   // constructor where accessing to mixin data is not possible !
@@ -80,6 +81,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.callSetState();
     _secondDurationDateTimeEditorWidget.callSetState();
     _thirdDurationDateTimeEditorWidget.callSetState();
+    _fourthDurationDateTimeEditorWidget.callSetState();
 
     setState(() {});
   }
@@ -97,6 +99,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     String nowEnglishFormatDateTimeStr = _updateWidgets();
 
+    _fourthDurationDateTimeEditorWidget = DurationDateTimeEditor(
+      key: const Key('fourthAddSubtractResultableDuration'),
+      widgetName: 'third',
+      dateTimeTitle: 'End date time',
+      topSelMenuPosition: 750.0,
+      nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
+      transferDataViewModel: _transferDataViewModel,
+      transferDataMap: _transferDataMap,
+      nextAddSubtractResultableDuration: null,
+      saveTransferDataIfModified: true,
+    );
+
     _thirdDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('thirdAddSubtractResultableDuration'),
       widgetName: 'third',
@@ -105,8 +119,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
-      nextAddSubtractResultableDuration: null,
-      saveTransferDataIfModified: true,
+      nextAddSubtractResultableDuration: _fourthDurationDateTimeEditorWidget,
     );
 
     _secondDurationDateTimeEditorWidget = DurationDateTimeEditor(
@@ -227,18 +240,19 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // next DurationDateTimeEditor, and so finaly the last one, to
     // be updated. Saving transfer data multiple times trevents
     // Undoing the application of the selected durations item.
-    _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = false;
+    _fourthDurationDateTimeEditorWidget.saveTransferDataIfModified = false;
 
     _firstDurationDateTimeEditorWidget.setDuration(durationStrLst[0]);
     _secondDurationDateTimeEditorWidget.setDuration(durationStrLst[1]);
+    _thirdDurationDateTimeEditorWidget.setDuration(durationStrLst[2]);
 
     // restoring the last DurationDateTimeEditor widget
     // saveTransferDataIfModified to true is necessary to enable
     // the last DurationDateTimeEditor duration field to be updated
     // as well as saved, making Undo effective.
-    _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = true;
+    _fourthDurationDateTimeEditorWidget.saveTransferDataIfModified = true;
 
-    _thirdDurationDateTimeEditorWidget.setDuration(durationStrLst[2]);
+    _fourthDurationDateTimeEditorWidget.setDuration(durationStrLst[3]);
   }
 
   void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {
@@ -290,7 +304,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   List<String> _buildSelectableDurationItemLst() {
     List<String> durationSelectableItemLst = [];
     const String durationDefinedItemStr =
-        '{"short": ["7:00", "3:30", "7:30"], "good": ["12:00", "3:30", "10:30"]}';
+        '{"short": ["7:00", "3:30", "7:30", "7:00"], "good": ["12:00", "3:30", "10:30", "12:00"]}';
 
     Map<String, dynamic> durationDefinedItemMap =
         jsonDecode(durationDefinedItemStr);
@@ -366,10 +380,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     //                  height ...
                     height: kVerticalFieldDistanceAddSubScreen,
                   ),
-                  Text(
-                    'one\ntwo\nthree\nfour\nfive\nsix',
-                    style: labelTextStyle,
-                  ),
+                  // Fourth duration addition/subtraction
+                  _fourthDurationDateTimeEditorWidget,
                   const SizedBox(
                     //  necessary since
                     //                  EditableDateTime must
