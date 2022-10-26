@@ -359,6 +359,28 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   // Third duration addition/subtraction
                   _thirdDurationDateTimeEditorWidget,
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                    //                  height ...
+                    height: kVerticalFieldDistanceAddSubScreen,
+                  ),
+                  Text(
+                    'one\ntwo\nthree\nfour\nfive\nsix',
+                    style: labelTextStyle,
+                  ),
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                    //                  height ...
+                    height: kVerticalFieldDistanceAddSubScreen,
+                  ),
+                  Text(
+                    'one\ntwo\nthree\nfour\nfive\nsix',
+                    style: labelTextStyle,
+                  ),
                 ],
               ),
             ),
