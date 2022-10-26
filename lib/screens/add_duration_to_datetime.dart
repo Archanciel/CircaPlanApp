@@ -357,7 +357,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     //                  height ...
                     height: kVerticalFieldDistanceAddSubScreen,
                   ),
-                  // Second duration addition/subtraction
+                  // Third duration addition/subtraction
                   _thirdDurationDateTimeEditorWidget,
                 ],
               ),
