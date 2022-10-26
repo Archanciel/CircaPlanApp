@@ -499,7 +499,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                       _durationTextfieldFocusNode,
                     );
 
-                    // Positioning the cursor to the end of TextField content
+                    // Positioning the cursor to the end of TextField content.
+                    // WARNING: works only if keyboard is displayed or other
+                    // duration field is in edit mode !
                     _durationTextFieldController.selection =
                         TextSelection.fromPosition(
                       TextPosition(
