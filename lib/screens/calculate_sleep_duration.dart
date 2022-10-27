@@ -992,11 +992,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         ),
                         onDoubleTap: () {
                           // empty anonymous function disables double tap selection
-                        //   await copyToClipboardHHmmExtractedFromHistoryDuration(
-                        //       context: context,
-                        //       controller: _sleepWakeUpHistoryController);
-                        //   _transferDataMap['clipboardLastAction'] =
-                        //       ClipboardLastAction.copy;
+                          //   await copyToClipboardHHmmExtractedFromHistoryDuration(
+                          //       context: context,
+                          //       controller: _sleepWakeUpHistoryController);
+                          //   _transferDataMap['clipboardLastAction'] =
+                          //       ClipboardLastAction.copy;
                         },
                       ),
                     ),
@@ -1120,7 +1120,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
                           onPressed: () async {
-                            final timeStr = await openTextInputDialog();
+                            final timeStr = await openTextInputDialog(
+                                context: context,
+                                submitController: _addTimeDialogController);
                             if (timeStr == null || timeStr.isEmpty) return;
 
                             _addTimeToCurrentSleepAndWakeUpDuration(
@@ -1143,35 +1145,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         ),
       ),
     );
-  }
-
-  Future<String?> openTextInputDialog() => showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Time to add'),
-          content: TextField(
-            autofocus: true,
-            style: const TextStyle(
-                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-            decoration: const InputDecoration(hintText: '(-)HH:mm'),
-            controller: _addTimeDialogController,
-            onSubmitted: (_) => submit(),
-            keyboardType: TextInputType.datetime,
-          ),
-          actions: [
-            TextButton(
-              onPressed: submit,
-              child: const Text('Add time'),
-            ),
-          ],
-        ),
-      );
-
-  void submit() {
-    Navigator.of(context).pop(_addTimeDialogController.text);
-
-    _addTimeDialogController.clear();
   }
 
   Future<void> copyToClipboardHHmmExtractedFromHistoryDuration(

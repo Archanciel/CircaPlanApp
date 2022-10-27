@@ -450,4 +450,37 @@ mixin ScreenMixin {
     String copiedtext = (cdata != null) ? cdata.text ?? '' : '';
     controller.text = copiedtext;
   }
+
+  Future<String?> openTextInputDialog(
+      {required BuildContext context,
+      required TextEditingController submitController}) {
+    void submit() {
+      Navigator.of(context).pop(submitController.text);
+
+      submitController.clear();
+    }
+
+    return showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Time to add'),
+        content: TextField(
+          autofocus: true,
+          style: const TextStyle(
+              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+          decoration: const InputDecoration(hintText: '(-)HH:mm'),
+          controller: submitController,
+          onSubmitted: (_) => submit(),
+          keyboardType: TextInputType.datetime,
+        ),
+        actions: [
+          TextButton(
+            onPressed: submit,
+            child: const Text('Add time'),
+          ),
+        ],
+      ),
+    );
+  }
 }

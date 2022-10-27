@@ -36,37 +36,6 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
             addPosOrNegTimeToCurrentDurationFunction,
         _deleteAddedTimeDuration = deleteAddedTimeDurationFunction;
 
-  Future<String?> openTextInputDialog({required BuildContext context}) {
-    void submit() {
-      Navigator.of(context).pop(_addTimeDialogController.text);
-
-      _addTimeDialogController.clear();
-    }
-
-    return showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Time to add'),
-        content: TextField(
-          autofocus: true,
-          style: const TextStyle(
-              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-          decoration: const InputDecoration(hintText: '(-)HH:mm'),
-          controller: _addTimeDialogController,
-          onSubmitted: (_) => submit(),
-          keyboardType: TextInputType.datetime,
-        ),
-        actions: [
-          TextButton(
-            onPressed: submit,
-            child: const Text('Add time'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -218,6 +187,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
               onPressed: () async {
                 final timeStr = await openTextInputDialog(
                   context: context,
+                  submitController: _addTimeDialogController
                 );
                 if (timeStr == null || timeStr.isEmpty) return;
 

@@ -202,7 +202,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         selectableStrItemLst: _buildSelectableDurationItemLst(),
         posRectangleLTRB: const RelativeRect.fromLTRB(
           1.0,
-          130.0,
+          125.0,
           0.0,
           0.0,
         ),
