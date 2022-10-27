@@ -71,7 +71,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
 }
 
 class _EditableDurationPercentState extends State<EditableDurationPercent> {
-  void handleSelectedPercentStr(String percentStr) {
+  void handleSelectedPercentStr(String percentStr, [BuildContext? context]) {
     widget.selectedPercentTextFieldController.text = percentStr;
 
     if (percentStr.isEmpty) {
@@ -261,11 +261,11 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                             // modify the TextField value and store it
                             // in the screen navigation transfer
                             // data map.
-                      
+
                             if (!val.contains('%')) {
                               val = '$val %';
                             }
-                      
+
                             handleSelectedPercentStr(val);
                             setState(() {});
                           },

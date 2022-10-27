@@ -189,9 +189,19 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.reset();
   }
 
-  void _deleteDurationItem(String selectedDurationItem) {}
+  void _deleteDurationItem(String selectedDurationItem,
+      [BuildContext? context]) {
+    if (context == null) {
+      return;
+    }
+  }
 
-  void _handleSelectedDurationItem(String selectedDurationItem) {
+  void _handleSelectedDurationItem(String selectedDurationItem,
+      [BuildContext? context]) {
+    if (context == null) {
+      return;
+    }
+
     if (selectedDurationItem == 'Add') {
       return;
     }

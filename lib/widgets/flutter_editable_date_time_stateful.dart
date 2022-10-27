@@ -57,7 +57,8 @@ class EditableDateTime extends StatefulWidget with ScreenMixin {
     return stateInstance;
   }
 
-  void handleSelectDateTimeButtonPressed(String selectedDateTimeStr) {
+  void handleSelectDateTimeButtonPressed(String selectedDateTimeStr,
+      [BuildContext? context]) {
     stateInstance._dateTime =
         ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _updateDateTimePickerValues();
@@ -259,7 +260,10 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
 
   final double topSelMenuPosition;
   final void Function(String) handleDateTimeModification;
-  final void Function(String) handleSelectedDateTimeStr;
+  final void Function(
+    String,
+    BuildContext?,
+  ) handleSelectedDateTimeStr;
 
   @override
   State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();

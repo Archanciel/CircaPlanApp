@@ -14,7 +14,7 @@ import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
-                                                                                                  
+
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
@@ -152,7 +152,11 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   /// Finally, the method is called when starting the
   /// application in order for the first screen to display the
   /// current circadian.json transfer data.
-  void loadFileName(String selectedFileNameStr) {
+  void loadFileName(String selectedFileNameStr, [BuildContext? context]) {
+    if (context == null) {
+      return;
+    }
+    
     loadFileNameNoMsg(selectedFileNameStr);
 
     final CircadianSnackBar snackBar =
