@@ -236,7 +236,7 @@ mixin ScreenMixin {
     });
   }
 
-  /// Method called by the 'Sel' buttons.
+  /// Method called by the 'Sel' and 'Add' to duration buttons.
   void displayPopupMenu({
     required BuildContext context,
     required List<String> selectableStrItemLst,
