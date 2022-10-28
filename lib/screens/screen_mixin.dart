@@ -468,6 +468,15 @@ mixin ScreenMixin {
       {required BuildContext context,
       required TextEditingController addTimeController}) {
     void submit() {
+      // pop(addTimeController.text) passes back the entered time string
+      // to the openAddTimeDialog() caller.
+      //
+      // Caller code:
+      //
+      // final timeStr = await openAddTimeDialog(
+      // context: context,
+      // addTimeController: _addTimeDialogController);
+
       Navigator.of(context).pop(addTimeController.text);
 
       addTimeController.clear();
