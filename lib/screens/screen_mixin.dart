@@ -236,20 +236,20 @@ mixin ScreenMixin {
     });
   }
 
-  /// Method called by the 'Sel' and 'Add' to duration buttons.
+  /// Method called by the 'Sel' and 1st screen heart buttons.
   void displayPopupMenu({
     required BuildContext context,
     required List<String> selectableStrItemLst,
     required RelativeRect posRectangleLTRB,
     required void Function(
       String,
-      BuildContext?,  // useful if selecting a popup menu item
-                      // liken Add in 1st screen favorite
-                      // durations popup menu opens a new popup
-                      // menu, action which need passing the
-                      // BuildContext. This argument is not always
-                      // required, reason why it is positiponal
-                      // optional !
+      BuildContext?, // useful if selecting a popup menu item
+      //                liken Add in 1st screen favorite
+      //                durations popup menu opens a new popup
+      //                menu, action which need passing the
+      //                BuildContext. This argument is not always
+      //                required, reason why it is positiponal
+      //                optional !
     )
         handleSelectedItem,
   }) {
@@ -464,7 +464,7 @@ mixin ScreenMixin {
     controller.text = copiedtext;
   }
 
-  Future<String?> openTextInputDialog(
+  Future<String?> openAddTimeDialog(
       {required BuildContext context,
       required TextEditingController submitController}) {
     void submit() {

@@ -5,8 +5,6 @@ import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:intl/intl.dart';
-
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
@@ -1120,7 +1118,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
                           onPressed: () async {
-                            final timeStr = await openTextInputDialog(
+                            final timeStr = await openAddTimeDialog(
                                 context: context,
                                 submitController: _addTimeDialogController);
                             if (timeStr == null || timeStr.isEmpty) return;
