@@ -187,7 +187,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
               onPressed: () async {
                 final timeStr = await openAddTimeDialog(
                     context: context,
-                    submitController: _addTimeDialogController);
+                    addTimeController: _addTimeDialogController);
                 if (timeStr == null || timeStr.isEmpty) return;
 
                 _addPosOrNegTimeToCurrentDuration(context, timeStr);

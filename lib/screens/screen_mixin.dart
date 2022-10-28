@@ -466,11 +466,11 @@ mixin ScreenMixin {
 
   Future<String?> openAddTimeDialog(
       {required BuildContext context,
-      required TextEditingController submitController}) {
+      required TextEditingController addTimeController}) {
     void submit() {
-      Navigator.of(context).pop(submitController.text);
+      Navigator.of(context).pop(addTimeController.text);
 
-      submitController.clear();
+      addTimeController.clear();
     }
 
     return showDialog<String>(
@@ -483,7 +483,7 @@ mixin ScreenMixin {
               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
           decoration: const InputDecoration(hintText: '(-)HH:mm'),
-          controller: submitController,
+          controller: addTimeController,
           onSubmitted: (_) => submit(),
           keyboardType: TextInputType.datetime,
         ),

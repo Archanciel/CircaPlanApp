@@ -1120,7 +1120,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           onPressed: () async {
                             final timeStr = await openAddTimeDialog(
                                 context: context,
-                                submitController: _addTimeDialogController);
+                                addTimeController: _addTimeDialogController);
                             if (timeStr == null || timeStr.isEmpty) return;
 
                             _addTimeToCurrentSleepAndWakeUpDuration(
