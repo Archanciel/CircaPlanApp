@@ -53,6 +53,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   String _startDateTimeStr = '';
 
   late TextEditingController _startDateTimePickerController;
+  final TextEditingController _addDurationPreferenceNameController =
+      TextEditingController(text: '');
+  final TextEditingController _addDurationPreferenceValueController =
+      TextEditingController(text: '');
 
   late DurationDateTimeEditor _firstDurationDateTimeEditorWidget;
   late DurationDateTimeEditor _secondDurationDateTimeEditorWidget;
@@ -156,6 +160,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   @override
   void dispose() {
     _startDateTimePickerController.dispose();
+    _addDurationPreferenceNameController.dispose();
+    _addDurationPreferenceValueController.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
@@ -189,34 +195,50 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.reset();
   }
 
-  void _deleteDurationItem(String selectedDurationItem,
+  void _deletePreferredDurationItem(String selectedPreferredDurationItem,
       [BuildContext? context]) {
     if (context == null) {
       return;
     }
+
+    Map<String, dynamic> durationDefinedItemMap =
+        _getPreferredDurationsItemMap();
+    String selectedDurationItemKey =
+        selectedPreferredDurationItem.split(' ')[0];
+
+    durationDefinedItemMap.remove(selectedDurationItemKey);
+
+    _transferDataMap['preferredDurationsItemsStr'] =
+        jsonEncode(durationDefinedItemMap);
+    _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  void _handleSelectedDurationItem(String selectedDurationItem,
-      [BuildContext? context]) {
+  /// Method called when clicking on the heart icon.
+  Future<void> _handlePreferedDurationMenuItemSelectionection(
+      String selectedDurationItem,
+      [BuildContext? context]) async {
     if (context == null) {
       return;
     }
 
     if (selectedDurationItem == 'Add') {
-      return;
+      await _openAddNewPreferredDurationDialog(context: context);
+      _transferDataMap['preferredDurationsItemsStr'] =
+          _buildPreferredDurationsItemStr();
+      _transferDataViewModel.updateAndSaveTransferData();
     }
 
     if (selectedDurationItem == 'Delete') {
       displayPopupMenu(
         context: context,
-        selectableStrItemLst: _buildSelectableDurationItemLst(),
+        selectableStrItemLst: _buildPreferredDurationsItemLst(),
         posRectangleLTRB: const RelativeRect.fromLTRB(
           1.0,
           125.0,
           0.0,
           0.0,
         ),
-        handleSelectedItem: _deleteDurationItem,
+        handleSelectedItem: _deletePreferredDurationItem,
       );
 
       return;
@@ -286,8 +308,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  List<String> _buildDurationPopupMenuItemLst() {
-    List<String> durationSelectableItemLst = _buildSelectableDurationItemLst();
+  List<String> _buildPreferredDurationsPopupMenuItemLst() {
+    List<String> durationSelectableItemLst = _buildPreferredDurationsItemLst();
 
     // and adding 'Add' and 'Delete' items
 
@@ -297,13 +319,42 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return durationSelectableItemLst;
   }
 
-  List<String> _buildSelectableDurationItemLst() {
-    List<String> durationSelectableItemLst = [];
-    const String durationDefinedItemStr =
-        '{"short": ["7:00", "3:30", "7:30"], "good": ["12:00", "3:30", "10:30"]}';
+  String? _buildPreferredDurationsItemStr() {
+    String preferredDurationsItemName =
+        _addDurationPreferenceNameController.text;
+    String preferredDurationsItemValue =
+        _addDurationPreferenceValueController.text;
 
+    if (preferredDurationsItemName == '' || preferredDurationsItemValue == '') {
+      return null;
+    }
+
+    Map<String, dynamic> currentPreferredDurationsItemMap =
+        _getPreferredDurationsItemMap();
+
+    currentPreferredDurationsItemMap[preferredDurationsItemName] =
+        preferredDurationsItemValue.split(', ');
+
+    return jsonEncode(currentPreferredDurationsItemMap);
+  }
+
+  Map<String, dynamic> _getPreferredDurationsItemMap() {
+    String? currentPreferredDurationsItemStr =
+        _transferDataMap['preferredDurationsItemsStr'];
+
+    Map<String, dynamic> currentPreferredDurationsItemMap = {};
+
+    if (currentPreferredDurationsItemStr != null) {
+      currentPreferredDurationsItemMap =
+          jsonDecode(currentPreferredDurationsItemStr);
+    }
+    return currentPreferredDurationsItemMap;
+  }
+
+  List<String> _buildPreferredDurationsItemLst() {
+    List<String> durationSelectableItemLst = [];
     Map<String, dynamic> durationDefinedItemMap =
-        jsonDecode(durationDefinedItemStr);
+        _getPreferredDurationsItemMap();
 
     for (var entry in durationDefinedItemMap.entries) {
       List<dynamic> durationLst = entry.value;
@@ -314,6 +365,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // now sorting the DateTime list
 
     durationSelectableItemLst.sort();
+
     return durationSelectableItemLst;
   }
 
@@ -399,14 +451,16 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     onPressed: () {
                       displayPopupMenu(
                         context: context,
-                        selectableStrItemLst: _buildDurationPopupMenuItemLst(),
+                        selectableStrItemLst:
+                            _buildPreferredDurationsPopupMenuItemLst(),
                         posRectangleLTRB: const RelativeRect.fromLTRB(
                           1.0,
                           125.0,
                           0.0,
                           0.0,
                         ),
-                        handleSelectedItem: _handleSelectedDurationItem,
+                        handleSelectedItem:
+                            _handlePreferedDurationMenuItemSelectionection,
                       );
                     },
                     icon: Icon(
@@ -444,6 +498,75 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             ),*/
           ],
         ),
+      ),
+    );
+  }
+
+  Future<String?> _openAddNewPreferredDurationDialog(
+      {required BuildContext context}) {
+    void submit() {
+      Navigator.of(context).pop();
+    }
+
+    return showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add new preferred durations menu item'),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          //position
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                const SizedBox(
+                  width: 50,
+                  child: Text('Name:'),
+                ),
+                SizedBox(
+                  width: 80,
+                  child: TextField(
+                    autofocus: true,
+                    style: const TextStyle(
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                    decoration: const InputDecoration(hintText: ''),
+                    controller: _addDurationPreferenceNameController,
+                    onSubmitted: (_) => submit(),
+                    keyboardType: TextInputType.datetime,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 50,
+                  child: Text('Value:'),
+                ),
+                SizedBox(
+                  width: 210,
+                  child: TextField(
+                    autofocus: true,
+                    style: const TextStyle(
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                    decoration: const InputDecoration(hintText: ''),
+                    controller: _addDurationPreferenceValueController,
+                    onSubmitted: (_) => submit(),
+                    keyboardType: TextInputType.datetime,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: submit,
+            child: const Text('Add new menu item'),
+          ),
+        ],
       ),
     );
   }
