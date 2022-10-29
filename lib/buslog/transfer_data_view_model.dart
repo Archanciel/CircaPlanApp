@@ -231,6 +231,9 @@ class TransferDataViewModel {
         _transferDataMap!['thirdDurationStr'];
     addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
         _transferDataMap!['thirdEndDateTimeStr'];
+
+    addDurationToDateTimeData.preferredDurationsItemsStr =
+        _transferDataMap!['preferredDurationsItemsStr'];
   }
 
   void updateCalculateSleepDurationData() {
@@ -430,6 +433,9 @@ class TransferDataViewModel {
           addDurationToDateTimeData.thirdAddDurationDurationStr;
       _transferDataMap!["thirdEndDateTimeStr"] =
           addDurationToDateTimeData.thirdAddDurationEndDateTimeStr;
+
+      _transferDataMap!['preferredDurationsItemsStr'] =
+          addDurationToDateTimeData.preferredDurationsItemsStr;
     }
 
     CalculateSleepDurationData calculateSleepDurationData =

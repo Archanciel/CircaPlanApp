@@ -97,6 +97,11 @@ class AddDurationToDateTimeData extends ScreenData {
   set thirdAddDurationEndDateTimeStr(String value) =>
       attributes['thirdAddDurationEndDateTimeStr'] = value;
 
+  String get preferredDurationsItemsStr =>
+      attributes['preferredDurationsItemsStr'];
+  set preferredDurationsItemsStr(String value) =>
+      attributes['preferredDurationsItemsStr'] = value;
+
   @override
   String toString() {
     DurationIconType? firstDurationIconType = getFirstDurationIconType();

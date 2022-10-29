@@ -17,10 +17,12 @@ import 'package:circa_plan/widgets/circadian_snackbar.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
 
   List<String> myArgs = [];
 
@@ -156,7 +158,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     if (context == null) {
       return;
     }
-    
+
     loadFileNameNoMsg(selectedFileNameStr);
 
     final CircadianSnackBar snackBar =
