@@ -601,19 +601,19 @@ void main() {
           const String hourMinuteStr = '-0:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-00:00:05');
           expect(duration?.HHmm(), '-0:05');
         },
       );
-      
+
       test(
         'valid negative 01:mm time string',
         () {
           const String hourMinuteStr = '-01:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-00:01:05');
           expect(duration?.HHmm(), '-1:05');
         },
@@ -625,19 +625,19 @@ void main() {
           const String hourMinuteStr = '-1:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-00:01:05');
           expect(duration?.HHmm(), '-1:05');
         },
       );
-      
+
       test(
         'valid negative 11:mm time string',
         () {
           const String hourMinuteStr = '-11:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-00:11:05');
           expect(duration?.HHmm(), '-11:05');
         },
@@ -661,19 +661,19 @@ void main() {
           const String hourMinuteStr = '-0:00:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-00:00:05');
           expect(duration?.HHmm(), '-0:05');
         },
       );
-      
+
       test(
         'valid negative 01:00:mm time string',
         () {
           const String hourMinuteStr = '-01:00:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-01:00:05');
           expect(duration?.HHmm(), '-24:05');
         },
@@ -685,19 +685,19 @@ void main() {
           const String hourMinuteStr = '-1:00:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-01:00:05');
           expect(duration?.HHmm(), '-24:05');
         },
       );
-      
+
       test(
         'valid negative 11:00:mm time string',
         () {
           const String hourMinuteStr = '-11:00:05';
           final Duration? duration =
               DateTimeParser.parseDDHHMMorHHMMDuration(hourMinuteStr);
-   //       expect(duration.toString(), '-0:05:00.000000');
+          //       expect(duration.toString(), '-0:05:00.000000');
           expect(duration?.ddHHmm(), '-11:00:05');
           expect(duration?.HHmm(), '-264:05');
         },
@@ -711,7 +711,8 @@ void main() {
         'valid date time string',
         () {
           final String? englishFormatDdateTimeStr =
-              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(frenchFormatDateTimeStr: '14-12-2022 13:35');
+              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                  frenchFormatDateTimeStr: '14-12-2022 13:35');
 
           expect(englishFormatDdateTimeStr, '2022-12-14 13:35');
         },
@@ -720,7 +721,8 @@ void main() {
         'invalid date time string',
         () {
           final String? englishFormatDdateTimeStr =
-              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(frenchFormatDateTimeStr: '14-12_022 13:35');
+              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                  frenchFormatDateTimeStr: '14-12_022 13:35');
 
           expect(englishFormatDdateTimeStr, null);
         },
@@ -734,7 +736,8 @@ void main() {
         'valid date time string',
         () {
           final String? frenchFormatDdateTimeStr =
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: '2022-12-14 13:35');
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: '2022-12-14 13:35');
 
           expect(frenchFormatDdateTimeStr, '14-12-2022 13:35');
         },
@@ -743,9 +746,36 @@ void main() {
         'invalid date time string',
         () {
           final String? frenchFormatDdateTimeStr =
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(englishFormatDateTimeStr: '202212-14 13:35');
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: '202212-14 13:35');
 
           expect(frenchFormatDdateTimeStr, null);
+        },
+      );
+    },
+  );
+  group(
+    'DateTimeParser.parseAllHHMMTimeStr()',
+    () {
+      test(
+        'positive times string',
+        () {
+          const String timeStr = '13:35 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
+
+          List<String> parsedTimeStrLst = DateTimeParser.parseAllHHMMTimeStr(timeStr);
+
+          expect(parsedTimeStrLst, ['13:35', '3:05', '0:05', '0:05']);
+        },
+      );
+      test(
+        'negative times string',
+        () {
+          const String negativeTimeStr =
+              '-13:35 -3:05,-0:05,-3-05 -3:u5, -3:5 -3-5';
+
+          List<String> parsedNegTimeStrLst = DateTimeParser.parseAllHHMMTimeStr(negativeTimeStr);
+
+          expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05']);
         },
       );
     },
