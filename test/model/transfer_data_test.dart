@@ -24,6 +24,14 @@ void main() {
           addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
           addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
               '10_07_2022 00:58';
+          addDurationToDateTimeData.secondAddDurationDurationStr = '02:00';
+          addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
+              '10_07_2022 02:58';
+          addDurationToDateTimeData.thirdAddDurationDurationStr = '03:00';
+          addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
+              '10_07_2022 03:58';
+          addDurationToDateTimeData.preferredDurationsItemsStr =
+              'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}';
 
           TransferData transferData = TransferData();
           transferData.addDurationToDateTimeData = addDurationToDateTimeData;
@@ -55,6 +63,17 @@ void main() {
               '01:00');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '10_07_2022 00:58');
+          expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
+              '02:00');
+          expect(
+              loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
+              '10_07_2022 02:58');
+          expect(loadedAddDurationToDateTimeData.thirdAddDurationDurationStr,
+              '03:00');
+          expect(loadedAddDurationToDateTimeData.thirdAddDurationEndDateTimeStr,
+              '10_07_2022 03:58');
+          expect(loadedAddDurationToDateTimeData.preferredDurationsItemsStr,
+              'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}');
         },
       );
       test(
@@ -245,6 +264,14 @@ void main() {
           addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
           addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
               '10_07_2022 00:58';
+          addDurationToDateTimeData.secondAddDurationDurationStr = '02:00';
+          addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
+              '10_07_2022 02:58';
+          addDurationToDateTimeData.thirdAddDurationDurationStr = '03:00';
+          addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
+              '10_07_2022 03:58';
+          addDurationToDateTimeData.preferredDurationsItemsStr =
+              'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}';
 
           TransferData transferData = TransferData();
           transferData.addDurationToDateTimeData = addDurationToDateTimeData;
@@ -330,6 +357,17 @@ void main() {
               '01:00');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '10_07_2022 00:58');
+          expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
+              '02:00');
+          expect(
+              loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
+              '10_07_2022 02:58');
+          expect(loadedAddDurationToDateTimeData.thirdAddDurationDurationStr,
+              '03:00');
+          expect(loadedAddDurationToDateTimeData.thirdAddDurationEndDateTimeStr,
+              '10_07_2022 03:58');
+          expect(loadedAddDurationToDateTimeData.preferredDurationsItemsStr,
+              'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}');
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
               loadedTransferData.calculateSleepDurationData;
