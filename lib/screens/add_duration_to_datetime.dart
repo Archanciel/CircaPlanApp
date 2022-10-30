@@ -203,8 +203,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     Map<String, dynamic> durationDefinedItemMap =
         _getPreferredDurationsItemMap();
+    RegExp preferredDurationsItemsNameRegExp = RegExp(r'^[\D ]+');
+    RegExpMatch? firstMatch = preferredDurationsItemsNameRegExp
+        .firstMatch(selectedPreferredDurationItem);
+
+    // next two statements handle case where the key is multi word,
+    // for example 'to del' !
     String selectedDurationItemKey =
-        selectedPreferredDurationItem.split(' ')[0];
+        (firstMatch != null) ? firstMatch.group(0) ?? '' : '';
+    selectedDurationItemKey = selectedDurationItemKey.trimRight();
 
     durationDefinedItemMap.remove(selectedDurationItemKey);
 
