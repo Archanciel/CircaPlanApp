@@ -16,10 +16,9 @@ class AddDurationToDateTimeData extends ScreenData {
         value is DurationIconType
             ? value.index
             : DurationIconType.values[value];
-    transformers['thirdDurationIconType'] = (value) =>
-        value is DurationIconType
-            ? value.index
-            : DurationIconType.values[value];
+    transformers['thirdDurationIconType'] = (value) => value is DurationIconType
+        ? value.index
+        : DurationIconType.values[value];
     screenDataType = ScreenDataType.addDurationToDateTimeData;
   }
 
@@ -97,8 +96,13 @@ class AddDurationToDateTimeData extends ScreenData {
   set thirdAddDurationEndDateTimeStr(String value) =>
       attributes['thirdAddDurationEndDateTimeStr'] = value;
 
-  String get preferredDurationsItemsStr =>
-      attributes['preferredDurationsItemsStr'];
+  String get preferredDurationsItemsStr {
+    // ?? '' solves the case when the preferredDurationsItemsStr
+    // value does not exist in the circadian.json file !
+    return preferredDurationsItemsStr =
+        attributes['preferredDurationsItemsStr'] ?? '';
+  }
+
   set preferredDurationsItemsStr(String value) =>
       attributes['preferredDurationsItemsStr'] = value;
 
