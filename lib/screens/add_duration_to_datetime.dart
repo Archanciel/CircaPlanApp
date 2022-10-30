@@ -332,22 +332,32 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     Map<String, dynamic> currentPreferredDurationsItemMap =
         _getPreferredDurationsItemMap();
 
+    List<String> parsedTimeStrLst =
+        DateTimeParser.parseAllHHMMTimeStr(preferredDurationsItemValue);
+
     currentPreferredDurationsItemMap[preferredDurationsItemName] =
-        preferredDurationsItemValue.split(', ');
+        parsedTimeStrLst;
+
+    String preferredDurationsItemFormattedValueStr =
+        parsedTimeStrLst.join(', ');
+
+    _addDurationPreferenceValueController.text =
+        preferredDurationsItemFormattedValueStr;
 
     return jsonEncode(currentPreferredDurationsItemMap);
   }
 
   Map<String, dynamic> _getPreferredDurationsItemMap() {
-    String? currentPreferredDurationsItemStr =
+    String currentPreferredDurationsItemStr =
         _transferDataMap['preferredDurationsItemsStr'];
 
     Map<String, dynamic> currentPreferredDurationsItemMap = {};
 
-    if (currentPreferredDurationsItemStr != null) {
+    if (currentPreferredDurationsItemStr != '') {
       currentPreferredDurationsItemMap =
           jsonDecode(currentPreferredDurationsItemStr);
     }
+
     return currentPreferredDurationsItemMap;
   }
 
@@ -533,7 +543,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     decoration: const InputDecoration(hintText: ''),
                     controller: _addDurationPreferenceNameController,
                     onSubmitted: (_) => submit(),
-                    keyboardType: TextInputType.datetime,
+                    keyboardType: TextInputType.name,
                   ),
                 ),
               ],
@@ -545,7 +555,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   child: Text('Value:'),
                 ),
                 SizedBox(
-                  width: 210,
+                  width: 180,
                   child: TextField(
                     autofocus: true,
                     style: const TextStyle(
