@@ -232,7 +232,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _addDurationPreferenceValueController.text = selectedDurationItemValueStr;
 
     // now, deleting the preferred duration item
-    
+
     durationDefinedItemMap.remove(selectedDurationItemKey);
 
     _transferDataMap['preferredDurationsItemsStr'] =
@@ -250,6 +250,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     if (selectedDurationItem == 'Add') {
       await _openAddNewPreferredDurationDialog(context: context);
+
+      if (_addDurationPreferenceNameController.text == '') {
+        return;
+      }
+
       _transferDataMap['preferredDurationsItemsStr'] =
           _buildPreferredDurationsItemStr();
       _transferDataViewModel.updateAndSaveTransferData();
@@ -602,6 +607,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
           ],
         ),
         actions: [
+          TextButton(
+            onPressed: () {
+              _addDurationPreferenceNameController.text = '';
+              _addDurationPreferenceValueController.text = '';
+            },
+            child: const Text('Clear'),
+          ),
           TextButton(
             onPressed: submit,
             child: const Text('Add new menu item'),
