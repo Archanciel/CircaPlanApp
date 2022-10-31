@@ -355,8 +355,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   Map<String, dynamic> _getPreferredDurationsItemMap() {
+    // _transferDataMap['preferredDurationsItemsStr'] returns
+    // null in case the Circadian app is started after deleting
+    // the circadian.json file !
     String currentPreferredDurationsItemStr =
-        _transferDataMap['preferredDurationsItemsStr'];
+        _transferDataMap['preferredDurationsItemsStr'] ?? '';
 
     Map<String, dynamic> currentPreferredDurationsItemMap = {};
 
