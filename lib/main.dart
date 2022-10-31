@@ -40,6 +40,7 @@ Future<void> main(List<String> args) async {
       deleteAppDir = false;
     }
   }
+  
   // It was necessary to place here the asynchronous
   // TransferDataViewModel instanciation instead of locating it
   // in [_MainAppState.build()] or [_MainAppState.initState()],
