@@ -213,6 +213,26 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         (firstMatch != null) ? firstMatch.group(0) ?? '' : '';
     selectedDurationItemKey = selectedDurationItemKey.trimRight();
 
+    String selectedDurationItemStr =
+        _transferDataMap['preferredDurationsItemsStr'];
+    Map<String, dynamic> selectedDurationItemMap =
+        jsonDecode(selectedDurationItemStr);
+
+    // before deleting preferred duration item, set the two
+    // add preferred duration item controlers text to the
+    // deleted elements
+
+    _addDurationPreferenceNameController.text = selectedDurationItemKey;
+
+    List<dynamic> selectedDurationItemValueLst =
+        selectedDurationItemMap[selectedDurationItemKey];
+    String selectedDurationItemValueStr =
+        selectedDurationItemValueLst.join(', ');
+
+    _addDurationPreferenceValueController.text = selectedDurationItemValueStr;
+
+    // now, deleting the preferred duration item
+    
     durationDefinedItemMap.remove(selectedDurationItemKey);
 
     _transferDataMap['preferredDurationsItemsStr'] =
