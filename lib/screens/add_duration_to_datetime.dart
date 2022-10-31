@@ -232,7 +232,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _addDurationPreferenceValueController.text = selectedDurationItemValueStr;
 
     // now, deleting the preferred duration item
-    
+
     durationDefinedItemMap.remove(selectedDurationItemKey);
 
     _transferDataMap['preferredDurationsItemsStr'] =
@@ -250,9 +250,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     if (selectedDurationItem == 'Add') {
       await _openAddNewPreferredDurationDialog(context: context);
-      _transferDataMap['preferredDurationsItemsStr'] =
-          _buildPreferredDurationsItemStr();
-      _transferDataViewModel.updateAndSaveTransferData();
+      String? preferredDurationsItemStr = _buildPreferredDurationsItemStr();
+
+      if (preferredDurationsItemStr != null) {
+        _transferDataMap['preferredDurationsItemsStr'] =
+            preferredDurationsItemStr;
+        _transferDataViewModel.updateAndSaveTransferData();
+      }
     }
 
     if (selectedDurationItem == 'Delete') {
