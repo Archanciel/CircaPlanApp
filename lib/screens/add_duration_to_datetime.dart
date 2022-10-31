@@ -350,6 +350,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return durationSelectableItemLst;
   }
 
+  /// Returns null if preferredDurationsItemName is '', example
+  /// {"ok":["12:00","4:00","10:00"],"new":["15:00","4:00","11:00"]} otherwise.
   String? _buildPreferredDurationsItemStr() {
     String preferredDurationsItemName =
         _addDurationPreferenceNameController.text;
