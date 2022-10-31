@@ -250,14 +250,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     if (selectedDurationItem == 'Add') {
       await _openAddNewPreferredDurationDialog(context: context);
+      String? preferredDurationsItemStr = _buildPreferredDurationsItemStr();
 
-      if (_addDurationPreferenceNameController.text == '') {
-        return;
+      if (preferredDurationsItemStr != null) {
+        _transferDataMap['preferredDurationsItemsStr'] =
+            preferredDurationsItemStr;
+        _transferDataViewModel.updateAndSaveTransferData();
       }
-
-      _transferDataMap['preferredDurationsItemsStr'] =
-          _buildPreferredDurationsItemStr();
-      _transferDataViewModel.updateAndSaveTransferData();
     }
 
     if (selectedDurationItem == 'Delete') {
@@ -351,6 +350,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return durationSelectableItemLst;
   }
 
+  /// Returns null if preferredDurationsItemName is '', example
+  /// {"ok":["12:00","4:00","10:00"],"new":["15:00","4:00","11:00"]} otherwise.
   String? _buildPreferredDurationsItemStr() {
     String preferredDurationsItemName =
         _addDurationPreferenceNameController.text;
