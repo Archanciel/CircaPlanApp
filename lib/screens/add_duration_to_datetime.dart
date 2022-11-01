@@ -203,15 +203,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     Map<String, dynamic> durationDefinedItemMap =
         _getPreferredDurationsItemMap();
-    RegExp preferredDurationsItemsNameRegExp = RegExp(r'^[\D ]+');
-    RegExpMatch? firstMatch = preferredDurationsItemsNameRegExp
-        .firstMatch(selectedPreferredDurationItem);
-
-    // next two statements handle case where the key is multi word,
-    // for example 'to del' !
-    String selectedDurationItemKey =
-        (firstMatch != null) ? firstMatch.group(0) ?? '' : '';
-    selectedDurationItemKey = selectedDurationItemKey.trimRight();
+    String selectedDurationItemKey = _getPreferredDurationItemName(selectedPreferredDurationItem);
 
     String selectedDurationItemStr =
         _transferDataMap['preferredDurationsItemsStr'];
@@ -219,7 +211,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         jsonDecode(selectedDurationItemStr);
 
     // before deleting preferred duration item, set the two
-    // add preferred duration item controlers text to the
+    // add preferred duration item controllers text to the
     // deleted elements
 
     _addDurationPreferenceNameController.text = selectedDurationItemKey;
@@ -240,8 +232,21 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  /// Method called when clicking on the heart icon.
-  Future<void> _handlePreferedDurationMenuItemSelectionection(
+  String _getPreferredDurationItemName(String string) {
+    RegExp regExp = RegExp(r'(^[\w ]+)( )');
+    RegExpMatch? firstMatch = regExp.firstMatch(string);
+
+    String name = '';
+
+    if (firstMatch != null) {
+      name = firstMatch.group(0)!.trimRight();
+    }
+
+    return name;
+  }
+
+  /// Method called when clicking on a menu item.
+  Future<void> _handlePreferedDurationMenuItemSelection(
       String selectedDurationItem,
       [BuildContext? context]) async {
     if (context == null) {
@@ -506,7 +511,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           0.0,
                         ),
                         handleSelectedItem:
-                            _handlePreferedDurationMenuItemSelectionection,
+                            _handlePreferedDurationMenuItemSelection,
                       );
                     },
                     icon: Icon(
