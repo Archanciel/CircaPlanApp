@@ -440,36 +440,28 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                       ),
                       child: GestureDetector(
-                        // HitTestBehavior intercepts all pointer calls. Required,
-                        // otherwise GestureDetector.onTap:, onDoubleTap:,
-                        // onLongPress: not applied
-                        behavior: HitTestBehavior.opaque,
-
-                        child: IgnorePointer(
-                          child: TextField(
-                            key: const Key('firstTimeTextField'),
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: valueTextStyle,
-                            keyboardType: TextInputType.datetime,
-                            controller: _firstTimeTextFieldController,
-                            onSubmitted: (val) {
-                              // called when manually updating the TextField
-                              // content. onChanged must be defined in order for
-                              // pasting a value to the TextField to really
-                              // modify the TextField value and store it
-                              // in the screen navigation transfer
-                              // data map.
-                              _firstTimeStr = Utility.formatStringDuration(
-                                durationStr: val,
-                                dayHourMinuteFormat: true,
-                              );
-                              _firstTimeTextFieldController.text =
-                                  _firstTimeStr;
-                              setState(() {});
-                              _updateTransferDataMap();
-                            },
-                          ),
+                        child: TextField(
+                          key: const Key('firstTimeTextField'),
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: valueTextStyle,
+                          keyboardType: TextInputType.datetime,
+                          controller: _firstTimeTextFieldController,
+                          onSubmitted: (val) {
+                            // called when manually updating the TextField
+                            // content. onChanged must be defined in order for
+                            // pasting a value to the TextField to really
+                            // modify the TextField value and store it
+                            // in the screen navigation transfer
+                            // data map.
+                            _firstTimeStr = Utility.formatStringDuration(
+                              durationStr: val,
+                              dayHourMinuteFormat: true,
+                            );
+                            _firstTimeTextFieldController.text = _firstTimeStr;
+                            setState(() {});
+                            _updateTransferDataMap();
+                          },
                         ),
                         onDoubleTap: () async {
                           await handleClipboardDataEditableDuration(
@@ -511,36 +503,29 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         ),
                       ),
                       child: GestureDetector(
-                        // HitTestBehavior intercepts all pointer calls. Required,
-                        // otherwise GestureDetector.onTap:, onDoubleTap:,
-                        // onLongPress: not applied
-                        behavior: HitTestBehavior.opaque,
-
-                        child: IgnorePointer(
-                          child: TextField(
-                            key: const Key('secondTimeTextField'),
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: valueTextStyle,
-                            keyboardType: TextInputType.datetime,
-                            controller: _secondTimeTextFieldController,
-                            onSubmitted: (val) {
-                              // called when manually updating the TextField
-                              // content. onChanged must be defined in order for
-                              // pasting a value to the TextField to really
-                              // modify the TextField value and store it
-                              // in the screen navigation transfer
-                              // data map.
-                              _secondTimeStr = Utility.formatStringDuration(
-                                durationStr: val,
-                                dayHourMinuteFormat: true,
-                              );
-                              _secondTimeTextFieldController.text =
-                                  _secondTimeStr;
-                              setState(() {});
-                              _updateTransferDataMap();
-                            },
-                          ),
+                        child: TextField(
+                          key: const Key('secondTimeTextField'),
+                          decoration:
+                              const InputDecoration.collapsed(hintText: ''),
+                          style: valueTextStyle,
+                          keyboardType: TextInputType.datetime,
+                          controller: _secondTimeTextFieldController,
+                          onSubmitted: (val) {
+                            // called when manually updating the TextField
+                            // content. onChanged must be defined in order for
+                            // pasting a value to the TextField to really
+                            // modify the TextField value and store it
+                            // in the screen navigation transfer
+                            // data map.
+                            _secondTimeStr = Utility.formatStringDuration(
+                              durationStr: val,
+                              dayHourMinuteFormat: true,
+                            );
+                            _secondTimeTextFieldController.text =
+                                _secondTimeStr;
+                            setState(() {});
+                            _updateTransferDataMap();
+                          },
                         ),
                         onDoubleTap: () async {
                           await handleClipboardDataEditableDuration(
