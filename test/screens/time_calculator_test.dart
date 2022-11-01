@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
@@ -143,6 +144,67 @@ Future<void> main() async {
           TextEditingController resultTextFieldController =
               resultTextField.controller!;
           expect(resultTextFieldController.text, '50.00 %');
+        },
+      );
+    },
+  );
+  group(
+    'Add test',
+    () {
+      testWidgets(
+        "Simulating keyboard typing on Time TextField's",
+        (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: TimeCalculator(
+                  transferDataViewModel: transferDataViewModel,
+                  screenNavigTransData: screenNavigTransData,
+                ),
+              ),
+            ),
+          );
+
+          final Finder firstTimeTextFieldFinder =
+              find.byKey(const Key('firstTimeTextField'));
+          final Finder secondTimeTextFieldFinder =
+              find.byKey(const Key('secondTimeTextField'));
+          final Finder resultTextFieldFinder =
+              find.byKey(const Key('resultTextField'));
+          final Finder addButtonFinder = find.byKey(const Key('addButton'));
+
+          await tester.tap(firstTimeTextFieldFinder);
+          await simulateKeyDownEvent(LogicalKeyboardKey.digit3);
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+          await tester.pumpAndSettle();
+
+          TextField firstTimeTextField =
+              tester.firstWidget(firstTimeTextFieldFinder);
+          TextEditingController firstTimeTextFieldController =
+              firstTimeTextField.controller!;
+          expect(firstTimeTextFieldController.text, '00:03:00');
+
+        //   await tester.enterText(secondTimeTextFieldFinder, '15');
+
+        //   // typing on Done button
+        //   await tester.testTextInput.receiveAction(TextInputAction.done);
+        //   await tester.pumpAndSettle();
+
+        //   TextField secondTimeTextField =
+        //       tester.firstWidget(secondTimeTextFieldFinder);
+        //   TextEditingController secondTimeTextFieldController =
+        //       secondTimeTextField.controller!;
+        //   expect(secondTimeTextFieldController.text, '00:15:00');
+
+        //   await tester.tap(addButtonFinder);
+        //   await tester.pumpAndSettle();
+
+        //   TextField resultTextField = tester.firstWidget(resultTextFieldFinder);
+        //   TextEditingController resultTextFieldController =
+        //       resultTextField.controller!;
+        //   expect(resultTextFieldController.text, '50.00 %');
         },
       );
     },
