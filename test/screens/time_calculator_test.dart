@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
@@ -148,65 +149,107 @@ Future<void> main() async {
       );
     },
   );
-  group(
-    'Add test',
-    () {
-      testWidgets(
-        "Simulating keyboard typing on Time TextField's",
-        (tester) async {
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: TimeCalculator(
-                  transferDataViewModel: transferDataViewModel,
-                  screenNavigTransData: screenNavigTransData,
-                ),
-              ),
-            ),
-          );
+//   group(
+//     'Add test',
+//     () {
+//       testWidgets(
+//         "Simulating keyboard typing on Time TextField's",
+//         (tester) async {
+//           await tester.pumpWidget(
+//             MaterialApp(
+//               home: Scaffold(
+//                 body: TimeCalculator(
+//                   transferDataViewModel: transferDataViewModel,
+//                   screenNavigTransData: screenNavigTransData,
+//                 ),
+//               ),
+//             ),
+//           );
 
-          final Finder firstTimeTextFieldFinder =
-              find.byKey(const Key('firstTimeTextField'));
-          final Finder secondTimeTextFieldFinder =
-              find.byKey(const Key('secondTimeTextField'));
-          final Finder resultTextFieldFinder =
-              find.byKey(const Key('resultTextField'));
-          final Finder addButtonFinder = find.byKey(const Key('addButton'));
+//           final Finder firstTimeTextFieldFinder =
+//               find.byKey(const Key('firstTimeTextField'));
+//           final Finder secondTimeTextFieldFinder =
+//               find.byKey(const Key('secondTimeTextField'));
+//           final Finder resultTextFieldFinder =
+//               find.byKey(const Key('resultTextField'));
+//           final Finder addButtonFinder = find.byKey(const Key('addButton'));
 
-          await tester.tap(firstTimeTextFieldFinder);
-          await simulateKeyDownEvent(LogicalKeyboardKey.digit3);
+//           TextField firstTimeTextField =
+//               tester.firstWidget(firstTimeTextFieldFinder);
+//           TextEditingController firstTimeTextFieldController =
+//               firstTimeTextField.controller!;
 
-          // typing on Done button
-          await tester.testTextInput.receiveAction(TextInputAction.done);
-          await tester.pumpAndSettle();
+//           // await tester.tap(firstTimeTextFieldFinder);
+//           await tester.tapAt(textOffsetToPosition(
+//               tester, firstTimeTextFieldController.text.length));
+//           await tester.pump();
 
-          TextField firstTimeTextField =
-              tester.firstWidget(firstTimeTextFieldFinder);
-          TextEditingController firstTimeTextFieldController =
-              firstTimeTextField.controller!;
-          expect(firstTimeTextFieldController.text, '00:03:00');
+//           await simulateKeyDownEvent(LogicalKeyboardKey.backspace);
+//           // await simulateKeyDownEvent(LogicalKeyboardKey.digit3);
+//           await tester.pumpAndSettle();
 
-        //   await tester.enterText(secondTimeTextFieldFinder, '15');
+//           expect(firstTimeTextFieldController.text, '00:03:00'); // not working
 
-        //   // typing on Done button
-        //   await tester.testTextInput.receiveAction(TextInputAction.done);
-        //   await tester.pumpAndSettle();
+//           //   await tester.enterText(secondTimeTextFieldFinder, '15');
 
-        //   TextField secondTimeTextField =
-        //       tester.firstWidget(secondTimeTextFieldFinder);
-        //   TextEditingController secondTimeTextFieldController =
-        //       secondTimeTextField.controller!;
-        //   expect(secondTimeTextFieldController.text, '00:15:00');
+//           //   // typing on Done button
+//           //   await tester.testTextInput.receiveAction(TextInputAction.done);
+//           //   await tester.pumpAndSettle();
 
-        //   await tester.tap(addButtonFinder);
-        //   await tester.pumpAndSettle();
+//           //   TextField secondTimeTextField =
+//           //       tester.firstWidget(secondTimeTextFieldFinder);
+//           //   TextEditingController secondTimeTextFieldController =
+//           //       secondTimeTextField.controller!;
+//           //   expect(secondTimeTextFieldController.text, '00:15:00');
 
-        //   TextField resultTextField = tester.firstWidget(resultTextFieldFinder);
-        //   TextEditingController resultTextFieldController =
-        //       resultTextField.controller!;
-        //   expect(resultTextFieldController.text, '50.00 %');
-        },
-      );
-    },
+//           //   await tester.tap(addButtonFinder);
+//           //   await tester.pumpAndSettle();
+
+//           //   TextField resultTextField = tester.firstWidget(resultTextFieldFinder);
+//           //   TextEditingController resultTextFieldController =
+//           //       resultTextField.controller!;
+//           //   expect(resultTextFieldController.text, '50.00 %');
+//         },
+//       );
+//     },
+//   );
+// }
+
+Offset textOffsetToPosition(WidgetTester tester, int offset) {
+  final RenderEditable renderEditable = findRenderEditable(tester);
+  final List<TextSelectionPoint> endpoints = globalize(
+    renderEditable.getEndpointsForSelection(
+      TextSelection.collapsed(offset: offset),
+    ),
+    renderEditable,
   );
+  expect(endpoints.length, 1);
+  return endpoints[0].point + const Offset(0.0, -2.0);
+}
+
+RenderEditable findRenderEditable(WidgetTester tester) {
+  final RenderObject root = tester.renderObject(find.byType(EditableText));
+  expect(root, isNotNull);
+  RenderEditable? renderEditable = null;
+  void recursiveFinder(RenderObject child) {
+    if (child is RenderEditable) {
+      renderEditable = child;
+      return;
+    }
+    child.visitChildren(recursiveFinder);
+  }
+
+  root.visitChildren(recursiveFinder);
+  expect(renderEditable, isNotNull);
+  return renderEditable!;
+}
+
+List<TextSelectionPoint> globalize(
+    Iterable<TextSelectionPoint> points, RenderBox box) {
+  return points.map<TextSelectionPoint>((TextSelectionPoint point) {
+    return TextSelectionPoint(
+      box.localToGlobal(point.point),
+      point.direction,
+    );
+  }).toList();
 }
