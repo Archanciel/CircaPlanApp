@@ -96,9 +96,11 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     stateInstance.saveTransferDataIfModified = doSave;
   }
 
-  /// Calls the _AddSubtractResultableDurationState.reset() method.
-  void reset() {
-    stateInstance.reset();
+  /// Calls the _DurationDateTimeEditorState.reset() method.
+  void reset({required String resetDateTimeEnglishFormatStr}) {
+    stateInstance.reset(
+      resetDateTimeEnglishFormatStr: resetDateTimeEnglishFormatStr,
+    );
   }
 
   /// Calls the _AddSubtractResultableDurationState.setStartDateTimeStr() method.
@@ -203,13 +205,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
   String get frenchFormatEndDateTimeStr => _dateTimePickerController.text;
 
-  void reset() {
-    final DateTime dateTimeNow = DateTime.now();
-    // String value used to initialize DateTimePicker field
-    String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
-
-    _startDateTimeStr = nowDateTimeEnglishFormatStr;
-    _endDateTimeStr = nowDateTimeEnglishFormatStr;
+  void reset({required String resetDateTimeEnglishFormatStr}) {
+    _startDateTimeStr = resetDateTimeEnglishFormatStr;
+    _endDateTimeStr = resetDateTimeEnglishFormatStr;
     _dateTimePickerController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
             englishFormatDateTimeStr: _endDateTimeStr)!;
@@ -227,7 +225,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     if (_nextAddSubtractResultableDuration != null) {
-      _nextAddSubtractResultableDuration!.reset();
+      _nextAddSubtractResultableDuration!.reset(
+        resetDateTimeEnglishFormatStr: resetDateTimeEnglishFormatStr,
+      );
     }
   }
 

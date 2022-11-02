@@ -178,14 +178,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   void _resetScreen() {
-    final DateTime dateTimeNow = DateTime.now();
-    // String value used to initialize DateTimePicker field
-    String nowDateTimePickerEnglishFormatStr = dateTimeNow.toString();
+    // When resetting the 1dt screen, its Start date time is set
+    // to the last date time value added to the 3rd screen.
+    String thirdScreenLastDateTimeFrenchFormatStr =
+        _transferDataMap['calcSlDurPreviousDateTimeStr'];
 
-    _startDateTimeStr = nowDateTimePickerEnglishFormatStr;
-    _startDateTimePickerController.text =
-        DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-            englishFormatDateTimeStr: _startDateTimeStr)!;
+    if (thirdScreenLastDateTimeFrenchFormatStr == '') {
+      // String value used to initialize DateTimePicker field
+      thirdScreenLastDateTimeFrenchFormatStr =
+          ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+    }
+    _startDateTimeStr = thirdScreenLastDateTimeFrenchFormatStr;
+    _startDateTimePickerController.text = _startDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
@@ -193,7 +197,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // third AddSubtractResultableDuration widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
-    _firstDurationDateTimeEditorWidget.reset();
+    _firstDurationDateTimeEditorWidget.reset(
+        resetDateTimeEnglishFormatStr:
+            DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                    frenchFormatDateTimeStr:
+                        thirdScreenLastDateTimeFrenchFormatStr) ??
+                '');
   }
 
   void _deletePreferredDurationItem(String selectedPreferredDurationItem,
