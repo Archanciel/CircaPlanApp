@@ -213,7 +213,7 @@ Future<void> main() async {
 //       );
 //     },
 //   );
-// }
+}
 
 Offset textOffsetToPosition(WidgetTester tester, int offset) {
   final RenderEditable renderEditable = findRenderEditable(tester);

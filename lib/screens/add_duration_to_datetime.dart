@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -203,7 +204,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     Map<String, dynamic> durationDefinedItemMap =
         _getPreferredDurationsItemMap();
-    String selectedDurationItemKey = _getPreferredDurationItemName(selectedPreferredDurationItem);
+    String selectedDurationItemKey =
+        _getPreferredDurationItemName(selectedPreferredDurationItem);
 
     String selectedDurationItemStr =
         _transferDataMap['preferredDurationsItemsStr'];
@@ -371,7 +373,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _getPreferredDurationsItemMap();
 
     List<String> parsedTimeStrLst =
-        DateTimeParser.parseAllHHMMTimeStr(preferredDurationsItemValue);
+        DateTimeParser.parseAllIntOrHHMMTimeStr(preferredDurationsItemValue);
+
+    // List<String> parsedTimeStrLst =
+    //     DateTimeParser.parseAllHHMMTimeStr(preferredDurationsItemValue);
 
     currentPreferredDurationsItemMap[preferredDurationsItemName] =
         parsedTimeStrLst;

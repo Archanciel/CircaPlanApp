@@ -780,4 +780,50 @@ void main() {
       );
     },
   );
+  group(
+    'DateTimeParser.parseAllIntOrHHMMTimeStr()',
+    () {
+      test(
+        'positive valid times string',
+        () {
+          const String timeStr = '10 2 13:35, 5,3 3:05,0:05, 0:05';
+
+          List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
+
+          expect(parsedTimeStrLst, ['10:00', '2:00', '13:35', '5:00', '3:00', '3:05', '0:05', '0:05']);
+        },
+      );
+      test(
+        'negative valid times string',
+        () {
+          const String timeStr = '-10 -2 -13:35, 5,-3 3:05,0:05, -0:05';
+
+          List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
+
+          expect(parsedTimeStrLst, ['-10:00', '-2:00', '-13:35', '5:00', '-3:00', '3:05', '0:05', '-0:05']);
+        },
+      );
+      test(
+        'positive valid and invalid times string',
+        () {
+          const String timeStr = '10 2 13:35, 5,3 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
+
+          List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
+
+          expect(parsedTimeStrLst, ['10:00', '2:00', '13:35', '5:00', '3:00', '3:05', '0:05', '0:05', '3:u5', '3:5', '3-05', '3-5']);
+        },
+      );
+      test(
+        'negative valid and invalid times string',
+        () {
+          const String negativeTimeStr =
+              '-13:35 -3:05,-0:05,-3-05 -3:u5, -3:5 -3-5';
+
+          List<String> parsedNegTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(negativeTimeStr);
+
+          expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05', '-3-05', '-3:u5', '-3:5', '-3-5']);
+        },
+      );
+    },
+  );
 }

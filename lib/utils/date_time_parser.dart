@@ -1,5 +1,6 @@
 // adding method HHmm which returns the Duration formatted as HH:mm
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:intl/intl.dart';
 
 extension FormattedDayHourMinute on Duration {
@@ -107,6 +108,26 @@ class DateTimeParser {
         .map((m) => m.group(0))
         .whereType<String>()
         .toList();
+  }
+
+  /// Parses the passed int or hourMinuteStr formatted as h or hh or hh:mm or
+  /// h:mm or -hh:mm or -h or -hh or -h:mm and returns the hh:mm, h:mm, -hh:mm
+  /// or -h:mm parsed String or null if the passed hourMinuteStr does not
+  /// respect the hh:mm or h:mm or -hh:mm or -h:mm format, like 03:2 or 3:2 or
+  /// 03-02 or 03:a2 or -03:2 or -3:2 or -03-02 or -03:a2 for example.
+  static List<String> parseAllIntOrHHMMTimeStr(
+      String preferredDurationsItemValue) {
+    RegExp regExp = RegExp(r'[ ,]+');
+    List<String> preferredDurationsItemValueStrLst =
+        preferredDurationsItemValue.split(regExp);
+    List<String> parsedTimeStrLst = preferredDurationsItemValueStrLst
+        .map((e) => Utility.formatStringDuration(
+              durationStr: e,
+              removeMinusSign: false,
+            ))
+        .toList();
+
+    return parsedTimeStrLst;
   }
 
   /// Parses the passed hourMinuteStr formatted as hh:mm or h:mm or -hh:mm or
