@@ -35,30 +35,6 @@ Future<void> main() async {
     'EditableDateTime widget testing',
     () {
       testWidgets(
-        'testing default date time set to now',
-        (tester) async {
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: EditableDateTime(
-                  dateTimeTitle: 'Start date time',
-                  topSelMenuPosition: 120,
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataViewModel.getTransferDataMap()!,
-                  handleDateTimeModificationFunction: handleEndDateTimeChange,
-                  handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
-                ),
-              ),
-            ),
-          );
-
-          await tester.pumpAndSettle();
-
-          String nowStr = DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now());
-          expect(find.text(nowStr), findsOneWidget);
-        },
-      );
-      testWidgets(
         'Clicking on Now button',
         (tester) async {
           final edtNowButton =
