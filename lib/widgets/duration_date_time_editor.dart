@@ -471,7 +471,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   child: IgnorePointer(
-                    // Prevents displaying copèy menu after selecting in
+                    // Prevents displaying copy menu after selecting in
                     // TextField.
                     // Required for onLongPress selection to work
                     child: TextField(
