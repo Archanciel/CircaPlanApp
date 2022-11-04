@@ -203,6 +203,16 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
             englishFormatDateTimeStr: _endDateTimeStr)!;
   }
 
+  @override
+  void dispose() {
+    _durationTextFieldController.dispose();
+    _dateTimePickerController.dispose();
+
+    _durationTextfieldFocusNode.dispose();
+
+    super.dispose();
+  }
+
   String get frenchFormatEndDateTimeStr => _dateTimePickerController.text;
 
   void reset({required String resetDateTimeEnglishFormatStr}) {

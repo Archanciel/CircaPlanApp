@@ -191,6 +191,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _secondTimeTextFieldController.dispose();
     _resultTextFieldController.dispose();
 
+    _firstTimeTextFieldFocusNode.dispose();
+    _secondTimeTextFieldController.dispose();
+
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
     }
@@ -547,9 +550,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                       ),
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                          // Prevents displaying copy menu after selecting in
-                          // TextField.
-                          // Required for onLongPress selection to work
+                        // Prevents displaying copy menu after selecting in
+                        // TextField.
+                        // Required for onLongPress selection to work
                         child: IgnorePointer(
                           child: TextField(
                             key: const Key('secondTimeTextField'),
@@ -591,7 +594,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           _secondTimeTextFieldController.selection =
                               TextSelection.fromPosition(
                             TextPosition(
-                              offset: _secondTimeTextFieldController.text.length,
+                              offset:
+                                  _secondTimeTextFieldController.text.length,
                             ),
                           );
                         },
