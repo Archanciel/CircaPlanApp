@@ -40,7 +40,7 @@ Future<void> main(List<String> args) async {
       deleteAppDir = false;
     }
   }
-  
+
   // It was necessary to place here the asynchronous
   // TransferDataViewModel instanciation instead of locating it
   // in [_MainAppState.build()] or [_MainAppState.initState()],
@@ -91,8 +91,10 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
 class MyApp extends StatelessWidget with ScreenMixin {
   final TransferDataViewModel _transferDataViewModel;
 
-  MyApp({Key? key, required TransferDataViewModel transferDataViewModel})
-      : _transferDataViewModel = transferDataViewModel,
+  MyApp({
+    Key? key,
+    required TransferDataViewModel transferDataViewModel,
+  })  : _transferDataViewModel = transferDataViewModel,
         super(key: key);
 
   @override
