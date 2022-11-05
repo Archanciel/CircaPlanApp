@@ -9,37 +9,107 @@ import '../buslog/transfer_data_view_model.dart';
 import '../utils/utility.dart';
 
 void main() {
-  runApp(const MyApp());
+  final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+      transferDataJsonFilePathName:
+          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
+  final Map<String, dynamic> transferDataMap = {
+    "firstDurationIconData": Icons.add,
+    "firstDurationIconColor": Colors.green.shade200,
+    "firstDurationSign": 1,
+    "firstDurationTextColor": Colors.green.shade200,
+    "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
+    "firstDurationStr": "00:50",
+    "firstStartDateTimeStr": "12-07-2022 16:00",
+    "firstEndDateTimeStr": "12-07-2022 16:50",
+    "secondDurationIconData": Icons.remove,
+    "secondDurationIconColor": Colors.red.shade200,
+    "secondDurationSign": -1,
+    "secondDurationTextColor": Colors.red.shade200,
+    "secondDurationStr": "02:00",
+    "secondStartDateTimeStr": "12-07-2022 16:00",
+    "secondEndDateTimeStr": "12-07-2022 14:00",
+    "thirdDurationIconData": Icons.remove,
+    "thirdDurationIconColor": Colors.red.shade200,
+    "thirdDurationSign": -1,
+    "thirdDurationTextColor": Colors.red.shade200,
+    "thirdDurationStr": "00:00",
+    "thirdStartDateTimeStr": "12-07-2022 16:00",
+    "thirdEndDateTimeStr": "12-07-2022 16:00",
+    "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30"]}',
+    "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
+    "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+    "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+    "calcSlDurCurrSleepDurationStr": '12:36',
+    "calcSlDurCurrWakeUpDurationStr": '0:02',
+    "calcSlDurCurrTotalDurationStr": '12:38',
+    "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+    "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+    "calcSlDurCurrTotalDurationPercentStr": '100 %',
+    "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+    "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+    "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+    "calcSlDurStatus": Status.sleep,
+    "calcSlDurSleepTimeStrHistory": ['10_07_2022 00:58', '05:35', '04:00'],
+    "calcSlDurWakeUpTimeStrHistory": ['10_07_2022 05:58', '00:35', '01:00'],
+    "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+    "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+    "dtDiffDurationStr": "24:00",
+    "dtDiffAddTimeStr": "1:00",
+    "dtDiffFinalDurationStr": "25:00",
+    "dtDurationPercentStr": "70 %",
+    "dtDurationTotalPercentStr": "90 %",
+    "firstTimeStr": "00:10:00",
+    "secondTimeStr": "00:05:00",
+    "resultTimeStr": "00:15:00",
+    "resultPercentStr": "40 %",
+    "resultSecondPercentStr": "90 %",
+    "divideFirstBySecondCheckBox": false,
+  };
+
+  transferDataViewModel.transferDataMap = transferDataMap;
+  transferDataViewModel.updateAndSaveTransferData();
+
+  runApp(MyApp(
+    transferDataViewModel: transferDataViewModel,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final TransferDataViewModel _transferDataViewModel;
+
+  const MyApp({
+    Key? key,
+    required TransferDataViewModel transferDataViewModel,
+  })  : _transferDataViewModel = transferDataViewModel,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // print('MyApp.build()');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ManualSelectableTextFieldScreen(),
+      home: ManuallySelectableTextFieldScreen(
+          transferDataViewModel: _transferDataViewModel),
     );
   }
 }
 
-class ManualSelectableTextFieldScreen extends StatefulWidget with ScreenMixin {
-  ManualSelectableTextFieldScreen({Key? key}) : super(key: key);
-  String lsonFileName = 'manual_selectable_text_field_main.json';
-  final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
-      transferDataJsonFilePathName:
-          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
-  Map<String, dynamic> transferDataMap = {
-    "firstTimeStr": "00:00",
-  };
+class ManuallySelectableTextFieldScreen extends StatefulWidget
+    with ScreenMixin {
+  final String lsonFileName = 'manual_selectable_text_field_main.json';
+  final TransferDataViewModel transferDataViewModel;
+  final Map<String, dynamic> transferDataMap;
 
-  String firstTimeStr = '';
+  ManuallySelectableTextFieldScreen({
+    Key? key,
+    required TransferDataViewModel transferDataViewModel,
+  })  : transferDataViewModel = transferDataViewModel,
+  transferDataMap = transferDataViewModel.getTransferDataMap()!,
+        super(key: key);
 
   @override
-  State<ManualSelectableTextFieldScreen> createState() =>
-      _ManualSelectableTextFieldScreenState();
+  State<ManuallySelectableTextFieldScreen> createState() =>
+      _ManuallySelectableTextFieldScreenState();
 
   void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
     print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
@@ -48,18 +118,14 @@ class ManualSelectableTextFieldScreen extends StatefulWidget with ScreenMixin {
   void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
     print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
   }
-
-  void updateTransferDataMap() {
-    transferDataMap['firstTimeStr'] = firstTimeStr;
-
-    transferDataViewModel.updateAndSaveTransferData();
-  }
 }
 
-class _ManualSelectableTextFieldScreenState
-    extends State<ManualSelectableTextFieldScreen> {
+class _ManuallySelectableTextFieldScreenState
+    extends State<ManuallySelectableTextFieldScreen> {
   late TextEditingController _firstTimeTextFieldController;
   final _firstTimeTextFieldFocusNode = FocusNode();
+
+  String _firstTimeStr = '';
 
   @override
   void initState() {
@@ -71,10 +137,15 @@ class _ManualSelectableTextFieldScreenState
     widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstEndDateTimeStr"] = nowStr;
 
-    widget.firstTimeStr = widget.transferDataMap['firstTimeStr'] ?? '00:00:00';
+    _firstTimeStr = widget.transferDataMap['firstTimeStr'] ?? '00:00:00';
 
-    _firstTimeTextFieldController =
-        TextEditingController(text: widget.firstTimeStr);
+    _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
+  }
+
+  void _updateTransferDataMap() {
+    widget.transferDataMap['firstTimeStr'] = _firstTimeStr;
+
+    widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
   @override
@@ -83,7 +154,7 @@ class _ManualSelectableTextFieldScreenState
     return Scaffold(
       backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
-        title: const Text('Flutter Date Timer Picker'),
+        title: const Text('Manually selectable TextField'),
         centerTitle: true,
         backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
       ),
@@ -104,7 +175,7 @@ class _ManualSelectableTextFieldScreenState
                     height: 15,
                   ),
                   Text(
-                    'Time (dd:hh:mm)',
+                    'Time (dd:hh:mm) | %',
                     style: widget.labelTextStyle,
                   ),
                   Container(
@@ -141,15 +212,14 @@ class _ManualSelectableTextFieldScreenState
                               // modify the TextField value and store it
                               // in the screen navigation transfer
                               // data map.
-                              widget.firstTimeStr =
-                                  Utility.formatStringDuration(
+                              _firstTimeStr = Utility.formatStringDuration(
                                 durationStr: val,
                                 dayHourMinuteFormat: true,
                               );
                               _firstTimeTextFieldController.text =
-                                  widget.firstTimeStr;
+                                  _firstTimeStr;
                               setState(() {});
-                              widget.updateTransferDataMap();
+                              _updateTransferDataMap();
                             },
                           ),
                         ),
@@ -177,14 +247,13 @@ class _ManualSelectableTextFieldScreenState
                             transferDataMap: widget.transferDataMap,
                             handleDataChangeFunction:
                                 (BuildContext c, String s) {
-                              widget.firstTimeStr =
-                                  Utility.formatStringDuration(
+                              _firstTimeStr = Utility.formatStringDuration(
                                 durationStr: s,
                                 dayHourMinuteFormat: true,
                               );
                               _firstTimeTextFieldController.text =
-                                  widget.firstTimeStr;
-                              widget.updateTransferDataMap();
+                                  _firstTimeStr;
+                              _updateTransferDataMap();
                             },
                           );
                         },
