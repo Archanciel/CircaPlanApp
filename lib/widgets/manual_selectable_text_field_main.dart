@@ -104,7 +104,7 @@ class ManuallySelectableTextFieldScreen extends StatefulWidget
     Key? key,
     required TransferDataViewModel transferDataViewModel,
   })  : transferDataViewModel = transferDataViewModel,
-  transferDataMap = transferDataViewModel.getTransferDataMap()!,
+        transferDataMap = transferDataViewModel.getTransferDataMap()!,
         super(key: key);
 
   @override
@@ -123,9 +123,14 @@ class ManuallySelectableTextFieldScreen extends StatefulWidget
 class _ManuallySelectableTextFieldScreenState
     extends State<ManuallySelectableTextFieldScreen> {
   late TextEditingController _firstTimeTextFieldController;
+  late TextEditingController _durationTextFieldController;
   final _firstTimeTextFieldFocusNode = FocusNode();
+  final _durationTextfieldFocusNode = FocusNode();
+  Color _durationTextColor = Colors.green.shade200;
 
   String _firstTimeStr = '';
+  String _durationTextFieldStr = '';
+  String _durationStr = '';
 
   @override
   void initState() {
@@ -138,14 +143,53 @@ class _ManuallySelectableTextFieldScreenState
     widget.transferDataMap["firstEndDateTimeStr"] = nowStr;
 
     _firstTimeStr = widget.transferDataMap['firstTimeStr'] ?? '00:00:00';
+    _durationTextFieldStr =
+        widget.transferDataMap['firstDurationStr'] ?? '00:00:00';
 
     _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
+    _durationTextFieldController =
+        TextEditingController(text: _durationTextFieldStr);
+  }
+
+  @override
+  void dispose() {
+    _firstTimeTextFieldController.dispose();
+    _durationTextFieldController.dispose();
+
+    _firstTimeTextFieldFocusNode.dispose();
+    _durationTextfieldFocusNode.dispose();
+
+    super.dispose();
   }
 
   void _updateTransferDataMap() {
     widget.transferDataMap['firstTimeStr'] = _firstTimeStr;
+    widget.transferDataMap['firstDurationStr'] = _durationStr;
 
     widget.transferDataViewModel.updateAndSaveTransferData();
+  }
+
+
+  void handleDurationChange({
+    String? durationStr,
+    int? durationSign,
+    bool wasDurationSignButtonPressed = false,
+  }) {
+    _durationStr = Utility.formatStringDuration(
+        durationStr: _durationTextFieldController.text);
+
+    // necessary in case the _durationStr was set to an
+    // int value, like 2 instead of 2:00 !
+    _durationTextFieldController.text = _durationStr;
+
+    _updateTransferDataMap(); // must be executed before calling
+    // the next DurationDateTimeEditor widget
+    // setStartDateTimeStr() method in order for the transfer
+    // data map to be updated before the last linked third
+    // DurationDateTimeEditor widget
+    // _updateTransferDataMap() method calls the
+    // TransferDataViewModel.updateAndSaveTransferData()
+    // method !
   }
 
   @override
@@ -269,6 +313,97 @@ class _ManuallySelectableTextFieldScreenState
                             baseOffset: 0,
                             extentOffset:
                                 _firstTimeTextFieldController.text.length,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                    //                  height ...
+                    height: kVerticalFieldDistance,
+                  ),
+                  Text(
+                    'Duration',
+                    style: widget.labelTextStyle,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
+//                                          4 is compliant with current value 5
+//                                          of APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: widget.selectionColor,
+                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                        ),
+                      ),
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        child: IgnorePointer(
+                          // Prevents displaying copy menu after selecting in
+                          // TextField.
+                          // Required for onLongPress selection to work
+                          child: TextField(
+                            key: const Key('durationTextField'),
+                            // Required, otherwise, field not focusable due to
+                            // IgnorePointer wrapping
+                            focusNode: _durationTextfieldFocusNode,
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            style: TextStyle(
+                                color: _durationTextColor,
+                                fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                            keyboardType: TextInputType.datetime,
+                            controller: _durationTextFieldController,
+                            onSubmitted: (val) {
+                              // solve the unsolvable problem of onChange()
+                              // which set cursor at TextField start position !
+                              handleDurationChange(durationStr: val);
+                            },
+                          ),
+                        ),
+                        onTap: () {
+                          // Required, otherwise, duration field not focusable
+                          FocusScope.of(context).requestFocus(
+                            _durationTextfieldFocusNode,
+                          );
+
+                          // Positioning the cursor to the end of TextField content.
+                          // WARNING: works only if keyboard is displayed or other
+                          // duration field is in edit mode !
+                          _durationTextFieldController.selection =
+                              TextSelection.fromPosition(
+                            TextPosition(
+                              offset: _durationTextFieldController.text.length,
+                            ),
+                          );
+                        },
+                        onDoubleTap: () async {
+                          await widget
+                              .handleClipboardDataDurationDateTimeEditor(
+                                  context: context,
+                                  textEditingController:
+                                      _durationTextFieldController,
+                                  transferDataMap: widget.transferDataViewModel.getTransferDataMap()!,
+                                  handleDataChangeFunction:
+                                      handleDurationChange);
+                        },
+                        onLongPress: () {
+                          // Requesting focus avoids necessity to first tap on
+                          // TextField before long pressing on it to select its
+                          // content !
+                          FocusScope.of(context).requestFocus(
+                            _durationTextfieldFocusNode,
+                          );
+                          _durationTextFieldController.selection =
+                              TextSelection(
+                            baseOffset: 0,
+                            extentOffset:
+                                _durationTextFieldController.text.length,
                           );
                         },
                       ),
