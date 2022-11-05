@@ -192,7 +192,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _resultTextFieldController.dispose();
 
     _firstTimeTextFieldFocusNode.dispose();
-    _secondTimeTextFieldController.dispose();
+    _secondTimeTextFieldFocusNode.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
