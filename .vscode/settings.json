@@ -1,5 +1,8 @@
 {
     "github.gitAuthentication": false,
     "git.allowNoVerifyCommit": true,
-    "editor.codeActionsOnSave": {"source.fixAll": true},
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "editor.tabSize": 2,
 }

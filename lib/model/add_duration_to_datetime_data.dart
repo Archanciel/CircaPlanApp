@@ -103,8 +103,11 @@ class AddDurationToDateTimeData extends ScreenData {
         attributes['preferredDurationsItemsStr'] ?? '';
   }
 
-  set preferredDurationsItemsStr(String value) =>
-      attributes['preferredDurationsItemsStr'] = value;
+  set preferredDurationsItemsStr(String? value) {
+    // ?? '' solves the case when the preferredDurationsItemsStr
+    // value does not exist in the circadian.json file !
+    attributes['preferredDurationsItemsStr'] = value ?? '';
+  }
 
   @override
   String toString() {
