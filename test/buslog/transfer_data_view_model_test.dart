@@ -661,6 +661,287 @@ void main() {
               transferDataMap);
         },
       );
+      test(
+        'TransferDataViewModel loadTransferData no preferredDurationsItemsStr',
+        () async {
+          Map<String, dynamic> transferDataMap = {
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
+            "firstDurationStr": "00:50",
+            "firstStartDateTimeStr": "12-07-2022 16:00",
+            "firstEndDateTimeStr": "12-07-2022 16:50",
+            "secondDurationIconData": Icons.remove,
+            "secondDurationIconColor": Colors.red.shade200,
+            "secondDurationSign": -1,
+            "secondDurationTextColor": Colors.red.shade200,
+            "secondDurationStr": "02:00",
+            "secondStartDateTimeStr": "12-07-2022 16:00",
+            "secondEndDateTimeStr": "12-07-2022 14:00",
+            "thirdDurationIconData": Icons.remove,
+            "thirdDurationIconColor": Colors.red.shade200,
+            "thirdDurationSign": -1,
+            "thirdDurationTextColor": Colors.red.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdStartDateTimeStr": "12-07-2022 16:00",
+            "thirdEndDateTimeStr": "12-07-2022 16:00",
+            "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
+            "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+            "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+            "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+            "calcSlDurStatus": Status.sleep,
+            "calcSlDurSleepTimeStrHistory": [
+              '10-07-2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": [
+              '10-07-2022 05:58',
+              '00:35',
+              '01:00'
+            ],
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
+          };
+
+          String path = kCircadianAppDataTestDir;
+          final Directory directory = Directory(path);
+          bool directoryExists = await directory.exists();
+
+          if (!directoryExists) {
+            await directory.create();
+          }
+
+          String pathSeparator = Platform.pathSeparator;
+          String transferDataJsonFilePathName =
+              '${directory.path}${pathSeparator}circadianNoPreferredDurItem.json';
+          TransferDataViewModel transferDataViewModel = TransferDataViewModel(
+              transferDataJsonFilePathName: transferDataJsonFilePathName);
+          transferDataViewModel.transferDataMap = transferDataMap;
+
+          // if not using await on next expression,
+          // loadedTransferDataViewModel.loadTransferData() will fail with
+          // dart Could not load source 'dart:io/file_impl.dart': <source not
+          // available error !
+          await transferDataViewModel
+              .updateAndSaveTransferData(); // saves to json file
+
+          TransferDataViewModel loadedTransferDataViewModel =
+              TransferDataViewModel(
+                  transferDataJsonFilePathName: transferDataJsonFilePathName);
+
+          Map<String, dynamic> emptyTransferDataMap = {};
+
+          loadedTransferDataViewModel.transferDataMap = emptyTransferDataMap;
+          await loadedTransferDataViewModel.loadTransferData();
+
+          AddDurationToDateTimeData loadedAddDurationToDateTimeData =
+              loadedTransferDataViewModel.addDurationToDateTimeData;
+          expect(loadedAddDurationToDateTimeData.toString(),
+              'addDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationIconType: DurationIconType.add\nfirstDurationStr: 00:50\nfirstStartDateTimeStr: 12-07-2022 16:00\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: DurationIconType.subtract\nsecondDurationStr: 02:00\nsecondStartDateTimeStr: 12-07-2022 16:00\nsecondEndDateTimeStr: 12-07-2022 14:00\nthirdDurationIconType: DurationIconType.subtract\nthirdDurationStr: 00:00\nthirdStartDateTimeStr: 12-07-2022 16:00\nthirdEndDateTimeStr: 12-07-2022 16:00\npreferredDurationsItemsStr: ');
+          expect(loadedAddDurationToDateTimeData.screenDataType,
+              ScreenDataType.addDurationToDateTimeData);
+          expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
+              '2022-07-12 16:00:26.486627');
+          expect(loadedAddDurationToDateTimeData.firstDurationIconType,
+              DurationIconType.add);
+          expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
+              '00:50');
+          expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
+              '12-07-2022 16:50');
+          expect(loadedAddDurationToDateTimeData.secondDurationIconType,
+              DurationIconType.subtract);
+          expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
+              '02:00');
+          expect(
+              loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
+              '12-07-2022 14:00');
+
+          // currently, those data are not stored in AddDurationToDateTimeData,
+          // but only in the transfer data map !
+          Map<String, dynamic> loadedTransferDataMap =
+              loadedTransferDataViewModel.getTransferDataMap()!;
+
+          expect(loadedTransferDataMap['firstDurationIconColor'],
+              DurationDateTimeEditor.durationPositiveColor);
+          expect(loadedTransferDataMap['firstDurationTextColor'],
+              DurationDateTimeEditor.durationPositiveColor);
+          expect(loadedTransferDataMap['firstDurationSign'], 1);
+
+          expect(loadedTransferDataMap['secondDurationIconColor'],
+              DurationDateTimeEditor.durationNegativeColor);
+          expect(loadedTransferDataMap['secondDurationTextColor'],
+              DurationDateTimeEditor.durationNegativeColor);
+          expect(loadedTransferDataMap['secondDurationSign'], -1);
+
+          CalculateSleepDurationData loadedCalculateSleepDurationData =
+              loadedTransferDataViewModel.calculateSleepDurationData;
+
+          expect(loadedCalculateSleepDurationData.screenDataType,
+              ScreenDataType.calculateSleepDurationData);
+          expect(loadedCalculateSleepDurationData.status, Status.sleep);
+          expect(loadedCalculateSleepDurationData.sleepDurationNewDateTimeStr,
+              '14-07-2022 13:09');
+          expect(
+              loadedCalculateSleepDurationData.sleepDurationPreviousDateTimeStr,
+              '14-07-2022 13:13');
+          expect(
+              loadedCalculateSleepDurationData
+                  .sleepDurationBeforePreviousDateTimeStr,
+              '14-07-2022 13:12');
+          expect(loadedCalculateSleepDurationData.sleepDurationStr, '12:36');
+          expect(loadedCalculateSleepDurationData.wakeUpDurationStr, '0:02');
+          expect(loadedCalculateSleepDurationData.totalDurationStr, '12:38');
+          expect(loadedCalculateSleepDurationData.sleepDurationPercentStr,
+              '99.74 %');
+          expect(loadedCalculateSleepDurationData.wakeUpDurationPercentStr,
+              '0.26 %');
+          expect(loadedCalculateSleepDurationData.totalDurationPercentStr,
+              '100 %');
+          expect(loadedCalculateSleepDurationData.sleepPrevDayTotalPercentStr,
+              '79.74 %');
+          expect(loadedCalculateSleepDurationData.wakeUpPrevDayTotalPercentStr,
+              '1.26 %');
+          expect(loadedCalculateSleepDurationData.totalPrevDayTotalPercentStr,
+              '81 %');
+          expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
+              ['10-07-2022 00:58', '05:35', '04:00']);
+          expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
+              ['10-07-2022 05:58', '00:35', '01:00']);
+
+          DateTimeDifferenceDurationData loadedDateTimeDifferenceDurationData =
+              loadedTransferDataViewModel.dateTimeDifferenceDurationData;
+
+          expect(loadedDateTimeDifferenceDurationData.screenDataType,
+              ScreenDataType.dateTimeDifferenceDurationData);
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceStartDateTimeStr,
+              "2022-07-13 16:09");
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceEndDateTimeStr,
+              "2022-07-14 16:09:42.390753");
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationStr,
+              "24:00");
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceFinalDurationStr,
+              "25:00");
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationPercentStr,
+              "70 %");
+          expect(
+              loadedDateTimeDifferenceDurationData
+                  .dateTimeDifferenceDurationTotalPercentStr,
+              "90 %");
+
+          TimeCalculatorData loadedTimeCalculatorData =
+              loadedTransferDataViewModel.timeCalculatorData;
+
+          expect(loadedTimeCalculatorData.screenDataType,
+              ScreenDataType.timeCalculatorData);
+          expect(
+              loadedTimeCalculatorData.timeCalculatorFirstTimeStr, "00:10:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorSecondTimeStr, "00:05:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultTimeStr, "00:15:00");
+          expect(
+              loadedTimeCalculatorData.timeCalculatorResultPercentStr, "40 %");
+          expect(loadedTimeCalculatorData.timeCalculatorResultSecondPercentStr,
+              "90 %");
+
+          Map<String, dynamic> expectedLoadedTransferDataMap = {
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": "2022-07-12 16:00:26.486627",
+            "firstDurationStr": "00:50",
+            "firstStartDateTimeStr": "12-07-2022 16:00",
+            "firstEndDateTimeStr": "12-07-2022 16:50",
+            "secondDurationIconData": Icons.remove,
+            "secondDurationIconColor": Colors.red.shade200,
+            "secondDurationSign": -1,
+            "secondDurationTextColor": Colors.red.shade200,
+            "secondDurationStr": "02:00",
+            "secondStartDateTimeStr": "12-07-2022 16:00",
+            "secondEndDateTimeStr": "12-07-2022 14:00",
+            "thirdDurationIconData": Icons.remove,
+            "thirdDurationIconColor": Colors.red.shade200,
+            "thirdDurationSign": -1,
+            "thirdDurationTextColor": Colors.red.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdStartDateTimeStr": "12-07-2022 16:00",
+            "thirdEndDateTimeStr": "12-07-2022 16:00",
+            "preferredDurationsItemsStr": '',
+            "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
+            "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+            "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+            "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+            "calcSlDurStatus": Status.sleep,
+            "calcSlDurSleepTimeStrHistory": [
+              '10-07-2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": [
+              '10-07-2022 05:58',
+              '00:35',
+              '01:00'
+            ],
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
+          };
+
+          expect(loadedTransferDataViewModel.getTransferDataMap(),
+              expectedLoadedTransferDataMap);
+        },
+      );
     },
   );
 }
