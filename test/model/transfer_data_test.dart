@@ -23,13 +23,13 @@ void main() {
               '09_07_2022 23:58';
           addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
           addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
-              '10_07_2022 00:58';
+              '10-07-2022 00:58';
           addDurationToDateTimeData.secondAddDurationDurationStr = '02:00';
           addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
-              '10_07_2022 02:58';
+              '10-07-2022 02:58';
           addDurationToDateTimeData.thirdAddDurationDurationStr = '03:00';
           addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
-              '10_07_2022 03:58';
+              '10-07-2022 03:58';
           addDurationToDateTimeData.preferredDurationsItemsStr =
               'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}';
 
@@ -62,16 +62,16 @@ void main() {
           expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
               '01:00');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
-              '10_07_2022 00:58');
+              '10-07-2022 00:58');
           expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
               '02:00');
           expect(
               loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
-              '10_07_2022 02:58');
+              '10-07-2022 02:58');
           expect(loadedAddDurationToDateTimeData.thirdAddDurationDurationStr,
               '03:00');
           expect(loadedAddDurationToDateTimeData.thirdAddDurationEndDateTimeStr,
-              '10_07_2022 03:58');
+              '10-07-2022 03:58');
           expect(loadedAddDurationToDateTimeData.preferredDurationsItemsStr,
               'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}');
         },
@@ -95,12 +95,12 @@ void main() {
           calculateSleepDurationData.wakeUpDurationPercentStr = '33.33 %';
           calculateSleepDurationData.totalDurationPercentStr = '100 %';
           calculateSleepDurationData.sleepHistoryDateTimeStrLst = [
-            '10_07_2022 00:58',
+            '10-07-2022 00:58',
             '05:35',
             '04:00'
           ];
           calculateSleepDurationData.wakeUpHistoryDateTimeStrLst = [
-            '10_07_2022 05:58',
+            '10-07-2022 05:58',
             '00:35',
             '01:00'
           ];
@@ -148,9 +148,9 @@ void main() {
           expect(loadedCalculateSleepDurationData.totalDurationPercentStr,
               '100 %');
           expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
-              ['10_07_2022 00:58', '05:35', '04:00']);
+              ['10-07-2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
-              ['10_07_2022 05:58', '00:35', '01:00']);
+              ['10-07-2022 05:58', '00:35', '01:00']);
         },
       );
       test(
@@ -263,13 +263,13 @@ void main() {
               '09_07_2022 23:58';
           addDurationToDateTimeData.firstAddDurationDurationStr = '01:00';
           addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
-              '10_07_2022 00:58';
+              '10-07-2022 00:58';
           addDurationToDateTimeData.secondAddDurationDurationStr = '02:00';
           addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
-              '10_07_2022 02:58';
+              '10-07-2022 02:58';
           addDurationToDateTimeData.thirdAddDurationDurationStr = '03:00';
           addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
-              '10_07_2022 03:58';
+              '10-07-2022 03:58';
           addDurationToDateTimeData.preferredDurationsItemsStr =
               'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}';
 
@@ -292,12 +292,12 @@ void main() {
           calculateSleepDurationData.wakeUpDurationPercentStr = '33.33 %';
           calculateSleepDurationData.totalDurationPercentStr = '100 %';
           calculateSleepDurationData.sleepHistoryDateTimeStrLst = [
-            '10_07_2022 00:58',
+            '10-07-2022 00:58',
             '05:35',
             '04:00'
           ];
           calculateSleepDurationData.wakeUpHistoryDateTimeStrLst = [
-            '10_07_2022 05:58',
+            '10-07-2022 05:58',
             '00:35',
             '01:00'
           ];
@@ -356,16 +356,16 @@ void main() {
           expect(loadedAddDurationToDateTimeData.firstAddDurationDurationStr,
               '01:00');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
-              '10_07_2022 00:58');
+              '10-07-2022 00:58');
           expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
               '02:00');
           expect(
               loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
-              '10_07_2022 02:58');
+              '10-07-2022 02:58');
           expect(loadedAddDurationToDateTimeData.thirdAddDurationDurationStr,
               '03:00');
           expect(loadedAddDurationToDateTimeData.thirdAddDurationEndDateTimeStr,
-              '10_07_2022 03:58');
+              '10-07-2022 03:58');
           expect(loadedAddDurationToDateTimeData.preferredDurationsItemsStr,
               'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}');
 
@@ -394,9 +394,9 @@ void main() {
           expect(loadedCalculateSleepDurationData.totalDurationPercentStr,
               '100 %');
           expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
-              ['10_07_2022 00:58', '05:35', '04:00']);
+              ['10-07-2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
-              ['10_07_2022 05:58', '00:35', '01:00']);
+              ['10-07-2022 05:58', '00:35', '01:00']);
 
           DateTimeDifferenceDurationData loadedDateTimeDifferenceDurationData =
               loadedTransferData.dateTimeDifferenceDurationData;
