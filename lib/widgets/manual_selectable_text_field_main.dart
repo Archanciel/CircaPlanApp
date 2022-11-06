@@ -11,7 +11,7 @@ import '../utils/utility.dart';
 void main() {
   final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
-          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
+          '$kDownloadAppDir${Platform.pathSeparator}manuallySelectableTextField.json');
   final Map<String, dynamic> transferDataMap = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,
@@ -49,8 +49,8 @@ void main() {
     "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
     "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
     "calcSlDurStatus": Status.sleep,
-    "calcSlDurSleepTimeStrHistory": ['10_07_2022 00:58', '05:35', '04:00'],
-    "calcSlDurWakeUpTimeStrHistory": ['10_07_2022 05:58', '00:35', '01:00'],
+    "calcSlDurSleepTimeStrHistory": ['10-07-2022 00:58', '05:35', '04:00'],
+    "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35', '01:00'],
     "dtDiffStartDateTimeStr": "2022-07-13 16:09",
     "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
     "dtDiffDurationStr": "24:00",
