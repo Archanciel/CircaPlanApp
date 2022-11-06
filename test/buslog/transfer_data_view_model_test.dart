@@ -111,12 +111,12 @@ void main() {
             "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
             "calcSlDurStatus": Status.sleep,
             "calcSlDurSleepTimeStrHistory": [
-              '10_07_2022 00:58',
+              '10-07-2022 00:58',
               '05:35',
               '04:00'
             ],
             "calcSlDurWakeUpTimeStrHistory": [
-              '10_07_2022 05:58',
+              '10-07-2022 05:58',
               '00:35',
               '01:00'
             ],
@@ -164,9 +164,9 @@ void main() {
           expect(
               calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
-              ['10_07_2022 00:58', '05:35', '04:00']);
+              ['10-07-2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
-              ['10_07_2022 05:58', '00:35', '01:00']);
+              ['10-07-2022 05:58', '00:35', '01:00']);
         },
       );
       test(
@@ -306,12 +306,12 @@ void main() {
             "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
             "calcSlDurStatus": Status.sleep,
             "calcSlDurSleepTimeStrHistory": [
-              '10_07_2022 00:58',
+              '10-07-2022 00:58',
               '05:35',
               '04:00'
             ],
             "calcSlDurWakeUpTimeStrHistory": [
-              '10_07_2022 05:58',
+              '10-07-2022 05:58',
               '00:35',
               '01:00'
             ],
@@ -399,9 +399,9 @@ void main() {
           expect(
               calculateSleepDurationData.totalPrevDayTotalPercentStr, '81 %');
           expect(calculateSleepDurationData.sleepHistoryDateTimeStrLst,
-              ['10_07_2022 00:58', '05:35', '04:00']);
+              ['10-07-2022 00:58', '05:35', '04:00']);
           expect(calculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
-              ['10_07_2022 05:58', '00:35', '01:00']);
+              ['10-07-2022 05:58', '00:35', '01:00']);
 
           DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
               transferDataViewModel.dateTimeDifferenceDurationData;
@@ -482,12 +482,12 @@ void main() {
             "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
             "calcSlDurStatus": Status.sleep,
             "calcSlDurSleepTimeStrHistory": [
-              '10_07_2022 00:58',
+              '10-07-2022 00:58',
               '05:35',
               '04:00'
             ],
             "calcSlDurWakeUpTimeStrHistory": [
-              '10_07_2022 05:58',
+              '10-07-2022 05:58',
               '00:35',
               '01:00'
             ],
@@ -607,9 +607,9 @@ void main() {
           expect(loadedCalculateSleepDurationData.totalPrevDayTotalPercentStr,
               '81 %');
           expect(loadedCalculateSleepDurationData.sleepHistoryDateTimeStrLst,
-              ['10_07_2022 00:58', '05:35', '04:00']);
+              ['10-07-2022 00:58', '05:35', '04:00']);
           expect(loadedCalculateSleepDurationData.wakeUpHistoryDateTimeStrLst,
-              ['10_07_2022 05:58', '00:35', '01:00']);
+              ['10-07-2022 05:58', '00:35', '01:00']);
 
           DateTimeDifferenceDurationData loadedDateTimeDifferenceDurationData =
               loadedTransferDataViewModel.dateTimeDifferenceDurationData;
