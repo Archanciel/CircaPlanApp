@@ -201,23 +201,36 @@ class Utility {
           }
         }
       } else {
-        RegExp re = RegExp(r"^\d{1}:\d{2}$");
-
+        RegExp re = RegExp(r"^\d+:\d{1}$");
         RegExpMatch? match = re.firstMatch(durationStr);
-
         if (match != null) {
-          durationStr = '00:0${match.group(0)}';
+          durationStr = '${match.group(0)}0';
         } else {
-          RegExp re = RegExp(r"^\d{2}:\d{2}$");
-          RegExpMatch? match = re.firstMatch(durationStr);
-          if (match != null) {
-            durationStr = '00:${match.group(0)}';
-          } else {
-            RegExp re = RegExp(r"^\d{1}:\d{2}:\d{2}$");
+          if (!removeMinusSign) {
+            RegExp re = RegExp(r"^-\d+:\d{1}$");
             RegExpMatch? match = re.firstMatch(durationStr);
             if (match != null) {
-              durationStr = '0${match.group(0)}';
+              durationStr = '${match.group(0)}0';
             }
+          }
+        }
+      }
+
+      RegExp re = RegExp(r"^\d{1}:\d{2}$");
+      RegExpMatch? match = re.firstMatch(durationStr);
+
+      if (match != null) {
+        durationStr = '00:0${match.group(0)}';
+      } else {
+        RegExp re = RegExp(r"^\d{2}:\d{2}$");
+        RegExpMatch? match = re.firstMatch(durationStr);
+        if (match != null) {
+          durationStr = '00:${match.group(0)}';
+        } else {
+          RegExp re = RegExp(r"^\d{1}:\d{2}:\d{2}$");
+          RegExpMatch? match = re.firstMatch(durationStr);
+          if (match != null) {
+            durationStr = '0${match.group(0)}';
           }
         }
       }
@@ -227,6 +240,20 @@ class Utility {
       if (durationInt != null) {
         // the case if a one or two digits duration was entered ...
         durationStr = '$durationStr:00';
+      } else {
+        RegExp re = RegExp(r"^\d+:\d{1}$");
+        RegExpMatch? match = re.firstMatch(durationStr);
+        if (match != null) {
+          durationStr = '${match.group(0)}0';
+        } else {
+          if (!removeMinusSign) {
+            RegExp re = RegExp(r"^-\d+:\d{1}$");
+            RegExpMatch? match = re.firstMatch(durationStr);
+            if (match != null) {
+              durationStr = '${match.group(0)}0';
+            }
+          }
+        }
       }
     }
 

@@ -810,7 +810,7 @@ void main() {
 
           List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
 
-          expect(parsedTimeStrLst, ['10:00', '2:00', '13:35', '5:00', '3:00', '3:05', '0:05', '0:05', '3:u5', '3:5', '3-05', '3-5']);
+          expect(parsedTimeStrLst, ['10:00', '2:00', '13:35', '5:00', '3:00', '3:05', '0:05', '0:05', '3:u5', '3:50', '3-05', '3-5']);
         },
       );
       test(
@@ -821,7 +821,7 @@ void main() {
 
           List<String> parsedNegTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(negativeTimeStr);
 
-          expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05', '-3-05', '-3:u5', '-3:5', '-3-5']);
+          expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05', '-3-05', '-3:u5', '-3:50', '-3-5']);
         },
       );
     },

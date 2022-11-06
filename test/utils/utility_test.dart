@@ -392,7 +392,7 @@ void main() {
     'convertIntDuration() removeMinusSign==false',
     () {
       test(
-        'dayHourMinuteFormat==false pos int < 10',
+        'positive int < 10',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '2',
@@ -403,7 +403,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false neg int < 10',
+        'neg int < 10',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-2',
@@ -414,7 +414,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos int > 10',
+        'positive int > 10',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '20',
@@ -425,7 +425,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false neg int > 10',
+        'neg int > 10',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-20',
@@ -436,7 +436,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos int 0',
+        'positive int 0',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '0',
@@ -447,7 +447,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false neg int -0',
+        'neg int -0',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-0',
@@ -458,7 +458,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos H:mm',
+        'positive H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '2:34',
@@ -469,7 +469,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos HH:mm',
+        'positive HH:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '20:34',
@@ -480,7 +480,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false neg H:mm',
+        'neg H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-2:34',
@@ -491,7 +491,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false neg HH:mm',
+        'neg HH:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-20:34',
@@ -503,6 +503,149 @@ void main() {
       );
     },
   );
+  group(
+    'convertHmDuration() removeMinusSign==false dayHourMinuteFormat==true',
+    () {
+      test(
+        'positive int:int < 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '2:3',
+              removeMinusSign: false,
+              dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:02:30');
+        },
+      );
+      test(
+        'neg int < 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '-2:4',
+              removeMinusSign: false,
+              dayHourMinuteFormat: true);
+
+          expect(convertedStr, '-2:40');
+        },
+      );
+      test(
+        'positive int:int > 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '20:2',
+              removeMinusSign: false,
+              dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:20:20');
+        },
+      );
+      test(
+        'neg int:int > 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '-20:3',
+              removeMinusSign: false,
+              dayHourMinuteFormat: true);
+
+          expect(convertedStr, '-20:30');
+        },
+      );
+      test(
+        'positive int:int 0:0',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '0:0',
+              removeMinusSign: false,
+              dayHourMinuteFormat: true);
+
+          expect(convertedStr, '00:00:00');
+        },
+      );
+      test(
+        'neg int:int -0:0',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+              durationStr: '-0:0',
+              removeMinusSign: false,
+              dayHourMinuteFormat: true);
+
+          expect(convertedStr, '-0:00');
+        },
+      );
+    },
+  );
+  group(
+    'convertHmDuration() removeMinusSign==false dayHourMinuteFormat==false',
+    () {
+      test(
+        'positive int:int < 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '2:3',
+            removeMinusSign: false,
+          );
+
+          expect(convertedStr, '2:30');
+        },
+      );
+      test(
+        'neg int < 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '-2:4',
+            removeMinusSign: false,
+          );
+
+          expect(convertedStr, '-2:40');
+        },
+      );
+      test(
+        'positive int:int > 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '20:2',
+            removeMinusSign: false,
+          );
+
+          expect(convertedStr, '20:20');
+        },
+      );
+      test(
+        'neg int:int > 10',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '-20:3',
+            removeMinusSign: false,
+          );
+
+          expect(convertedStr, '-20:30');
+        },
+      );
+      test(
+        'positive int:int 0:0',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '0:0',
+            removeMinusSign: false,
+          );
+
+          expect(convertedStr, '0:00');
+        },
+      );
+      test(
+        'neg int:int -0:0',
+        () {
+          String convertedStr = Utility.formatStringDuration(
+            durationStr: '-0:0',
+            removeMinusSign: false,
+          );
+
+          expect(convertedStr, '-0:00');
+        },
+      );
+    },
+  );
+
   group(
     'formatStringDuration() removeMinusSign==false',
     () {
@@ -519,7 +662,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos int > 10',
+        'dayHourMinuteFormat==true positive int > 10',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-20',
@@ -536,7 +679,7 @@ void main() {
     'formatStringDuration() removeMinusSign==true',
     () {
       test(
-        'dayHourMinuteFormat==false pos int < 10',
+        'dayHourMinuteFormat==false positive int < 10',
         () {
           String convertedStr = Utility.formatStringDuration(durationStr: '2');
 
@@ -552,7 +695,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos int > 10',
+        'dayHourMinuteFormat==false positive int > 10',
         () {
           String convertedStr = Utility.formatStringDuration(durationStr: '20');
 
@@ -569,7 +712,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos int 0',
+        'dayHourMinuteFormat==false positive int 0',
         () {
           String convertedStr = Utility.formatStringDuration(durationStr: '0');
 
@@ -585,7 +728,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos H:mm',
+        'dayHourMinuteFormat==false positive H:mm',
         () {
           String convertedStr =
               Utility.formatStringDuration(durationStr: '2:34');
@@ -594,7 +737,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==false pos HH:mm',
+        'dayHourMinuteFormat==false positive HH:mm',
         () {
           String convertedStr =
               Utility.formatStringDuration(durationStr: '20:34');
@@ -621,7 +764,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos int < 10',
+        'dayHourMinuteFormat==true positive int < 10',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '2', dayHourMinuteFormat: true);
@@ -639,7 +782,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos int > 10',
+        'dayHourMinuteFormat==true positive int > 10',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '20', dayHourMinuteFormat: true);
@@ -657,7 +800,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos int 0',
+        'dayHourMinuteFormat==true positive int 0',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '0', dayHourMinuteFormat: true);
@@ -675,7 +818,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos H:mm',
+        'dayHourMinuteFormat==true positive H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '2:34', dayHourMinuteFormat: true);
@@ -684,7 +827,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos HH:mm',
+        'dayHourMinuteFormat==true positive HH:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '20:34', dayHourMinuteFormat: true);
@@ -693,7 +836,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos d:HH:mm',
+        'dayHourMinuteFormat==true positive d:HH:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '5:20:34', dayHourMinuteFormat: true);
@@ -702,7 +845,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos dd:HH:mm',
+        'dayHourMinuteFormat==true positive dd:HH:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
               durationStr: '35:20:34', dayHourMinuteFormat: true);
@@ -711,7 +854,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos 0H:mm',
+        'dayHourMinuteFormat==true positive 0H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '02:34',
@@ -723,7 +866,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos 00:0H:mm',
+        'dayHourMinuteFormat==true positive 00:0H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '00:02:34',
@@ -753,7 +896,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos -0H:mm',
+        'dayHourMinuteFormat==true positive -0H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-02:34',
@@ -765,7 +908,7 @@ void main() {
         },
       );
       test(
-        'dayHourMinuteFormat==true pos 00:0H:mm',
+        'dayHourMinuteFormat==true positive 00:0H:mm',
         () {
           String convertedStr = Utility.formatStringDuration(
             durationStr: '-00:02:34',
@@ -785,7 +928,7 @@ void main() {
           'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
 
       test(
-        'first HH:mm, pos 20',
+        'first HH:mm, positive 20',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -796,7 +939,7 @@ void main() {
         },
       );
       test(
-        'first HH:mm, pos 22',
+        'first HH:mm, positive 22',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -807,7 +950,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, pos 56',
+        'last HH:mm, positive 56',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -818,7 +961,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, pos 58',
+        'last HH:mm, positive 58',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -829,7 +972,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, pos 59 > histoStr length',
+        'last HH:mm, positive 59 > histoStr length',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
