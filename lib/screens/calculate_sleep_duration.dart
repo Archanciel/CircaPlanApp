@@ -461,11 +461,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Private method called when 'Reset' is confirmed.
   void _applyReset() {
-    // before resetting the current new date time string, its
+    // before resetting the current New date time string, its
     // value, which is the last wake up time, is copied to the
-    // date time difference duration start date time map entry.
-    // The effect is not updating the screen field, but adding
-    // the value to the Sel available values.
+    // 2nd screen start date time map entry.
+    //
+    // Since when adding a date time for the first time also sets
+    // the 2nd screen End date time to this added date time, the
+    // 2nd screen will compute the previous wake day duration.
     _transferDataMap['dtDiffStartDateTimeStr'] =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr: _newDateTimeStr);
@@ -535,11 +537,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             ScreenMixin.frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
-        // Without using applying ! bang operator to the newDateTime variable,
-        // the compiler displays this error: 'The argument type 'DateTime?'
-        // can't be assigned to the parameter type DateTime
+        // Without using applying ! bang operator to the
+        // newDateTime variable, the compiler displays this
+        // error: 'The argument type 'DateTime?' can't be
+        // assigned to the parameter type DateTime
         _lastDateTimeStr = newDateTimeStr;
         _lastDateTimeController.text = _lastDateTimeStr;
+
+        // Setting the 2nd screen End date time to the first
+        // added date time makes sense since when resetting this
+        // screen, the 2nd screen Start date time was set to
+        // current screen New date time value.
+        _transferDataMap['dtDiffEndDateTimeStr'] =
+            DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                frenchFormatDateTimeStr: newDateTimeStr);
         _status = Status.sleep;
       } else {
         DateTime? previousDateTime;
