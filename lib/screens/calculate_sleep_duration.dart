@@ -43,7 +43,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataViewModel = transferDataViewModel,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
             ScreenMixin.frenchDateTimeFormat.format(DateTime.now()),
-        _previousDateTimeStr =
+        _lastDateTimeStr =
             transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
@@ -74,8 +74,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   final TransferDataViewModel _transferDataViewModel;
 
   String _newDateTimeStr = '';
+  String _lastDateTimeStr = '';
   String _previousDateTimeStr = '';
-  String _beforePreviousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
   String _currentTotalDurationStr = '';
@@ -277,17 +277,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _newDateTimeStr =
         _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
     _newDateTimeController = TextEditingController(text: _newDateTimeStr);
-    _previousDateTimeStr =
-        _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
-    _lastDateTimeController = TextEditingController(text: _previousDateTimeStr);
+    _lastDateTimeStr = _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
+    _lastDateTimeController = TextEditingController(text: _lastDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
     // bug which happens when switching to another screen and
     // back to this screen !
-    _beforePreviousDateTimeStr =
+    _previousDateTimeStr =
         _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '';
     _previousDateTimeController =
-        TextEditingController(text: _beforePreviousDateTimeStr);
+        TextEditingController(text: _previousDateTimeStr);
 
     _currentSleepDurationStr =
         _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '';
@@ -378,8 +377,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Map<String, dynamic> map = _transferDataMap;
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
-    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
-    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
+    map['calcSlDurPreviousDateTimeStr'] = _lastDateTimeStr;
+    map['calcSlDurBeforePreviousDateTimeStr'] = _previousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
@@ -473,10 +472,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
+    _lastDateTimeStr = '';
+    _lastDateTimeController.text = _lastDateTimeStr;
     _previousDateTimeStr = '';
-    _lastDateTimeController.text = _previousDateTimeStr;
-    _beforePreviousDateTimeStr = '';
-    _previousDateTimeController.text = _beforePreviousDateTimeStr;
+    _previousDateTimeController.text = _previousDateTimeStr;
     _currentSleepDurationStr = '';
     _currentSleepDurationController.text = _currentSleepDurationStr;
     _currentWakeUpDurationStr = '';
@@ -529,7 +528,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
 
     if (_status == Status.wakeUp) {
-      if (_previousDateTimeStr == '') {
+      if (_lastDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
         String newDateTimeStr =
@@ -539,14 +538,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // Without using applying ! bang operator to the newDateTime variable,
         // the compiler displays this error: 'The argument type 'DateTime?'
         // can't be assigned to the parameter type DateTime
-        _previousDateTimeStr = newDateTimeStr;
-        _lastDateTimeController.text = _previousDateTimeStr;
+        _lastDateTimeStr = newDateTimeStr;
+        _lastDateTimeController.text = _lastDateTimeStr;
         _status = Status.sleep;
       } else {
         DateTime? previousDateTime;
 
         previousDateTime =
-            ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
+            ScreenMixin.frenchDateTimeFormat.parse(_lastDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
@@ -558,7 +557,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           // that the wake up time history list first item is the date time
           // when I waked up, i.e the _previousDateTimeStr
           _addFirstDateTimeStrToHistorylst(
-              _wakeUpTimeStrHistory, _previousDateTimeStr);
+              _wakeUpTimeStrHistory, _lastDateTimeStr);
         }
 
         Duration wakeUpDuration = newDateTime.difference(previousDateTime);
@@ -588,10 +587,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
         _currentTotalDurationStr = currentTotalDuration.HHmm();
         _currentTotalDurationController.text = _currentTotalDurationStr;
-        _beforePreviousDateTimeStr = _previousDateTimeStr;
-        _previousDateTimeController.text = _beforePreviousDateTimeStr;
-        _previousDateTimeStr = _newDateTimeStr;
-        _lastDateTimeController.text = _previousDateTimeStr;
+        _previousDateTimeStr = _lastDateTimeStr;
+        _previousDateTimeController.text = _previousDateTimeStr;
+        _lastDateTimeStr = _newDateTimeStr;
+        _lastDateTimeController.text = _lastDateTimeStr;
         _status = Status.sleep;
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
@@ -601,7 +600,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       DateTime? previousDateTime;
 
       previousDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
+          ScreenMixin.frenchDateTimeFormat.parse(_lastDateTimeStr);
 
       if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
@@ -631,10 +630,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentSleepDurationController.text = _currentSleepDurationStr;
       _currentTotalDurationStr = currentTotalDuration.HHmm();
       _currentTotalDurationController.text = _currentTotalDurationStr;
-      _beforePreviousDateTimeStr = _previousDateTimeStr;
-      _previousDateTimeController.text = _beforePreviousDateTimeStr;
-      _previousDateTimeStr = _newDateTimeStr;
-      _lastDateTimeController.text = _previousDateTimeStr;
+      _previousDateTimeStr = _lastDateTimeStr;
+      _previousDateTimeController.text = _previousDateTimeStr;
+      _lastDateTimeStr = _newDateTimeStr;
+      _lastDateTimeController.text = _lastDateTimeStr;
       _sleepTimeStrHistory.add(sleepDuration.HHmm());
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       _status = Status.wakeUp;
@@ -649,13 +648,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
     if (newDateTime.isBefore(previousDateTime)) {
       openWarningDialog(context,
-          'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please increase it and retry !');
+          'New date time can\'t be before previous date time ($_newDateTimeStr < $_lastDateTimeStr). Please increase it and retry !');
       return false;
     }
 
     if (newDateTime == previousDateTime) {
       openWarningDialog(context,
-          'New date time can\'t be equal to previous date time ($_newDateTimeStr = $_previousDateTimeStr). Please increase it and retry !');
+          'New date time can\'t be equal to previous date time ($_newDateTimeStr = $_lastDateTimeStr). Please increase it and retry !');
       return false;
     }
 
