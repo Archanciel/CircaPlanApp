@@ -169,7 +169,6 @@ class _ManuallySelectableTextFieldScreenState
     widget.transferDataViewModel.updateAndSaveTransferData();
   }
 
-
   void handleDurationChange({
     String? durationStr,
     int? durationSign,
@@ -388,7 +387,8 @@ class _ManuallySelectableTextFieldScreenState
                                   context: context,
                                   textEditingController:
                                       _durationTextFieldController,
-                                  transferDataMap: widget.transferDataViewModel.getTransferDataMap()!,
+                                  transferDataMap: widget.transferDataViewModel
+                                      .getTransferDataMap()!,
                                   handleDataChangeFunction:
                                       handleDurationChange);
                         },
@@ -406,6 +406,34 @@ class _ManuallySelectableTextFieldScreenState
                                 _durationTextFieldController.text.length,
                           );
                         },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                    //                  height ...
+                    height: kVerticalFieldDistance,
+                  ),
+                  ElevatedButton(
+                    key: const Key('editableDateTimeSelButton'),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            widget.appElevatedButtonBackgroundColor,
+                        shape: widget.appElevatedButtonRoundedShape),
+                    onPressed: () {
+                      if (_durationTextColor == Colors.green.shade200) {
+                        _durationTextColor = Colors.red.shade200;
+                      } else {
+                        _durationTextColor = Colors.green.shade200;
+                      }
+                      setState(() {});
+                    },
+                    child: const Text(
+                      'Change color',
+                      style: TextStyle(
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                       ),
                     ),
                   ),
