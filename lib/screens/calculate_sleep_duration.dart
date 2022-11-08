@@ -43,7 +43,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataViewModel = transferDataViewModel,
         _newDateTimeStr = transferDataMap['calcSlDurNewDateTimeStr'] ??
             ScreenMixin.frenchDateTimeFormat.format(DateTime.now()),
-        _previousDateTimeStr =
+        _lastDateTimeStr =
             transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
             transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '',
@@ -74,8 +74,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   final TransferDataViewModel _transferDataViewModel;
 
   String _newDateTimeStr = '';
+  String _lastDateTimeStr = '';
   String _previousDateTimeStr = '';
-  String _beforePreviousDateTimeStr = '';
   String _currentSleepDurationStr = '';
   String _currentWakeUpDurationStr = '';
   String _currentTotalDurationStr = '';
@@ -277,17 +277,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _newDateTimeStr =
         _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
     _newDateTimeController = TextEditingController(text: _newDateTimeStr);
-    _previousDateTimeStr =
-        _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
-    _lastDateTimeController = TextEditingController(text: _previousDateTimeStr);
+    _lastDateTimeStr = _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
+    _lastDateTimeController = TextEditingController(text: _lastDateTimeStr);
 
     // setting _beforePreviousDateTimeStr value here fixes a
     // bug which happens when switching to another screen and
     // back to this screen !
-    _beforePreviousDateTimeStr =
+    _previousDateTimeStr =
         _transferDataMap['calcSlDurBeforePreviousDateTimeStr'] ?? '';
     _previousDateTimeController =
-        TextEditingController(text: _beforePreviousDateTimeStr);
+        TextEditingController(text: _previousDateTimeStr);
 
     _currentSleepDurationStr =
         _transferDataMap['calcSlDurCurrSleepDurationStr'] ?? '';
@@ -378,8 +377,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Map<String, dynamic> map = _transferDataMap;
 
     map['calcSlDurNewDateTimeStr'] = _newDateTimeStr;
-    map['calcSlDurPreviousDateTimeStr'] = _previousDateTimeStr;
-    map['calcSlDurBeforePreviousDateTimeStr'] = _beforePreviousDateTimeStr;
+    map['calcSlDurPreviousDateTimeStr'] = _lastDateTimeStr;
+    map['calcSlDurBeforePreviousDateTimeStr'] = _previousDateTimeStr;
     map['calcSlDurCurrSleepDurationStr'] = _currentSleepDurationStr;
     map['calcSlDurCurrWakeUpDurationStr'] = _currentWakeUpDurationStr;
     map['calcSlDurCurrTotalDurationStr'] = _currentTotalDurationStr;
@@ -462,21 +461,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Private method called when 'Reset' is confirmed.
   void _applyReset() {
-    // before resetting the current new date time string, its
+    // before resetting the current New date time string, its
     // value, which is the last wake up time, is copied to the
-    // date time difference duration start date time map entry.
-    // The effect is not updating the screen field, but adding
-    // the value to the Sel available values.
+    // 2nd screen start date time map entry.
+    //
+    // Since when adding a date time for the first time also sets
+    // the 2nd screen End date time to this added date time, the
+    // 2nd screen will compute the previous wake day duration.
     _transferDataMap['dtDiffStartDateTimeStr'] =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr: _newDateTimeStr);
 
     _newDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newDateTimeStr;
+    _lastDateTimeStr = '';
+    _lastDateTimeController.text = _lastDateTimeStr;
     _previousDateTimeStr = '';
-    _lastDateTimeController.text = _previousDateTimeStr;
-    _beforePreviousDateTimeStr = '';
-    _previousDateTimeController.text = _beforePreviousDateTimeStr;
+    _previousDateTimeController.text = _previousDateTimeStr;
     _currentSleepDurationStr = '';
     _currentSleepDurationController.text = _currentSleepDurationStr;
     _currentWakeUpDurationStr = '';
@@ -529,24 +530,33 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
 
     if (_status == Status.wakeUp) {
-      if (_previousDateTimeStr == '') {
+      if (_lastDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
         String newDateTimeStr =
             ScreenMixin.frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
-        // Without using applying ! bang operator to the newDateTime variable,
-        // the compiler displays this error: 'The argument type 'DateTime?'
-        // can't be assigned to the parameter type DateTime
-        _previousDateTimeStr = newDateTimeStr;
-        _lastDateTimeController.text = _previousDateTimeStr;
+        // Without using applying ! bang operator to the
+        // newDateTime variable, the compiler displays this
+        // error: 'The argument type 'DateTime?' can't be
+        // assigned to the parameter type DateTime
+        _lastDateTimeStr = newDateTimeStr;
+        _lastDateTimeController.text = _lastDateTimeStr;
+
+        // Setting the 2nd screen End date time to the first
+        // added date time makes sense since when resetting this
+        // screen, the 2nd screen Start date time was set to
+        // current screen New date time value.
+        _transferDataMap['dtDiffEndDateTimeStr'] =
+            DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                frenchFormatDateTimeStr: newDateTimeStr);
         _status = Status.sleep;
       } else {
         DateTime? previousDateTime;
 
         previousDateTime =
-            ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
+            ScreenMixin.frenchDateTimeFormat.parse(_lastDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
@@ -558,7 +568,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
           // that the wake up time history list first item is the date time
           // when I waked up, i.e the _previousDateTimeStr
           _addFirstDateTimeStrToHistorylst(
-              _wakeUpTimeStrHistory, _previousDateTimeStr);
+              _wakeUpTimeStrHistory, _lastDateTimeStr);
         }
 
         Duration wakeUpDuration = newDateTime.difference(previousDateTime);
@@ -588,10 +598,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpDurationController.text = _currentWakeUpDurationStr;
         _currentTotalDurationStr = currentTotalDuration.HHmm();
         _currentTotalDurationController.text = _currentTotalDurationStr;
-        _beforePreviousDateTimeStr = _previousDateTimeStr;
-        _previousDateTimeController.text = _beforePreviousDateTimeStr;
-        _previousDateTimeStr = _newDateTimeStr;
-        _lastDateTimeController.text = _previousDateTimeStr;
+        _previousDateTimeStr = _lastDateTimeStr;
+        _previousDateTimeController.text = _previousDateTimeStr;
+        _lastDateTimeStr = _newDateTimeStr;
+        _lastDateTimeController.text = _lastDateTimeStr;
         _status = Status.sleep;
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
@@ -601,7 +611,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       DateTime? previousDateTime;
 
       previousDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(_previousDateTimeStr);
+          ScreenMixin.frenchDateTimeFormat.parse(_lastDateTimeStr);
 
       if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
@@ -631,10 +641,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       _currentSleepDurationController.text = _currentSleepDurationStr;
       _currentTotalDurationStr = currentTotalDuration.HHmm();
       _currentTotalDurationController.text = _currentTotalDurationStr;
-      _beforePreviousDateTimeStr = _previousDateTimeStr;
-      _previousDateTimeController.text = _beforePreviousDateTimeStr;
-      _previousDateTimeStr = _newDateTimeStr;
-      _lastDateTimeController.text = _previousDateTimeStr;
+      _previousDateTimeStr = _lastDateTimeStr;
+      _previousDateTimeController.text = _previousDateTimeStr;
+      _lastDateTimeStr = _newDateTimeStr;
+      _lastDateTimeController.text = _lastDateTimeStr;
       _sleepTimeStrHistory.add(sleepDuration.HHmm());
       _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       _status = Status.wakeUp;
@@ -649,13 +659,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
     if (newDateTime.isBefore(previousDateTime)) {
       openWarningDialog(context,
-          'New date time can\'t be before previous date time ($_newDateTimeStr < $_previousDateTimeStr). Please increase it and retry !');
+          'New date time can\'t be before previous date time ($_newDateTimeStr < $_lastDateTimeStr). Please increase it and retry !');
       return false;
     }
 
     if (newDateTime == previousDateTime) {
       openWarningDialog(context,
-          'New date time can\'t be equal to previous date time ($_newDateTimeStr = $_previousDateTimeStr). Please increase it and retry !');
+          'New date time can\'t be equal to previous date time ($_newDateTimeStr = $_lastDateTimeStr). Please increase it and retry !');
       return false;
     }
 
