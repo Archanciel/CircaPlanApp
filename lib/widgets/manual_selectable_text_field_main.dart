@@ -1,5 +1,3 @@
-// https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 
@@ -97,19 +95,21 @@ class MyApp extends StatelessWidget {
 class ManuallySelectableTextFieldScreen extends StatefulWidget
     with ScreenMixin {
   final String lsonFileName = 'manual_selectable_text_field_main.json';
-  final TransferDataViewModel transferDataViewModel;
-  final Map<String, dynamic> transferDataMap;
+  final TransferDataViewModel _transferDataViewModel;
+  final Map<String, dynamic> _transferDataMap;
 
   ManuallySelectableTextFieldScreen({
     Key? key,
     required TransferDataViewModel transferDataViewModel,
-  })  : transferDataViewModel = transferDataViewModel,
-        transferDataMap = transferDataViewModel.getTransferDataMap()!,
+  })  : _transferDataViewModel = transferDataViewModel,
+        _transferDataMap = transferDataViewModel.getTransferDataMap()!,
         super(key: key);
 
   @override
   State<ManuallySelectableTextFieldScreen> createState() =>
-      _ManuallySelectableTextFieldScreenState();
+      _ManuallySelectableTextFieldScreenState(
+          transferDataViewModel: _transferDataViewModel,
+          transferDataMap: _transferDataMap);
 
   void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
     print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
@@ -121,7 +121,9 @@ class ManuallySelectableTextFieldScreen extends StatefulWidget
 }
 
 class _ManuallySelectableTextFieldScreenState
-    extends State<ManuallySelectableTextFieldScreen> {
+    extends State<ManuallySelectableTextFieldScreen> with ScreenMixin {
+  final Map<String, dynamic> _transferDataMap;
+  final TransferDataViewModel _transferDataViewModel;
   late TextEditingController _firstTimeTextFieldController;
   late TextEditingController _durationTextFieldController;
   final _firstTimeTextFieldFocusNode = FocusNode();
@@ -132,19 +134,24 @@ class _ManuallySelectableTextFieldScreenState
   String _durationTextFieldStr = '';
   String _durationStr = '';
 
+  _ManuallySelectableTextFieldScreenState({
+    required TransferDataViewModel transferDataViewModel,
+    required Map<String, dynamic> transferDataMap,
+  })  : _transferDataViewModel = transferDataViewModel,
+        _transferDataMap = transferDataMap;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());
-    widget.transferDataMap["addDurStartDateTimeStr"] = nowStr;
-    widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
-    widget.transferDataMap["firstEndDateTimeStr"] = nowStr;
+    _transferDataMap["addDurStartDateTimeStr"] = nowStr;
+    _transferDataMap["firstStartDateTimeStr"] = nowStr;
+    _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
-    _firstTimeStr = widget.transferDataMap['firstTimeStr'] ?? '00:00:00';
-    _durationTextFieldStr =
-        widget.transferDataMap['firstDurationStr'] ?? '00:00:00';
+    _firstTimeStr = _transferDataMap['firstTimeStr'] ?? '00:00:00';
+    _durationTextFieldStr = _transferDataMap['firstDurationStr'] ?? '00:00:00';
 
     _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
     _durationTextFieldController =
@@ -163,13 +170,13 @@ class _ManuallySelectableTextFieldScreenState
   }
 
   void _updateTransferDataMap() {
-    widget.transferDataMap['firstTimeStr'] = _firstTimeStr;
-    widget.transferDataMap['firstDurationStr'] = _durationStr;
+    _transferDataMap['firstTimeStr'] = _firstTimeStr;
+    _transferDataMap['firstDurationStr'] = _durationStr;
 
-    widget.transferDataViewModel.updateAndSaveTransferData();
+    _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  void handleDurationChange({
+  void _handleDurationChange({
     String? durationStr,
     int? durationSign,
     bool wasDurationSignButtonPressed = false,
@@ -219,7 +226,7 @@ class _ManuallySelectableTextFieldScreenState
                   ),
                   Text(
                     'Time (dd:hh:mm) | %',
-                    style: widget.labelTextStyle,
+                    style: labelTextStyle,
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
@@ -228,7 +235,7 @@ class _ManuallySelectableTextFieldScreenState
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: widget.selectionColor,
+                          selectionColor: selectionColor,
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
@@ -245,7 +252,7 @@ class _ManuallySelectableTextFieldScreenState
                             focusNode: _firstTimeTextFieldFocusNode,
                             decoration:
                                 const InputDecoration.collapsed(hintText: ''),
-                            style: widget.valueTextStyle,
+                            style: valueTextStyle,
                             keyboardType: TextInputType.datetime,
                             controller: _firstTimeTextFieldController,
                             onSubmitted: (val) {
@@ -283,11 +290,11 @@ class _ManuallySelectableTextFieldScreenState
                           );
                         },
                         onDoubleTap: () async {
-                          await widget.handleClipboardDataEditableDuration(
+                          await handleClipboardDataEditableDuration(
                             context: context,
                             textEditingController:
                                 _firstTimeTextFieldController,
-                            transferDataMap: widget.transferDataMap,
+                            transferDataMap: _transferDataMap,
                             handleDataChangeFunction:
                                 (BuildContext c, String s) {
                               _firstTimeStr = Utility.formatStringDuration(
@@ -326,7 +333,7 @@ class _ManuallySelectableTextFieldScreenState
                   ),
                   Text(
                     'Duration',
-                    style: widget.labelTextStyle,
+                    style: labelTextStyle,
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
@@ -335,7 +342,7 @@ class _ManuallySelectableTextFieldScreenState
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: widget.selectionColor,
+                          selectionColor: selectionColor,
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
@@ -361,7 +368,7 @@ class _ManuallySelectableTextFieldScreenState
                             onSubmitted: (val) {
                               // solve the unsolvable problem of onChange()
                               // which set cursor at TextField start position !
-                              handleDurationChange(durationStr: val);
+                              _handleDurationChange(durationStr: val);
                             },
                           ),
                         ),
@@ -382,15 +389,14 @@ class _ManuallySelectableTextFieldScreenState
                           );
                         },
                         onDoubleTap: () async {
-                          await widget
-                              .handleClipboardDataDurationDateTimeEditor(
+                          await handleClipboardDataDurationDateTimeEditor(
                                   context: context,
                                   textEditingController:
                                       _durationTextFieldController,
-                                  transferDataMap: widget.transferDataViewModel
+                                  transferDataMap: _transferDataViewModel
                                       .getTransferDataMap()!,
                                   handleDataChangeFunction:
-                                      handleDurationChange);
+                                      _handleDurationChange);
                         },
                         onLongPress: () {
                           // Requesting focus avoids necessity to first tap on
@@ -419,9 +425,8 @@ class _ManuallySelectableTextFieldScreenState
                   ElevatedButton(
                     key: const Key('editableDateTimeSelButton'),
                     style: ButtonStyle(
-                        backgroundColor:
-                            widget.appElevatedButtonBackgroundColor,
-                        shape: widget.appElevatedButtonRoundedShape),
+                        backgroundColor: appElevatedButtonBackgroundColor,
+                        shape: appElevatedButtonRoundedShape),
                     onPressed: () {
                       if (_durationTextColor == Colors.green.shade200) {
                         _durationTextColor = Colors.red.shade200;
@@ -444,5 +449,19 @@ class _ManuallySelectableTextFieldScreenState
         ),
       ),
     );
+  }
+}
+
+class ManuallySelectableTextField extends StatefulWidget with ScreenMixin {
+  ManuallySelectableTextField({super.key});
+
+  @override
+  State<ManuallySelectableTextField> createState() => _ManuallySelectableTextFieldState();
+}
+
+class _ManuallySelectableTextFieldState extends State<ManuallySelectableTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
