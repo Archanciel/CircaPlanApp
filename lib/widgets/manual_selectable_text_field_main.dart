@@ -126,12 +126,9 @@ class _ManuallySelectableTextFieldScreenState
   late TextEditingController _firstTimeTextFieldController;
   late TextEditingController _durationTextFieldController;
   final _firstTimeTextFieldFocusNode = FocusNode();
-  final _durationTextfieldFocusNode = FocusNode();
-  Color _durationTextColor = Colors.green.shade200;
 
   String _firstTimeStr = '';
-  String _durationTextFieldStr = '';
-  String _durationStr = '';
+  final String _durationStr = '';
 
   _ManuallySelectableTextFieldScreenState({
     required TransferDataViewModel transferDataViewModel,
@@ -150,11 +147,9 @@ class _ManuallySelectableTextFieldScreenState
     _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
     _firstTimeStr = _transferDataMap['firstTimeStr'] ?? '00:00:00';
-    _durationTextFieldStr = _transferDataMap['firstDurationStr'] ?? '00:00:00';
 
     _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
-    _durationTextFieldController =
-        TextEditingController(text: _durationTextFieldStr);
+    _durationTextFieldController = TextEditingController(text: '');
   }
 
   @override
@@ -163,44 +158,20 @@ class _ManuallySelectableTextFieldScreenState
     _durationTextFieldController.dispose();
 
     _firstTimeTextFieldFocusNode.dispose();
-    _durationTextfieldFocusNode.dispose();
 
     super.dispose();
   }
 
   void _updateTransferDataMap() {
     _transferDataMap['firstTimeStr'] = _firstTimeStr;
-    _transferDataMap['firstDurationStr'] = _durationStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
-  }
-
-  void _handleDurationChange({
-    String? durationStr,
-    int? durationSign,
-    bool wasDurationSignButtonPressed = false,
-  }) {
-    _durationStr = Utility.formatStringDuration(
-        durationStr: _durationTextFieldController.text);
-
-    // necessary in case the _durationStr was set to an
-    // int value, like 2 instead of 2:00 !
-    _durationTextFieldController.text = _durationStr;
-
-    _updateTransferDataMap(); // must be executed before calling
-    // the next DurationDateTimeEditor widget
-    // setStartDateTimeStr() method in order for the transfer
-    // data map to be updated before the last linked third
-    // DurationDateTimeEditor widget
-    // _updateTransferDataMap() method calls the
-    // TransferDataViewModel.updateAndSaveTransferData()
-    // method !
   }
 
   @override
   Widget build(BuildContext context) {
     // print('_FlutterEditableDateTimeScreenState.build()');
-    ManuallySelectableTextField _manuallySelectableTextField =
+    ManuallySelectableTextField manuallySelectableTextField =
         ManuallySelectableTextField(
             transferDataViewModel: _transferDataViewModel);
 
@@ -349,7 +320,7 @@ class _ManuallySelectableTextFieldScreenState
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: _manuallySelectableTextField,
+                      child: manuallySelectableTextField,
                     ),
                   ),
                   const SizedBox(
@@ -366,7 +337,7 @@ class _ManuallySelectableTextFieldScreenState
                         shape: appElevatedButtonRoundedShape),
                     onPressed: () {
                       Color manuallySelectableTextFieldColor =
-                          _manuallySelectableTextField.getTextColor();
+                          manuallySelectableTextField.getTextColor();
                       if (manuallySelectableTextFieldColor ==
                           Colors.green.shade200) {
                         manuallySelectableTextFieldColor = Colors.red.shade200;
@@ -374,7 +345,7 @@ class _ManuallySelectableTextFieldScreenState
                         manuallySelectableTextFieldColor =
                             Colors.green.shade200;
                       }
-                      _manuallySelectableTextField
+                      manuallySelectableTextField
                           .setTextColor(manuallySelectableTextFieldColor);
                     },
                     child: const Text(
@@ -427,12 +398,11 @@ class _ManuallySelectableTextFieldState
     extends State<ManuallySelectableTextField> with ScreenMixin {
   final TransferDataViewModel _transferDataViewModel;
   final Map<String, dynamic> _transferDataMap;
-  late TextEditingController _durationTextFieldController;
-  final _firstTimeTextFieldFocusNode = FocusNode();
-  final _durationTextfieldFocusNode = FocusNode();
+  late TextEditingController _textFieldController;
+  final _textfieldFocusNode = FocusNode();
   Color _durationTextColor = Colors.green.shade200;
 
-  String _durationTextFieldStr = '';
+  String _textFieldStr = '';
   String _durationStr = '';
 
   _ManuallySelectableTextFieldState({
@@ -451,18 +421,16 @@ class _ManuallySelectableTextFieldState
     _transferDataMap["firstStartDateTimeStr"] = nowStr;
     _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
-    _durationTextFieldStr = _transferDataMap['firstDurationStr'] ?? '00:00:00';
+    _textFieldStr = _transferDataMap['firstDurationStr'] ?? '00:00:00';
 
-    _durationTextFieldController =
-        TextEditingController(text: _durationTextFieldStr);
+    _textFieldController = TextEditingController(text: _textFieldStr);
   }
 
   @override
   void dispose() {
-    _durationTextFieldController.dispose();
+    _textFieldController.dispose();
 
-    _firstTimeTextFieldFocusNode.dispose();
-    _durationTextfieldFocusNode.dispose();
+    _textfieldFocusNode.dispose();
 
     super.dispose();
   }
@@ -488,17 +456,17 @@ class _ManuallySelectableTextFieldState
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  void _handleDurationChange({
+  void _handleTextFieldChange({
     String? durationStr,
     int? durationSign,
     bool wasDurationSignButtonPressed = false,
   }) {
-    _durationStr = Utility.formatStringDuration(
-        durationStr: _durationTextFieldController.text);
+    _durationStr =
+        Utility.formatStringDuration(durationStr: _textFieldController.text);
 
     // necessary in case the _durationStr was set to an
     // int value, like 2 instead of 2:00 !
-    _durationTextFieldController.text = _durationStr;
+    _textFieldController.text = _durationStr;
 
     _updateTransferDataMap(); // must be executed before calling
     // the next DurationDateTimeEditor widget
@@ -522,53 +490,53 @@ class _ManuallySelectableTextFieldState
           key: const Key('durationTextField'),
           // Required, otherwise, field not focusable due to
           // IgnorePointer wrapping
-          focusNode: _durationTextfieldFocusNode,
+          focusNode: _textfieldFocusNode,
           decoration: const InputDecoration.collapsed(hintText: ''),
           style: TextStyle(
               color: _durationTextColor,
               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
           keyboardType: TextInputType.datetime,
-          controller: _durationTextFieldController,
+          controller: _textFieldController,
           onSubmitted: (val) {
             // solve the unsolvable problem of onChange()
             // which set cursor at TextField start position !
-            _handleDurationChange(durationStr: val);
+            _handleTextFieldChange(durationStr: val);
           },
         ),
       ),
       onTap: () {
         // Required, otherwise, duration field not focusable
         FocusScope.of(context).requestFocus(
-          _durationTextfieldFocusNode,
+          _textfieldFocusNode,
         );
 
         // Positioning the cursor to the end of TextField content.
         // WARNING: works only if keyboard is displayed or other
         // duration field is in edit mode !
-        _durationTextFieldController.selection = TextSelection.fromPosition(
+        _textFieldController.selection = TextSelection.fromPosition(
           TextPosition(
-            offset: _durationTextFieldController.text.length,
+            offset: _textFieldController.text.length,
           ),
         );
       },
       onDoubleTap: () async {
         await handleClipboardDataDurationDateTimeEditor(
             context: context,
-            textEditingController: _durationTextFieldController,
+            textEditingController: _textFieldController,
             transferDataMap: _transferDataViewModel.getTransferDataMap()!,
-            handleDataChangeFunction: _handleDurationChange);
+            handleDataChangeFunction: _handleTextFieldChange);
       },
       onLongPress: () {
         // Requesting focus avoids necessity to first tap on
         // TextField before long pressing on it to select its
         // content !
         FocusScope.of(context).requestFocus(
-          _durationTextfieldFocusNode,
+          _textfieldFocusNode,
         );
-        _durationTextFieldController.selection = TextSelection(
+        _textFieldController.selection = TextSelection(
           baseOffset: 0,
-          extentOffset: _durationTextFieldController.text.length,
+          extentOffset: _textFieldController.text.length,
         );
       },
     );
