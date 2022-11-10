@@ -365,14 +365,17 @@ class _ManuallySelectableTextFieldScreenState
                         backgroundColor: appElevatedButtonBackgroundColor,
                         shape: appElevatedButtonRoundedShape),
                     onPressed: () {
-                      if (_durationTextColor == Colors.green.shade200) {
-                        _durationTextColor = Colors.red.shade200;
+                      Color manuallySelectableTextFieldColor =
+                          _manuallySelectableTextField.getTextColor();
+                      if (manuallySelectableTextFieldColor ==
+                          Colors.green.shade200) {
+                        manuallySelectableTextFieldColor = Colors.red.shade200;
                       } else {
-                        _durationTextColor = Colors.green.shade200;
+                        manuallySelectableTextFieldColor =
+                            Colors.green.shade200;
                       }
-                      // _manuallySelectableTextField
-                      //     .setTextColor(_durationTextColor);
-                      setState(() {});
+                      _manuallySelectableTextField
+                          .setTextColor(manuallySelectableTextFieldColor);
                     },
                     child: const Text(
                       'Change color',
@@ -395,16 +398,29 @@ class ManuallySelectableTextField extends StatefulWidget {
   final TransferDataViewModel _transferDataViewModel;
   final Map<String, dynamic> _transferDataMap;
 
+  late final _ManuallySelectableTextFieldState stateInstance;
+
   ManuallySelectableTextField(
       {super.key, required TransferDataViewModel transferDataViewModel})
       : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataViewModel.getTransferDataMap() ?? {};
 
   @override
-  State<ManuallySelectableTextField> createState() =>
-      _ManuallySelectableTextFieldState(
-          transferDataViewModel: _transferDataViewModel,
-          transferDataMap: _transferDataMap);
+  State<ManuallySelectableTextField> createState() {
+    stateInstance = _ManuallySelectableTextFieldState(
+        transferDataViewModel: _transferDataViewModel,
+        transferDataMap: _transferDataMap);
+
+    return stateInstance;
+  }
+
+  Color getTextColor() {
+    return stateInstance.getTextColor();
+  }
+
+  void setTextColor(Color textColor) {
+    stateInstance.setTextColor(textColor);
+  }
 }
 
 class _ManuallySelectableTextFieldState
@@ -449,6 +465,21 @@ class _ManuallySelectableTextFieldState
     _durationTextfieldFocusNode.dispose();
 
     super.dispose();
+  }
+
+  Color getTextColor() {
+    return _durationTextColor;
+  }
+
+  void setTextColor(Color textColor) {
+    _durationTextColor = textColor;
+
+    setState(() {}); // WARNING: setState() method must not be
+    //                           called a second time in the
+    //                           setTextColor() calling code in
+    //                           order to avoid "Field
+    //                           'stateInstance'has not been
+    //                           initialized" error !
   }
 
   void _updateTransferDataMap() {
