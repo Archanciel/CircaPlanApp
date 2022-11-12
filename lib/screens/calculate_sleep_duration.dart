@@ -537,20 +537,46 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             ScreenMixin.frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
-        // Without using applying ! bang operator to the
-        // newDateTime variable, the compiler displays this
-        // error: 'The argument type 'DateTime?' can't be
-        // assigned to the parameter type DateTime
         _lastDateTimeStr = newDateTimeStr;
         _lastDateTimeController.text = _lastDateTimeStr;
 
         // Setting the 2nd screen End date time to the first
         // added date time makes sense since when resetting this
-        // screen, the 2nd screen Start date time was set to
-        // current screen New date time value.
-        _transferDataMap['dtDiffEndDateTimeStr'] =
+        // screen, the 2nd screen Start date time was set to the
+        // current 3rd screen New date time value.
+        String secondScreenEnglishFormatEndDateTimeStr =
             DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
-                frenchFormatDateTimeStr: newDateTimeStr);
+                    frenchFormatDateTimeStr: newDateTimeStr) ??
+                '';
+        _transferDataMap['dtDiffEndDateTimeStr'] =
+            secondScreenEnglishFormatEndDateTimeStr;
+
+        // Having set the 2nd screen End date time, it is now
+        // necessary to compute the resulting duration for two
+        // purposes:
+        //
+        //  1/ to update the 2nd screen duration value which
+        //     represents the previous day wake
+        //     up duration value and
+        //  2/ to set the current 3rd screen previous day wake
+        //     up duration value
+
+        String secondScreenEnglishFormatStartDateTimeStr =
+            _transferDataMap['dtDiffStartDateTimeStr'];
+
+        DateTime secondScreenStartDateTime = ScreenMixin.englishDateTimeFormat
+            .parse(secondScreenEnglishFormatStartDateTimeStr);
+        DateTime secondScreenEndDateTime = ScreenMixin.englishDateTimeFormat
+            .parse(secondScreenEnglishFormatEndDateTimeStr);
+        Duration diffDuration =
+            secondScreenEndDateTime.difference(secondScreenStartDateTime);
+        String secondScreenDurationStr = diffDuration.HHmm();
+        _transferDataMap['dtDiffDurationStr'] = secondScreenDurationStr;
+
+        _prevDayTotalWakeUpStr = secondScreenDurationStr;
+        _prevDayTotalController.text = _prevDayTotalWakeUpStr;
+        _prevDayEmptyTotalController = TextEditingController(text: '');
+
         _status = Status.sleep;
       } else {
         DateTime? previousDateTime;
