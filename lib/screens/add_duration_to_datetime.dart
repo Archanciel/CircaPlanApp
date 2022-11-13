@@ -244,13 +244,15 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   String _getPreferredDurationItemName(String string) {
-    RegExp regExp = RegExp(r'(^[\w ]+)( )');
+    // the RegExp below is the uniue possibility of extracting
+    // 'Item name %' from 'Item name % 1:00, 2:00, 3:00' !
+    RegExp regExp = RegExp(r'([^:]+ )([\d:, ]+)');
     RegExpMatch? firstMatch = regExp.firstMatch(string);
 
     String name = '';
 
     if (firstMatch != null) {
-      name = firstMatch.group(0)!.trimRight();
+      name = firstMatch.group(1)!.trimRight();
     }
 
     return name;
