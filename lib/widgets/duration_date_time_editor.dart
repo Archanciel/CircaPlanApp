@@ -277,8 +277,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
 
     if (!wasDurationSignButtonPressed) {
-      setDurationSignIconAndColor(
-          durationIsNegative: _durationTextFieldController.text.contains('-'));
+      bool durationIsNegative =
+          _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
+              _durationTextFieldController.text.contains('-');
+      setDurationSignIconAndColor(durationIsNegative: durationIsNegative);
     }
 
     _durationStr = Utility.formatStringDuration(
