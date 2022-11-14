@@ -63,7 +63,6 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         expect(find.text('02:30'), findsOneWidget);
-        // expect(find.text('11-08-2022 12:30'), findsOneWidget);
         final TextField editableDateTimeTextField =
             tester.widget(editableDateTimeTextFieldFinder);
         expect(editableDateTimeTextField.controller!.text,
