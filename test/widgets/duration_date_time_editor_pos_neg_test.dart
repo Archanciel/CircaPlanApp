@@ -30,12 +30,15 @@ Future<void> main() async {
   const IconData positiveDurationIcon = Icons.add;
   const IconData negativeDurationIcon = Icons.remove;
 
+  /// This test group validate duration icon and color bug fix
   group(
-    'DurationDateTimeEditor adding one int duration',
+    'DurationDateTimeEditor adding multiple int durations',
     () {
       testWidgets(
-        'Adding one digit duration',
+        'Positive then negative duration',
         (tester) async {
+          final Finder durationSignButtonFinder =
+              find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
               find.byKey(const Key('durationTextField'));
 
@@ -54,6 +57,8 @@ Future<void> main() async {
               ),
             ),
           );
+
+          // Adding positive one digit duration
 
           await tester.enterText(durationTextFieldFinder, '2');
 
@@ -66,88 +71,20 @@ Future<void> main() async {
           expect(find.text('11-08-2022 12:00'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField =
+          TextField durationTextField =
               tester.widget(find.byKey(const Key('durationTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
           // testing the duration sign button icon and color
-          final dynamic textButtonWithIconWidget = tester.widget(
+          dynamic textButtonWithIconWidget = tester.widget(
               find.byWidgetPredicate((Widget widget) =>
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationPositiveColor);
-        },
-      );
-      testWidgets(
-        'Adding two digits duration',
-        (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
-                ),
-              ),
-            ),
-          );
-
-          await tester.enterText(durationTextFieldFinder, '24');
-
-          // typing on Done button
-          await tester.testTextInput.receiveAction(TextInputAction.done);
-
-          await tester.pumpAndSettle();
-
-          expect(find.text('24:00'), findsOneWidget);
-          expect(find.text('12-08-2022 10:00'), findsOneWidget);
-
-          // testing the duration text field color
-          final TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
-          expect(durationTextField.style!.color,
-              DurationDateTimeEditor.durationPositiveColor);
-
-          // testing the duration sign button icon and color
-          final dynamic textButtonWithIconWidget = tester.widget(
-              find.byWidgetPredicate((Widget widget) =>
-                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
-          expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
-          expect(textButtonWithIconWidget.icon.color,
-              DurationDateTimeEditor.durationPositiveColor);
-        },
-      );
-      testWidgets(
-        'Adding one digit with - sign duration',
-        (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
-
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
-                ),
-              ),
-            ),
-          );
+          // Adding negative one digit duration
 
           await tester.enterText(durationTextFieldFinder, '-2');
 
@@ -160,14 +97,52 @@ Future<void> main() async {
           expect(find.text('11-08-2022 08:00'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField =
+          durationTextField =
               tester.widget(find.byKey(const Key('durationTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
           // testing the duration sign button icon and color
-          final dynamic textButtonWithIconWidget = tester.widget(
-              find.byWidgetPredicate((Widget widget) =>
+          textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
+              (Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationNegativeColor);
+
+          // Typing once on negative duration sign button
+
+          await tester.tap(durationSignButtonFinder);
+          await tester.pumpAndSettle();
+
+          // testing the duration text field color
+          durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationPositiveColor);
+
+          // testing the duration sign button icon and color
+          textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
+              (Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationPositiveColor);
+
+          // Typing again on now positive duration sign button
+
+          await tester.tap(durationSignButtonFinder);
+          await tester.pumpAndSettle();
+
+          // testing the duration text field color
+          durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationNegativeColor);
+
+          // testing the duration sign button icon and color
+          textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
+              (Widget widget) =>
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
@@ -175,10 +150,14 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'Adding two digits with - signs duration',
+        'Negative then positive duration',
         (tester) async {
+          final Finder durationSignButtonFinder =
+              find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
               find.byKey(const Key('durationTextField'));
+          final Finder editableDateTimeTextFieldFinder =
+              find.byKey(const Key('editableDateTimeTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -196,71 +175,105 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(durationTextFieldFinder, '-24');
+          // Adding negative one digit duration
+
+          await tester.enterText(durationTextFieldFinder, '-2');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
 
           await tester.pumpAndSettle();
 
-          expect(find.text('10-08-2022 10:00'), findsOneWidget);
+          expect(find.text('2:00'), findsOneWidget);
+          final TextField editableDateTimeTextField =
+              tester.widget(editableDateTimeTextFieldFinder);
+          expect(editableDateTimeTextField.controller!.text, '11-08-2022 08:00');
 
           // testing the duration text field color
-          final TextField durationTextField =
+          TextField durationTextField =
               tester.widget(find.byKey(const Key('durationTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
           // testing the duration sign button icon and color
-          final dynamic textButtonWithIconWidget = tester.widget(
+          dynamic textButtonWithIconWidget = tester.widget(
               find.byWidgetPredicate((Widget widget) =>
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               DurationDateTimeEditor.durationNegativeColor);
-        },
-      );
-      testWidgets(
-        'Subtracting valid duration',
-        (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: DurationDateTimeEditor(
-                  widgetName: 'one',
-                  dateTimeTitle: 'End date time',
-                  topSelMenuPosition: 210.0,
-                  nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
-                  transferDataViewModel: transferDataViewModel,
-                  transferDataMap: transferDataMap,
-                  nextAddSubtractResultableDuration: null,
-                ),
-              ),
-            ),
-          );
+          // Adding positive one digit duration. Since the current duration
+          // icon is negative and same fpor the color (negative), entering
+          // a positive duration value and tapping on Done button is interpreted
+          // as entering a negative duration !
+          //
+          // This is due to the following DurationDateTimeEditor widget code:
+          //
+          // if (!wasDurationSignButtonPressed) {
+          //   bool durationIsNegative =
+          //       _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
+          //           _durationTextFieldController.text.contains('-');
+          //   setDurationSignIconAndColor(durationIsNegative: durationIsNegative);
+          // }
 
-          await tester.enterText(durationTextFieldFinder, '-2:30');
+          await tester.enterText(durationTextFieldFinder, '3');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
 
           await tester.pumpAndSettle();
 
-          expect(find.text('2:30'), findsOneWidget);
-          expect(find.text('11-08-2022 07:30'), findsOneWidget);
+          expect(find.text('3:00'), findsOneWidget);
+          expect(editableDateTimeTextField.controller!.text, '11-08-2022 07:00');
 
           // testing the duration text field color
-          final TextField durationTextField =
+          durationTextField =
               tester.widget(find.byKey(const Key('durationTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
           // testing the duration sign button icon and color
-          final dynamic textButtonWithIconWidget = tester.widget(
-              find.byWidgetPredicate((Widget widget) =>
+          textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
+              (Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationNegativeColor);
+
+          // Typing once on negative duration sign button
+
+          await tester.tap(durationSignButtonFinder);
+          await tester.pumpAndSettle();
+
+          // testing the duration text field color
+          durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationPositiveColor);
+
+          // testing the duration sign button icon and color
+          textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
+              (Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
+          expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
+          expect(textButtonWithIconWidget.icon.color,
+              DurationDateTimeEditor.durationPositiveColor);
+
+          // Typing again on now positive duration sign button
+
+          await tester.tap(durationSignButtonFinder);
+          await tester.pumpAndSettle();
+
+          // testing the duration text field color
+          durationTextField =
+              tester.widget(find.byKey(const Key('durationTextField')));
+          expect(durationTextField.style!.color,
+              DurationDateTimeEditor.durationNegativeColor);
+
+          // testing the duration sign button icon and color
+          textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
+              (Widget widget) =>
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
