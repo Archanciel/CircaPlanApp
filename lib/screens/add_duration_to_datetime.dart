@@ -591,7 +591,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   child: Text('Name:'),
                 ),
                 SizedBox(
-                  width: 80,
+                  width: 180,
                   child: TextField(
                     autofocus: true,
                     style: const TextStyle(
