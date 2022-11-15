@@ -252,6 +252,14 @@ class Utility {
             if (match != null) {
               durationStr = '${match.group(0)}0';
             }
+          } else {
+            // the case when copying a 00:hh:mm time text field content to a 
+            // duration text field.
+            RegExp re = RegExp(r"^00:\d{2}:\d{2}$");
+            RegExpMatch? match = re.firstMatch(durationStr);
+            if (match != null) {
+              durationStr = '${match.group(0)!.replaceFirst('00:', '')}';
+            }
           }
         }
       }

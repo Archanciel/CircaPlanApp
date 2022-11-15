@@ -764,6 +764,51 @@ void main() {
         },
       );
       test(
+        'dayHourMinuteFormat==false positive 00:0H:mm',
+        () {
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '00:02:34');
+
+          expect(convertedStr, '02:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false positive 00:HH:mm',
+        () {
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '00:12:34');
+
+          expect(convertedStr, '12:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false positive 00:00:mm',
+        () {
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '00:00:34');
+
+          expect(convertedStr, '00:34');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false positive 00:00:0m',
+        () {
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '00:00:04');
+
+          expect(convertedStr, '00:04');
+        },
+      );
+      test(
+        'dayHourMinuteFormat==false positive 00:00:00',
+        () {
+          String convertedStr =
+              Utility.formatStringDuration(durationStr: '00:00:00');
+
+          expect(convertedStr, '00:00');
+        },
+      );
+      test(
         'dayHourMinuteFormat==true positive int < 10',
         () {
           String convertedStr = Utility.formatStringDuration(
