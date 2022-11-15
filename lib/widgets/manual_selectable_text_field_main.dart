@@ -168,7 +168,7 @@ class _ManuallySelectableTextFieldScreenState
   }
 
 
-  void _handleTextFieldChange([
+  void _handleDurationTextFieldChange([
     String? durationStr,
     int? durationSign,
     bool? wasDurationSignButtonPressed,
@@ -192,7 +192,8 @@ class _ManuallySelectableTextFieldScreenState
 
   void _handleTimeTextFieldChange([
     String? timeTextFieldStr,
-  ]) {
+    int? _,
+    bool? __,  ]) {
     _firstTimeStr = Utility.formatStringDuration(
       durationStr: timeTextFieldStr!,
       dayHourMinuteFormat: true,
@@ -216,7 +217,14 @@ class _ManuallySelectableTextFieldScreenState
         ManuallySelectableTextField(
       transferDataViewModel: _transferDataViewModel,
       textFieldController: _durationTextFieldController,
-      handleTextFieldChangeFunction: _handleTextFieldChange,
+      handleTextFieldChangeFunction: _handleDurationTextFieldChange,
+    );
+
+    ManuallySelectableTextField manuallySelectableTimeTextField =
+        ManuallySelectableTextField(
+      transferDataViewModel: _transferDataViewModel,
+      textFieldController: _firstTimeTextFieldController,
+      handleTextFieldChangeFunction: _handleTimeTextFieldChange,
     );
 
     return Scaffold(
@@ -367,6 +375,36 @@ class _ManuallySelectableTextFieldScreenState
                     //                  height ...
                     height: kVerticalFieldDistance,
                   ),
+
+
+                  Text(
+                    'Time (dd:hh:mm) | %',
+                    style: labelTextStyle,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
+//                                          4 is compliant with current value 5
+//                                          of APP_LABEL_TO_TEXT_DISTANCE
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: TextSelectionThemeData(
+                          selectionColor: selectionColor,
+                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                        ),
+                      ),
+                      child: manuallySelectableTimeTextField,
+                    ),
+                  ),
+                  const SizedBox(
+                    //  necessary since
+                    //                  EditableDateTime must
+                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
+                    //                  height ...
+                    height: kVerticalFieldDistance,
+                  ),
+
+
+
                   ElevatedButton(
                     key: const Key('editableDateTimeSelButton'),
                     style: ButtonStyle(
