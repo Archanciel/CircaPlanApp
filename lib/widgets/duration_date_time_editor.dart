@@ -245,22 +245,25 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _startDateTimeStr = englishFormatStartDateTimeStr;
 
     handleDurationChange(
-      durationStr: _durationStr,
-      durationSign: _durationSign,
+      _durationStr,
+      _durationSign,
     );
   }
 
   void setDuration(String durationStr) {
     _durationStr = durationStr;
     _durationTextFieldController.text = _durationStr;
-    handleDurationChange(durationStr: durationStr, durationSign: _durationSign);
+    handleDurationChange(
+      durationStr,
+      _durationSign,
+    );
   }
 
-  void handleDurationChange({
+  void handleDurationChange([
     String? durationStr,
     int? durationSign,
-    bool wasDurationSignButtonPressed = false,
-  }) {
+    bool? wasDurationSignButtonPressed = false,
+  ]) {
     if (durationSign != null) {
       _durationSign = durationSign;
     }
@@ -276,7 +279,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       return;
     }
 
-    if (!wasDurationSignButtonPressed) {
+    if (wasDurationSignButtonPressed == null || !wasDurationSignButtonPressed) {
       bool durationIsNegative =
           _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
               _durationTextFieldController.text.contains('-');
@@ -464,8 +467,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                   }
 
                   handleDurationChange(
-                      durationSign: _durationSign,
-                      wasDurationSignButtonPressed: true);
+                    null,
+                    _durationSign,
+                    true,
+                  );
                 },
               ),
             ),
@@ -501,7 +506,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                       onSubmitted: (val) {
                         // solve the unsolvable problem of onChange()
                         // which set cursor at TextField start position !
-                        handleDurationChange(durationStr: val);
+                        handleDurationChange(val);
                       },
                     ),
                   ),

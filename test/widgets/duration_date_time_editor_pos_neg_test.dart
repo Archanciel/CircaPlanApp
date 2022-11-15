@@ -204,13 +204,13 @@ Future<void> main() async {
               DurationDateTimeEditor.durationNegativeColor);
 
           // Adding positive one digit duration. Since the current duration
-          // icon is negative and same fpor the color (negative), entering
+          // icon is negative and same for the color (negative), entering
           // a positive duration value and tapping on Done button is interpreted
           // as entering a negative duration !
           //
           // This is due to the following DurationDateTimeEditor widget code:
           //
-          // if (!wasDurationSignButtonPressed) {
+          // if (wasDurationSignButtonPressed == null || !wasDurationSignButtonPressed) {
           //   bool durationIsNegative =
           //       _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
           //           _durationTextFieldController.text.contains('-');

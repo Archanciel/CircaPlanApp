@@ -456,11 +456,11 @@ class _ManuallySelectableTextFieldState
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  void _handleTextFieldChange({
+  void _handleTextFieldChange([
     String? durationStr,
     int? durationSign,
-    bool wasDurationSignButtonPressed = false,
-  }) {
+    bool? wasDurationSignButtonPressed = false,
+  ]) {
     _durationStr =
         Utility.formatStringDuration(durationStr: _textFieldController.text);
 
@@ -501,7 +501,7 @@ class _ManuallySelectableTextFieldState
           onSubmitted: (val) {
             // solve the unsolvable problem of onChange()
             // which set cursor at TextField start position !
-            _handleTextFieldChange(durationStr: val);
+            _handleTextFieldChange(val);
           },
         ),
       ),

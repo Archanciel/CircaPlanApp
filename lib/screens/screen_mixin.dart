@@ -393,9 +393,9 @@ mixin ScreenMixin {
     required TextEditingController textEditingController,
     required Map<String, dynamic> transferDataMap,
     required void Function(
-            {int? durationSign,
-            String? durationStr,
-            bool wasDurationSignButtonPressed})
+            [String? durationStr,
+            int? durationSign,
+            bool? wasDurationSignButtonPressed])
         handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
@@ -409,7 +409,7 @@ mixin ScreenMixin {
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.paste;
 
-      handleDataChangeFunction(durationStr: textEditingController.text);
+      handleDataChangeFunction(textEditingController.text);
     } else {
       await copyToClipboard(
           context: context, controller: textEditingController);
