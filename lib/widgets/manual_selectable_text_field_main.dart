@@ -168,6 +168,25 @@ class _ManuallySelectableTextFieldScreenState
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
+  void _handleTimeTextFieldChange([
+    String? timeTextFieldStr,
+  ]) {
+    _firstTimeStr = Utility.formatStringDuration(
+      durationStr: timeTextFieldStr!,
+      dayHourMinuteFormat: true,
+    );
+    _firstTimeTextFieldController.text = _firstTimeStr;
+
+    _updateTransferDataMap(); // must be executed before calling
+    // the next DurationDateTimeEditor widget
+    // setStartDateTimeStr() method in order for the transfer
+    // data map to be updated before the last linked third
+    // DurationDateTimeEditor widget
+    // _updateTransferDataMap() method calls the
+    // TransferDataViewModel.updateAndSaveTransferData()
+    // method !
+  }
+
   @override
   Widget build(BuildContext context) {
     // print('_FlutterEditableDateTimeScreenState.build()');
@@ -236,14 +255,7 @@ class _ManuallySelectableTextFieldScreenState
                               // modify the TextField value and store it
                               // in the screen navigation transfer
                               // data map.
-                              _firstTimeStr = Utility.formatStringDuration(
-                                durationStr: val,
-                                dayHourMinuteFormat: true,
-                              );
-                              _firstTimeTextFieldController.text =
-                                  _firstTimeStr;
-                              setState(() {});
-                              _updateTransferDataMap();
+                              _handleTimeTextFieldChange(val);
                             },
                           ),
                         ),
@@ -459,7 +471,7 @@ class _ManuallySelectableTextFieldState
   void _handleTextFieldChange([
     String? durationStr,
     int? durationSign,
-    bool? wasDurationSignButtonPressed = false,
+    bool? wasDurationSignButtonPressed,
   ]) {
     _durationStr =
         Utility.formatStringDuration(durationStr: _textFieldController.text);
