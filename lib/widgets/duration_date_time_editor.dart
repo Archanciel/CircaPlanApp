@@ -262,7 +262,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   void handleDurationChange([
     String? durationStr,
     int? durationSign,
-    bool? wasDurationSignButtonPressed = false,
+    bool? wasDurationSignButtonPressed,
   ]) {
     if (durationSign != null) {
       _durationSign = durationSign;
@@ -279,7 +279,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       return;
     }
 
-    if (wasDurationSignButtonPressed == null || !wasDurationSignButtonPressed) {
+    if (wasDurationSignButtonPressed == null) {
       bool durationIsNegative =
           _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
               _durationTextFieldController.text.contains('-');
