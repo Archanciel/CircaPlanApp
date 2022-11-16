@@ -256,9 +256,9 @@ class _ManuallySelectableTextFieldScreenState
                     style: labelTextStyle,
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
-//                                            compliant with current value 6 of
-//                                            APP_LABEL_TO_TEXT_DISTANCE
+                    padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
+//                                          4 is compliant with current value 5
+//                                          of APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         textSelectionTheme: TextSelectionThemeData(
@@ -266,82 +266,7 @@ class _ManuallySelectableTextFieldScreenState
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: IgnorePointer(
-                          // Prevents displaying copy menu after selecting in
-                          // TextField.
-                          // Required for onLongPress selection to work
-                          child: TextField(
-                            key: const Key('firstTimeTextField'),
-                            // Required, otherwise, field not focusable due to
-                            // IgnorePointer wrapping
-                            focusNode: _firstTimeTextFieldFocusNode,
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: valueTextStyle,
-                            keyboardType: TextInputType.datetime,
-                            controller: _firstTimeTextFieldController,
-                            onSubmitted: (val) {
-                              // called when manually updating the TextField
-                              // content. onChanged must be defined in order for
-                              // pasting a value to the TextField to really
-                              // modify the TextField value and store it
-                              // in the screen navigation transfer
-                              // data map.
-                              _handleTimeTextFieldChange(val);
-                            },
-                          ),
-                        ),
-                        onTap: () {
-                          // Required, otherwise, duration field not focusable
-                          FocusScope.of(context).requestFocus(
-                            _firstTimeTextFieldFocusNode,
-                          );
-
-                          // Positioning the cursor to the end of TextField content.
-                          // WARNING: works only if keyboard is displayed or other
-                          // duration field is in edit mode !
-                          _firstTimeTextFieldController.selection =
-                              TextSelection.fromPosition(
-                            TextPosition(
-                              offset: _firstTimeTextFieldController.text.length,
-                            ),
-                          );
-                        },
-                        onDoubleTap: () async {
-                          await handleClipboardDataEditableDuration(
-                            context: context,
-                            textEditingController:
-                                _firstTimeTextFieldController,
-                            transferDataMap: _transferDataMap,
-                            handleDataChangeFunction:
-                                (BuildContext c, String s) {
-                              _firstTimeStr = Utility.formatStringDuration(
-                                durationStr: s,
-                                dayHourMinuteFormat: true,
-                              );
-                              _firstTimeTextFieldController.text =
-                                  _firstTimeStr;
-                              _updateTransferDataMap();
-                            },
-                          );
-                        },
-                        onLongPress: () {
-                          // Requesting focus avoids necessity to first tap on
-                          // TextField before long pressing on it to select its
-                          // content !
-                          FocusScope.of(context).requestFocus(
-                            _firstTimeTextFieldFocusNode,
-                          );
-                          _firstTimeTextFieldController.selection =
-                              TextSelection(
-                            baseOffset: 0,
-                            extentOffset:
-                                _firstTimeTextFieldController.text.length,
-                          );
-                        },
-                      ),
+                      child: manuallySelectableTimeTextField,
                     ),
                   ),
                   const SizedBox(
@@ -368,38 +293,6 @@ class _ManuallySelectableTextFieldScreenState
                       ),
                       child: manuallySelectableDurationTextField,
                     ),
-                  ),
-                  const SizedBox(
-                    //  necessary since
-                    //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
-                    //                  height ...
-                    height: kVerticalFieldDistance,
-                  ),
-                  Text(
-                    'Time (dd:hh:mm) | %',
-                    style: labelTextStyle,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(25, 4, 0, 0), // val
-//                                          4 is compliant with current value 5
-//                                          of APP_LABEL_TO_TEXT_DISTANCE
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                        ),
-                      ),
-                      child: manuallySelectableTimeTextField,
-                    ),
-                  ),
-                  const SizedBox(
-                    //  necessary since
-                    //                  EditableDateTime must
-                    //                  include a SizedBox of kVerticalFieldDistanceAddSubScreen
-                    //                  height ...
-                    height: kVerticalFieldDistance,
                   ),
                   ElevatedButton(
                     key: const Key('editableDateTimeSelButton'),
