@@ -53,7 +53,7 @@ class _ManuallySelectableTextFieldState
   final TransferDataViewModel _transferDataViewModel;
   final Map<String, dynamic> _transferDataMap;
   final _textfieldFocusNode = FocusNode();
-  Color _durationTextColor = Colors.green.shade200;
+  Color _durationTextColor;
 
   late final TextEditingController textFieldController;
 
@@ -72,7 +72,7 @@ class _ManuallySelectableTextFieldState
   })  : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataMap,
         _durationTextColor =
-            transferDataMap['${widgetName}DurationTextColor'] ?? Colors.white;
+            transferDataMap['${widgetName}DurationTextColor'] ?? ScreenMixin.APP_TEXT_AND_ICON_COLOR;
 
   @override
   void initState() {

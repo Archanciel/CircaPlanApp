@@ -1,3 +1,4 @@
+import 'package:circa_plan/widgets/manually_selectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -67,6 +68,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   final _firstTimeTextFieldFocusNode = FocusNode();
   final _secondTimeTextFieldFocusNode = FocusNode();
 
+  late ManuallySelectableTextField manuallySelectableFirstTimeTextField;
+  late ManuallySelectableTextField manuallySelectableSecondTimeTextField;
+
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
@@ -111,6 +115,20 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
+
+    manuallySelectableFirstTimeTextField = ManuallySelectableTextField(
+      key: const Key('firstTimeTextField'),
+      transferDataViewModel: _transferDataViewModel,
+      textFieldController: _firstTimeTextFieldController,
+      handleTextFieldChangeFunction: _handleFirstTimeTextFieldChange,
+    );
+
+    manuallySelectableSecondTimeTextField = ManuallySelectableTextField(
+      key: const Key('secondTimeTextField'),
+      transferDataViewModel: _transferDataViewModel,
+      textFieldController: _firstTimeTextFieldController,
+      handleTextFieldChangeFunction: _handleSecondTimeTextFieldChange,
+    );
 
     String extractedHHmm = '';
 
@@ -409,6 +427,48 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _updateTransferDataMap();
   }
 
+  void _handleFirstTimeTextFieldChange([
+    String? timeTextFieldStr,
+    int? _,
+    bool? __,
+  ]) {
+    _firstTimeStr = Utility.formatStringDuration(
+      durationStr: timeTextFieldStr!,
+      dayHourMinuteFormat: true,
+    );
+    _firstTimeTextFieldController.text = _firstTimeStr;
+
+    _updateTransferDataMap(); // must be executed before calling
+    // the next DurationDateTimeEditor widget
+    // setStartDateTimeStr() method in order for the transfer
+    // data map to be updated before the last linked third
+    // DurationDateTimeEditor widget
+    // _updateTransferDataMap() method calls the
+    // TransferDataViewModel.updateAndSaveTransferData()
+    // method !
+  }
+
+  void _handleSecondTimeTextFieldChange([
+    String? timeTextFieldStr,
+    int? _,
+    bool? __,
+  ]) {
+    _secondTimeStr = Utility.formatStringDuration(
+      durationStr: timeTextFieldStr!,
+      dayHourMinuteFormat: true,
+    );
+    _secondTimeTextFieldController.text = _secondTimeStr;
+
+    _updateTransferDataMap(); // must be executed before calling
+    // the next DurationDateTimeEditor widget
+    // setStartDateTimeStr() method in order for the transfer
+    // data map to be updated before the last linked third
+    // DurationDateTimeEditor widget
+    // _updateTransferDataMap() method calls the
+    // TransferDataViewModel.updateAndSaveTransferData()
+    // method !
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -445,89 +505,90 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: IgnorePointer(
-                          // Prevents displaying copy menu after selecting in
-                          // TextField.
-                          // Required for onLongPress selection to work
-                          child: TextField(
-                            key: const Key('firstTimeTextField'),
-                            // Required, otherwise, field not focusable due to
-                            // IgnorePointer wrapping
-                            focusNode: _firstTimeTextFieldFocusNode,
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: valueTextStyle,
-                            keyboardType: TextInputType.datetime,
-                            controller: _firstTimeTextFieldController,
-                            onSubmitted: (val) {
-                              // called when manually updating the TextField
-                              // content. onChanged must be defined in order for
-                              // pasting a value to the TextField to really
-                              // modify the TextField value and store it
-                              // in the screen navigation transfer
-                              // data map.
-                              _firstTimeStr = Utility.formatStringDuration(
-                                durationStr: val,
-                                dayHourMinuteFormat: true,
-                              );
-                              _firstTimeTextFieldController.text =
-                                  _firstTimeStr;
-                              setState(() {});
-                              _updateTransferDataMap();
-                            },
-                          ),
-                        ),
-                        onTap: () {
-                          // Required, otherwise, duration field not focusable
-                          FocusScope.of(context).requestFocus(
-                            _firstTimeTextFieldFocusNode,
-                          );
+                      child: manuallySelectableFirstTimeTextField,
+                      // child: GestureDetector(
+                      //   behavior: HitTestBehavior.opaque,
+                      //   child: IgnorePointer(
+                      //     // Prevents displaying copy menu after selecting in
+                      //     // TextField.
+                      //     // Required for onLongPress selection to work
+                      //     child: TextField(
+                      //       key: const Key('firstTimeTextField'),
+                      //       // Required, otherwise, field not focusable due to
+                      //       // IgnorePointer wrapping
+                      //       focusNode: _firstTimeTextFieldFocusNode,
+                      //       decoration:
+                      //           const InputDecoration.collapsed(hintText: ''),
+                      //       style: valueTextStyle,
+                      //       keyboardType: TextInputType.datetime,
+                      //       controller: _firstTimeTextFieldController,
+                      //       onSubmitted: (val) {
+                      //         // called when manually updating the TextField
+                      //         // content. onChanged must be defined in order for
+                      //         // pasting a value to the TextField to really
+                      //         // modify the TextField value and store it
+                      //         // in the screen navigation transfer
+                      //         // data map.
+                      //         _firstTimeStr = Utility.formatStringDuration(
+                      //           durationStr: val,
+                      //           dayHourMinuteFormat: true,
+                      //         );
+                      //         _firstTimeTextFieldController.text =
+                      //             _firstTimeStr;
+                      //         setState(() {});
+                      //         _updateTransferDataMap();
+                      //       },
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     // Required, otherwise, duration field not focusable
+                      //     FocusScope.of(context).requestFocus(
+                      //       _firstTimeTextFieldFocusNode,
+                      //     );
 
-                          // Positioning the cursor to the end of TextField content.
-                          // WARNING: works only if keyboard is displayed or other
-                          // duration field is in edit mode !
-                          _firstTimeTextFieldController.selection =
-                              TextSelection.fromPosition(
-                            TextPosition(
-                              offset: _firstTimeTextFieldController.text.length,
-                            ),
-                          );
-                        },
-                        onDoubleTap: () async {
-                          await handleClipboardDataEditableDuration(
-                            context: context,
-                            textEditingController:
-                                _firstTimeTextFieldController,
-                            transferDataMap: _transferDataMap,
-                            handleDataChangeFunction:
-                                (BuildContext c, String s) {
-                              _firstTimeStr = Utility.formatStringDuration(
-                                durationStr: s,
-                                dayHourMinuteFormat: true,
-                              );
-                              _firstTimeTextFieldController.text =
-                                  _firstTimeStr;
-                              _updateTransferDataMap();
-                            },
-                          );
-                        },
-                        onLongPress: () {
-                          // Requesting focus avoids necessity to first tap on
-                          // TextField before long pressing on it to select its
-                          // content !
-                          FocusScope.of(context).requestFocus(
-                            _firstTimeTextFieldFocusNode,
-                          );
-                          _firstTimeTextFieldController.selection =
-                              TextSelection(
-                            baseOffset: 0,
-                            extentOffset:
-                                _firstTimeTextFieldController.text.length,
-                          );
-                        },
-                      ),
+                      //     // Positioning the cursor to the end of TextField content.
+                      //     // WARNING: works only if keyboard is displayed or other
+                      //     // duration field is in edit mode !
+                      //     _firstTimeTextFieldController.selection =
+                      //         TextSelection.fromPosition(
+                      //       TextPosition(
+                      //         offset: _firstTimeTextFieldController.text.length,
+                      //       ),
+                      //     );
+                      //   },
+                      //   onDoubleTap: () async {
+                      //     await handleClipboardDataEditableDuration(
+                      //       context: context,
+                      //       textEditingController:
+                      //           _firstTimeTextFieldController,
+                      //       transferDataMap: _transferDataMap,
+                      //       handleDataChangeFunction:
+                      //           (BuildContext c, String s) {
+                      //         _firstTimeStr = Utility.formatStringDuration(
+                      //           durationStr: s,
+                      //           dayHourMinuteFormat: true,
+                      //         );
+                      //         _firstTimeTextFieldController.text =
+                      //             _firstTimeStr;
+                      //         _updateTransferDataMap();
+                      //       },
+                      //     );
+                      //   },
+                      //   onLongPress: () {
+                      //     // Requesting focus avoids necessity to first tap on
+                      //     // TextField before long pressing on it to select its
+                      //     // content !
+                      //     FocusScope.of(context).requestFocus(
+                      //       _firstTimeTextFieldFocusNode,
+                      //     );
+                      //     _firstTimeTextFieldController.selection =
+                      //         TextSelection(
+                      //       baseOffset: 0,
+                      //       extentOffset:
+                      //           _firstTimeTextFieldController.text.length,
+                      //     );
+                      //   },
+                      // ),
                     ),
                   ),
                   const SizedBox(
