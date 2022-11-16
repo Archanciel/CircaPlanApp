@@ -9,6 +9,7 @@ import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 import '../utils/utility.dart';
+import 'manually_selectable_text_field.dart';
 
 /// HH:MM editable widget with a '+' button changeable to '-'
 /// button. Adds or subtracts the defined duration value to
@@ -134,6 +135,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       TextEditingController();
   final _durationTextfieldFocusNode = FocusNode();
 
+  late ManuallySelectableTextField manuallySelectableDurationTextField;
+
   _DurationDateTimeEditorState({
     required String widgetName,
     required String nowDateTimeEnglishFormatStr,
@@ -201,6 +204,13 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _dateTimePickerController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
             englishFormatDateTimeStr: _endDateTimeStr)!;
+
+    manuallySelectableDurationTextField = ManuallySelectableTextField(
+      transferDataViewModel: widget.transferDataViewModel,
+      textFieldController: _durationTextFieldController,
+      handleTextFieldChangeFunction: handleDurationChange,
+      widgetName: _widgetName,
+    );
   }
 
   @override
@@ -397,6 +407,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
       _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
     }
+
+    manuallySelectableDurationTextField.setTextColor(_durationTextColor);
   }
 
   /// This method must be executed before calling the next
@@ -427,7 +439,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   @override
   Widget build(BuildContext context) {
     _durationTextFieldController.text = _durationStr;
-
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -465,6 +477,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                         DurationDateTimeEditor.durationPositiveColor;
                   }
 
+                  manuallySelectableDurationTextField
+                      .setTextColor(_durationTextColor);
+
                   handleDurationChange(
                     null,
                     _durationSign,
@@ -484,67 +499,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                   ),
                 ),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  child: IgnorePointer(
-                    // Prevents displaying copy menu after selecting in
-                    // TextField.
-                    // Required for onLongPress selection to work
-                    child: TextField(
-                      key: const Key('durationTextField'),
-                      // Required, otherwise, field not focusable due to
-                      // IgnorePointer wrapping
-                      focusNode: _durationTextfieldFocusNode,
-                      decoration: const InputDecoration.collapsed(hintText: ''),
-                      style: TextStyle(
-                          color: _durationTextColor,
-                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                      keyboardType: TextInputType.datetime,
-                      controller: _durationTextFieldController,
-                      onSubmitted: (val) {
-                        // solve the unsolvable problem of onChange()
-                        // which set cursor at TextField start position !
-                        handleDurationChange(val);
-                      },
-                    ),
-                  ),
-                  onTap: () {
-                    // Required, otherwise, duration field not focusable
-                    FocusScope.of(context).requestFocus(
-                      _durationTextfieldFocusNode,
-                    );
-
-                    // Positioning the cursor to the end of TextField content.
-                    // WARNING: works only if keyboard is displayed or other
-                    // duration field is in edit mode !
-                    _durationTextFieldController.selection =
-                        TextSelection.fromPosition(
-                      TextPosition(
-                        offset: _durationTextFieldController.text.length,
-                      ),
-                    );
-                  },
-                  onDoubleTap: () async {
-                    await widget.handleClipboardDataDurationDateTimeEditor(
-                        context: context,
-                        textEditingController: _durationTextFieldController,
-                        transferDataMap: widget._transferDataMap,
-                        handleDataChangeFunction: handleDurationChange);
-                  },
-                  onLongPress: () {
-                    // Requesting focus avoids necessity to first tap on
-                    // TextField before long pressing on it to select its
-                    // content !
-                    FocusScope.of(context).requestFocus(
-                      _durationTextfieldFocusNode,
-                    );
-                    _durationTextFieldController.selection = TextSelection(
-                      baseOffset: 0,
-                      extentOffset: _durationTextFieldController.text.length,
-                    );
-                  },
-                ),
+                child: manuallySelectableDurationTextField,
               ),
             ),
           ],

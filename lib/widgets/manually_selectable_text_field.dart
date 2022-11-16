@@ -16,11 +16,14 @@ class ManuallySelectableTextField extends StatefulWidget {
     bool? wasDurationSignButtonPressed,
   ]) handleTextFieldChangeFunction;
 
+  final String widgetName;
+
   ManuallySelectableTextField({
     super.key,
     required TransferDataViewModel transferDataViewModel,
     required this.textFieldController,
     required this.handleTextFieldChangeFunction,
+    this.widgetName = '',
   })  : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataViewModel.getTransferDataMap() ?? {};
 
@@ -30,7 +33,8 @@ class ManuallySelectableTextField extends StatefulWidget {
         transferDataViewModel: _transferDataViewModel,
         transferDataMap: _transferDataMap,
         textFieldController: textFieldController,
-        handleTextFieldChangeFunction: handleTextFieldChangeFunction);
+        handleTextFieldChangeFunction: handleTextFieldChangeFunction,
+        widgetName: widgetName);
 
     return stateInstance;
   }
@@ -64,8 +68,11 @@ class _ManuallySelectableTextFieldState
     required Map<String, dynamic> transferDataMap,
     required this.textFieldController,
     required this.handleTextFieldChangeFunction,
+    String widgetName = '',
   })  : _transferDataViewModel = transferDataViewModel,
-        _transferDataMap = transferDataMap;
+        _transferDataMap = transferDataMap,
+        _durationTextColor =
+            transferDataMap['${widgetName}DurationTextColor'] ?? Colors.white;
 
   @override
   void initState() {
@@ -78,7 +85,7 @@ class _ManuallySelectableTextFieldState
     _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
     textFieldController.text =
-        _transferDataMap['firstDurationStr'] ?? '00:00:00';
+        _transferDataMap['${widget.widgetName}DurationStr'] ?? '00:00:00';
   }
 
   @override
@@ -104,7 +111,7 @@ class _ManuallySelectableTextFieldState
   }
 
   void _updateTransferDataMap() {
-    _transferDataMap['firstDurationStr'] = textFieldController.text;
+    _transferDataMap['${widget.widgetName}DurationStr'] = textFieldController.text;
 
     _transferDataViewModel.updateAndSaveTransferData();
   }
