@@ -125,6 +125,9 @@ class _ManuallySelectableTextFieldScreenState
   final TransferDataViewModel _transferDataViewModel;
   late TextEditingController _firstTimeTextFieldController;
   late TextEditingController _durationTextFieldController;
+  late ManuallySelectableTextField manuallySelectableDurationTextField;
+  late ManuallySelectableTextField manuallySelectableTimeTextField;
+
   final _firstTimeTextFieldFocusNode = FocusNode();
 
   String _firstTimeStr = '';
@@ -149,6 +152,18 @@ class _ManuallySelectableTextFieldScreenState
 
     _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
     _durationTextFieldController = TextEditingController(text: '');
+
+    manuallySelectableDurationTextField = ManuallySelectableTextField(
+      transferDataViewModel: _transferDataViewModel,
+      textFieldController: _durationTextFieldController,
+      handleTextFieldChangeFunction: _handleDurationTextFieldChange,
+    );
+
+    manuallySelectableTimeTextField = ManuallySelectableTextField(
+      transferDataViewModel: _transferDataViewModel,
+      textFieldController: _firstTimeTextFieldController,
+      handleTextFieldChangeFunction: _handleTimeTextFieldChange,
+    );
   }
 
   @override
@@ -167,14 +182,13 @@ class _ManuallySelectableTextFieldScreenState
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
-
   void _handleDurationTextFieldChange([
     String? durationStr,
     int? durationSign,
     bool? wasDurationSignButtonPressed,
   ]) {
-    String durationStr =
-        Utility.formatStringDuration(durationStr: _durationTextFieldController.text);
+    String durationStr = Utility.formatStringDuration(
+        durationStr: _durationTextFieldController.text);
 
     // necessary in case the durationStr was set to an
     // int value, like 2 instead of 2:00 !
@@ -193,7 +207,8 @@ class _ManuallySelectableTextFieldScreenState
   void _handleTimeTextFieldChange([
     String? timeTextFieldStr,
     int? _,
-    bool? __,  ]) {
+    bool? __,
+  ]) {
     _firstTimeStr = Utility.formatStringDuration(
       durationStr: timeTextFieldStr!,
       dayHourMinuteFormat: true,
@@ -213,20 +228,6 @@ class _ManuallySelectableTextFieldScreenState
   @override
   Widget build(BuildContext context) {
     // print('_FlutterEditableDateTimeScreenState.build()');
-    ManuallySelectableTextField manuallySelectableDurationTextField =
-        ManuallySelectableTextField(
-      transferDataViewModel: _transferDataViewModel,
-      textFieldController: _durationTextFieldController,
-      handleTextFieldChangeFunction: _handleDurationTextFieldChange,
-    );
-
-    ManuallySelectableTextField manuallySelectableTimeTextField =
-        ManuallySelectableTextField(
-      transferDataViewModel: _transferDataViewModel,
-      textFieldController: _firstTimeTextFieldController,
-      handleTextFieldChangeFunction: _handleTimeTextFieldChange,
-    );
-
     return Scaffold(
       backgroundColor: ScreenMixin.APP_LIGHT_BLUE_COLOR,
       appBar: AppBar(
@@ -375,8 +376,6 @@ class _ManuallySelectableTextFieldScreenState
                     //                  height ...
                     height: kVerticalFieldDistance,
                   ),
-
-
                   Text(
                     'Time (dd:hh:mm) | %',
                     style: labelTextStyle,
@@ -402,9 +401,6 @@ class _ManuallySelectableTextFieldScreenState
                     //                  height ...
                     height: kVerticalFieldDistance,
                   ),
-
-
-
                   ElevatedButton(
                     key: const Key('editableDateTimeSelButton'),
                     style: ButtonStyle(
@@ -514,7 +510,8 @@ class _ManuallySelectableTextFieldState
     _transferDataMap["firstStartDateTimeStr"] = nowStr;
     _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
-    textFieldController.text = _transferDataMap['firstDurationStr'] ?? '00:00:00';
+    textFieldController.text =
+        _transferDataMap['firstDurationStr'] ?? '00:00:00';
   }
 
   @override
