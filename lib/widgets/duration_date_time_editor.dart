@@ -135,7 +135,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       TextEditingController();
   final _durationTextfieldFocusNode = FocusNode();
 
-  late ManuallySelectableTextField manuallySelectableDurationTextField;
+  late ManuallySelectableTextField _manuallySelectableDurationTextField;
 
   _DurationDateTimeEditorState({
     required String widgetName,
@@ -184,6 +184,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationSign = _transferDataMap['${_widgetName}DurationSign'] ?? 1;
     _durationTextColor = _transferDataMap['${_widgetName}DurationTextColor'] ??
         DurationDateTimeEditor.durationPositiveColor;
+
+    _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
+
     _durationStr = _transferDataMap['${_widgetName}DurationStr'] ?? '00:00';
     _durationTextFieldController.text = _durationStr;
     _startDateTimeStr = _transferDataMap['${_widgetName}StartDateTimeStr'] ??
@@ -205,7 +208,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
             englishFormatDateTimeStr: _endDateTimeStr)!;
 
-    manuallySelectableDurationTextField = ManuallySelectableTextField(
+    _manuallySelectableDurationTextField = ManuallySelectableTextField(
       transferDataViewModel: widget.transferDataViewModel,
       textFieldController: _durationTextFieldController,
       handleTextFieldChangeFunction: handleDurationChange,
@@ -408,7 +411,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
     }
 
-    manuallySelectableDurationTextField.setTextColor(_durationTextColor);
+    _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
   }
 
   /// This method must be executed before calling the next
@@ -439,7 +442,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   @override
   Widget build(BuildContext context) {
     _durationTextFieldController.text = _durationStr;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -477,7 +480,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                         DurationDateTimeEditor.durationPositiveColor;
                   }
 
-                  manuallySelectableDurationTextField
+                  _manuallySelectableDurationTextField
                       .setTextColor(_durationTextColor);
 
                   handleDurationChange(
@@ -499,7 +502,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                     cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                   ),
                 ),
-                child: manuallySelectableDurationTextField,
+                child: _manuallySelectableDurationTextField,
               ),
             ),
           ],
