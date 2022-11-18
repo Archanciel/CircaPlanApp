@@ -561,8 +561,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         //  2/ to set the current 3rd screen previous day wake
         //     up duration value
 
-        String secondScreenEnglishFormatStartDateTimeStr =
+        String? secondScreenEnglishFormatStartDateTimeStr =
             _transferDataMap['dtDiffStartDateTimeStr'];
+
+        if (secondScreenEnglishFormatStartDateTimeStr == null) {
+          return;
+        }
 
         DateTime secondScreenStartDateTime = ScreenMixin.englishDateTimeFormat
             .parse(secondScreenEnglishFormatStartDateTimeStr);
