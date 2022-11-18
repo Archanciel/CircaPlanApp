@@ -43,7 +43,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -90,7 +90,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -137,7 +137,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -184,7 +184,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -230,7 +230,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',

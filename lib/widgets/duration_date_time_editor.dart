@@ -27,7 +27,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
 
   // instance variables used to pass values to the
   // _DurationDateTimeEditorState constructor
-  final String _widgetName;
+  final String _widgetPrefix;
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
@@ -38,7 +38,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// avoid unuseful transfer data saving's.
   DurationDateTimeEditor({
     Key? key,
-    required String widgetName,
+    required String widgetPrefix,
     required this.dateTimeTitle,
     required this.topSelMenuPosition,
     required String nowDateTimeEnglishFormatStr,
@@ -46,7 +46,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     required Map<String, dynamic> transferDataMap,
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     this.saveTransferDataIfModified = false,
-  })  : _widgetName = widgetName,
+  })  : _widgetPrefix = widgetPrefix,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
@@ -75,7 +75,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   @override
   State<DurationDateTimeEditor> createState() {
     stateInstance = _DurationDateTimeEditorState(
-      widgetName: _widgetName,
+      widgetPrefix: _widgetPrefix,
       nowDateTimeEnglishFormatStr: _nowDateTimeEnglishFormatStr,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _nextAddSubtractResultableDuration,
@@ -120,7 +120,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   Color _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
   Color _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
 
-  final String _widgetName;
+  final String _widgetPrefix;
   final Map<String, dynamic> _transferDataMap;
   String _durationStr;
   int _durationSign;
@@ -138,26 +138,26 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   late ManuallySelectableTextField _manuallySelectableDurationTextField;
 
   _DurationDateTimeEditorState({
-    required String widgetName,
+    required String widgetPrefix,
     required String nowDateTimeEnglishFormatStr,
     required Map<String, dynamic> transferDataMap,
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     bool saveTransferDataIfModified = false,
-  })  : _widgetName = widgetName,
+  })  : _widgetPrefix = widgetPrefix,
         _transferDataMap = transferDataMap,
         _durationIcon =
-            transferDataMap['${widgetName}DurationIconData'] ?? Icons.add,
+            transferDataMap['${widgetPrefix}DurationIconData'] ?? Icons.add,
         _durationIconColor =
-            transferDataMap['${widgetName}DurationIconColor'] ??
+            transferDataMap['${widgetPrefix}DurationIconColor'] ??
                 DurationDateTimeEditor.durationPositiveColor,
-        _durationSign = transferDataMap['${widgetName}DurationSign'] ?? 1,
+        _durationSign = transferDataMap['${widgetPrefix}DurationSign'] ?? 1,
         _durationTextColor =
-            transferDataMap['${widgetName}DurationTextColor'] ??
+            transferDataMap['${widgetPrefix}DurationTextColor'] ??
                 DurationDateTimeEditor.durationPositiveColor,
-        _durationStr = transferDataMap['${widgetName}DurationStr'] ?? '00:00',
-        _startDateTimeStr = transferDataMap['${widgetName}StartDateTimeStr'] ??
+        _durationStr = transferDataMap['${widgetPrefix}DurationStr'] ?? '00:00',
+        _startDateTimeStr = transferDataMap['${widgetPrefix}StartDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
-        _endDateTimeStr = transferDataMap['${widgetName}EndDateTimeStr'] ??
+        _endDateTimeStr = transferDataMap['${widgetPrefix}EndDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
         saveTransferDataIfModified = saveTransferDataIfModified;
@@ -178,20 +178,20 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     String nowDateTimeEnglishFormatStr = dateTimeNow.toString();
 
     _durationIcon =
-        _transferDataMap['${_widgetName}DurationIconData'] ?? Icons.add;
-    _durationIconColor = _transferDataMap['${_widgetName}DurationIconColor'] ??
+        _transferDataMap['${_widgetPrefix}DurationIconData'] ?? Icons.add;
+    _durationIconColor = _transferDataMap['${_widgetPrefix}DurationIconColor'] ??
         DurationDateTimeEditor.durationPositiveColor;
-    _durationSign = _transferDataMap['${_widgetName}DurationSign'] ?? 1;
-    _durationTextColor = _transferDataMap['${_widgetName}DurationTextColor'] ??
+    _durationSign = _transferDataMap['${_widgetPrefix}DurationSign'] ?? 1;
+    _durationTextColor = _transferDataMap['${_widgetPrefix}DurationTextColor'] ??
         DurationDateTimeEditor.durationPositiveColor;
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
 
-    _durationStr = _transferDataMap['${_widgetName}DurationStr'] ?? '00:00';
+    _durationStr = _transferDataMap['${_widgetPrefix}DurationStr'] ?? '00:00';
     _durationTextFieldController.text = _durationStr;
-    _startDateTimeStr = _transferDataMap['${_widgetName}StartDateTimeStr'] ??
+    _startDateTimeStr = _transferDataMap['${_widgetPrefix}StartDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
-    _endDateTimeStr = _transferDataMap['${_widgetName}EndDateTimeStr'] ??
+    _endDateTimeStr = _transferDataMap['${_widgetPrefix}EndDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
     _dateTimePickerController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
@@ -212,7 +212,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       transferDataViewModel: widget.transferDataViewModel,
       textFieldController: _durationTextFieldController,
       handleTextFieldChangeFunction: handleDurationChange,
-      widgetName: _widgetName,
+      widgetPrefixOrName: _widgetPrefix,
     );
   }
 
@@ -422,13 +422,13 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   /// method calls the
   /// TransferDataViewModel.updateAndSaveTransferData() method.
   void _updateTransferDataMap() {
-    _transferDataMap['${_widgetName}DurationIconData'] = _durationIcon;
-    _transferDataMap['${_widgetName}DurationIconColor'] = _durationIconColor;
-    _transferDataMap['${_widgetName}DurationSign'] = _durationSign;
-    _transferDataMap['${_widgetName}DurationTextColor'] = _durationTextColor;
-    _transferDataMap['${_widgetName}DurationStr'] = _durationStr;
-    _transferDataMap['${_widgetName}StartDateTimeStr'] = _startDateTimeStr;
-    _transferDataMap['${_widgetName}EndDateTimeStr'] = _endDateTimeStr;
+    _transferDataMap['${_widgetPrefix}DurationIconData'] = _durationIcon;
+    _transferDataMap['${_widgetPrefix}DurationIconColor'] = _durationIconColor;
+    _transferDataMap['${_widgetPrefix}DurationSign'] = _durationSign;
+    _transferDataMap['${_widgetPrefix}DurationTextColor'] = _durationTextColor;
+    _transferDataMap['${_widgetPrefix}DurationStr'] = _durationStr;
+    _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeStr;
+    _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
 
     setState(() {});
 

@@ -37,13 +37,13 @@ Future<void> main() async {
         final Finder durationTextFieldFinder =
             find.byKey(const Key('durationTextField'));
         final Finder editableDateTimeTextFieldFinder =
-              find.byKey(const Key('editableDateTimeTextField'));
+            find.byKey(const Key('editableDateTimeTextField'));
 
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
               body: DurationDateTimeEditor(
-                widgetName: 'one',
+                widgetPrefix: 'one',
                 dateTimeTitle: 'End date time',
                 topSelMenuPosition: 210.0,
                 nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -65,8 +65,7 @@ Future<void> main() async {
         expect(find.text('02:30'), findsOneWidget);
         final TextField editableDateTimeTextField =
             tester.widget(editableDateTimeTextFieldFinder);
-        expect(editableDateTimeTextField.controller!.text,
-            '11-08-2022 12:30');
+        expect(editableDateTimeTextField.controller!.text, '11-08-2022 12:30');
 
         // testing the duration text field color
         final TextField durationTextField =

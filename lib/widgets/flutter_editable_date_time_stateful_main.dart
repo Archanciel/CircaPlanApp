@@ -97,7 +97,7 @@ class _FlutterEditableDateTimeScreenState
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
-      widgetName: 'first',
+      widgetPrefix: 'first',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 210.0,
       nowDateTimeEnglishFormatStr: DateTime.now().toString(),

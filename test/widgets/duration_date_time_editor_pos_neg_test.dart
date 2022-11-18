@@ -46,7 +46,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -163,7 +163,7 @@ Future<void> main() async {
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetName: 'one',
+                  widgetPrefix: 'one',
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -187,7 +187,8 @@ Future<void> main() async {
           expect(find.text('2:00'), findsOneWidget);
           final TextField editableDateTimeTextField =
               tester.widget(editableDateTimeTextFieldFinder);
-          expect(editableDateTimeTextField.controller!.text, '11-08-2022 08:00');
+          expect(
+              editableDateTimeTextField.controller!.text, '11-08-2022 08:00');
 
           // testing the duration text field color
           TextField durationTextField =
@@ -225,7 +226,8 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           expect(find.text('3:00'), findsOneWidget);
-          expect(editableDateTimeTextField.controller!.text, '11-08-2022 07:00');
+          expect(
+              editableDateTimeTextField.controller!.text, '11-08-2022 07:00');
 
           // testing the duration text field color
           durationTextField =

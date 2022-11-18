@@ -56,8 +56,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   String _secondTimeStr = '';
   String _resultTimeStr = '';
 
-  late TextEditingController _firstTimeTextFieldController;
-  late TextEditingController _secondTimeTextFieldController;
+  final TextEditingController _firstTimeTextFieldController = TextEditingController();
+  final TextEditingController _secondTimeTextFieldController = TextEditingController();
   late TextEditingController _resultTextFieldController;
 
   late EditableDurationPercent _editableDurationPercentWidgetFirst;
@@ -121,13 +121,15 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       transferDataViewModel: _transferDataViewModel,
       textFieldController: _firstTimeTextFieldController,
       handleTextFieldChangeFunction: _handleFirstTimeTextFieldChange,
+      widgetPrefixOrName: 'firstTimeStr',
     );
 
     manuallySelectableSecondTimeTextField = ManuallySelectableTextField(
       key: const Key('secondTimeTextField'),
       transferDataViewModel: _transferDataViewModel,
-      textFieldController: _firstTimeTextFieldController,
+      textFieldController: _secondTimeTextFieldController,
       handleTextFieldChangeFunction: _handleSecondTimeTextFieldChange,
+      widgetPrefixOrName: 'secondTimeStr',
     );
 
     String extractedHHmm = '';
@@ -181,10 +183,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
 
   void _updateWidgets() {
     _firstTimeStr = _transferDataMap['firstTimeStr'] ?? '00:00:00';
-    _firstTimeTextFieldController = TextEditingController(text: _firstTimeStr);
+    _firstTimeTextFieldController.text = _firstTimeStr;
     _secondTimeStr = _transferDataMap['secondTimeStr'] ?? '00:00:00';
-    _secondTimeTextFieldController =
-        TextEditingController(text: _secondTimeStr);
+    _secondTimeTextFieldController.text =_secondTimeStr;
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
     _resultTextFieldController = TextEditingController(text: _resultTimeStr);
     _divideFirstBySecond =
@@ -609,90 +610,91 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        // Prevents displaying copy menu after selecting in
-                        // TextField.
-                        // Required for onLongPress selection to work
-                        child: IgnorePointer(
-                          child: TextField(
-                            key: const Key('secondTimeTextField'),
-                            // Required, otherwise, field not focusable due to
-                            // IgnorePointer wrapping
-                            focusNode: _secondTimeTextFieldFocusNode,
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            style: valueTextStyle,
-                            keyboardType: TextInputType.datetime,
-                            controller: _secondTimeTextFieldController,
-                            onSubmitted: (val) {
-                              // called when manually updating the TextField
-                              // content. onChanged must be defined in order for
-                              // pasting a value to the TextField to really
-                              // modify the TextField value and store it
-                              // in the screen navigation transfer
-                              // data map.
-                              _secondTimeStr = Utility.formatStringDuration(
-                                durationStr: val,
-                                dayHourMinuteFormat: true,
-                              );
-                              _secondTimeTextFieldController.text =
-                                  _secondTimeStr;
-                              setState(() {});
-                              _updateTransferDataMap();
-                            },
-                          ),
-                        ),
-                        onTap: () {
-                          // Required, otherwise, duration field not focusable
-                          FocusScope.of(context).requestFocus(
-                            _secondTimeTextFieldFocusNode,
-                          );
+                      child: manuallySelectableSecondTimeTextField,
+                      // child: GestureDetector(
+                      //   behavior: HitTestBehavior.opaque,
+                      //   // Prevents displaying copy menu after selecting in
+                      //   // TextField.
+                      //   // Required for onLongPress selection to work
+                      //   child: IgnorePointer(
+                      //     child: TextField(
+                      //       key: const Key('secondTimeTextField'),
+                      //       // Required, otherwise, field not focusable due to
+                      //       // IgnorePointer wrapping
+                      //       focusNode: _secondTimeTextFieldFocusNode,
+                      //       decoration:
+                      //           const InputDecoration.collapsed(hintText: ''),
+                      //       style: valueTextStyle,
+                      //       keyboardType: TextInputType.datetime,
+                      //       controller: _secondTimeTextFieldController,
+                      //       onSubmitted: (val) {
+                      //         // called when manually updating the TextField
+                      //         // content. onChanged must be defined in order for
+                      //         // pasting a value to the TextField to really
+                      //         // modify the TextField value and store it
+                      //         // in the screen navigation transfer
+                      //         // data map.
+                      //         _secondTimeStr = Utility.formatStringDuration(
+                      //           durationStr: val,
+                      //           dayHourMinuteFormat: true,
+                      //         );
+                      //         _secondTimeTextFieldController.text =
+                      //             _secondTimeStr;
+                      //         setState(() {});
+                      //         _updateTransferDataMap();
+                      //       },
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     // Required, otherwise, duration field not focusable
+                      //     FocusScope.of(context).requestFocus(
+                      //       _secondTimeTextFieldFocusNode,
+                      //     );
 
-                          // Positioning the cursor to the end of TextField content.
-                          // WARNING: works only if keyboard is displayed or other
-                          // duration field is in edit mode !
-                          _secondTimeTextFieldController.selection =
-                              TextSelection.fromPosition(
-                            TextPosition(
-                              offset:
-                                  _secondTimeTextFieldController.text.length,
-                            ),
-                          );
-                        },
-                        onDoubleTap: () async {
-                          await handleClipboardDataEditableDuration(
-                            context: context,
-                            textEditingController:
-                                _secondTimeTextFieldController,
-                            transferDataMap: _transferDataMap,
-                            handleDataChangeFunction:
-                                (BuildContext c, String s) {
-                              _secondTimeStr = Utility.formatStringDuration(
-                                durationStr: s,
-                                dayHourMinuteFormat: true,
-                              );
-                              _secondTimeTextFieldController.text =
-                                  _secondTimeStr;
-                              _updateTransferDataMap();
-                            },
-                          );
-                        },
-                        onLongPress: () {
-                          // Requesting focus avoids necessity to first tap on
-                          // TextField before long pressing on it to select its
-                          // content !
-                          FocusScope.of(context).requestFocus(
-                            _secondTimeTextFieldFocusNode,
-                          );
-                          _secondTimeTextFieldController.selection =
-                              TextSelection(
-                            baseOffset: 0,
-                            extentOffset:
-                                _secondTimeTextFieldController.text.length,
-                          );
-                        },
-                      ),
+                      //     // Positioning the cursor to the end of TextField content.
+                      //     // WARNING: works only if keyboard is displayed or other
+                      //     // duration field is in edit mode !
+                      //     _secondTimeTextFieldController.selection =
+                      //         TextSelection.fromPosition(
+                      //       TextPosition(
+                      //         offset:
+                      //             _secondTimeTextFieldController.text.length,
+                      //       ),
+                      //     );
+                      //   },
+                      //   onDoubleTap: () async {
+                      //     await handleClipboardDataEditableDuration(
+                      //       context: context,
+                      //       textEditingController:
+                      //           _secondTimeTextFieldController,
+                      //       transferDataMap: _transferDataMap,
+                      //       handleDataChangeFunction:
+                      //           (BuildContext c, String s) {
+                      //         _secondTimeStr = Utility.formatStringDuration(
+                      //           durationStr: s,
+                      //           dayHourMinuteFormat: true,
+                      //         );
+                      //         _secondTimeTextFieldController.text =
+                      //             _secondTimeStr;
+                      //         _updateTransferDataMap();
+                      //       },
+                      //     );
+                      //   },
+                      //   onLongPress: () {
+                      //     // Requesting focus avoids necessity to first tap on
+                      //     // TextField before long pressing on it to select its
+                      //     // content !
+                      //     FocusScope.of(context).requestFocus(
+                      //       _secondTimeTextFieldFocusNode,
+                      //     );
+                      //     _secondTimeTextFieldController.selection =
+                      //         TextSelection(
+                      //       baseOffset: 0,
+                      //       extentOffset:
+                      //           _secondTimeTextFieldController.text.length,
+                      //     );
+                      //   },
+                      // ),
                     ),
                   ),
                   const SizedBox(

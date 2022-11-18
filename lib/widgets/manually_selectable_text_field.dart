@@ -16,14 +16,14 @@ class ManuallySelectableTextField extends StatefulWidget {
     bool? wasDurationSignButtonPressed,
   ]) handleTextFieldChangeFunction;
 
-  final String widgetName;
+  final String widgetPrefixOrName;
 
   ManuallySelectableTextField({
     super.key,
     required TransferDataViewModel transferDataViewModel,
     required this.textFieldController,
     required this.handleTextFieldChangeFunction,
-    this.widgetName = '',
+    this.widgetPrefixOrName = '',
   })  : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataViewModel.getTransferDataMap() ?? {};
 
@@ -34,10 +34,12 @@ class ManuallySelectableTextField extends StatefulWidget {
         transferDataMap: _transferDataMap,
         textFieldController: textFieldController,
         handleTextFieldChangeFunction: handleTextFieldChangeFunction,
-        widgetName: widgetName);
+        widgetName: widgetPrefixOrName);
 
     return stateInstance;
   }
+
+  TextEditingController? get controller => textFieldController;
 
   Color getTextColor() {
     return stateInstance.getTextColor();
@@ -72,7 +74,8 @@ class _ManuallySelectableTextFieldState
   })  : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataMap,
         _durationTextColor =
-            transferDataMap['${widgetName}DurationTextColor'] ?? ScreenMixin.APP_TEXT_AND_ICON_COLOR;
+            transferDataMap['${widgetName}DurationTextColor'] ??
+                ScreenMixin.APP_TEXT_AND_ICON_COLOR;
 
   @override
   void initState() {
@@ -85,7 +88,25 @@ class _ManuallySelectableTextFieldState
     _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
     textFieldController.text =
-        _transferDataMap['${widget.widgetName}DurationStr'] ?? '00:00:00';
+        _transferDataMap[_getTextFieldKey()] ?? '00:00:00';
+  }
+
+  /// Since the ManuallySelectableTextField is used for 1st screen
+  /// 3 Duration text fields in the DurationDateTimeEditor and for
+  /// 4th screen 2 Time text fields, in the 2 cases, constructing
+  /// the textFieldValueKey is specific to the ManuallySelectableTextField
+  /// usage. The logic is located in this method.
+  String _getTextFieldKey() {
+    if (_transferDataMap.containsKey(widget.widgetPrefixOrName)) {
+      return widget.widgetPrefixOrName;
+    } else {
+      String textFieldValueKey = '${widget.widgetPrefixOrName}DurationStr';
+      if (_transferDataMap.containsKey(textFieldValueKey)) {
+        return textFieldValueKey;
+      } else {
+        return '';
+      }
+    }
   }
 
   @override
@@ -111,7 +132,7 @@ class _ManuallySelectableTextFieldState
   }
 
   void _updateTransferDataMap() {
-    _transferDataMap['${widget.widgetName}DurationStr'] = textFieldController.text;
+    _transferDataMap[_getTextFieldKey()] = textFieldController.text;
 
     _transferDataViewModel.updateAndSaveTransferData();
   }

@@ -17,7 +17,7 @@ class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
   final TransferDataViewModel _transferDataViewModel;
 
-  AddDurationToDateTime({
+  const AddDurationToDateTime({
     Key? key,
     required ScreenNavigTransData screenNavigTransData,
     required TransferDataViewModel transferDataViewModel,
@@ -104,7 +104,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     _thirdDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('thirdAddSubtractResultableDuration'),
-      widgetName: 'third',
+      widgetPrefix: 'third',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 550.0,
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
@@ -116,7 +116,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     _secondDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('secondAddSubtractResultableDuration'),
-      widgetName: 'second',
+      widgetPrefix: 'second',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 350.0,
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,
@@ -127,7 +127,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(
       key: const Key('firstAddSubtractResultableDuration'),
-      widgetName: 'first',
+      widgetPrefix: 'first',
       dateTimeTitle: 'End date time',
       topSelMenuPosition: 210.0,
       nowDateTimeEnglishFormatStr: nowEnglishFormatDateTimeStr,

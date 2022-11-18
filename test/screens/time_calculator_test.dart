@@ -1,3 +1,4 @@
+import 'package:circa_plan/widgets/manually_selectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -65,8 +66,8 @@ Future<void> main() async {
           await tester.testTextInput.receiveAction(TextInputAction.done);
           await tester.pumpAndSettle();
 
-          TextField firstTimeTextField =
-              tester.firstWidget(firstTimeTextFieldFinder);
+          ManuallySelectableTextField firstTimeTextField =
+              tester.firstWidget(firstTimeTextFieldFinder) as ManuallySelectableTextField;
           TextEditingController firstTimeTextFieldController =
               firstTimeTextField.controller!;
           expect(firstTimeTextFieldController.text, '00:30:00');
@@ -77,8 +78,8 @@ Future<void> main() async {
           await tester.testTextInput.receiveAction(TextInputAction.done);
           await tester.pumpAndSettle();
 
-          TextField secondTimeTextField =
-              tester.firstWidget(secondTimeTextFieldFinder);
+          ManuallySelectableTextField secondTimeTextField =
+              tester.firstWidget(secondTimeTextFieldFinder) as ManuallySelectableTextField;
           TextEditingController secondTimeTextFieldController =
               secondTimeTextField.controller!;
           expect(secondTimeTextFieldController.text, '00:15:00');
@@ -120,8 +121,8 @@ Future<void> main() async {
           await tester.testTextInput.receiveAction(TextInputAction.done);
           await tester.pumpAndSettle();
 
-          TextField firstTimeTextField =
-              tester.firstWidget(firstTimeTextFieldFinder);
+          ManuallySelectableTextField firstTimeTextField =
+              tester.firstWidget(firstTimeTextFieldFinder) as ManuallySelectableTextField;
           TextEditingController firstTimeTextFieldController =
               firstTimeTextField.controller!;
           expect(firstTimeTextFieldController.text, '00:15:00');
@@ -132,8 +133,8 @@ Future<void> main() async {
           await tester.testTextInput.receiveAction(TextInputAction.done);
           await tester.pumpAndSettle();
 
-          TextField secondTimeTextField =
-              tester.firstWidget(secondTimeTextFieldFinder);
+          ManuallySelectableTextField secondTimeTextField =
+              tester.firstWidget(secondTimeTextFieldFinder) as ManuallySelectableTextField;
           TextEditingController secondTimeTextFieldController =
               secondTimeTextField.controller!;
           expect(secondTimeTextFieldController.text, '00:30:00');
