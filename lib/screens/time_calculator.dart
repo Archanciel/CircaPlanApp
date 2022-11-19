@@ -595,9 +595,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   const SizedBox(
                     height: kVerticalFieldDistance,
                   ),
-                  Text(
-                    'Time (dd:hh:mm | %)',
-                    style: labelTextStyle,
+                  Tooltip(
+                    message: 'Percent format: 9% or 9 % or 9.9',
+                    child: Text(
+                      'Time (dd:hh:mm | %)',
+                      style: labelTextStyle,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
