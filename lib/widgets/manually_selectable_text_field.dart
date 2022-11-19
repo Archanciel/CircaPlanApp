@@ -79,13 +79,7 @@ class _ManuallySelectableTextFieldState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());
-    _transferDataMap["addDurStartDateTimeStr"] = nowStr;
-    _transferDataMap["firstStartDateTimeStr"] = nowStr;
-    _transferDataMap["firstEndDateTimeStr"] = nowStr;
 
     textFieldController.text =
         _transferDataMap[_getTextFieldKey()] ?? '00:00:00';
