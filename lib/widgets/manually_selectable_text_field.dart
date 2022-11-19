@@ -131,12 +131,6 @@ class _ManuallySelectableTextFieldState
     //                           initialized" error !
   }
 
-  void _updateTransferDataMap() {
-    _transferDataMap[_getTextFieldKey()] = textFieldController.text;
-
-    _transferDataViewModel.updateAndSaveTransferData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
