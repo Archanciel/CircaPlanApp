@@ -1148,7 +1148,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         width: 265,
                       ),
                       Tooltip(
-                        message: 'Add siesta or sleep reduction time.',
+                        message: 'Add siesta or sleep reduction time',
                         child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
