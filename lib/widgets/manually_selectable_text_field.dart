@@ -128,6 +128,9 @@ class _ManuallySelectableTextFieldState
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // HitTestBehavior intercepts all pointer calls. Required,
+      // otherwise GestureDetector.onTap:, onDoubleTap:,
+      // onLongPress: not applied
       behavior: HitTestBehavior.opaque,
       child: IgnorePointer(
         // Prevents displaying copy menu after selecting in
