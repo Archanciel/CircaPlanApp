@@ -34,7 +34,7 @@ class ManuallySelectableTextField extends StatefulWidget {
         transferDataMap: _transferDataMap,
         textFieldController: textFieldController,
         handleTextFieldChangeFunction: handleTextFieldChangeFunction,
-        widgetName: widgetPrefixOrName);
+        widgetPrefixOrName: widgetPrefixOrName);
 
     return stateInstance;
   }
@@ -70,11 +70,11 @@ class _ManuallySelectableTextFieldState
     required Map<String, dynamic> transferDataMap,
     required this.textFieldController,
     required this.handleTextFieldChangeFunction,
-    String widgetName = '',
+    String widgetPrefixOrName = '',
   })  : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataMap,
         _durationTextColor =
-            transferDataMap['${widgetName}DurationTextColor'] ??
+            transferDataMap['${widgetPrefixOrName}DurationTextColor'] ??
                 ScreenMixin.APP_TEXT_AND_ICON_COLOR;
 
   @override
@@ -137,7 +137,7 @@ class _ManuallySelectableTextFieldState
         // TextField.
         // Required for onLongPress selection to work
         child: TextField(
-          key: const Key('durationTextField'),
+          key: const Key('manuallySelectableTextField'),
           // Required, otherwise, field not focusable due to
           // IgnorePointer wrapping
           focusNode: _textfieldFocusNode,

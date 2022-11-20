@@ -37,7 +37,7 @@ Future<void> main() async {
         'Adding one digit duration',
         (tester) async {
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -67,7 +67,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           final TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -84,7 +84,7 @@ Future<void> main() async {
         'Adding two digits duration',
         (tester) async {
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -114,7 +114,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           final TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -131,7 +131,7 @@ Future<void> main() async {
         'Adding one digit with - sign duration',
         (tester) async {
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -161,7 +161,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           final TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -178,7 +178,7 @@ Future<void> main() async {
         'Adding two digits with - signs duration',
         (tester) async {
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -207,7 +207,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           final TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -224,7 +224,7 @@ Future<void> main() async {
         'Subtracting valid duration',
         (tester) async {
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -254,7 +254,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           final TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 

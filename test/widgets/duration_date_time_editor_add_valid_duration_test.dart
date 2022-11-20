@@ -35,7 +35,7 @@ Future<void> main() async {
       'Adding valid duration',
       (tester) async {
         final Finder durationTextFieldFinder =
-            find.byKey(const Key('durationTextField'));
+            find.byKey(const Key('manuallySelectableTextField'));
         final Finder editableDateTimeTextFieldFinder =
             find.byKey(const Key('editableDateTimeTextField'));
 
@@ -69,7 +69,7 @@ Future<void> main() async {
 
         // testing the duration text field color
         final TextField durationTextField =
-            tester.widget(find.byKey(const Key('durationTextField')));
+            tester.widget(find.byKey(const Key('manuallySelectableTextField')));
         expect(durationTextField.style!.color,
             DurationDateTimeEditor.durationPositiveColor);
 

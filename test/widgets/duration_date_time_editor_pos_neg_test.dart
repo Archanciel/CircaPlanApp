@@ -40,7 +40,7 @@ Future<void> main() async {
           final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -72,7 +72,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -98,7 +98,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -117,7 +117,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -136,7 +136,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -155,7 +155,7 @@ Future<void> main() async {
           final Finder durationSignButtonFinder =
               find.byKey(const Key('durationSignButton'));
           final Finder durationTextFieldFinder =
-              find.byKey(const Key('durationTextField'));
+              find.byKey(const Key('manuallySelectableTextField'));
           final Finder editableDateTimeTextFieldFinder =
               find.byKey(const Key('editableDateTimeTextField'));
 
@@ -192,7 +192,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           TextField durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -231,7 +231,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -250,7 +250,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -269,7 +269,7 @@ Future<void> main() async {
 
           // testing the duration text field color
           durationTextField =
-              tester.widget(find.byKey(const Key('durationTextField')));
+              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
