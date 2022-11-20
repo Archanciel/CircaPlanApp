@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 
 import '../widgets/editable_duration_percent.dart';
+import '../widgets/non_editable_date_time.dart';
 
 class DateTimeDifferenceDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -47,6 +48,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         _durationStr = transferDataMap['dtDiffDurationStr'] ?? '',
         _addTimeStr = transferDataMap['dtDiffAddTimeStr'] ?? '',
         _finalDurationStr = transferDataMap['dtDiffFinalDurationStr'] ?? '',
+        _wakingAtDateTimeStr =
+            transferDataMap['dtDiffWakingAtDateTimeStr'] ?? '',
         super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -59,6 +62,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   String _durationStr = '';
   String _addTimeStr = '';
   String _finalDurationStr = '';
+  String _wakingAtDateTimeStr = '';
 
   late TextEditingController _startDateTimeController;
   late TextEditingController _endDateTimeController;
@@ -66,6 +70,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeDialogController;
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
+  late TextEditingController _wakingAtDateTimeController;
 
   late EditableDurationPercent _editableDurationPercentSleep;
   late EditableDurationPercent _editableDurationPercentTotal;
@@ -162,6 +167,10 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
     _finalDurationTextFieldController =
         TextEditingController(text: _finalDurationStr);
+    _wakingAtDateTimeStr =
+        _transferDataMap['dtDiffWakingAtDateTimeStr'] ?? '20-11-2022 6:57';
+    _wakingAtDateTimeController =
+        TextEditingController(text: _wakingAtDateTimeStr);
   }
 
   @override
@@ -172,6 +181,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _addTimeDialogController.dispose();
     _addTimeTextFieldController.dispose();
     _finalDurationTextFieldController.dispose();
+    _wakingAtDateTimeController.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
@@ -186,6 +196,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _transferDataMap['dtDiffDurationStr'] = _durationStr;
     _transferDataMap['dtDiffAddTimeStr'] = _addTimeStr;
     _transferDataMap['dtDiffFinalDurationStr'] = _finalDurationStr;
+    _transferDataMap['dtDiffWakingAtDateTimeStr'] = _wakingAtDateTimeStr;
 
     _transferDataViewModel.updateAndSaveTransferData();
   }
@@ -212,6 +223,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _addTimeTextFieldController.text = _addTimeStr;
     _finalDurationStr = '';
     _finalDurationTextFieldController.text = _finalDurationStr;
+    _wakingAtDateTimeStr = '';
+    _wakingAtDateTimeController.text = _wakingAtDateTimeStr;
     _endDateTimeStr = nowDateTimeStr;
     _endDateTimeController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
@@ -408,6 +421,17 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   _editableDurationPercentSleep,
                   _editableDurationPercentTotal,
+                  Text(
+                    'Waking at',
+                    style: labelTextStyle,
+                  ),
+                  const SizedBox(
+                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
+                  ),
+                  NonEditableDateTime(
+                    dateTimeController: _wakingAtDateTimeController,
+                    transferDataMap: _transferDataMap,
+                  ),
                 ],
               ),
             ),

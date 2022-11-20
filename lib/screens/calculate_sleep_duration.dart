@@ -1,16 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/widgets/result_duration.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
-
 import '../constants.dart';
 import '../widgets/circadian_snackbar.dart';
+import '../widgets/non_editable_date_time.dart';
 
 class CalculateSleepDuration extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -896,23 +896,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               ),
                             ),
-                            child: GestureDetector(
-                              child: TextField(
-                                style: valueTextStyle,
-                                decoration: const InputDecoration.collapsed(
-                                    hintText: ''),
-                                controller: _lastDateTimeController,
-                                readOnly: true,
-                              ),
-                              onDoubleTap: () async {
-                                await copyToClipboard(
-                                  context: context,
-                                  controller: _lastDateTimeController,
-                                  extractHHmmFromCopiedStr: true,
-                                );
-                                _transferDataMap['clipboardLastAction'] =
-                                    ClipboardLastAction.copy;
-                              },
+                            child: NonEditableDateTime(
+                              dateTimeController: _lastDateTimeController,
+                              transferDataMap: _transferDataMap,
                             ),
                           ),
                         ),
@@ -933,23 +919,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               ),
                             ),
-                            child: GestureDetector(
-                              child: TextField(
-                                style: valueTextStyle,
-                                decoration: const InputDecoration.collapsed(
-                                    hintText: ''),
-                                controller: _previousDateTimeController,
-                                readOnly: true,
-                              ),
-                              onDoubleTap: () async {
-                                await copyToClipboard(
-                                  context: context,
-                                  controller: _previousDateTimeController,
-                                  extractHHmmFromCopiedStr: true,
-                                );
-                                _transferDataMap['clipboardLastAction'] =
-                                    ClipboardLastAction.copy;
-                              },
+                            child: NonEditableDateTime(
+                              dateTimeController: _previousDateTimeController,
+                              transferDataMap: _transferDataMap,
                             ),
                           ),
                         ),
