@@ -309,6 +309,10 @@ mixin ScreenMixin {
 
     if (extractHHmmFromCopiedStr) {
       selectedText = selectedText.substring(selectedText.length - 5);
+
+      // fixes bug copying dd-mm-yyyy H:mm as ' H:mm' like
+      // 16-11-2022 8:39. '8:39' must be pasted, not ' 8:39' !
+      selectedText = selectedText.trimLeft();
     } else {
       // useful in case copying Calculate Sleep Duration screen percent values
       selectedText = selectedText.replaceAll(' %', '');
