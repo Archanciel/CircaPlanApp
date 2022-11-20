@@ -40,8 +40,8 @@ Future<void> main() async {
               find.byKey(const Key('edpDelButton'));
           final Finder edpDurationPercentComputedValueTextFieldFinder =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -60,7 +60,7 @@ Future<void> main() async {
 
           await tester.enterText(
               edpDurationPercentComputedValueTextFieldFinder, '12:00');
-          await tester.enterText(edpDurationPercentTextFieldFinder, '50 %');
+          await tester.enterText(manuallySelectableTextFieldFinder, '50 %');
           await tester.tap(edpDelButtonFinder);
 
           await tester.pumpAndSettle();
@@ -73,7 +73,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '');
@@ -84,8 +84,8 @@ Future<void> main() async {
         (tester) async {
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           final EditableDurationPercent editableDurationPercentWidget =
               EditableDurationPercent(
@@ -106,7 +106,7 @@ Future<void> main() async {
           );
 
           editableDurationPercentWidget.stateInstance
-              .handleSelectedPercentStr('70 %');
+              .handleSelectedPercentStrFunction('70 %');
 
           await tester.pumpAndSettle();
 
@@ -118,7 +118,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '9:06');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '70 %');
@@ -129,8 +129,8 @@ Future<void> main() async {
         (tester) async {
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           final EditableDurationPercent editableDurationPercentWidget =
               EditableDurationPercent(
@@ -151,7 +151,7 @@ Future<void> main() async {
           );
 
           editableDurationPercentWidget.stateInstance
-              .handleSelectedPercentStr('70 %');
+              .handleSelectedPercentStrFunction('70 %');
 
           await tester.pumpAndSettle();
 
@@ -163,7 +163,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '9:06');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '70 %');
@@ -179,8 +179,8 @@ Future<void> main() async {
           final edpSelButton = find.byKey(const Key('edpSelButton'));
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -210,7 +210,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '9:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '60 %');
@@ -229,8 +229,8 @@ Future<void> main() async {
         (tester) async {
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -247,9 +247,9 @@ Future<void> main() async {
             ),
           );
           // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextFieldFinder), '73.2');
+          //     tester.firstWidget(manuallySelectableTextFieldFinder), '73.2');
 
-          await tester.enterText(edpDurationPercentTextFieldFinder, '73.2');
+          await tester.enterText(manuallySelectableTextFieldFinder, '73.2');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -264,7 +264,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '10:58');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '73.2 %');
@@ -275,8 +275,8 @@ Future<void> main() async {
         (tester) async {
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -293,7 +293,7 @@ Future<void> main() async {
             ),
           );
 
-          await tester.enterText(edpDurationPercentTextFieldFinder, '');
+          await tester.enterText(manuallySelectableTextFieldFinder, '');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -308,7 +308,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '0:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '0 %');
@@ -319,8 +319,8 @@ Future<void> main() async {
         (tester) async {
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -337,9 +337,9 @@ Future<void> main() async {
             ),
           );
           // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextFieldFinder), '73.2');
+          //     tester.firstWidget(manuallySelectableTextFieldFinder), '73.2');
 
-          await tester.enterText(edpDurationPercentTextFieldFinder, 'iiii');
+          await tester.enterText(manuallySelectableTextFieldFinder, 'iiii');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -354,7 +354,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '0:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '0 %');
@@ -365,8 +365,8 @@ Future<void> main() async {
         (tester) async {
           final Finder edpDurationPercentComputedValueTextField =
               find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder edpDurationPercentTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentTextField'));
+          final Finder manuallySelectableTextFieldFinder =
+              find.byKey(const Key('manuallySelectableTextField'));
 
           await tester.pumpWidget(
             MaterialApp(
@@ -383,9 +383,9 @@ Future<void> main() async {
             ),
           );
           // await tester.enterText(
-          //     tester.firstWidget(edpDurationPercentTextFieldFinder), '73.2');
+          //     tester.firstWidget(manuallySelectableTextFieldFinder), '73.2');
 
-          await tester.enterText(edpDurationPercentTextFieldFinder, 'iiii %');
+          await tester.enterText(manuallySelectableTextFieldFinder, 'iiii %');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -400,7 +400,7 @@ Future<void> main() async {
           expect(durationPercentComputedValueTextFieldController.text, '0:00');
 
           TextField durationPercentTextField =
-              tester.firstWidget(edpDurationPercentTextFieldFinder);
+              tester.firstWidget(manuallySelectableTextFieldFinder);
           TextEditingController durationPercentTextFieldController =
               durationPercentTextField.controller!;
           expect(durationPercentTextFieldController.text, '0 %');

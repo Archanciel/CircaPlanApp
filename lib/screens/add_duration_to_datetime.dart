@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -287,7 +286,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
           0.0,
           0.0,
         ),
-        handleSelectedItem: _deletePreferredDurationItem,
+        handleSelectedItemFunction: _deletePreferredDurationItem,
       );
 
       return;
@@ -526,7 +525,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           0.0,
                           0.0,
                         ),
-                        handleSelectedItem:
+                        handleSelectedItemFunction:
                             _handlePreferedDurationMenuItemSelection,
                       );
                     },

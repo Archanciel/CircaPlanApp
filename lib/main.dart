@@ -378,7 +378,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItem: loadFileName,
+                          handleSelectedItemFunction: loadFileName,
                         );
 
                         break;

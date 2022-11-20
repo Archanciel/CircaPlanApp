@@ -301,7 +301,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                 0.0,
                 0.0,
               ),
-              handleSelectedItem: widget.handleSelectedDateTimeStr,
+              handleSelectedItemFunction: widget.handleSelectedDateTimeStr,
             );
           },
           child: const Text(

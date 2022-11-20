@@ -5,6 +5,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 import '../buslog/transfer_data_view_model.dart';
+import 'manually_selectable_text_field.dart';
 
 /// Widget enabling to select and compute a duration percent value.
 class EditableDurationPercent extends StatefulWidget with ScreenMixin {
@@ -58,7 +59,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   void setDurationStr(String changedDurationStr) {
     durationStr = changedDurationStr;
 
-    stateInstance.handleSelectedPercentStr(
+    stateInstance.handleModifiedPercentStrFunction(
         transferDataMap[transferDataMapPercentKey] ?? '100 %');
   }
 
@@ -71,19 +72,39 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
 }
 
 class _EditableDurationPercentState extends State<EditableDurationPercent> {
-  void handleSelectedPercentStr(String percentStr, [BuildContext? context]) {
-    widget.selectedPercentTextFieldController.text = percentStr;
+  late ManuallySelectableTextField _manuallySelectableDurationTextField;
 
-    if (percentStr.isEmpty) {
+  /// Method passed as parameter function to
+  /// ScreenMixin.displayPopupMenu method
+  void handleSelectedPercentStrFunction(String percentStr,
+      [BuildContext? context]) {
+    handleModifiedPercentStrFunction(percentStr);
+  }
+
+  void handleModifiedPercentStrFunction(
+      [String? percentStr, int? _, bool? __]) {
+    widget.selectedPercentTextFieldController.text = percentStr ?? '';
+
+    if (percentStr == null) {
       // the case if clicked on Reset button after clicked on Del
       // button !
       return;
     }
 
+    String percentDoublStr = percentStr;
+
+    if (percentDoublStr.contains('%')) {
+      percentDoublStr = percentStr.replaceFirst('%', '');
+    } else {
+      // here, the user did not enter '%'. The '%' char is added.
+      percentStr = '$percentDoublStr %';
+      widget.selectedPercentTextFieldController.text = percentStr;
+    }
+
     double percentValueDouble = 0.0;
 
     try {
-      percentValueDouble = double.parse(percentStr.replaceFirst(' %', ''));
+      percentValueDouble = double.parse(percentDoublStr);
     } catch (e) {
       // in case the user enter a non double parsable percent
       // value, the invalid value is replaced by 0 % !
@@ -121,7 +142,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     String percentStr =
         widget.transferDataMap[widget.transferDataMapPercentKey] ?? '100 %';
 
-    handleSelectedPercentStr(percentStr);
+    handleModifiedPercentStrFunction(percentStr);
 
     setState(() {});
   }
@@ -161,13 +182,20 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     String? percentStrValue =
         widget.transferDataMap[widget.transferDataMapPercentKey];
 
+    _manuallySelectableDurationTextField = ManuallySelectableTextField(
+      transferDataViewModel: widget.transferDataViewModel,
+      textFieldController: widget.selectedPercentTextFieldController,
+      handleTextFieldChangeFunction: handleModifiedPercentStrFunction,
+      widgetPrefixOrName: widget.transferDataMapPercentKey,
+    );
+
     if (percentStrValue == null) {
       // the case if the app is launched after deleting all json
       // files.
       return;
     }
 
-    handleSelectedPercentStr(percentStrValue);
+    handleModifiedPercentStrFunction(percentStrValue);
   }
 
   @override
@@ -237,49 +265,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                         cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                       ),
                     ),
-                    child: GestureDetector(
-                      // HitTestBehavior intercepts all pointer calls. Required,
-                      // otherwise GestureDetector.onTap:, onDoubleTap:,
-                      // onLongPress: not applied
-                      behavior: HitTestBehavior.opaque,
-
-                      child: IgnorePointer(
-                        child: TextField(
-                          key: const Key('edpDurationPercentTextField'),
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          style: const TextStyle(
-                              color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          controller: widget.selectedPercentTextFieldController,
-                          readOnly: false,
-                          onSubmitted: (val) {
-                            // called when manually updating the TextField
-                            // content. onChanged must be defined in order for
-                            // pasting a value to the TextField to really
-                            // modify the TextField value and store it
-                            // in the screen navigation transfer
-                            // data map.
-
-                            if (!val.contains('%')) {
-                              val = '$val %';
-                            }
-
-                            handleSelectedPercentStr(val);
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                      onDoubleTap: () async {
-                        await widget.copyToClipboard(
-                            context: context,
-                            controller:
-                                widget.selectedPercentTextFieldController);
-                        widget.transferDataMap['clipboardLastAction'] =
-                            ClipboardLastAction.copy;
-                      },
-                    ),
+                    child: _manuallySelectableDurationTextField,
                   ),
                 ),
                 const SizedBox(
@@ -343,7 +329,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                     0.0,
                     0.0,
                   ),
-                  handleSelectedItem: handleSelectedPercentStr,
+                  handleSelectedItemFunction: handleSelectedPercentStrFunction,
                 );
               },
               child: const Text(

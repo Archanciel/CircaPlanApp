@@ -251,7 +251,7 @@ mixin ScreenMixin {
       //                required, reason why it is positiponal
       //                optional !
     )
-        handleSelectedItem,
+        handleSelectedItemFunction,
   }) {
     if (selectableStrItemLst.isEmpty) {
       return;
@@ -289,7 +289,7 @@ mixin ScreenMixin {
 
         String selectedItemStr = selectableStrItemLst[int.parse(itemSelected)];
 
-        handleSelectedItem(
+        handleSelectedItemFunction(
           selectedItemStr,
           context,
         );
