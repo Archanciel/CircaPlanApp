@@ -596,7 +596,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     height: kVerticalFieldDistance,
                   ),
                   Tooltip(
-                    message: 'Percent format: 9% or 9 % or 9.9',
+                    message: 'Percent format: 9% or 9 % or 9.',
                     child: Text(
                       'Time (dd:hh:mm | %)',
                       style: labelTextStyle,
