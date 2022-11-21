@@ -53,6 +53,7 @@ Future<void> main() async {
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
+                  handleChangeDurationFunction: (_) {},
                 ),
               ),
             ),
@@ -95,6 +96,7 @@ Future<void> main() async {
             topSelMenuPosition: 343.0,
             transferDataViewModel: transferDataViewModel,
             transferDataMap: transferDataMap,
+            handleChangeDurationFunction: (_) {},
           );
 
           await tester.pumpWidget(
@@ -140,6 +142,7 @@ Future<void> main() async {
             topSelMenuPosition: 343.0,
             transferDataViewModel: transferDataViewModel,
             transferDataMap: transferDataMap,
+            handleChangeDurationFunction: (_) {},
           );
 
           await tester.pumpWidget(
@@ -192,6 +195,7 @@ Future<void> main() async {
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
+                  handleChangeDurationFunction: (_) {},
                 ),
               ),
             ),
@@ -242,6 +246,7 @@ Future<void> main() async {
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
+                  handleChangeDurationFunction: (_) {},
                 ),
               ),
             ),
@@ -288,6 +293,7 @@ Future<void> main() async {
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
+                  handleChangeDurationFunction: (_) {},
                 ),
               ),
             ),
@@ -332,6 +338,7 @@ Future<void> main() async {
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
+                  handleChangeDurationFunction: (_) {},
                 ),
               ),
             ),
@@ -378,6 +385,7 @@ Future<void> main() async {
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
                   transferDataMap: transferDataMap,
+                  handleChangeDurationFunction: (_) {},
                 ),
               ),
             ),

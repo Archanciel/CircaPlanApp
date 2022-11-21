@@ -19,6 +19,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   String durationStr;
   final TransferDataViewModel transferDataViewModel;
   final Map<String, dynamic> transferDataMap;
+  final Function(String) handleChangeDurationFunction;
 
   /// This variable enables the EditableDurationPercent
   /// instance to execute the callSetState() method of its
@@ -38,6 +39,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
     required this.transferDataMap,
+    required this.handleChangeDurationFunction,
   }) : _dateTimeTitle = dateTimeTitle;
 
   /// The method ensures that the current widget (screen or custom widget)
@@ -127,6 +129,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
       percentStr: percentStr,
       percentDurationStr: percentDurationStr,
     );
+
+    widget.handleChangeDurationFunction(percentDurationStr);
   }
 
   /// The method ensures that the current widget (screen or custom widget)

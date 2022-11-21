@@ -151,6 +151,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      handleChangeDurationFunction: (String _) => _,
     );
 
     _editableDurationPercentWidgetSecond = EditableDurationPercent(
@@ -160,6 +161,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       topSelMenuPosition: 411.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      handleChangeDurationFunction: (String _) => _,
     );
   }
 

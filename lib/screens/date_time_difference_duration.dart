@@ -131,6 +131,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      handleChangeDurationFunction: (String _) => _,
     );
 
     _editableDurationPercentTotal = EditableDurationPercent(
@@ -140,6 +141,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       topSelMenuPosition: 411.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
+      handleChangeDurationFunction: handleChangeDurationFunction,
     );
   }
 
@@ -364,6 +366,22 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _endDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);
+  }
+
+  void handleChangeDurationFunction(String durationStr) {
+    String frenchFormatEndDateTimeStr = _endDateTimeController.text;
+    DateTime endDateTime =
+        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
+    Duration? durationToAdd =
+        DateTimeParser.parseHHmmDuration(durationStr);
+
+    if (durationToAdd != null) {
+      DateTime wakingAtDateTime = endDateTime.add(durationToAdd);
+      _wakingAtDateTimeController.text =
+          DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: wakingAtDateTime.toString()) ??
+              '';
+    }
   }
 
   @override
