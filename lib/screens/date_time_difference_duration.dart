@@ -70,6 +70,11 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   late TextEditingController _addTimeDialogController;
   late TextEditingController _addTimeTextFieldController;
   late TextEditingController _finalDurationTextFieldController;
+  late TextEditingController _durationPercentTextFieldController =
+      TextEditingController();
+  late TextEditingController _durationPercentTotalTextFieldController =
+      TextEditingController();
+
   late TextEditingController _wakingAtDateTimeController;
 
   late EditableDurationPercent _editableDurationPercentSleep;
@@ -124,19 +129,25 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     String editableDurationPercentWidgetDurationStr =
         (_finalDurationStr.isNotEmpty) ? _finalDurationStr : _durationStr;
 
+    _durationPercentTextFieldController.text =
+        editableDurationPercentWidgetDurationStr;
+
     _editableDurationPercentSleep = EditableDurationPercent(
       dateTimeTitle: 'Duration %',
       transferDataMapPercentKey: 'dtDurationPercentStr',
-      durationStr: editableDurationPercentWidgetDurationStr,
+      durationTextFieldController: _durationPercentTextFieldController,
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
     );
 
+    _durationPercentTotalTextFieldController.text =
+        editableDurationPercentWidgetDurationStr;
+
     _editableDurationPercentTotal = EditableDurationPercent(
       dateTimeTitle: 'Duration %',
       transferDataMapPercentKey: 'dtDurationTotalPercentStr',
-      durationStr: editableDurationPercentWidgetDurationStr,
+      durationTextFieldController: _durationPercentTotalTextFieldController,
       topSelMenuPosition: 411.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
@@ -167,6 +178,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _finalDurationStr = _transferDataMap['dtDiffFinalDurationStr'] ?? '';
     _finalDurationTextFieldController =
         TextEditingController(text: _finalDurationStr);
+    _durationPercentTextFieldController = TextEditingController();
+    _durationPercentTotalTextFieldController = TextEditingController();
     _wakingAtDateTimeStr =
         _transferDataMap['dtDiffWakingAtDateTimeStr'] ?? '20-11-2022 6:57';
     _wakingAtDateTimeController =
@@ -181,6 +194,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _addTimeDialogController.dispose();
     _addTimeTextFieldController.dispose();
     _finalDurationTextFieldController.dispose();
+    _durationPercentTextFieldController.dispose();
+    _durationPercentTotalTextFieldController.dispose();
     _wakingAtDateTimeController.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {

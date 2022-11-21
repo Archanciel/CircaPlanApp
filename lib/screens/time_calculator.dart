@@ -59,6 +59,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   final TextEditingController _firstTimeTextFieldController = TextEditingController();
   final TextEditingController _secondTimeTextFieldController = TextEditingController();
   late TextEditingController _resultTextFieldController;
+  late TextEditingController _durationPercentTextFieldController =
+      TextEditingController();
+  late TextEditingController _durationPercentTotalTextFieldController =
+      TextEditingController();
 
   late EditableDurationPercent _editableDurationPercentWidgetFirst;
   late EditableDurationPercent _editableDurationPercentWidgetSecond;
@@ -144,19 +148,25 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       extractedHHmm = _extractHHmm(_resultTimeStr);
     }
 
+    _durationPercentTextFieldController.text =
+        extractedHHmm;
+
     _editableDurationPercentWidgetFirst = EditableDurationPercent(
       dateTimeTitle: 'Result %',
       transferDataMapPercentKey: 'resultPercentStr',
-      durationStr: extractedHHmm,
+      durationTextFieldController: _durationPercentTextFieldController,
       topSelMenuPosition: 343.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
     );
 
+    _durationPercentTotalTextFieldController.text =
+        extractedHHmm;
+
     _editableDurationPercentWidgetSecond = EditableDurationPercent(
       dateTimeTitle: 'Result %',
       transferDataMapPercentKey: 'resultSecondPercentStr',
-      durationStr: extractedHHmm,
+      durationTextFieldController: _durationPercentTotalTextFieldController,
       topSelMenuPosition: 411.0,
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
@@ -190,6 +200,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _resultTextFieldController = TextEditingController(text: _resultTimeStr);
     _divideFirstBySecond =
         _transferDataMap['divideFirstBySecondCheckBox'] ?? false;
+    _durationPercentTextFieldController = TextEditingController();
+    _durationPercentTotalTextFieldController = TextEditingController();
 
     // fixed Undo bug: after Add or Subtr button pressed,
     // now Undo works. I don't know why, but this solution
@@ -209,9 +221,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _firstTimeTextFieldController.dispose();
     _secondTimeTextFieldController.dispose();
     _resultTextFieldController.dispose();
-
     _firstTimeTextFieldFocusNode.dispose();
     _secondTimeTextFieldFocusNode.dispose();
+    _durationPercentTextFieldController.dispose();
+    _durationPercentTotalTextFieldController.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;

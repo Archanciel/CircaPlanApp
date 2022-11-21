@@ -11,9 +11,8 @@ import 'manually_selectable_text_field.dart';
 class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String _dateTimeTitle;
   final String transferDataMapPercentKey;
-  final TextEditingController durationPercentTextFieldController =
-      TextEditingController();
-  final TextEditingController selectedPercentTextFieldController =
+  final TextEditingController durationTextFieldController;
+  final TextEditingController percentTextFieldController =
       TextEditingController();
   final double topSelMenuPosition;
   String durationStr;
@@ -34,11 +33,12 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   EditableDurationPercent({
     required String dateTimeTitle,
     required this.transferDataMapPercentKey,
-    required this.durationStr,
+    required this.durationTextFieldController,
     required this.topSelMenuPosition,
     required this.transferDataViewModel,
     required this.transferDataMap,
-  }) : _dateTimeTitle = dateTimeTitle;
+  })  : _dateTimeTitle = dateTimeTitle,
+        durationStr = durationTextFieldController.text;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data to be
@@ -83,7 +83,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
 
   void handleModifiedPercentStrFunction(
       [String? percentStr, int? _, bool? __]) {
-    widget.selectedPercentTextFieldController.text = percentStr ?? '';
+    widget.percentTextFieldController.text = percentStr ?? '';
 
     if (percentStr == null) {
       // the case if clicked on Reset button after clicked on Del
@@ -98,7 +98,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     } else {
       // here, the user did not enter '%'. The '%' char is added.
       percentStr = '$percentDoublStr %';
-      widget.selectedPercentTextFieldController.text = percentStr;
+      widget.percentTextFieldController.text = percentStr;
     }
 
     double percentValueDouble = 0.0;
@@ -108,7 +108,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     } catch (e) {
       // in case the user enter a non double parsable percent
       // value, the invalid value is replaced by 0 % !
-      widget.selectedPercentTextFieldController.text = '0 %';
+      widget.percentTextFieldController.text = '0 %';
     }
 
     Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
@@ -148,7 +148,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
   }
 
   void _deleteDurationPercent() {
-    widget.selectedPercentTextFieldController.text = '';
+    widget.percentTextFieldController.text = '';
     _updateDurationPercentStr(
       percentStr: '',
       percentDurationStr: '',
@@ -159,7 +159,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     required String percentStr,
     required String percentDurationStr,
   }) {
-    widget.durationPercentTextFieldController.text = percentDurationStr;
+    widget.durationTextFieldController.text = percentDurationStr;
     widget.transferDataMap[widget.transferDataMapPercentKey] = percentStr;
 
     // Commenting out last method line avoids making Redo (Undo +
@@ -184,7 +184,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
 
     _manuallySelectableDurationTextField = ManuallySelectableTextField(
       transferDataViewModel: widget.transferDataViewModel,
-      textFieldController: widget.selectedPercentTextFieldController,
+      textFieldController: widget.percentTextFieldController,
       handleTextFieldChangeFunction: handleModifiedPercentStrFunction,
       widgetPrefixOrName: widget.transferDataMapPercentKey,
     );
@@ -241,15 +241,14 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                               color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                          controller: widget.durationPercentTextFieldController,
+                          controller: widget.durationTextFieldController,
                           readOnly: true,
                         ),
                       ),
                       onDoubleTap: () async {
                         await widget.copyToClipboard(
                             context: context,
-                            controller:
-                                widget.durationPercentTextFieldController);
+                            controller: widget.durationTextFieldController);
                         widget.transferDataMap['clipboardLastAction'] =
                             ClipboardLastAction.copy;
                       },
