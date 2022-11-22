@@ -865,21 +865,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                   ),
                   Row(
                     children: [
-                      Text(
-                        'Last date time',
-                        style: labelTextStyle,
-                      ),
-                      const SizedBox(
-                        width: 41,
-                      ),
-                      Text(
-                        'Previous date time',
-                        style: labelTextStyle,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
                       Container(
                         padding:
                             const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
@@ -897,6 +882,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             child: NonEditableDateTime(
+                              dateTimeTitle: 'Last date time',
                               dateTimeController: _lastDateTimeController,
                               transferDataMap: _transferDataMap,
                             ),
@@ -920,6 +906,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               ),
                             ),
                             child: NonEditableDateTime(
+                              dateTimeTitle: 'Previous date time',
                               dateTimeController: _previousDateTimeController,
                               transferDataMap: _transferDataMap,
                             ),

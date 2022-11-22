@@ -439,14 +439,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                   _editableDurationPercentSleep,
                   _editableDurationPercentTotal,
-                  Text(
-                    'Waking at',
-                    style: labelTextStyle,
-                  ),
-                  const SizedBox(
-                    height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
-                  ),
                   NonEditableDateTime(
+                    dateTimeTitle: 'Waking at',
                     dateTimeController: _wakingAtDateTimeController,
                     transferDataMap: _transferDataMap,
                   ),
