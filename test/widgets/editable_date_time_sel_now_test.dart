@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
@@ -128,9 +129,6 @@ Future<void> main() async {
       testWidgets(
         'Selecting previous date month and setting day only',
         (tester) async {
-          final edtSelButton =
-              find.byKey(const Key('editableDateTimeSelButton'));
-
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
@@ -149,12 +147,12 @@ Future<void> main() async {
 
           dateTimePickerController.text = '20-09-2022 12:45';
 
-          TextField textField =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
-
+          Finder textFieldFinder =
+              find.byKey(const Key('editableDateTimeTextField'));
+          TextField textField = tester.widget(textFieldFinder);
           expect(textField.controller!.text, '20-09-2022 12:45');
 
-          await tester.tap(find.byKey(const Key('editableDateTimeTextField')));
+          await tester.tap(textFieldFinder);
           await tester.pump(kDoubleTapTimeout); // required to avoid
           //  GestureDetector.onDoubleTap: to be applied instead of
           //  TextField onTap: !
@@ -164,8 +162,18 @@ Future<void> main() async {
           await tester.tap(find.text('OK'));
           await tester.pumpAndSettle();
           await tester.tap(find.text('OK'));
-
           expect(textField.controller!.text, '06-08-2022 12:45');
+
+          // testing double tap
+          await tester.tap(textFieldFinder);
+          await tester.pump(kDoubleTapMinTime);
+          await tester.tap(textFieldFinder);
+          await tester.pumpAndSettle();
+
+          // not working
+          // ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
+          // String copiedtext = (cdata != null) ? cdata.text ?? '' : '';
+          // print(copiedtext);
         },
       );
       testWidgets(
