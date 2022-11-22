@@ -170,7 +170,9 @@ Future<void> main() async {
           await tester.tap(textFieldFinder);
           await tester.pumpAndSettle();
 
-          // not working
+          // not working ask on StackOverFlow how to obtain pasted text from
+          // clipboard.
+
           // ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
           // String copiedtext = (cdata != null) ? cdata.text ?? '' : '';
           // print(copiedtext);
