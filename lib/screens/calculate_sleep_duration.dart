@@ -949,9 +949,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         _currentTotalPrevDayTotalPercentController,
                     prevDayTotalController: _prevDayEmptyTotalController,
                   ),
-                  Text(
-                    'Sleep and wake up history',
-                    style: labelTextStyle,
+                  Tooltip(
+                    message: 'Simple click copies HH:mm to clipboard',
+                    child: Text(
+                      'Sleep and wake up history',
+                      style: labelTextStyle,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
