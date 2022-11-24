@@ -17,7 +17,7 @@ enum ClipboardLastAction {
 }
 
 const String kApplicationName = "Circadian Calculator";
-const String kApplicationVersion = '1.9.19';
+const String kApplicationVersion = '1.9.20';
 const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';
 const String kCircadianAppDataTestDir = 'c:\\temp\\test\\CircadianData';
 const String kDefaultJsonFileName = 'circadian.json';

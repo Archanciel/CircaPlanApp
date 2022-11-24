@@ -969,30 +969,26 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         ),
                       ),
-                      child: GestureDetector(
-                        child: TextField(
-                          maxLines: null, // must be set, otherwise multi lines
-                          //                                         not displayed
-                          style: valueTextStyle,
-                          decoration:
-                              const InputDecoration.collapsed(hintText: ''),
-                          controller: _sleepWakeUpHistoryController,
-                          readOnly: true,
-                          onTap: () async {
-                            await copyToClipboardHHmmExtractedFromHistoryDuration(
-                                context: context,
-                                controller: _sleepWakeUpHistoryController);
-                            _transferDataMap['clipboardLastAction'] =
-                                ClipboardLastAction.copy;
-                          },
-                        ),
-                        onDoubleTap: () {
-                          // empty anonymous function disables double tap selection
-                          //   await copyToClipboardHHmmExtractedFromHistoryDuration(
-                          //       context: context,
-                          //       controller: _sleepWakeUpHistoryController);
-                          //   _transferDataMap['clipboardLastAction'] =
-                          //       ClipboardLastAction.copy;
+                      child: TextField(
+                        maxLines: null, // must be set, otherwise multi lines
+                        //                                         not displayed
+                        style: valueTextStyle,
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        controller: _sleepWakeUpHistoryController,
+                        readOnly: true,
+                        // prevents displaying copy paste menu !
+                        toolbarOptions: const ToolbarOptions(
+                            copy: false,
+                            paste: false,
+                            cut: false,
+                            selectAll: false),
+                        onTap: () async {
+                          await copyToClipboardHHmmExtractedFromHistoryDuration(
+                              context: context,
+                              controller: _sleepWakeUpHistoryController);
+                          _transferDataMap['clipboardLastAction'] =
+                              ClipboardLastAction.copy;
                         },
                       ),
                     ),
@@ -1148,11 +1144,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       required TextEditingController controller,
       bool extractHHmmFromCopiedStr = false}) async {
     String historyStr = controller.text;
-    int selectionStartPosition = controller.selection.start;
-    int selectionEndPosition = controller.selection.end;
     String extractedHHmm = Utility.extractHHmmAtPosition(
       dataStr: historyStr,
-      pos: selectionStartPosition,
+      pos: controller.selection.start,
     );
 
     await Clipboard.setData(ClipboardData(text: extractedHHmm));
