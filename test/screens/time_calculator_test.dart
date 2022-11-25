@@ -1,18 +1,14 @@
-import 'package:circa_plan/widgets/manually_selectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
+import 'package:circa_plan/widgets/manually_selectable_text_field.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 
-/// This DurationDateTimeEditor widget unit test tests
-/// specifically handling integer duration setting in place of
-/// defining HH:mm durations.
 Future<void> main() async {
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
@@ -23,17 +19,13 @@ Future<void> main() async {
   }
 
   Map<String, dynamic> transferDataMap = {};
-  String pathSeparator = Platform.pathSeparator;
   String transferDataJsonFilePathName =
-      '${directory.path}${pathSeparator}circadian.json';
+      '${directory.path}${Platform.pathSeparator}circadian.json';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
   final ScreenNavigTransData screenNavigTransData =
       ScreenNavigTransData(transferDataMap: transferDataMap);
-
-  const IconData positiveDurationIcon = Icons.add;
-  const IconData negativeDurationIcon = Icons.remove;
 
   group(
     'Division test',

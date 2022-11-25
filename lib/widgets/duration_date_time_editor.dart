@@ -97,6 +97,14 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     stateInstance.saveTransferDataIfModified = doSave;
   }
 
+  /// For widget test only
+  TextEditingController get dateTimePickerController =>
+      stateInstance._dateTimePickerController;
+
+  /// For widget test only
+  String get durationStr =>
+      stateInstance._durationStr;
+
   /// Calls the _DurationDateTimeEditorState.reset() method.
   void reset({required String resetDateTimeEnglishFormatStr}) {
     stateInstance.reset(
@@ -155,8 +163,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
             transferDataMap['${widgetPrefix}DurationTextColor'] ??
                 DurationDateTimeEditor.durationPositiveColor,
         _durationStr = transferDataMap['${widgetPrefix}DurationStr'] ?? '00:00',
-        _startDateTimeStr = transferDataMap['${widgetPrefix}StartDateTimeStr'] ??
-            nowDateTimeEnglishFormatStr,
+        _startDateTimeStr =
+            transferDataMap['${widgetPrefix}StartDateTimeStr'] ??
+                nowDateTimeEnglishFormatStr,
         _endDateTimeStr = transferDataMap['${widgetPrefix}EndDateTimeStr'] ??
             nowDateTimeEnglishFormatStr,
         _nextAddSubtractResultableDuration = nextAddSubtractResultableDuration,
@@ -179,11 +188,13 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     _durationIcon =
         _transferDataMap['${_widgetPrefix}DurationIconData'] ?? Icons.add;
-    _durationIconColor = _transferDataMap['${_widgetPrefix}DurationIconColor'] ??
-        DurationDateTimeEditor.durationPositiveColor;
+    _durationIconColor =
+        _transferDataMap['${_widgetPrefix}DurationIconColor'] ??
+            DurationDateTimeEditor.durationPositiveColor;
     _durationSign = _transferDataMap['${_widgetPrefix}DurationSign'] ?? 1;
-    _durationTextColor = _transferDataMap['${_widgetPrefix}DurationTextColor'] ??
-        DurationDateTimeEditor.durationPositiveColor;
+    _durationTextColor =
+        _transferDataMap['${_widgetPrefix}DurationTextColor'] ??
+            DurationDateTimeEditor.durationPositiveColor;
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
 
