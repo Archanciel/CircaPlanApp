@@ -38,12 +38,12 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final Function handleDateTimeModificationFunction;
   final Function(String) handleSelectedDateTimeStrFunction;
 
-  void handleSelectDateTimeButtonPressed(String selectedDateTimeStr,
+  void handleSelectDateTimeButtonPressed(String frenchFormatSelectedDateTimeStr,
       [BuildContext? context]) {
-    _dateTime = ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
+    _dateTime = ScreenMixin.frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     _updateDateTimePickerValues();
 
-    handleSelectedDateTimeStrFunction(selectedDateTimeStr);
+    handleSelectedDateTimeStrFunction(frenchFormatSelectedDateTimeStr);
   }
 
   void handleDateTimeNowButtonPressed(String nowStr) {

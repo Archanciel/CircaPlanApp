@@ -457,6 +457,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     height: 15,
                   ),
                   EditableDateTime(
+                    key: const Key('addDurToDateTimeStartDateTime'),
                     dateTimeTitle: 'Start date time',
                     dateTimePickerController: _startDateTimePickerController,
                     handleDateTimeModificationFunction:

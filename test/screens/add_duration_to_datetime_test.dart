@@ -1,5 +1,6 @@
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
+import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -86,10 +87,10 @@ Future<void> main() async {
   const IconData negativeDurationIcon = Icons.remove;
 
   group(
-    'Division test',
+    'Updating AddDurationToDateTime screen Start date time',
     () {
       testWidgets(
-        'Greatest divided by smallest',
+        'plus 4 hours',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
@@ -101,6 +102,16 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final EditableDateTime editableStartDateTime = tester.firstWidget(
+                  find.byKey(const Key('addDurToDateTimeStartDateTime')))
+              as EditableDateTime;
+
+          expect(
+              editableStartDateTime.dateTimePickerController.text,
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr:
+                      transferDataMap['addDurStartDateTimeStr']));
 
           final DurationDateTimeEditor firstDurationDateTimeEditorWidget =
               tester.firstWidget(find
@@ -119,8 +130,8 @@ Future<void> main() async {
               firstDurationDateTimeEditorWidget
                   .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr:
-                    transferDataMap['firstEndDateTimeStr'],
+                englishFormatDateTimeStr: transferDataMap[
+                    'firstEndDateTimeStr'], // "2022-07-12 16:50"
               ));
 
           expect(
@@ -132,8 +143,8 @@ Future<void> main() async {
               secondDurationDateTimeEditorWidget
                   .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr:
-                    transferDataMap['secondEndDateTimeStr'],
+                englishFormatDateTimeStr: transferDataMap[
+                    'secondEndDateTimeStr'], // "2022-07-12 14:50"
               ));
 
           expect(
@@ -145,13 +156,94 @@ Future<void> main() async {
               thirdDurationDateTimeEditorWidget
                   .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr:
-                    transferDataMap['thirdEndDateTimeStr'],
+                englishFormatDateTimeStr: transferDataMap[
+                    'thirdEndDateTimeStr'], // "2022-07-12 13:50"
               ));
 
           expect(
             thirdDurationDateTimeEditorWidget.durationStrTst,
             transferDataMap['thirdDurationStr'],
+          );
+
+          // changing AddDurationToDateTime screen Start date time
+
+          // 4 hours later than 12-07-2022 16:00
+          const String frenchFormatChangedDateTimeStr = '12-07-2022 20:00';
+
+          editableStartDateTime.handleSelectDateTimeButtonPressed(
+              frenchFormatChangedDateTimeStr);
+
+          expect(editableStartDateTime.dateTimePickerController.text,
+              frenchFormatChangedDateTimeStr);
+
+          // 4 hours later
+          const String englishFormatFirstNewDateTimeStr = "2022-07-12 20:50";
+
+          expect(
+              firstDurationDateTimeEditorWidget
+                  .dateTimePickerControllerTst.text,
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr,
+              ));
+
+          expect(transferDataMap['firstEndDateTimeStr'],
+              englishFormatFirstNewDateTimeStr);
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationStrTst,
+            '00:50', // duration not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationSignTst,
+            1, // duration sign not changed
+          );
+
+          // 4 hours later
+          const String englishFormatSecondNewDateTimeStr = '2022-07-12 18:50';
+
+          expect(
+              secondDurationDateTimeEditorWidget
+                  .dateTimePickerControllerTst.text,
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr: englishFormatSecondNewDateTimeStr,
+              ));
+
+          expect(transferDataMap['secondEndDateTimeStr'],
+              englishFormatSecondNewDateTimeStr);
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationStrTst,
+            '02:00', // duration not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationSignTst,
+            -1, // duration sign not changed
+          );
+
+          // 4 hours later
+          const String englishFormatThirdNewDateTimeStr = '2022-07-12 17:50';
+
+          expect(
+              thirdDurationDateTimeEditorWidget
+                  .dateTimePickerControllerTst.text,
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                englishFormatDateTimeStr:
+                    englishFormatThirdNewDateTimeStr, // 4 hours later
+              ));
+
+          expect(transferDataMap['thirdEndDateTimeStr'],
+              englishFormatThirdNewDateTimeStr);
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationStrTst,
+            '01:00', // duration not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationSignTst,
+            -1, // duration sign not changed
           );
         },
       );
