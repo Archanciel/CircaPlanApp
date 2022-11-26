@@ -123,6 +123,11 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   void setDuration(String duration) {
     stateInstance.setDuration(duration);
   }
+
+  /// For widget test only
+  void handleEndDateTimeChangeTst(String endDateTimeEnglishFormatStr) {
+    stateInstance.handleEndDateTimeChange(endDateTimeEnglishFormatStr);
+  }
 }
 
 class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {

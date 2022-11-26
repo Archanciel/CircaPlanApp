@@ -80,6 +80,7 @@ Future<void> main() async {
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
+  await transferDataViewModel.updateAndSaveTransferData();
   final ScreenNavigTransData screenNavigTransData =
       ScreenNavigTransData(transferDataMap: transferDataMap);
 
@@ -87,7 +88,7 @@ Future<void> main() async {
   const IconData negativeDurationIcon = Icons.remove;
 
   group(
-    'Updating AddDurationToDateTime screen Start date time',
+    'Updating first End date time',
     () {
       testWidgets(
         'plus 4 hours',
@@ -165,19 +166,19 @@ Future<void> main() async {
             transferDataMap['thirdDurationStr'],
           );
 
-          // changing AddDurationToDateTime screen Start date time
+          // changing first End date time
 
-          // 4 hours later than 12-07-2022 16:00
-          const String frenchFormatChangedDateTimeStr = '12-07-2022 20:00';
+          // 4 hours later than 12-07-2022 16:50
+          const String englishFormatFirstNewDateTimeStr = "2022-07-12 20:50";
 
-          editableStartDateTime.handleSelectDateTimeButtonPressed(
-              frenchFormatChangedDateTimeStr);
+          firstDurationDateTimeEditorWidget.dateTimePickerControllerTst.text =
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr)!;
+          firstDurationDateTimeEditorWidget
+              .handleEndDateTimeChangeTst(englishFormatFirstNewDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
-              frenchFormatChangedDateTimeStr);
-
-          // 4 hours later
-          const String englishFormatFirstNewDateTimeStr = "2022-07-12 20:50";
+              '12-07-2022 16:00'); // not changed
 
           expect(
               firstDurationDateTimeEditorWidget
@@ -191,7 +192,7 @@ Future<void> main() async {
 
           expect(
             firstDurationDateTimeEditorWidget.durationStrTst,
-            '00:50', // duration not changed
+            '4:50', // duration 4 hours bigger
           );
 
           expect(
@@ -323,19 +324,19 @@ Future<void> main() async {
             transferDataMap['thirdDurationStr'],
           );
 
-          // changing AddDurationToDateTime screen Start date time
+          // changing first End date time
 
-          // 4 hours sooner than 12-07-2022 16:00
-          const String frenchFormatChangedDateTimeStr = '12-07-2022 12:00';
+          // 4 hours sooner than 12-07-2022 16:50
+          const String englishFormatFirstNewDateTimeStr = "2022-07-12 12:50";
 
-          editableStartDateTime.handleSelectDateTimeButtonPressed(
-              frenchFormatChangedDateTimeStr);
+          firstDurationDateTimeEditorWidget.dateTimePickerControllerTst.text =
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr)!;
+          firstDurationDateTimeEditorWidget
+              .handleEndDateTimeChangeTst(englishFormatFirstNewDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
-              frenchFormatChangedDateTimeStr);
-
-          // 4 hours sooner
-          const String englishFormatFirstNewDateTimeStr = "2022-07-12 12:50";
+              '12-07-2022 16:00'); // not changed
 
           expect(
               firstDurationDateTimeEditorWidget
@@ -349,12 +350,12 @@ Future<void> main() async {
 
           expect(
             firstDurationDateTimeEditorWidget.durationStrTst,
-            '00:50', // duration not changed
+            '3:10', // duration 4 hours smaller
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationSignTst,
-            1, // duration sign not changed
+            -1, // duration sign now negative
           );
 
           // 4 hours sooner
@@ -407,43 +408,4 @@ Future<void> main() async {
       );
     },
   );
-}
-
-Offset textOffsetToPosition(WidgetTester tester, int offset) {
-  final RenderEditable renderEditable = findRenderEditable(tester);
-  final List<TextSelectionPoint> endpoints = globalize(
-    renderEditable.getEndpointsForSelection(
-      TextSelection.collapsed(offset: offset),
-    ),
-    renderEditable,
-  );
-  expect(endpoints.length, 1);
-  return endpoints[0].point + const Offset(0.0, -2.0);
-}
-
-RenderEditable findRenderEditable(WidgetTester tester) {
-  final RenderObject root = tester.renderObject(find.byType(EditableText));
-  expect(root, isNotNull);
-  RenderEditable? renderEditable;
-  void recursiveFinder(RenderObject child) {
-    if (child is RenderEditable) {
-      renderEditable = child;
-      return;
-    }
-    child.visitChildren(recursiveFinder);
-  }
-
-  root.visitChildren(recursiveFinder);
-  expect(renderEditable, isNotNull);
-  return renderEditable!;
-}
-
-List<TextSelectionPoint> globalize(
-    Iterable<TextSelectionPoint> points, RenderBox box) {
-  return points.map<TextSelectionPoint>((TextSelectionPoint point) {
-    return TextSelectionPoint(
-      box.localToGlobal(point.point),
-      point.direction,
-    );
-  }).toList();
 }
