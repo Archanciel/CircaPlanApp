@@ -9,7 +9,6 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/screens/add_duration_to_datetime.dart';
-import 'package:circa_plan/widgets/manually_selectable_text_field.dart';
 
 Future<void> main() async {
   Map<String, dynamic> transferDataMap = {
@@ -117,40 +116,43 @@ Future<void> main() async {
                   as DurationDateTimeEditor;
 
           expect(
-              firstDurationDateTimeEditorWidget.dateTimePickerController.text,
+              firstDurationDateTimeEditorWidget
+                  .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
                 englishFormatDateTimeStr:
                     transferDataMap['firstEndDateTimeStr'],
               ));
-                  
+
           expect(
-              firstDurationDateTimeEditorWidget.durationStr,
-                    transferDataMap['firstDurationStr'],
-              );
-                  
+            firstDurationDateTimeEditorWidget.durationStrTst,
+            transferDataMap['firstDurationStr'],
+          );
+
           expect(
-              secondDurationDateTimeEditorWidget.dateTimePickerController.text,
+              secondDurationDateTimeEditorWidget
+                  .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
                 englishFormatDateTimeStr:
                     transferDataMap['secondEndDateTimeStr'],
               ));
-                  
+
           expect(
-              secondDurationDateTimeEditorWidget.durationStr,
-                    transferDataMap['secondDurationStr'],
-              );
-                  
+            secondDurationDateTimeEditorWidget.durationStrTst,
+            transferDataMap['secondDurationStr'],
+          );
+
           expect(
-              thirdDurationDateTimeEditorWidget.dateTimePickerController.text,
+              thirdDurationDateTimeEditorWidget
+                  .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
                 englishFormatDateTimeStr:
                     transferDataMap['thirdEndDateTimeStr'],
               ));
-                  
+
           expect(
-              thirdDurationDateTimeEditorWidget.durationStr,
-                    transferDataMap['thirdDurationStr'],
-              );
+            thirdDurationDateTimeEditorWidget.durationStrTst,
+            transferDataMap['thirdDurationStr'],
+          );
         },
       );
     },
@@ -172,7 +174,7 @@ Offset textOffsetToPosition(WidgetTester tester, int offset) {
 RenderEditable findRenderEditable(WidgetTester tester) {
   final RenderObject root = tester.renderObject(find.byType(EditableText));
   expect(root, isNotNull);
-  RenderEditable? renderEditable = null;
+  RenderEditable? renderEditable;
   void recursiveFinder(RenderObject child) {
     if (child is RenderEditable) {
       renderEditable = child;

@@ -98,12 +98,11 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   }
 
   /// For widget test only
-  TextEditingController get dateTimePickerController =>
+  TextEditingController get dateTimePickerControllerTst =>
       stateInstance._dateTimePickerController;
 
   /// For widget test only
-  String get durationStr =>
-      stateInstance._durationStr;
+  String get durationStrTst => stateInstance._durationStr;
 
   /// Calls the _DurationDateTimeEditorState.reset() method.
   void reset({required String resetDateTimeEnglishFormatStr}) {
