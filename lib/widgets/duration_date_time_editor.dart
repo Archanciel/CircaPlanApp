@@ -107,6 +107,15 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// For widget test only
   int get durationSignTst => stateInstance._durationSign;
 
+  /// For widget test only
+  IconData get durationIconTst => stateInstance._durationIcon;
+
+  /// For widget test only
+  Color get durationIconColorTst => stateInstance._durationIconColor;
+
+  /// For widget test only
+  Color get durationTextColorTst => stateInstance._durationTextColor;
+
   /// Calls the _DurationDateTimeEditorState.reset() method.
   void reset({required String resetDateTimeEnglishFormatStr}) {
     stateInstance.reset(

@@ -1,3 +1,4 @@
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
@@ -200,6 +201,23 @@ Future<void> main() async {
             1, // duration sign not changed
           );
 
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconTst,
+            Icons.add, // duration icon not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationPositiveColor, // duration icon color not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationPositiveColor, // duration text color not changed
+          );
+
           // 4 hours later
           const String englishFormatSecondNewDateTimeStr = '2022-07-12 18:50';
 
@@ -221,6 +239,23 @@ Future<void> main() async {
           expect(
             secondDurationDateTimeEditorWidget.durationSignTst,
             -1, // duration sign not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
           );
 
           // 4 hours later
@@ -245,6 +280,23 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationSignTst,
             -1, // duration sign not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
           );
         },
       );
@@ -358,6 +410,23 @@ Future<void> main() async {
             1, // duration sign not changed
           );
 
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconTst,
+            Icons.add, // duration icon not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationPositiveColor, // duration icon color not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationPositiveColor, // duration text color not changed
+          );
+
           // 4 hours sooner
           const String englishFormatSecondNewDateTimeStr = '2022-07-12 10:50';
 
@@ -379,6 +448,23 @@ Future<void> main() async {
           expect(
             secondDurationDateTimeEditorWidget.durationSignTst,
             -1, // duration sign not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
           );
 
           // 4 hours sooner
@@ -403,6 +489,23 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationSignTst,
             -1, // duration sign not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
           );
         },
       );

@@ -166,19 +166,19 @@ Future<void> main() async {
             transferDataMap['thirdDurationStr'],
           );
 
-          // changing AddDurationToDateTime screen Start date time
+          // changing first End date time
 
-          // 4 hours later than 12-07-2022 16:00
-          const String frenchFormatChangedDateTimeStr = '12-07-2022 20:00';
+          // 4 hours later than 12-07-2022 16:50
+          const String englishFormatFirstNewDateTimeStr = "2022-07-12 20:50";
 
-          editableStartDateTime.handleSelectDateTimeButtonPressed(
-              frenchFormatChangedDateTimeStr);
+          firstDurationDateTimeEditorWidget.dateTimePickerControllerTst.text =
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr)!;
+          firstDurationDateTimeEditorWidget
+              .handleEndDateTimeChangeTst(englishFormatFirstNewDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
-              frenchFormatChangedDateTimeStr);
-
-          // 4 hours later
-          const String englishFormatFirstNewDateTimeStr = "2022-07-12 20:50";
+              '12-07-2022 16:00'); // not changed
 
           expect(
               firstDurationDateTimeEditorWidget
@@ -192,12 +192,29 @@ Future<void> main() async {
 
           expect(
             firstDurationDateTimeEditorWidget.durationStrTst,
-            '00:50', // duration not changed
+            '4:50', // duration 4 hours bigger
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationSignTst,
             1, // duration sign not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconTst,
+            Icons.add, // duration icon not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationPositiveColor, // duration icon color not changed
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationPositiveColor, // duration text color not changed
           );
 
           // 4 hours later
@@ -223,6 +240,23 @@ Future<void> main() async {
             -1, // duration sign not changed
           );
 
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
+          );
+
           // 4 hours later
           const String englishFormatThirdNewDateTimeStr = '2022-07-12 17:50';
 
@@ -245,6 +279,23 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationSignTst,
             -1, // duration sign not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
           );
         },
       );
@@ -324,19 +375,19 @@ Future<void> main() async {
             transferDataMap['thirdDurationStr'],
           );
 
-          // changing AddDurationToDateTime screen Start date time
+          // changing first End date time
 
-          // 4 hours sooner than 12-07-2022 16:00
-          const String frenchFormatChangedDateTimeStr = '12-07-2022 12:00';
+          // 4 hours sooner than 12-07-2022 16:50
+          const String englishFormatFirstNewDateTimeStr = "2022-07-12 12:50";
 
-          editableStartDateTime.handleSelectDateTimeButtonPressed(
-              frenchFormatChangedDateTimeStr);
+          firstDurationDateTimeEditorWidget.dateTimePickerControllerTst.text =
+              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+                  englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr)!;
+          firstDurationDateTimeEditorWidget
+              .handleEndDateTimeChangeTst(englishFormatFirstNewDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
-              frenchFormatChangedDateTimeStr);
-
-          // 4 hours sooner
-          const String englishFormatFirstNewDateTimeStr = "2022-07-12 12:50";
+              '12-07-2022 16:00'); // not changed
 
           expect(
               firstDurationDateTimeEditorWidget
@@ -350,12 +401,29 @@ Future<void> main() async {
 
           expect(
             firstDurationDateTimeEditorWidget.durationStrTst,
-            '00:50', // duration not changed
+            '3:10', // duration 4 hours smaller
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationSignTst,
-            1, // duration sign not changed
+            -1, // duration sign now negative
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon now minus
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color now negative
+          );
+
+          expect(
+            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color now negative
           );
 
           // 4 hours sooner
@@ -381,6 +449,23 @@ Future<void> main() async {
             -1, // duration sign not changed
           );
 
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
+          );
+
           // 4 hours sooner
           const String englishFormatThirdNewDateTimeStr = '2022-07-12 09:50';
 
@@ -403,6 +488,23 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationSignTst,
             -1, // duration sign not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconTst,
+            Icons.remove, // duration icon not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration icon color not changed
+          );
+
+          expect(
+            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            DurationDateTimeEditor
+                .durationNegativeColor, // duration text color not changed
           );
         },
       );
