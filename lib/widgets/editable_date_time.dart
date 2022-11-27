@@ -40,7 +40,8 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
 
   void handleSelectDateTimeButtonPressed(String frenchFormatSelectedDateTimeStr,
       [BuildContext? context]) {
-    _dateTime = ScreenMixin.frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
+    _dateTime =
+        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     _updateDateTimePickerValues();
 
     handleSelectedDateTimeStrFunction(frenchFormatSelectedDateTimeStr);
@@ -178,6 +179,12 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
                     controller: dateTimePickerController,
                     readOnly: true,
+                    // prevents displaying copy paste menu !
+                    toolbarOptions: const ToolbarOptions(
+                        copy: false,
+                        paste: false,
+                        cut: false,
+                        selectAll: false),
                     onTap: () {
                       // initializing the date and time dialogs with the
                       // currently displayed date time value ...
