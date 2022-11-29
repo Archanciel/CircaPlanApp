@@ -279,16 +279,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_widgetBody != null) {
-      // Since the TwoButtonsWidget layout is not modified
-      // after it has been built, avoiding rebuilding it
-      // each time its including widget is rebuilt improves
-      // app performance. This is not possible if the widget
-      // is stateless !
-      return _widgetBody!;
-    }
-
-    _widgetBody = Row(
+    return Row(
       children: [
         Theme(
           data: ThemeData(
@@ -354,7 +345,5 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
         ),
       ],
     );
-
-    return _widgetBody!;
   }
 }
