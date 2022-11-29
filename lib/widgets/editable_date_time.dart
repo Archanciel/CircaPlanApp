@@ -269,6 +269,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // conditionally adding checkbox widget
         widget.displayFixDateTimeCheckbox
             ? Theme(
                 data: ThemeData(
@@ -278,14 +279,13 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                   key: const Key('divideFirstBySecond'),
                   value: _isEndDateTimeFixed,
                   onChanged: (value) {
-                    print('checkbox value: $value');
                     setState(() {
                       _isEndDateTimeFixed = value!;
                     });
                   },
                 ),
               )
-            : const SizedBox(width: 5.0),
+            : const SizedBox(width: 0.0),
         ElevatedButton(
           key: const Key('editableDateTimeNowButton'),
           style: ButtonStyle(
