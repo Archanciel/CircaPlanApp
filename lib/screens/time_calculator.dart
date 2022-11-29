@@ -814,6 +814,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // necessary to keep buttons horizontally aligned
+                      const SizedBox(
+                        width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT_REDUCTION,
+                      ),
                       Theme(
                         data: ThemeData(
                           unselectedWidgetColor: Colors.white70,
