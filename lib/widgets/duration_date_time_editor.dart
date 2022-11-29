@@ -546,6 +546,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
           topSelMenuPosition: widget.topSelMenuPosition,
           transferDataViewModel: widget.transferDataViewModel,
+          displayFixDateTimeCheckbox: true,
         ),
       ],
     );

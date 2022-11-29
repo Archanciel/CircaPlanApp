@@ -16,6 +16,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     required this.dateTimePickerController,
     required this.handleDateTimeModificationFunction,
     required this.handleSelectedDateTimeStrFunction,
+    this.displayFixDateTimeCheckbox = false,
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
       dateTimePickerController.text =
@@ -37,6 +38,8 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
   final TextEditingController dateTimePickerController;
   final Function handleDateTimeModificationFunction;
   final Function(String) handleSelectedDateTimeStrFunction;
+
+  final bool displayFixDateTimeCheckbox;
 
   void handleSelectDateTimeButtonPressed(String frenchFormatSelectedDateTimeStr,
       [BuildContext? context]) {
@@ -223,6 +226,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
           transferDataMap: transferDataMap,
           handleDateTimeModification: handleDateTimeNowButtonPressed,
           handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
+          displayFixDateTimeCheckbox: displayFixDateTimeCheckbox,
         ),
       ],
     );
@@ -240,6 +244,7 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
     required this.transferDataMap,
     required this.handleDateTimeModification,
     required this.handleSelectedDateTimeStr,
+    this.displayFixDateTimeCheckbox = false,
   }) : super(key: key);
 
   final TransferDataViewModel transferDataViewModel;
@@ -251,26 +256,36 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final void Function(String) handleDateTimeModification;
   final void Function(String, BuildContext?) handleSelectedDateTimeStr;
 
+  final bool displayFixDateTimeCheckbox;
+
   @override
   State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();
 }
 
 class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
-  Widget? _widgetBody;
+  bool _isEndDateTimeFixed = false;
 
   @override
   Widget build(BuildContext context) {
-    if (_widgetBody != null) {
-      // Since the TwoButtonsWidget layout is not modified
-      // after it has been built, avoiding rebuilding it
-      // each time its including widget is rebuilt improves
-      // app performance. This is not possible if the widget
-      // is stateless !
-      return _widgetBody!;
-    }
-
-    _widgetBody = Row(
+    return Row(
       children: [
+        widget.displayFixDateTimeCheckbox
+            ? Theme(
+                data: ThemeData(
+                  unselectedWidgetColor: Colors.white70,
+                ),
+                child: Checkbox(
+                  key: const Key('divideFirstBySecond'),
+                  value: _isEndDateTimeFixed,
+                  onChanged: (value) {
+                    print('checkbox value: $value');
+                    setState(() {
+                      _isEndDateTimeFixed = value!;
+                    });
+                  },
+                ),
+              )
+            : const SizedBox(width: 5.0),
         ElevatedButton(
           key: const Key('editableDateTimeNowButton'),
           style: ButtonStyle(
@@ -320,7 +335,5 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
         ),
       ],
     );
-
-    return _widgetBody!;
   }
 }
