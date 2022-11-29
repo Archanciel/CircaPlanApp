@@ -165,7 +165,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
             SizedBox(
               // Required to fix Row exception
               // layoutConstraints.maxWidth < double.infinity.
-              width: 170,
+              width: 140,
               child: Theme(
                 data: Theme.of(context).copyWith(
                   textSelectionTheme: TextSelectionThemeData(
@@ -275,14 +275,18 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                 data: ThemeData(
                   unselectedWidgetColor: Colors.white70,
                 ),
-                child: Checkbox(
-                  key: const Key('divideFirstBySecond'),
-                  value: _isEndDateTimeFixed,
-                  onChanged: (value) {
-                    setState(() {
-                      _isEndDateTimeFixed = value!;
-                    });
-                  },
+                child: SizedBox(
+                  width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                  height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                  child: Checkbox(
+                    key: const Key('divideFirstBySecond'),
+                    value: _isEndDateTimeFixed,
+                    onChanged: (value) {
+                      setState(() {
+                        _isEndDateTimeFixed = value!;
+                      });
+                    },
+                  ),
                 ),
               )
             : const SizedBox(width: 0.0),

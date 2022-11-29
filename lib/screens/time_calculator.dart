@@ -56,8 +56,10 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   String _secondTimeStr = '';
   String _resultTimeStr = '';
 
-  final TextEditingController _firstTimeTextFieldController = TextEditingController();
-  final TextEditingController _secondTimeTextFieldController = TextEditingController();
+  final TextEditingController _firstTimeTextFieldController =
+      TextEditingController();
+  final TextEditingController _secondTimeTextFieldController =
+      TextEditingController();
   late TextEditingController _resultTextFieldController;
 
   late EditableDurationPercent _editableDurationPercentWidgetFirst;
@@ -187,7 +189,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _firstTimeStr = _transferDataMap['firstTimeStr'] ?? '00:00:00';
     _firstTimeTextFieldController.text = _firstTimeStr;
     _secondTimeStr = _transferDataMap['secondTimeStr'] ?? '00:00:00';
-    _secondTimeTextFieldController.text =_secondTimeStr;
+    _secondTimeTextFieldController.text = _secondTimeStr;
     _resultTimeStr = _transferDataMap['resultTimeStr'] ?? '';
     _resultTextFieldController = TextEditingController(text: _resultTimeStr);
     _divideFirstBySecond =
@@ -816,14 +818,18 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         data: ThemeData(
                           unselectedWidgetColor: Colors.white70,
                         ),
-                        child: Checkbox(
-                          key: const Key('divideFirstBySecond'),
-                          value: _divideFirstBySecond,
-                          onChanged: (value) {
-                            setState(() {
-                              _divideFirstBySecond = value!;
-                            });
-                          },
+                        child: SizedBox(
+                          width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                          height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                          child: Checkbox(
+                            key: const Key('divideFirstBySecond'),
+                            value: _divideFirstBySecond,
+                            onChanged: (value) {
+                              setState(() {
+                                _divideFirstBySecond = value!;
+                              });
+                            },
+                          ),
                         ),
                       ),
                       ElevatedButton(

@@ -50,6 +50,7 @@ mixin ScreenMixin {
   static DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
   static const double APP_ROUNDED_BOARDER_RADIUS = 18.0;
   static const double BUTTON_SEP_WIDTH = 10.0;
+  static const double CHECKBOX_WIDTH_HEIGHT = 30.0;
   final Color appLabelColor = ScreenMixin.APP_LIGHT_YELLOW_COLOR;
   final Color selectionColor = ScreenMixin.APP_DARK_BLUE_COLOR;
   final MaterialStateProperty<Color?> appElevatedButtonBackgroundColor =
