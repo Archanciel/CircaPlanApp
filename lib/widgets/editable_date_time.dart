@@ -6,7 +6,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import '../buslog/transfer_data_view_model.dart';
 
-class EditableDateTime extends StatelessWidget with ScreenMixin {
+class EditableDateTime extends StatefulWidget {
   EditableDateTime({
     Key? key,
     required this.dateTimeTitle,
@@ -24,10 +24,6 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     }
   }
 
-  DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
-  DateTime _dateTime = DateTime.now();
-
   final String dateTimeTitle;
   final TransferDataViewModel transferDataViewModel;
 
@@ -41,26 +37,68 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
 
   final bool displayFixDateTimeCheckbox;
 
+  /// This variable enables the EditableDurationPercent
+  /// instance to execute the callSetState() method of its
+  /// _EditableDurationPercentState instance in order to
+  /// redraw the widget to display the values modified by
+  /// loading a json file.
+  late final _EditableDateTimeState stateInstance;
+
+  @override
+  State<EditableDateTime> createState() {
+    stateInstance = _EditableDateTimeState();
+
+    return stateInstance;
+  }
+
+  bool get isEndDateTimeFixed {
+    return stateInstance._twoButtonsWidget.isEndDateTimeFixed;
+  }
+}
+
+class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
+  DateTime _selectedDate = DateTime.now();
+
+  TimeOfDay _selectedTime = TimeOfDay.now();
+
+  DateTime _dateTime = DateTime.now();
+
+  late TwoButtonsWidget _twoButtonsWidget;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _twoButtonsWidget = TwoButtonsWidget(
+      topSelMenuPosition: widget.topSelMenuPosition,
+      transferDataViewModel: widget.transferDataViewModel,
+      transferDataMap: widget.transferDataMap,
+      handleDateTimeModification: handleDateTimeNowButtonPressed,
+      handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
+      displayFixDateTimeCheckbox: widget.displayFixDateTimeCheckbox,
+    );
+  }
+
   void handleSelectDateTimeButtonPressed(String frenchFormatSelectedDateTimeStr,
       [BuildContext? context]) {
     _dateTime =
         ScreenMixin.frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     _updateDateTimePickerValues();
 
-    handleSelectedDateTimeStrFunction(frenchFormatSelectedDateTimeStr);
+    widget.handleSelectedDateTimeStrFunction(frenchFormatSelectedDateTimeStr);
   }
 
   void handleDateTimeNowButtonPressed(String nowStr) {
     _dateTime = ScreenMixin.englishDateTimeFormat.parse(nowStr);
     _updateDateTimePickerValues();
 
-    handleDateTimeModificationFunction(nowStr);
+    widget.handleDateTimeModificationFunction(nowStr);
   }
 
   void _updateDateTimePickerValues() {
     _selectedDate = _dateTime;
     _selectedTime = TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
-    dateTimePickerController.text =
+    widget.dateTimePickerController.text =
         ScreenMixin.frenchDateTimeFormat.format(_dateTime);
   }
 
@@ -139,16 +177,15 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
     );
     //  });
 
-    dateTimePickerController.text =
+    widget.dateTimePickerController.text =
         ScreenMixin.frenchDateTimeFormat.format(_dateTime);
 
-    handleDateTimeModificationFunction(
+    widget.handleDateTimeModificationFunction(
         ScreenMixin.englishDateTimeFormat.format(_dateTime));
   }
 
   @override
   Widget build(BuildContext context) {
-    // print('_EditableDateTimeState.build()');
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -156,7 +193,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              dateTimeTitle,
+              widget.dateTimeTitle,
               style: labelTextStyle,
             ),
             const SizedBox(
@@ -180,7 +217,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                         color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                         fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    controller: dateTimePickerController,
+                    controller: widget.dateTimePickerController,
                     readOnly: true,
                     // prevents displaying copy paste menu !
                     toolbarOptions: const ToolbarOptions(
@@ -192,7 +229,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                       // initializing the date and time dialogs with the
                       // currently displayed date time value ...
                       String frenchFormatDateTimeStr =
-                          dateTimePickerController.text;
+                          widget.dateTimePickerController.text;
                       DateTime dateTime = ScreenMixin.frenchDateTimeFormat
                           .parse(frenchFormatDateTimeStr);
                       _selectedTime = TimeOfDay(
@@ -204,10 +241,10 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
                   onDoubleTap: () async {
                     await copyToClipboard(
                       context: context,
-                      controller: dateTimePickerController,
+                      controller: widget.dateTimePickerController,
                       extractHHmmFromCopiedStr: true,
                     );
-                    transferDataMap['clipboardLastAction'] =
+                    widget.transferDataMap['clipboardLastAction'] =
                         ClipboardLastAction.copy;
                   },
                 ),
@@ -220,14 +257,7 @@ class EditableDateTime extends StatelessWidget with ScreenMixin {
             ),
           ],
         ),
-        TwoButtonsWidget(
-          topSelMenuPosition: topSelMenuPosition,
-          transferDataViewModel: transferDataViewModel,
-          transferDataMap: transferDataMap,
-          handleDateTimeModification: handleDateTimeNowButtonPressed,
-          handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
-          displayFixDateTimeCheckbox: displayFixDateTimeCheckbox,
-        ),
+        _twoButtonsWidget,
       ],
     );
   }
@@ -257,14 +287,13 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final void Function(String, BuildContext?) handleSelectedDateTimeStr;
 
   final bool displayFixDateTimeCheckbox;
+  bool isEndDateTimeFixed = false;
 
   @override
   State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();
 }
 
 class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
-  bool _isEndDateTimeFixed = false;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -280,10 +309,10 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                   height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                   child: Checkbox(
                     key: const Key('divideFirstBySecond'),
-                    value: _isEndDateTimeFixed,
+                    value: widget.isEndDateTimeFixed,
                     onChanged: (value) {
                       setState(() {
-                        _isEndDateTimeFixed = value!;
+                        widget.isEndDateTimeFixed = value!;
                       });
                     },
                   ),
