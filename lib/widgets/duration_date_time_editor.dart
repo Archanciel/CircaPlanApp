@@ -316,7 +316,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     int? durationSign,
     bool? wasDurationSignButtonPressed,
   ]) {
-    print('$_widgetPrefix _editableDateTime.isEndDateTimeFixed ${_editableDateTime.isEndDateTimeFixed}');
+    print(
+        '$_widgetPrefix _editableDateTime.isEndDateTimeFixed ${_editableDateTime.isEndDateTimeFixed}');
 
     if (durationSign != null) {
       _durationSign = durationSign;
@@ -332,6 +333,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     if (startDateTime == null) {
       return;
     }
+
     if (wasDurationSignButtonPressed == null || !wasDurationSignButtonPressed) {
       bool durationIsNegative =
           _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
@@ -350,15 +352,34 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime endDateTime;
 
     if (duration != null) {
-      if (_durationSign > 0) {
-        endDateTime = startDateTime.add(duration);
-      } else {
-        endDateTime = startDateTime.subtract(duration);
-      }
+      if (_editableDateTime.isEndDateTimeFixed) {
+        // duration must be changed
+        DateTime? endDateTime;
 
-      _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);
-      _dateTimePickerController.text =
-          ScreenMixin.frenchDateTimeFormat.format(endDateTime);
+        try {
+          endDateTime =
+              ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
+        } on FormatException {}
+
+        if (endDateTime != null) {
+          Duration durationChange = endDateTime.difference(startDateTime);
+          duration = duration + durationChange;
+          _durationStr = duration.HHmm();
+          _durationTextFieldController.text = _durationStr;
+          setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
+        }
+      } else {
+        // date time must be changed
+        if (_durationSign > 0) {
+          endDateTime = startDateTime.add(duration);
+        } else {
+          endDateTime = startDateTime.subtract(duration);
+        }
+
+        _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);
+        _dateTimePickerController.text =
+            ScreenMixin.frenchDateTimeFormat.format(endDateTime);
+      }
     }
 
     _updateTransferDataMap(); // must be executed before calling
