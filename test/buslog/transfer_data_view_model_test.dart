@@ -15,6 +15,8 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 class TestClassWithScreenMixin with ScreenMixin {}
 
 void main() {
+  final TestClassWithScreenMixin testClassWithSreenMixin =
+      TestClassWithScreenMixin();
   group(
     'TransferDataViewModel',
     () {

@@ -77,9 +77,13 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   State<FlutterEditableDateTimeScreen> createState() =>
       _FlutterEditableDateTimeScreenState();
 
-  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {}
+  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+    print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
+  }
 
-  void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {}
+  void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
+    print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
+  }
 }
 
 class _FlutterEditableDateTimeScreenState
@@ -88,6 +92,7 @@ class _FlutterEditableDateTimeScreenState
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
     _firstDurationDateTimeEditorWidget = DurationDateTimeEditor(

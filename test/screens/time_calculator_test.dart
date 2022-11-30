@@ -223,7 +223,7 @@ Offset textOffsetToPosition(WidgetTester tester, int offset) {
 RenderEditable findRenderEditable(WidgetTester tester) {
   final RenderObject root = tester.renderObject(find.byType(EditableText));
   expect(root, isNotNull);
-  RenderEditable? renderEditable;
+  RenderEditable? renderEditable = null;
   void recursiveFinder(RenderObject child) {
     if (child is RenderEditable) {
       renderEditable = child;

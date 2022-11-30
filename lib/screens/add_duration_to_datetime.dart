@@ -45,6 +45,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             DateTime.now().toString(),
         super();
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
 
@@ -336,6 +338,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
+
+  /// Private method called each time when the third End date
+  /// time value is changed.
+  void _updateThirdDuration(String thirdEndDateTimeEnglishFormatStr) {}
 
   void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
     _startDateTimeStr = englishFormatStartDateTimeStr;

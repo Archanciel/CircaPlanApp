@@ -22,7 +22,10 @@ Future<void> main() async {
                         enableInteractiveSelection: true,
                         controller: controller,
                         onSubmitted: (value) async {
+                          print('onSubmitted $value');
                           await Clipboard.setData(ClipboardData(text: value));
+                          ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+                          print('clipboard content = ${data!.text}');
                         },
                       ),
                     ),
@@ -33,12 +36,13 @@ Future<void> main() async {
           );
 
           Finder textFieldFinder = find.byKey(const Key('textField'));
+          TextField textField = tester.widget(textFieldFinder);
           String textFieldValue = DateTime.now().toString();
 
           await tester.tap(textFieldFinder);
           await tester.enterText(textFieldFinder, textFieldValue);
           await tester.testTextInput.receiveAction(TextInputAction.done);
-          await tester.pumpAndSettle(const Duration(seconds: 1));
+          await tester.pumpAndSettle(Duration(seconds: 1));
         },
       );
     },

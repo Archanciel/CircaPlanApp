@@ -1,7 +1,9 @@
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
@@ -82,6 +84,9 @@ Future<void> main() async {
   await transferDataViewModel.updateAndSaveTransferData();
   final ScreenNavigTransData screenNavigTransData =
       ScreenNavigTransData(transferDataMap: transferDataMap);
+
+  const IconData positiveDurationIcon = Icons.add;
+  const IconData negativeDurationIcon = Icons.remove;
 
   group(
     'Updating AddDurationToDateTime screen Start date time',

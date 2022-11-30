@@ -292,3 +292,12 @@ class DateTimeParser {
     return frenchFormatDateTimeStr;
   }
 }
+
+void main() {
+  const String timeStr = '13:35 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
+
+  const String negativeTimeStr = '-13:35 -3:05,-0:05,-3-05 -3:u5, -3:5 -3-5';
+
+  print(DateTimeParser.parseAllHHMMTimeStr(timeStr));
+  print(DateTimeParser.parseAllHHMMTimeStr(negativeTimeStr));
+}
