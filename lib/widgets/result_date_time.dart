@@ -37,7 +37,7 @@ class ResultDateTime extends StatelessWidget with ScreenMixin {
             ),
             child: TextField(
               decoration: const InputDecoration.collapsed(hintText: ''),
-              style: TextStyle(
+              style: const TextStyle(
                   color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                   fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                   fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),

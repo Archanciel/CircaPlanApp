@@ -355,8 +355,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   }
 
   void _handleSelectedStartDateTimeStr(String selectedDateTimeStr) {
-    DateTime selectedDateTime =
-        ScreenMixin.frenchDateTimeFormat.parse(selectedDateTimeStr);
     _startDateTimeController.text = selectedDateTimeStr;
 
     _setStateDiffDuration(selectedDateTimeStr);

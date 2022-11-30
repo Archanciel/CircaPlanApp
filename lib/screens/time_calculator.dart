@@ -25,11 +25,9 @@ class TimeCalculator extends StatefulWidget {
         super(key: key);
 
   @override
-  _TimeCalculatorState createState() {
-    return _TimeCalculatorState(
-        transferDataMap: _screenNavigTransData.transferDataMap,
-        transferDataViewModel: _transferDataViewModel);
-  }
+  _TimeCalculatorState createState() => _TimeCalculatorState(
+      transferDataMap: _screenNavigTransData.transferDataMap,
+      transferDataViewModel: _transferDataViewModel);
 }
 
 // Create a corresponding State class.

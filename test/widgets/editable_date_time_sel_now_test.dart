@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
@@ -181,9 +180,6 @@ Future<void> main() async {
       testWidgets(
         'Selecting next date month and setting day only',
         (tester) async {
-          final edtSelButton =
-              find.byKey(const Key('editableDateTimeSelButton'));
-
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(

@@ -83,9 +83,6 @@ Future<void> main() async {
   final ScreenNavigTransData screenNavigTransData =
       ScreenNavigTransData(transferDataMap: transferDataMap);
 
-  const IconData positiveDurationIcon = Icons.add;
-  const IconData negativeDurationIcon = Icons.remove;
-
   group(
     'Updating last End date time',
     () {

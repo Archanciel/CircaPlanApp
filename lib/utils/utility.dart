@@ -258,7 +258,7 @@ class Utility {
             RegExp re = RegExp(r"^00:\d{2}:\d{2}$");
             RegExpMatch? match = re.firstMatch(durationStr);
             if (match != null) {
-              durationStr = '${match.group(0)!.replaceFirst('00:', '')}';
+              durationStr = match.group(0)!.replaceFirst('00:', '');
             }
           }
         }

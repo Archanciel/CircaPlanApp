@@ -111,13 +111,9 @@ class ManuallySelectableTextFieldScreen extends StatefulWidget
           transferDataViewModel: _transferDataViewModel,
           transferDataMap: _transferDataMap);
 
-  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
-    print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
-  }
+  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {}
 
-  void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
-    print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
-  }
+  void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {}
 }
 
 class _ManuallySelectableTextFieldScreenState
@@ -141,7 +137,6 @@ class _ManuallySelectableTextFieldScreenState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());

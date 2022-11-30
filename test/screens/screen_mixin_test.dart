@@ -394,23 +394,6 @@ Future<void> main() async {
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
         },
       );
-
-      const List<String> dateTimeFrenchYYYYStrLst = [
-        '14-12-2022 13:35',
-        '4-2-2022 3:05',
-        '04-02-2022 03:05',
-        '4-2-2022 3:00',
-        '4-2-2022 3:0',
-        'a4-2-2022 3:05',
-        '14-2-2022 3:u5',
-        '14-2-2022 3:5',
-        '14/2/2022 3:50',
-        '14-2-2022 3-50',
-        '4-2-22 3:05',
-        'a4-2-22 3:05',
-        '14-2-22 3:u5',
-        '14-2-22 3:5',
-      ];
     },
   );
   group(

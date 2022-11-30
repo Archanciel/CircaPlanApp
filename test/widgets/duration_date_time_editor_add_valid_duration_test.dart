@@ -28,7 +28,6 @@ Future<void> main() async {
   transferDataViewModel.transferDataMap = transferDataMap;
 
   const IconData positiveDurationIcon = Icons.add;
-  const IconData negativeDurationIcon = Icons.remove;
 
   group('DurationDateTimeEditor adding valid duration', () {
     testWidgets(
