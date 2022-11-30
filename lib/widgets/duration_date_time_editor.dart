@@ -362,9 +362,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         } on FormatException {}
 
         if (endDateTime != null) {
-          Duration durationChange = endDateTime.difference(startDateTime);
-          duration = duration + durationChange;
-          _durationStr = duration.HHmm();
+          duration = endDateTime.difference(startDateTime);
+          _durationStr =
+              duration.HHmm().replaceAll('-', ''); // removing minus sign
+          //                                          if duration is negative;
           _durationTextFieldController.text = _durationStr;
           setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
         }
