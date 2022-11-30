@@ -172,7 +172,7 @@ Future<void> main() async {
           // 4 hours later than 12-07-2022 16:00
           const String frenchFormatChangedDateTimeStr = '12-07-2022 20:00';
 
-          editableStartDateTime.stateInstance.handleSelectDateTimeButtonPressed(
+          editableStartDateTime.handleSelectDateTimeButtonPressed(
               frenchFormatChangedDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
@@ -381,7 +381,7 @@ Future<void> main() async {
           // 4 hours sooner than 12-07-2022 16:00
           const String frenchFormatChangedDateTimeStr = '12-07-2022 12:00';
 
-          editableStartDateTime.stateInstance.handleSelectDateTimeButtonPressed(
+          editableStartDateTime.handleSelectDateTimeButtonPressed(
               frenchFormatChangedDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,

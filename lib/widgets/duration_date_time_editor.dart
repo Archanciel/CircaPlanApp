@@ -160,7 +160,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   final _durationTextfieldFocusNode = FocusNode();
 
   late ManuallySelectableTextField _manuallySelectableDurationTextField;
-  late EditableDateTime _editableDateTime;
 
   _DurationDateTimeEditorState({
     required String widgetPrefix,
@@ -242,17 +241,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       handleTextFieldChangeFunction: handleDurationChange,
       widgetPrefixOrName: _widgetPrefix,
     );
-
-    _editableDateTime = EditableDateTime(
-      dateTimeTitle: widget.dateTimeTitle,
-      dateTimePickerController: _dateTimePickerController,
-      handleDateTimeModificationFunction: handleEndDateTimeChange,
-      transferDataMap: widget._transferDataMap,
-      handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
-      topSelMenuPosition: widget.topSelMenuPosition,
-      transferDataViewModel: widget.transferDataViewModel,
-      displayFixDateTimeCheckbox: true,
-    );
   }
 
   @override
@@ -316,8 +304,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     int? durationSign,
     bool? wasDurationSignButtonPressed,
   ]) {
-    print('$_widgetPrefix _editableDateTime.isEndDateTimeFixed ${_editableDateTime.isEndDateTimeFixed}');
-
     if (durationSign != null) {
       _durationSign = durationSign;
     }
@@ -552,7 +538,16 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           height: kVerticalFieldDistance, // required for correct Now and Sel
           //                                 buttons positioning.
         ),
-        _editableDateTime,
+        EditableDateTime(
+          dateTimeTitle: widget.dateTimeTitle,
+          dateTimePickerController: _dateTimePickerController,
+          handleDateTimeModificationFunction: handleEndDateTimeChange,
+          transferDataMap: widget._transferDataMap,
+          handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
+          topSelMenuPosition: widget.topSelMenuPosition,
+          transferDataViewModel: widget.transferDataViewModel,
+          displayFixDateTimeCheckbox: true,
+        ),
       ],
     );
   }
