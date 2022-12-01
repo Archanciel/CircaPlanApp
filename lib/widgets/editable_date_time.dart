@@ -1,5 +1,7 @@
 // https://flutterguide.com/date-and-time-picker-in-flutter/#:~:text=To%20create%20a%20DatePicker%20and,the%20user%20confirms%20the%20dialog.
 
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
@@ -17,6 +19,7 @@ class EditableDateTime extends StatefulWidget {
     required this.handleDateTimeModificationFunction,
     required this.handleSelectedDateTimeStrFunction,
     this.displayFixDateTimeCheckbox = false,
+    this.widgetPrefix = '',
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
       dateTimePickerController.text =
@@ -36,6 +39,7 @@ class EditableDateTime extends StatefulWidget {
   final Function(String) handleSelectedDateTimeStrFunction;
 
   final bool displayFixDateTimeCheckbox;
+  final String widgetPrefix;
 
   /// This variable enables the EditableDurationPercent
   /// instance to execute the callSetState() method of its
@@ -76,6 +80,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
       handleDateTimeModification: handleDateTimeNowButtonPressed,
       handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
       displayFixDateTimeCheckbox: widget.displayFixDateTimeCheckbox,
+      widgetPrefix: widget.widgetPrefix,
     );
   }
 
@@ -263,9 +268,6 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
   }
 }
 
-/// TwoButtonsWidget remains stateful only for the reason that it
-/// can so improve performance with avoiding rebuilding it each
-/// time its including widget is rebuilt !
 class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   TwoButtonsWidget({
     Key? key,
@@ -275,7 +277,10 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
     required this.handleDateTimeModification,
     required this.handleSelectedDateTimeStr,
     this.displayFixDateTimeCheckbox = false,
-  }) : super(key: key);
+    this.widgetPrefix = '',
+  })  : isEndDateTimeFixed =
+            transferDataMap['${widgetPrefix}EndDateTimeCheckbox'] ?? false,
+        super(key: key);
 
   final TransferDataViewModel transferDataViewModel;
 
@@ -287,7 +292,8 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final void Function(String, BuildContext?) handleSelectedDateTimeStr;
 
   final bool displayFixDateTimeCheckbox;
-  bool isEndDateTimeFixed = false;
+  bool isEndDateTimeFixed; // stores the end date time fix checkbox value
+  final String widgetPrefix;
 
   @override
   State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();
@@ -311,6 +317,8 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                     key: const Key('divideFirstBySecond'),
                     value: widget.isEndDateTimeFixed,
                     onChanged: (value) {
+                      widget.transferDataMap[
+                          '${widget.widgetPrefix}EndDateTimeCheckbox'] = value;
                       setState(() {
                         widget.isEndDateTimeFixed = value!;
                       });

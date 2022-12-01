@@ -252,6 +252,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       topSelMenuPosition: widget.topSelMenuPosition,
       transferDataViewModel: widget.transferDataViewModel,
       displayFixDateTimeCheckbox: true,
+      widgetPrefix: _widgetPrefix,
     );
   }
 

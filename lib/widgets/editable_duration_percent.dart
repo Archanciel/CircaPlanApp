@@ -8,6 +8,7 @@ import '../buslog/transfer_data_view_model.dart';
 import 'manually_selectable_text_field.dart';
 
 /// Widget enabling to select and compute a duration percent value.
+// ignore: must_be_immutable
 class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   final String _dateTimeTitle;
   final String transferDataMapPercentKey;
