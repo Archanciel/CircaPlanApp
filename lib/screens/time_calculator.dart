@@ -226,7 +226,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _transferDataMap['firstTimeStr'] = _firstTimeStr;
     _transferDataMap['secondTimeStr'] = _secondTimeStr;
     _transferDataMap['resultTimeStr'] = _resultTimeStr;
-    _transferDataMap['divideFirstBySecondCheckBox'] = _divideFirstBySecond;
 
     _transferDataViewModel.updateAndSaveTransferData();
   }
@@ -827,6 +826,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                             key: const Key('divideFirstBySecond'),
                             value: _divideFirstBySecond,
                             onChanged: (value) {
+                              _transferDataMap['divideFirstBySecondCheckBox'] =
+                                  value;
+
                               setState(() {
                                 _divideFirstBySecond = value!;
                               });
