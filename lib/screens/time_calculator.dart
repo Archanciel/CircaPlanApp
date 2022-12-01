@@ -829,6 +829,11 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               _transferDataMap['divideFirstBySecondCheckBox'] =
                                   value;
 
+                              // fix bug of not storing checkbox state when
+                              // closing app after changing checkbox only
+                              _transferDataViewModel
+                                  .updateAndSaveTransferData();
+
                               setState(() {
                                 _divideFirstBySecond = value!;
                               });
