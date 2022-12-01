@@ -830,6 +830,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               setState(() {
                                 _divideFirstBySecond = value!;
                               });
+
+                              _updateTransferDataMap();
                             },
                           ),
                         ),
