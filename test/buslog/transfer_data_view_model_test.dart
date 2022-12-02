@@ -88,7 +88,8 @@ void main() {
               addDurationToDateTimeData.thirdAddDurationDurationStr, '02:00');
           expect(addDurationToDateTimeData.thirdAddDurationEndDateTimeStr,
               '12-07-2022 18:00');
-          expect(addDurationToDateTimeData.preferredDurationsItemsStr, '{"good":["12:00","3:30","10:30"]}');
+          expect(addDurationToDateTimeData.preferredDurationsItemsStr,
+              '{"good":["12:00","3:30","10:30"]}');
         },
       );
       test(
@@ -369,7 +370,8 @@ void main() {
               addDurationToDateTimeData.thirdAddDurationDurationStr, '02:00');
           expect(addDurationToDateTimeData.thirdAddDurationEndDateTimeStr,
               '12-07-2022 18:00');
-          expect(addDurationToDateTimeData.preferredDurationsItemsStr, '{"good":["12:00","3:30","10:30"]}');
+          expect(addDurationToDateTimeData.preferredDurationsItemsStr,
+              '{"good":["12:00","3:30","10:30"]}');
 
           CalculateSleepDurationData calculateSleepDurationData =
               transferDataViewModel.calculateSleepDurationData;
@@ -537,8 +539,25 @@ void main() {
 
           AddDurationToDateTimeData loadedAddDurationToDateTimeData =
               loadedTransferDataViewModel.addDurationToDateTimeData;
-          expect(loadedAddDurationToDateTimeData.toString(),
-              'addDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationIconType: DurationIconType.add\nfirstDurationStr: 00:50\nfirstStartDateTimeStr: 12-07-2022 16:00\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: DurationIconType.subtract\nsecondDurationStr: 02:00\nsecondStartDateTimeStr: 12-07-2022 16:00\nsecondEndDateTimeStr: 12-07-2022 14:00\nthirdDurationIconType: DurationIconType.subtract\nthirdDurationStr: 00:00\nthirdStartDateTimeStr: 12-07-2022 16:00\nthirdEndDateTimeStr: 12-07-2022 16:00\npreferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}');
+          expect(
+              loadedAddDurationToDateTimeData.toString(),
+              'addDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\n'
+              'firstDurationIconType: DurationIconType.add\n'
+              'firstDurationStr: 00:50\n'
+              'firstStartDateTimeStr: 12-07-2022 16:00\n'
+              'firstEndDateTimeStr: 12-07-2022 16:50\n'
+              'firstEndDateTimeCheckBox: false\n'
+              'secondDurationIconType: DurationIconType.subtract\n'
+              'secondDurationStr: 02:00\n'
+              'secondStartDateTimeStr: 12-07-2022 16:00\n'
+              'secondEndDateTimeStr: 12-07-2022 14:00\n'
+              'secondEndDateTimeCheckBox: false\n'
+              'thirdDurationIconType: DurationIconType.subtract\n'
+              'thirdDurationStr: 00:00\n'
+              'thirdStartDateTimeStr: 12-07-2022 16:00\n'
+              'thirdEndDateTimeStr: 12-07-2022 16:00\n'
+              'thirdEndDateTimeCheckBox: false\n'
+              'preferredDurationsItemsStr: {"good":["12:00","3:30","10:30"]}');
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
@@ -757,7 +776,23 @@ void main() {
           AddDurationToDateTimeData loadedAddDurationToDateTimeData =
               loadedTransferDataViewModel.addDurationToDateTimeData;
           expect(loadedAddDurationToDateTimeData.toString(),
-              'addDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\nfirstDurationIconType: DurationIconType.add\nfirstDurationStr: 00:50\nfirstStartDateTimeStr: 12-07-2022 16:00\nfirstEndDateTimeStr: 12-07-2022 16:50\nsecondDurationIconType: DurationIconType.subtract\nsecondDurationStr: 02:00\nsecondStartDateTimeStr: 12-07-2022 16:00\nsecondEndDateTimeStr: 12-07-2022 14:00\nthirdDurationIconType: DurationIconType.subtract\nthirdDurationStr: 00:00\nthirdStartDateTimeStr: 12-07-2022 16:00\nthirdEndDateTimeStr: 12-07-2022 16:00\npreferredDurationsItemsStr: ');
+              'addDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\n'
+            'firstDurationIconType: DurationIconType.add\n'
+            'firstDurationStr: 00:50\n'
+            'firstStartDateTimeStr: 12-07-2022 16:00\n'
+            'firstEndDateTimeStr: 12-07-2022 16:50\n'
+            'firstEndDateTimeCheckBox: false\n'
+            'secondDurationIconType: DurationIconType.subtract\n'
+            'secondDurationStr: 02:00\n'
+            'secondStartDateTimeStr: 12-07-2022 16:00\n'
+            'secondEndDateTimeStr: 12-07-2022 14:00\n'
+            'secondEndDateTimeCheckBox: false\n'
+            'thirdDurationIconType: DurationIconType.subtract\n'
+            'thirdDurationStr: 00:00\n'
+            'thirdStartDateTimeStr: 12-07-2022 16:00\n'
+            'thirdEndDateTimeStr: 12-07-2022 16:00\n'
+            'thirdEndDateTimeCheckBox: false\n'
+            'preferredDurationsItemsStr: ');
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
