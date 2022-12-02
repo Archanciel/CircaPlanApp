@@ -834,6 +834,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               _transferDataViewModel
                                   .updateAndSaveTransferData();
 
+                              // _updateTransferDataMap(); not solving undo bug
+
                               setState(() {
                                 _divideFirstBySecond = value!;
                               });
