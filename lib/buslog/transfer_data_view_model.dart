@@ -207,6 +207,8 @@ class TransferDataViewModel {
         _transferDataMap!['firstDurationStr'];
     addDurationToDateTimeData.firstAddDurationEndDateTimeStr =
         _transferDataMap!['firstEndDateTimeStr'];
+    addDurationToDateTimeData.firstEndDateTimeCheckbox =
+        _transferDataMap!['firstEndDateTimeCheckbox'];
 
     int secondDurationSign = _transferDataMap!['secondDurationSign'];
 
@@ -219,6 +221,8 @@ class TransferDataViewModel {
         _transferDataMap!['secondDurationStr'];
     addDurationToDateTimeData.secondAddDurationEndDateTimeStr =
         _transferDataMap!['secondEndDateTimeStr'];
+    addDurationToDateTimeData.secondEndDateTimeCheckbox =
+        _transferDataMap!['secondEndDateTimeCheckbox'];
 
     int thirdDurationSign = _transferDataMap!['thirdDurationSign'];
 
@@ -231,6 +235,8 @@ class TransferDataViewModel {
         _transferDataMap!['thirdDurationStr'];
     addDurationToDateTimeData.thirdAddDurationEndDateTimeStr =
         _transferDataMap!['thirdEndDateTimeStr'];
+    addDurationToDateTimeData.thirdEndDateTimeCheckbox =
+        _transferDataMap!['thirdEndDateTimeCheckbox'];
 
     addDurationToDateTimeData.preferredDurationsItemsStr =
         _transferDataMap!['preferredDurationsItemsStr'];
@@ -393,6 +399,8 @@ class TransferDataViewModel {
           addDurationToDateTimeData.firstAddDurationDurationStr;
       _transferDataMap!["firstEndDateTimeStr"] =
           addDurationToDateTimeData.firstAddDurationEndDateTimeStr;
+      _transferDataMap!["firstEndDateTimeCheckbox"] =
+          addDurationToDateTimeData.firstEndDateTimeCheckbox;
 
       if (addDurationToDateTimeData.secondDurationIconType ==
           DurationIconType.add) {
@@ -413,6 +421,8 @@ class TransferDataViewModel {
           addDurationToDateTimeData.secondAddDurationDurationStr;
       _transferDataMap!["secondEndDateTimeStr"] =
           addDurationToDateTimeData.secondAddDurationEndDateTimeStr;
+      _transferDataMap!["secondEndDateTimeCheckbox"] =
+          addDurationToDateTimeData.secondEndDateTimeCheckbox;
 
       if (addDurationToDateTimeData.thirdDurationIconType ==
           DurationIconType.add) {
@@ -433,6 +443,8 @@ class TransferDataViewModel {
           addDurationToDateTimeData.thirdAddDurationDurationStr;
       _transferDataMap!["thirdEndDateTimeStr"] =
           addDurationToDateTimeData.thirdAddDurationEndDateTimeStr;
+      _transferDataMap!["thirdEndDateTimeCheckbox"] =
+          addDurationToDateTimeData.thirdEndDateTimeCheckbox;
 
       _transferDataMap!['preferredDurationsItemsStr'] =
           addDurationToDateTimeData.preferredDurationsItemsStr;

@@ -224,6 +224,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _dateTimePickerController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
             englishFormatDateTimeStr: _endDateTimeStr)!;
+    _editableDateTime.isEndDateTimeFixed =
+        _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] ?? false;
 
     setState(() {});
   }
@@ -493,6 +495,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _transferDataMap['${_widgetPrefix}DurationStr'] = _durationStr;
     _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
+    // _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] = _editableDateTime.isEndDateTimeFixed;
 
     setState(() {});
 

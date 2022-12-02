@@ -58,6 +58,11 @@ class EditableDateTime extends StatefulWidget {
   bool get isEndDateTimeFixed {
     return stateInstance._twoButtonsWidget.isEndDateTimeFixed;
   }
+
+  set isEndDateTimeFixed(bool value) {
+    stateInstance._twoButtonsWidget.isEndDateTimeFixed = value;
+    stateInstance._twoButtonsWidget.stateInstance.setState(() {});
+  }
 }
 
 class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
@@ -292,11 +297,18 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final void Function(String, BuildContext?) handleSelectedDateTimeStr;
 
   final bool displayFixDateTimeCheckbox;
-  bool isEndDateTimeFixed; // stores the end date time fix checkbox value
+  bool isEndDateTimeFixed =
+      false; // stores the end date time fix checkbox value
   final String widgetPrefix;
 
+  late final _TwoButtonsWidgetState stateInstance;
+
   @override
-  State<TwoButtonsWidget> createState() => _TwoButtonsWidgetState();
+  State<TwoButtonsWidget> createState() {
+    stateInstance = _TwoButtonsWidgetState();
+
+    return stateInstance;
+  }
 }
 
 class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
@@ -319,6 +331,8 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                     onChanged: (value) {
                       widget.transferDataMap[
                           '${widget.widgetPrefix}EndDateTimeCheckbox'] = value;
+                      widget.transferDataViewModel.updateAndSaveTransferData();
+
                       setState(() {
                         widget.isEndDateTimeFixed = value!;
                       });

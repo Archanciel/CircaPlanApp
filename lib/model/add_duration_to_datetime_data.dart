@@ -56,21 +56,20 @@ class AddDurationToDateTimeData extends ScreenData {
   set firstAddDurationEndDateTimeStr(String value) =>
       attributes['firstAddDurationEndDateTimeStr'] = value;
 
-  /// Checking if the firstEndDateTimeCheckBox == null
+  /// Checking if the firstEndDateTimeCheckbox == null
   /// solves the problem of starting the app on a physical device
   /// where the json files do not yet have the
-  /// 'firstEndDateTimeCheckBox' entry !
-  bool get firstEndDateTimeCheckBox {
-    String? firstEndDateTimeCheckBox =
-        attributes['firstEndDateTimeCheckBox'];
+  /// 'firstEndDateTimeCheckbox' entry !
+  bool get firstEndDateTimeCheckbox {
+    String? firstEndDateTimeCheckbox = attributes['firstEndDateTimeCheckbox'];
 
-    firstEndDateTimeCheckBox ??= 'false';
+    firstEndDateTimeCheckbox ??= 'false';
 
-    return firstEndDateTimeCheckBox == 'true';
+    return firstEndDateTimeCheckbox == 'true';
   }
 
-  set firstEndDateTimeCheckBox(bool value) =>
-      attributes['firstEndDateTimeCheckBox'] = value.toString();
+  set firstEndDateTimeCheckbox(bool value) =>
+      attributes['firstEndDateTimeCheckbox'] = value.toString();
 
   DurationIconType get secondDurationIconType =>
       attributes['secondDurationIconType'];
@@ -92,21 +91,20 @@ class AddDurationToDateTimeData extends ScreenData {
   set secondAddDurationEndDateTimeStr(String value) =>
       attributes['secondAddDurationEndDateTimeStr'] = value;
 
-  /// Checking if the secondEndDateTimeCheckBox == null
+  /// Checking if the secondEndDateTimeCheckbox == null
   /// solves the problem of starting the app on a physical device
   /// where the json files do not yet have the
-  /// 'secondEndDateTimeCheckBox' entry !
-  bool get secondEndDateTimeCheckBox {
-    String? secondEndDateTimeCheckBox =
-        attributes['secondEndDateTimeCheckBox'];
+  /// 'secondEndDateTimeCheckbox' entry !
+  bool get secondEndDateTimeCheckbox {
+    String? secondEndDateTimeCheckbox = attributes['secondEndDateTimeCheckbox'];
 
-    secondEndDateTimeCheckBox ??= 'false';
+    secondEndDateTimeCheckbox ??= 'false';
 
-    return secondEndDateTimeCheckBox == 'true';
+    return secondEndDateTimeCheckbox == 'true';
   }
 
-  set secondEndDateTimeCheckBox(bool value) =>
-      attributes['secondEndDateTimeCheckBox'] = value.toString();
+  set secondEndDateTimeCheckbox(bool value) =>
+      attributes['secondEndDateTimeCheckbox'] = value.toString();
 
   DurationIconType get thirdDurationIconType =>
       attributes['thirdDurationIconType'];
@@ -128,21 +126,20 @@ class AddDurationToDateTimeData extends ScreenData {
   set thirdAddDurationEndDateTimeStr(String value) =>
       attributes['thirdAddDurationEndDateTimeStr'] = value;
 
-  /// Checking if the thirdEndDateTimeCheckBox == null
+  /// Checking if the thirdEndDateTimeCheckbox == null
   /// solves the problem of starting the app on a physical device
   /// where the json files do not yet have the
-  /// 'thirdEndDateTimeCheckBox' entry !
-  bool get thirdEndDateTimeCheckBox {
-    String? thirdEndDateTimeCheckBox =
-        attributes['thirdEndDateTimeCheckBox'];
+  /// 'thirdEndDateTimeCheckbox' entry !
+  bool get thirdEndDateTimeCheckbox {
+    String? thirdEndDateTimeCheckbox = attributes['thirdEndDateTimeCheckbox'];
 
-    thirdEndDateTimeCheckBox ??= 'false';
+    thirdEndDateTimeCheckbox ??= 'false';
 
-    return thirdEndDateTimeCheckBox == 'true';
+    return thirdEndDateTimeCheckbox == 'true';
   }
 
-  set thirdEndDateTimeCheckBox(bool value) =>
-      attributes['thirdEndDateTimeCheckBox'] = value.toString();
+  set thirdEndDateTimeCheckbox(bool value) =>
+      attributes['thirdEndDateTimeCheckbox'] = value.toString();
 
   String get preferredDurationsItemsStr {
     // ?? '' solves the case when the preferredDurationsItemsStr
@@ -164,7 +161,7 @@ class AddDurationToDateTimeData extends ScreenData {
     if (firstDurationIconType == null) {
       return '';
     } else {
-      return 'addDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationIconType: $firstDurationIconType\nfirstDurationStr: $firstAddDurationDurationStr\nfirstStartDateTimeStr: $firstAddDurationStartDateTimeStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nfirstEndDateTimeCheckBox: $firstEndDateTimeCheckBox\nsecondDurationIconType: $secondDurationIconType\nsecondDurationStr: $secondAddDurationDurationStr\nsecondStartDateTimeStr: $secondAddDurationStartDateTimeStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr\nsecondEndDateTimeCheckBox: $secondEndDateTimeCheckBox\nthirdDurationIconType: $thirdDurationIconType\nthirdDurationStr: $thirdAddDurationDurationStr\nthirdStartDateTimeStr: $thirdAddDurationStartDateTimeStr\nthirdEndDateTimeStr: $thirdAddDurationEndDateTimeStr\nthirdEndDateTimeCheckBox: $thirdEndDateTimeCheckBox\npreferredDurationsItemsStr: $preferredDurationsItemsStr';
+      return 'addDurationStartDateTimeStr: $addDurationStartDateTimeStr\nfirstDurationIconType: $firstDurationIconType\nfirstDurationStr: $firstAddDurationDurationStr\nfirstStartDateTimeStr: $firstAddDurationStartDateTimeStr\nfirstEndDateTimeStr: $firstAddDurationEndDateTimeStr\nfirstEndDateTimeCheckbox: $firstEndDateTimeCheckbox\nsecondDurationIconType: $secondDurationIconType\nsecondDurationStr: $secondAddDurationDurationStr\nsecondStartDateTimeStr: $secondAddDurationStartDateTimeStr\nsecondEndDateTimeStr: $secondAddDurationEndDateTimeStr\nsecondEndDateTimeCheckbox: $secondEndDateTimeCheckbox\nthirdDurationIconType: $thirdDurationIconType\nthirdDurationStr: $thirdAddDurationDurationStr\nthirdStartDateTimeStr: $thirdAddDurationStartDateTimeStr\nthirdEndDateTimeStr: $thirdAddDurationEndDateTimeStr\nthirdEndDateTimeCheckbox: $thirdEndDateTimeCheckbox\npreferredDurationsItemsStr: $preferredDurationsItemsStr';
     }
   }
 }
