@@ -282,6 +282,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
     _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
     _durationTextFieldController.text = _durationStr;
+    _editableDateTime.isEndDateTimeFixed = false;
 
     _updateTransferDataMap(); // must be executed before calling
     // the next DurationDateTimeEditor widget reset method in
@@ -495,7 +496,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _transferDataMap['${_widgetPrefix}DurationStr'] = _durationStr;
     _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
-    // _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] = _editableDateTime.isEndDateTimeFixed;
+    _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] = _editableDateTime.isEndDateTimeFixed;
 
     setState(() {});
 
