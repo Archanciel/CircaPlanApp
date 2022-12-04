@@ -265,20 +265,20 @@ mixin ScreenMixin {
       return;
     }
 
-    String? lastCreatedJsonFileNameDateTimeStr =
-        selMenuDateTimeItemData.stylableItemValueStr;
     List<PopupMenuEntry<String>> itemLst = [];
     int i = 0;
 
     for (String selectableStrItem in selectableStrItemLst) {
       PopupMenuItem<String> popupMenuItem;
 
-      if (selectableStrItem == lastCreatedJsonFileNameDateTimeStr) {
+      if (selectableStrItem == selMenuDateTimeItemData.stylableItemValueStr) {
         popupMenuItem = PopupMenuItem<String>(
           value: i.toString(),
           child: Text(
             selectableStrItem,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
       } else {
