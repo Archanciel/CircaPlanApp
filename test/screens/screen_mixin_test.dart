@@ -79,12 +79,13 @@ Future<void> main() async {
       test(
         'several and double date time str most late first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapRegular,
-            mostRecentFirst: false,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapRegular,
+                mostRecentFirst: false,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:12',
             '01-06-2022 23:42',
@@ -101,12 +102,13 @@ Future<void> main() async {
       test(
         'several and double date time str most recent first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapRegular,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapRegular,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '03-06-2022 06:42',
             '03-06-2022 03:42',
@@ -137,12 +139,13 @@ Future<void> main() async {
       test(
         'no date time str most late first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapTimeOnly,
-            mostRecentFirst: false,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapTimeOnly,
+                mostRecentFirst: false,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -152,12 +155,13 @@ Future<void> main() async {
       test(
         'no date time str most recent first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapTimeOnly,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapTimeOnly,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -169,12 +173,13 @@ Future<void> main() async {
       test(
         'map empty most late first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapEmpty,
-            mostRecentFirst: false,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapEmpty,
+                mostRecentFirst: false,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -184,12 +189,13 @@ Future<void> main() async {
       test(
         'map empty most recent first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapEmpty,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapEmpty,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -204,12 +210,13 @@ Future<void> main() async {
       test(
         'one date time str most late first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapOneDateTime,
-            mostRecentFirst: false,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapOneDateTime,
+                mostRecentFirst: false,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
           ];
@@ -221,12 +228,13 @@ Future<void> main() async {
       test(
         'one date time str most recent first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapOneDateTime,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapOneDateTime,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
           ];
@@ -280,12 +288,13 @@ Future<void> main() async {
       test(
         'several and double date time str most late first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapInvalidFormat,
-            mostRecentFirst: false,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapInvalidFormat,
+                mostRecentFirst: false,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
             '03-06-2022 03:42',
@@ -299,12 +308,13 @@ Future<void> main() async {
       test(
         'several and double date time str most recent first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapInvalidFormat,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapInvalidFormat,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '03-06-2022 06:42',
             '03-06-2022 03:42',
@@ -329,12 +339,13 @@ Future<void> main() async {
       test(
         'english (DateTimePicker field) and french format date time str most late first',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapEnglishAndFrenchDateTime,
-            mostRecentFirst: false,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+                mostRecentFirst: false,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
             '02-06-2022 23:42',
@@ -349,12 +360,13 @@ Future<void> main() async {
       test(
         'english (DateTimePicker field) and french format date time str most recent first. App dir contains no yyyy-MM.dd HH.mm.json file.',
         () {
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapEnglishAndFrenchDateTime,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '11-06-2022 22:30',
             '10-06-2022 00:30',
@@ -373,12 +385,13 @@ Future<void> main() async {
               filePathNameStr:
                   transferDataViewModel.transferDataJsonFilePathName,
               newFileNameStr: '2022-08-07 02.30.json');
-          List<String> actualDateTimeStrLst =
-              testClassWithSreenMixin.buildSortedAppDateTimeStrList(
-            transferDataMap: transferDataMapEnglishAndFrenchDateTime,
-            mostRecentFirst: true,
-            transferDataViewModel: transferDataViewModel,
-          ).appDateTimeStrLst;
+          List<String> actualDateTimeStrLst = testClassWithSreenMixin
+              .buildSortedAppDateTimeStrList(
+                transferDataMap: transferDataMapEnglishAndFrenchDateTime,
+                mostRecentFirst: true,
+                transferDataViewModel: transferDataViewModel,
+              )
+              .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
             '07-08-2022 02:30',
             '11-06-2022 22:30',

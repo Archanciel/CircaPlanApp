@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
-import '../model/sel_menu_date_time_item_data.dart';
+import '../model/menu_item_data.dart';
 
 /// This mixin class contains UI parameters used by all the Circa
 /// application screens. Since it is not possible to define a
@@ -102,7 +102,7 @@ mixin ScreenMixin {
   /// Extract date time string's from the passed transfer data map and return
   /// them in a list sorted with most recent first or last according to the
   /// mostRecentFirst bool paraneter.
-  SelMenuDateTimeItemData buildSortedAppDateTimeStrList({
+  MenuItemData buildSortedAppDateTimeStrList({
     required Map<String, dynamic> transferDataMap,
     required bool mostRecentFirst,
     required TransferDataViewModel transferDataViewModel,
@@ -170,9 +170,9 @@ mixin ScreenMixin {
     List<String> sortedAppDateTimeStrLst =
         appDateTimeLst.map((e) => frenchDateTimeFormat.format(e)).toList();
 
-    return SelMenuDateTimeItemData(
-      appDateTimeStrLst: sortedAppDateTimeStrLst,
-      lastCreatedJsonFileNameDateTimeStr: lastCreatedJsonFileNameDateTimeStr,
+    return MenuItemData(
+      itemDataStrLst: sortedAppDateTimeStrLst,
+      stylableItemValueStr: lastCreatedJsonFileNameDateTimeStr,
     );
   }
 
@@ -245,7 +245,7 @@ mixin ScreenMixin {
   /// Method called by the 'Sel' and 1st screen heart buttons.
   void displayPopupMenu({
     required BuildContext context,
-    required SelMenuDateTimeItemData selMenuDateTimeItemData,
+    required MenuItemData selMenuDateTimeItemData,
     required RelativeRect posRectangleLTRB,
     required void Function(
       String,
@@ -259,15 +259,14 @@ mixin ScreenMixin {
     )
         handleSelectedItemFunction,
   }) {
-    List<String> selectableStrItemLst =
-        selMenuDateTimeItemData.appDateTimeStrLst;
+    List<String> selectableStrItemLst = selMenuDateTimeItemData.itemDataStrLst;
 
     if (selectableStrItemLst.isEmpty) {
       return;
     }
 
     String? lastCreatedJsonFileNameDateTimeStr =
-        selMenuDateTimeItemData.lastCreatedJsonFileNameDateTimeStr;
+        selMenuDateTimeItemData.stylableItemValueStr;
     List<PopupMenuEntry<String>> itemLst = [];
     int i = 0;
 

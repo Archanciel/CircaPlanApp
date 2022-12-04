@@ -11,7 +11,7 @@ import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import '../model/sel_menu_date_time_item_data.dart';
+import '../model/menu_item_data.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -351,19 +351,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  SelMenuDateTimeItemData _buildPreferredDurationsPopupMenuItemLst() {
-    SelMenuDateTimeItemData selMenuDateTimeItemData =
-        _buildPreferredDurationsItemLst();
+  MenuItemData _buildPreferredDurationsPopupMenuItemLst() {
+    MenuItemData selMenuDateTimeItemData = _buildPreferredDurationsItemLst();
     List<String> durationSelectableItemLst =
-        selMenuDateTimeItemData.appDateTimeStrLst;
+        selMenuDateTimeItemData.itemDataStrLst;
 
     // and adding 'Add' and 'Delete' items
 
     durationSelectableItemLst.add("Add");
     durationSelectableItemLst.add("Delete");
 
-    return SelMenuDateTimeItemData(
-      appDateTimeStrLst: durationSelectableItemLst,
+    return MenuItemData(
+      itemDataStrLst: durationSelectableItemLst,
     );
   }
 
@@ -417,7 +416,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return currentPreferredDurationsItemMap;
   }
 
-  SelMenuDateTimeItemData _buildPreferredDurationsItemLst() {
+  MenuItemData _buildPreferredDurationsItemLst() {
     List<String> durationSelectableItemLst = [];
     Map<String, dynamic> durationDefinedItemMap =
         _getPreferredDurationsItemMap();
@@ -432,8 +431,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     durationSelectableItemLst.sort();
 
-    return SelMenuDateTimeItemData(
-      appDateTimeStrLst: durationSelectableItemLst,
+    return MenuItemData(
+      itemDataStrLst: durationSelectableItemLst,
     );
   }
 

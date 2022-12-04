@@ -4,7 +4,7 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import '../buslog/transfer_data_view_model.dart';
-import '../model/sel_menu_date_time_item_data.dart';
+import '../model/menu_item_data.dart';
 import 'manually_selectable_text_field.dart';
 
 /// Widget enabling to select and compute a duration percent value.
@@ -329,8 +329,8 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
 
                 widget.displayPopupMenu(
                   context: context,
-                  selMenuDateTimeItemData: SelMenuDateTimeItemData(
-                    appDateTimeStrLst: selectableStrItemLst,
+                  selMenuDateTimeItemData: MenuItemData(
+                    itemDataStrLst: selectableStrItemLst,
                   ),
                   posRectangleLTRB: RelativeRect.fromLTRB(
                     1.0,
