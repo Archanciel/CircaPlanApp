@@ -1,10 +1,10 @@
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 
+import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-
 import '../buslog/transfer_data_view_model.dart';
+import '../model/sel_menu_date_time_item_data.dart';
 import 'manually_selectable_text_field.dart';
 
 /// Widget enabling to select and compute a duration percent value.
@@ -312,22 +312,26 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
                   backgroundColor: widget.appElevatedButtonBackgroundColor,
                   shape: widget.appElevatedButtonRoundedShape),
               onPressed: () {
+                List<String> selectableStrItemLst = [
+                  '40 %',
+                  '45 %',
+                  '50 %',
+                  '55 %',
+                  '60 %',
+                  '65 %',
+                  '70 %',
+                  '75 %',
+                  '80 %',
+                  '85 %',
+                  '90 %',
+                  '95 %',
+                ];
+
                 widget.displayPopupMenu(
                   context: context,
-                  selectableStrItemLst: [
-                    '40 %',
-                    '45 %',
-                    '50 %',
-                    '55 %',
-                    '60 %',
-                    '65 %',
-                    '70 %',
-                    '75 %',
-                    '80 %',
-                    '85 %',
-                    '90 %',
-                    '95 %',
-                  ],
+                  selMenuDateTimeItemData: SelMenuDateTimeItemData(
+                    appDateTimeStrLst: selectableStrItemLst,
+                  ),
                   posRectangleLTRB: RelativeRect.fromLTRB(
                     1.0,
                     widget.topSelMenuPosition,

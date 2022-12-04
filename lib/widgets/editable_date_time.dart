@@ -368,7 +368,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
           onPressed: () {
             widget.displayPopupMenu(
               context: context,
-              selectableStrItemLst: widget.buildSortedAppDateTimeStrList(
+              selMenuDateTimeItemData: widget.buildSortedAppDateTimeStrList(
                   transferDataMap: widget.transferDataMap,
                   mostRecentFirst: true,
                   transferDataViewModel: widget.transferDataViewModel),

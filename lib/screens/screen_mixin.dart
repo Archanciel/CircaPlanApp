@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
+import '../model/sel_menu_date_time_item_data.dart';
 
 /// This mixin class contains UI parameters used by all the Circa
 /// application screens. Since it is not possible to define a
@@ -101,13 +102,13 @@ mixin ScreenMixin {
   /// Extract date time string's from the passed transfer data map and return
   /// them in a list sorted with most recent first or last according to the
   /// mostRecentFirst bool paraneter.
-  List<String> buildSortedAppDateTimeStrList({
+  SelMenuDateTimeItemData buildSortedAppDateTimeStrList({
     required Map<String, dynamic> transferDataMap,
     required bool mostRecentFirst,
     required TransferDataViewModel transferDataViewModel,
   }) {
     final DateTime twoThousandDateTime = DateTime(2000);
-    List<DateTime> appDateTimeList = [];
+    List<DateTime> appDateTimeLst = [];
 
     for (var value in transferDataMap.values) {
       if (value is String && isDateTimeStrValid(value)) {
@@ -123,7 +124,7 @@ mixin ScreenMixin {
           dateTime = englishDateTimeFormat.parse(value);
         }
 
-        addDateTimeIfNotExist(appDateTimeList, dateTime);
+        addDateTimeIfNotExist(appDateTimeLst, dateTime);
       } else if (value is List<String> &&
           value.isNotEmpty &&
           isDateTimeStrValid(value.first)) {
@@ -135,7 +136,7 @@ mixin ScreenMixin {
           continue;
         }
 
-        addDateTimeIfNotExist(appDateTimeList, dateTime);
+        addDateTimeIfNotExist(appDateTimeLst, dateTime);
       }
     }
 
@@ -149,27 +150,30 @@ mixin ScreenMixin {
       final DateTime lastCreatedJsonFileNameDateTime =
           parseDateTime(lastCreatedJsonFileNameDateTimeStr)!;
 
-      if (!appDateTimeList.contains(lastCreatedJsonFileNameDateTime)) {
-        appDateTimeList.add(lastCreatedJsonFileNameDateTime);
+      if (!appDateTimeLst.contains(lastCreatedJsonFileNameDateTime)) {
+        appDateTimeLst.add(lastCreatedJsonFileNameDateTime);
       }
     }
 
     // now sorting the DateTime list
 
     if (mostRecentFirst) {
-      appDateTimeList.sort((a, b) =>
+      appDateTimeLst.sort((a, b) =>
           b.millisecondsSinceEpoch.compareTo(a.millisecondsSinceEpoch));
     } else {
-      appDateTimeList.sort((a, b) =>
+      appDateTimeLst.sort((a, b) =>
           a.millisecondsSinceEpoch.compareTo(b.millisecondsSinceEpoch));
     }
 
     // and converting it to String list
 
     List<String> sortedAppDateTimeStrLst =
-        appDateTimeList.map((e) => frenchDateTimeFormat.format(e)).toList();
+        appDateTimeLst.map((e) => frenchDateTimeFormat.format(e)).toList();
 
-    return sortedAppDateTimeStrLst;
+    return SelMenuDateTimeItemData(
+      appDateTimeStrLst: sortedAppDateTimeStrLst,
+      lastCreatedJsonFileNameDateTimeStr: lastCreatedJsonFileNameDateTimeStr,
+    );
   }
 
   bool isDateTimeStrValid(String dateTimeStr) {
@@ -241,7 +245,7 @@ mixin ScreenMixin {
   /// Method called by the 'Sel' and 1st screen heart buttons.
   void displayPopupMenu({
     required BuildContext context,
-    required List<String> selectableStrItemLst,
+    required SelMenuDateTimeItemData selMenuDateTimeItemData,
     required RelativeRect posRectangleLTRB,
     required void Function(
       String,
@@ -255,19 +259,37 @@ mixin ScreenMixin {
     )
         handleSelectedItemFunction,
   }) {
+    List<String> selectableStrItemLst =
+        selMenuDateTimeItemData.appDateTimeStrLst;
+
     if (selectableStrItemLst.isEmpty) {
       return;
     }
 
+    String? lastCreatedJsonFileNameDateTimeStr =
+        selMenuDateTimeItemData.lastCreatedJsonFileNameDateTimeStr;
     List<PopupMenuEntry<String>> itemLst = [];
     int i = 0;
 
     for (String selectableStrItem in selectableStrItemLst) {
-      itemLst.add(
-        PopupMenuItem<String>(
+      PopupMenuItem<String> popupMenuItem;
+
+      if (selectableStrItem == lastCreatedJsonFileNameDateTimeStr) {
+        popupMenuItem = PopupMenuItem<String>(
+          value: i.toString(),
+          child: Text(
+            selectableStrItem,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        );
+      } else {
+        popupMenuItem = PopupMenuItem<String>(
           value: i.toString(),
           child: Text(selectableStrItem),
-        ),
+        );
+      }
+      itemLst.add(
+        popupMenuItem,
       );
       i++;
     }

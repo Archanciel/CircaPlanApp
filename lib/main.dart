@@ -14,6 +14,7 @@ import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
+import 'model/sel_menu_date_time_item_data.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -371,7 +372,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
                         displayPopupMenu(
                           context: context,
-                          selectableStrItemLst: nonNullablefileNameLst,
+                          selMenuDateTimeItemData: SelMenuDateTimeItemData(
+                            appDateTimeStrLst: nonNullablefileNameLst,
+                          ),
                           posRectangleLTRB: const RelativeRect.fromLTRB(
                             1.0,
                             130.0,

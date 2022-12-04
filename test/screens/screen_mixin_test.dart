@@ -84,7 +84,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapRegular,
             mostRecentFirst: false,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:12',
             '01-06-2022 23:42',
@@ -106,7 +106,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapRegular,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '03-06-2022 06:42',
             '03-06-2022 03:42',
@@ -142,7 +142,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapTimeOnly,
             mostRecentFirst: false,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -157,7 +157,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapTimeOnly,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -174,7 +174,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapEmpty,
             mostRecentFirst: false,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -189,7 +189,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapEmpty,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -209,7 +209,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapOneDateTime,
             mostRecentFirst: false,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
           ];
@@ -226,7 +226,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapOneDateTime,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
           ];
@@ -285,7 +285,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapInvalidFormat,
             mostRecentFirst: false,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
             '03-06-2022 03:42',
@@ -304,7 +304,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapInvalidFormat,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '03-06-2022 06:42',
             '03-06-2022 03:42',
@@ -334,7 +334,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapEnglishAndFrenchDateTime,
             mostRecentFirst: false,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '01-06-2022 23:42',
             '02-06-2022 23:42',
@@ -354,7 +354,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapEnglishAndFrenchDateTime,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '11-06-2022 22:30',
             '10-06-2022 00:30',
@@ -378,7 +378,7 @@ Future<void> main() async {
             transferDataMap: transferDataMapEnglishAndFrenchDateTime,
             mostRecentFirst: true,
             transferDataViewModel: transferDataViewModel,
-          );
+          ).appDateTimeStrLst;
           List<String> expectedDateTimeStrLst = [
             '07-08-2022 02:30',
             '11-06-2022 22:30',

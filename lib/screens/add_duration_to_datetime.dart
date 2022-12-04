@@ -11,6 +11,7 @@ import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
+import '../model/sel_menu_date_time_item_data.dart';
 
 class AddDurationToDateTime extends StatefulWidget {
   final ScreenNavigTransData _screenNavigTransData;
@@ -277,7 +278,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     if (selectedDurationItem == 'Delete') {
       displayPopupMenu(
         context: context,
-        selectableStrItemLst: _buildPreferredDurationsItemLst(),
+        selMenuDateTimeItemData: _buildPreferredDurationsItemLst(),
         posRectangleLTRB: const RelativeRect.fromLTRB(
           1.0,
           125.0,
@@ -350,15 +351,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  List<String> _buildPreferredDurationsPopupMenuItemLst() {
-    List<String> durationSelectableItemLst = _buildPreferredDurationsItemLst();
+  SelMenuDateTimeItemData _buildPreferredDurationsPopupMenuItemLst() {
+    SelMenuDateTimeItemData selMenuDateTimeItemData =
+        _buildPreferredDurationsItemLst();
+    List<String> durationSelectableItemLst =
+        selMenuDateTimeItemData.appDateTimeStrLst;
 
     // and adding 'Add' and 'Delete' items
 
     durationSelectableItemLst.add("Add");
     durationSelectableItemLst.add("Delete");
 
-    return durationSelectableItemLst;
+    return SelMenuDateTimeItemData(
+      appDateTimeStrLst: durationSelectableItemLst,
+    );
   }
 
   /// Returns null if preferredDurationsItemName is '', example
@@ -411,7 +417,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     return currentPreferredDurationsItemMap;
   }
 
-  List<String> _buildPreferredDurationsItemLst() {
+  SelMenuDateTimeItemData _buildPreferredDurationsItemLst() {
     List<String> durationSelectableItemLst = [];
     Map<String, dynamic> durationDefinedItemMap =
         _getPreferredDurationsItemMap();
@@ -426,7 +432,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     durationSelectableItemLst.sort();
 
-    return durationSelectableItemLst;
+    return SelMenuDateTimeItemData(
+      appDateTimeStrLst: durationSelectableItemLst,
+    );
   }
 
   @override
@@ -512,7 +520,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     onPressed: () {
                       displayPopupMenu(
                         context: context,
-                        selectableStrItemLst:
+                        selMenuDateTimeItemData:
                             _buildPreferredDurationsPopupMenuItemLst(),
                         posRectangleLTRB: const RelativeRect.fromLTRB(
                           1.0,
