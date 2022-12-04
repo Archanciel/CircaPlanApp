@@ -246,8 +246,8 @@ mixin ScreenMixin {
     required void Function(
       String,
       BuildContext?, // useful if selecting a popup menu item
-      //                liken Add in 1st screen favorite
-      //                durations popup menu opens a new popup
+      //                like Add in 1st screen favorite
+      //                durations popup menu which opens a new popup
       //                menu, action which need passing the
       //                BuildContext. This argument is not always
       //                required, reason why it is positiponal
