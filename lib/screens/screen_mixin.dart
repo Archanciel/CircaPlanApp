@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import '../model/menu_item_data.dart';
+import '../widgets/circadian_flutter_toast.dart';
 
 /// This mixin class contains UI parameters used by all the Circa
 /// application screens. Since it is not possible to define a
@@ -352,9 +352,7 @@ mixin ScreenMixin {
 
     await Clipboard.setData(ClipboardData(text: selectedText));
 
-    final CircadianSnackBar snackBar =
-        CircadianSnackBar(message: '$selectedText copied to clipboard');
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    CircadianFlutterToast.showToast(message: '$selectedText copied to clipboard');
   }
 
   /// Method returning the sorted list of app data
