@@ -341,7 +341,7 @@ class TransferDataViewModel {
     timeCalculatorData.timeCalculatorResultSecondPercentStr =
         _transferDataMap!['resultSecondPercentStr'] ?? '';
     timeCalculatorData.timeCalculatorDivideFirstBySecondCheckBox =
-        _transferDataMap!['divideFirstBySecondCheckBox'] ?? false;
+        _transferDataMap!['divideFirstBySecondCheckBox'];
   }
 
   /// Loads the application screen data json file and sets
