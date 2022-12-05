@@ -560,9 +560,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         //     up duration value and
         //  2/ to set the current 3rd screen previous day wake
         //     up duration value
-
-        String secondScreenEnglishFormatStartDateTimeStr =
-            _transferDataMap['dtDiffStartDateTimeStr'];
+        String secondScreenEnglishFormatStartDateTimeStr = _transferDataMap[
+                'dtDiffStartDateTimeStr'] ??
+            secondScreenEnglishFormatEndDateTimeStr; // the secondScreenEnglishFormatStartDateTimeStr
+        //                     is null in the case the app is started with the
+        //                     circadian dir containing no circadian.json file
 
         DateTime secondScreenStartDateTime = ScreenMixin.englishDateTimeFormat
             .parse(secondScreenEnglishFormatStartDateTimeStr);
