@@ -352,7 +352,15 @@ mixin ScreenMixin {
 
     await Clipboard.setData(ClipboardData(text: selectedText));
 
-    CircadianFlutterToast.showToast(message: '$selectedText copied to clipboard');
+    CircadianFlutterToast.showToast(
+        message: '$selectedText to clipboard');
+
+    // does not compile, even after setting android/app/
+    // build.gradle compileSdkVersion 31
+    // if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+    //   CircadianFlutterToast.showToast(
+    //       message: '$selectedText copied to clipboard');
+    // }
   }
 
   /// Method returning the sorted list of app data

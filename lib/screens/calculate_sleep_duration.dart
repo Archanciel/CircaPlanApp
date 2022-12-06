@@ -1160,6 +1160,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     await Clipboard.setData(ClipboardData(text: extractedHHmm));
 
-    CircadianFlutterToast.showToast(message: '$extractedHHmm copied to clipboard');
+    CircadianFlutterToast.showToast(message: '$extractedHHmm to clipboard');
   }
 }
