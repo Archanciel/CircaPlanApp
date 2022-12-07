@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
@@ -132,6 +133,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataViewModel: _transferDataViewModel,
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
+      position: ToastGravity.TOP,
     );
   }
 
@@ -468,6 +470,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                         _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
+                    position: ToastGravity.TOP,
                   ),
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,

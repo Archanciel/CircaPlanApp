@@ -8,6 +8,7 @@ import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../constants.dart';
 import '../widgets/circadian_flutter_toast.dart';
 import '../widgets/circadian_snackbar.dart';
@@ -862,6 +863,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             context: context,
                             controller: _newDateTimeController,
                             extractHHmmFromCopiedStr: true,
+                            position: ToastGravity.TOP,
                           );
                           _transferDataMap['clipboardLastAction'] =
                               ClipboardLastAction.copy;
@@ -894,6 +896,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               dateTimeTitle: 'Last date time',
                               dateTimeController: _lastDateTimeController,
                               transferDataMap: _transferDataMap,
+                              position: ToastGravity.TOP,
                             ),
                           ),
                         ),
@@ -918,6 +921,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               dateTimeTitle: 'Previous date time',
                               dateTimeController: _previousDateTimeController,
                               transferDataMap: _transferDataMap,
+                              position: ToastGravity.TOP,
                             ),
                           ),
                         ),
@@ -937,6 +941,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     prevDayTotalPercentController:
                         _currentSleepPrevDayTotalPercentController,
                     prevDayTotalController: _prevDayTotalController,
+                    position: ToastGravity.TOP,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Wake up duration',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constants.dart';
 
@@ -14,6 +15,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
   final String _previousDayPercentTitle;
   final TextEditingController _prevDayTotalPercentController;
   final TextEditingController _prevDayTotalController;
+  final ToastGravity position;
 
   ResultDuration({
     required String resultDurationTitle,
@@ -23,6 +25,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
     String previousDayPercentTitle = '',
     required TextEditingController prevDayTotalPercentController,
     required TextEditingController prevDayTotalController,
+    this.position = ToastGravity.CENTER,
   })  : _resultDurationTitle = resultDurationTitle,
         _transferDataMap = transferDataMap,
         _resultDurationController = resultDurationController,
@@ -93,7 +96,8 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
-                          controller: _resultDurationController);
+                          controller: _resultDurationController,
+                          position: position);
                       _transferDataMap['clipboardLastAction'] =
                           ClipboardLastAction.copy;
                     },
@@ -130,7 +134,8 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
-                          controller: _resultDurationPercentController);
+                          controller: _resultDurationPercentController,
+                          position: position);
                       _transferDataMap['clipboardLastAction'] =
                           ClipboardLastAction.copy;
                     },
@@ -170,7 +175,8 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
-                          controller: _prevDayTotalPercentController);
+                          controller: _prevDayTotalPercentController,
+                          position: position);
                       _transferDataMap['clipboardLastAction'] =
                           ClipboardLastAction.copy;
                     },
@@ -207,7 +213,8 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
                     onDoubleTap: () async {
                       await copyToClipboard(
                           context: context,
-                          controller: _prevDayTotalController);
+                          controller: _prevDayTotalController,
+                          position: position);
                     },
                   ),
                 ),

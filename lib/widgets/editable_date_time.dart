@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../buslog/transfer_data_view_model.dart';
 
 class EditableDateTime extends StatefulWidget {
@@ -20,6 +21,7 @@ class EditableDateTime extends StatefulWidget {
     required this.handleSelectedDateTimeStrFunction,
     this.displayFixDateTimeCheckbox = false,
     this.widgetPrefix = '',
+    this.position = ToastGravity.CENTER,
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
       dateTimePickerController.text =
@@ -40,6 +42,7 @@ class EditableDateTime extends StatefulWidget {
 
   final bool displayFixDateTimeCheckbox;
   final String widgetPrefix;
+  final ToastGravity position;
 
   /// This variable enables the EditableDurationPercent
   /// instance to execute the callSetState() method of its
@@ -253,6 +256,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                       context: context,
                       controller: widget.dateTimePickerController,
                       extractHHmmFromCopiedStr: true,
+                      position: widget.position,
                     );
                     widget.transferDataMap['clipboardLastAction'] =
                         ClipboardLastAction.copy;

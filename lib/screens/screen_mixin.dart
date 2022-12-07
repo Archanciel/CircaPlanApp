@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import 'package:circa_plan/constants.dart';
@@ -320,10 +321,12 @@ mixin ScreenMixin {
     );
   }
 
-  Future<void> copyToClipboard(
-      {required BuildContext context,
-      required TextEditingController controller,
-      bool extractHHmmFromCopiedStr = false}) async {
+  Future<void> copyToClipboard({
+    required BuildContext context,
+    required TextEditingController controller,
+    bool extractHHmmFromCopiedStr = false,
+    ToastGravity position = ToastGravity.CENTER,
+  }) async {
     // avoiding selecting the value copied to clipboard !
     // controller.selection = TextSelection(
     //     baseOffset: 0, extentOffset: controller.value.text.length);
@@ -353,7 +356,9 @@ mixin ScreenMixin {
     await Clipboard.setData(ClipboardData(text: selectedText));
 
     CircadianFlutterToast.showToast(
-        message: '$selectedText to clipboard');
+      message: '$selectedText to clipboard',
+      position: position,
+    );
 
     // does not compile, even after setting android/app/
     // build.gradle compileSdkVersion 31 6 déc 22
@@ -432,6 +437,7 @@ mixin ScreenMixin {
         handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
+    ToastGravity position = ToastGravity.CENTER,
   }) async {
     var clipboardLastAction = transferDataMap['clipboardLastAction'];
 
@@ -445,7 +451,10 @@ mixin ScreenMixin {
       handleDataChangeFunction(textEditingController.text);
     } else {
       await copyToClipboard(
-          context: context, controller: textEditingController);
+        context: context,
+        controller: textEditingController,
+        position: position,
+      );
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
     }
@@ -469,6 +478,7 @@ mixin ScreenMixin {
         handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
+    ToastGravity position = ToastGravity.CENTER,
   }) async {
     var clipboardLastAction = transferDataMap['clipboardLastAction'];
 
@@ -482,7 +492,10 @@ mixin ScreenMixin {
       handleDataChangeFunction(context, textEditingController.text);
     } else {
       await copyToClipboard(
-          context: context, controller: textEditingController);
+        context: context,
+        controller: textEditingController,
+        position: position,
+      );
 
       transferDataMap['clipboardLastAction'] = ClipboardLastAction.copy;
     }

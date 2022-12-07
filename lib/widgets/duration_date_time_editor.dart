@@ -7,6 +7,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/utility.dart';
 import 'manually_selectable_text_field.dart';
@@ -32,6 +33,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   final Map<String, dynamic> _transferDataMap;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
   final bool saveTransferDataIfModified; // is true only for last widget
+  final ToastGravity position;
 
   /// saveTransferDataIfModified is set to true only for
   /// the last DurationDateTimeEditor widget in order to
@@ -46,6 +48,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     required Map<String, dynamic> transferDataMap,
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     this.saveTransferDataIfModified = false,
+    this.position = ToastGravity.CENTER,
   })  : _widgetPrefix = widgetPrefix,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
@@ -243,6 +246,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       textFieldController: _durationTextFieldController,
       handleTextFieldChangeFunction: handleDurationChange,
       widgetPrefixOrName: _widgetPrefix,
+      position: widget.position,
     );
 
     _editableDateTime = EditableDateTime(
@@ -255,6 +259,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       transferDataViewModel: widget.transferDataViewModel,
       displayFixDateTimeCheckbox: true,
       widgetPrefix: _widgetPrefix,
+      position: widget.position,
     );
   }
 

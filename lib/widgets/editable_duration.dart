@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 /// Widget enabling to add or subtract a HH:MM value to the
 /// duration field.
@@ -15,6 +16,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
       _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
   final Map<String, dynamic> _transferDataMap;
+  final ToastGravity position;
 
   EditableDuration({
     required String dateTimeTitle,
@@ -26,6 +28,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
     required void Function(BuildContext context, String dialogTimeStr)
         addPosOrNegTimeToCurrentDurationFunction,
     required Function deleteAddedTimeDurationFunction,
+    this.position = ToastGravity.CENTER,
   })  : _dateTimeTitle = dateTimeTitle,
         _transferDataMap = transferDataMap,
         _durationTextFieldController = durationTextFieldController,
@@ -86,7 +89,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                       onDoubleTap: () async {
                         await copyToClipboard(
                             context: context,
-                            controller: _durationTextFieldController);
+                            controller: _durationTextFieldController,
+                            position: position);
                         _transferDataMap['clipboardLastAction'] =
                             ClipboardLastAction.copy;
                       },
@@ -128,7 +132,8 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
                             textEditingController: _addTimeTextFieldController,
                             transferDataMap: _transferDataMap,
                             handleDataChangeFunction:
-                                _addPosOrNegTimeToCurrentDuration);
+                                _addPosOrNegTimeToCurrentDuration,
+                            position: position);
                       },
                     ),
                   ),
