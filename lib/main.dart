@@ -370,10 +370,17 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                                 transferDataViewModel: transferDataViewModel,
                                 addCircadianJsonFileNameToLst: true);
 
+                        String? lastCreatedJsonFileNameStr;
+
+                        if (nonNullablefileNameLst.length >= 2) {
+                          lastCreatedJsonFileNameStr = nonNullablefileNameLst[1];
+                        }
+
                         displayPopupMenu(
                           context: context,
                           selMenuDateTimeItemData: MenuItemData(
                             itemDataStrLst: nonNullablefileNameLst,
+                            stylableItemValueStr: lastCreatedJsonFileNameStr,
                           ),
                           posRectangleLTRB: const RelativeRect.fromLTRB(
                             1.0,
