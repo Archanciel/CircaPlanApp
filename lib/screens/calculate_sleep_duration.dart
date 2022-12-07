@@ -9,6 +9,7 @@ import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import '../constants.dart';
+import '../widgets/circadian_flutter_toast.dart';
 import '../widgets/circadian_snackbar.dart';
 import '../widgets/non_editable_date_time.dart';
 
@@ -1159,9 +1160,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     await Clipboard.setData(ClipboardData(text: extractedHHmm));
 
-    final CircadianSnackBar snackBar =
-        CircadianSnackBar(message: '$extractedHHmm copied to clipboard');
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    CircadianFlutterToast.showToast(message: '$extractedHHmm to clipboard');
   }
 }
