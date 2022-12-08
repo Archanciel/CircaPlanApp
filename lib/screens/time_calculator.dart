@@ -519,6 +519,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           ),
                         ),
                         ElevatedButton(
+                          key: Key('timeCalculatorNowButton'),
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),

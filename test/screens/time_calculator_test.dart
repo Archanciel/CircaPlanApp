@@ -1,3 +1,4 @@
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -340,6 +341,54 @@ Future<void> main() async {
           TextEditingController resultTextFieldController =
               resultTextField.controller!;
           expect(resultTextFieldController.text, '200.00 %');
+        },
+      );
+    },
+  );
+  group(
+    'First dd:hh:mm time setting',
+    () {
+      testWidgets(
+        'Now button test',
+        (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: TimeCalculator(
+                  transferDataViewModel: transferDataViewModel,
+                  screenNavigTransData: screenNavigTransData,
+                ),
+              ),
+            ),
+          );
+
+          final Finder firstTimeTextFieldFinder =
+              find.byKey(const Key('firstTimeTextField'));
+          final Finder nowButtonFinder =
+              find.byKey(const Key('timeCalculatorNowButton'));
+
+          await tester.enterText(firstTimeTextFieldFinder, '30');
+
+          // typing on Done button
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+          await tester.pumpAndSettle();
+
+          ManuallySelectableTextField firstTimeTextField =
+              tester.firstWidget(firstTimeTextFieldFinder)
+                  as ManuallySelectableTextField;
+          TextEditingController firstTimeTextFieldController =
+              firstTimeTextField.controller!;
+          expect(firstTimeTextFieldController.text, '00:30:00');
+          await tester.tap(nowButtonFinder);
+          await tester.pumpAndSettle();
+
+          String now_dd_hh_mm_str =
+              '00:${ScreenMixin.HHmmDateTimeFormat.format(DateTime.now())}';
+
+          firstTimeTextField = tester.firstWidget(firstTimeTextFieldFinder)
+              as ManuallySelectableTextField;
+          firstTimeTextFieldController = firstTimeTextField.controller!;
+          expect(firstTimeTextFieldController.text, now_dd_hh_mm_str);
         },
       );
     },
