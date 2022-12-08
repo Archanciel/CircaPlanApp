@@ -506,7 +506,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 115,
+                          width: 90,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               textSelectionTheme: TextSelectionThemeData(
