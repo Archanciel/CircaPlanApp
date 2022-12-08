@@ -500,17 +500,41 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     style: labelTextStyle,
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
 //                                            compliant with current value 6 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        textSelectionTheme: TextSelectionThemeData(
-                          selectionColor: selectionColor,
-                          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 115,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              textSelectionTheme: TextSelectionThemeData(
+                                selectionColor: selectionColor,
+                                cursorColor:
+                                    ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              ),
+                            ),
+                            child: manuallySelectableFirstTimeTextField,
+                          ),
                         ),
-                      ),
-                      child: manuallySelectableFirstTimeTextField,
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: appElevatedButtonBackgroundColor,
+                              shape: appElevatedButtonRoundedShape),
+                          onPressed: () {
+                            String dateTimeStr =
+                                ScreenMixin.HHmmDateTimeFormat.format(DateTime.now());
+                            _handleFirstTimeTextFieldChange(dateTimeStr);
+                          },
+                          child: const Text(
+                            'Now',
+                            style: TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(
@@ -524,7 +548,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // val 4 is
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 4 is
 //                                            compliant with current value 6 of
 //                                            APP_LABEL_TO_TEXT_DISTANCE
                     child: Theme(

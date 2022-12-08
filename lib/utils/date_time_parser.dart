@@ -18,7 +18,7 @@ extension FormattedDayHourMinute on Duration {
     return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}";
   }
 
-  /// returns the Duration formatted as HH:mm
+  /// returns the Duration formatted as dd:HH:mm
   String ddHHmm() {
     int durationMinute = inMinutes.remainder(60);
     String minusStr = '';

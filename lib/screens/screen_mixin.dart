@@ -50,6 +50,7 @@ mixin ScreenMixin {
 
   static DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
   static DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
+  static DateFormat HHmmDateTimeFormat = DateFormat("HH:mm");
   static const double APP_ROUNDED_BOARDER_RADIUS = 18.0;
   static const double BUTTON_SEP_WIDTH = 10.0;
   static const double CHECKBOX_WIDTH_HEIGHT = 35.0;
