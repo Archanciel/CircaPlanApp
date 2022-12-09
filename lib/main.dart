@@ -228,7 +228,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ),
       CalculateSleepDuration(
         screenNavigTransData: _screenNavigTransData,
-        transferDataViewModel: transferDataViewModel,
+        transferDataViewModel: transferDataViewModel
       ),
       TimeCalculator(
         screenNavigTransData: _screenNavigTransData,

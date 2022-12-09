@@ -37,7 +37,10 @@ class CalculateSleepDuration extends StatefulWidget {
 // Create a corresponding State class.
 // This class holds data related to the form.
 class _CalculateSleepDurationState extends State<CalculateSleepDuration>
-    with ScreenMixin {
+    with ScreenMixin, WidgetsBindingObserver {
+  // adding the WidgetsBindingObserver as mixin enables
+  // _CalculateSleepDurationState to be added as observer to WidgetsBinding
+  // in overridden method initState {
   _CalculateSleepDurationState(
       {required Map<String, dynamic> transferDataMap,
       required TransferDataViewModel transferDataViewModel})
@@ -260,6 +263,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void initState() {
     super.initState();
 
+    // adding the instance as observer to WidgetsBinding.instance causes the
+    // overridden method didChangeAppLifecycleState() to be called each time
+    // the current screen is displayed and the app status is resumed.
+    WidgetsBinding.instance.addObserver(this);
+
+    _handleMedics();
+
     // The reference to the stateful widget State instance stored in
     // the transfer data map is used in the
     // _MainAppState.handleSelectedLoadFileName() method executed after
@@ -268,6 +278,34 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _transferDataMap['currentScreenStateInstance'] = this;
 
     _updateWidgets();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed) {
+      // the case if the screen is active and the app is reselected
+      _handleMedics();
+    }
+  }
+
+  /// Called each time the CalculateSleepDuration screen is selected or the
+  /// app showing the CalculateSleepDuration screen resumes.
+  void _handleMedics() {
+    DateTime now = DateTime.now();
+    int medicHour = 6;
+    DateTime todayMedicTime =
+        DateTime(now.year, now.month, now.day, medicHour, 0);
+    DateTime todayMedicTimePlusFourHours =
+        DateTime(now.year, now.month, now.day, medicHour + 4, 0);
+
+    if (now.isAfter(todayMedicTime) &&
+        now.isBefore(todayMedicTimePlusFourHours)) {
+      CircadianFlutterToast.showToast(
+          message: "MEDICS AT $medicHour:00 !",
+          backgroundColor: ScreenMixin.APP_WARNING_COLOR);
+    }
   }
 
   void _updateWidgets({bool isAfterLoading = false}) {

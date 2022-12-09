@@ -33,6 +33,7 @@ mixin ScreenMixin {
       500: APP_LIGHTER_YELLOW_COLOR,
     },
   );
+  static Color APP_WARNING_COLOR = Colors.red.shade900;
   static double app_computed_vertical_top_margin = 0;
   static const String APP_TITLE = 'Circadian Calculator';
   static const Color APP_TEXT_AND_ICON_COLOR = Colors.white;
