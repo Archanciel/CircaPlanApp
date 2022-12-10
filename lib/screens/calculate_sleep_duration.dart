@@ -114,6 +114,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _prevDayTotalController;
   late TextEditingController _prevDayEmptyTotalController;
 
+  TextEditingController _medicAlarmController = TextEditingController();
+
   String _buildSleepWakeUpHistoryStr() {
     List<String>? sleepTimeHistoryLst =
         _transferDataMap['calcSlDurSleepTimeStrHistory'];
@@ -293,19 +295,31 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Called each time the CalculateSleepDuration screen is selected or the
   /// app showing the CalculateSleepDuration screen resumes.
   void _handleMedics() {
-    DateTime now = DateTime.now();
     int medicHour = 6;
+
+    if (_isAlarmToDisplay(medicHour)) {
+      _medicAlarmController.text = "MEDICS AT $medicHour O'CLOCK ?";
+      CircadianFlutterToast.showToast(
+          message: "MEDICS AT $medicHour:00 !",
+          backgroundColor: ScreenMixin.APP_WARNING_COLOR);
+    }
+  }
+
+  bool _isAlarmToDisplay(int medicHour) {
+    DateTime now = DateTime.now();
     DateTime todayMedicTime =
         DateTime(now.year, now.month, now.day, medicHour - 1, 0);
     DateTime todayMedicTimePlusFourHours =
         DateTime(now.year, now.month, now.day, medicHour + 4, 0);
 
-    if (now.isAfter(todayMedicTime) &&
-        now.isBefore(todayMedicTimePlusFourHours)) {
-      CircadianFlutterToast.showToast(
-          message: "MEDICS AT $medicHour:00 !",
-          backgroundColor: ScreenMixin.APP_WARNING_COLOR);
+    bool result = now.isAfter(todayMedicTime) &&
+        now.isBefore(todayMedicTimePlusFourHours);
+
+    if (result) {
+      _medicAlarmController.text = "MEDICS AT $medicHour O'CLOCK ?";
     }
+
+    return result;
   }
 
   void _updateWidgets({bool isAfterLoading = false}) {
@@ -372,6 +386,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         TextEditingController(text: _prevDayTotalWakeUpStr);
     _prevDayEmptyTotalController = TextEditingController(text: '');
 
+    _medicAlarmController = TextEditingController(text: '');
+
     _sleepTimeStrHistory =
         _transferDataMap['calcSlDurSleepTimeStrHistory'] ?? [];
     _wakeUpTimeStrHistory =
@@ -403,6 +419,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _currentTotalPrevDayTotalPercentController.dispose();
     _prevDayTotalController.dispose();
     _prevDayEmptyTotalController.dispose();
+    _medicAlarmController.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
@@ -549,6 +566,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalPrevDayTotalPercentStr;
     _prevDayTotalController.text = _prevDayTotalWakeUpStr;
     _prevDayEmptyTotalController.text = '';
+    _medicAlarmController.text = '';
 
     setState(() {});
 
@@ -1023,7 +1041,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ),
                       child: TextField(
                         maxLines: null, // must be set, otherwise multi lines
-                        //                                         not displayed
+                        //                 not displayed
                         style: valueTextStyle,
                         decoration:
                             const InputDecoration.collapsed(hintText: ''),
@@ -1048,6 +1066,109 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
+            _isAlarmToDisplay(6)
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 460,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              SizedBox(
+                                width: 250,
+                                child: TextField(
+                                  minLines: 1,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: valueTextStyle,
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            ScreenMixin
+                                                .APP_ROUNDED_BOARDER_RADIUS),
+                                      ),
+                                      filled: true,
+                                      fillColor: ScreenMixin.APP_WARNING_COLOR),
+                                  controller: _medicAlarmController,
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 30,
+                              ),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        appWarningButtonBackgroundColor,
+                                    shape: appElevatedButtonRoundedShape),
+                                onPressed: () {
+                                  String nowStr = DateTime.now().toString();
+                                  // widget.handleDateTimeModification(nowStr);
+                                },
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: ScreenMixin.BUTTON_SEP_WIDTH,
+                              ),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        appWarningButtonBackgroundColor,
+                                    shape: appElevatedButtonRoundedShape),
+                                onPressed: () {
+                                  displayPopupMenu(
+                                    context: context,
+                                    selMenuDateTimeItemData:
+                                        buildSortedAppDateTimeStrList(
+                                            transferDataMap: _transferDataMap,
+                                            mostRecentFirst: true,
+                                            transferDataViewModel:
+                                                _transferDataViewModel),
+                                    posRectangleLTRB:
+                                        const RelativeRect.fromLTRB(
+                                      1.0,
+                                      300,
+                                      0.0,
+                                      0.0,
+                                    ),
+                                    handleSelectedItemFunction:
+                                        (String s, BuildContext? context) {},
+                                  );
+                                },
+                                child: const Text(
+                                  'Set time',
+                                  style: TextStyle(
+                                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
             SizedBox(
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
