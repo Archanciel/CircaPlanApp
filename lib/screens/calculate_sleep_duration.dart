@@ -296,7 +296,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     DateTime now = DateTime.now();
     int medicHour = 6;
     DateTime todayMedicTime =
-        DateTime(now.year, now.month, now.day, medicHour, 0);
+        DateTime(now.year, now.month, now.day, medicHour - 1, 0);
     DateTime todayMedicTimePlusFourHours =
         DateTime(now.year, now.month, now.day, medicHour + 4, 0);
 
