@@ -1066,7 +1066,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isAlarmToDisplay(16)
+            _isAlarmToDisplay(6)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
