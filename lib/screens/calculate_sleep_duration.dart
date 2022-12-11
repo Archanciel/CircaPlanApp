@@ -1066,7 +1066,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isAlarmToDisplay(6)
+            _isAlarmToDisplay(16)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1108,7 +1108,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const SizedBox(
-                                width: 20,
+                                width: 25,
                               ),
                               ElevatedButton(
                                 style: ButtonStyle(
