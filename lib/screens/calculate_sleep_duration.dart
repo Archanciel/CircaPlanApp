@@ -1090,15 +1090,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                   textAlign: TextAlign.center,
                                   style: alarmTextStyle,
                                   decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            ScreenMixin
-                                                .APP_ROUNDED_BOARDER_RADIUS),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        ScreenMixin.APP_ROUNDED_BOARDER_RADIUS,
                                       ),
-                                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                                      isDense: true,
-                                      filled: true,
-                                      fillColor: ScreenMixin.APP_WARNING_COLOR),
+                                    ),
+                                    // required for contentPadding to be fully
+                                    // applied
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                    ),
+                                    filled: true,
+                                    fillColor: ScreenMixin.APP_WARNING_COLOR,
+                                  ),
                                   controller: _medicAlarmController,
                                 ),
                               )
