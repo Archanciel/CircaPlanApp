@@ -33,7 +33,7 @@ mixin ScreenMixin {
       500: APP_LIGHTER_YELLOW_COLOR,
     },
   );
-  static Color APP_WARNING_COLOR = Colors.red.shade700;
+  static Color APP_WARNING_COLOR = Colors.red.shade900;
   final MaterialStateProperty<Color?> appWarningButtonBackgroundColor =
       MaterialStateProperty.all(ScreenMixin.APP_WARNING_COLOR);
   static MaterialColor APP_MATERIAL_APP_WARNING_COLOR = MaterialColor(
@@ -81,6 +81,11 @@ mixin ScreenMixin {
     color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
     fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT,
+  );
+  final TextStyle alarmTextStyle = const TextStyle(
+    color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
   );
 
   static void setAppVerticalTopMargin(double screenHeight) {

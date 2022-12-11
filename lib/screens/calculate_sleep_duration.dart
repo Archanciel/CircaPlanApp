@@ -1071,7 +1071,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(
-                        height: 460,
+                        height: 430,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1083,18 +1083,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 width: 20,
                               ),
                               SizedBox(
-                                width: 250,
+                                width: 200,
                                 child: TextField(
                                   minLines: 1,
                                   maxLines: 2,
                                   textAlign: TextAlign.center,
-                                  style: valueTextStyle,
+                                  style: alarmTextStyle,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             ScreenMixin
                                                 .APP_ROUNDED_BOARDER_RADIUS),
                                       ),
+                                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                                      isDense: true,
                                       filled: true,
                                       fillColor: ScreenMixin.APP_WARNING_COLOR),
                                   controller: _medicAlarmController,
@@ -1102,14 +1104,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const SizedBox(
-                                width: 30,
+                                width: 20,
                               ),
                               ElevatedButton(
                                 style: ButtonStyle(
