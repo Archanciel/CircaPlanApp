@@ -259,7 +259,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   /// Method called when clicking on a menu item.
-  Future<void> _handlePreferedDurationMenuItemSelection(
+  Future<void> _handlePreferredDurationMenuItemSelection(
       String selectedDurationItem,
       [BuildContext? context]) async {
     if (context == null) {
@@ -531,7 +531,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           0.0,
                         ),
                         handleSelectedItemFunction:
-                            _handlePreferedDurationMenuItemSelection,
+                            _handlePreferredDurationMenuItemSelection,
                       );
                     },
                     icon: Icon(

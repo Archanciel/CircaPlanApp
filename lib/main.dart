@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -147,6 +148,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
+  final TextEditingController _medicAlarmTimeController =
+      TextEditingController();
 
   /// Method called after choosing a file to load in the load
   /// file popup menu opened after selecting the Load ... AppBar
@@ -227,9 +230,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         transferDataViewModel: transferDataViewModel,
       ),
       CalculateSleepDuration(
-        screenNavigTransData: _screenNavigTransData,
-        transferDataViewModel: transferDataViewModel
-      ),
+          screenNavigTransData: _screenNavigTransData,
+          transferDataViewModel: transferDataViewModel),
       TimeCalculator(
         screenNavigTransData: _screenNavigTransData,
         transferDataViewModel: transferDataViewModel,
@@ -373,7 +375,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         String? lastCreatedJsonFileNameStr;
 
                         if (nonNullablefileNameLst.length >= 2) {
-                          lastCreatedJsonFileNameStr = nonNullablefileNameLst[1];
+                          lastCreatedJsonFileNameStr =
+                              nonNullablefileNameLst[1];
                         }
 
                         displayPopupMenu(
@@ -410,7 +413,17 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     case 5:
                       {
                         // Settings selected ...
-                        print("Settings is selected.");
+                        displayPopupMenu(
+                          context: context,
+                          selMenuDateTimeItemData: _buildSettingsMenuItemLst(),
+                          posRectangleLTRB: const RelativeRect.fromLTRB(
+                            1.0,
+                            130.0,
+                            0.0,
+                            0.0,
+                          ),
+                          handleSelectedItemFunction: _applySettibgsMenuItem,
+                        );
 
                         break;
                       }
@@ -513,5 +526,83 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     } else {
       return '';
     }
+  }
+
+  MenuItemData _buildSettingsMenuItemLst() {
+    return MenuItemData(itemDataStrLst: ['Set medic time']);
+  }
+
+  Future<void> _applySettibgsMenuItem(
+      String menuItemStr, BuildContext? context) async {
+    if (context == null) {
+      return;
+    }
+
+    switch (menuItemStr) {
+      case 'Set medic time':
+        {
+          await _openSetMedicTimeDialog(context: context);
+          String medicHHmmTime = Utility.formatStringDuration(
+              durationStr: _medicAlarmTimeController.text);
+          _screenNavigTransData.transferDataMap['alarmMedicHour'] = medicHHmmTime;
+          widget.transferDataViewModel.updateAndSaveTransferData();
+          break;
+        }
+      default:
+        break;
+    }
+  }
+
+  Future<String?> _openSetMedicTimeDialog({required BuildContext context}) {
+    void submit() {
+      Navigator.of(context).pop();
+    }
+
+    return showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Set medics time'),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          //position
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                const SizedBox(
+                  width: 100,
+                  child: Text('HH:mm time'),
+                ),
+                SizedBox(
+                  width: 180,
+                  child: TextField(
+                    autofocus: true,
+                    style: const TextStyle(
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                    decoration: const InputDecoration(hintText: ''),
+                    controller: _medicAlarmTimeController,
+                    onSubmitted: (_) => submit(),
+                    keyboardType: TextInputType.datetime,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              _medicAlarmTimeController.text = '';
+            },
+            child: const Text('Clear'),
+          ),
+          TextButton(
+            onPressed: submit,
+            child: const Text('Set time'),
+          ),
+        ],
+      ),
+    );
   }
 }
