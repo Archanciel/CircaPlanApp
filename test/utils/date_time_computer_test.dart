@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:circa_plan/buslog/date_time_computer.dart';
+import 'package:circa_plan/constants.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test/test.dart';
 
@@ -10,7 +12,7 @@ void main() {
   initializeDateFormatting(localName);
 
   group(
-    'DateTimeComputer.addDurationsToDateTime()',
+    'addDurationsToDateTime()',
     () {
       test(
         'valid date time string + 1 durations',
@@ -152,6 +154,50 @@ void main() {
           );
 
           expect(dateTime, DateTime(2022, 4, 23, 18, 0));
+        },
+      );
+    },
+  );
+  group(
+    'computeTodayOrTomorrowAlarmFrenchDateTimeStr',
+    () {
+      test(
+        'alarm date time after now',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('${oneHourLater.hour}:${oneHourLater.minute}'),
+              '${now.day}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}');
+        },
+      );
+      test(
+        'alarm date time before now',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('${oneHourLater.hour}:${oneHourLater.minute}'),
+              '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}');
+        },
+      );
+      test(
+        'alarm date time equal now',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('${oneHourLater.hour}:${oneHourLater.minute}'),
+              '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}');
         },
       );
     },

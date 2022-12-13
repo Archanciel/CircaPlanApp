@@ -1,5 +1,8 @@
 import 'package:intl/intl.dart';
 
+import '../constants.dart';
+import '../utils/date_time_parser.dart';
+
 class DateTimeComputer {
   static final NumberFormat _minuteFormatter = NumberFormat('00');
 
@@ -55,6 +58,33 @@ class DateTimeComputer {
     }
 
     return "${wakeUpDuration.inHours}:${DateTimeComputer._minuteFormatter.format(wakeUpDurationMinute)}";
+  }
+
+  /// if the passed alarmHHmmTimeStr is after the current time, the returned
+  /// dd-MM-yyyy HH:mm is still today.
+  /// Else, i.e. if is before the current time or equal to the current time,
+  /// it is on tomorrow.
+  static String computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+      String alarmHHmmTimeStr) {
+    Duration alarmHHmmTimeDuration =
+        DateTimeParser.parseHHmmDuration(alarmHHmmTimeStr)!;
+    DateTime now = DateTime.now();
+    int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
+    DateTime todayAlarmDateTime = DateTime(
+        now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
+
+    String alarmFrenchDateTimeStr;
+
+    if (todayAlarmDateTime.isAfter(now)) {
+      alarmFrenchDateTimeStr = frenchDateTimeFormat.format(todayAlarmDateTime);
+    } else {
+      DateTime tomorrowAlarmDateTime = DateTime(now.year, now.month,
+          now.day + 1, 0, alarmHHmmTimeDurationInMinutes, 0);
+      alarmFrenchDateTimeStr =
+          frenchDateTimeFormat.format(tomorrowAlarmDateTime);
+    }
+
+    return alarmFrenchDateTimeStr;
   }
 }
 

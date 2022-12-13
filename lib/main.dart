@@ -544,7 +544,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           await _openSetMedicTimeDialog(context: context);
           String medicHHmmTime = Utility.formatStringDuration(
               durationStr: _medicAlarmTimeController.text);
-          _screenNavigTransData.transferDataMap['alarmMedicHour'] = medicHHmmTime;
+          _screenNavigTransData.transferDataMap['alarmMedicDateTime'] =
+              medicHHmmTime;
           widget.transferDataViewModel.updateAndSaveTransferData();
           break;
         }

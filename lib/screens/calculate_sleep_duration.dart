@@ -11,7 +11,6 @@ import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../constants.dart';
 import '../widgets/circadian_flutter_toast.dart';
-import '../widgets/circadian_snackbar.dart';
 import '../widgets/non_editable_date_time.dart';
 
 class CalculateSleepDuration extends StatefulWidget {
@@ -295,7 +294,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Called each time the CalculateSleepDuration screen is selected or the
   /// app showing the CalculateSleepDuration screen resumes.
   void _handleMedics() {
-    String medicHHmmTimeStr = _transferDataMap['alarmMedicHour'] ?? '14:35';
+    String medicHHmmTimeStr = _transferDataMap['alarmMedicDateTime'] ?? '14:35';
 
     if (_isAlarmToDisplay(medicHHmmTimeStr)) {
       CircadianFlutterToast.showToast(
@@ -304,7 +303,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
-  bool _isAlarmToDisplay(String medicHHmmTimeStr) {
+  bool _isAlarmToDisplay(String? medicHHmmTimeStr) {
+    if (medicHHmmTimeStr == null) {
+      // the case if the transferDataMap does not contain
+      // the 'alarmMedicDateTime' entry.
+      return false;
+    }
+
     Duration medicHHmmTimeDuration =
         DateTimeParser.parseHHmmDuration(medicHHmmTimeStr)!;
     DateTime now = DateTime.now();
@@ -324,14 +329,37 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     return result;
   }
 
+  String computeTodayOrTomorrowAlarmFrenchDateTimeStr(String alarmHHmmTimeStr) {
+    Duration alarmHHmmTimeDuration =
+        DateTimeParser.parseHHmmDuration(alarmHHmmTimeStr)!;
+    DateTime now = DateTime.now();
+    int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
+    DateTime todayAlarmDateTime = DateTime(
+        now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
+
+    String alarmFrenchDateTimeStr;
+
+    if (todayAlarmDateTime.isAfter(now)) {
+      alarmFrenchDateTimeStr =
+          ScreenMixin.frenchDateTimeFormat.format(todayAlarmDateTime);
+    } else {
+    DateTime tomorrowAlarmDateTime = DateTime(
+        now.year, now.month, now.day + 1, 0, alarmHHmmTimeDurationInMinutes, 0);
+      alarmFrenchDateTimeStr =
+          ScreenMixin.frenchDateTimeFormat.format(tomorrowAlarmDateTime);
+    }
+
+    return alarmFrenchDateTimeStr;
+  }
+
   void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
-    String nowDateTimeStr =
+    String nowFrenchDateTimeStr =
         ScreenMixin.frenchDateTimeFormat.format(dateTimeNow);
 
     _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newDateTimeStr =
-        _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowDateTimeStr;
+        _transferDataMap['calcSlDurNewDateTimeStr'] ?? nowFrenchDateTimeStr;
     _newDateTimeController = TextEditingController(text: _newDateTimeStr);
     _lastDateTimeStr = _transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '';
     _lastDateTimeController = TextEditingController(text: _lastDateTimeStr);
@@ -1067,7 +1095,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isAlarmToDisplay(_transferDataMap['alarmMedicHour'])
+            _isAlarmToDisplay(_transferDataMap['alarmMedicDateTime'])
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1127,41 +1155,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 },
                                 child: const Text(
                                   'Yes',
-                                  style: TextStyle(
-                                    fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: ScreenMixin.BUTTON_SEP_WIDTH,
-                              ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        appWarningButtonBackgroundColor,
-                                    shape: appElevatedButtonRoundedShape),
-                                onPressed: () {
-                                  displayPopupMenu(
-                                    context: context,
-                                    selMenuDateTimeItemData:
-                                        buildSortedAppDateTimeStrList(
-                                            transferDataMap: _transferDataMap,
-                                            mostRecentFirst: true,
-                                            transferDataViewModel:
-                                                _transferDataViewModel),
-                                    posRectangleLTRB:
-                                        const RelativeRect.fromLTRB(
-                                      1.0,
-                                      300,
-                                      0.0,
-                                      0.0,
-                                    ),
-                                    handleSelectedItemFunction:
-                                        (String s, BuildContext? context) {},
-                                  );
-                                },
-                                child: const Text(
-                                  'Set time',
                                   style: TextStyle(
                                     fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                                   ),
