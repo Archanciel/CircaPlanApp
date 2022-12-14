@@ -1,3 +1,4 @@
+import 'package:circa_plan/utils/utility.dart';
 import 'package:intl/intl.dart';
 
 import '../constants.dart';
@@ -60,14 +61,20 @@ class DateTimeComputer {
     return "${wakeUpDuration.inHours}:${DateTimeComputer._minuteFormatter.format(wakeUpDurationMinute)}";
   }
 
-  /// if the passed alarmHHmmTimeStr is after the current time, the returned
-  /// dd-MM-yyyy HH:mm is still today.
-  /// Else, i.e. if is before the current time or equal to the current time,
-  /// it is on tomorrow.
+  /// If the passed alarmHHmmTimeStr is after the current time, the
+  /// returned dd-MM-yyyy HH:mm is still today.
+  ///
+  /// Else, i.e. if the passed alarmHHmmTimeStr is before the current
+  /// time or is equal to the current time, then the returned
+  /// dd-MM-yyyy HH:mm it is on tomorrow.
   static String computeTodayOrTomorrowAlarmFrenchDateTimeStr(
       String alarmHHmmTimeStr) {
+    // solving the problem caused by 1 digit hour and/or minute
+    // alarmHHmmTimeStr
+    String formattedAlarmHHmmTimeStr =
+        Utility.formatStringDuration(durationStr: alarmHHmmTimeStr);
     Duration alarmHHmmTimeDuration =
-        DateTimeParser.parseHHmmDuration(alarmHHmmTimeStr)!;
+        DateTimeParser.parseHHmmDuration(formattedAlarmHHmmTimeStr)!;
     DateTime now = DateTime.now();
     int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
     DateTime todayAlarmDateTime = DateTime(

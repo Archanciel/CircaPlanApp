@@ -188,6 +188,58 @@ void main() {
         },
       );
       test(
+        'alarm date time before now with 1 digit hour 2 digits minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('2:23'),
+              '${now.day + 1}-${now.month}-${now.year} 02:23');
+        },
+      );
+      test(
+        'alarm date time before now with 1 digit hour 1 digit minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('2:3'),
+              '${now.day + 1}-${now.month}-${now.year} 02:30');
+        },
+      );
+      test(
+        'alarm date time before now with 2 digits hour starting with 0 and 1 digit minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('02:3'),
+              '${now.day + 1}-${now.month}-${now.year} 02:30');
+        },
+      );
+      test(
+        'alarm date time before now with 2 digits hour 1 digit minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('10:3'),
+              '${now.day + 1}-${now.month}-${now.year} 10:30');
+        },
+      );
+      test(
         'alarm date time equal now',
         () {
           DateTime now = DateTime.now();
