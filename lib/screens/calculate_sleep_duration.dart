@@ -333,7 +333,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (result) {
       _medicAlarmController.text =
-          "MEDICS AT ${medicFrenchDateTimeStr.split(' ').last} O'CLOCK ?";
+          "MEDICS AT ${medicFrenchDateTimeStr.split(' ').last} ?";
     }
 
     return result;

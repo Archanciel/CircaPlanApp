@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -552,6 +551,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           // TODO remove print
           print(_screenNavigTransData.transferDataMap['alarmMedicDateTime']);
           widget.transferDataViewModel.updateAndSaveTransferData();
+
+          // TODO callSetState
+          // only if current screen is 3rd screen !
+          _screenNavigTransData.transferDataMap['currentScreenStateInstance']
+              ?.callSetState();
+
           break;
         }
       default:
