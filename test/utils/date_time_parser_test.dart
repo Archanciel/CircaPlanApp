@@ -210,10 +210,19 @@ void main() {
       );
 
       test(
-        'date and time string',
+        'dd-mm date and time string',
         () {
           final String? hourMinute =
               DateTimeParser.parseHHMMTimeStr('14-12 13:35');
+
+          expect(hourMinute, null);
+        },
+      );
+      test(
+        'dd-mm-yyyy date and time string',
+        () {
+          final String? hourMinute =
+              DateTimeParser.parseHHMMTimeStr('14-12-2022 13:35');
 
           expect(hourMinute, null);
         },

@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:circa_plan/buslog/date_time_computer.dart';
-import 'package:circa_plan/constants.dart';
+import 'package:circa_plan/utils/date_time_computer.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test/test.dart';
 
@@ -159,7 +158,7 @@ void main() {
     },
   );
   group(
-    'computeTodayOrTomorrowAlarmFrenchDateTimeStr',
+    'computeTodayOrTomorrowAlarmFrenchDateTimeStr setToTomorrow = false',
     () {
       test(
         'alarm date time after now',
@@ -170,7 +169,9 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('${oneHourLater.hour}:${oneHourLater.minute}'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+              ),
               '${now.day}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}');
         },
       );
@@ -183,7 +184,9 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('${oneHourLater.hour}:${oneHourLater.minute}'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+              ),
               '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}');
         },
       );
@@ -196,7 +199,9 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('2:23'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '2:23',
+              ),
               '${now.day + 1}-${now.month}-${now.year} 02:23');
         },
       );
@@ -209,7 +214,9 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('2:3'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '2:3',
+              ),
               '${now.day + 1}-${now.month}-${now.year} 02:30');
         },
       );
@@ -222,7 +229,9 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('02:3'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '02:3',
+              ),
               '${now.day + 1}-${now.month}-${now.year} 02:30');
         },
       );
@@ -235,7 +244,9 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('10:3'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '10:3',
+              ),
               '${now.day + 1}-${now.month}-${now.year} 10:30');
         },
       );
@@ -248,7 +259,126 @@ void main() {
               DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
           expect(
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr('${oneHourLater.hour}:${oneHourLater.minute}'),
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+              ),
+              '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}');
+        },
+      );
+    },
+  );
+  group(
+    'computeTodayOrTomorrowAlarmFrenchDateTimeStr setToTomorrow = true',
+    () {
+      test(
+        'alarm date time after now',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+                setToTomorrow: true,
+              ),
+              '${now.day + 1}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}');
+        },
+      );
+      test(
+        'alarm date time before now',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+                setToTomorrow: true,
+              ),
+              '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}');
+        },
+      );
+      test(
+        'alarm date time before now with 1 digit hour 2 digits minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '2:23',
+                setToTomorrow: true,
+              ),
+              '${now.day + 1}-${now.month}-${now.year} 02:23');
+        },
+      );
+      test(
+        'alarm date time before now with 1 digit hour 1 digit minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '2:3',
+                setToTomorrow: true,
+              ),
+              '${now.day + 1}-${now.month}-${now.year} 02:30');
+        },
+      );
+      test(
+        'alarm date time before now with 2 digits hour starting with 0 and 1 digit minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '02:3',
+                setToTomorrow: true,
+              ),
+              '${now.day + 1}-${now.month}-${now.year} 02:30');
+        },
+      );
+      test(
+        'alarm date time before now with 2 digits hour 1 digit minutes',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '10:3',
+                setToTomorrow: true,
+              ),
+              '${now.day + 1}-${now.month}-${now.year} 10:30');
+        },
+      );
+      test(
+        'alarm date time equal now',
+        () {
+          DateTime now = DateTime.now();
+
+          DateTime oneHourLater =
+              DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
+          expect(
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+                setToTomorrow: true,
+              ),
               '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}');
         },
       );

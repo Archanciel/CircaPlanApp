@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'utils/date_time_computer.dart';
 import 'constants.dart';
 import 'screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -542,10 +543,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       case 'Set medic time':
         {
           await _openSetMedicTimeDialog(context: context);
-          String medicHHmmTime = Utility.formatStringDuration(
-              durationStr: _medicAlarmTimeController.text);
+          String medicAlarmDateTimeStr =
+              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+            alarmHHmmTimeStr: _medicAlarmTimeController.text,
+          );
           _screenNavigTransData.transferDataMap['alarmMedicDateTime'] =
-              medicHHmmTime;
+              medicAlarmDateTimeStr;
+          // TODO remove print
+          print(_screenNavigTransData.transferDataMap['alarmMedicDateTime']);
           widget.transferDataViewModel.updateAndSaveTransferData();
           break;
         }

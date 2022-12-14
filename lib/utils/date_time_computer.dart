@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:intl/intl.dart';
 
+import '../constants.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
+import 'package:circa_plan/utils/utility.dart';
 
 class DateTimeComputer {
   static final String localName = Platform.localeName;
@@ -53,5 +55,51 @@ class DateTimeComputer {
     } else {
       return secondDateTime.difference(firstDateTime);
     }
+  }
+
+  /// If the passed alarmHHmmTimeStr is after the current time, the
+  /// returned dd-MM-yyyy HH:mm is still today.
+  ///
+  /// Else, i.e. if the passed alarmHHmmTimeStr is before the current
+  /// time or is equal to the current time, then the returned
+  /// dd-MM-yyyy HH:mm it is on tomorrow.
+  static String computeTodayOrTomorrowAlarmFrenchDateTimeStr({
+    required String alarmHHmmTimeStr,
+    bool setToTomorrow = false,
+  }) {
+    // solving the problem caused by 1 digit hour and/or minute
+    // alarmHHmmTimeStr
+    String formattedAlarmHHmmTimeStr =
+        Utility.formatStringDuration(durationStr: alarmHHmmTimeStr);
+    Duration alarmHHmmTimeDuration =
+        DateTimeParser.parseHHmmDuration(formattedAlarmHHmmTimeStr)!;
+    DateTime now = DateTime.now();
+    int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
+    DateTime todayAlarmDateTime = DateTime(
+        now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
+
+    String alarmFrenchDateTimeStr;
+
+    if (setToTomorrow) {
+      alarmFrenchDateTimeStr = setAlarmToTomorrow(
+          now, alarmHHmmTimeDurationInMinutes);
+    } else {
+      if (todayAlarmDateTime.isAfter(now)) {
+        alarmFrenchDateTimeStr =
+            frenchDateTimeFormat.format(todayAlarmDateTime);
+      } else {
+        alarmFrenchDateTimeStr = setAlarmToTomorrow(
+            now, alarmHHmmTimeDurationInMinutes);
+      }
+    }
+
+    return alarmFrenchDateTimeStr;
+  }
+
+  static String setAlarmToTomorrow(DateTime now,
+      int alarmHHmmTimeDurationInMinutes) {
+    DateTime tomorrowAlarmDateTime = DateTime(
+        now.year, now.month, now.day + 1, 0, alarmHHmmTimeDurationInMinutes, 0);
+    return frenchDateTimeFormat.format(tomorrowAlarmDateTime);
   }
 }
