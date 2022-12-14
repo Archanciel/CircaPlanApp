@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/utils/utility.dart';
@@ -8,7 +9,7 @@ import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import '../utils/date_time_computer.dart';
 import '../constants.dart';
 import '../widgets/circadian_flutter_toast.dart';
 import '../widgets/non_editable_date_time.dart';
@@ -294,62 +295,48 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Called each time the CalculateSleepDuration screen is selected or the
   /// app showing the CalculateSleepDuration screen resumes.
   void _handleMedics() {
-    String medicHHmmTimeStr = _transferDataMap['alarmMedicDateTime'] ?? '14:35';
+    String? medicFrenchDateTimeStr = _transferDataMap['alarmMedicDateTime'];
 
-    if (_isAlarmToDisplay(medicHHmmTimeStr)) {
-      CircadianFlutterToast.showToast(
-          message: "MEDICS AT $medicHHmmTimeStr O'CLOCK ?",
-          backgroundColor: ScreenMixin.APP_WARNING_COLOR);
+    if (_isAlarmToDisplay(medicFrenchDateTimeStr)) {
+      setState(() {});
+      // CircadianFlutterToast.showToast(
+      //     message: "MEDICS AT $medicHHmmTimeStr O'CLOCK ?",
+      //     backgroundColor: ScreenMixin.APP_WARNING_COLOR);
     }
   }
 
-  bool _isAlarmToDisplay(String? medicHHmmTimeStr) {
-    if (medicHHmmTimeStr == null) {
+  bool _isAlarmToDisplay(String? medicFrenchDateTimeStr) {
+    if (medicFrenchDateTimeStr == null) {
       // the case if the transferDataMap does not contain
       // the 'alarmMedicDateTime' entry.
       return false;
     }
 
-    Duration medicHHmmTimeDuration =
-        DateTimeParser.parseHHmmDuration(medicHHmmTimeStr)!;
-    DateTime now = DateTime.now();
-    int medicHHmmTimeDurationInMinutes = medicHHmmTimeDuration.inMinutes;
-    DateTime todayMedicTimeMinusOneHour = DateTime(now.year, now.month, now.day,
-        0, medicHHmmTimeDurationInMinutes - 60, 0);
-    DateTime todayMedicTimePlusFourHours = DateTime(now.year, now.month,
-        now.day, 0, medicHHmmTimeDurationInMinutes + 240, 0);
+    DateTime alarmDateTime = frenchDateTimeFormat.parse(medicFrenchDateTimeStr);
+    DateTime alarmDateTimeMinusOneHour = DateTime(
+        alarmDateTime.year,
+        alarmDateTime.month,
+        alarmDateTime.day,
+        alarmDateTime.hour,
+        alarmDateTime.minute - 60);
+    DateTime alarmDateTimePlusFourHour = DateTime(
+        alarmDateTime.year,
+        alarmDateTime.month,
+        alarmDateTime.day,
+        alarmDateTime.hour,
+        alarmDateTime.minute + 240);
 
-    bool result = now.isAfter(todayMedicTimeMinusOneHour) &&
-        now.isBefore(todayMedicTimePlusFourHours);
+    DateTime now = DateTime.now();
+
+    bool result = now.isAfter(alarmDateTimeMinusOneHour) &&
+        now.isBefore(alarmDateTimePlusFourHour);
 
     if (result) {
-      _medicAlarmController.text = "MEDICS AT $medicHHmmTimeStr O'CLOCK ?";
+      _medicAlarmController.text =
+          "MEDICS AT ${medicFrenchDateTimeStr.split(' ').last} O'CLOCK ?";
     }
 
     return result;
-  }
-
-  String computeTodayOrTomorrowAlarmFrenchDateTimeStr(String alarmHHmmTimeStr) {
-    Duration alarmHHmmTimeDuration =
-        DateTimeParser.parseHHmmDuration(alarmHHmmTimeStr)!;
-    DateTime now = DateTime.now();
-    int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
-    DateTime todayAlarmDateTime = DateTime(
-        now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
-
-    String alarmFrenchDateTimeStr;
-
-    if (todayAlarmDateTime.isAfter(now)) {
-      alarmFrenchDateTimeStr =
-          ScreenMixin.frenchDateTimeFormat.format(todayAlarmDateTime);
-    } else {
-    DateTime tomorrowAlarmDateTime = DateTime(
-        now.year, now.month, now.day + 1, 0, alarmHHmmTimeDurationInMinutes, 0);
-      alarmFrenchDateTimeStr =
-          ScreenMixin.frenchDateTimeFormat.format(tomorrowAlarmDateTime);
-    }
-
-    return alarmFrenchDateTimeStr;
   }
 
   void _updateWidgets({bool isAfterLoading = false}) {
@@ -1150,8 +1137,26 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                         appWarningButtonBackgroundColor,
                                     shape: appElevatedButtonRoundedShape),
                                 onPressed: () {
-                                  String nowStr = DateTime.now().toString();
-                                  // widget.handleDateTimeModification(nowStr);
+                                  String? alarmMedicDateTimeStr =
+                                      _transferDataMap['alarmMedicDateTime'];
+
+                                  if (alarmMedicDateTimeStr == null) {
+                                    print(
+                                        'Medic alarm date time not stored in transferDataMap !');
+                                    return;
+                                  }
+
+                                  _transferDataMap['alarmMedicDateTime'] =
+                                      DateTimeComputer
+                                          .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                                    alarmHHmmTimeStr:
+                                        '${alarmMedicDateTimeStr.split(' ').last}',
+                                    setToTomorrow: true,
+                                  );
+                                  // TODO remove print
+                                  print(
+                                      'New medic alarm date time: ${_transferDataMap['alarmMedicDateTime']}');
+                                  setState(() {});
                                 },
                                 child: const Text(
                                   'Yes',
