@@ -1153,6 +1153,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                         alarmMedicDateTimeStr.split(' ').last,
                                     setToTomorrow: true,
                                   );
+                                  _transferDataViewModel
+                                      .updateAndSaveTransferData();
                                   // TODO remove print
                                   print(
                                       'New medic alarm date time: ${_transferDataMap['alarmMedicDateTimeStr']}');

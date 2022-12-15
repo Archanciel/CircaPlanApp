@@ -541,11 +541,24 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     switch (menuItemStr) {
       case 'Set medic time':
         {
+          String alarmMedicDateTimeStr =
+              _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'];
+          _medicAlarmTimeController.text =
+              alarmMedicDateTimeStr.split(' ').last;
           await _openSetMedicTimeDialog(context: context);
+          String alarmTimeStr = _medicAlarmTimeController.text;
+
+          if (alarmTimeStr == '') {
+            // the case if Clear button was pressed and no time
+            // was enteted
+            return;
+          }
+
           String medicAlarmDateTimeStr =
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-            alarmHHmmTimeStr: _medicAlarmTimeController.text,
+            alarmHHmmTimeStr: alarmTimeStr,
           );
+          
           _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
               medicAlarmDateTimeStr;
           // TODO remove print
