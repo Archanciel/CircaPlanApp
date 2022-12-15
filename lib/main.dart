@@ -542,7 +542,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       case 'Set medic time':
         {
           String alarmMedicDateTimeStr =
-              _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'];
+              _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ?? '';
           _medicAlarmTimeController.text =
               alarmMedicDateTimeStr.split(' ').last;
           await _openSetMedicTimeDialog(context: context);
@@ -558,7 +558,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: alarmTimeStr,
           );
-          
+
           _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
               medicAlarmDateTimeStr;
           // TODO remove print
@@ -594,8 +594,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             Row(
               children: [
                 const SizedBox(
-                  width: 100,
-                  child: Text('HH:mm time'),
+                  width: 60,
+                  child: Text('HH:mm'),
                 ),
                 SizedBox(
                   width: 180,
