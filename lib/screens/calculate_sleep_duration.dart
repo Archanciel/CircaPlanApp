@@ -295,7 +295,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Called each time the CalculateSleepDuration screen is selected or the
   /// app showing the CalculateSleepDuration screen resumes.
   void _handleMedics() {
-    String? medicFrenchDateTimeStr = _transferDataMap['alarmMedicDateTime'];
+    String? medicFrenchDateTimeStr = _transferDataMap['alarmMedicDateTimeStr'];
 
     if (_isAlarmToDisplay(medicFrenchDateTimeStr)) {
       setState(() {});
@@ -308,7 +308,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   bool _isAlarmToDisplay(String? medicFrenchDateTimeStr) {
     if (medicFrenchDateTimeStr == null) {
       // the case if the transferDataMap does not contain
-      // the 'alarmMedicDateTime' entry.
+      // the 'alarmMedicDateTimeStr' entry.
       return false;
     }
 
@@ -1082,7 +1082,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isAlarmToDisplay(_transferDataMap['alarmMedicDateTime'])
+            _isAlarmToDisplay(_transferDataMap['alarmMedicDateTimeStr'])
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1138,7 +1138,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     shape: appElevatedButtonRoundedShape),
                                 onPressed: () {
                                   String? alarmMedicDateTimeStr =
-                                      _transferDataMap['alarmMedicDateTime'];
+                                      _transferDataMap['alarmMedicDateTimeStr'];
 
                                   if (alarmMedicDateTimeStr == null) {
                                     print(
@@ -1146,16 +1146,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     return;
                                   }
 
-                                  _transferDataMap['alarmMedicDateTime'] =
+                                  _transferDataMap['alarmMedicDateTimeStr'] =
                                       DateTimeComputer
                                           .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                                     alarmHHmmTimeStr:
-                                        '${alarmMedicDateTimeStr.split(' ').last}',
+                                        alarmMedicDateTimeStr.split(' ').last,
                                     setToTomorrow: true,
                                   );
                                   // TODO remove print
                                   print(
-                                      'New medic alarm date time: ${_transferDataMap['alarmMedicDateTime']}');
+                                      'New medic alarm date time: ${_transferDataMap['alarmMedicDateTimeStr']}');
                                   setState(() {});
                                 },
                                 child: const Text(

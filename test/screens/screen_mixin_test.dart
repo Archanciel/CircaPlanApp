@@ -66,6 +66,7 @@ Future<void> main() async {
     '02-06-2022 02:22',
     '04:00',
   ];
+  transferDataMapRegular['alarmMedicDateTimeStr'] = '15-12-2022 06:00';
   transferDataMapRegular['addDurStartDateTimeStr'] = '03-06-2022 03:42';
 
   transferDataMapRegular['firstTimeStr'] = '00:03:45';
@@ -93,6 +94,7 @@ Future<void> main() async {
             '02-06-2022 02:42',
             '03-06-2022 03:42',
             '03-06-2022 06:42',
+            '15-12-2022 06:00',
           ];
 
           expect(actualDateTimeStrLst, expectedDateTimeStrLst);
@@ -110,6 +112,7 @@ Future<void> main() async {
               )
               .itemDataStrLst;
           List<String> expectedDateTimeStrLst = [
+            '15-12-2022 06:00',
             '03-06-2022 06:42',
             '03-06-2022 03:42',
             '02-06-2022 02:42',

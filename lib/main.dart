@@ -546,10 +546,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: _medicAlarmTimeController.text,
           );
-          _screenNavigTransData.transferDataMap['alarmMedicDateTime'] =
+          _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
               medicAlarmDateTimeStr;
           // TODO remove print
-          print(_screenNavigTransData.transferDataMap['alarmMedicDateTime']);
+          print(_screenNavigTransData.transferDataMap['alarmMedicDateTimeStr']);
           widget.transferDataViewModel.updateAndSaveTransferData();
 
           // TODO callSetState

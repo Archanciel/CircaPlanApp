@@ -87,6 +87,10 @@ class CalculateSleepDurationData extends ScreenData {
   set wakeUpHistoryDateTimeStrLst(List<String> value) =>
       attributes['wakeUpHistoryDateTimeStrLst'] = value;
 
+  String get alarmMedicDateTimeStr => attributes['alarmMedicDateTimeStr'];
+  set alarmMedicDateTimeStr(String value) =>
+      attributes['alarmMedicDateTimeStr'] = value;
+
   @override
   String toString() {
     Status? status = getStatus();
@@ -94,7 +98,7 @@ class CalculateSleepDurationData extends ScreenData {
     if (status == null) {
       return '';
     } else {
-      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst';
+      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst\nalarmMedicDateTimeStr: $alarmMedicDateTimeStr';
     }
   }
 }

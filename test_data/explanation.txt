@@ -1,0 +1,6 @@
+The circadian_edt.json file is used by unit or widget test files. Each
+time a new transferDataMap entry is added,. this element must be manually
+added to this json file, otherwise the tests are not executable.
+
+Currently, this file is located in the directory c:\temp\test\CircadianData.
+This value is defined as kCircadianAppDataTestDir in constant.dart.

@@ -285,6 +285,8 @@ class TransferDataViewModel {
         _transferDataMap!['calcSlDurSleepTimeStrHistory'];
     calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
         _transferDataMap!['calcSlDurWakeUpTimeStrHistory'];
+    calculateSleepDurationData.alarmMedicDateTimeStr =
+        _transferDataMap!['alarmMedicDateTimeStr'];
   }
 
   void updateDateTimeDifferenceDurationData() {
@@ -482,6 +484,8 @@ class TransferDataViewModel {
         calculateSleepDurationData.sleepHistoryDateTimeStrLst;
     _transferDataMap!["calcSlDurWakeUpTimeStrHistory"] =
         calculateSleepDurationData.wakeUpHistoryDateTimeStrLst;
+    _transferDataMap!["alarmMedicDateTimeStr"] =
+        calculateSleepDurationData.alarmMedicDateTimeStr;
 
     DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
         _transferData.dateTimeDifferenceDurationData;

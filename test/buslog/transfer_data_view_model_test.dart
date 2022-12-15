@@ -125,6 +125,7 @@ void main() {
               '00:35',
               '01:00'
             ],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
           };
 
           String path = kCircadianAppDataTestDir;
@@ -325,6 +326,7 @@ void main() {
               '00:35',
               '01:00'
             ],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -510,6 +512,7 @@ void main() {
               '00:35',
               '01:00'
             ],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -757,6 +760,7 @@ void main() {
               '00:35',
               '01:00'
             ],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -998,6 +1002,7 @@ void main() {
               '00:35',
               '01:00'
             ],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
