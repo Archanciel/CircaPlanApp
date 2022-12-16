@@ -549,8 +549,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           String alarmTimeStr = _medicAlarmTimeController.text;
 
           if (alarmTimeStr == '') {
-            // the case if Clear button was pressed and no time
-            // was enteted
+            // the case if Cancel button was pressed or if Clear
+            // button was pressed and no time was entetred
             return;
           }
 
@@ -583,6 +583,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     }
 
     return showDialog<String>(
+      // so, clicking outside the dialog screen does not close it.
+      // Instead, Cancel button was added ...
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Set medics time'),
@@ -615,6 +618,13 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           ],
         ),
         actions: [
+          TextButton(
+            onPressed: () {
+              _medicAlarmTimeController.text = '';
+              submit();
+            },
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               _medicAlarmTimeController.text = '';
