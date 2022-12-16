@@ -377,6 +377,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _addDurationPreferenceValueController.text;
 
     if (preferredDurationsItemName == '' || preferredDurationsItemValue == '') {
+      // the case if Cancel button was pressed
       return null;
     }
 
@@ -581,6 +582,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     return showDialog<String>(
       context: context,
+      // so, clicking outside the dialog screen does not close it.
+      // Instead, Cancel button was added ...
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: const Text('Add new preferred durations menu item'),
         content: Column(
@@ -592,7 +596,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               children: [
                 const SizedBox(
                   width: 50,
-                  child: Text('Name:'),
+                  child: Text('Name'),
                 ),
                 SizedBox(
                   width: 180,
@@ -613,7 +617,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               children: [
                 const SizedBox(
                   width: 50,
-                  child: Text('Value:'),
+                  child: Text('Value'),
                 ),
                 SizedBox(
                   width: 180,
@@ -637,12 +641,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             onPressed: () {
               _addDurationPreferenceNameController.text = '';
               _addDurationPreferenceValueController.text = '';
+              submit();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              _addDurationPreferenceNameController.text = '';
+              _addDurationPreferenceValueController.text = '';
             },
             child: const Text('Clear'),
           ),
           TextButton(
             onPressed: submit,
-            child: const Text('Add new menu item'),
+            child: const Text('Add menu item'),
           ),
         ],
       ),
