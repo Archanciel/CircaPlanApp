@@ -377,7 +377,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _addDurationPreferenceValueController.text;
 
     if (preferredDurationsItemName == '' || preferredDurationsItemValue == '') {
-      // the case if Cancel button was pressed
+      // the case if Cancel button was pressed or if Clear
+      // button was pressed and no data was enterred
       return null;
     }
 
