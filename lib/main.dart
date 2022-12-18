@@ -150,6 +150,16 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ScreenNavigTransData(transferDataMap: {});
   final TextEditingController _medicAlarmTimeController =
       TextEditingController();
+  final TextEditingController _medicAlarmDateTimeController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    
+    _medicAlarmTimeController.dispose();
+    _medicAlarmDateTimeController.dispose();
+  }
 
   /// Method called after choosing a file to load in the load
   /// file popup menu opened after selecting the Load ... AppBar
@@ -542,7 +552,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       case 'Set medic time':
         {
           String alarmMedicDateTimeStr =
-              _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ?? '';
+              _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ??
+                  '';
           _medicAlarmTimeController.text =
               alarmMedicDateTimeStr.split(' ').last;
           await _openSetMedicTimeDialog(context: context);
@@ -558,6 +569,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: alarmTimeStr,
           );
+          _medicAlarmDateTimeController.text = alarmMedicDateTimeStr;
 
           _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
               medicAlarmDateTimeStr;
@@ -615,6 +627,24 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 ),
               ],
             ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 60,
+                ),
+                SizedBox(
+                  width: 180,
+                  child: TextField(
+                    readOnly: true,
+                    style: const TextStyle(
+                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                    decoration: const InputDecoration(hintText: ''),
+                    controller: _medicAlarmDateTimeController,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         actions: [
@@ -628,6 +658,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           TextButton(
             onPressed: () {
               _medicAlarmTimeController.text = '';
+              _medicAlarmDateTimeController.text = '';
             },
             child: const Text('Clear'),
           ),
