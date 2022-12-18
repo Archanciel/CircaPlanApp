@@ -1155,6 +1155,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
                                   CircadianFlutterToast.showToast(
                                     message: alarmFrenchDateTimeStr,
+                                    position: ToastGravity.BOTTOM,
                                   );
 
                                   _transferDataMap['alarmMedicDateTimeStr'] =
