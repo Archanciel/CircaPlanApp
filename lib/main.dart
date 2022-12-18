@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:circa_plan/widgets/circadian_flutter_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'utils/date_time_computer.dart';
 import 'constants.dart';
@@ -156,7 +158,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   @override
   void dispose() {
     super.dispose();
-    
+
     _medicAlarmTimeController.dispose();
     _medicAlarmDateTimeController.dispose();
   }
@@ -556,6 +558,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   '';
           _medicAlarmTimeController.text =
               alarmMedicDateTimeStr.split(' ').last;
+          _medicAlarmDateTimeController.text = alarmMedicDateTimeStr;
           await _openSetMedicTimeDialog(context: context);
           String alarmTimeStr = _medicAlarmTimeController.text;
 
@@ -569,12 +572,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: alarmTimeStr,
           );
-          _medicAlarmDateTimeController.text = alarmMedicDateTimeStr;
+
+          CircadianFlutterToast.showToast(
+            message: medicAlarmDateTimeStr,
+            position: ToastGravity.TOP,
+          );
 
           _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
               medicAlarmDateTimeStr;
-          // TODO remove print
-          print(_screenNavigTransData.transferDataMap['alarmMedicDateTimeStr']);
           widget.transferDataViewModel.updateAndSaveTransferData();
 
           // TODO callSetState

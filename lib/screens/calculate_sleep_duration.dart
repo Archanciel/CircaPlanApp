@@ -1146,18 +1146,21 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     return;
                                   }
 
-                                  _transferDataMap['alarmMedicDateTimeStr'] =
-                                      DateTimeComputer
-                                          .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                                  String alarmFrenchDateTimeStr = DateTimeComputer
+                                      .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                                     alarmHHmmTimeStr:
                                         alarmMedicDateTimeStr.split(' ').last,
                                     setToTomorrow: true,
                                   );
+
+                                  CircadianFlutterToast.showToast(
+                                    message: alarmFrenchDateTimeStr,
+                                  );
+
+                                  _transferDataMap['alarmMedicDateTimeStr'] =
+                                      alarmFrenchDateTimeStr;
                                   _transferDataViewModel
                                       .updateAndSaveTransferData();
-                                  // TODO remove print
-                                  print(
-                                      'New medic alarm date time: ${_transferDataMap['alarmMedicDateTimeStr']}');
                                   setState(() {});
                                 },
                                 child: const Text(
