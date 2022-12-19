@@ -17,11 +17,11 @@ class DateTimeComputer {
   /// In case the passed posNegDurationStrLst contains invalid duration strings
   /// (for example 2a:00), this duration is ignored, no FormatException is
   /// thrown.
-  /// 
+  ///
   /// Usage examples:
   /// DateTimeComputer.addDurationsToDateTime('21-4-2022 13:34', ['20:00'])
   /// DateTimeComputer.addDurationsToDateTime('21-4-2022 13:34', ['0:15', '-8:15'])
-  /// 
+  ///
   /// throws FormatException in case the passed dateTimeStr is not conform to
   ///                        its expected format
   static DateTime? addDurationsToDateTime({
@@ -63,6 +63,8 @@ class DateTimeComputer {
   /// Else, i.e. if the passed alarmHHmmTimeStr is before the current
   /// time or is equal to the current time, then the returned
   /// dd-MM-yyyy HH:mm it is on tomorrow.
+  /// 
+  /// In case the passed alarmHHmmTimeStr is invalid, '' is returned.
   static String computeTodayOrTomorrowAlarmFrenchDateTimeStr({
     required String alarmHHmmTimeStr,
     bool setToTomorrow = false,
@@ -71,8 +73,13 @@ class DateTimeComputer {
     // alarmHHmmTimeStr
     String formattedAlarmHHmmTimeStr =
         Utility.formatStringDuration(durationStr: alarmHHmmTimeStr);
-    Duration alarmHHmmTimeDuration =
-        DateTimeParser.parseHHmmDuration(formattedAlarmHHmmTimeStr)!;
+    Duration? alarmHHmmTimeDuration =
+        DateTimeParser.parseHHmmDuration(formattedAlarmHHmmTimeStr);
+
+    if (alarmHHmmTimeDuration == null) {
+      return '';
+    }
+
     DateTime now = DateTime.now();
     int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
     DateTime todayAlarmDateTime = DateTime(
@@ -81,23 +88,23 @@ class DateTimeComputer {
     String alarmFrenchDateTimeStr;
 
     if (setToTomorrow) {
-      alarmFrenchDateTimeStr = setAlarmToTomorrow(
-          now, alarmHHmmTimeDurationInMinutes);
+      alarmFrenchDateTimeStr =
+          setAlarmToTomorrow(now, alarmHHmmTimeDurationInMinutes);
     } else {
       if (todayAlarmDateTime.isAfter(now)) {
         alarmFrenchDateTimeStr =
             frenchDateTimeFormat.format(todayAlarmDateTime);
       } else {
-        alarmFrenchDateTimeStr = setAlarmToTomorrow(
-            now, alarmHHmmTimeDurationInMinutes);
+        alarmFrenchDateTimeStr =
+            setAlarmToTomorrow(now, alarmHHmmTimeDurationInMinutes);
       }
     }
 
     return alarmFrenchDateTimeStr;
   }
 
-  static String setAlarmToTomorrow(DateTime now,
-      int alarmHHmmTimeDurationInMinutes) {
+  static String setAlarmToTomorrow(
+      DateTime now, int alarmHHmmTimeDurationInMinutes) {
     DateTime tomorrowAlarmDateTime = DateTime(
         now.year, now.month, now.day + 1, 0, alarmHHmmTimeDurationInMinutes, 0);
     return frenchDateTimeFormat.format(tomorrowAlarmDateTime);

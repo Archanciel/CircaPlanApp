@@ -7,14 +7,14 @@ class CircadianFlutterToast with ScreenMixin {
   static showToast({
     required String message,
     ToastGravity position = ToastGravity.CENTER,
-    Color? backgroundColor,
+    bool isError = false,
   }) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: Toast.LENGTH_SHORT,
+      toastLength: (isError) ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT,
       gravity: position,
-      backgroundColor: backgroundColor ?? ScreenMixin.APP_DARK_BLUE_COLOR,
-      timeInSecForIosWeb: 1,
+      backgroundColor: (isError) ? ScreenMixin.APP_WARNING_COLOR : ScreenMixin.APP_DARK_BLUE_COLOR,
+      timeInSecForIosWeb: (isError) ? 2 : 1,
       textColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
       fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
     );

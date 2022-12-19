@@ -564,7 +564,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
           if (alarmTimeStr == '') {
             // the case if Cancel button was pressed or if Clear
-            // button was pressed and no time was entetred
+            // button was pressed and no time was entered
             return;
           }
 
@@ -572,6 +572,17 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: alarmTimeStr,
           );
+
+          if (medicAlarmDateTimeStr == '') {
+            // the case if the entered alarmTimeStr is invalid
+            CircadianFlutterToast.showToast(
+              message: "Invalid alarm time $alarmTimeStr ignored !",
+              position: ToastGravity.TOP,
+              isError: true,
+            );
+
+            return;
+          }
 
           CircadianFlutterToast.showToast(
             message: medicAlarmDateTimeStr,

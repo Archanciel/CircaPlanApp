@@ -378,7 +378,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     if (preferredDurationsItemName == '' || preferredDurationsItemValue == '') {
       // the case if Cancel button was pressed or if Clear
-      // button was pressed and no data was enterred
+      // button was pressed and no data was entered
       return null;
     }
 
