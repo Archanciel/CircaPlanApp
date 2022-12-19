@@ -298,7 +298,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     String? medicFrenchDateTimeStr = _transferDataMap['alarmMedicDateTimeStr'];
 
     if (_isAlarmToDisplay(medicFrenchDateTimeStr)) {
-      setState(() {});
+      setState(() {}); // not working on S8, i.e alarm medic code
+      //                  not applied, I don't know why ! But once
+      //                  I click on Now button, the alarm is displayed.
       // CircadianFlutterToast.showToast(
       //     message: "MEDICS AT $medicHHmmTimeStr O'CLOCK ?",
       //     backgroundColor: ScreenMixin.APP_WARNING_COLOR);
