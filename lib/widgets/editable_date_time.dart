@@ -330,7 +330,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                   width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                   height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                   child: Checkbox(
-                    key: const Key('divideFirstBySecond'),
+                    key: Key('${widget.widgetPrefix}FixedDateTimeCheckbox'),
                     value: widget.isEndDateTimeFixed,
                     onChanged: (value) {
                       widget.transferDataMap[
