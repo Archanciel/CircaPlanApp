@@ -593,10 +593,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               medicAlarmDateTimeStr;
           widget.transferDataViewModel.updateAndSaveTransferData();
 
-          // TODO callSetState
-          // only if current screen is 3rd screen !
-          _screenNavigTransData.transferDataMap['currentScreenStateInstance']
-              ?.callSetState();
+          var currentScreenInstance = _screenNavigTransData
+              .transferDataMap['currentScreenStateInstance'];
+
+          if (currentScreenInstance.widget is CalculateSleepDuration) {
+            currentScreenInstance?.callSetState();
+          }
 
           break;
         }
