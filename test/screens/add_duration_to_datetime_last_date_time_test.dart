@@ -164,6 +164,8 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationStrTst,
             transferDataMap['thirdDurationStr'],
+          );
+
           // changing last End date time
 
           // 4 hours later than 12-07-2022 13:50
@@ -218,14 +220,12 @@ Future<void> main() async {
           // first DurationDateTimeEditorWidget not impacted
 
           expect(
+            firstDurationDateTimeEditorWidget.dateTimePickerControllerTst.text,
+            DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+              englishFormatDateTimeStr:
+                  transferDataMap['firstEndDateTimeStr'], // "2022-07-12 16:50"
+            ),
           );
-
-              firstDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: transferDataMap[
-                    'firstEndDateTimeStr'], // "2022-07-12 16:50"
-              ));
 
           expect(
             firstDurationDateTimeEditorWidget.durationStrTst,
