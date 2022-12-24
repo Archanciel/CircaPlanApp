@@ -233,17 +233,17 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     // data for CurvedNavigationBar
 
     final List<StatefulWidget> screensLst = [
-      AddDurationToDateTime(
-        screenNavigTransData: _screenNavigTransData,
-        transferDataViewModel: transferDataViewModel,
-      ),
+      CalculateSleepDuration(
+          screenNavigTransData: _screenNavigTransData,
+          transferDataViewModel: transferDataViewModel),
       DateTimeDifferenceDuration(
         screenNavigTransData: _screenNavigTransData,
         transferDataViewModel: transferDataViewModel,
       ),
-      CalculateSleepDuration(
-          screenNavigTransData: _screenNavigTransData,
-          transferDataViewModel: transferDataViewModel),
+      AddDurationToDateTime(
+        screenNavigTransData: _screenNavigTransData,
+        transferDataViewModel: transferDataViewModel,
+      ),
       TimeCalculator(
         screenNavigTransData: _screenNavigTransData,
         transferDataViewModel: transferDataViewModel,
@@ -251,15 +251,15 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ];
 
     final List<String> screenTitlesLst = [
-      ScreenMixin.APP_DURATION_TO_DATE_TIME_TITLE,
-      ScreenMixin.DATE_TIME_DIFF_DURATION_TITLE,
       ScreenMixin.CALCULATR_SLEEP_DURATION_TITLE,
+      ScreenMixin.DATE_TIME_DIFF_DURATION_TITLE,
+      ScreenMixin.APP_DURATION_TO_DATE_TIME_TITLE,
       ScreenMixin.TIME_CALCULATOR_TITLE,
     ];
 
     final List<Widget> curvedNavigationBarItemIconsLst = [
       Image.asset(
-        "images/add_duration_to_date_time_blue_trans.png",
+        "images/calc_sleep_duration_blue_trans.png",
         width: 36,
         height: 36,
       ),
@@ -269,7 +269,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         height: 35,
       ),
       Image.asset(
-        "images/calc_sleep_duration_blue_trans.png",
+        "images/add_duration_to_date_time_blue_trans.png",
         width: 36,
         height: 36,
       ),

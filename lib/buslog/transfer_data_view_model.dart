@@ -196,7 +196,7 @@ class TransferDataViewModel {
         _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.addDurationStartDateTimeStr =
-        _transferDataMap!['addDurStartDateTimeStr'] ?? '';
+        _transferDataMap!['addDurStartDateTimeStr'];
 
     addDurationToDateTimeData.firstDurationIconType = (firstDurationSign > 0)
         ? DurationIconType.add
@@ -285,8 +285,12 @@ class TransferDataViewModel {
         _transferDataMap!['calcSlDurSleepTimeStrHistory'];
     calculateSleepDurationData.wakeUpHistoryDateTimeStrLst =
         _transferDataMap!['calcSlDurWakeUpTimeStrHistory'];
+
+    // solves null not String exception now happening after
+    // CalculateSleepDuration screen was moved at first screen
+    // position
     calculateSleepDurationData.alarmMedicDateTimeStr =
-        _transferDataMap!['alarmMedicDateTimeStr'];
+        _transferDataMap!['alarmMedicDateTimeStr'] ?? '';
   }
 
   void updateDateTimeDifferenceDurationData() {
