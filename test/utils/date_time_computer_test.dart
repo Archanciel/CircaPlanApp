@@ -172,7 +172,9 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
               ),
-              '${now.day}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}');
+              (now.minute > 10)
+                  ? '${now.day}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}'
+                  : '${now.day}-${now.month}-${now.year} ${now.hour + 1}:0${now.minute}');
         },
       );
       test(
@@ -187,7 +189,9 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
               ),
-              '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}');
+              (now.minute > 10)
+                  ? '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}'
+                  : '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:0${now.minute}');
         },
       );
       test(
@@ -262,7 +266,9 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
               ),
-              '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}');
+              (now.minute > 10)
+                  ? '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}'
+                  : '${now.day + 1}-${now.month}-${now.year} ${now.hour}:0${now.minute}');
         },
       );
     },
@@ -283,7 +289,9 @@ void main() {
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
                 setToTomorrow: true,
               ),
-              '${now.day + 1}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}');
+              (now.minute > 10)
+                  ? '${now.day + 1}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}'
+                  : '${now.day + 1}-${now.month}-${now.year} ${now.hour + 1}:0${now.minute}');
         },
       );
       test(
@@ -299,9 +307,9 @@ void main() {
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
                 setToTomorrow: true,
               ),
-              (now.hour > 10)
+              (now.minute > 10)
                   ? '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}'
-                  : '${now.day + 1}-${now.month}-${now.year} 0${now.hour - 1}:${now.minute}');
+                  : '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:0${now.minute}');
         },
       );
       test(
@@ -381,7 +389,9 @@ void main() {
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
                 setToTomorrow: true,
               ),
-              '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}');
+              (now.minute > 10)
+                  ?               '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}'
+                  :               '${now.day + 1}-${now.month}-${now.year} ${now.hour}:0${now.minute}');
         },
       );
     },
