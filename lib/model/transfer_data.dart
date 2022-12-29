@@ -60,7 +60,7 @@ class TransferData extends SerializableObject {
   set timeCalculatorData(TimeCalculatorData value) =>
       attributes['timeCalculatorData'] = value;
 
-  Future<TransferData> loadTransferDataFromFile(
+  Future<void> loadTransferDataFromFile(
       {required String jsonFilePathName}) async {
     final Serializer serializer = Serializer();
     final String inputJsonStr = await File(jsonFilePathName).readAsString();
@@ -78,8 +78,6 @@ class TransferData extends SerializableObject {
 
     // print(
     //     'loadTransferDataFromFile($jsonFilePathName)\nsleepDurationStr: ${calculateSleepDurationData.sleepDurationStr}\nsleepHistoryDateTimeStrLst: ${calculateSleepDurationData.sleepHistoryDateTimeStrLst}');
-
-    return deserializedTransferData;
   }
 
   Future<void> saveTransferDataToFile({
@@ -90,7 +88,7 @@ class TransferData extends SerializableObject {
 
     if (jsonFileExist && jsonUndoFileName != null) {
       // String jsonUndoFilePathName =
-          '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
+      '/storage/emulated/0/Download/CircadianData/$jsonUndoFileName';
 
       // String screenDataSubMapKey = 'addDurationToDateTimeData';
       // String screenDataSubMapKey = 'dateTimeDifferenceDurationData';
@@ -109,12 +107,12 @@ class TransferData extends SerializableObject {
         newFileNameStr: jsonUndoFileName,
       );
 
-    //   formattedScreenDataSubMap =
-    //       await Utility.formatScreenDataSubMapFromJsonFileContent(
-    //           jsonFilePathName: jsonUndoFilePathName,
-    //           screenDataSubMapKey: screenDataSubMapKey);
-    //   print(
-    //       '\n$jsonUndoFileName CONTENT AFTER RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
+      //   formattedScreenDataSubMap =
+      //       await Utility.formatScreenDataSubMapFromJsonFileContent(
+      //           jsonFilePathName: jsonUndoFilePathName,
+      //           screenDataSubMapKey: screenDataSubMapKey);
+      //   print(
+      //       '\n$jsonUndoFileName CONTENT AFTER RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
     }
 
     final Serializer serializer = Serializer();
