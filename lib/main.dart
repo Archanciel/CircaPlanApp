@@ -386,6 +386,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
                         String? lastCreatedJsonFileNameStr;
 
+                        if (nonNullablefileNameLst.isEmpty) {
+                          displayWarningDialog(
+                              context, 'No file available to load !');
+                          return;
+                        }
+
                         if (nonNullablefileNameLst.length >= 2) {
                           lastCreatedJsonFileNameStr =
                               nonNullablefileNameLst[1];

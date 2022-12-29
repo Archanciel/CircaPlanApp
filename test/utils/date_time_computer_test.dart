@@ -299,7 +299,9 @@ void main() {
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
                 setToTomorrow: true,
               ),
-              '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}');
+              (now.hour > 10)
+                  ? '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}'
+                  : '${now.day + 1}-${now.month}-${now.year} 0${now.hour - 1}:${now.minute}');
         },
       );
       test(

@@ -493,7 +493,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
 
     if (newDateTime == null) {
-      openWarningDialog(context,
+      displayWarningDialog(context,
           'You are trying to increase/decrease an incorrectly formated dd-MM-yyyy HH:mm new date time ($_newDateTimeStr). Please correct it and retry !');
       return;
     }
@@ -600,7 +600,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
 
     if (newDateTime == null) {
-      openWarningDialog(context,
+      displayWarningDialog(context,
           'You entered an incorrectly formated dd-MM-yyyy HH:mm new date time ($_newDateTimeStr). Please correct it and retry !');
       return;
     }
@@ -762,13 +762,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
     if (newDateTime.isBefore(previousDateTime)) {
-      openWarningDialog(context,
+      displayWarningDialog(context,
           'New date time can\'t be before previous date time ($_newDateTimeStr < $_lastDateTimeStr). Please increase it and retry !');
       return false;
     }
 
     if (newDateTime == previousDateTime) {
-      openWarningDialog(context,
+      displayWarningDialog(context,
           'New date time can\'t be equal to previous date time ($_newDateTimeStr = $_lastDateTimeStr). Please increase it and retry !');
       return false;
     }
@@ -808,7 +808,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (addDuration == null) {
-      openWarningDialog(context,
+      displayWarningDialog(context,
           'You entered an incorrectly formated HH:mm time ($durationStr). Please retry !');
       return;
     } else {
@@ -1143,8 +1143,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                       _transferDataMap['alarmMedicDateTimeStr'];
 
                                   if (alarmMedicDateTimeStr == null) {
-                                    print(
-                                        'Medic alarm date time not stored in transferDataMap !');
                                     return;
                                   }
 
@@ -1179,7 +1177,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ),
                     ],
                   )
-                : const SizedBox(),
+                : const SizedBox(
+                    child: TextField(),
+                  ),
             SizedBox(
               height: screenHeight *
                   ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,

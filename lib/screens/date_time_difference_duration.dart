@@ -306,7 +306,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         DateTimeParser.parseHHmmDuration(dialogTimeStr);
 
     if (dialogTimeDuration == null) {
-      openWarningDialog(context,
+      displayWarningDialog(context,
           'You entered an incorrectly formated (-)HH:mm time ($dialogTimeStr). Please retry !');
       return;
     } else {
@@ -371,8 +371,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     String frenchFormatEndDateTimeStr = _endDateTimeController.text;
     DateTime endDateTime =
         ScreenMixin.frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
-    Duration? durationToAdd =
-        DateTimeParser.parseHHmmDuration(durationStr);
+    Duration? durationToAdd = DateTimeParser.parseHHmmDuration(durationStr);
 
     if (durationToAdd != null) {
       DateTime wakingAtDateTime = endDateTime.add(durationToAdd);

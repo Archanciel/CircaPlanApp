@@ -271,7 +271,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
             'You are trying to subtract time from an incorrectly formated dd:hh:mm time $_firstTimeStr. Please correct it and retry !';
       }
 
-      openWarningDialog(context, warningMsg);
+      displayWarningDialog(context, warningMsg);
 
       return;
     }
@@ -285,7 +285,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
             'You are trying to subtract an incorrectly formated dd:hh:mm time $_secondTimeStr from $_firstTimeStr. Please correct it and retry !';
       }
 
-      openWarningDialog(context, warningMsg);
+      displayWarningDialog(context, warningMsg);
 
       return;
     }
@@ -333,7 +333,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
             'You are trying to % multiply an incorrectly formated dd:hh:mm time $_firstTimeStr. Please correct it and retry !';
       }
 
-      openWarningDialog(context, warningMsg);
+      displayWarningDialog(context, warningMsg);
 
       return;
     }
@@ -356,7 +356,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       }
 
       if (warningMsg != null) {
-        openWarningDialog(context, warningMsg);
+        displayWarningDialog(context, warningMsg);
 
         return;
       }
@@ -365,7 +365,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       if (_secondTimeStr.contains('%')) {
         warningMsg =
             'Invalid second time or % value format $_secondTimeStr. Please correct it and retry !';
-        openWarningDialog(context, warningMsg);
+        displayWarningDialog(context, warningMsg);
 
         return;
       }
@@ -373,7 +373,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       if (!isDiv) {
         warningMsg =
             'Invalid % value format $_secondTimeStr. Please correct it and retry !';
-        openWarningDialog(context, warningMsg);
+        displayWarningDialog(context, warningMsg);
 
         return;
       }
@@ -519,13 +519,14 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                           ),
                         ),
                         ElevatedButton(
-                          key: Key('timeCalculatorNowButton'),
+                          key: const Key('timeCalculatorNowButton'),
                           style: ButtonStyle(
                               backgroundColor: appElevatedButtonBackgroundColor,
                               shape: appElevatedButtonRoundedShape),
                           onPressed: () {
                             String dateTimeStr =
-                                ScreenMixin.HHmmDateTimeFormat.format(DateTime.now());
+                                ScreenMixin.HHmmDateTimeFormat.format(
+                                    DateTime.now());
                             _handleFirstTimeTextFieldChange(dateTimeStr);
                           },
                           child: const Text(

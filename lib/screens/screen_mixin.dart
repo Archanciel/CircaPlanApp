@@ -52,8 +52,7 @@ mixin ScreenMixin {
   static const String APP_DURATION_TO_DATE_TIME_TITLE =
       'Add Duration To Date Time';
   static const String DATE_TIME_DIFF_DURATION_TITLE = 'Wake Up Duration';
-  static const String CALCULATR_SLEEP_DURATION_TITLE =
-      'Sleep Duration';
+  static const String CALCULATR_SLEEP_DURATION_TITLE = 'Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
   static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
 
@@ -93,7 +92,7 @@ mixin ScreenMixin {
         screenHeight * APP_VERTICAL_TOP_MARGIN_PROPORTION;
   }
 
-  void openWarningDialog(BuildContext context, String message) {
+  void displayWarningDialog(BuildContext context, String message) {
     /// Located in ScreenMixin in order to be usable in any screen.
     showDialog(
       context: context,
@@ -390,6 +389,10 @@ mixin ScreenMixin {
       required bool addCircadianJsonFileNameToLst}) {
     List<String?> nullablefileNameLst = transferDataViewModel
         .getFileNameInDirLst(transferDataViewModel.getTransferDataJsonPath());
+
+    if (nullablefileNameLst == null || nullablefileNameLst.length == 0) {
+      return [];
+    }
 
     List<String> nonNullablefileNameLst =
         nullablefileNameLst.whereType<String>().toList();
