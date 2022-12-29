@@ -308,7 +308,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   bool _isAlarmToDisplay(String? medicFrenchDateTimeStr) {
-    if (medicFrenchDateTimeStr == null) {
+    if (medicFrenchDateTimeStr == null || medicFrenchDateTimeStr == '') {
       // the case if the transferDataMap does not contain
       // the 'alarmMedicDateTimeStr' entry.
       return false;
