@@ -513,6 +513,7 @@ void main() {
               '01:00'
             ],
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
+            "sleepDurationCommentStr": "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -761,6 +762,7 @@ void main() {
               '01:00'
             ],
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
+            "sleepDurationCommentStr": "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -1003,6 +1005,7 @@ void main() {
               '01:00'
             ],
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
+            "sleepDurationCommentStr": "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",

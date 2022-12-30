@@ -91,6 +91,10 @@ class CalculateSleepDurationData extends ScreenData {
   set alarmMedicDateTimeStr(String value) =>
       attributes['alarmMedicDateTimeStr'] = value;
 
+  String get sleepDurationCommentStr => attributes['sleepDurationCommentStr'];
+  set sleepDurationCommentStr(String value) =>
+      attributes['sleepDurationCommentStr'] = value;
+
   @override
   String toString() {
     Status? status = getStatus();
