@@ -73,6 +73,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] ?? '',
         _currentTotalPrevDayTotalPercentStr =
             transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] ?? '',
+        _sleepDurationCommentStr =
+            transferDataMap['sleepDurationCommentStr'] ?? '',
         super();
 
   final Map<String, dynamic> _transferDataMap;
@@ -95,6 +97,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _currentWakeUpPrevDayTotalPercentStr;
   String _currentTotalPrevDayTotalPercentStr;
   String _prevDayTotalWakeUpStr = '';
+  String _sleepDurationCommentStr = '';
 
   late TextEditingController _newDateTimeController;
   late TextEditingController _lastDateTimeController;
@@ -107,6 +110,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   late TextEditingController _currentWakeUpDurationPercentController;
   late TextEditingController _currentTotalDurationPercentController;
   late TextEditingController _sleepWakeUpHistoryController;
+  late TextEditingController _sleepDurationCommentController;
 
   late TextEditingController _currentSleepPrevDayTotalPercentController;
   late TextEditingController _currentWakeUpPrevDayTotalPercentController;
@@ -417,6 +421,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
 
+    _sleepDurationCommentStr =
+        _transferDataMap['sleepDurationCommentStr'] ?? '';
+
+    _sleepDurationCommentController =
+        TextEditingController(text: _sleepDurationCommentStr);
+
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
 
@@ -439,6 +449,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _prevDayTotalController.dispose();
     _prevDayEmptyTotalController.dispose();
     _medicAlarmController.dispose();
+    _sleepDurationCommentController.dispose();
 
     if (_transferDataMap['currentScreenStateInstance'] == this) {
       _transferDataMap['currentScreenStateInstance'] = null;
@@ -473,6 +484,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpPrevDayTotalPercentStr;
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
+    map['sleepDurationCommentStr'] = _sleepDurationCommentStr;
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
@@ -573,6 +585,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepTimeStrHistory = [];
     _wakeUpTimeStrHistory = [];
     _sleepWakeUpHistoryController.text = '';
+    _sleepDurationCommentStr = '';
+    _sleepDurationCommentController.text = _sleepDurationCommentStr;
 
     _currentSleepPrevDayTotalPercentStr = '';
     _currentSleepPrevDayTotalPercentController.text =
@@ -1177,8 +1191,60 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ),
                     ],
                   )
-                : const SizedBox(
-                    child: TextField(),
+                : Container(
+                    padding:
+                        const EdgeInsets.fromLTRB(0, 450, 0, 0), // val 450 =
+//                                                               // 430 + 20
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Comment',
+                          style: labelTextStyle,
+                        ),
+                        Theme(
+                          data: Theme.of(context).copyWith(
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: selectionColor,
+                              // commenting cursorColor discourage manually
+                              // editing the TextField !
+                              // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                            ),
+                          ),
+                          child: TextField(
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: 3,
+                            autofocus: false,
+                            style: valueTextStyle,
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            controller: _sleepDurationCommentController,
+                            // prevents displaying copy paste menu !
+                            toolbarOptions: const ToolbarOptions(
+                                copy: false,
+                                paste: false,
+                                cut: false,
+                                selectAll: false),
+                             onChanged: (value) {
+                              // neither onSubmitted nor onEditingComplete
+                              // work on multiline TextField !!!
+                              if (value.endsWith("\n")) {
+                                _sleepDurationCommentStr = value.trim();
+                                _updateTransferDataMap();
+                              }
+                            },
+                            onTap: () async {
+                              await copyToClipboardHHmmExtractedFromHistoryDuration(
+                                  context: context,
+                                  controller: _sleepDurationCommentController);
+                              _transferDataMap['clipboardLastAction'] =
+                                  ClipboardLastAction.copy;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
             SizedBox(
               height: screenHeight *
