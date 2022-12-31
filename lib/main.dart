@@ -484,22 +484,15 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     },
                     child: Stack(
                       children: [
-                        // Positioned(
-                        //   left: 0,
-                        //   right: 0,
-                        //   top: 0,
-                        //   height: screenHeight,
-                        //   child: Container(
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
-                            ),
-                            child: SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
+                          ),
+                          child: SizedBox(
                               height: screenHeight - 80, // ok on S8
                               child: screensLst[_currentIndex]),
-                          ),
-                        // ),
+                        ),
                         Positioned(
                           left: 0,
                           right: 0,
