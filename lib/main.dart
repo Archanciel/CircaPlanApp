@@ -471,7 +471,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           body: SizedBox.expand(
             child: DraggableScrollableSheet(
               initialChildSize: 1.0,
-              minChildSize: 0.5,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return SingleChildScrollView(
@@ -496,13 +495,15 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                               borderRadius: BorderRadius.circular(30),
                               color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
                             ),
-                            child: screensLst[_currentIndex],
+                            child: SizedBox(
+                              height: screenHeight - 100,
+                              child: screensLst[_currentIndex]),
                           ),
                         // ),
                         Positioned(
                           left: 0,
                           right: 0,
-                          bottom: 0,
+                          top: screenHeight - 155,
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               iconTheme: IconThemeData(
