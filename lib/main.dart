@@ -470,6 +470,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           ),
           body: SizedBox.expand(
             child: DraggableScrollableSheet(
+              initialChildSize: 1.0,
+              minChildSize: 0.5,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return GestureDetector(
