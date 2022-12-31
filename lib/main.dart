@@ -496,14 +496,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                               color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
                             ),
                             child: SizedBox(
-                              height: screenHeight - 100,
+                              height: screenHeight - 80, // ok on S8
                               child: screensLst[_currentIndex]),
                           ),
                         // ),
                         Positioned(
                           left: 0,
                           right: 0,
-                          top: screenHeight - 155,
+                          top: screenHeight - 125, // ok on S8
                           child: Theme(
                             data: Theme.of(context).copyWith(
                               iconTheme: IconThemeData(
