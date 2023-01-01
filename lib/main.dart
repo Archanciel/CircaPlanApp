@@ -468,64 +468,62 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
               ),
             ],
           ),
-          body: SizedBox.expand(
-            child: DraggableScrollableSheet(
-              initialChildSize: 1.0,
-              builder:
-                  (BuildContext context, ScrollController scrollController) {
-                return SingleChildScrollView(
-                  child: GestureDetector(
-                    // enables that when clicking above or below a
-                    // TextField, the keyboard is hidden. Otherwise,
-                    // the keyboard remains open !
-                    onTap: () {
-                      // call this method here to hide soft keyboard
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
-                          ),
-                          child: SizedBox(
-                              height: screenHeight - 80, // ok on S8
-                              child: screensLst[_currentIndex]),
+          body: DraggableScrollableSheet(
+            initialChildSize: 1.0,
+            builder:
+                (BuildContext context, ScrollController scrollController) {
+              return SingleChildScrollView(
+                child: GestureDetector(
+                  // enables that when clicking above or below a
+                  // TextField, the keyboard is hidden. Otherwise,
+                  // the keyboard remains open !
+                  onTap: () {
+                    // call this method here to hide soft keyboard
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
                         ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          top: screenHeight - 125, // ok on S8
-                          child: Theme(
-                            data: Theme.of(context).copyWith(
-                              iconTheme: IconThemeData(
-                                  color: ScreenMixin.APP_DARK_BLUE_COLOR),
-                            ),
-                            child: CurvedNavigationBar(
-                              key: _navigationKey,
-                              color: Colors.white,
-                              buttonBackgroundColor:
-                                  ScreenMixin.APP_LIGHT_YELLOW_COLOR,
-                              backgroundColor: Colors.transparent,
-                              height: 55,
-                              animationCurve: Curves.easeInOut,
-                              animationDuration:
-                                  const Duration(milliseconds: 500),
-                              index: _currentIndex,
-                              items: curvedNavigationBarItemIconsLst,
-                              onTap: (index) => setState(() {
-                                _currentIndex = index;
-                              }),
-                            ),
+                        child: SizedBox(
+                            height: screenHeight - 80, // ok on S8
+                            child: screensLst[_currentIndex]),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: screenHeight - 125, // ok on S8
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            iconTheme: IconThemeData(
+                                color: ScreenMixin.APP_DARK_BLUE_COLOR),
+                          ),
+                          child: CurvedNavigationBar(
+                            key: _navigationKey,
+                            color: Colors.white,
+                            buttonBackgroundColor:
+                                ScreenMixin.APP_LIGHT_YELLOW_COLOR,
+                            backgroundColor: Colors.transparent,
+                            height: 55,
+                            animationCurve: Curves.easeInOut,
+                            animationDuration:
+                                const Duration(milliseconds: 500),
+                            index: _currentIndex,
+                            items: curvedNavigationBarItemIconsLst,
+                            onTap: (index) => setState(() {
+                              _currentIndex = index;
+                            }),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
