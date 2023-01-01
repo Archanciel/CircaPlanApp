@@ -486,6 +486,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalPrevDayTotalPercentStr;
     map['sleepDurationCommentStr'] = _sleepDurationCommentStr;
 
+    // TODO why not working !
+    // map['sleepDurationCommentStr'] = _sleepDurationCommentController.text;
+
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
       // _updateTransferDataMap() after a json file was loaded, the
