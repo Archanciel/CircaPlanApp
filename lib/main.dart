@@ -470,9 +470,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           ),
           body: DraggableScrollableSheet(
             initialChildSize: 1.0, // necessary to use full screen surface
-            builder:
-                (BuildContext context, ScrollController scrollController) {
-              return SingleChildScrollView( // necessary for scrolling to work
+            builder: (BuildContext context, ScrollController scrollController) {
+              return SingleChildScrollView(
+                // necessary for scrolling to work
                 child: GestureDetector(
                   // enables that when clicking above or below a
                   // TextField, the keyboard is hidden. Otherwise,
@@ -499,7 +499,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         child: Theme(
                           data: Theme.of(context).copyWith(
                             iconTheme: IconThemeData(
-                                color: ScreenMixin.APP_DARK_BLUE_COLOR),
+                              color: ScreenMixin.APP_DARK_BLUE_COLOR,
+                            ),
                           ),
                           child: CurvedNavigationBar(
                             key: _navigationKey,
