@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -155,6 +156,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   final TextEditingController _medicAlarmDateTimeController =
       TextEditingController();
 
+  // data for CurvedNavigationBar
+
+  late List<StatefulWidget> _screensLst;
+
+  late List<String> _screenTitlesLst;
+
+  late List<Widget> _curvedNavigationBarItemIconsLst;
+
   @override
   void dispose() {
     super.dispose();
@@ -210,54 +219,34 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Adds a call back function called after the _MainAppState
-      // build() method has been executed. This solves the problem
-      // of the first screen not displaying the values contained in
-      // the circadian.json file.
-      //
-      // This anonymous function is called only once, when the app
-      // is launched (or restarted).
-      loadFileNameNoMsg('circadian.json');
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    ScreenMixin.setAppVerticalTopMargin(screenHeight);
-    TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
-    transferDataViewModel.transferDataMap =
-        _screenNavigTransData.transferDataMap;
-
     // data for CurvedNavigationBar
 
-    final List<StatefulWidget> screensLst = [
+    _screensLst = [
       CalculateSleepDuration(
           screenNavigTransData: _screenNavigTransData,
-          transferDataViewModel: transferDataViewModel),
+          transferDataViewModel: widget.transferDataViewModel),
       DateTimeDifferenceDuration(
         screenNavigTransData: _screenNavigTransData,
-        transferDataViewModel: transferDataViewModel,
+        transferDataViewModel: widget.transferDataViewModel,
       ),
       AddDurationToDateTime(
         screenNavigTransData: _screenNavigTransData,
-        transferDataViewModel: transferDataViewModel,
+        transferDataViewModel: widget.transferDataViewModel,
       ),
       TimeCalculator(
         screenNavigTransData: _screenNavigTransData,
-        transferDataViewModel: transferDataViewModel,
+        transferDataViewModel: widget.transferDataViewModel,
       ),
     ];
 
-    final List<String> screenTitlesLst = [
+    _screenTitlesLst = [
       ScreenMixin.CALCULATR_SLEEP_DURATION_TITLE,
       ScreenMixin.DATE_TIME_DIFF_DURATION_TITLE,
       ScreenMixin.APP_DURATION_TO_DATE_TIME_TITLE,
       ScreenMixin.TIME_CALCULATOR_TITLE,
     ];
 
-    final List<Widget> curvedNavigationBarItemIconsLst = [
+    _curvedNavigationBarItemIconsLst = [
       Image.asset(
         "images/calc_sleep_duration_blue_trans.png",
         width: 36,
@@ -280,6 +269,26 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ),
     ];
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Adds a call back function called after the _MainAppState
+      // build() method has been executed. This solves the problem
+      // of the first screen not displaying the values contained in
+      // the circadian.json file.
+      //
+      // This anonymous function is called only once, when the app
+      // is launched (or restarted).
+      loadFileNameNoMsg('circadian.json');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    ScreenMixin.setAppVerticalTopMargin(screenHeight);
+    TransferDataViewModel transferDataViewModel = widget.transferDataViewModel;
+    transferDataViewModel.transferDataMap =
+        _screenNavigTransData.transferDataMap;
+
     /// For iOS platform: SafeArea and ClipRect needed
     return SafeArea(
       child: Container(
@@ -290,7 +299,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           appBar: AppBar(
             backgroundColor: ScreenMixin.APP_DARK_BLUE_COLOR,
             title: Text(
-              screenTitlesLst[_currentIndex],
+              _screenTitlesLst[_currentIndex],
               style: TextStyle(
                 color: ScreenMixin.APP_LIGHTER_YELLOW_COLOR,
               ),
@@ -490,33 +499,63 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                         ),
                         child: SizedBox(
                             height: screenHeight - 80, // ok on S8
-                            child: screensLst[_currentIndex]),
+                            child: _screensLst[_currentIndex]),
                       ),
                       Positioned(
                         left: 0,
                         right: 0,
-                        top: screenHeight - 125, // ok on S8
+                        top: screenHeight - 200, // ok on S8
                         child: Theme(
                           data: Theme.of(context).copyWith(
                             iconTheme: IconThemeData(
                               color: ScreenMixin.APP_DARK_BLUE_COLOR,
                             ),
                           ),
-                          child: CurvedNavigationBar(
-                            key: _navigationKey,
-                            color: Colors.white,
-                            buttonBackgroundColor:
-                                ScreenMixin.APP_LIGHT_YELLOW_COLOR,
-                            backgroundColor: Colors.transparent,
-                            height: 55,
-                            animationCurve: Curves.easeInOut,
-                            animationDuration:
-                                const Duration(milliseconds: 500),
-                            index: _currentIndex,
-                            items: curvedNavigationBarItemIconsLst,
-                            onTap: (index) => setState(() {
-                              _currentIndex = index;
-                            }),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    key: const Key('resetButton'),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            appElevatedButtonBackgroundColor,
+                                        shape: appElevatedButtonRoundedShape),
+                                    onPressed: _resetScreen,
+                                    child: const Text(
+                                      'Reset',
+                                      style: TextStyle(
+                                        fontSize:
+                                            ScreenMixin.APP_TEXT_FONT_SIZE,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CurvedNavigationBar(
+                                key: _navigationKey,
+                                color: Colors.white,
+                                buttonBackgroundColor:
+                                    ScreenMixin.APP_LIGHT_YELLOW_COLOR,
+                                backgroundColor: Colors.transparent,
+                                height: 55,
+                                animationCurve: Curves.easeInOut,
+                                animationDuration:
+                                    const Duration(milliseconds: 500),
+                                index: _currentIndex,
+                                items: _curvedNavigationBarItemIconsLst,
+                                onTap: (index) => setState(() {
+                                  _currentIndex = index;
+                                }),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -529,6 +568,11 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
         ),
       ),
     );
+  }
+
+  void _resetScreen() {
+    print('Reset screen ${_screenNavigTransData.transferDataMap['currentScreenStateInstance']}');
+    _screenNavigTransData.transferDataMap['currentScreenStateInstance'].resetScreen();
   }
 
   /// Private method returning the Save as file name string.

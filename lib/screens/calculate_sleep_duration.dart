@@ -525,8 +525,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap();
   }
 
-  /// Private method called when clicking on 'Reset' button.
-  void _resetScreen() {
+  /// Public method called when clicking on Main screen'Reset' button.
+  void resetScreen() {
     String okButtonStr = 'Ok';
     Widget cancelButton = TextButton(
       child: const Text("Cancel"),
@@ -1240,13 +1240,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ],
                     ),
                   ),
-            SizedBox(
-              height: screenHeight *
-                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
-            ),
-            ResetButton(
-              onPress: _resetScreen,
-            ),
             Positioned(
               right: 0,
               top: -4,

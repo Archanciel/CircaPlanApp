@@ -178,7 +178,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     setState(() {});
   }
 
-  void _resetScreen() {
+  /// Public method called when clicking on Main screen'Reset' button.
+  void resetScreen() {
     // When resetting the 1dt screen, its Start date time is set
     // to the last date time value added to the 3rd screen.
     String thirdScreenLastDateTimeFrenchFormatStr =
@@ -503,13 +504,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
               child: Column(
                 children: const [],
               ),
-            ),
-            SizedBox(
-              height: screenHeight *
-                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
-            ),
-            ResetButton(
-              onPress: _resetScreen,
             ),
             Positioned(
               right: 2,

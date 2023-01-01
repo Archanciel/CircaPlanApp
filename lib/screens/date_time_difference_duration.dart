@@ -204,7 +204,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  void _resetScreen() {
+  /// Public method called when clicking on Main screen'Reset' button.
+  void resetScreen() {
     _startDateTimeStr = '';
     _endDateTimeStr = '';
     _durationStr = '';
@@ -447,13 +448,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: screenHeight *
-                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
-            ),
-            ResetButton(
-              onPress: _resetScreen,
             ),
             Align(
               alignment: Alignment.bottomLeft,

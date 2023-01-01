@@ -233,7 +233,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _transferDataViewModel.updateAndSaveTransferData();
   }
 
-  void _resetScreen() {
+  /// Public method called when clicking on Main screen'Reset' button.
+  void resetScreen() {
     _firstTimeStr = '00:00:00';
     _firstTimeTextFieldController.text = _firstTimeStr;
     _secondTimeStr = '00:00:00';
@@ -745,13 +746,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: screenHeight *
-                  ScreenMixin.APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION,
-            ),
-            ResetButton(
-              onPress: _resetScreen,
             ),
 /*            Align(
               alignment: Alignment.bottomLeft,
