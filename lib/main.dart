@@ -469,10 +469,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             ],
           ),
           body: DraggableScrollableSheet(
-            initialChildSize: 1.0,
+            initialChildSize: 1.0, // necessary to use full screen surface
             builder:
                 (BuildContext context, ScrollController scrollController) {
-              return SingleChildScrollView(
+              return SingleChildScrollView( // necessary for scrolling to work
                 child: GestureDetector(
                   // enables that when clicking above or below a
                   // TextField, the keyboard is hidden. Otherwise,
