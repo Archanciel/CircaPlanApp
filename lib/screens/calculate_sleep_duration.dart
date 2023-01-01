@@ -1220,13 +1220,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             decoration:
                                 const InputDecoration.collapsed(hintText: ''),
                             controller: _sleepDurationCommentController,
-                            // prevents displaying copy paste menu !
-                            toolbarOptions: const ToolbarOptions(
-                                copy: false,
-                                paste: false,
-                                cut: false,
-                                selectAll: false),
-                             onChanged: (value) {
+                            onChanged: (value) {
                               // neither onSubmitted nor onEditingComplete
                               // work on multiline TextField !!!
                               if (value.endsWith("\n")) {
