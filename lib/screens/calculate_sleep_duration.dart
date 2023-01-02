@@ -1223,14 +1223,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               // work on multiline TextField !!!
                               if (value.endsWith("\n")) {
                                 _sleepDurationCommentStr = value.trim();
-                                _sleepDurationCommentController.text =
-                                    _sleepDurationCommentStr;
-                                _sleepDurationCommentController.selection =
-                                    TextSelection.fromPosition(
-                                  TextPosition(
-                                      offset: _sleepDurationCommentController
-                                          .text.length),
-                                );
+
                                 _updateTransferDataMap();
                               }
                             },
