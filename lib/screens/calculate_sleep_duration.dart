@@ -484,10 +484,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpPrevDayTotalPercentStr;
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
-    map['sleepDurationCommentStr'] = _sleepDurationCommentStr;
-
-    // TODO why not working !
-    // map['sleepDurationCommentStr'] = _sleepDurationCommentController.text;
+    map['sleepDurationCommentStr'] = _sleepDurationCommentController.text;
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
@@ -588,9 +585,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepTimeStrHistory = [];
     _wakeUpTimeStrHistory = [];
     _sleepWakeUpHistoryController.text = '';
-    _sleepDurationCommentStr = '';
-    _sleepDurationCommentController.text = _sleepDurationCommentStr;
-
+    _sleepDurationCommentController.text = '';
     _currentSleepPrevDayTotalPercentStr = '';
     _currentSleepPrevDayTotalPercentController.text =
         _currentSleepPrevDayTotalPercentStr;
@@ -1228,6 +1223,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               // work on multiline TextField !!!
                               if (value.endsWith("\n")) {
                                 _sleepDurationCommentStr = value.trim();
+                                _sleepDurationCommentController.text =
+                                    _sleepDurationCommentStr;
+                                _sleepDurationCommentController.selection =
+                                    TextSelection.fromPosition(
+                                  TextPosition(
+                                      offset: _sleepDurationCommentController
+                                          .text.length),
+                                );
                                 _updateTransferDataMap();
                               }
                             },
