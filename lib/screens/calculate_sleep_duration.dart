@@ -1231,13 +1231,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 _updateTransferDataMap();
                               }
                             },
-                            onTap: () async {
-                              await copyToClipboardHHmmExtractedFromHistoryDuration(
-                                  context: context,
-                                  controller: _sleepDurationCommentController);
-                              _transferDataMap['clipboardLastAction'] =
-                                  ClipboardLastAction.copy;
-                            },
                           ),
                         ),
                       ],
