@@ -504,7 +504,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       Positioned(
                         left: 0,
                         right: 0,
-                        top: screenHeight - 200, // ok on S8
+                        top: screenHeight - 195, // ok on S8
                         child: Theme(
                           data: Theme.of(context).copyWith(
                             iconTheme: IconThemeData(
