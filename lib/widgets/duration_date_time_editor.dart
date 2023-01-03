@@ -286,6 +286,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationIcon = Icons.add;
     _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
     _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
+    _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
     _durationTextFieldController.text = _durationStr;
     _editableDateTime.isEndDateTimeFixed = false;
 
