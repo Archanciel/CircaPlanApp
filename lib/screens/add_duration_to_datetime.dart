@@ -43,14 +43,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       required TransferDataViewModel transferDataViewModel})
       : _transferDataMap = transferDataMap,
         _transferDataViewModel = transferDataViewModel,
-        _startDateTimeStr = transferDataMap['addDurStartDateTimeStr'] ??
-            DateTime.now().toString(),
         super();
 
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
 
-  String _startDateTimeStr = '';
+  String _startEnglishFormatDateTimeStr = '';
 
   late TextEditingController _startDateTimePickerController;
   final TextEditingController _addDurationPreferenceNameController =
@@ -144,17 +142,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // String value used to initialize DateTimePicker field
     String nowEnglishFormatDateTimeStr = dateTimeNow.toString();
 
-    String startDateTimeStr = _transferDataMap['addDurStartDateTimeStr'] ??
-        nowEnglishFormatDateTimeStr;
+    String startEnglishFormatDateTimeStr =
+        _transferDataMap['addDurStartDateTimeStr'] ?? '';
 
-    if (startDateTimeStr == "") {
-      // solving a bug ...
-      startDateTimeStr = nowEnglishFormatDateTimeStr;
+    if (startEnglishFormatDateTimeStr == "") {
+      _startEnglishFormatDateTimeStr = nowEnglishFormatDateTimeStr;
+      _startDateTimePickerController = TextEditingController(
+          text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+              englishFormatDateTimeStr: nowEnglishFormatDateTimeStr)!);
+    } else {
+      _startEnglishFormatDateTimeStr = startEnglishFormatDateTimeStr;
+      _startDateTimePickerController = TextEditingController(
+          text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
+              englishFormatDateTimeStr: startEnglishFormatDateTimeStr));
     }
-
-    _startDateTimePickerController = TextEditingController(
-        text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-            englishFormatDateTimeStr: startDateTimeStr)!);
 
     return nowEnglishFormatDateTimeStr;
   }
@@ -173,7 +174,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   void _updateTransferDataMap() {
-    _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
+    _transferDataMap['addDurStartDateTimeStr'] = _startEnglishFormatDateTimeStr;
 
     setState(() {});
   }
@@ -182,16 +183,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   void resetScreen() {
     // When resetting the 1dt screen, its Start date time is set
     // to the last date time value added to the 3rd screen.
-    String thirdScreenLastDateTimeFrenchFormatStr =
+    String sleepDurationScreenLastDateTimeFrenchFormatStr =
         _transferDataMap['calcSlDurPreviousDateTimeStr'];
 
-    if (thirdScreenLastDateTimeFrenchFormatStr == '') {
+    if (sleepDurationScreenLastDateTimeFrenchFormatStr == '') {
       // String value used to initialize DateTimePicker field
-      thirdScreenLastDateTimeFrenchFormatStr =
+      sleepDurationScreenLastDateTimeFrenchFormatStr =
           ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     }
-    _startDateTimeStr = thirdScreenLastDateTimeFrenchFormatStr;
-    _startDateTimePickerController.text = _startDateTimeStr;
+    _startEnglishFormatDateTimeStr =
+        DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+            frenchFormatDateTimeStr:
+                sleepDurationScreenLastDateTimeFrenchFormatStr)!;
+    _startDateTimePickerController.text =
+        sleepDurationScreenLastDateTimeFrenchFormatStr;
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
@@ -203,7 +208,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         resetDateTimeEnglishFormatStr:
             DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
                     frenchFormatDateTimeStr:
-                        thirdScreenLastDateTimeFrenchFormatStr) ??
+                        sleepDurationScreenLastDateTimeFrenchFormatStr) ??
                 '');
   }
 
@@ -329,7 +334,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
 
-    _startDateTimeStr = englishFormatStartDateTimeStr;
+    _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
     _startDateTimePickerController.text = frenchFormatSelectedDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
@@ -343,7 +348,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
-    _startDateTimeStr = englishFormatStartDateTimeStr;
+    _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
     // the AddSubtractResultableDuration widget reset method in order
