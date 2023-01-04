@@ -168,13 +168,47 @@ void main() {
           DateTime oneHourLater =
               DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
 
+          int minuteInt = oneHourLater.minute;
+          String minuteStr;
+
+          if (minuteInt > 9) {
+            minuteStr = minuteInt.toString();
+          } else {
+            minuteStr = '0${minuteInt.toString()}';
+          }
+
+          int hourInt = oneHourLater.hour;
+          String hourStr;
+
+          if (hourInt > 9) {
+            hourStr = hourInt.toString();
+          } else {
+            hourStr = '0${hourInt.toString()}';
+          }
+
+          int monthInt = oneHourLater.month;
+          String monthStr;
+
+          if (monthInt > 9) {
+            monthStr = monthInt.toString();
+          } else {
+            monthStr = '0${monthInt.toString()}';
+          }
+
+          int dayInt = oneHourLater.day;
+          String dayStr;
+
+          if (dayInt > 9) {
+            dayStr = dayInt.toString();
+          } else {
+            dayStr = '0${dayInt.toString()}';
+          }
+
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
               ),
-              (now.minute > 10)
-                  ? '${now.day}-${now.month}-${now.year} ${now.hour + 1}:${now.minute}'
-                  : '${now.day}-${now.month}-${now.year} ${now.hour + 1}:0${now.minute}');
+              '$dayStr-$monthStr-${now.year} ${hourStr}:$minuteStr');
         },
       );
       test(
@@ -182,16 +216,50 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime oneHourLater =
+          DateTime oneHourBefore =
               DateTime(now.year, now.month, now.day, now.hour - 1, now.minute);
+
+          int minuteInt = oneHourBefore.minute;
+          String minuteStr;
+
+          if (minuteInt > 9) {
+            minuteStr = minuteInt.toString();
+          } else {
+            minuteStr = '0${minuteInt.toString()}';
+          }
+
+          int hourInt = oneHourBefore.hour;
+          String hourStr;
+
+          if (hourInt > 9) {
+            hourStr = hourInt.toString();
+          } else {
+            hourStr = '0${hourInt.toString()}';
+          }
+
+          int monthInt = oneHourBefore.month;
+          String monthStr;
+
+          if (monthInt > 9) {
+            monthStr = monthInt.toString();
+          } else {
+            monthStr = '0${monthInt.toString()}';
+          }
+
+          int dayInt = oneHourBefore.day + 1;
+          String dayStr;
+
+          if (dayInt > 9) {
+            dayStr = dayInt.toString();
+          } else {
+            dayStr = '0${dayInt.toString()}';
+          }
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+                alarmHHmmTimeStr: '${oneHourBefore.hour}:${oneHourBefore.minute}',
               ),
-              (now.minute > 10)
-                  ? '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:${now.minute}'
-                  : '${now.day + 1}-${now.month}-${now.year} ${now.hour - 1}:0${now.minute}');
+              '$dayStr-$monthStr-${now.year} ${hourStr}:$minuteStr');
         },
       );
       test(
@@ -390,8 +458,8 @@ void main() {
                 setToTomorrow: true,
               ),
               (now.minute > 10)
-                  ?               '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}'
-                  :               '${now.day + 1}-${now.month}-${now.year} ${now.hour}:0${now.minute}');
+                  ? '${now.day + 1}-${now.month}-${now.year} ${now.hour}:${now.minute}'
+                  : '${now.day + 1}-${now.month}-${now.year} ${now.hour}:0${now.minute}');
         },
       );
     },
