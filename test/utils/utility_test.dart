@@ -973,7 +973,7 @@ void main() {
           'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
 
       test(
-        'first HH:mm, positive 20',
+        'first HH:mm at pos 20',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -984,7 +984,7 @@ void main() {
         },
       );
       test(
-        'first HH:mm, positive 22',
+        'first HH:mm at pos 22',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -995,7 +995,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, positive 56',
+        'last HH:mm at pos 56',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -1006,7 +1006,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, positive 58',
+        'last HH:mm at pos 58',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -1017,7 +1017,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, positive 59 > histoStr length',
+        'last HH:mm at pos 59 > histoStr length',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -1091,7 +1091,7 @@ void main() {
           'Sleep 11-10 12:17: 6:12, 23:00\nWake 11-10 18:29: 0:30, 10:20';
 
       test(
-        'last HH:mm, pos 59',
+        'last HH:mm at pos 59',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -1102,7 +1102,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, pos 60',
+        'last HH:mm at pos 60',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -1113,7 +1113,7 @@ void main() {
         },
       );
       test(
-        'last HH:mm, pos 61 > histoStr length',
+        'last HH:mm at pos 61 > histoStr length',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
