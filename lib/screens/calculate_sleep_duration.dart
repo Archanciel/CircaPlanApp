@@ -488,8 +488,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // storing in transfer data map _sleepDurationCommentController.text
     // instead of _sleepDurationCommentStr which is updated only if Enter
     // was clicked after entering a new line ensure that the last comment
-    // value is stored in case Enter not clicked and one of the two Add 
-    // buttons was clicked ! This is due to the fact that the 
+    // value is stored in case Enter not clicked and one of the two Add
+    // buttons was clicked ! This is due to the fact that the
     // _sleepDurationCommentController.text is updated each time he user
     // does an edition action.
     map['sleepDurationCommentStr'] = _sleepDurationCommentController.text;
