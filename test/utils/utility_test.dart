@@ -967,7 +967,7 @@ void main() {
     },
   );
   group(
-    'extractHHmmAtPosition() end line H:mm',
+    'extractHHmmAtPosition(), end line H:mm, positive times',
     () {
       String histoStr =
           'Sleep 11-10 12:17: 6:12, 3:00\nWake 11-10 18:29: 0:30, 0:20';
@@ -1085,7 +1085,7 @@ void main() {
     },
   );
   group(
-    'extractHHmmAtPosition() end line HH:mm',
+    'extractHHmmAtPosition(), end line HH:mm, positive times',
     () {
       String histoStr =
           'Sleep 11-10 12:17: 6:12, 23:00\nWake 11-10 18:29: 0:30, 10:20';
