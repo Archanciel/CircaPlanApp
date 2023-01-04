@@ -298,13 +298,13 @@ class Utility {
 
     if (rightIdx == -1) {
       // the case if the position is on the last HH:mm value
-      rightIdx = dataStr.lastIndexOf(RegExp(r'\d')) + 1;
+      rightIdx = dataStr.lastIndexOf(RegExp(r'-|\d')) + 1;
     }
 
     extractedHHmmStr = dataStr.substring(leftIdx, rightIdx);
 
     if (extractedHHmmStr.contains(RegExp(r'\D'))) {
-      RegExpMatch? match = RegExp(r'\d+:\d+').firstMatch(extractedHHmmStr);
+      RegExpMatch? match = RegExp(r'(-|\d)+:\d+').firstMatch(extractedHHmmStr);
 
       if (match != null) {
         extractedHHmmStr = match.group(0) ?? '';

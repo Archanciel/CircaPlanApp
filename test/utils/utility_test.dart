@@ -1061,7 +1061,7 @@ void main() {
         },
       );
       test(
-        'Wake date time at pos 33',
+        'Wake date time at pos 30',
         () {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
@@ -1162,6 +1162,209 @@ void main() {
           String extractedHHmm = Utility.extractHHmmAtPosition(
             dataStr: histoStr,
             pos: 40,
+          );
+
+          expect(extractedHHmm, '18:29');
+        },
+      );
+    },
+  );
+group(
+    'extractHHmmAtPosition(), end line H:mm, negative times',
+    () {
+      String histoStr =
+          'Sleep 11-10 12:17: 6:12, -3:00\nWake 11-10 18:29: 0:30, -0:20';
+
+      test(
+        'first HH:mm at pos 20',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 20,
+          );
+
+          expect(extractedHHmm, '6:12');
+        },
+      );
+      test(
+        'first HH:mm at pos 22',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 22,
+          );
+
+          expect(extractedHHmm, '6:12');
+        },
+      );
+      test(
+        'last HH:mm at pos 57',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 57,
+          );
+
+          expect(extractedHHmm, '-0:20');
+        },
+      );
+      test(
+        'last HH:mm at pos 59',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 59,
+          );
+
+          expect(extractedHHmm, '-0:20');
+        },
+      );
+      test(
+        'last HH:mm at pos 61 > histoStr length',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 61,
+          );
+
+          expect(extractedHHmm, '');
+        },
+      );
+      test(
+        'Sleep date time at pos 0',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 0,
+          );
+
+          expect(extractedHHmm, '12:17');
+        },
+      );
+      test(
+        'Sleep date time at pos 3',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 3,
+          );
+
+          expect(extractedHHmm, '12:17');
+        },
+      );
+      test(
+        'Sleep date time at pos 13',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 13,
+          );
+
+          expect(extractedHHmm, '12:17');
+        },
+      );
+      test(
+        'Wake date time at pos 31',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 31,
+          );
+
+          expect(extractedHHmm, '18:29');
+        },
+      );
+      test(
+        'Wake date time at pos 40',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 40,
+          );
+
+          expect(extractedHHmm, '18:29');
+        },
+      );
+    },
+  );
+  group(
+    'extractHHmmAtPosition(), end line HH:mm, negative times',
+    () {
+      String histoStr =
+          'Sleep 11-10 12:17: 6:12, -23:00\nWake 11-10 18:29: -0:30, -10:20';
+
+      test(
+        'last HH:mm at pos 59',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 59,
+          );
+
+          expect(extractedHHmm, '-10:20');
+        },
+      );
+      test(
+        'last HH:mm at pos 61',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 61,
+          );
+
+          expect(extractedHHmm, '-10:20');
+        },
+      );
+      test(
+        'last HH:mm at pos 64 > histoStr length',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 64,
+          );
+
+          expect(extractedHHmm, '');
+        },
+      );
+      test(
+        'Wake date time at pos 30',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 29,
+          );
+
+          expect(extractedHHmm, '-23:00');
+        },
+      );
+      test(
+        'Wake date time at pos 31',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 31,
+          );
+
+          expect(extractedHHmm, '-23:00');
+        },
+      );
+      test(
+        'Wake date time at pos 32',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 32,
+          );
+
+          expect(extractedHHmm, '18:29');
+        },
+      );
+      test(
+        'Wake date time at pos 41',
+        () {
+          String extractedHHmm = Utility.extractHHmmAtPosition(
+            dataStr: histoStr,
+            pos: 41,
           );
 
           expect(extractedHHmm, '18:29');
