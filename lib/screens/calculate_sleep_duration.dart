@@ -510,7 +510,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     /// is pressed.
     DateTime? newDateTime;
 
-    newDateTime = DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeStr);
+    newDateTime =
+        // parsing _newDateTimeController.text instead of _newDateTimeStr
+        // enables the user to edit the New date time TextField and then
+        // click on the + or - button with + or - to be implemented on
+        // the edited value.
+        //
+        // Example: 
+        // click on Now -> 01-01-2023 16:31. Then edit it to 01-01-2023 16:00.
+        // Then click on - button -> 01-01-2023 15:59 and not 01-01-2023 16:30 ! 
+        DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeController.text);
 
     if (newDateTime == null) {
       displayWarningDialog(context,
