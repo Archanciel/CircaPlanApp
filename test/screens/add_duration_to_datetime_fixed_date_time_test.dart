@@ -69,6 +69,9 @@ Future<void> main() async {
     "divideFirstBySecondCheckBox": false,
   };
 
+  // files in this local test dir are stored in
+  // project test_data dir updated
+  // on GitHub
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
@@ -182,7 +185,7 @@ Future<void> main() async {
           expect(firstDateTimeCheckBox.value, true);
 
           // Now updating Start date time 3 hours later
-          
+
           editableStartDateTime.dateTimePickerController.text =
               "12-07-2022 13:00";
           firstDurationDateTimeEditorWidget.setStartDateTimeStr(
@@ -280,8 +283,7 @@ Future<void> main() async {
               thirdDurationDateTimeEditorWidget
                   .dateTimePickerControllerTst.text,
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: "2022-07-13 11:00" 
-              ));
+                  englishFormatDateTimeStr: "2022-07-13 11:00"));
 
           expect(
             thirdDurationDateTimeEditorWidget.durationStrTst,

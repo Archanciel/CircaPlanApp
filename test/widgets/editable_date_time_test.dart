@@ -9,6 +9,9 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 Future<void> main() async {
+  // files in this local test dir are stored in
+  // project test_data dir updated
+  // on GitHub
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();

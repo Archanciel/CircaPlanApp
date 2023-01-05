@@ -69,6 +69,9 @@ Future<void> main() async {
     "divideFirstBySecondCheckBox": false,
   };
 
+  // files in this local test dir are stored in
+  // project test_data dir updated
+  // on GitHub
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();

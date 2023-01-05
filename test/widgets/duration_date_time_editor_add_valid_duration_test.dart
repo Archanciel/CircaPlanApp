@@ -11,6 +11,9 @@ import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 /// specifically handling integer duration setting in place of
 /// defining HH:mm durations.
 Future<void> main() async {
+  // files in this local test dir are stored in
+  // project test_data dir updated
+  // on GitHub
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();

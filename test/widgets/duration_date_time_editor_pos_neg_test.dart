@@ -11,6 +11,9 @@ import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 /// specifically handling integer duration setting in place of
 /// defining HH:mm durations.
 Future<void> main() async {
+  // files in this local test dir are stored in
+  // project test_data dir updated
+  // on GitHub
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
@@ -71,8 +74,8 @@ Future<void> main() async {
           expect(find.text('11-08-2022 12:00'), findsOneWidget);
 
           // testing the duration text field color
-          TextField durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          TextField durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -97,8 +100,8 @@ Future<void> main() async {
           expect(find.text('11-08-2022 08:00'), findsOneWidget);
 
           // testing the duration text field color
-          durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -116,8 +119,8 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           // testing the duration text field color
-          durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -135,8 +138,8 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           // testing the duration text field color
-          durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -191,8 +194,8 @@ Future<void> main() async {
               editableDateTimeTextField.controller!.text, '11-08-2022 08:00');
 
           // testing the duration text field color
-          TextField durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          TextField durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -230,8 +233,8 @@ Future<void> main() async {
               editableDateTimeTextField.controller!.text, '11-08-2022 07:00');
 
           // testing the duration text field color
-          durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -249,8 +252,8 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           // testing the duration text field color
-          durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -268,8 +271,8 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           // testing the duration text field color
-          durationTextField =
-              tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+          durationTextField = tester
+              .widget(find.byKey(const Key('manuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 

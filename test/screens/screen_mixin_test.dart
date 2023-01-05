@@ -11,6 +11,9 @@ class TestClassWithScreenMixin with ScreenMixin {}
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool mustAppDirBeDeleted = false,
 }) async {
+  // files in this local test dir are stored in
+  // project test_data dir updated
+  // on GitHub
   String path = kCircadianAppDataTestDir;
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();

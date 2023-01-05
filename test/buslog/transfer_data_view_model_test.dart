@@ -50,6 +50,9 @@ void main() {
             "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30"]}',
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -128,6 +131,9 @@ void main() {
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -188,6 +194,9 @@ void main() {
             "dtDurationTotalPercentStr": "90 %",
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -242,6 +251,9 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -342,6 +354,9 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -513,7 +528,8 @@ void main() {
               '01:00'
             ],
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
-            "sleepDurationCommentStr": "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
+            "sleepDurationCommentStr":
+                "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -529,6 +545,9 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -762,7 +781,8 @@ void main() {
               '01:00'
             ],
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
-            "sleepDurationCommentStr": "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
+            "sleepDurationCommentStr":
+                "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
@@ -778,6 +798,9 @@ void main() {
             "divideFirstBySecondCheckBox": false,
           };
 
+          // files in this local test dir are stored in
+          // project test_data dir updated
+          // on GitHub
           String path = kCircadianAppDataTestDir;
           final Directory directory = Directory(path);
           bool directoryExists = await directory.exists();
@@ -814,22 +837,22 @@ void main() {
           expect(
               loadedAddDurationToDateTimeData.toString(),
               'addDurationStartDateTimeStr: 2022-07-12 16:00:26.486627\n'
-            'firstDurationIconType: DurationIconType.add\n'
-            'firstDurationStr: 00:50\n'
-            'firstStartDateTimeStr: 12-07-2022 16:00\n'
-            'firstEndDateTimeStr: 12-07-2022 16:50\n'
-            'firstEndDateTimeCheckbox: true\n'
-            'secondDurationIconType: DurationIconType.subtract\n'
-            'secondDurationStr: 02:00\n'
-            'secondStartDateTimeStr: 12-07-2022 16:00\n'
-            'secondEndDateTimeStr: 12-07-2022 14:00\n'
-            'secondEndDateTimeCheckbox: false\n'
-            'thirdDurationIconType: DurationIconType.subtract\n'
-            'thirdDurationStr: 00:00\n'
-            'thirdStartDateTimeStr: 12-07-2022 16:00\n'
-            'thirdEndDateTimeStr: 12-07-2022 16:00\n'
-            'thirdEndDateTimeCheckbox: true\n'
-            'preferredDurationsItemsStr: ');
+              'firstDurationIconType: DurationIconType.add\n'
+              'firstDurationStr: 00:50\n'
+              'firstStartDateTimeStr: 12-07-2022 16:00\n'
+              'firstEndDateTimeStr: 12-07-2022 16:50\n'
+              'firstEndDateTimeCheckbox: true\n'
+              'secondDurationIconType: DurationIconType.subtract\n'
+              'secondDurationStr: 02:00\n'
+              'secondStartDateTimeStr: 12-07-2022 16:00\n'
+              'secondEndDateTimeStr: 12-07-2022 14:00\n'
+              'secondEndDateTimeCheckbox: false\n'
+              'thirdDurationIconType: DurationIconType.subtract\n'
+              'thirdDurationStr: 00:00\n'
+              'thirdStartDateTimeStr: 12-07-2022 16:00\n'
+              'thirdEndDateTimeStr: 12-07-2022 16:00\n'
+              'thirdEndDateTimeCheckbox: true\n'
+              'preferredDurationsItemsStr: ');
           expect(loadedAddDurationToDateTimeData.screenDataType,
               ScreenDataType.addDurationToDateTimeData);
           expect(loadedAddDurationToDateTimeData.addDurationStartDateTimeStr,
@@ -840,8 +863,8 @@ void main() {
               '00:50');
           expect(loadedAddDurationToDateTimeData.firstAddDurationEndDateTimeStr,
               '12-07-2022 16:50');
-          expect(loadedAddDurationToDateTimeData.firstEndDateTimeCheckbox,
-              true);
+          expect(
+              loadedAddDurationToDateTimeData.firstEndDateTimeCheckbox, true);
           expect(loadedAddDurationToDateTimeData.secondDurationIconType,
               DurationIconType.subtract);
           expect(loadedAddDurationToDateTimeData.secondAddDurationDurationStr,
@@ -849,8 +872,8 @@ void main() {
           expect(
               loadedAddDurationToDateTimeData.secondAddDurationEndDateTimeStr,
               '12-07-2022 14:00');
-          expect(loadedAddDurationToDateTimeData.secondEndDateTimeCheckbox,
-              false);
+          expect(
+              loadedAddDurationToDateTimeData.secondEndDateTimeCheckbox, false);
 
           // currently, those data are not stored in AddDurationToDateTimeData,
           // but only in the transfer data map !
@@ -1005,7 +1028,8 @@ void main() {
               '01:00'
             ],
             "alarmMedicDateTimeStr": '15-12-2022 06:00',
-            "sleepDurationCommentStr": "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
+            "sleepDurationCommentStr":
+                "Mangé 2 pommes + 1 kaki ce matin.\nMangé 2 kakis ce soir.",
             "dtDiffStartDateTimeStr": "2022-07-13 16:09",
             "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
             "dtDiffDurationStr": "24:00",
