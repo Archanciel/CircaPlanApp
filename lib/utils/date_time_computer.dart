@@ -65,6 +65,13 @@ class DateTimeComputer {
   /// dd-MM-yyyy HH:mm it is on tomorrow.
   /// 
   /// In case the passed alarmHHmmTimeStr is invalid, '' is returned.
+  /// 
+  /// If the conditionally set to false setToTomorrow parameter is true,
+  /// then the returned alarm date time string is on tomorrow even the
+  /// passed alarmHHmmTimeStr is after the current time. This makes
+  /// sense if you click on the alarm yes button whwn the alarm was
+  /// diaplayed before the alarm time (for example at 5:30 when the 
+  /// alarm time is 6:00 !).
   static String computeTodayOrTomorrowAlarmFrenchDateTimeStr({
     required String alarmHHmmTimeStr,
     bool setToTomorrow = false,
