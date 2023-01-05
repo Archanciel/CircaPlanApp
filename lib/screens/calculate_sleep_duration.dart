@@ -516,9 +516,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // click on the + or - button with + or - to be implemented on
         // the edited value.
         //
-        // Example: 
+        // Example:
         // click on Now -> 01-01-2023 16:31. Then edit it to 01-01-2023 16:00.
-        // Then click on - button -> 01-01-2023 15:59 and not 01-01-2023 16:30 ! 
+        // Then click on - button -> 01-01-2023 15:59 and not 01-01-2023 16:30 !
         DateTimeParser.parseDDMMYYYYDateTime(_newDateTimeController.text);
 
     if (newDateTime == null) {
@@ -1216,6 +1216,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         Text(
                           'Comment',
                           style: labelTextStyle,
+                        ),
+                        const SizedBox(
+                          height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                         ),
                         Theme(
                           data: Theme.of(context).copyWith(
