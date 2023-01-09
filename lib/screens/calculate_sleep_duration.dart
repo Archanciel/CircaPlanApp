@@ -1149,9 +1149,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
                               SizedBox(
                                 width: 200,
                                 child: TextField(
@@ -1182,9 +1179,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(
-                                width: 25,
-                              ),
                               ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor:
