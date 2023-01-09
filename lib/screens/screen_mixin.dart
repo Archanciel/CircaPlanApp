@@ -560,4 +560,26 @@ mixin ScreenMixin {
       ),
     );
   }
+
+  /// Mmethod returning the Save as file name string.
+  String getSaveAsFileName({
+    required Map<String, dynamic> transferDataMap,
+    required TransferDataViewModel transferDataViewModel,
+  }) {
+    if (transferDataMap.isEmpty) {
+      return '';
+    }
+
+    String? calcSlDurNewDateTimeStr =
+        transferDataMap['calcSlDurNewDateTimeStr'];
+
+    if (calcSlDurNewDateTimeStr != null) {
+      String jsonFileName = transferDataViewModel
+          .reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+              calcSlDurNewDateTimeStr);
+      return '$jsonFileName.json';
+    } else {
+      return '';
+    }
+  }
 }

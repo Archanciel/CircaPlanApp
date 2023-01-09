@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -318,7 +317,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                 // add icon, by default "3 dot" icon
                 // icon: Icon(Icons.book)
                 itemBuilder: (context) {
-                  String saveAsFileName = _getSaveAsFileName();
+                  String saveAsFileName = getSaveAsFileName(
+                    transferDataMap: _screenNavigTransData.transferDataMap,
+                    transferDataViewModel: widget.transferDataViewModel,
+                  );
 
                   if (saveAsFileName == '') {
                     saveAsFileName = kDefaultJsonFileName;
@@ -373,10 +375,16 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             await transferDataViewModel.saveAsTransferData();
                         String snackBarMsg;
 
+                        String saveAsFileName = getSaveAsFileName(
+                          transferDataMap:
+                              _screenNavigTransData.transferDataMap,
+                          transferDataViewModel: widget.transferDataViewModel,
+                        );
+
                         if (transferDataJsonFileCreated) {
-                          snackBarMsg = '${_getSaveAsFileName()} created';
+                          snackBarMsg = '$saveAsFileName created';
                         } else {
-                          snackBarMsg = '${_getSaveAsFileName()} updated';
+                          snackBarMsg = '$saveAsFileName updated';
                         }
 
                         final CircadianSnackBar snackBar =
@@ -571,30 +579,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   }
 
   void _resetScreen() {
-    print('Reset screen ${_screenNavigTransData.transferDataMap['currentScreenStateInstance']}');
-    _screenNavigTransData.transferDataMap['currentScreenStateInstance'].resetScreen();
-  }
-
-  /// Private method returning the Save as file name string.
-  String _getSaveAsFileName() {
-    Map<String, dynamic> transferDataMap =
-        _screenNavigTransData.transferDataMap;
-
-    if (transferDataMap.isEmpty) {
-      return '';
-    }
-
-    String? calcSlDurNewDateTimeStr =
-        transferDataMap['calcSlDurNewDateTimeStr'];
-
-    if (calcSlDurNewDateTimeStr != null) {
-      String jsonFileName = widget.transferDataViewModel
-          .reformatDateTimeStrToCompatibleEnglishFormattedFileName(
-              calcSlDurNewDateTimeStr);
-      return '$jsonFileName.json';
-    } else {
-      return '';
-    }
+    print(
+        'Reset screen ${_screenNavigTransData.transferDataMap['currentScreenStateInstance']}');
+    _screenNavigTransData.transferDataMap['currentScreenStateInstance']
+        .resetScreen();
   }
 
   MenuItemData _buildSettingsMenuItemLst() {
