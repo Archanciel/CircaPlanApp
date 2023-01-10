@@ -75,8 +75,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] ?? '',
         _currentTotalPrevDayTotalPercentStr =
             transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] ?? '',
-        _sleepDurationCommentStr =
-            transferDataMap['sleepDurationCommentStr'] ?? '',
+
         super();
 
   final Map<String, dynamic> _transferDataMap;
@@ -99,7 +98,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   String _currentWakeUpPrevDayTotalPercentStr;
   String _currentTotalPrevDayTotalPercentStr;
   String _prevDayTotalWakeUpStr = '';
-  String _sleepDurationCommentStr = '';
 
   TextEditingController _newDateTimeController = TextEditingController();
   late TextEditingController _lastDateTimeController;
@@ -441,11 +439,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
 
-    _sleepDurationCommentStr =
-        _transferDataMap['sleepDurationCommentStr'] ?? '';
-
     _sleepDurationCommentController =
-        TextEditingController(text: _sleepDurationCommentStr);
+        TextEditingController(text: _transferDataMap['sleepDurationCommentStr'] ?? '');
 
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
@@ -506,13 +501,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentTotalPrevDayTotalPercentStr;
 
     // storing in transfer data map _sleepDurationCommentController.text
-    // instead of _sleepDurationCommentStr which is updated only if Enter
+    // instead of _sleepDurationCommentStr which was updated only if Enter
     // was clicked after entering a new line ensure that the last comment
     // value is stored in case Enter not clicked and one of the two Add
     // buttons was clicked ! This is due to the fact that the
     // _sleepDurationCommentController.text is updated each time he user
     // does an edition action.
-    map['sleepDurationCommentStr'] = _sleepDurationCommentController.text;
+    map['sleepDurationCommentStr'] = _sleepDurationCommentController.text.trim();
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
@@ -1259,8 +1254,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               // neither onSubmitted nor onEditingComplete
                               // work on multiline TextField !!!
                               if (value.endsWith("\n")) {
-                                _sleepDurationCommentStr = value.trim();
-
                                 _updateTransferDataMap();
                               }
                             },
