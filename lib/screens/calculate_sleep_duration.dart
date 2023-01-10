@@ -1243,8 +1243,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           ),
                           child: TextField(
                             keyboardType: TextInputType.multiline,
-                            // minLines: 1,
-                            maxLines: null,
+                            minLines: 1,
+                            maxLines: 3,
                             autofocus: false,
                             style: valueTextStyle,
                             decoration:
