@@ -75,7 +75,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             transferDataMap['calcSlDurCurrWakeUpPrevDayTotalPercentStr'] ?? '',
         _currentTotalPrevDayTotalPercentStr =
             transferDataMap['calcSlDurCurrTotalPrevDayTotalPercentStr'] ?? '',
-
         super();
 
   final Map<String, dynamic> _transferDataMap;
@@ -439,8 +438,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepWakeUpHistoryController =
         TextEditingController(text: _buildSleepWakeUpHistoryStr());
 
-    _sleepDurationCommentController =
-        TextEditingController(text: _transferDataMap['sleepDurationCommentStr'] ?? '');
+    _sleepDurationCommentController = TextEditingController(
+        text: _transferDataMap['sleepDurationCommentStr'] ?? '');
 
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
@@ -499,15 +498,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpPrevDayTotalPercentStr;
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
-
-    // storing in transfer data map _sleepDurationCommentController.text
-    // instead of _sleepDurationCommentStr which was updated only if Enter
-    // was clicked after entering a new line ensure that the last comment
-    // value is stored in case Enter not clicked and one of the two Add
-    // buttons was clicked ! This is due to the fact that the
-    // _sleepDurationCommentController.text is updated each time he user
-    // does an edition action.
-    map['sleepDurationCommentStr'] = _sleepDurationCommentController.text.trim();
+    map['sleepDurationCommentStr'] =
+        _sleepDurationCommentController.text.trim();
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
@@ -1241,19 +1233,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                             ),
                           ),
-                          child: TextField(
-                            keyboardType: TextInputType.multiline,
-                            minLines: 1,
-                            maxLines: 3,
-                            autofocus: false,
-                            style: valueTextStyle,
-                            decoration:
-                                const InputDecoration.collapsed(hintText: ''),
-                            controller: _sleepDurationCommentController,
-                            onChanged: (value) {
+                          child: Focus(
+                            child: TextField(
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 3,
+                              autofocus: false,
+                              style: valueTextStyle,
+                              decoration:
+                                  const InputDecoration.collapsed(hintText: ''),
+                              controller: _sleepDurationCommentController,
+                            ),
+                            onFocusChange: (bool value) {
                               // neither onSubmitted nor onEditingComplete
                               // work on multiline TextField !!!
-                              if (value.endsWith("\n")) {
+                              if (!value) {
+                                // value bis false if clicking outside the
+                                // textField.
                                 _updateTransferDataMap();
                               }
                             },
