@@ -107,9 +107,11 @@ class MyApp extends StatelessWidget with ScreenMixin {
       debugShowCheckedModeBanner: false,
       title: ScreenMixin.APP_TITLE,
       theme: ThemeData(
-        textSelectionTheme: const TextSelectionThemeData(
+        textSelectionTheme: TextSelectionThemeData(
           cursorColor: ScreenMixin
               .APP_TEXT_AND_ICON_COLOR, // requires with ScreenMixin !
+              selectionColor: selectionColor,
+              selectionHandleColor: selectionColor,
         ),
         dialogTheme: const DialogTheme(
           shape: RoundedRectangleBorder(

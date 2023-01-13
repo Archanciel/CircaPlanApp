@@ -1224,35 +1224,26 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         const SizedBox(
                           height: ScreenMixin.APP_LABEL_TO_TEXT_DISTANCE,
                         ),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                            textSelectionTheme: TextSelectionThemeData(
-                              selectionColor: selectionColor,
-                              selectionHandleColor: selectionColor,
-                              cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-                            ),
+                        Focus(
+                          child: TextField(
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: 3,
+                            autofocus: false,
+                            style: valueTextStyle,
+                            decoration:
+                                const InputDecoration.collapsed(hintText: ''),
+                            controller: _sleepDurationCommentController,
                           ),
-                          child: Focus(
-                            child: TextField(
-                              keyboardType: TextInputType.multiline,
-                              minLines: 1,
-                              maxLines: 3,
-                              autofocus: false,
-                              style: valueTextStyle,
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              controller: _sleepDurationCommentController,
-                            ),
-                            onFocusChange: (bool value) {
-                              // neither onSubmitted nor onEditingComplete
-                              // work on multiline TextField !!!
-                              if (!value) {
-                                // value bis false if clicking outside the
-                                // textField.
-                                _updateTransferDataMap();
-                              }
-                            },
-                          ),
+                          onFocusChange: (bool value) {
+                            // neither onSubmitted nor onEditingComplete
+                            // work on multiline TextField !!!
+                            if (!value) {
+                              // value bis false if clicking outside the
+                              // textField.
+                              _updateTransferDataMap();
+                            }
+                          },
                         ),
                       ],
                     ),
