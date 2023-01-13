@@ -1228,9 +1228,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           data: Theme.of(context).copyWith(
                             textSelectionTheme: TextSelectionThemeData(
                               selectionColor: selectionColor,
-                              // commenting cursorColor discourage manually
-                              // editing the TextField !
-                              // cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+                              selectionHandleColor: selectionColor,
+                              cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
                             ),
                           ),
                           child: Focus(
