@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget with ScreenMixin {
       theme: ThemeData(
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: ScreenMixin
-              .APP_TEXT_AND_ICON_COLOR, // requires with ScreenMixin !
+              .APP_TEXT_AND_ICON_COLOR,
               selectionColor: selectionColor,
               selectionHandleColor: selectionColor,
         ),
