@@ -1128,7 +1128,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(
-                        height: 430,
+                        height: 455,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
