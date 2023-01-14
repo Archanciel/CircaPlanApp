@@ -440,8 +440,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _sleepDurationCommentController = TextEditingController(
         text: _transferDataMap['sleepDurationCommentStr'] ?? '');
+
+    // not working !!! I don't know why !
     _sleepDurationCommentController.selection =
-        TextSelection.fromPosition(const TextPosition(offset: 0));;
+        TextSelection.fromPosition(const TextPosition(offset: 0));
 
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
