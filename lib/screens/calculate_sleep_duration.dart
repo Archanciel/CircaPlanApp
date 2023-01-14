@@ -441,9 +441,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepDurationCommentController = TextEditingController(
         text: _transferDataMap['sleepDurationCommentStr'] ?? '');
 
-    // not working !!! I don't know why !
-    _sleepDurationCommentController.selection =
-        TextSelection.fromPosition(const TextPosition(offset: 0));
+    if (isAfterLoading) {
+      // moving cursor to start position. Works only if
+      // Comment TextField was in edit state !
+      _sleepDurationCommentController.selection =
+          const TextSelection(baseOffset: 0, extentOffset: 0);
+    }
 
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
