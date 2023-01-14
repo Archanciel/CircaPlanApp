@@ -16,7 +16,7 @@ import 'package:circa_plan/model/transfer_data.dart';
 /// the circadian json file.
 class TransferDataViewModel {
   final String _transferDataJsonFilePathName;
-  final TransferData _transferData;
+  TransferData _transferData;
 
   // since the transferDataMap can not be set by the constructor but
   // by calling the corresponding setter, the instance variable must
@@ -374,6 +374,16 @@ class TransferDataViewModel {
       // files. In this case, the transfer data map remains empty.
       return;
     }
+
+    // Reinitializing the _transferData private instance field
+    // avoids that if a json file which does not contain a Comment
+    // entry is loaded after a json file containing a Comment
+    // entry was loaded, the last loaded json file incorrectly
+    // contains the previously loaded Comment entry !
+    //
+    // The TransferData constructor instanciates 4 empty screen
+    // data sub classes.
+    _transferData = TransferData();
 
     await _transferData.loadTransferDataFromFile(
         jsonFilePathName: jsonFilePathName);
