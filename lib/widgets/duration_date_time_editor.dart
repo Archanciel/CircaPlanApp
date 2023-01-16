@@ -326,9 +326,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     int? durationSign,
     bool? wasDurationSignButtonPressed,
   ]) {
-    print(
-        '$_widgetPrefix _editableDateTime.isEndDateTimeFixed ${_editableDateTime.isEndDateTimeFixed}');
-
     if (durationSign != null) {
       _durationSign = durationSign;
     }
