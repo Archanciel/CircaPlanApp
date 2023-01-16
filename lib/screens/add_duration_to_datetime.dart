@@ -64,6 +64,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   // constructor where accessing to mixin data is not possible !
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
+  bool _isPreferredDurationBold = false;
+
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
   /// displayed. Calling this method is necessary since the load function
@@ -282,6 +284,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             preferredDurationsItemStr;
         _transferDataViewModel.updateAndSaveTransferData();
       }
+
+      return;
     }
 
     if (selectedDurationItem == 'Delete') {
@@ -635,6 +639,38 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 ),
               ],
             ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 50,
+                  child: Text('Bold'),
+                ),
+                Theme(
+                  data: ThemeData(
+                    unselectedWidgetColor: Colors.white70,
+                  ),
+                  child: SizedBox(
+                    width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                    height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                    child: Checkbox(
+                      key: const Key('preferredDurationBoldCheckbox'),
+                      value: _isPreferredDurationBold,
+                      onChanged: (value) {
+                        // _transferDataMap['divideFirstBySecondCheckBox'] = value;
+
+                        // // fix bug of not storing checkbox state when
+                        // // closing app after changing checkbox only
+                        // _transferDataViewModel.updateAndSaveTransferData();
+
+                        // setState(() {
+                        _isPreferredDurationBold = value!;
+                        // });
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         actions: [
@@ -642,6 +678,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             onPressed: () {
               _addDurationPreferenceNameController.text = '';
               _addDurationPreferenceValueController.text = '';
+              _isPreferredDurationBold = false;
               submit();
             },
             child: const Text('Cancel'),
@@ -650,6 +687,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
             onPressed: () {
               _addDurationPreferenceNameController.text = '';
               _addDurationPreferenceValueController.text = '';
+              _isPreferredDurationBold = false;
             },
             child: const Text('Clear'),
           ),
