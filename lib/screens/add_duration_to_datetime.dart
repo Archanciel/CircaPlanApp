@@ -586,117 +586,115 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     }
 
     return showDialog<String>(
-      context: context,
-      // so, clicking outside the dialog screen does not close it.
-      // Instead, Cancel button was added ...
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Text('Add new preferred durations menu item'),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          //position
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                const SizedBox(
-                  width: 50,
-                  child: Text('Name'),
-                ),
-                SizedBox(
-                  width: 180,
-                  child: TextField(
-                    autofocus: true,
-                    style: const TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    decoration: const InputDecoration(hintText: ''),
-                    controller: _addDurationPreferenceNameController,
-                    onSubmitted: (_) => submit(),
-                    keyboardType: TextInputType.name,
+        context: context,
+        // so, clicking outside the dialog screen does not close it.
+        // Instead, Cancel button was added ...
+        barrierDismissible: false,
+        builder: (context) {
+          // since AlertDialog is stateless, checkbox does not work.
+          // Using StatefulBuilder solves the problem.
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Add new preferred durations menu item'),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                //position
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 50,
+                        child: Text('Name'),
+                      ),
+                      SizedBox(
+                        width: 180,
+                        child: TextField(
+                          autofocus: true,
+                          style: const TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          keyboardType: TextInputType.name,
+                        ),
+                      ),
+                    ],
                   ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 50,
+                        child: Text('Value'),
+                      ),
+                      SizedBox(
+                        width: 180,
+                        child: TextField(
+                          autofocus: true,
+                          style: const TextStyle(
+                              fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                              fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          decoration: const InputDecoration(hintText: ''),
+                          controller: _addDurationPreferenceValueController,
+                          onSubmitted: (_) => submit(),
+                          keyboardType: TextInputType.datetime,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 50,
+                        child: Text('Bold'),
+                      ),
+                      Theme(
+                        data: ThemeData(
+                          unselectedWidgetColor: Colors.white70,
+                        ),
+                        child: SizedBox(
+                          width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                          height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                          child: Checkbox(
+                            key: const Key('preferredDurationBoldCheckbox'),
+                            value: _isPreferredDurationBold,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  _isPreferredDurationBold = value!;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    _addDurationPreferenceNameController.text = '';
+                    _addDurationPreferenceValueController.text = '';
+                    _isPreferredDurationBold = false;
+                    submit();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _addDurationPreferenceNameController.text = '';
+                    _addDurationPreferenceValueController.text = '';
+                    _isPreferredDurationBold = false;
+                  },
+                  child: const Text('Clear'),
+                ),
+                TextButton(
+                  onPressed: submit,
+                  child: const Text('Add menu item'),
                 ),
               ],
-            ),
-            Row(
-              children: [
-                const SizedBox(
-                  width: 50,
-                  child: Text('Value'),
-                ),
-                SizedBox(
-                  width: 180,
-                  child: TextField(
-                    autofocus: true,
-                    style: const TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    decoration: const InputDecoration(hintText: ''),
-                    controller: _addDurationPreferenceValueController,
-                    onSubmitted: (_) => submit(),
-                    keyboardType: TextInputType.datetime,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const SizedBox(
-                  width: 50,
-                  child: Text('Bold'),
-                ),
-                Theme(
-                  data: ThemeData(
-                    unselectedWidgetColor: Colors.white70,
-                  ),
-                  child: SizedBox(
-                    width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                    height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                    child: Checkbox(
-                      key: const Key('preferredDurationBoldCheckbox'),
-                      value: _isPreferredDurationBold,
-                      onChanged: (value) {
-                        // _transferDataMap['divideFirstBySecondCheckBox'] = value;
-
-                        // // fix bug of not storing checkbox state when
-                        // // closing app after changing checkbox only
-                        // _transferDataViewModel.updateAndSaveTransferData();
-
-                        // setState(() {
-                        _isPreferredDurationBold = value!;
-                        // });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              _addDurationPreferenceNameController.text = '';
-              _addDurationPreferenceValueController.text = '';
-              _isPreferredDurationBold = false;
-              submit();
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              _addDurationPreferenceNameController.text = '';
-              _addDurationPreferenceValueController.text = '';
-              _isPreferredDurationBold = false;
-            },
-            child: const Text('Clear'),
-          ),
-          TextButton(
-            onPressed: submit,
-            child: const Text('Add menu item'),
-          ),
-        ],
-      ),
-    );
+            );
+          });
+        });
   }
 }
