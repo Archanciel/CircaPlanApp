@@ -614,6 +614,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           style: const TextStyle(
                               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                               fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                          decoration: const InputDecoration(hintText: ''),
+                          controller: _addDurationPreferenceNameController,
+                          onSubmitted: (_) => submit(),
                           keyboardType: TextInputType.name,
                         ),
                       ),
@@ -685,6 +688,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     _addDurationPreferenceNameController.text = '';
                     _addDurationPreferenceValueController.text = '';
                     _isPreferredDurationBold = false;
+                    setState(() {});
                   },
                   child: const Text('Clear'),
                 ),
