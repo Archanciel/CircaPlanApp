@@ -441,7 +441,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _sleepDurationCommentController = TextEditingController(
         text: _transferDataMap['sleepDurationCommentStr'] ?? '');
     _sleepDurationCommentController.selection =
-        TextSelection.fromPosition(const TextPosition(offset: 0));;
+        TextSelection.fromPosition(const TextPosition(offset: 0));
+    ;
 
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
@@ -500,8 +501,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _currentWakeUpPrevDayTotalPercentStr;
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
-    map['sleepDurationCommentStr'] =
-        _sleepDurationCommentController.text.trim();
+
+    // addfing a new line improves Comment last line display
+    String sleepDurationCommentStr =
+        '${_sleepDurationCommentController.text.trim()}\n';
+    map['sleepDurationCommentStr'] = sleepDurationCommentStr;
+    _sleepDurationCommentController.text = sleepDurationCommentStr;
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
