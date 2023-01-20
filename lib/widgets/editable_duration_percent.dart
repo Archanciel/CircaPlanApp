@@ -114,7 +114,7 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
       widget.selectedPercentTextFieldController.text = '0 %';
     }
 
-    Duration? duration = DateTimeParser.parseHHmmDuration(widget.durationStr);
+    Duration? duration = DateTimeParser.parseHHMMDuration(widget.durationStr);
     String percentDurationStr = '';
 
     if (duration != null) {

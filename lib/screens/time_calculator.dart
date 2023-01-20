@@ -256,9 +256,9 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _firstTimeStr = _firstTimeTextFieldController.text;
     _secondTimeStr = _secondTimeTextFieldController.text;
     Duration? firstTimeDuration =
-        DateTimeParser.parseDDHHMMorHHMMDuration(_firstTimeStr);
+        DateTimeParser.parseDDHHAnyMMorHHAnyMMDuration(_firstTimeStr);
     Duration? secondTimeDuration =
-        DateTimeParser.parseDDHHMMorHHMMDuration(_secondTimeStr);
+        DateTimeParser.parseDDHHAnyMMorHHAnyMMDuration(_secondTimeStr);
 
     Duration resultDuration;
     String warningMsg;

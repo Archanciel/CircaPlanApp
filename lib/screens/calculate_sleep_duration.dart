@@ -160,12 +160,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (_currentSleepDurationStr.isNotEmpty) {
       currentSleepDurationMinutes =
-          DateTimeParser.parseHHmmDuration(_currentSleepDurationStr)!.inMinutes;
+          DateTimeParser.parseHHMMDuration(_currentSleepDurationStr)!.inMinutes;
     }
 
     if (_currentWakeUpDurationStr.isNotEmpty) {
       currentWakeUpDurationMinutes =
-          DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr)!
+          DateTimeParser.parseHHMMDuration(_currentWakeUpDurationStr)!
               .inMinutes;
     }
 
@@ -200,7 +200,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
 
     final int prevDayTotalWakeUpDurationInMinutes =
-        DateTimeParser.parseHHmmDuration(_prevDayTotalWakeUpStr)!.inMinutes;
+        DateTimeParser.parseHHMMDuration(_prevDayTotalWakeUpStr)!.inMinutes;
 
     if (currentSleepDurationMinutes != null) {
       final double currentSleepPrevDayTotalPercent =
@@ -442,7 +442,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         text: _transferDataMap['sleepDurationCommentStr'] ?? '');
     _sleepDurationCommentController.selection =
         TextSelection.fromPosition(const TextPosition(offset: 0));
-    ;
 
     _updateTransferDataMap(isAfterLoading: isAfterLoading);
   }
@@ -724,7 +723,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         Duration wakeUpDuration = newDateTime.difference(previousDateTime);
 
         Duration? currentWakeUpDuration =
-            DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
+            DateTimeParser.parseHHMMDuration(_currentWakeUpDurationStr);
 
         if (currentWakeUpDuration == null) {
           currentWakeUpDuration = wakeUpDuration;
@@ -736,7 +735,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         }
 
         Duration? currentTotalDuration =
-            DateTimeParser.parseHHmmDuration(_currentTotalDurationStr);
+            DateTimeParser.parseHHMMDuration(_currentTotalDurationStr);
 
         if (currentTotalDuration == null) {
           currentTotalDuration = currentWakeUpDuration;
@@ -770,7 +769,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       Duration sleepDuration = newDateTime.difference(previousDateTime);
 
       Duration? currentSleepDuration =
-          DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
+          DateTimeParser.parseHHMMDuration(_currentSleepDurationStr);
 
       if (currentSleepDuration == null) {
         currentSleepDuration = sleepDuration;
@@ -779,7 +778,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       }
 
       Duration? currentTotalDuration =
-          DateTimeParser.parseHHmmDuration(_currentTotalDurationStr);
+          DateTimeParser.parseHHMMDuration(_currentTotalDurationStr);
 
       if (currentTotalDuration == null) {
         currentTotalDuration = currentSleepDuration;
@@ -851,7 +850,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       durationStr: durationStr,
       removeMinusSign: false,
     );
-    Duration? addDuration = DateTimeParser.parseHHmmDuration(durationStr);
+    Duration? addDuration = DateTimeParser.parseHHMMDuration(durationStr);
 
     if (addDuration == null) {
       displayWarningDialog(context,
@@ -859,11 +858,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       return;
     } else {
       Duration? currentSleepDuration =
-          DateTimeParser.parseHHmmDuration(_currentSleepDurationStr);
+          DateTimeParser.parseHHMMDuration(_currentSleepDurationStr);
       Duration? currentWakeUpDuration =
-          DateTimeParser.parseHHmmDuration(_currentWakeUpDurationStr);
+          DateTimeParser.parseHHMMDuration(_currentWakeUpDurationStr);
       Duration? currentTotalDuration =
-          DateTimeParser.parseHHmmDuration(_currentTotalDurationStr);
+          DateTimeParser.parseHHMMDuration(_currentTotalDurationStr);
 
       if (durationStr.contains('-')) {
         if (currentWakeUpDuration == null) {

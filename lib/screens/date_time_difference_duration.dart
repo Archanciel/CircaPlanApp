@@ -2,7 +2,6 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/widgets/editable_duration.dart';
-import 'package:circa_plan/widgets/reset_button.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
@@ -266,7 +265,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     }
 
     Duration? finalDuration;
-    Duration? addTimeDuration = DateTimeParser.parseHHmmDuration(_addTimeStr);
+    Duration? addTimeDuration = DateTimeParser.parseHHMMDuration(_addTimeStr);
 
     if (addTimeDuration != null) {
       finalDuration = diffDuration + addTimeDuration;
@@ -304,7 +303,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       removeMinusSign: false,
     );
     Duration? dialogTimeDuration =
-        DateTimeParser.parseHHmmDuration(dialogTimeStr);
+        DateTimeParser.parseHHMMDuration(dialogTimeStr);
 
     if (dialogTimeDuration == null) {
       displayWarningDialog(context,
@@ -312,7 +311,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       return;
     } else {
       Duration? existingAddTimeDuration =
-          DateTimeParser.parseHHmmDuration(_addTimeStr);
+          DateTimeParser.parseHHMMDuration(_addTimeStr);
 
       if (existingAddTimeDuration == null) {
         existingAddTimeDuration = dialogTimeDuration;
@@ -321,7 +320,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
       }
 
       Duration? startEndDateTimeDiffDuration =
-          DateTimeParser.parseHHmmDuration(_durationStr);
+          DateTimeParser.parseHHMMDuration(_durationStr);
       Duration? finalDuration;
 
       if (startEndDateTimeDiffDuration != null) {
@@ -372,7 +371,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
     String frenchFormatEndDateTimeStr = _endDateTimeController.text;
     DateTime endDateTime =
         ScreenMixin.frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
-    Duration? durationToAdd = DateTimeParser.parseHHmmDuration(durationStr);
+    Duration? durationToAdd = DateTimeParser.parseHHMMDuration(durationStr);
 
     if (durationToAdd != null) {
       DateTime wakingAtDateTime = endDateTime.add(durationToAdd);

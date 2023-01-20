@@ -355,7 +355,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     // int value, like 2 instead of 2:00 !
     _durationTextFieldController.text = _durationStr;
 
-    Duration? duration = DateTimeParser.parseHHmmDuration(_durationStr);
+    Duration? duration = DateTimeParser.parseHHMMDuration(_durationStr);
     DateTime endDateTime;
 
     if (duration != null) {
@@ -499,7 +499,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _transferDataMap['${_widgetPrefix}DurationStr'] = _durationStr;
     _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
-    _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] = _editableDateTime.isEndDateTimeFixed;
+    _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] =
+        _editableDateTime.isEndDateTimeFixed;
 
     setState(() {});
 

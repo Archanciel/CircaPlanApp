@@ -258,7 +258,7 @@ void main() {
         () {
           const String hourMinuteStr = '13:35';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: 13, minutes: 35));
           expect(duration?.HHmm(), hourMinuteStr);
@@ -270,7 +270,7 @@ void main() {
         () {
           const String hourMinuteStr = '3:05';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: 3, minutes: 5));
           expect(duration?.HHmm(), hourMinuteStr);
@@ -282,7 +282,7 @@ void main() {
         () {
           const String hourMinuteStr = '0:05';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: 0, minutes: 5));
           expect(duration?.HHmm(), hourMinuteStr);
@@ -294,7 +294,7 @@ void main() {
         () {
           const String hourMinuteStr = '3:u5';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -306,7 +306,7 @@ void main() {
         () {
           const String hourMinuteStr = '3:5';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -318,7 +318,7 @@ void main() {
         () {
           const String hourMinuteStr = '3-05';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -330,7 +330,7 @@ void main() {
         () {
           const String hourMinuteStr = '3-5';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -342,7 +342,7 @@ void main() {
         () {
           const String hourMinuteStr = '14-12-2022 13:35';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -354,7 +354,7 @@ void main() {
         () {
           const String hourMinuteStr = '14-12 13:35';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -366,7 +366,7 @@ void main() {
         () {
           const String hourMinuteStr = 'a4-2 3:35';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -378,7 +378,7 @@ void main() {
         () {
           const String hourMinuteStr = '-13:35';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: -13, minutes: -35));
           expect(duration?.HHmm(), hourMinuteStr);
@@ -390,7 +390,7 @@ void main() {
         () {
           const String hourMinuteStr = '-3:05';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: -3, minutes: -5));
           expect(duration?.HHmm(), hourMinuteStr);
@@ -402,7 +402,7 @@ void main() {
         () {
           const String hourMinuteStr = '-0:05';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: 0, minutes: -5));
           expect(duration?.HHmm(), hourMinuteStr);
@@ -414,7 +414,7 @@ void main() {
         () {
           const String hourMinuteStr = '-3-05';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -426,7 +426,7 @@ void main() {
         () {
           const String hourMinuteStr = '-3:u5';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -438,7 +438,7 @@ void main() {
         () {
           const String hourMinuteStr = '-3:5';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -450,7 +450,7 @@ void main() {
         () {
           const String hourMinuteStr = '-3-5';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, null);
           expect(duration?.HHmm(), null);
@@ -462,7 +462,7 @@ void main() {
         () {
           const String hourMinuteStr = '-05:06';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: -5, minutes: -6));
           expect(duration?.HHmm(), '-5:06');
@@ -474,7 +474,7 @@ void main() {
         () {
           const String hourMinuteStr = '-5:06';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: -5, minutes: -6));
           expect(duration?.HHmm(), '-5:06');
@@ -486,7 +486,7 @@ void main() {
         () {
           const String hourMinuteStr = '-00:06';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: 0, minutes: -6));
           expect(duration?.HHmm(), '-0:06');
@@ -498,7 +498,7 @@ void main() {
         () {
           const String hourMinuteStr = '-0:06';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: -0, minutes: -6));
           expect(duration?.HHmm(), '-0:06');
@@ -510,7 +510,7 @@ void main() {
         () {
           const String hourMinuteStr = '-15:06';
           final Duration? duration =
-              DateTimeParser.parseHHmmDuration(hourMinuteStr);
+              DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
           expect(duration, const Duration(hours: -15, minutes: -6));
           expect(duration?.HHmm(), '-15:06');
@@ -771,7 +771,8 @@ void main() {
         () {
           const String timeStr = '13:35 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
 
-          List<String> parsedTimeStrLst = DateTimeParser.parseAllHHMMTimeStr(timeStr);
+          List<String> parsedTimeStrLst =
+              DateTimeParser.parseAllHHMMTimeStr(timeStr);
 
           expect(parsedTimeStrLst, ['13:35', '3:05', '0:05', '0:05']);
         },
@@ -782,7 +783,8 @@ void main() {
           const String negativeTimeStr =
               '-13:35 -3:05,-0:05,-3-05 -3:u5, -3:5 -3-5';
 
-          List<String> parsedNegTimeStrLst = DateTimeParser.parseAllHHMMTimeStr(negativeTimeStr);
+          List<String> parsedNegTimeStrLst =
+              DateTimeParser.parseAllHHMMTimeStr(negativeTimeStr);
 
           expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05']);
         },
@@ -797,9 +799,19 @@ void main() {
         () {
           const String timeStr = '10 2 13:35, 5,3 3:05,0:05, 0:05';
 
-          List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
+          List<String> parsedTimeStrLst =
+              DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
 
-          expect(parsedTimeStrLst, ['10:00', '2:00', '13:35', '5:00', '3:00', '3:05', '0:05', '0:05']);
+          expect(parsedTimeStrLst, [
+            '10:00',
+            '2:00',
+            '13:35',
+            '5:00',
+            '3:00',
+            '3:05',
+            '0:05',
+            '0:05'
+          ]);
         },
       );
       test(
@@ -807,19 +819,44 @@ void main() {
         () {
           const String timeStr = '-10 -2 -13:35, 5,-3 3:05,0:05, -0:05';
 
-          List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
+          List<String> parsedTimeStrLst =
+              DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
 
-          expect(parsedTimeStrLst, ['-10:00', '-2:00', '-13:35', '5:00', '-3:00', '3:05', '0:05', '-0:05']);
+          expect(parsedTimeStrLst, [
+            '-10:00',
+            '-2:00',
+            '-13:35',
+            '5:00',
+            '-3:00',
+            '3:05',
+            '0:05',
+            '-0:05'
+          ]);
         },
       );
       test(
         'positive valid and invalid times string',
         () {
-          const String timeStr = '10 2 13:35, 5,3 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
+          const String timeStr =
+              '10 2 13:35, 5,3 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
 
-          List<String> parsedTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
+          List<String> parsedTimeStrLst =
+              DateTimeParser.parseAllIntOrHHMMTimeStr(timeStr);
 
-          expect(parsedTimeStrLst, ['10:00', '2:00', '13:35', '5:00', '3:00', '3:05', '0:05', '0:05', '3:u5', '3:50', '3-05', '3-5']);
+          expect(parsedTimeStrLst, [
+            '10:00',
+            '2:00',
+            '13:35',
+            '5:00',
+            '3:00',
+            '3:05',
+            '0:05',
+            '0:05',
+            '3:u5',
+            '3:50',
+            '3-05',
+            '3-5'
+          ]);
         },
       );
       test(
@@ -828,9 +865,11 @@ void main() {
           const String negativeTimeStr =
               '-13:35 -3:05,-0:05,-3-05 -3:u5, -3:5 -3-5';
 
-          List<String> parsedNegTimeStrLst = DateTimeParser.parseAllIntOrHHMMTimeStr(negativeTimeStr);
+          List<String> parsedNegTimeStrLst =
+              DateTimeParser.parseAllIntOrHHMMTimeStr(negativeTimeStr);
 
-          expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05', '-3-05', '-3:u5', '-3:50', '-3-5']);
+          expect(parsedNegTimeStrLst,
+              ['-13:35', '-3:05', '-0:05', '-3-05', '-3:u5', '-3:50', '-3-5']);
         },
       );
     },

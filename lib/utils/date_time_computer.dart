@@ -32,7 +32,7 @@ class DateTimeComputer {
 
     for (String posNegDurationStr in posNegDurationStrLst) {
       final Duration? posNegDuration =
-          DateTimeParser.parseHHmmDuration(posNegDurationStr);
+          DateTimeParser.parseHHMMDuration(posNegDurationStr);
 
       if (posNegDuration != null) {
         dateTime = dateTime.add(posNegDuration);
@@ -63,14 +63,14 @@ class DateTimeComputer {
   /// Else, i.e. if the passed alarmHHmmTimeStr is before the current
   /// time or is equal to the current time, then the returned
   /// dd-MM-yyyy HH:mm it is on tomorrow.
-  /// 
+  ///
   /// In case the passed alarmHHmmTimeStr is invalid, '' is returned.
-  /// 
+  ///
   /// If the conditionally set to false setToTomorrow parameter is true,
   /// then the returned alarm date time string is on tomorrow even the
   /// passed alarmHHmmTimeStr is after the current time. This makes
   /// sense if you click on the alarm yes button whwn the alarm was
-  /// diaplayed before the alarm time (for example at 5:30 when the 
+  /// diaplayed before the alarm time (for example at 5:30 when the
   /// alarm time is 6:00 !).
   static String computeTodayOrTomorrowAlarmFrenchDateTimeStr({
     required String alarmHHmmTimeStr,
@@ -81,7 +81,7 @@ class DateTimeComputer {
     String formattedAlarmHHmmTimeStr =
         Utility.formatStringDuration(durationStr: alarmHHmmTimeStr);
     Duration? alarmHHmmTimeDuration =
-        DateTimeParser.parseHHmmDuration(formattedAlarmHHmmTimeStr);
+        DateTimeParser.parseHHMMDuration(formattedAlarmHHmmTimeStr);
 
     if (alarmHHmmTimeDuration == null) {
       return '';
