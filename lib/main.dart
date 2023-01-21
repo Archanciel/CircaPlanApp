@@ -108,10 +108,9 @@ class MyApp extends StatelessWidget with ScreenMixin {
       title: ScreenMixin.APP_TITLE,
       theme: ThemeData(
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: ScreenMixin
-              .APP_TEXT_AND_ICON_COLOR,
-              selectionColor: selectionColor,
-              selectionHandleColor: selectionColor,
+          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+          selectionColor: selectionColor,
+          selectionHandleColor: selectionColor,
         ),
         dialogTheme: const DialogTheme(
           shape: RoundedRectangleBorder(
@@ -309,8 +308,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             centerTitle: true,
             actions: [
               PopupMenuButton(
-                constraints:
-                    const BoxConstraints.expand(width: 255, height: 350),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
@@ -351,10 +348,14 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     ),
                     const PopupMenuItem<int>(
                       value: 5,
-                      child: Text("Settings"),
+                      child: Text("Delete ..."),
                     ),
                     const PopupMenuItem<int>(
                       value: 6,
+                      child: Text("Settings ..."),
+                    ),
+                    const PopupMenuItem<int>(
+                      value: 7,
                       child: Text("About ..."),
                     ),
                   ];
@@ -449,6 +450,44 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       }
                     case 5:
                       {
+                        // Delete selected ...
+                        List<String> nonNullablefileNameLst =
+                            getSortedFileNameLstInDir(
+                                transferDataViewModel: transferDataViewModel,
+                                addCircadianJsonFileNameToLst: true);
+
+                        String? lastCreatedJsonFileNameStr;
+
+                        if (nonNullablefileNameLst.isEmpty) {
+                          displayWarningDialog(
+                              context, 'No file available to load !');
+                          return;
+                        }
+
+                        if (nonNullablefileNameLst.length >= 2) {
+                          lastCreatedJsonFileNameStr =
+                              nonNullablefileNameLst[1];
+                        }
+
+                        displayPopupMenu(
+                          context: context,
+                          selMenuDateTimeItemData: MenuItemData(
+                            itemDataStrLst: nonNullablefileNameLst,
+                            stylableItemValueStr: lastCreatedJsonFileNameStr,
+                          ),
+                          posRectangleLTRB: const RelativeRect.fromLTRB(
+                            1.0,
+                            130.0,
+                            0.0,
+                            0.0,
+                          ),
+                          handleSelectedItemFunction: loadFileName,
+                        );
+
+                        break;
+                      }
+                    case 6:
+                      {
                         // Settings selected ...
                         displayPopupMenu(
                           context: context,
@@ -464,7 +503,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
                         break;
                       }
-                    case 6:
+                    case 7:
                       {
                         showAboutDialog(
                           context: context,
