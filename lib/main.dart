@@ -412,9 +412,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           return;
                         }
 
-                        if (nonNullablefileNameLst.length >= 2) {
+                        if (nonNullablefileNameLst.length >= 1) {
                           lastCreatedJsonFileNameStr =
-                              nonNullablefileNameLst[1];
+                              nonNullablefileNameLst[0];
                         }
 
                         displayPopupMenu(

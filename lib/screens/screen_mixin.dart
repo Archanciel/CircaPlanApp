@@ -399,11 +399,6 @@ mixin ScreenMixin {
 
     List<String> sortedFileNameLst = [];
 
-    if (addCircadianJsonFileNameToLst) {
-      sortedFileNameLst.add(nonNullablefileNameLst
-          .firstWhere((element) => element == 'circadian.json'));
-    }
-
     RegExp regExp = RegExp(r'^[\d\- \.]+json');
     List<String> dateTimeFileNameSortedLst =
         nonNullablefileNameLst.where((e) => regExp.hasMatch(e)).toList();
