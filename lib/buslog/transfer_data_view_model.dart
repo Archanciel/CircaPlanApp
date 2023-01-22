@@ -123,6 +123,12 @@ class TransferDataViewModel {
     }
   }
 
+  static void deleteFile(String filePathName) {
+    final File fileToDelete = File(filePathName);
+    
+    fileToDelete.deleteSync();
+  }
+
   /// This method converts the french formatted date time string to
   /// an english formatted date time string with '.' in place of ':'.
   String reformatDateTimeStrToCompatibleEnglishFormattedFileName(

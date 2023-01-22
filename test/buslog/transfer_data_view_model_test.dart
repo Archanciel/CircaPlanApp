@@ -1049,6 +1049,29 @@ void main() {
               expectedLoadedTransferDataMap);
         },
       );
+      test(
+        'TransferDataViewModel deleteFile',
+        () async {
+          String fileName = '2022-12-31 12.55.json';
+          String filePathName =
+              kCircadianAppDataTestDir + Platform.pathSeparator + fileName;
+          File file = File(filePathName);
+
+          if (!await file.exists()) {
+            // Create file
+            file = await File(filePathName).writeAsString('Hello World');
+          }
+
+          bool fileExist = await file.exists();
+          expect(fileExist, true);
+
+          TransferDataViewModel.deleteFile(filePathName);
+
+          file = File(filePathName);
+          fileExist = await file.exists();
+          expect(fileExist, false);
+        },
+      );
     },
   );
 }

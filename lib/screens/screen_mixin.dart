@@ -252,7 +252,7 @@ mixin ScreenMixin {
       ),
     ).then((value) {
       if (value == okValueStr) {
-        okFunction();
+        okFunction(context, dialogContent);
       }
     });
   }

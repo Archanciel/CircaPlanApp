@@ -579,7 +579,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   /// Private method called when 'Reset' is confirmed.
-  void _applyReset() {
+  void _applyReset(BuildContext _, String __) {
     // before resetting the current New date time string, its
     // value, which is the last wake up time, is copied to the
     // 2nd screen start date time map entry.

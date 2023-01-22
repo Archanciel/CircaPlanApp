@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:test/test.dart';
 
@@ -1169,7 +1170,7 @@ void main() {
       );
     },
   );
-group(
+  group(
     'extractHHmmAtPosition(), end line H:mm, negative times',
     () {
       String histoStr =
@@ -1368,6 +1369,57 @@ group(
           );
 
           expect(extractedHHmm, '18:29');
+        },
+      );
+    },
+  );
+  group(
+    'extract file name',
+    () {
+      String fileName = '2022-12-31 12.55.json';
+
+      test(
+        'from filePathName',
+        () {
+          String filePathName =
+              kDownloadAppDir + Platform.pathSeparator + fileName;
+          String extractedFileName =
+              Utility.extractFileName(filePathName: filePathName);
+
+          expect(extractedFileName, fileName);
+        },
+      );
+      test(
+        'from phrase ending with fileName',
+        () {
+          String phraseContainingFileName =
+              'Click on Cancel to avoid deleting ' + fileName;
+          String extractedFileName =
+              Utility.extractFileName(filePathName: phraseContainingFileName);
+
+          expect(extractedFileName, fileName);
+        },
+      );
+      test(
+        'from phrase starting with fileName',
+        () {
+          String phraseContainingFileName =
+              '${fileName}Click on Cancel to avoid deleting ';
+          String extractedFileName =
+              Utility.extractFileName(filePathName: phraseContainingFileName);
+
+          expect(extractedFileName, fileName);
+        },
+      );
+      test(
+        'from phrase containing fileName',
+        () {
+          String phraseContainingFileName =
+              'Click on Cancel ${fileName}to avoid deleting ';
+          String extractedFileName =
+              Utility.extractFileName(filePathName: phraseContainingFileName);
+
+          expect(extractedFileName, fileName);
         },
       );
     },

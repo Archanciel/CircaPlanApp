@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -191,6 +192,49 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
     final CircadianSnackBar snackBar =
         CircadianSnackBar(message: '$selectedFileNameStr loaded');
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  /// Method called after choosing a file to delete in the
+  /// delete file popup menu opened after selecting the
+  /// Delete ... AppBar menu item.
+  void _deleteFileName(String selectedFileNameStr, [BuildContext? context]) {
+    if (context == null) {
+      return;
+    }
+
+    String okButtonStr = 'Ok';
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () => Navigator.pop(context, 'Cancel'),
+    );
+    Widget okButton = TextButton(
+      child: Text(okButtonStr),
+      onPressed: () => Navigator.pop(context, okButtonStr),
+    );
+
+    showAlertDialog(
+      buttonList: [cancelButton, okButton],
+      dialogTitle: 'WARNING - $selectedFileNameStr will be deleted',
+      dialogContent: 'Click on Cancel to avoid deleting $selectedFileNameStr',
+      okValueStr: okButtonStr,
+      okFunction: _applyDelete,
+      context: context,
+    );
+  }
+
+  void _applyDelete(
+    BuildContext context,
+    String dialogContentEndingWithDeletedFileName,
+  ) {
+    String fileName = Utility.extractFileName(
+      filePathName: dialogContentEndingWithDeletedFileName,
+    );
+    String filePathName = kDownloadAppDir + Platform.pathSeparator + fileName;
+    TransferDataViewModel.deleteFile(filePathName);
+    
+    final CircadianSnackBar snackBar =
+        CircadianSnackBar(message: '${fileName} deleted');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -464,9 +508,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           return;
                         }
 
-                        if (nonNullablefileNameLst.length >= 2) {
+                        if (nonNullablefileNameLst.length >= 1) {
                           lastCreatedJsonFileNameStr =
-                              nonNullablefileNameLst[1];
+                              nonNullablefileNameLst[0];
                         }
 
                         displayPopupMenu(
@@ -481,7 +525,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItemFunction: loadFileName,
+                          handleSelectedItemFunction: _deleteFileName,
                         );
 
                         break;
@@ -620,8 +664,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   }
 
   void _resetScreen() {
-    print(
-        'Reset screen ${_screenNavigTransData.transferDataMap['currentScreenStateInstance']}');
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']
         .resetScreen();
   }

@@ -32,7 +32,15 @@ class Utility {
   }
 
   static String extractFileName({required String filePathName}) {
-    return filePathName.split(Platform.pathSeparator).last;
+    RegExp jsonFileNameRegExp = RegExp(r'([\d\- \.]+.json)');
+
+    RegExpMatch? match = jsonFileNameRegExp.firstMatch(filePathName);
+
+    if (match != null) {
+      return match.group(0)!.trim();
+    } else {
+      return '';
+    }
   }
 
   /// Returns a formatted String which can be printed to dislay a
@@ -231,13 +239,13 @@ class Utility {
           RegExpMatch? match = re.firstMatch(durationStr);
           if (match != null) {
             durationStr = '0${match.group(0)}';
-        } else {
-          RegExp re = RegExp(r"^\d{2}:\d{2}:\d+$");
-          RegExpMatch? match = re.firstMatch(durationStr);
-          if (match != null) {
-            durationStr = '${match.group(0)}';
+          } else {
+            RegExp re = RegExp(r"^\d{2}:\d{2}:\d+$");
+            RegExpMatch? match = re.firstMatch(durationStr);
+            if (match != null) {
+              durationStr = '${match.group(0)}';
+            }
           }
-        }
         }
       }
     } else {
@@ -259,7 +267,7 @@ class Utility {
               durationStr = '${match.group(0)}0';
             }
           } else {
-            // the case when copying a 00:hh:mm time text field content to a 
+            // the case when copying a 00:hh:mm time text field content to a
             // duration text field.
             RegExp re = RegExp(r"^00:\d{2}:\d{2}$");
             RegExpMatch? match = re.firstMatch(durationStr);
