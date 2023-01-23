@@ -80,9 +80,8 @@ Future<void> main() async {
     await directory.create();
   }
 
-  String pathSeparator = Platform.pathSeparator;
   String transferDataJsonFilePathName =
-      '${directory.path}${pathSeparator}circadian.json';
+      '${directory.path}${Platform.pathSeparator}circadian.json';
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
