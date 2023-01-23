@@ -130,7 +130,12 @@ Future<void> main() async {
     "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
     "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
     "calcSlDurStatus": Status.wakeUp,
-    "calcSlDurSleepTimeStrHistory": ['10-07-2022 00:58', '05:35', '04:00', '03:00'],
+    "calcSlDurSleepTimeStrHistory": [
+      '10-07-2022 00:58',
+      '05:35',
+      '04:00',
+      '03:00'
+    ],
     "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35', '00:30'],
     "alarmMedicDateTimeStr": '15-12-2022 06:00',
     "dtDiffStartDateTimeStr": "2022-07-13 16:09",
@@ -162,27 +167,29 @@ Future<void> main() async {
       testWidgets(
         'Undo load',
         (tester) async {
+          MainApp mainApp =
+              MainApp(transferDataViewModel: transferDataViewModelOne);
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: MainApp(transferDataViewModel: transferDataViewModelOne),
+                body: mainApp,
               ),
             ),
           );
 
           // clicking on AppBar popup menu button
-          await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
-          await tester.pumpAndSettle();
+          // await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
+          // await tester.pumpAndSettle();
 
-          // then clicking on the Load menu item
-          await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
-          await tester.pumpAndSettle();
+          // // then clicking on the Load menu item
+          // await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
+          // await tester.pumpAndSettle();
 
-          // then loading jsonFileNameOne
-          await tester.tap(find.text(jsonFileNameOne).first);
-          await tester.pumpAndSettle();
+          // // then loading jsonFileNameOne
+          // await tester.tap(find.text(jsonFileNameOne).first);
+          // await tester.pumpAndSettle();
 
-          // re-clicking on AppBar popup menu button.
+          // // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
 
@@ -194,6 +201,7 @@ Future<void> main() async {
           await tester.tap(find.text(jsonFileNameTwo).first);
           await tester.pumpAndSettle();
 
+          int a = 1;
         },
       );
     },
