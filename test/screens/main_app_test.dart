@@ -95,7 +95,7 @@ Future<void> main() async {
     'AppBar menu testing',
     () {
       testWidgets(
-        'Undo load',
+        'Cloud upload then cloud download',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
@@ -105,18 +105,23 @@ Future<void> main() async {
             ),
           );
 
-          final PopupMenuButton popupMenuItem =
-              tester.firstWidget(find.byKey(const Key('appBarPopupMenuButton')))
-                  as PopupMenuButton;
-
+          // clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
+
+          // then clicking on the Upload to cloud menu item.
+          // Menu item selected using its displayed name.
           await tester.tap(find.text('Upload to cloud').first);
           await tester.pumpAndSettle();
 
+          // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
-          await tester.tap(find.byKey(const Key('appBarMenuDownloadFromCloud')).first);
+
+          // then clicking on the Download from cloud menu item.
+          // Menu item selected using its key.
+          await tester
+              .tap(find.byKey(const Key('appBarMenuDownloadFromCloud')).first);
           await tester.pumpAndSettle();
         },
       );
