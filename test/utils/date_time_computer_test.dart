@@ -206,7 +206,7 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${oneHourLater.hour}:${oneHourLater.minute}',
+                alarmHHmmTimeStr: '$hourStr:$minuteStr',
               ),
               '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
         },
@@ -257,7 +257,7 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${oneHourBefore.hour}:${oneHourBefore.minute}',
+                alarmHHmmTimeStr: '$hourStr:$minuteStr',
               ),
               '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
         },
@@ -509,7 +509,7 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${dateTimeNow.hour}:${dateTimeNow.minute}',
+                alarmHHmmTimeStr: '$hourStr:$minuteStr',
               ),
               '$dayStr-$monthStr-${dateTimeNow.year} $hourStr:$minuteStr');
         },
@@ -875,7 +875,7 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${dateTimeNow.hour}:${dateTimeNow.minute}',
+                alarmHHmmTimeStr: '$hourStr:$minuteStr',
                 setToTomorrow: true,
               ),
               '$dayStr-$monthStr-${dateTimeNow.year} $hourStr:$minuteStr');
