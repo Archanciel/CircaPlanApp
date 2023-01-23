@@ -628,6 +628,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     );
   }
 
+  void _deleteFileName(String _, BuildContext? __) {
+
+  }
+
   void _resetScreen() {
     print(
         'Reset screen ${_screenNavigTransData.transferDataMap['currentScreenStateInstance']}');
