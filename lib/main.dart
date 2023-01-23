@@ -308,6 +308,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             centerTitle: true,
             actions: [
               PopupMenuButton(
+                key: Key('appBarPopupMenuButton'),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
@@ -327,34 +328,42 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
                   return [
                     const PopupMenuItem<int>(
+                      key: Key('appBarMenuUndo'),
                       value: 0,
                       child: Text("Undo"),
                     ),
                     PopupMenuItem<int>(
+                      key: Key('appBarMenuSaveAs'),
                       value: 1,
                       child: Text("Save as $saveAsFileName"),
                     ),
                     const PopupMenuItem<int>(
+                      key: Key('appBarMenuLoad'),
                       value: 2,
                       child: Text("Load ..."),
                     ),
                     const PopupMenuItem<int>(
+                      key: Key('appBarMenuUploadToCloud'),
                       value: 3,
                       child: Text("Upload to cloud"),
                     ),
                     const PopupMenuItem<int>(
                       value: 4,
                       child: Text("Download from cloud"),
+                      key: Key('appBarMenuDownloadFromCloud'),
                     ),
                     const PopupMenuItem<int>(
+                      key: Key('appBarMenuDelete'),
                       value: 5,
                       child: Text("Delete ..."),
                     ),
                     const PopupMenuItem<int>(
+                      key: Key('appBarMenuSettings'),
                       value: 6,
                       child: Text("Settings ..."),
                     ),
                     const PopupMenuItem<int>(
+                      key: Key('appBarMenuAbout'),
                       value: 7,
                       child: Text("About ..."),
                     ),
@@ -412,9 +421,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           return;
                         }
 
-                        if (nonNullablefileNameLst.length >= 2) {
+                        if (nonNullablefileNameLst.length >= 1) {
                           lastCreatedJsonFileNameStr =
-                              nonNullablefileNameLst[1];
+                              nonNullablefileNameLst[0];
                         }
 
                         displayPopupMenu(
@@ -436,15 +445,15 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       }
                     case 3:
                       {
-                        // Uploadv to cloud selected ...
-                        print("Upload is selected.");
+                        // Upload to cloud selected ...
+                        print("Upload to cloud is selected.");
 
                         break;
                       }
                     case 4:
                       {
                         // Download from cloud selected ...
-                        print("Download is selected.");
+                        print("Download from cloud is selected.");
 
                         break;
                       }
@@ -464,9 +473,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           return;
                         }
 
-                        if (nonNullablefileNameLst.length >= 2) {
+                        if (nonNullablefileNameLst.length >= 1) {
                           lastCreatedJsonFileNameStr =
-                              nonNullablefileNameLst[1];
+                              nonNullablefileNameLst[0];
                         }
 
                         displayPopupMenu(
@@ -481,7 +490,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItemFunction: loadFileName,
+                          handleSelectedItemFunction: _deleteFileName,
                         );
 
                         break;
