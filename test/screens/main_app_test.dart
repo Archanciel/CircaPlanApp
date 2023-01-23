@@ -13,7 +13,7 @@ import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 
 Future<void> main() async {
-  Map<String, dynamic> transferDataMap = {
+  Map<String, dynamic> transferDataMapOne = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,
     "firstDurationSign": 1,
@@ -52,9 +52,9 @@ Future<void> main() async {
     "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
     "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
     "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
-    "calcSlDurStatus": Status.sleep,
+    "calcSlDurStatus": Status.wakeUp,
     "calcSlDurSleepTimeStrHistory": ['10-07-2022 00:58', '05:35', '04:00'],
-    "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35', '01:00'],
+    "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35'],
     "alarmMedicDateTimeStr": '15-12-2022 06:00',
     "dtDiffStartDateTimeStr": "2022-07-13 16:09",
     "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
@@ -82,249 +82,118 @@ Future<void> main() async {
     await directory.create();
   }
 
-  String transferDataJsonFilePathName =
-      '${directory.path}${Platform.pathSeparator}circadian.json';
-  TransferDataViewModel transferDataViewModel = TransferDataViewModel(
-      transferDataJsonFilePathName: transferDataJsonFilePathName);
-  transferDataViewModel.transferDataMap = transferDataMap;
-  await transferDataViewModel.updateAndSaveTransferData();
-  final ScreenNavigTransData screenNavigTransData =
-      ScreenNavigTransData(transferDataMap: transferDataMap);
+  String jsonFileNameOne = '2022-07-14 13.09.json';
+  String transferDataJsonFilePathNameOne =
+      '${directory.path}${Platform.pathSeparator}$jsonFileNameOne';
+  TransferDataViewModel transferDataViewModelOne = TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathNameOne);
+  transferDataViewModelOne.transferDataMap = transferDataMapOne;
+  await transferDataViewModelOne.updateAndSaveTransferData();
+
+  Map<String, dynamic> transferDataMapTwo = {
+    "firstDurationIconData": Icons.add,
+    "firstDurationIconColor": Colors.green.shade200,
+    "firstDurationSign": 1,
+    "firstDurationTextColor": Colors.green.shade200,
+    "addDurStartDateTimeStr": "2022-07-12 16:00",
+    "firstDurationStr": "00:50",
+    "firstStartDateTimeStr": "2022-07-12 16:00",
+    "firstEndDateTimeStr": "2022-07-12 16:50",
+    "firstEndDateTimeCheckbox": false,
+    "secondDurationIconData": Icons.remove,
+    "secondDurationIconColor": Colors.red.shade200,
+    "secondDurationSign": -1,
+    "secondDurationTextColor": Colors.red.shade200,
+    "secondDurationStr": "02:00",
+    "secondStartDateTimeStr": "2022-07-12 16:50",
+    "secondEndDateTimeStr": "2022-07-12 14:50",
+    "secondEndDateTimeCheckbox": false,
+    "thirdDurationIconData": Icons.remove,
+    "thirdDurationIconColor": Colors.red.shade200,
+    "thirdDurationSign": -1,
+    "thirdDurationTextColor": Colors.red.shade200,
+    "thirdDurationStr": "01:00",
+    "thirdStartDateTimeStr": "2022-07-12 14:50",
+    "thirdEndDateTimeStr": "2022-07-12 13:50",
+    "thirdEndDateTimeCheckbox": false,
+    "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30"]}',
+    "calcSlDurNewDateTimeStr": '14-07-2022 16:39',
+    "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
+    "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+    "calcSlDurCurrSleepDurationStr": '12:36',
+    "calcSlDurCurrWakeUpDurationStr": '0:02',
+    "calcSlDurCurrTotalDurationStr": '12:38',
+    "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+    "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+    "calcSlDurCurrTotalDurationPercentStr": '100 %',
+    "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+    "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+    "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+    "calcSlDurStatus": Status.wakeUp,
+    "calcSlDurSleepTimeStrHistory": ['10-07-2022 00:58', '05:35', '04:00', '03:00'],
+    "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35', '00:30'],
+    "alarmMedicDateTimeStr": '15-12-2022 06:00',
+    "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+    "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+    "dtDiffDurationStr": "24:00",
+    "dtDiffAddTimeStr": "1:00",
+    "dtDiffFinalDurationStr": "25:00",
+    "dtDurationPercentStr": "70 %",
+    "dtDurationTotalPercentStr": "90 %",
+    "firstTimeStr": "00:10:00",
+    "secondTimeStr": "00:05:00",
+    "resultTimeStr": "00:15:00",
+    "resultPercentStr": "40 %",
+    "resultSecondPercentStr": "90 %",
+    "divideFirstBySecondCheckBox": false,
+  };
+
+  String jsonFileNameTwo = '2022-07-14 16.39.json';
+  String transferDataJsonFilePathNameTwo =
+      '${directory.path}${Platform.pathSeparator}$jsonFileNameTwo';
+  TransferDataViewModel transferDataViewModelTwo = TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathNameTwo);
+  transferDataViewModelTwo.transferDataMap = transferDataMapTwo;
+  await transferDataViewModelTwo.updateAndSaveTransferData();
 
   group(
     'AppBar menu testing',
     () {
       testWidgets(
-        'Cloud upload then cloud download',
+        'Undo load',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: MainApp(transferDataViewModel: transferDataViewModel),
+                body: MainApp(transferDataViewModel: transferDataViewModelOne),
               ),
             ),
           );
 
-          // clicking on AppBar popup menu button.
+          // clicking on AppBar popup menu button
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
 
-          // then clicking on the Upload to cloud menu item.
-          // Menu item selected using its displayed name.
-          await tester.tap(find.text('Upload to cloud').first);
+          // then clicking on the Load menu item
+          await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
+          await tester.pumpAndSettle();
+
+          // then loading jsonFileNameOne
+          await tester.tap(find.text(jsonFileNameOne).first);
           await tester.pumpAndSettle();
 
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
 
-          // then clicking on the Download from cloud menu item.
-          // Menu item selected using its key.
-          await tester
-              .tap(find.byKey(const Key('appBarMenuDownloadFromCloud')).first);
+          // then clicking on the Load menu item
+          await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
           await tester.pumpAndSettle();
-        },
-      );
-      testWidgets(
-        'minus 4 hours',
-        (tester) async {
-          await tester.pumpWidget(
-            MaterialApp(
-              home: Scaffold(
-                body: AddDurationToDateTime(
-                  transferDataViewModel: transferDataViewModel,
-                  screenNavigTransData: screenNavigTransData,
-                ),
-              ),
-            ),
-          );
 
-          final EditableDateTime editableStartDateTime = tester.firstWidget(
-                  find.byKey(const Key('addDurToDateTimeStartDateTime')))
-              as EditableDateTime;
+          // then loading jsonFileNameTwo
+          await tester.tap(find.text(jsonFileNameTwo).first);
+          await tester.pumpAndSettle();
 
-          expect(
-              editableStartDateTime.dateTimePickerController.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                  englishFormatDateTimeStr:
-                      transferDataMap['addDurStartDateTimeStr']));
-
-          final DurationDateTimeEditor firstDurationDateTimeEditorWidget =
-              tester.firstWidget(find
-                      .byKey(const Key('firstAddSubtractResultableDuration')))
-                  as DurationDateTimeEditor;
-          final DurationDateTimeEditor secondDurationDateTimeEditorWidget =
-              tester.firstWidget(find
-                      .byKey(const Key('secondAddSubtractResultableDuration')))
-                  as DurationDateTimeEditor;
-          final DurationDateTimeEditor thirdDurationDateTimeEditorWidget =
-              tester.firstWidget(find
-                      .byKey(const Key('thirdAddSubtractResultableDuration')))
-                  as DurationDateTimeEditor;
-
-          expect(
-              firstDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: transferDataMap[
-                    'firstEndDateTimeStr'], // "2022-07-12 16:50"
-              ));
-
-          expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
-            transferDataMap['firstDurationStr'],
-          );
-
-          expect(
-              secondDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: transferDataMap[
-                    'secondEndDateTimeStr'], // "2022-07-12 14:50"
-              ));
-
-          expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
-            transferDataMap['secondDurationStr'],
-          );
-
-          expect(
-              thirdDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: transferDataMap[
-                    'thirdEndDateTimeStr'], // "2022-07-12 13:50"
-              ));
-
-          expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
-            transferDataMap['thirdDurationStr'],
-          );
-
-          // changing last End date time
-
-          // 4 hours sooner than 12-07-2022 13:50
-          const String englishFormatThirdNewDateTimeStr = "2022-07-12 09:50";
-
-          thirdDurationDateTimeEditorWidget.dateTimePickerControllerTst.text =
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                  englishFormatDateTimeStr: englishFormatThirdNewDateTimeStr)!;
-          thirdDurationDateTimeEditorWidget
-              .handleEndDateTimeChangeTst(englishFormatThirdNewDateTimeStr);
-
-          expect(editableStartDateTime.dateTimePickerController.text,
-              '12-07-2022 16:00'); // not changed
-
-          expect(
-              thirdDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: englishFormatThirdNewDateTimeStr,
-              ));
-
-          expect(transferDataMap['thirdEndDateTimeStr'],
-              englishFormatThirdNewDateTimeStr);
-
-          expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
-            '5:00', // duration 4 hours smaller: -1:00 - 4:00 = -5:00 !
-          );
-
-          expect(
-            thirdDurationDateTimeEditorWidget.durationSignTst,
-            -1, // duration sign now positive
-          );
-
-          expect(
-            thirdDurationDateTimeEditorWidget.durationIconTst,
-            Icons.remove, // duration icon now add
-          );
-
-          expect(
-            thirdDurationDateTimeEditorWidget.durationIconColorTst,
-            DurationDateTimeEditor
-                .durationNegativeColor, // duration icon color now positive
-          );
-
-          expect(
-            thirdDurationDateTimeEditorWidget.durationTextColorTst,
-            DurationDateTimeEditor
-                .durationNegativeColor, // duration text color now positive
-          );
-
-          // first DurationDateTimeEditorWidget not impacted
-
-          expect(
-              firstDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: transferDataMap[
-                    'firstEndDateTimeStr'], // "2022-07-12 16:50"
-              ));
-
-          expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
-            transferDataMap['firstDurationStr'],
-          );
-
-          expect(
-            firstDurationDateTimeEditorWidget.durationSignTst,
-            1, // duration sign not changed
-          );
-
-          expect(
-            firstDurationDateTimeEditorWidget.durationIconTst,
-            Icons.add, // duration icon not changed
-          );
-
-          expect(
-            firstDurationDateTimeEditorWidget.durationIconColorTst,
-            DurationDateTimeEditor
-                .durationPositiveColor, // duration icon color not changed
-          );
-
-          expect(
-            firstDurationDateTimeEditorWidget.durationTextColorTst,
-            DurationDateTimeEditor
-                .durationPositiveColor, // duration text color not changed
-          );
-
-          // second DurationDateTimeEditorWidget not impacted
-
-          expect(
-              secondDurationDateTimeEditorWidget
-                  .dateTimePickerControllerTst.text,
-              DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                englishFormatDateTimeStr: transferDataMap[
-                    'secondEndDateTimeStr'], // "2022-07-12 14:50"
-              ));
-
-          expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
-            transferDataMap['secondDurationStr'],
-          );
-
-          expect(
-            secondDurationDateTimeEditorWidget.durationSignTst,
-            -1, // duration sign not changed
-          );
-
-          expect(
-            secondDurationDateTimeEditorWidget.durationIconTst,
-            Icons.remove, // duration icon not changed
-          );
-
-          expect(
-            secondDurationDateTimeEditorWidget.durationIconColorTst,
-            DurationDateTimeEditor
-                .durationNegativeColor, // duration icon color not changed
-          );
-
-          expect(
-            secondDurationDateTimeEditorWidget.durationTextColorTst,
-            DurationDateTimeEditor
-                .durationNegativeColor, // duration text color not changed
-          );
         },
       );
     },
