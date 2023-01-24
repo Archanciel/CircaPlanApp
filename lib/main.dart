@@ -138,13 +138,21 @@ class MyApp extends StatelessWidget with ScreenMixin {
 class MainApp extends StatefulWidget {
   final TransferDataViewModel transferDataViewModel;
 
-  const MainApp({
+  // used for widget testing only
+  late final _MainAppState stateInstance;
+  _MainAppState get mainAppStateInstance => stateInstance;
+
+  MainApp({
     Key? key,
     required this.transferDataViewModel,
   }) : super(key: key);
 
   @override
-  State<MainApp> createState() => _MainAppState();
+  State<MainApp> createState() {
+    stateInstance = _MainAppState();
+
+    return stateInstance;
+  }
 }
 
 class _MainAppState extends State<MainApp> with ScreenMixin {
