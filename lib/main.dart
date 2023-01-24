@@ -136,6 +136,8 @@ class MyApp extends StatelessWidget with ScreenMixin {
 
 class MainApp extends StatefulWidget {
   final TransferDataViewModel transferDataViewModel;
+
+  // used for widget testing only
   late final _MainAppState stateInstance;
   _MainAppState get mainAppStateInstance => stateInstance;
 
