@@ -386,11 +386,12 @@ mixin ScreenMixin {
   /// files located in the app data dir.
   List<String> getSortedFileNameLstInDir(
       {required TransferDataViewModel transferDataViewModel,
-      required bool addCircadianJsonFileNameToLst}) {
+      required bool addCircadianJsonFileNameToLst,
+      bool includeDefaultJsonFileName = false}) {
     List<String?> nullablefileNameLst = transferDataViewModel
         .getFileNameInDirLst(transferDataViewModel.getTransferDataJsonPath());
 
-    if (nullablefileNameLst == null || nullablefileNameLst.length == 0) {
+    if (nullablefileNameLst.isEmpty) {
       return [];
     }
 
@@ -398,6 +399,11 @@ mixin ScreenMixin {
         nullablefileNameLst.whereType<String>().toList();
 
     List<String> sortedFileNameLst = [];
+
+    if (includeDefaultJsonFileName && addCircadianJsonFileNameToLst) {
+      sortedFileNameLst.add(nonNullablefileNameLst
+          .firstWhere((element) => element == 'circadian.json'));
+    }
 
     RegExp regExp = RegExp(r'^[\d\- \.]+json');
     List<String> dateTimeFileNameSortedLst =

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:circa_plan/constants.dart';
+
 class Utility {
   /// Returns true if the passed file path name exists, false
   /// otherwise.
@@ -32,14 +34,20 @@ class Utility {
   }
 
   static String extractFileName({required String filePathName}) {
-    RegExp jsonFileNameRegExp = RegExp(r'([\d\- \.]+.json)');
-
-    RegExpMatch? match = jsonFileNameRegExp.firstMatch(filePathName);
+    RegExp defaultJsonFileNameRegExp = RegExp(kDefaultJsonFileName);
+    RegExpMatch? match = defaultJsonFileNameRegExp.firstMatch(filePathName);
 
     if (match != null) {
       return match.group(0)!.trim();
     } else {
-      return '';
+      RegExp jsonFileNameRegExp = RegExp(r'([\d\- \.]+.json)');
+      RegExpMatch? match = jsonFileNameRegExp.firstMatch(filePathName);
+
+      if (match != null) {
+        return match.group(0)!.trim();
+      } else {
+        return '';
+      }
     }
   }
 

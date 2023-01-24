@@ -240,9 +240,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     );
     String filePathName = kDownloadAppDir + Platform.pathSeparator + fileName;
     TransferDataViewModel.deleteFile(filePathName);
-    
+
     final CircadianSnackBar snackBar =
-        CircadianSnackBar(message: '${fileName} deleted');
+        CircadianSnackBar(message: '$fileName deleted');
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -360,7 +360,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             centerTitle: true,
             actions: [
               PopupMenuButton(
-                key: Key('appBarPopupMenuButton'),
+                key: const Key('appBarPopupMenuButton'),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
@@ -385,7 +385,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                       child: Text("Undo"),
                     ),
                     PopupMenuItem<int>(
-                      key: Key('appBarMenuSaveAs'),
+                      key: const Key('appBarMenuSaveAs'),
                       value: 1,
                       child: Text("Save as $saveAsFileName"),
                     ),
@@ -401,8 +401,8 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     ),
                     const PopupMenuItem<int>(
                       value: 4,
-                      child: Text("Download from cloud"),
                       key: Key('appBarMenuDownloadFromCloud'),
+                      child: Text("Download from cloud"),
                     ),
                     const PopupMenuItem<int>(
                       key: Key('appBarMenuDelete'),
@@ -473,7 +473,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           return;
                         }
 
-                        if (nonNullablefileNameLst.length >= 1) {
+                        if (nonNullablefileNameLst.isNotEmpty) {
                           lastCreatedJsonFileNameStr =
                               nonNullablefileNameLst[0];
                         }
@@ -525,7 +525,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           return;
                         }
 
-                        if (nonNullablefileNameLst.length >= 1) {
+                        if (nonNullablefileNameLst.isNotEmpty) {
                           lastCreatedJsonFileNameStr =
                               nonNullablefileNameLst[0];
                         }
