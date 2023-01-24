@@ -13,7 +13,7 @@ import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 
 Future<void> main() async {
-  Map<String, dynamic> transferDataMapOne = {
+  Map<String, dynamic> transferDataMapCircadian = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,
     "firstDurationSign": 1,
@@ -74,20 +74,28 @@ Future<void> main() async {
   // files in this local test dir are stored in
   // project test_data dir updated
   // on GitHub
-  String path = kCircadianAppDataTestDir;
-  final Directory directory = Directory(path);
+  String testPath = kCircadianAppDataTestDir;
+  final Directory directory = Directory(testPath);
   bool directoryExists = await directory.exists();
 
   if (!directoryExists) {
     await directory.create();
   }
 
+  String jsonFileNameCircadian = 'circadian.json';
+  String transferDataJsonFilePathNameCircadian =
+      '$testPath${Platform.pathSeparator}$jsonFileNameCircadian';
+  TransferDataViewModel transferDataViewModelCircadian = TransferDataViewModel(
+      transferDataJsonFilePathName: transferDataJsonFilePathNameCircadian);
+  transferDataViewModelCircadian.transferDataMap = transferDataMapCircadian;
+  await transferDataViewModelCircadian.updateAndSaveTransferData();
+
   String jsonFileNameOne = '2022-07-14 13.09.json';
   String transferDataJsonFilePathNameOne =
-      '${directory.path}${Platform.pathSeparator}$jsonFileNameOne';
+      '$testPath${Platform.pathSeparator}$jsonFileNameOne';
   TransferDataViewModel transferDataViewModelOne = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathNameOne);
-  transferDataViewModelOne.transferDataMap = transferDataMapOne;
+  transferDataViewModelOne.transferDataMap = transferDataMapCircadian;
   await transferDataViewModelOne.updateAndSaveTransferData();
 
   Map<String, dynamic> transferDataMapTwo = {
@@ -155,7 +163,7 @@ Future<void> main() async {
 
   String jsonFileNameTwo = '2022-07-14 16.39.json';
   String transferDataJsonFilePathNameTwo =
-      '${directory.path}${Platform.pathSeparator}$jsonFileNameTwo';
+      '$testPath${Platform.pathSeparator}$jsonFileNameTwo';
   TransferDataViewModel transferDataViewModelTwo = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathNameTwo);
   transferDataViewModelTwo.transferDataMap = transferDataMapTwo;
@@ -165,17 +173,21 @@ Future<void> main() async {
     'AppBar menu testing',
     () {
       testWidgets(
-        'Undo load',
+        'Undo load. Test not working',
         (tester) async {
-          MainApp mainApp =
-              MainApp(transferDataViewModel: transferDataViewModelOne);
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                body: mainApp,
+                body: MainApp(
+                  key: const Key('mainAppKey'),
+                  transferDataViewModel: transferDataViewModelOne,
+                ),
               ),
             ),
           );
+
+          final MainApp mainApp = tester
+              .firstWidget(find.byKey(const Key('mainAppKey'))) as MainApp;
 
           // clicking on AppBar popup menu button
           // await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
@@ -200,8 +212,6 @@ Future<void> main() async {
           // then loading jsonFileNameTwo
           await tester.tap(find.text(jsonFileNameTwo).first);
           await tester.pumpAndSettle();
-
-          int a = 1;
         },
       );
     },
