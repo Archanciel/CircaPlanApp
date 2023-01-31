@@ -321,8 +321,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // Undoing the application of the selected durations item.
     _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = false;
 
-    _firstDurationDateTimeEditorWidget.setDuration(durationStrLst[0]);
-    _secondDurationDateTimeEditorWidget.setDuration(durationStrLst[1]);
+    _firstDurationDateTimeEditorWidget.setDuration(
+      durationStrLst[0],
+      1,
+    );
+    _secondDurationDateTimeEditorWidget.setDuration(
+      durationStrLst[1],
+      1,
+    );
 
     // restoring the last DurationDateTimeEditor widget
     // saveTransferDataIfModified to true is necessary to enable
@@ -330,7 +336,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // as well as saved, making Undo effective.
     _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = true;
 
-    _thirdDurationDateTimeEditorWidget.setDuration(durationStrLst[2]);
+    _thirdDurationDateTimeEditorWidget.setDuration(
+      durationStrLst[2],
+      1,
+    );
   }
 
   void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {

@@ -132,8 +132,14 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void setDuration(String duration) {
-    stateInstance.setDuration(duration);
+  void setDuration(
+    String duration,
+    int durationSign,
+  ) {
+    stateInstance.setDuration(
+      duration,
+      durationSign,
+    );
   }
 
   /// For widget test only
@@ -312,9 +318,14 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     );
   }
 
-  void setDuration(String durationStr) {
+  void setDuration(
+    String durationStr,
+    int durationSign,
+  ) {
     _durationStr = durationStr;
     _durationTextFieldController.text = _durationStr;
+    _durationSign = durationSign;
+    applyDurationSign(_durationSign);
     handleDurationChange(
       durationStr,
       _durationSign,
@@ -341,7 +352,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       return;
     }
 
-    if (wasDurationSignButtonPressed == null || !wasDurationSignButtonPressed) {
+    if (durationSign == null &&
+        (wasDurationSignButtonPressed == null ||
+            !wasDurationSignButtonPressed)) {
       bool durationIsNegative =
           _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
               _durationTextFieldController.text.contains('-');
@@ -536,24 +549,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                 ),
                 label: const Text(''),
                 onPressed: () {
-                  if (_durationSign > 0) {
-                    _durationIcon = Icons.remove;
-                    _durationIconColor =
-                        DurationDateTimeEditor.durationNegativeColor;
-                    _durationSign = -1;
-                    _durationTextColor =
-                        DurationDateTimeEditor.durationNegativeColor;
-                  } else {
-                    _durationIcon = Icons.add;
-                    _durationIconColor =
-                        DurationDateTimeEditor.durationPositiveColor;
-                    _durationSign = 1;
-                    _durationTextColor =
-                        DurationDateTimeEditor.durationPositiveColor;
-                  }
+                  _durationSign = -1 * _durationSign;
 
-                  _manuallySelectableDurationTextField
-                      .setTextColor(_durationTextColor);
+                  applyDurationSign(_durationSign);
 
                   handleDurationChange(
                     null,
@@ -586,5 +584,19 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         _editableDateTime,
       ],
     );
+  }
+
+  void applyDurationSign(int durationSign) {
+    if (durationSign < 0) {
+      _durationIcon = Icons.remove;
+      _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
+      _durationTextColor = DurationDateTimeEditor.durationNegativeColor;
+    } else {
+      _durationIcon = Icons.add;
+      _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
+      _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
+    }
+
+    _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
   }
 }
