@@ -371,7 +371,7 @@ mixin ScreenMixin {
 
     CircadianFlutterToast.showToast(
       message: '$selectedText to clipboard',
-      position: position,
+      positionWorkingOnOldAndroid: position,
     );
 
     // does not compile, even after setting android/app/

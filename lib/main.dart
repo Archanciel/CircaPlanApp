@@ -38,6 +38,9 @@ Future<void> main(List<String> args) async {
     //                            app dir
   }
 
+  // two methods which could not be declared async !
+  //
+  // Setting the TransferDataViewModel transfer data Map
   bool deleteAppDir = false;
 
   if (myArgs.isNotEmpty) {
@@ -49,9 +52,6 @@ Future<void> main(List<String> args) async {
   // It was necessary to place here the asynchronous
   // TransferDataViewModel instanciation instead of locating it
   // in [_MainAppState.build()] or [_MainAppState.initState()],
-  // two methods which could not be declared async !
-  //
-  // Setting the TransferDataViewModel transfer data Map
   // reference is done at the beginning of the
   //_MainAppState.build() method.
   TransferDataViewModel transferDataViewModel =
@@ -722,7 +722,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             // the case if the entered alarmTimeStr is invalid
             CircadianFlutterToast.showToast(
               message: "Invalid alarm time $alarmTimeStr ignored !",
-              position: ToastGravity.TOP,
+              positionWorkingOnOldAndroid: ToastGravity.TOP,
               isError: true,
             );
 
@@ -731,7 +731,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
           CircadianFlutterToast.showToast(
             message: medicAlarmDateTimeStr,
-            position: ToastGravity.TOP,
+            positionWorkingOnOldAndroid: ToastGravity.TOP,
           );
 
           _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =

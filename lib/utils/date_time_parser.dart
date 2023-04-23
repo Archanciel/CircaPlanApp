@@ -6,12 +6,13 @@ import 'package:intl/intl.dart';
 extension FormattedDayHourMinute on Duration {
   static final NumberFormat numberFormatTwoInt = NumberFormat('00');
 
+  // ignore: non_constant_identifier_names
   /// returns the Duration formatted as HH:mm
   String HHmm() {
     int durationMinute = inMinutes.remainder(60);
     String minusStr = '';
 
-    if (this.inMinutes < 0) {
+    if (inMinutes < 0) {
       minusStr = '-';
     }
 
