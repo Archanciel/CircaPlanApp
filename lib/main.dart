@@ -142,7 +142,7 @@ class MainApp extends StatefulWidget {
   late final _MainAppState stateInstance;
   _MainAppState get mainAppStateInstance => stateInstance;
 
-  MainApp({
+  const MainApp({
     Key? key,
     required this.transferDataViewModel,
   }) : super(key: key);

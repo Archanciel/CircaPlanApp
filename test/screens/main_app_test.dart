@@ -1,16 +1,10 @@
 import 'package:circa_plan/main.dart';
-import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/screens/screen_navig_trans_data.dart';
-import 'package:circa_plan/screens/add_duration_to_datetime.dart';
-import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:circa_plan/widgets/duration_date_time_editor.dart';
-import 'package:circa_plan/widgets/editable_date_time.dart';
 
 Future<void> main() async {
   Map<String, dynamic> transferDataMapCircadian = {

@@ -19,6 +19,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
   final ToastGravity position;
 
   EditableDuration({
+    super.key,
     required String dateTimeTitle,
     required Map<String, dynamic> transferDataMap,
     required TextEditingController durationTextFieldController,

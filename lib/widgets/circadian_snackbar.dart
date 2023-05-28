@@ -4,15 +4,17 @@ import '../screens/screen_mixin.dart';
 
 /// This widget extends SnackBar and accept the String snackBar
 /// content as constructor parameter.
-/// 
+///
 /// Using CircadianSnackBar
 ///
-/// final CircadianSnackBar snackBar = 
+/// final CircadianSnackBar snackBar =
 ///   CircadianSnackBar(message: 'Bad new date time !');
 /// ScaffoldMessenger.of(context).showSnackBar(snackBar);
 class CircadianSnackBar extends SnackBar with ScreenMixin {
-  CircadianSnackBar({required String message})
-      : super(
+  CircadianSnackBar({
+    super.key,
+    required String message,
+  }) : super(
           content: Text(
             message,
             style: const TextStyle(

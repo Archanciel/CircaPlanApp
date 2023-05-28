@@ -34,6 +34,7 @@ class EditableDurationPercent extends StatefulWidget with ScreenMixin {
   /// store the percent string value with a key specific to the
   /// concerned EditableDurationPercent widget instance.
   EditableDurationPercent({
+    super.key,
     required String dateTimeTitle,
     required this.transferDataMapPercentKey,
     required this.durationStr,

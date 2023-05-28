@@ -18,6 +18,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
   final ToastGravity position;
 
   ResultDuration({
+    super.key,
     required String resultDurationTitle,
     required Map<String, dynamic> transferDataMap,
     required TextEditingController resultDurationController,

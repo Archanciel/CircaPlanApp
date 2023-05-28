@@ -4,14 +4,15 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 
 /// Widget displaying date time value in a TextField.
-/// 
+///
 /// This widget ios included in the AddSubtractDuration widget.
 class ResultDateTime extends StatelessWidget with ScreenMixin {
   final TextEditingController _resultDateTimeController;
 
   ResultDateTime({
+    super.key,
     required TextEditingController resultDateTimeController,
-  })  : _resultDateTimeController = resultDateTimeController;
+  }) : _resultDateTimeController = resultDateTimeController;
   @override
   Widget build(BuildContext context) {
     return Padding(

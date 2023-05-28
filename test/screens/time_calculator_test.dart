@@ -386,13 +386,13 @@ Future<void> main() async {
           await tester.tap(nowButtonFinder);
           await tester.pumpAndSettle();
 
-          String now_dd_hh_mm_str =
+          String nowDdHhMmStr =
               '00:${ScreenMixin.HHmmDateTimeFormat.format(DateTime.now())}';
 
           firstTimeTextField = tester.firstWidget(firstTimeTextFieldFinder)
               as ManuallySelectableTextField;
           firstTimeTextFieldController = firstTimeTextField.controller!;
-          expect(firstTimeTextFieldController.text, now_dd_hh_mm_str);
+          expect(firstTimeTextFieldController.text, nowDdHhMmStr);
         },
       );
     },

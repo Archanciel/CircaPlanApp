@@ -1393,7 +1393,7 @@ void main() {
         'from phrase ending with fileName',
         () {
           String phraseContainingFileName =
-              'Click on Cancel to avoid deleting ' + fileName;
+              'Click on Cancel to avoid deleting $fileName';
           String extractedFileName =
               Utility.extractFileName(filePathName: phraseContainingFileName);
 
