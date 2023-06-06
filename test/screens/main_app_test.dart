@@ -180,9 +180,6 @@ Future<void> main() async {
             ),
           );
 
-          final MainApp mainApp = tester
-              .firstWidget(find.byKey(const Key('mainAppKey'))) as MainApp;
-
           // clicking on AppBar popup menu button
           // await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           // await tester.pumpAndSettle();
