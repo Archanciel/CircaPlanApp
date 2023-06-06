@@ -233,24 +233,20 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     controller: widget.dateTimePickerController,
                     readOnly: true,
                     // prevents displaying copy paste menu !
-                    toolbarOptions: const ToolbarOptions(
-                        copy: false,
-                        paste: false,
-                        cut: false,
-                        selectAll: false),
-                    onTap: () {
-                      // initializing the date and time dialogs with the
-                      // currently displayed date time value ...
-                      String frenchFormatDateTimeStr =
-                          widget.dateTimePickerController.text;
-                      DateTime dateTime = ScreenMixin.frenchDateTimeFormat
-                          .parse(frenchFormatDateTimeStr);
-                      _selectedTime = TimeOfDay(
-                          hour: dateTime.hour, minute: dateTime.minute);
-                      _selectedDate = dateTime;
-                      _selectDatePickerDateTime(context);
-                    },
+                    contextMenuBuilder: null,
                   ),
+                  onTap: () {
+                    // initializing the date and time dialogs with the
+                    // currently displayed date time value ...
+                    String frenchFormatDateTimeStr =
+                        widget.dateTimePickerController.text;
+                    DateTime dateTime = ScreenMixin.frenchDateTimeFormat
+                        .parse(frenchFormatDateTimeStr);
+                    _selectedTime =
+                        TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+                    _selectedDate = dateTime;
+                    _selectDatePickerDateTime(context);
+                  },
                   onDoubleTap: () async {
                     await copyToClipboard(
                       context: context,
