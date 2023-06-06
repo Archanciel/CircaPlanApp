@@ -30,23 +30,17 @@ class Utility {
 
   /// If the filePathNameStr file exists, it is renamed and the
   /// renamed File is returned. Otherwise, null is returned.
-  static File? renameFile({
+  static Future<void> renameFile({
     required String filePathNameStr,
     required String newFileNameStr,
-  }) {
+  }) async {
     File file = File(filePathNameStr);
-
-    bool fileExist = file.existsSync();
-
-    if (!fileExist) {
-      return null;
-    }
 
     var lastSeparator = filePathNameStr.lastIndexOf(Platform.pathSeparator);
     var newPath =
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
-    return file.renameSync(newPath);
+    file.rename(newPath);
   }
 
   static String extractFileName({required String filePathName}) {

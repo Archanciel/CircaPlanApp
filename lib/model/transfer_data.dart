@@ -102,6 +102,13 @@ class TransferData extends SerializableObject {
       // print(
       //     '\n$jsonUndoFileName CONTENT BEFORE RENAMING $kDefaultJsonFileName to $jsonUndoFileName\n$formattedScreenDataSubMap');
 
+      File file = File(jsonFilePathName);
+      bool fileExist = file.existsSync();
+
+      if (!fileExist) {
+        return;
+      }
+
       Utility.renameFile(
         filePathNameStr: jsonFilePathName,
         newFileNameStr: jsonUndoFileName,
