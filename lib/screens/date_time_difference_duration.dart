@@ -7,7 +7,7 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../widgets/editable_duration_percent.dart';
 import '../widgets/non_editable_date_time.dart';
@@ -412,7 +412,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
-                    position: ToastGravity.TOP,
+                    position: ToastPosition.top,
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'End date time',
@@ -423,7 +423,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _handleSelectedEndDateTimeStr,
                     topSelMenuPosition: 203.0,
                     transferDataViewModel: _transferDataViewModel,
-                    position: ToastGravity.TOP,
+                    position: ToastPosition.top,
                   ),
                   EditableDuration(
                     dateTimeTitle: 'Duration',
@@ -436,7 +436,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     addPosOrNegTimeToCurrentDurationFunction:
                         _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
-                    position: ToastGravity.TOP,
+                    position: ToastPosition.top,
                   ),
                   _editableDurationPercentSleep,
                   _editableDurationPercentTotal,

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/utils/utility.dart';
@@ -10,9 +9,10 @@ import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
+import 'package:oktoast/oktoast.dart';
 import '../utils/date_time_computer.dart';
 import '../constants.dart';
-import '../widgets/circadian_flutter_toast.dart';
+import '../widgets/circadian_ok_toast.dart';
 import '../widgets/non_editable_date_time.dart';
 
 class CalculateSleepDuration extends StatefulWidget {
@@ -323,7 +323,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
 
     String transferDataJsonFilePathName =
-        '$kDownloadAppDir${Platform.pathSeparator}$savedJsonFileName';
+        '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
 
     if (Utility.fileExist(transferDataJsonFilePathName)) {
       // the case if loading the previous day json file at
@@ -926,8 +926,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
@@ -967,11 +965,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               const InputDecoration.collapsed(hintText: ''),
                           style: valueTextStyle,
                           // prevents displaying copy paste menu !
-                          toolbarOptions: const ToolbarOptions(
-                              copy: false,
-                              paste: false,
-                              cut: false,
-                              selectAll: false),
+                          contextMenuBuilder: null,
                           keyboardType: TextInputType.datetime,
                           controller: _newDateTimeController, // links the
                           //                         TextField content to pressing
@@ -982,7 +976,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             context: context,
                             controller: _newDateTimeController,
                             extractHHmmFromCopiedStr: true,
-                            position: ToastGravity.TOP,
+                            position: ToastPosition.top,
                           );
                           _transferDataMap['clipboardLastAction'] =
                               ClipboardLastAction.copy;
@@ -1015,7 +1009,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               dateTimeTitle: 'Last date time',
                               dateTimeController: _lastDateTimeController,
                               transferDataMap: _transferDataMap,
-                              position: ToastGravity.TOP,
+                              position: ToastPosition.top,
                             ),
                           ),
                         ),
@@ -1040,7 +1034,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               dateTimeTitle: 'Previous date time',
                               dateTimeController: _previousDateTimeController,
                               transferDataMap: _transferDataMap,
-                              position: ToastGravity.TOP,
+                              position: ToastPosition.top,
                             ),
                           ),
                         ),
@@ -1060,7 +1054,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     prevDayTotalPercentController:
                         _currentSleepPrevDayTotalPercentController,
                     prevDayTotalController: _prevDayTotalController,
-                    position: ToastGravity.TOP,
+                    position: ToastPosition.top,
                   ),
                   ResultDuration(
                     resultDurationTitle: 'Wake up duration',
@@ -1192,10 +1186,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     setToTomorrow: true,
                                   );
 
-                                  CircadianFlutterToast.showToast(
+                                  CircadianOkToast.showToastMessage(
                                     message: alarmFrenchDateTimeStr,
+                                    context: context,
                                     positionWorkingOnOldAndroid:
-                                        ToastGravity.BOTTOM,
+                                        ToastPosition.bottom,
                                   );
 
                                   _transferDataMap['alarmMedicDateTimeStr'] =
@@ -1403,6 +1398,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     await Clipboard.setData(ClipboardData(text: extractedHHmm));
 
-    CircadianFlutterToast.showToast(message: '$extractedHHmm to clipboard');
+    CircadianOkToast.showToastMessage(
+      message: '$extractedHHmm to clipboard',
+      context: context,
+    );
   }
 }

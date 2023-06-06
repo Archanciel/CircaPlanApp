@@ -1,11 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'utils/date_time_computer.dart';
 import 'constants.dart';
@@ -18,7 +19,7 @@ import 'package:circa_plan/screens/time_calculator.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import 'model/menu_item_data.dart';
-import 'package:circa_plan/widgets/circadian_flutter_toast.dart';
+import 'package:circa_plan/widgets/circadian_ok_toast.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +66,7 @@ Future<void> main(List<String> args) async {
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool isAppDirToBeDeleted = false,
 }) async {
-  String path = kDownloadAppDir;
+  String path = Utility.getPlaylistDownloadHomePath();
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -104,33 +105,26 @@ class MyApp extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: ScreenMixin.APP_TITLE,
-      theme: ThemeData(
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
-          selectionColor: selectionColor,
-          selectionHandleColor: selectionColor,
-        ),
-        dialogTheme: const DialogTheme(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+    return OKToast(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: ScreenMixin.APP_TITLE,
+        theme: ThemeData(
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
+            selectionColor: selectionColor,
+            selectionHandleColor: selectionColor,
+          ),
+          dialogTheme: const DialogTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(ScreenMixin.APP_ROUNDED_BOARDER_RADIUS),
+              ),
             ),
           ),
         ),
+        home: MainApp(transferDataViewModel: _transferDataViewModel),
       ),
-      home: MainApp(transferDataViewModel: _transferDataViewModel),
-      localizationsDelegates: const [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('fr', ''),
-        Locale('en', ''),
-      ],
     );
   }
 }
@@ -238,7 +232,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     String fileName = Utility.extractFileName(
       filePathName: dialogContentEndingWithDeletedFileName,
     );
-    String filePathName = kDownloadAppDir + Platform.pathSeparator + fileName;
+    String filePathName = kCircadianAppDir + Platform.pathSeparator + fileName;
     TransferDataViewModel.deleteFile(filePathName);
 
     final CircadianSnackBar snackBar =
@@ -720,18 +714,20 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
           if (medicAlarmDateTimeStr == '') {
             // the case if the entered alarmTimeStr is invalid
-            CircadianFlutterToast.showToast(
+            CircadianOkToast.showToastMessage(
               message: "Invalid alarm time $alarmTimeStr ignored !",
-              positionWorkingOnOldAndroid: ToastGravity.TOP,
+              context: context,
+              positionWorkingOnOldAndroid: ToastPosition.top,
               isError: true,
             );
 
             return;
           }
 
-          CircadianFlutterToast.showToast(
+          CircadianOkToast.showToastMessage(
             message: medicAlarmDateTimeStr,
-            positionWorkingOnOldAndroid: ToastGravity.TOP,
+            context: context,
+            positionWorkingOnOldAndroid: ToastPosition.top,
           );
 
           _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =

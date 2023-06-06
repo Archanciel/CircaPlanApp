@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../constants.dart';
 
@@ -15,7 +15,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
   final String _previousDayPercentTitle;
   final TextEditingController _prevDayTotalPercentController;
   final TextEditingController _prevDayTotalController;
-  final ToastGravity position;
+  final ToastPosition position;
 
   ResultDuration({
     super.key,
@@ -26,7 +26,7 @@ class ResultDuration extends StatelessWidget with ScreenMixin {
     String previousDayPercentTitle = '',
     required TextEditingController prevDayTotalPercentController,
     required TextEditingController prevDayTotalController,
-    this.position = ToastGravity.CENTER,
+    this.position = ToastPosition.center,
   })  : _resultDurationTitle = resultDurationTitle,
         _transferDataMap = transferDataMap,
         _resultDurationController = resultDurationController,

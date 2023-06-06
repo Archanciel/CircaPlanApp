@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 
 /// Widget enabling to add or subtract a HH:MM value to the
 /// duration field.
@@ -16,7 +16,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
       _addPosOrNegTimeToCurrentDuration;
   final Function _deleteAddedTimeDuration;
   final Map<String, dynamic> _transferDataMap;
-  final ToastGravity position;
+  final ToastPosition position;
 
   EditableDuration({
     super.key,
@@ -29,7 +29,7 @@ class EditableDuration extends StatelessWidget with ScreenMixin {
     required void Function(BuildContext context, String dialogTimeStr)
         addPosOrNegTimeToCurrentDurationFunction,
     required Function deleteAddedTimeDurationFunction,
-    this.position = ToastGravity.CENTER,
+    this.position = ToastPosition.center,
   })  : _dateTimeTitle = dateTimeTitle,
         _transferDataMap = transferDataMap,
         _durationTextFieldController = durationTextFieldController,

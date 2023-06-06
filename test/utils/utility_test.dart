@@ -1382,7 +1382,7 @@ void main() {
         'from filePathName',
         () {
           String filePathName =
-              kDownloadAppDir + Platform.pathSeparator + fileName;
+              kCircadianAppDir + Platform.pathSeparator + fileName;
           String extractedFileName =
               Utility.extractFileName(filePathName: filePathName);
 

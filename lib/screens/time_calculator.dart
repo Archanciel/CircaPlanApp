@@ -7,7 +7,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../utils/utility.dart';
 import '../widgets/editable_duration_percent.dart';
@@ -122,7 +122,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       textFieldController: _firstTimeTextFieldController,
       handleTextFieldChangeFunction: _handleFirstTimeTextFieldChange,
       widgetPrefixOrName: 'firstTimeStr',
-      position: ToastGravity.TOP,
+      position: ToastPosition.top,
     );
 
     manuallySelectableSecondTimeTextField = ManuallySelectableTextField(
@@ -131,7 +131,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       textFieldController: _secondTimeTextFieldController,
       handleTextFieldChangeFunction: _handleSecondTimeTextFieldChange,
       widgetPrefixOrName: 'secondTimeStr',
-      position: ToastGravity.TOP,
+      position: ToastPosition.top,
     );
 
     String extractedHHmm = '';
@@ -603,7 +603,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         await copyToClipboard(
                           context: context,
                           controller: _resultTextFieldController,
-                          position: ToastGravity.TOP,
+                          position: ToastPosition.top,
                         );
                         _transferDataMap['clipboardLastAction'] =
                             ClipboardLastAction.copy;
