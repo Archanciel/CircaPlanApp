@@ -1105,11 +1105,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         controller: _sleepWakeUpHistoryController,
                         readOnly: true,
                         // prevents displaying copy paste menu !
-                        toolbarOptions: const ToolbarOptions(
-                            copy: false,
-                            paste: false,
-                            cut: false,
-                            selectAll: false),
+                        contextMenuBuilder: null,
                         onTap: () async {
                           await copyToClipboardHHmmExtractedFromHistoryDuration(
                               context: context,

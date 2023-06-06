@@ -37,8 +37,7 @@ class NonEditableDateTime extends StatelessWidget with ScreenMixin {
             style: valueTextStyle,
             decoration: const InputDecoration.collapsed(hintText: ''),
             // prevents displaying copy paste menu !
-            toolbarOptions: const ToolbarOptions(
-                copy: false, paste: false, cut: false, selectAll: false),
+            contextMenuBuilder: null,
             controller: _dateTimeController,
             readOnly: true,
           ),
