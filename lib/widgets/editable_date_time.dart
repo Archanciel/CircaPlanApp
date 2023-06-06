@@ -64,6 +64,7 @@ class EditableDateTime extends StatefulWidget {
 
   set isEndDateTimeFixed(bool value) {
     stateInstance._twoButtonsWidget.isEndDateTimeFixed = value;
+    // ignore: invalid_use_of_protected_member
     stateInstance._twoButtonsWidget.stateInstance.setState(() {});
   }
 }
