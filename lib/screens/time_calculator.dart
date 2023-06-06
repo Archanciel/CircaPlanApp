@@ -296,8 +296,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       resultDuration = firstTimeDuration - secondTimeDuration;
     }
 
-    String resultTimeStr;
-
     _resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
     _resultTextFieldController.text = _resultTimeStr;
 
@@ -477,8 +475,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(

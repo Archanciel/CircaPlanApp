@@ -461,8 +461,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(

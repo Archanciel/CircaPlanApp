@@ -52,8 +52,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
             transferDataMap['dtDiffWakingAtDateTimeStr'] ?? '',
         super();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
 
@@ -384,8 +382,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
