@@ -143,8 +143,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   }
 
   /// For widget test only
-  void handleEndDateTimeChangeTst(String endDateTimeEnglishFormatStr) {
-    stateInstance.handleEndDateTimeChange(endDateTimeEnglishFormatStr);
+  void handleEndDateTimeChangeTst(DateTime endDateTime) {
+    stateInstance.handleEndDateTimeChange(endDateTime);
   }
 }
 
@@ -432,18 +432,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
   }
 
-  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
-    _endDateTimeStr = endDateTimeEnglishFormatStr;
-    DateTime? endDateTime;
-
-    try {
-      endDateTime =
-          ScreenMixin.englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
-    } on FormatException {}
-
-    if (endDateTime != null) {
-      processEndDateTimeChange(endDateTime);
-    }
+  void handleEndDateTimeChange(DateTime endDateTime) {
+    _endDateTimeStr = endDateTime.toString(); // english format
+    processEndDateTimeChange(endDateTime);
   }
 
   void processEndDateTimeChange(DateTime endDateTime) {

@@ -359,7 +359,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void handleStartDateTimeChange(DateTime startDateTime) {
+  void _handleStartDateTimeChange(DateTime startDateTime) {
     String englishFormatStartDateTimeStr = startDateTime.toString();
     
     _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
@@ -485,7 +485,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     dateTimeTitle: 'Start date time',
                     dateTimePickerController: _startDateTimePickerController,
                     handleDateTimeModificationFunction:
-                        handleStartDateTimeChange,
+                        _handleStartDateTimeChange,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedStartDateTimeStr,
