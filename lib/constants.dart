@@ -31,6 +31,7 @@ const String kCircadianAppTestDirWindows =
 // files in this local test dir are stored in project test_data dir updated
 // on GitHub
 const String kCircadianAppDataTestDir = 'c:\\temp\\test\\CircadianData';
+const String kCircadianAppDataTestSaveDir = 'c:\\temp\\test\\CircadianDataSaved';
 
 const String kDefaultJsonFileName = 'circadian.json';
 const double kVerticalFieldDistance = 23.0;
