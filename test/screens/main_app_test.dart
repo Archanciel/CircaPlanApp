@@ -167,7 +167,7 @@ Future<void> main() async {
     'AppBar menu testing',
     () {
       testWidgets(
-        'Undo load. Test not working',
+        'Undo load.',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
@@ -181,18 +181,18 @@ Future<void> main() async {
           );
 
           // clicking on AppBar popup menu button
-          // await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
-          // await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
+          await tester.pumpAndSettle();
 
-          // // then clicking on the Load menu item
-          // await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
-          // await tester.pumpAndSettle();
+          // then clicking on the Load menu item
+          await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
+          await tester.pumpAndSettle();
 
-          // // then loading jsonFileNameOne
-          // await tester.tap(find.text(jsonFileNameOne).first);
-          // await tester.pumpAndSettle();
+          // then loading jsonFileNameOne
+          await tester.tap(find.text(jsonFileNameOne).first);
+          await tester.pumpAndSettle();
 
-          // // re-clicking on AppBar popup menu button.
+          // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
 
@@ -202,6 +202,14 @@ Future<void> main() async {
 
           // then loading jsonFileNameTwo
           await tester.tap(find.text(jsonFileNameTwo).first);
+          await tester.pumpAndSettle();
+
+          // re-clicking on AppBar popup menu button.
+          await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
+          await tester.pumpAndSettle();
+
+          // then undo the load
+          await tester.tap(find.byKey(const Key('appBarMenuUndo')).first);
           await tester.pumpAndSettle();
         },
       );
