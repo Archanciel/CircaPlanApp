@@ -359,7 +359,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
+  void handleStartDateTimeChange(DateTime startDateTime) {
+    String englishFormatStartDateTimeStr = startDateTime.toString();
+    
     _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
@@ -490,6 +492,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
                     position: ToastPosition.top,
+                    nowButtonUndo: true,
                   ),
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,
