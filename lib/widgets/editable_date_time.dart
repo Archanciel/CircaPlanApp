@@ -391,11 +391,17 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
                 _nowButtonTxt = 'Now';
               }
               setState(() {});
+            } else {
+              String nowStr = DateTime.now().toString();
+              widget.handleDateTimeModification(
+                isUndo: false,
+                nowStr: nowStr,
+              );
             }
           },
           child: Text(
             _nowButtonTxt,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
             ),
           ),
