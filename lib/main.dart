@@ -133,7 +133,7 @@ class MainApp extends StatefulWidget {
   final TransferDataViewModel transferDataViewModel;
 
   // used for widget testing only
-  late final _MainAppState stateInstance;
+  late _MainAppState stateInstance;
   _MainAppState get mainAppStateInstance => stateInstance;
 
   MainApp({
