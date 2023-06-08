@@ -963,6 +963,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       ),
                       child: GestureDetector(
                         child: TextField(
+                          key: const Key('newDateTimeTextField'),
                           decoration:
                               const InputDecoration.collapsed(hintText: ''),
                           style: valueTextStyle,
