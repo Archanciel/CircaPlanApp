@@ -233,11 +233,6 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     controller: widget.dateTimePickerController,
                     readOnly: true,
                     // prevents displaying copy paste menu !
-                    toolbarOptions: const ToolbarOptions(
-                        copy: false,
-                        paste: false,
-                        cut: false,
-                        selectAll: false),
                     contextMenuBuilder: null,
                   ),
                   onTap: () {

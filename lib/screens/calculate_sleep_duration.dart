@@ -967,11 +967,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               const InputDecoration.collapsed(hintText: ''),
                           style: valueTextStyle,
                           // prevents displaying copy paste menu !
-                          toolbarOptions: const ToolbarOptions(
-                              copy: false,
-                              paste: false,
-                              cut: false,
-                              selectAll: false),
+                          contextMenuBuilder: null,
                           keyboardType: TextInputType.datetime,
                           controller: _newDateTimeController, // links the
                           //                         TextField content to pressing
@@ -1111,11 +1107,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         controller: _sleepWakeUpHistoryController,
                         readOnly: true,
                         // prevents displaying copy paste menu !
-                        toolbarOptions: const ToolbarOptions(
-                            copy: false,
-                            paste: false,
-                            cut: false,
-                            selectAll: false),
+                        contextMenuBuilder: null,
                         onTap: () async {
                           await copyToClipboardHHmmExtractedFromHistoryDuration(
                               context: context,
