@@ -45,6 +45,13 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
 }
 
 Future<void> main() async {
+  // initialize test data
+  Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+  Utility.copyFileToDirectorySync(
+      sourceFilePathName:
+          '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
+      targetDirectoryPath: kCircadianAppDataTestDir);
+
   final TestClassWithScreenMixin testClassWithSreenMixin =
       TestClassWithScreenMixin();
 

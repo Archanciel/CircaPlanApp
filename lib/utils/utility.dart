@@ -351,6 +351,41 @@ class Utility {
       }
     }
   }
+
+  static void deleteFilesInDirAndSubDirs(String transferDataJsonPath) {
+    final Directory directory = Directory(transferDataJsonPath);
+    final List<FileSystemEntity> contents = directory.listSync(recursive: true);
+
+    for (FileSystemEntity file in contents) {
+      if (file is File) {
+        file.deleteSync();
+      }
+    }
+  }
+
+  /// If [targetFileName] is not provided, the moved file will
+  /// have the same name than the source file name.
+  ///
+  /// Returns true if the file has been moved, false
+  /// otherwise in case the moved file already exist in
+  /// the target dir.
+  static bool copyFileToDirectorySync({
+    required String sourceFilePathName,
+    required String targetDirectoryPath,
+    String? targetFileName,
+  }) {
+    File sourceFile = File(sourceFilePathName);
+    String copiedFileName = targetFileName ?? sourceFile.uri.pathSegments.last;
+    String targetPathFileName = '$targetDirectoryPath/$copiedFileName';
+
+    if (File(targetPathFileName).existsSync()) {
+      return false;
+    }
+
+    sourceFile.copySync(targetPathFileName);
+
+    return true;
+  }
 }
 
 // void main() {
