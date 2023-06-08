@@ -32,7 +32,7 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
 
   final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
-          '$kDownloadAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
+          '$kCircadianAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
   Map<String, dynamic> transferDataMap = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,

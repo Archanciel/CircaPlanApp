@@ -10,7 +10,7 @@ import 'manually_selectable_text_field.dart';
 void main() {
   final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
-          '$kDownloadAppDir${Platform.pathSeparator}manuallySelectableTextField.json');
+          '$kCircadianAppDir${Platform.pathSeparator}manuallySelectableTextField.json');
 
   final Map<String, dynamic> transferDataMap = {
     "firstDurationIconData": Icons.add,

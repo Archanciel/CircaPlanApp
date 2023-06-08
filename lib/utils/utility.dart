@@ -335,6 +335,22 @@ class Utility {
 
     return extractedHHmmStr;
   }
+
+  static String getPlaylistDownloadHomePath({bool isTest = false}) {
+    if (Platform.isWindows) {
+      if (isTest) {
+        return kCircadianAppTestDirWindows;
+      } else {
+        return kCircadianAppDirWindows;
+      }
+    } else {
+      if (isTest) {
+        return kCircadianAppDataTestDir;
+      } else {
+        return kCircadianAppDir;
+      }
+    }
+  }
 }
 
 // void main() {

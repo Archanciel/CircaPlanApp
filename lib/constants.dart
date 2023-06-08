@@ -20,8 +20,14 @@ enum ClipboardLastAction {
 
 const String kApplicationName = "Circadian Calculator";
 const String kApplicationVersion = '2.82';
-const String kDownloadAppDir = '/storage/emulated/0/Download/CircadianData';
-
+const String kCircadianAppDir = '/storage/emulated/0/Download/CircadianData';
+const String kCircadianAppDirWindows =
+    "C:\\Users\\Jean-Pierre\\Downloads\\Circadian";
+const String kCircadianAppTestDirWindows =
+    "D:\\Development\\Flutter\\circa_plan\\test\\data";
+    
+// Tests are run on Windows only. Files in this local test dir are stored in project test_data dir updated
+// on GitHub
 // files in this local test dir are stored in project test_data dir updated
 // on GitHub
 const String kCircadianAppDataTestDir = 'c:\\temp\\test\\CircadianData';

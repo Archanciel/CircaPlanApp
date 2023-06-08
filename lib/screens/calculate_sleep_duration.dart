@@ -323,7 +323,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
 
     String transferDataJsonFilePathName =
-        '$kDownloadAppDir${Platform.pathSeparator}$savedJsonFileName';
+        '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
 
     if (Utility.fileExist(transferDataJsonFilePathName)) {
       // the case if loading the previous day json file at
