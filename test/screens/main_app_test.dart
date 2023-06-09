@@ -1,6 +1,5 @@
 import 'package:circa_plan/main.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
