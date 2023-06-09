@@ -359,7 +359,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
+  void _handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
     _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
@@ -485,13 +485,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     dateTimeTitle: 'Start date time',
                     dateTimePickerController: _startDateTimePickerController,
                     handleDateTimeModificationFunction:
-                        handleStartDateTimeChange,
+                        _handleStartDateTimeChange,
                     transferDataMap: _transferDataMap,
                     handleSelectedDateTimeStrFunction:
                         _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
                     position: ToastGravity.TOP,
+                    nowButtonUndo: true,
                   ),
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,
