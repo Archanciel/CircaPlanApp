@@ -45,6 +45,13 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
 }
 
 Future<void> main() async {
+  // initialize test data
+  Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+  Utility.copyFileToDirectorySync(
+      sourceFilePathName:
+          '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
+      targetDirectoryPath: kCircadianAppDataTestDir);
+
   final TestClassWithScreenMixin testClassWithSreenMixin =
       TestClassWithScreenMixin();
 
@@ -76,13 +83,6 @@ Future<void> main() async {
   transferDataMapRegular['secondTimeStr'] = '00:00:45';
   transferDataMapRegular['dtDiffEndDateTimeStr'] = '03-06-2022 06:42';
   transferDataMapRegular['dtDiffDurationStr'] = '02:53';
-
-  // initialize test data
-  Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
-  Utility.copyFileToDirectorySync(
-      sourceFilePathName:
-          '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
-      targetDirectoryPath: kCircadianAppDataTestDir);
 
   group(
     'Test ScreenMixin.buildSortedAppDateTimeStrList',

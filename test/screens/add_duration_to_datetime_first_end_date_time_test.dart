@@ -1,4 +1,3 @@
-import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
@@ -178,8 +177,7 @@ Future<void> main() async {
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
                   englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr)!;
           firstDurationDateTimeEditorWidget
-              .handleEndDateTimeChangeTst(ScreenMixin.englishDateTimeFormat
-                  .parse(englishFormatFirstNewDateTimeStr));
+              .handleEndDateTimeChangeTst(englishFormatFirstNewDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
               '12-07-2022 16:00'); // not changed
@@ -388,8 +386,7 @@ Future<void> main() async {
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
                   englishFormatDateTimeStr: englishFormatFirstNewDateTimeStr)!;
           firstDurationDateTimeEditorWidget
-              .handleEndDateTimeChangeTst(ScreenMixin.englishDateTimeFormat
-                  .parse(englishFormatFirstNewDateTimeStr));
+              .handleEndDateTimeChangeTst(englishFormatFirstNewDateTimeStr);
 
           expect(editableStartDateTime.dateTimePickerController.text,
               '12-07-2022 16:00'); // not changed

@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:oktoast/oktoast.dart';
 import '../model/menu_item_data.dart';
-import '../widgets/circadian_ok_toast.dart';
+import '../widgets/circadian_flutter_toast.dart';
 
 /// This mixin class contains UI parameters used by all the Circa
 /// application screens. Since it is not possible to define a
@@ -271,7 +271,8 @@ mixin ScreenMixin {
       //                BuildContext. This argument is not always
       //                required, reason why it is positiponal
       //                optional !
-    ) handleSelectedItemFunction,
+    )
+        handleSelectedItemFunction,
   }) {
     List<String> selectableStrItemLst = selMenuDateTimeItemData.itemDataStrLst;
 
@@ -338,7 +339,7 @@ mixin ScreenMixin {
     required BuildContext context,
     required TextEditingController controller,
     bool extractHHmmFromCopiedStr = false,
-    ToastPosition position = ToastPosition.center,
+    ToastGravity position = ToastGravity.CENTER,
   }) async {
     // avoiding selecting the value copied to clipboard !
     // controller.selection = TextSelection(
@@ -368,9 +369,8 @@ mixin ScreenMixin {
 
     await Clipboard.setData(ClipboardData(text: selectedText));
 
-    CircadianOkToast.showToastMessage(
+    CircadianFlutterToast.showToast(
       message: '$selectedText to clipboard',
-      context: context,
       positionWorkingOnOldAndroid: position,
     );
 
@@ -456,7 +456,7 @@ mixin ScreenMixin {
         handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
-    ToastPosition position = ToastPosition.center,
+    ToastGravity position = ToastGravity.CENTER,
   }) async {
     var clipboardLastAction = transferDataMap['clipboardLastAction'];
 
@@ -493,10 +493,11 @@ mixin ScreenMixin {
     required void Function(
       BuildContext context,
       String dialogTimeStr,
-    ) handleDataChangeFunction, // the unique difference with
+    )
+        handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
-    ToastPosition position = ToastPosition.center,
+    ToastGravity position = ToastGravity.CENTER,
   }) async {
     var clipboardLastAction = transferDataMap['clipboardLastAction'];
 

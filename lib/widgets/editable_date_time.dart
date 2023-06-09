@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../buslog/transfer_data_view_model.dart';
 
 class EditableDateTime extends StatefulWidget {
@@ -21,7 +21,7 @@ class EditableDateTime extends StatefulWidget {
     required this.handleSelectedDateTimeStrFunction,
     this.displayFixDateTimeCheckbox = false,
     this.widgetPrefix = '',
-    this.position = ToastPosition.center,
+    this.position = ToastGravity.CENTER,
     this.nowButtonUndo = false,
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
@@ -43,9 +43,10 @@ class EditableDateTime extends StatefulWidget {
 
   final bool displayFixDateTimeCheckbox;
   final String widgetPrefix;
-  final ToastPosition position;
+  final ToastGravity position;
 
   final bool nowButtonUndo;
+  String undoDateTimeStr = '';
 
   /// This variable enables the EditableDurationPercent
   /// instance to execute the callSetState() method of its
@@ -67,7 +68,6 @@ class EditableDateTime extends StatefulWidget {
 
   set isEndDateTimeFixed(bool value) {
     stateInstance._twoButtonsWidget.isEndDateTimeFixed = value;
-    // ignore: invalid_use_of_protected_member
     stateInstance._twoButtonsWidget.stateInstance.setState(() {});
   }
 }
@@ -78,9 +78,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
   TimeOfDay _selectedTime = TimeOfDay.now();
 
   DateTime _dateTime = DateTime.now();
-
   DateTime _undoDateTime = DateTime.now();
-
   late TwoButtonsWidget _twoButtonsWidget;
 
   @override
@@ -118,6 +116,9 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     if (widget.nowButtonUndo) {
       if (isUndo) {
         _dateTime = _undoDateTime;
+
+        // setting nowStr to the value of the _undoDateTime
+        nowStr = ScreenMixin.englishDateTimeFormat.format(_undoDateTime);
       } else {
         _undoDateTime = ScreenMixin.frenchDateTimeFormat
             .parse(widget.dateTimePickerController.text);
@@ -128,7 +129,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     }
 
     _updateDateTimePickerValues();
-    widget.handleDateTimeModificationFunction(_dateTime);
+    widget.handleDateTimeModificationFunction(nowStr);
   }
 
   void _updateDateTimePickerValues() {

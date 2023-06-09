@@ -1,4 +1,6 @@
 import 'package:circa_plan/main.dart';
+import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
@@ -167,7 +169,7 @@ Future<void> main() async {
     'AppBar menu testing',
     () {
       testWidgets(
-        'Undo load.',
+        'Undo load. Test working, but result not checked.',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
@@ -180,6 +182,11 @@ Future<void> main() async {
             ),
           );
 
+          TextField newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          expect(newDateTimeTextField.controller!.text,
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+
           // clicking on AppBar popup menu button
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
@@ -191,6 +198,8 @@ Future<void> main() async {
           // then loading jsonFileNameOne
           await tester.tap(find.text(jsonFileNameOne).first);
           await tester.pumpAndSettle();
+
+          print(newDateTimeTextField.controller!.text);
 
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));

@@ -7,7 +7,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/utility.dart';
 import '../widgets/editable_duration_percent.dart';
@@ -122,7 +122,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       textFieldController: _firstTimeTextFieldController,
       handleTextFieldChangeFunction: _handleFirstTimeTextFieldChange,
       widgetPrefixOrName: 'firstTimeStr',
-      position: ToastPosition.top,
+      position: ToastGravity.TOP,
     );
 
     manuallySelectableSecondTimeTextField = ManuallySelectableTextField(
@@ -131,7 +131,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
       textFieldController: _secondTimeTextFieldController,
       handleTextFieldChangeFunction: _handleSecondTimeTextFieldChange,
       widgetPrefixOrName: 'secondTimeStr',
-      position: ToastPosition.top,
+      position: ToastGravity.TOP,
     );
 
     String extractedHHmm = '';
@@ -295,6 +295,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     } else {
       resultDuration = firstTimeDuration - secondTimeDuration;
     }
+
+    String resultTimeStr;
 
     _resultTimeStr = '${resultDuration.ddHHmm()} = ${resultDuration.HHmm()}';
     _resultTextFieldController.text = _resultTimeStr;
@@ -475,6 +477,8 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -599,7 +603,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                         await copyToClipboard(
                           context: context,
                           controller: _resultTextFieldController,
-                          position: ToastPosition.top,
+                          position: ToastGravity.TOP,
                         );
                         _transferDataMap['clipboardLastAction'] =
                             ClipboardLastAction.copy;

@@ -4,22 +4,6 @@ import 'dart:io';
 import 'package:circa_plan/constants.dart';
 
 class Utility {
-  static String getPlaylistDownloadHomePath({bool isTest = false}) {
-    if (Platform.isWindows) {
-      if (isTest) {
-        return kCircadianAppTestDirWindows;
-      } else {
-        return kCircadianAppDirWindows;
-      }
-    } else {
-      if (isTest) {
-        return kCircadianAppDataTestDir;
-      } else {
-        return kCircadianAppDir;
-      }
-    }
-  }
-
   /// Returns true if the passed file path name exists, false
   /// otherwise.
   static bool fileExist(String filePathNameStr) {
@@ -350,6 +334,22 @@ class Utility {
     }
 
     return extractedHHmmStr;
+  }
+
+  static String getPlaylistDownloadHomePath({bool isTest = false}) {
+    if (Platform.isWindows) {
+      if (isTest) {
+        return kCircadianAppTestDirWindows;
+      } else {
+        return kCircadianAppDirWindows;
+      }
+    } else {
+      if (isTest) {
+        return kCircadianAppDataTestDir;
+      } else {
+        return kCircadianAppDir;
+      }
+    }
   }
 
   static void deleteFilesInDirAndSubDirs(String transferDataJsonPath) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../buslog/transfer_data_view_model.dart';
 
 class ManuallySelectableTextField extends StatefulWidget {
@@ -18,7 +18,7 @@ class ManuallySelectableTextField extends StatefulWidget {
   ]) handleTextFieldChangeFunction;
 
   final String widgetPrefixOrName;
-  final ToastPosition position;
+  final ToastGravity position;
 
   ManuallySelectableTextField({
     super.key,
@@ -26,7 +26,7 @@ class ManuallySelectableTextField extends StatefulWidget {
     required this.textFieldController,
     required this.handleTextFieldChangeFunction,
     this.widgetPrefixOrName = '',
-    this.position = ToastPosition.center,
+    this.position = ToastGravity.CENTER,
   })  : _transferDataViewModel = transferDataViewModel,
         _transferDataMap = transferDataViewModel.getTransferDataMap() ?? {};
 

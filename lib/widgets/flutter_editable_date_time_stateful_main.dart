@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/widgets/flutter_editable_date_time_stateful.dart';
-import 'package:oktoast/oktoast.dart';
 import '../buslog/transfer_data_view_model.dart';
 import 'duration_date_time_editor.dart';
 
@@ -21,11 +20,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // print('MyApp.build()');
-    return OKToast(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: FlutterEditableDateTimeScreen(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FlutterEditableDateTimeScreen(),
     );
   }
 }
@@ -36,7 +33,7 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   final TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
           '$kCircadianAppDir${Platform.pathSeparator}$kDefaultJsonFileName');
-  final Map<String, dynamic> transferDataMap = {
+  Map<String, dynamic> transferDataMap = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,
     "firstDurationSign": 1,

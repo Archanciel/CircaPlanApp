@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constants.dart';
 import '../screens/screen_mixin.dart';
@@ -10,7 +10,7 @@ class NonEditableDateTime extends StatelessWidget with ScreenMixin {
     required this.dateTimeTitle,
     required TextEditingController dateTimeController,
     required Map<String, dynamic> transferDataMap,
-    this.position = ToastPosition.center,
+    this.position = ToastGravity.CENTER,
   })  : _dateTimeController = dateTimeController,
         _transferDataMap = transferDataMap,
         super(key: key);
@@ -18,7 +18,7 @@ class NonEditableDateTime extends StatelessWidget with ScreenMixin {
   final String dateTimeTitle;
   final TextEditingController _dateTimeController;
   final Map<String, dynamic> _transferDataMap;
-  final ToastPosition position;
+  final ToastGravity position;
 
   @override
   Widget build(BuildContext context) {

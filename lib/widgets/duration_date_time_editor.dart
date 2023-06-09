@@ -7,7 +7,7 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/utility.dart';
 import 'manually_selectable_text_field.dart';
@@ -33,7 +33,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   final Map<String, dynamic> _transferDataMap;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
   final bool saveTransferDataIfModified; // is true only for last widget
-  final ToastPosition position;
+  final ToastGravity position;
 
   /// saveTransferDataIfModified is set to true only for
   /// the last DurationDateTimeEditor widget in order to
@@ -48,7 +48,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     required Map<String, dynamic> transferDataMap,
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     this.saveTransferDataIfModified = false,
-    this.position = ToastPosition.center,
+    this.position = ToastGravity.CENTER,
   })  : _widgetPrefix = widgetPrefix,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
@@ -143,8 +143,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   }
 
   /// For widget test only
-  void handleEndDateTimeChangeTst(DateTime endDateTime) {
-    stateInstance.handleEndDateTimeChange(endDateTime);
+  void handleEndDateTimeChangeTst(String endDateTimeEnglishFormatStr) {
+    stateInstance.handleEndDateTimeChange(endDateTimeEnglishFormatStr);
   }
 }
 
@@ -432,9 +432,18 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
   }
 
-  void handleEndDateTimeChange(DateTime endDateTime) {
-    _endDateTimeStr = endDateTime.toString(); // english format
-    processEndDateTimeChange(endDateTime);
+  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+    _endDateTimeStr = endDateTimeEnglishFormatStr;
+    DateTime? endDateTime;
+
+    try {
+      endDateTime =
+          ScreenMixin.englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
+    } on FormatException {}
+
+    if (endDateTime != null) {
+      processEndDateTimeChange(endDateTime);
+    }
   }
 
   void processEndDateTimeChange(DateTime endDateTime) {

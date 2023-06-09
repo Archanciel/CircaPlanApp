@@ -7,7 +7,7 @@ import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/utils/date_time_parser.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../widgets/editable_duration_percent.dart';
 import '../widgets/non_editable_date_time.dart';
@@ -51,6 +51,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
         _wakingAtDateTimeStr =
             transferDataMap['dtDiffWakingAtDateTimeStr'] ?? '',
         super();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
@@ -382,6 +384,8 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
@@ -408,7 +412,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _handleSelectedStartDateTimeStr,
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
-                    position: ToastPosition.top,
+                    position: ToastGravity.TOP,
                   ),
                   EditableDateTime(
                     dateTimeTitle: 'End date time',
@@ -419,7 +423,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                         _handleSelectedEndDateTimeStr,
                     topSelMenuPosition: 203.0,
                     transferDataViewModel: _transferDataViewModel,
-                    position: ToastPosition.top,
+                    position: ToastGravity.TOP,
                   ),
                   EditableDuration(
                     dateTimeTitle: 'Duration',
@@ -432,7 +436,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     addPosOrNegTimeToCurrentDurationFunction:
                         _addPosOrNegTimeToCurrentDuration,
                     deleteAddedTimeDurationFunction: _deleteAddedTimeDuration,
-                    position: ToastPosition.top,
+                    position: ToastGravity.TOP,
                   ),
                   _editableDurationPercentSleep,
                   _editableDurationPercentTotal,

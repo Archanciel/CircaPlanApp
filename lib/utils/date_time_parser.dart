@@ -209,6 +209,8 @@ class DateTimeParser {
           .map((element) => int.parse(element))
           .toList(growable: false);
 
+      int setNegative = 1;
+
       final int dayInt = hourMinuteIntLst[0];
       final int hourInt = hourMinuteIntLst[1];
       final int minuteInt = hourMinuteIntLst[2];
