@@ -119,6 +119,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   TextEditingController _medicAlarmController = TextEditingController();
 
+  final FocusNode _newDateTimeFocusNode = FocusNode();
+
   String _buildSleepWakeUpHistoryStr() {
     List<String>? sleepTimeHistoryLst =
         _transferDataMap['calcSlDurSleepTimeStrHistory'];
@@ -973,7 +975,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                           controller: _newDateTimeController, // links the
                           //                         TextField content to pressing
                           //                         the button 'Now'. '+' or '-'
+                          focusNode: _newDateTimeFocusNode,
                         ),
+                        onTap: () {
+                          _newDateTimeFocusNode.requestFocus();
+                        },
                         onDoubleTap: () async {
                           await copyToClipboard(
                             context: context,
