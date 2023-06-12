@@ -282,7 +282,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 2, 23);
+              DateTime(now.year, now.month, now.day - 1, 2, 23);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -333,7 +333,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 2, 3);
+              DateTime(now.year, now.month, now.day - 1, 2, 3);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -384,7 +384,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 2, 30);
+              DateTime(now.year, now.month, now.day - 1, 2, 30);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -435,7 +435,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 10, 30);
+              DateTime(now.year, now.month, now.day - 1, 10, 30);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
