@@ -203,6 +203,11 @@ Future<void> main() async {
 
           // checking that '14-07-2022 13:09' is displayed once
           expect(find.text('14-07-2022 13:09'), findsOneWidget);
+
+          // checking that startDateTime text field is '14-07-2022 13:09'
+          newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');          
           
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
@@ -219,6 +224,11 @@ Future<void> main() async {
           // checking that '14-07-2022 16:39' is displayed once
           expect(find.text('14-07-2022 16:39'), findsOneWidget);
 
+          // checking that newDateTime text field is '14-07-2022 16:39'
+          newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          expect(newDateTimeTextField.controller!.text, '14-07-2022 16:39');
+
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
@@ -232,6 +242,11 @@ Future<void> main() async {
 
           // checking that '14-07-2022 13:09' is displayed once
           expect(find.text('14-07-2022 13:09'), findsOneWidget);
+
+          // checking that newDateTime text field is '14-07-2022 13:09'
+          newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');
         },
       );
     },
