@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,6 +14,12 @@ Future<void> main() async {
       w is IconButton && (w.tooltip?.startsWith('Next month') ?? false));
   final Finder previousMonthIcon = find.byWidgetPredicate((Widget w) =>
       w is IconButton && (w.tooltip?.startsWith('Previous month') ?? false));
+
+  Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+  Utility.copyFileToDirectorySync(
+      sourceFilePathName:
+          '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian_edt.json',
+      targetDirectoryPath: kCircadianAppDataTestDir);
 
   // files in this local test dir are stored in
   // project test_data dir updated

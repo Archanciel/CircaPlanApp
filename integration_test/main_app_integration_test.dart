@@ -1,5 +1,6 @@
 import 'package:circa_plan/main.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -11,6 +12,12 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+ Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+  Utility.copyFileToDirectorySync(
+      sourceFilePathName:
+          '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
+      targetDirectoryPath: kCircadianAppDataTestDir);
+      
   Map<String, dynamic> transferDataMapCircadian = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,

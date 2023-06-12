@@ -282,7 +282,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day, 2, 23);
+              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 2, 23);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -333,7 +333,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day, 2, 3);
+              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 2, 3);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -384,7 +384,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day, 2, 30);
+              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 2, 30);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -435,7 +435,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day, 10, 30);
+              DateTime(now.year, now.month, (now.hour > 0) ? now.day : now.day - 1, 10, 30);
 
           int minuteInt = dateTimeBeforeNow.minute;
           String minuteStr;
@@ -539,7 +539,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeTomorrowOneHourLater = DateTime(
-              now.year, now.month, now.day + 1, now.hour + 1, now.minute);
+              now.year, now.month, now.day + 1, (now.hour > 0) ? now.hour : now.hour + 1, now.minute);
 
           int minuteInt = dateTimeTomorrowOneHourLater.minute;
           String minuteStr;
@@ -592,7 +592,7 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeTomorrowOneHourBefore = DateTime(
-              now.year, now.month, now.day + 1, now.hour - 1, now.minute);
+              now.year, now.month, now.day + 1, (now.hour > 0) ? now.hour - 1 : now.hour, now.minute);
 
           int minuteInt = dateTimeTomorrowOneHourBefore.minute;
           String minuteStr;
