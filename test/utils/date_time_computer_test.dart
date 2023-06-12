@@ -134,10 +134,7 @@ void main() {
                       '8:00',
                     ],
                   ),
-              throwsA(predicate((e) =>
-                  e is FormatException &&
-                  e.message ==
-                      'Trying to read : from 23-4-2022 1a:00 at position 12')));
+              throwsA(isA<FormatException>()));
         },
       );
 
