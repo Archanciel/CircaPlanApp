@@ -124,7 +124,7 @@ void main() {
       );
 
       test(
-        'invalid date time string + 2 valid durations',
+        'invalid date time string + 2 valid durations exception type only',
         () {
           expect(
               () => dtc.DateTimeComputer.addDurationsToDateTime(
@@ -135,6 +135,23 @@ void main() {
                     ],
                   ),
               throwsA(isA<FormatException>()));
+        },
+      );
+      test(
+        'invalid date time string + 2 valid durations exception type + message',
+        () {
+          expect(
+              () => dtc.DateTimeComputer.addDurationsToDateTime(
+                    dateTimeStr: '23-4-2022 1a:00',
+                    posNegDurationStrLst: [
+                      '20:00',
+                      '8:00',
+                    ],
+                  ),
+              throwsA(predicate((e) =>
+                  e is FormatException &&
+                  e.message ==
+                      'Trying to read : from 23-4-2022 1a:00 at 12')));
         },
       );
 
@@ -521,8 +538,8 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTimeTomorrowOneHourLater =
-              DateTime(now.year, now.month, now.day + 1, now.hour + 1, now.minute);
+          DateTime dateTimeTomorrowOneHourLater = DateTime(
+              now.year, now.month, now.day + 1, now.hour + 1, now.minute);
 
           int minuteInt = dateTimeTomorrowOneHourLater.minute;
           String minuteStr;
@@ -562,7 +579,8 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${dateTimeTomorrowOneHourLater.hour}:$minuteStr',
+                alarmHHmmTimeStr:
+                    '${dateTimeTomorrowOneHourLater.hour}:$minuteStr',
                 setToTomorrow: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowOneHourLater.year} $hourStr:$minuteStr');
@@ -573,8 +591,8 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTimeTomorrowOneHourBefore =
-              DateTime(now.year, now.month, now.day + 1, now.hour - 1, now.minute);
+          DateTime dateTimeTomorrowOneHourBefore = DateTime(
+              now.year, now.month, now.day + 1, now.hour - 1, now.minute);
 
           int minuteInt = dateTimeTomorrowOneHourBefore.minute;
           String minuteStr;
@@ -614,7 +632,8 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '${dateTimeTomorrowOneHourBefore.hour}:$minuteStr',
+                alarmHHmmTimeStr:
+                    '${dateTimeTomorrowOneHourBefore.hour}:$minuteStr',
                 setToTomorrow: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowOneHourBefore.year} $hourStr:$minuteStr');
@@ -831,7 +850,6 @@ void main() {
       test(
         'alarm date time equal now',
         () {
-
           DateTime dateTimeNow = DateTime.now();
 
           int minuteInt = dateTimeNow.minute;
