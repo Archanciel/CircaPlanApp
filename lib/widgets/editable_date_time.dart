@@ -160,6 +160,49 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     return _selectedDate;
   }
 
+  /// The _selectDatePickerDateTime method is an asynchronous method
+  /// that first displays a Date Picker and, if the user doesn't
+  /// cancel the selection, subsequently displays the Time Picker
+  /// using _selectDatePickerTime. If the user picks both date and
+  /// time, the method updates the text in the TextField to the newly
+  /// selected date and time in French format.
+  Future _selectDatePickerDateTime(BuildContext context) async {
+    final DateTime? date = await _selectDatePickerDate(context);
+
+    if (date == null) {
+      // User clicked on date picker dialog Cancel button. In
+      // this case, the time picker dialog is not displayed and
+      // the _dateTime value is not modified.
+      return;
+    }
+
+    final TimeOfDay? time = await _selectDatePickerTime(context);
+
+    if (time == null) {
+      // User clicked on time picker dialog Cancel button. In
+      // this case, the _dateTime value is not modified.
+      return;
+    }
+
+    _dateTime = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
+
+    widget.dateTimePickerController.text =
+        ScreenMixin.frenchDateTimeFormat.format(_dateTime);
+
+    widget.handleDateTimeModificationFunction(
+        ScreenMixin.englishDateTimeFormat.format(_dateTime));
+  }
+
+  /// The _selectDatePickerTime method is an asynchronous method
+  /// that displays a Time Picker and returns the selected time, or
+  /// null if the user cancels the selection. The time picker uses a
+  /// 24-hour format.
   Future<TimeOfDay?> _selectDatePickerTime(BuildContext context) async {
     final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
@@ -184,41 +227,6 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     }
 
     return _selectedTime;
-  }
-
-  Future _selectDatePickerDateTime(BuildContext context) async {
-    final DateTime? date = await _selectDatePickerDate(context);
-
-    if (date == null) {
-      // User clicked on date picker dialog Cancel button. In
-      // this case, the time picker dialog is not displayed and
-      // the _dateTime value is not modified.
-      return;
-    }
-
-    final TimeOfDay? time = await _selectDatePickerTime(context);
-
-    if (time == null) {
-      // User clicked on time picker dialog Cancel button. In
-      // this case, the _dateTime value is not modified.
-      return;
-    }
-
-//    setState(() {
-    _dateTime = DateTime(
-      date.year,
-      date.month,
-      date.day,
-      time.hour,
-      time.minute,
-    );
-    //  });
-
-    widget.dateTimePickerController.text =
-        ScreenMixin.frenchDateTimeFormat.format(_dateTime);
-
-    widget.handleDateTimeModificationFunction(
-        ScreenMixin.englishDateTimeFormat.format(_dateTime));
   }
 
   @override
@@ -269,6 +277,8 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     _selectedTime =
                         TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
                     _selectedDate = dateTime;
+
+                    // displaying the date and time dialogs ...
                     _selectDatePickerDateTime(context);
                   },
                   onDoubleTap: () async {
