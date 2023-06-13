@@ -139,27 +139,6 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
         ScreenMixin.frenchDateTimeFormat.format(_dateTime);
   }
 
-  // Select for Date
-  Future<DateTime?> _selectDatePickerDate(BuildContext context) async {
-    final DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2100),
-    );
-
-    if (selectedDate == null) {
-      // User clicked on Cancel button
-      return null;
-    } else {
-      if (selectedDate != _selectedDate) {
-        _selectedDate = selectedDate;
-      }
-    }
-
-    return _selectedDate;
-  }
-
   /// The _selectDatePickerDateTime method is an asynchronous method
   /// that first displays a Date Picker and, if the user doesn't
   /// cancel the selection, subsequently displays the Time Picker
@@ -197,6 +176,29 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
 
     widget.handleDateTimeModificationFunction(
         ScreenMixin.englishDateTimeFormat.format(_dateTime));
+  }
+
+  /// The _selectDatePickerTime method displays a Date Picker dialog
+  /// and returns the selected DateTime value. If the user cancels
+  /// the selection, the method returns null.
+  Future<DateTime?> _selectDatePickerDate(BuildContext context) async {
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2100),
+    );
+
+    if (selectedDate == null) {
+      // User clicked on Cancel button
+      return null;
+    } else {
+      if (selectedDate != _selectedDate) {
+        _selectedDate = selectedDate;
+      }
+    }
+
+    return _selectedDate;
   }
 
   /// The _selectDatePickerTime method is an asynchronous method
