@@ -12,12 +12,12 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
- Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+  Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
   Utility.copyFileToDirectorySync(
       sourceFilePathName:
           '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
       targetDirectoryPath: kCircadianAppDataTestDir);
-      
+
   Map<String, dynamic> transferDataMapCircadian = {
     "firstDurationIconData": Icons.add,
     "firstDurationIconColor": Colors.green.shade200,
@@ -214,8 +214,8 @@ Future<void> main() async {
           // checking that startDateTime text field is '14-07-2022 13:09'
           newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');          
-          
+          expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');
+
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
