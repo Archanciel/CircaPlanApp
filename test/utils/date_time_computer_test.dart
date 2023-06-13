@@ -281,10 +281,21 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day - 1, 2, 23);
+          DateTime dateTime_2_23 =
+              DateTime(now.year, now.month, now.day, 2, 23);
 
-          int minuteInt = dateTimeBeforeNow.minute;
+          DateTime expectedDateTime;
+
+          // if alarm time is before now or now, then it makes no sense to
+          // define an alarm for today which will never be triggered, so we
+          // it for tomorrow. If it is after now, then we define it for today.
+          if (dateTime_2_23.isBefore(now)) {
+            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 2, 23);
+          } else {
+            expectedDateTime = DateTime(now.year, now.month, now.day, 2, 23);
+          }
+
+          int minuteInt = expectedDateTime.minute;
           String minuteStr;
 
           if (minuteInt > 9) {
@@ -293,7 +304,7 @@ void main() {
             minuteStr = '0${minuteInt.toString()}';
           }
 
-          int hourInt = dateTimeBeforeNow.hour;
+          int hourInt = expectedDateTime.hour;
           String hourStr;
 
           if (hourInt > 9) {
@@ -302,7 +313,7 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = dateTimeBeforeNow.month;
+          int monthInt = expectedDateTime.month;
           String monthStr;
 
           if (monthInt > 9) {
@@ -311,7 +322,7 @@ void main() {
             monthStr = '0${monthInt.toString()}';
           }
 
-          int dayInt = dateTimeBeforeNow.day + 1;
+          int dayInt = expectedDateTime.day;
           String dayStr;
 
           if (dayInt > 9) {
@@ -332,10 +343,21 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day - 1, 2, 3);
+          DateTime dateTime_2_30 =
+              DateTime(now.year, now.month, now.day, 2, 30);
 
-          int minuteInt = dateTimeBeforeNow.minute;
+          DateTime expectedDateTime;
+
+          // if alarm time is before now or now, then it makes no sense to
+          // define an alarm for today which will never be triggered, so we
+          // it for tomorrow. If it is after now, then we define it for today.
+          if (dateTime_2_30.isBefore(now)) {
+            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 2, 30);
+          } else {
+            expectedDateTime = DateTime(now.year, now.month, now.day, 2, 30);
+          }
+
+          int minuteInt = expectedDateTime.minute;
           String minuteStr;
 
           if (minuteInt > 9) {
@@ -344,7 +366,7 @@ void main() {
             minuteStr = '0${minuteInt.toString()}';
           }
 
-          int hourInt = dateTimeBeforeNow.hour;
+          int hourInt = expectedDateTime.hour;
           String hourStr;
 
           if (hourInt > 9) {
@@ -353,7 +375,7 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = dateTimeBeforeNow.month;
+          int monthInt = expectedDateTime.month;
           String monthStr;
 
           if (monthInt > 9) {
@@ -362,7 +384,7 @@ void main() {
             monthStr = '0${monthInt.toString()}';
           }
 
-          int dayInt = dateTimeBeforeNow.day + 1;
+          int dayInt = expectedDateTime.day;
           String dayStr;
 
           if (dayInt > 9) {
@@ -373,7 +395,7 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '2:03',
+                alarmHHmmTimeStr: '2:30',
               ),
               '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
         },
@@ -383,10 +405,21 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day - 1, 2, 30);
+          DateTime dateTime_2_3 =
+              DateTime(now.year, now.month, now.day, 2, 3);
 
-          int minuteInt = dateTimeBeforeNow.minute;
+          DateTime expectedDateTime;
+
+          // if alarm time is before now or now, then it makes no sense to
+          // define an alarm for today which will never be triggered, so we
+          // it for tomorrow. If it is after now, then we define it for today.
+          if (dateTime_2_3.isBefore(now)) {
+            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 2, 3);
+          } else {
+            expectedDateTime = DateTime(now.year, now.month, now.day, 2, 3);
+          }
+
+          int minuteInt = expectedDateTime.minute;
           String minuteStr;
 
           if (minuteInt > 9) {
@@ -395,7 +428,7 @@ void main() {
             minuteStr = '0${minuteInt.toString()}';
           }
 
-          int hourInt = dateTimeBeforeNow.hour;
+          int hourInt = expectedDateTime.hour;
           String hourStr;
 
           if (hourInt > 9) {
@@ -404,7 +437,7 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = dateTimeBeforeNow.month;
+          int monthInt = expectedDateTime.month;
           String monthStr;
 
           if (monthInt > 9) {
@@ -413,7 +446,7 @@ void main() {
             monthStr = '0${monthInt.toString()}';
           }
 
-          int dayInt = dateTimeBeforeNow.day + 1;
+          int dayInt = expectedDateTime.day;
           String dayStr;
 
           if (dayInt > 9) {
@@ -424,7 +457,7 @@ void main() {
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '02:3',
+                alarmHHmmTimeStr: '02:03',
               ),
               '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
         },
@@ -434,10 +467,21 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTimeBeforeNow =
-              DateTime(now.year, now.month, now.day - 1, 10, 30);
+          DateTime dateTime_10_30 =
+              DateTime(now.year, now.month, now.day, 10, 30);
 
-          int minuteInt = dateTimeBeforeNow.minute;
+          DateTime expectedDateTime;
+
+          // if alarm time is before now or now, then it makes no sense to
+          // define an alarm for today which will never be triggered, so we
+          // it for tomorrow. If it is after now, then we define it for today.
+          if (dateTime_10_30.isBefore(now)) {
+            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 10, 30);
+          } else {
+            expectedDateTime = DateTime(now.year, now.month, now.day, 10, 30);
+          }
+
+          int minuteInt = expectedDateTime.minute;
           String minuteStr;
 
           if (minuteInt > 9) {
@@ -446,7 +490,7 @@ void main() {
             minuteStr = '0${minuteInt.toString()}';
           }
 
-          int hourInt = dateTimeBeforeNow.hour;
+          int hourInt = expectedDateTime.hour;
           String hourStr;
 
           if (hourInt > 9) {
@@ -455,7 +499,7 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = dateTimeBeforeNow.month;
+          int monthInt = expectedDateTime.month;
           String monthStr;
 
           if (monthInt > 9) {
@@ -464,7 +508,7 @@ void main() {
             monthStr = '0${monthInt.toString()}';
           }
 
-          int dayInt = dateTimeBeforeNow.day + 1;
+          int dayInt = expectedDateTime.day;
           String dayStr;
 
           if (dayInt > 9) {
@@ -512,6 +556,8 @@ void main() {
             monthStr = '0${monthInt.toString()}';
           }
 
+          // if alarm time is now time, then it makes no sense to define an
+          // alarm for today, so we define it for tomorrow.
           int dayInt = dateTimeNow.day + 1;
           String dayStr;
 
