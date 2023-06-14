@@ -300,25 +300,41 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ];
 
     _curvedNavigationBarItemIconsLst = [
-      Image.asset(
-        "images/calc_sleep_duration_blue_trans.png",
-        width: 36,
-        height: 36,
+      KeyedSubtree(
+        // enables adding a key to the image useful for integration testing
+        key: const ValueKey('navBarCalcSleepDurationPageOne'),
+        child: Image.asset(
+          "images/calc_sleep_duration_blue_trans.png",
+          width: 36,
+          height: 36,
+        ),
       ),
-      Image.asset(
-        "images/time_difference_blue_trans.png",
-        width: 35,
-        height: 35,
+      KeyedSubtree(
+        // enables adding a key to the image useful for integration testing
+        key: const ValueKey('navBarWakeUpDurationPageTwo'),
+        child: Image.asset(
+          "images/time_difference_blue_trans.png",
+          width: 35,
+          height: 35,
+        ),
       ),
-      Image.asset(
-        "images/add_duration_to_date_time_blue_trans.png",
-        width: 36,
-        height: 36,
+      KeyedSubtree(
+        // enables adding a key to the image useful for integration testing
+        key: const ValueKey('navBarAddDurationToDateTimePageThree'),
+        child: Image.asset(
+          "images/add_duration_to_date_time_blue_trans.png",
+          width: 36,
+          height: 36,
+        ),
       ),
-      Image.asset(
-        "images/calculate_time_blue_trans.png",
-        width: 38,
-        height: 38,
+      KeyedSubtree(
+        // enables adding a key to the image useful for integration testing
+        key: const ValueKey('navBarTimeCalculatorPageFour'),
+        child: Image.asset(
+          "images/calculate_time_blue_trans.png",
+          width: 38,
+          height: 38,
+        ),
       ),
     ];
 

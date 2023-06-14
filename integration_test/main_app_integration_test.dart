@@ -1,6 +1,7 @@
 import 'package:circa_plan/main.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/utils/utility.dart';
+import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -254,6 +255,39 @@ Future<void> main() async {
           newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
           expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');
+        },
+      );
+    },
+  );
+
+  group(
+    'Switch to other pages testing',
+    () {
+      testWidgets(
+        'Switch to Wake Up Duration page.',
+        (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: MainApp(
+                  key: const Key('mainAppKey'),
+                  transferDataViewModel: transferDataViewModelOne,
+                ),
+              ),
+            ),
+          );
+
+          // Clicking on the second icon in the navigation bar
+          await tester
+              .tap(find.byKey(const Key('navBarWakeUpDurationPageTwo')));
+          await tester.pumpAndSettle();
+
+          // Confirming that the Wake Up Duration page is displayed
+          EditableDateTime startDateTimeEditableDateTimeWidget = tester
+              .widget(find.byKey(const Key('wakeUpDurationStartDateTimeKey')));
+          expect(
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
+              '13-07-2022 16:09');
         },
       );
     },
