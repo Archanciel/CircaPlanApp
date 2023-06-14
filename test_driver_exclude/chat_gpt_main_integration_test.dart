@@ -3,6 +3,11 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 /// Running the test in terminal:
+/// First, rename test_driver_exclude to test_driver. The reason
+/// the test_driver folder was renamed to test_driver_exclude is
+/// because the test_driver folder is not excluded from the
+/// running the project tests in the VS Code Testing section.
+/// 
 /// flutter drive --target=test_driver/chat_gpt_main_integration.dart
 /// 
 /// WARNING: the tested app must not be already running before running
