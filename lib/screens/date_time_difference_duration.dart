@@ -404,6 +404,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                     height: 15,
                   ),
                   EditableDateTime(
+                    key: Key('wakeUpDurationStartDateTimeKey'),
                     dateTimeTitle: 'Start date time',
                     dateTimePickerController: _startDateTimeController,
                     handleDateTimeModificationFunction: _setStateDiffDuration,
