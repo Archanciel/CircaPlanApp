@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import 'utils/date_time_computer.dart';
 import 'constants.dart';
 import 'screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
@@ -16,9 +14,6 @@ import 'package:circa_plan/screens/calculate_sleep_duration.dart';
 import 'package:circa_plan/screens/date_time_difference_duration.dart';
 import 'package:circa_plan/screens/time_calculator.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/widgets/circadian_snackbar.dart';
-import 'model/menu_item_data.dart';
-import 'package:circa_plan/widgets/circadian_flutter_toast.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -157,25 +152,37 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     ];
 
     _curvedNavigationBarItemIconsLst = [
-      Image.asset(
-        "images/calc_sleep_duration_blue_trans.png",
-        width: 36,
-        height: 36,
+      KeyedSubtree(
+        key: ValueKey('navBarCalcSleepDurationPage'),
+        child: Image.asset(
+          "images/calc_sleep_duration_blue_trans.png",
+          width: 36,
+          height: 36,
+        ),
       ),
-      Image.asset(
-        "images/time_difference_blue_trans.png",
-        width: 35,
-        height: 35,
+      KeyedSubtree(
+        key: ValueKey('navBarWakeUpDurationPage'),
+        child: Image.asset(
+          "images/time_difference_blue_trans.png",
+          width: 35,
+          height: 35,
+        ),
       ),
-      Image.asset(
-        "images/add_duration_to_date_time_blue_trans.png",
-        width: 36,
-        height: 36,
+      KeyedSubtree(
+        key: ValueKey('navBarAddDurationToDateTimePage'),
+        child: Image.asset(
+          "images/add_duration_to_date_time_blue_trans.png",
+          width: 36,
+          height: 36,
+        ),
       ),
-      Image.asset(
-        "images/calculate_time_blue_trans.png",
-        width: 38,
-        height: 38,
+      KeyedSubtree(
+        key: ValueKey('navBarTimeCalculatorPage'),
+        child: Image.asset(
+          "images/calculate_time_blue_trans.png",
+          width: 38,
+          height: 38,
+        ),
       ),
     ];
   }
