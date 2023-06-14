@@ -178,7 +178,7 @@ Future<void> main() async {
     'AppBar menu testing',
     () {
       testWidgets(
-        'Undo load. Test working, but result not checked.',
+        'Undo load. Test working and results checked.',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
