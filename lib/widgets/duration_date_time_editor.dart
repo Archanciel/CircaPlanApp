@@ -127,18 +127,20 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   }
 
   /// Calls the _AddSubtractResultableDurationState.setStartDateTimeStr() method.
-  void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
+  void setStartDateTimeStr({
+    required String englishFormatStartDateTimeStr,
+  }) {
     stateInstance.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void setDuration(
-    String duration,
-    int durationSign,
-  ) {
+  void setDuration({
+    required String durationStr,
+    required durationSign,
+  }) {
     stateInstance.setDuration(
-      duration,
-      durationSign,
+      durationStr: durationStr,
+      durationSign: durationSign,
     );
   }
 
@@ -318,10 +320,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     );
   }
 
-  void setDuration(
-    String durationStr,
-    int durationSign,
-  ) {
+  void setDuration({
+    required String durationStr,
+    required durationSign,
+  }) {
     _durationStr = durationStr;
     _durationTextFieldController.text = _durationStr;
     _durationSign = durationSign;
