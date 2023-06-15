@@ -432,6 +432,12 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     _updateTransferDataMap();
   }
 
+  /// Since the ManuallySelectableTextField widget is also used in
+  /// the DurationDateTimeEditor widget, the {wasDurationSignButtonPressed}
+  /// and the {durationSign} parameters of the DurationDateTimeEditor
+  /// widget method passed to the ManuallySelectableTextField widget
+  /// are used and so must be available in the passed method. This
+  /// the reason why these parameters are optional.
   void _handleFirstTimeTextFieldChange([
     String? timeTextFieldStr,
     int? _,

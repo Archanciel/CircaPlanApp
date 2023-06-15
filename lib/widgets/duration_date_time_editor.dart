@@ -252,7 +252,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _manuallySelectableDurationTextField = ManuallySelectableTextField(
       transferDataViewModel: widget.transferDataViewModel,
       textFieldController: _durationTextFieldController,
-      handleTextFieldChangeFunction: handleDurationChange,
+      handleTextFieldChangeFunction: _handleDurationChange,
       widgetPrefixOrName: _widgetPrefix,
       position: widget.position,
     );
@@ -314,7 +314,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
     _startDateTimeStr = englishFormatStartDateTimeStr;
 
-    handleDurationChange(
+    _handleDurationChange(
       _durationStr,
       _durationSign,
     );
@@ -327,14 +327,33 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationStr = durationStr;
     _durationTextFieldController.text = _durationStr;
     _durationSign = durationSign;
-    applyDurationSign(_durationSign);
-    handleDurationChange(
+    _applyDurationSign(_durationSign);
+    _handleDurationChange(
       durationStr,
       _durationSign,
     );
   }
 
-  void handleDurationChange([
+  /// This method is called when the user selects a date and time 
+  /// in the DateTimePicker widget. In this case, the 
+  /// {wasDurationSignButtonPressed} is null.
+  /// 
+  /// This method is also called when the user presses the
+  /// duration sign button. In this case, the {wasDurationSignButtonPressed}
+  /// is true.
+  /// 
+  /// This method is passed as a parameter to the ManuallySelectableTextField
+  /// widget. It is called when the user changes the duration in the
+  /// ManuallySelectableTextField widget.
+  /// 
+  /// Since the ManuallySelectableTextField widget is also used in
+  /// the TimeCalculator screen, the {wasDurationSignButtonPressed}
+  /// and the {durationSign} parameters of the TimeCalculator screen
+  /// method passed to the ManuallySelectableTextField widget are
+  /// not used and so are null. This the reason why these parameters
+  /// are optional.
+  /// TODO docu
+  void _handleDurationChange([
     String? durationStr,
     int? durationSign,
     bool? wasDurationSignButtonPressed,
@@ -553,9 +572,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                 onPressed: () {
                   _durationSign = -1 * _durationSign;
 
-                  applyDurationSign(_durationSign);
+                  _applyDurationSign(_durationSign);
 
-                  handleDurationChange(
+                  _handleDurationChange(
                     null,
                     _durationSign,
                     true,
@@ -588,7 +607,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     );
   }
 
-  void applyDurationSign(int durationSign) {
+  void _applyDurationSign(int durationSign) {
     if (durationSign < 0) {
       _durationIcon = Icons.remove;
       _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
