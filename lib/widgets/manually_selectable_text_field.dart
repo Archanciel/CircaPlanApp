@@ -12,9 +12,9 @@ class ManuallySelectableTextField extends StatefulWidget {
   late final TextEditingController textFieldController;
 
   final void Function([
-    String? textFieldStr,
-    int? durationSign,
-    bool? wasDurationSignButtonPressed,
+    String textFieldStr,
+    int durationSign,
+    bool wasDurationSignButtonPressed,
   ]) handleTextFieldChangeFunction;
 
   final String widgetPrefixOrName;
@@ -63,9 +63,9 @@ class _ManuallySelectableTextFieldState
   late final TextEditingController textFieldController;
 
   final void Function([
-    String? textFieldStr,
-    int? durationSign,
-    bool? wasDurationSignButtonPressed,
+    String textFieldStr,
+    int durationSign,
+    bool wasDurationSignButtonPressed,
   ]) handleTextFieldChangeFunction;
 
   _ManuallySelectableTextFieldState({

@@ -450,9 +450,9 @@ mixin ScreenMixin {
     required TextEditingController textEditingController,
     required Map<String, dynamic> transferDataMap,
     required void Function(
-            [String? durationStr,
-            int? durationSign,
-            bool? wasDurationSignButtonPressed])
+            [String durationStr,
+            int durationSign,
+            bool wasDurationSignButtonPressed])
         handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
