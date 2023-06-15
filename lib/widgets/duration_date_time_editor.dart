@@ -352,7 +352,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   /// method passed to the ManuallySelectableTextField widget are
   /// not used and so are null. This the reason why these parameters
   /// are optional.
-  /// TODO docu
   void _handleDurationChange([
     String? durationStr,
     int? durationSign,
