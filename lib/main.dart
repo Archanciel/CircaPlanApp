@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:circa_plan/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'utils/date_time_computer.dart';
+import 'package:circa_plan/utils/utility.dart';
 import 'constants.dart';
 import 'screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
