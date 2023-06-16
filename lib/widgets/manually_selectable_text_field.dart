@@ -15,6 +15,8 @@ class ManuallySelectableTextField extends StatefulWidget {
     String textFieldStr,
     int durationSign,
     bool wasDurationSignButtonPressed,
+    bool mustEndDateTimeBeRounded,
+
   ]) handleTextFieldChangeFunction;
 
   final String widgetPrefixOrName;

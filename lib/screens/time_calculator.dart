@@ -442,6 +442,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     String? timeTextFieldStr,
     int? _,
     bool? __,
+    bool? ___,
   ]) {
     _firstTimeStr = Utility.formatStringDuration(
       durationStr: timeTextFieldStr!,
@@ -463,6 +464,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
     String? timeTextFieldStr,
     int? _,
     bool? __,
+    bool? ___,
   ]) {
     _secondTimeStr = Utility.formatStringDuration(
       durationStr: timeTextFieldStr!,

@@ -253,12 +253,12 @@ class DateTimeParser {
     List<int> hourMinuteIntLst = dayHourMinuteStrLst
         .map((element) => int.parse(element))
         .toList(growable: false);
-    
+
     final int hourInt = hourMinuteIntLst[0].abs();
     final int minuteInt = hourMinuteIntLst[1].abs();
-    
+
     Duration duration = Duration(hours: hourInt, minutes: minuteInt);
-    
+
     if (parsedHourMinuteStr.startsWith('-')) {
       return Duration.zero - duration;
     } else {
@@ -271,14 +271,14 @@ class DateTimeParser {
     List<int> dayHourMinuteIntLst = dayHourMinuteStrLst
         .map((element) => int.parse(element))
         .toList(growable: false);
-    
+
     final int dayInt = dayHourMinuteIntLst[0].abs();
     final int hourInt = dayHourMinuteIntLst[1].abs();
     final int minuteInt = dayHourMinuteIntLst[2].abs();
-    
+
     Duration duration =
         Duration(days: dayInt, hours: hourInt, minutes: minuteInt);
-    
+
     if (parsedDayHourMinuteStr.startsWith('-')) {
       return Duration.zero - duration;
     } else {
@@ -348,5 +348,17 @@ class DateTimeParser {
     }
 
     return frenchFormatDateTimeStr;
+  }
+
+  /// Examples: 2021-01-01T10:35 --> 2021-01-01T11:00
+  ///           2021-01-01T10:25 --> 2021-01-01T10:00
+  static DateTime roundDateTimeToHour(DateTime dateTime) {
+    if (dateTime.minute >= 30) {
+      return DateTime(dateTime.year, dateTime.month, dateTime.day,
+          dateTime.hour + 1, 0, 0, 0, 0);
+    } else {
+      return DateTime(dateTime.year, dateTime.month, dateTime.day,
+          dateTime.hour, 0, 0, 0, 0);
+    }
   }
 }

@@ -324,7 +324,6 @@ mixin ScreenMixin {
         if (itemSelected == null) {
           return;
         }
-
         String selectedItemStr = selectableStrItemLst[int.parse(itemSelected)];
 
         handleSelectedItemFunction(

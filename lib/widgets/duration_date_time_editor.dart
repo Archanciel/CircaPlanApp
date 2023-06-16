@@ -137,10 +137,12 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   void setDuration({
     required String durationStr,
     required durationSign,
+    bool roundEndDateTime = false,
   }) {
     stateInstance.setDuration(
       durationStr: durationStr,
       durationSign: durationSign,
+      roundEndDateTime: roundEndDateTime,
     );
   }
 
@@ -323,6 +325,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   void setDuration({
     required String durationStr,
     required durationSign,
+    bool roundEndDateTime = false,
   }) {
     _durationStr = durationStr;
     _durationTextFieldController.text = _durationStr;
@@ -331,6 +334,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _handleDurationChange(
       durationStr,
       _durationSign,
+      null,
+      roundEndDateTime,
     );
   }
 
@@ -356,6 +361,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     String? durationStr,
     int? durationSign,
     bool? wasDurationSignButtonPressed,
+    bool? mustEndDateTimeBeRounded,
   ]) {
     if (durationSign != null) {
       _durationSign = durationSign;
@@ -410,11 +416,23 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
         }
       } else {
-        // date time must be changed
+        // end date time must be changed
         if (_durationSign > 0) {
           endDateTime = startDateTime.add(duration);
         } else {
           endDateTime = startDateTime.subtract(duration);
+        }
+
+        if (mustEndDateTimeBeRounded != null && mustEndDateTimeBeRounded) {
+          endDateTime = DateTimeParser.roundDateTimeToHour(
+            endDateTime,
+          );
+          duration = endDateTime.difference(startDateTime);
+          _durationStr =
+              duration.HHmm().replaceAll('-', ''); // removing minus sign
+          //                                          if duration is negative;
+          _durationTextFieldController.text = _durationStr;
+          setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
         }
 
         _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);

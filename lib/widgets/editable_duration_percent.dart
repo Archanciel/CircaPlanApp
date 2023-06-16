@@ -85,8 +85,12 @@ class _EditableDurationPercentState extends State<EditableDurationPercent> {
     handleModifiedPercentStrFunction(percentStr);
   }
 
-  void handleModifiedPercentStrFunction(
-      [String? percentStr, int? _, bool? __]) {
+  void handleModifiedPercentStrFunction([
+    String? percentStr,
+    int? _,
+    bool? __,
+    bool? ___,
+  ]) {
     widget.selectedPercentTextFieldController.text = percentStr ?? '';
 
     if (percentStr == null) {

@@ -182,6 +182,7 @@ class _ManuallySelectableTextFieldScreenState
     String? durationStr,
     int? durationSign,
     bool? wasDurationSignButtonPressed,
+    bool? mustEndDateTimeBeRounded,
   ]) {
     String durationStr = Utility.formatStringDuration(
         durationStr: _durationTextFieldController.text);
@@ -204,6 +205,7 @@ class _ManuallySelectableTextFieldScreenState
     String? timeTextFieldStr,
     int? _,
     bool? __,
+    bool? ___,
   ]) {
     _firstTimeStr = Utility.formatStringDuration(
       durationStr: timeTextFieldStr!,

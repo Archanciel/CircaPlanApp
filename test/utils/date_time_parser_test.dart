@@ -872,6 +872,33 @@ void main() {
               ['-13:35', '-3:05', '-0:05', '-3-05', '-3:u5', '-3:50', '-3-5']);
         },
       );
+      test(
+        'rounding date time to next hour',
+        () {
+          final DateTime dateTime = DateTime(2021, 1, 1, 13, 35);
+          final DateTime roundedDateTime =
+              DateTimeParser.roundDateTimeToHour(dateTime);
+          expect(roundedDateTime, DateTime(2021, 1, 1, 14, 0));
+        },
+      );
+      test(
+        'rounding date time to next hour 30 minutes',
+        () {
+          final DateTime dateTime = DateTime(2021, 1, 1, 13, 30);
+          final DateTime roundedDateTime =
+              DateTimeParser.roundDateTimeToHour(dateTime);
+          expect(roundedDateTime, DateTime(2021, 1, 1, 14, 0));
+        },
+      );
+      test(
+        'rounding date time to hour',
+        () {
+          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25);
+          final DateTime roundedDateTime =
+              DateTimeParser.roundDateTimeToHour(dateTime);
+          expect(roundedDateTime, DateTime(2021, 1, 1, 13, 0));
+        },
+      );
     },
   );
 }

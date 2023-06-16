@@ -64,6 +64,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
 
   bool _isPreferredDurationBold = false;
+  bool _mustFirstEndDateTimeBeRounded = true;
 
   /// The method ensures that the current widget (screen or custom widget)
   /// setState() method is called in order for the loaded data are
@@ -213,6 +214,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 '');
   }
 
+  /// This method has the advantage that before deleting a preferred
+  /// duration item, the corresponding instance variables are set to
+  /// the values of the deleted item. This has the advantage that in 
+  /// order to modify a preferred duration item, you delete it and
+  /// then add a new preferred duration item with values defaulted 
+  /// to the values of the deleted one.
   void _deletePreferredDurationItem(String selectedPreferredDurationItem,
       [BuildContext? context]) {
     if (context == null) {
@@ -230,17 +237,28 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         jsonDecode(selectedDurationItemStr);
 
     // before deleting preferred duration item, set the two
-    // add preferred duration item controllers text to the
-    // deleted elements
+    // add preferred duration item text controllers to the
+    // delete item correspomding values as well as the two
+    // boolean values. This has the advantage in order to
+    // modify a preferred duration item, you delete it and
+    // then add a new preferred duration item with values
+    // defaulted to the values as the deleted one.
 
     _addDurationPreferenceNameController.text = selectedDurationItemKey;
 
     List<dynamic> selectedDurationItemValueLst =
         selectedDurationItemMap[selectedDurationItemKey];
-    String selectedDurationItemValueStr =
-        selectedDurationItemValueLst.join(', ');
 
-    _addDurationPreferenceValueController.text = selectedDurationItemValueStr;
+    _isPreferredDurationBold = bool.parse(selectedDurationItemValueLst[3]);
+    _mustFirstEndDateTimeBeRounded =
+        bool.parse(selectedDurationItemValueLst[4]);
+
+    // removing the two boolean values from the list, keeping only
+    // the duration values
+    selectedDurationItemValueLst
+        .removeWhere((item) => item == 'true' || item == 'false');
+    _addDurationPreferenceValueController.text =
+        selectedDurationItemValueLst.join(', ');
 
     // now, deleting the preferred duration item
 
@@ -320,9 +338,25 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // undoing the application of the selected durations item.
     _thirdDurationDateTimeEditorWidget.saveTransferDataIfModified = false;
 
+    // Extracting the selected duration item name from the
+    // selectedDurationItem, which example is:
+    // "Item name 8:00, 3:30, 10:00"
+    String selectedDurationItemName =
+        selectedDurationItem.replaceFirst(durationStrLst.join(', '), '').trim();
+
+    // _transferDataMap['preferredDurationsItemsStr'] is a String.
+    // So, it must be decoded before being used as a Map
+    // "{"one rounded":["8:00","4:00","10:00","false","true"],
+    //   "two not rounded":["8:00","4:00","10:00","false","false"]}"
+    List<dynamic> selectedDurationItemData =
+        jsonDecode(_transferDataMap['preferredDurationsItemsStr'])[
+            selectedDurationItemName];
+
     _firstDurationDateTimeEditorWidget.setDuration(
       durationStr: durationStrLst[0],
       durationSign: 1,
+      roundEndDateTime: bool.parse(
+          selectedDurationItemData[4]), // will be definable in durationStrLst !
     );
     _secondDurationDateTimeEditorWidget.setDuration(
       durationStr: durationStrLst[1],
@@ -375,7 +409,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   MenuItemData _buildPreferredDurationsPopupMenuItemLst() {
     MenuItemData selMenuDateTimeItemData = _buildPreferredDurationsItemLst();
     List<String> durationSelectableItemLst =
-        selMenuDateTimeItemData.itemDataStrLst;
+        selMenuDateTimeItemData.itemDataStrLst.map((string) {
+      return string.replaceAll(", false", "").replaceAll(", true", "");
+    }).toList();
 
     // and adding 'Add' and 'Delete' items
 
@@ -407,17 +443,20 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     List<String> parsedTimeStrLst =
         DateTimeParser.parseAllIntOrHHMMTimeStr(preferredDurationsItemValue);
 
-    // List<String> parsedTimeStrLst =
-    //     DateTimeParser.parseAllHHMMTimeStr(preferredDurationsItemValue);
-
-    currentPreferredDurationsItemMap[preferredDurationsItemName] =
-        parsedTimeStrLst;
-
     String preferredDurationsItemFormattedValueStr =
         parsedTimeStrLst.join(', ');
 
     _addDurationPreferenceValueController.text =
         preferredDurationsItemFormattedValueStr;
+
+    // adding the two boolean values to the parsedTimeStrLst
+    // in order to store those values in the circadian.json file
+
+    parsedTimeStrLst.add(_isPreferredDurationBold.toString());
+    parsedTimeStrLst.add(_mustFirstEndDateTimeBeRounded.toString());
+
+    currentPreferredDurationsItemMap[preferredDurationsItemName] =
+        parsedTimeStrLst;
 
     return jsonEncode(currentPreferredDurationsItemMap);
   }
@@ -446,6 +485,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     for (var entry in durationDefinedItemMap.entries) {
       List<dynamic> durationLst = entry.value;
+      durationLst.removeWhere((item) => item == 'true' || item == 'false');
 
       durationSelectableItemLst.add('${entry.key} ${durationLst.join(', ')}');
     }
@@ -654,10 +694,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   Row(
                     children: [
-                      const SizedBox(
-                        width: 50,
-                        child: Text('Bold'),
-                      ),
                       Theme(
                         data: ThemeData(
                           unselectedWidgetColor: Colors.white70,
@@ -667,6 +703,14 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                           child: Checkbox(
                             key: const Key('preferredDurationBoldCheckbox'),
+                            fillColor: MaterialStateColor.resolveWith(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return Colors.grey.shade800;
+                                }
+                                return Colors.blue.shade600;
+                              },
+                            ),
                             value: _isPreferredDurationBold,
                             onChanged: (value) {
                               setState(
@@ -678,6 +722,46 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        width: 50,
+                        child: Text('Bold'),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Theme(
+                        data: ThemeData(
+                          unselectedWidgetColor: Colors.white70,
+                        ),
+                        child: SizedBox(
+                          width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                          height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                          child: Checkbox(
+                            key: const Key('preferredDurationBoldCheckbox'),
+                            fillColor: MaterialStateColor.resolveWith(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return Colors.grey.shade800;
+                                }
+                                return Colors.blue.shade600;
+                              },
+                            ),
+                            value: _mustFirstEndDateTimeBeRounded,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  _mustFirstEndDateTimeBeRounded = value!;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 180,
+                        child: Text('Round first end date time'),
+                      ),
                     ],
                   ),
                 ],
@@ -688,6 +772,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     _addDurationPreferenceNameController.text = '';
                     _addDurationPreferenceValueController.text = '';
                     _isPreferredDurationBold = false;
+                    _mustFirstEndDateTimeBeRounded = false;
                     submit();
                   },
                   child: const Text('Cancel'),
@@ -697,6 +782,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     _addDurationPreferenceNameController.text = '';
                     _addDurationPreferenceValueController.text = '';
                     _isPreferredDurationBold = false;
+                    _mustFirstEndDateTimeBeRounded = true;
                     setState(() {});
                   },
                   child: const Text('Clear'),
