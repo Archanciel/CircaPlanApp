@@ -216,9 +216,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   /// This method has the advantage that before deleting a preferred
   /// duration item, the corresponding instance variables are set to
-  /// the values of the deleted item. This has the advantage that in 
+  /// the values of the deleted item. This has the advantage that in
   /// order to modify a preferred duration item, you delete it and
-  /// then add a new preferred duration item with values defaulted 
+  /// then add a new preferred duration item with values defaulted
   /// to the values of the deleted one.
   void _deletePreferredDurationItem(String selectedPreferredDurationItem,
       [BuildContext? context]) {
@@ -249,9 +249,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     List<dynamic> selectedDurationItemValueLst =
         selectedDurationItemMap[selectedDurationItemKey];
 
-    _isPreferredDurationBold = bool.parse(selectedDurationItemValueLst[3]);
+    _isPreferredDurationBold =
+        _getPreferredDurationTitleBold(selectedDurationItemValueLst);
     _mustFirstEndDateTimeBeRounded =
-        bool.parse(selectedDurationItemValueLst[4]);
+        _getMustFirstEndDateTimeBeRounded(selectedDurationItemValueLst);
 
     // removing the two boolean values from the list, keeping only
     // the duration values
@@ -268,6 +269,18 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         jsonEncode(durationDefinedItemMap);
     _transferDataViewModel.updateAndSaveTransferData();
   }
+
+  /// Extract true or false value indicating if the first end date time
+  /// must be rounded or not.
+  bool _getMustFirstEndDateTimeBeRounded(
+          List<dynamic> selectedDurationItemValueLst) =>
+      bool.parse(selectedDurationItemValueLst[4]);
+
+  /// Extract true or false value indicating if the preferred duration
+  /// item title must be bold or not.
+  bool _getPreferredDurationTitleBold(
+          List<dynamic> selectedDurationItemValueLst) =>
+      bool.parse(selectedDurationItemValueLst[3]);
 
   String _getPreferredDurationItemName(String string) {
     // the RegExp below is the uniue possibility of extracting
