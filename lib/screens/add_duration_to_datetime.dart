@@ -599,29 +599,6 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                 ],
               ),
             ),
-/*            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: appElevatedButtonBackgroundColor,
-                      shape: appElevatedButtonRoundedShape),
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: ScreenMixin.appTextFontSize,
-                    ),
-                  ),
-                ),
-              ),
-            ),*/
           ],
         ),
       ),

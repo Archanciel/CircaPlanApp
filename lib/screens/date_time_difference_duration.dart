@@ -384,8 +384,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     // Build a Form widget using the _formKey created above.
     return SingleChildScrollView(
       child: Container(
@@ -449,31 +447,6 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 ],
               ),
             ),
-/*            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(240, 404, 0, 0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: appElevatedButtonBackgroundColor,
-                      shape: appElevatedButtonRoundedShape),
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      _formKey.currentState!.save();
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: ScreenMixin.appTextFontSize,
-                    ),
-                  ),
-                ),
-              ),
-            ),*/
           ],
         ),
       ),
