@@ -775,21 +775,21 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     }
 
     return showDialog<String>(
-      // so, clicking outside the dialog screen does not close it.
-      // Instead, Cancel button was added ...
       barrierDismissible: false,
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) {
+        double settingsFieldWidth = 235;
+        return AlertDialog(
         title: const Text('Set medics time'),
         content: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          //position
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
                 SizedBox(
-                  width: 180,
+                  width: settingsFieldWidth,
                   child: TextField(
                     autofocus: true,
                     style: const TextStyle(
@@ -808,7 +808,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             Row(
               children: [
                 SizedBox(
-                  width: 180,
+                  width: settingsFieldWidth,
                   child: TextField(
                     readOnly: true,
                     style: const TextStyle(
@@ -823,26 +823,32 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              _medicAlarmTimeController.text = '';
-              submit();
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              _medicAlarmTimeController.text = '';
-              _medicAlarmDateTimeController.text = '';
-            },
-            child: const Text('Clear'),
-          ),
-          TextButton(
-            onPressed: submit,
-            child: const Text('Set time'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  _medicAlarmTimeController.text = '';
+                  submit();
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  _medicAlarmTimeController.text = '';
+                  _medicAlarmDateTimeController.text = '';
+                },
+                child: const Text('Clear'),
+              ),
+              TextButton(
+                onPressed: submit,
+                child: const Text('Set time'),
+              ),
+            ],
           ),
         ],
-      ),
+      );
+      },
     );
   }
 }
