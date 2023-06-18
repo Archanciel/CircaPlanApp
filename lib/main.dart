@@ -782,16 +782,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       builder: (context) => AlertDialog(
         title: const Text('Set medics time'),
         content: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           //position
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
-                const SizedBox(
-                  width: 60,
-                  child: Text('HH:mm'),
-                ),
                 SizedBox(
                   width: 180,
                   child: TextField(
@@ -799,7 +795,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                     style: const TextStyle(
                         fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
                         fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    decoration: const InputDecoration(hintText: ''),
+                    decoration: const InputDecoration(
+                      hintText: 'HH:mm',
+                    ),
                     controller: _medicAlarmTimeController,
                     onSubmitted: (_) => submit(),
                     keyboardType: TextInputType.datetime,
@@ -809,9 +807,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
             ),
             Row(
               children: [
-                const SizedBox(
-                  width: 60,
-                ),
                 SizedBox(
                   width: 180,
                   child: TextField(
