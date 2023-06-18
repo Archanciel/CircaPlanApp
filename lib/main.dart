@@ -780,74 +780,74 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       builder: (context) {
         double settingsFieldWidth = 235;
         return AlertDialog(
-        title: const Text('Set medics time'),
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: settingsFieldWidth,
-                  child: TextField(
-                    autofocus: true,
-                    style: const TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    decoration: const InputDecoration(
-                      hintText: 'HH:mm',
+          title: const Text('Set medics time'),
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: settingsFieldWidth,
+                    child: TextField(
+                      autofocus: true,
+                      style: const TextStyle(
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                      decoration: const InputDecoration(
+                        hintText: 'HH:mm',
+                      ),
+                      controller: _medicAlarmTimeController,
+                      onSubmitted: (_) => submit(),
+                      keyboardType: TextInputType.datetime,
                     ),
-                    controller: _medicAlarmTimeController,
-                    onSubmitted: (_) => submit(),
-                    keyboardType: TextInputType.datetime,
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: settingsFieldWidth,
+                    child: TextField(
+                      readOnly: true,
+                      style: const TextStyle(
+                          fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
+                          fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
+                      decoration: const InputDecoration(hintText: ''),
+                      controller: _medicAlarmDateTimeController,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          actions: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: settingsFieldWidth,
-                  child: TextField(
-                    readOnly: true,
-                    style: const TextStyle(
-                        fontSize: ScreenMixin.APP_TEXT_FONT_SIZE,
-                        fontWeight: ScreenMixin.APP_TEXT_FONT_WEIGHT),
-                    decoration: const InputDecoration(hintText: ''),
-                    controller: _medicAlarmDateTimeController,
-                  ),
+                TextButton(
+                  onPressed: () {
+                    _medicAlarmTimeController.text = '';
+                    submit();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _medicAlarmTimeController.text = '';
+                    _medicAlarmDateTimeController.text = '';
+                  },
+                  child: const Text('Clear'),
+                ),
+                TextButton(
+                  onPressed: submit,
+                  child: const Text('Set time'),
                 ),
               ],
             ),
           ],
-        ),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  _medicAlarmTimeController.text = '';
-                  submit();
-                },
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  _medicAlarmTimeController.text = '';
-                  _medicAlarmDateTimeController.text = '';
-                },
-                child: const Text('Clear'),
-              ),
-              TextButton(
-                onPressed: submit,
-                child: const Text('Set time'),
-              ),
-            ],
-          ),
-        ],
-      );
+        );
       },
     );
   }
