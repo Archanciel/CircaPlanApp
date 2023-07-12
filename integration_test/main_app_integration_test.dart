@@ -1,3 +1,4 @@
+import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -288,6 +289,38 @@ Future<void> main() async {
           expect(
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
               '13-07-2022 16:09');
+        },
+      );
+    },
+  );
+  group(
+    'Add Duration To Date Time testing',
+    () {
+      testWidgets(
+        'Switch to Wake Up Duration page.',
+        (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: MainApp(
+                  key: const Key('mainAppKey'),
+                  transferDataViewModel: transferDataViewModelOne,
+                ),
+              ),
+            ),
+          );
+
+          // Clicking on the third icon in the navigation bar
+          await tester.tap(
+              find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
+          await tester.pumpAndSettle();
+
+          EditableDateTime startDateTimeEditableDateTimeWidget = tester
+              .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
+          // Confirming that the Add Duration To Date Time page is displayed
+          expect(
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
+              '12-07-2022 16:00');
         },
       );
     },
