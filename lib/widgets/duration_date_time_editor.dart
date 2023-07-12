@@ -35,6 +35,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   final bool saveTransferDataIfModified; // is true only for last widget
   final ToastGravity position;
 
+  final TextEditingController? startDateTimePickerController;
+
   /// saveTransferDataIfModified is set to true only for
   /// the last DurationDateTimeEditor widget in order to
   /// avoid unuseful transfer data saving's.
@@ -49,6 +51,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     this.saveTransferDataIfModified = false,
     this.position = ToastGravity.CENTER,
+    this.startDateTimePickerController,
   })  : _widgetPrefix = widgetPrefix,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
@@ -339,18 +342,18 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     );
   }
 
-  /// This method is called when the user selects a date and time 
-  /// in the DateTimePicker widget. In this case, the 
+  /// This method is called when the user selects a date and time
+  /// in the DateTimePicker widget. In this case, the
   /// {wasDurationSignButtonPressed} is null.
-  /// 
+  ///
   /// This method is also called when the user presses the
   /// duration sign button. In this case, the {wasDurationSignButtonPressed}
   /// is true.
-  /// 
+  ///
   /// This method is passed as a parameter to the ManuallySelectableTextField
   /// widget. It is called when the user changes the duration in the
   /// ManuallySelectableTextField widget.
-  /// 
+  ///
   /// Since the ManuallySelectableTextField widget is also used in
   /// the TimeCalculator screen, the {wasDurationSignButtonPressed}
   /// and the {durationSign} parameters of the TimeCalculator screen
@@ -399,7 +402,6 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     if (duration != null) {
       if (_editableDateTime.isEndDateTimeFixed) {
-        // duration must be changed
         DateTime? endDateTime;
 
         try {
@@ -407,13 +409,22 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
-        if (endDateTime != null) {
-          duration = endDateTime.difference(startDateTime);
-          _durationStr =
-              duration.HHmm().replaceAll('-', ''); // removing minus sign
-          //                                          if duration is negative;
-          _durationTextFieldController.text = _durationStr;
-          setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
+        if (widget.startDateTimePickerController != null) {
+          startDateTime = endDateTime!.subtract(duration);
+          _startDateTimeStr =
+              ScreenMixin.englishDateTimeFormat.format(startDateTime);
+          widget.startDateTimePickerController!.text = _startDateTimeStr;
+        } else {
+          // duration must be changed
+          if (endDateTime != null) {
+            duration = endDateTime.difference(startDateTime);
+            _durationStr =
+                duration.HHmm().replaceAll('-', ''); // removing minus sign
+            //                                          if duration is negative;
+            _durationTextFieldController.text = _durationStr;
+            setDurationSignIconAndColor(
+                durationIsNegative: duration.isNegative);
+          }
         }
       } else {
         // end date time must be changed
@@ -441,7 +452,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       }
     }
 
-    _updateTransferDataMap(); // must be executed before calling
+    _updateTransferDataMap(
+      saveTransferDataIfModified: widget.startDateTimePickerController != null,
+    ); // must be executed before calling
     // the next DurationDateTimeEditor widget
     // setStartDateTimeStr() method in order for the transfer
     // data map to be updated before the last linked third
@@ -542,7 +555,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   /// DurationDateTimeEditor widget _updateTransferDataMap()
   /// method calls the
   /// TransferDataViewModel.updateAndSaveTransferData() method.
-  void _updateTransferDataMap() {
+  void _updateTransferDataMap({
+    bool saveTransferDataIfModified = false,
+  }) {
     _transferDataMap['${_widgetPrefix}DurationIconData'] = _durationIcon;
     _transferDataMap['${_widgetPrefix}DurationIconColor'] = _durationIconColor;
     _transferDataMap['${_widgetPrefix}DurationSign'] = _durationSign;
@@ -552,6 +567,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] =
         _editableDateTime.isEndDateTimeFixed;
+
+    _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
 
     setState(() {});
 

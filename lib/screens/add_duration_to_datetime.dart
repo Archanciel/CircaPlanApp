@@ -135,6 +135,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
       position: ToastGravity.TOP,
+      startDateTimePickerController: _startDateTimePickerController,
     );
   }
 
