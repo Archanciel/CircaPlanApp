@@ -136,7 +136,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
       position: ToastGravity.TOP,
       handleDateTimeModificationFunction:
-          _firstDurationDateTimeStartDateTimeChange,
+          _startDateTimeChangedFromFirstDurationDateTimeWidget,
     );
   }
 
@@ -421,7 +421,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void _firstDurationDateTimeStartDateTimeChange(
+  /// This method is called when the user changes the first duration
+  /// value in the situation where the first End Date Time is blocked.
+  /// In this case, modifying the first duration changes the Start
+  /// Date Time value.
+  void _startDateTimeChangedFromFirstDurationDateTimeWidget(
       String englishFormatStartDateTimeStr) {
     _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
     _startDateTimePickerController.text = frenchDateTimeFormat
