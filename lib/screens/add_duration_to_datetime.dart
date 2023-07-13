@@ -135,7 +135,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       transferDataMap: _transferDataMap,
       nextAddSubtractResultableDuration: _secondDurationDateTimeEditorWidget,
       position: ToastGravity.TOP,
-      startDateTimePickerController: _startDateTimePickerController,
+      handleDateTimeModificationFunction:
+          _firstDurationDateTimeStartDateTimeChange,
     );
   }
 
@@ -411,13 +412,22 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
-    // the AddSubtractResultableDuration widget reset method in order
+    // the DurationDateTimeEditor widget setStartDateTimeStr method in order
     // for the transfer data map to be updated before the last linked
-    // third AddSubtractResultableDuration widget calls the
+    // third DurationDateTimeEditor widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
+  }
+
+  void _firstDurationDateTimeStartDateTimeChange(
+      String englishFormatStartDateTimeStr) {
+    _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
+    _startDateTimePickerController.text = frenchDateTimeFormat
+        .format(DateTime.parse(englishFormatStartDateTimeStr));
+
+    _updateTransferDataMap();
   }
 
   MenuItemData _buildPreferredDurationsPopupMenuItemLst() {

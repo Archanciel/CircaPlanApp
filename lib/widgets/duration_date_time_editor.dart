@@ -35,7 +35,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   final bool saveTransferDataIfModified; // is true only for last widget
   final ToastGravity position;
 
-  final TextEditingController? startDateTimePickerController;
+  Function? handleDateTimeModificationFunction;
 
   /// saveTransferDataIfModified is set to true only for
   /// the last DurationDateTimeEditor widget in order to
@@ -51,7 +51,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
     required DurationDateTimeEditor? nextAddSubtractResultableDuration,
     this.saveTransferDataIfModified = false,
     this.position = ToastGravity.CENTER,
-    this.startDateTimePickerController,
+    this.handleDateTimeModificationFunction,
   })  : _widgetPrefix = widgetPrefix,
         _nowDateTimeEnglishFormatStr = nowDateTimeEnglishFormatStr,
         _transferDataMap = transferDataMap,
@@ -164,7 +164,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   final Map<String, dynamic> _transferDataMap;
   String _durationStr;
   int _durationSign;
-  String _startDateTimeStr;
+  String _startDateTimeEnglishFormatStr;
   String _endDateTimeStr;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
   bool saveTransferDataIfModified; // is true only for last widget
@@ -196,7 +196,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
             transferDataMap['${widgetPrefix}DurationTextColor'] ??
                 DurationDateTimeEditor.durationPositiveColor,
         _durationStr = transferDataMap['${widgetPrefix}DurationStr'] ?? '00:00',
-        _startDateTimeStr =
+        _startDateTimeEnglishFormatStr =
             transferDataMap['${widgetPrefix}StartDateTimeStr'] ??
                 nowDateTimeEnglishFormatStr,
         _endDateTimeStr = transferDataMap['${widgetPrefix}EndDateTimeStr'] ??
@@ -233,8 +233,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     _durationStr = _transferDataMap['${_widgetPrefix}DurationStr'] ?? '00:00';
     _durationTextFieldController.text = _durationStr;
-    _startDateTimeStr = _transferDataMap['${_widgetPrefix}StartDateTimeStr'] ??
-        nowDateTimeEnglishFormatStr;
+    _startDateTimeEnglishFormatStr =
+        _transferDataMap['${_widgetPrefix}StartDateTimeStr'] ??
+            nowDateTimeEnglishFormatStr;
     _endDateTimeStr = _transferDataMap['${_widgetPrefix}EndDateTimeStr'] ??
         nowDateTimeEnglishFormatStr;
     _dateTimePickerController.text =
@@ -289,7 +290,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   String get frenchFormatEndDateTimeStr => _dateTimePickerController.text;
 
   void reset({required String resetDateTimeEnglishFormatStr}) {
-    _startDateTimeStr = resetDateTimeEnglishFormatStr;
+    _startDateTimeEnglishFormatStr = resetDateTimeEnglishFormatStr;
     _endDateTimeStr = resetDateTimeEnglishFormatStr;
     _dateTimePickerController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
@@ -317,7 +318,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   }
 
   void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
-    _startDateTimeStr = englishFormatStartDateTimeStr;
+    _startDateTimeEnglishFormatStr = englishFormatStartDateTimeStr;
 
     _handleDurationChange(
       _durationStr,
@@ -373,8 +374,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime =
-          ScreenMixin.englishDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = ScreenMixin.englishDateTimeFormat
+          .parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (startDateTime == null) {
@@ -409,11 +410,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
-        if (widget.startDateTimePickerController != null) {
+        if (widget.handleDateTimeModificationFunction != null) {
           startDateTime = endDateTime!.subtract(duration);
-          _startDateTimeStr =
+          _startDateTimeEnglishFormatStr =
               ScreenMixin.englishDateTimeFormat.format(startDateTime);
-          widget.startDateTimePickerController!.text = _startDateTimeStr;
+          widget.handleDateTimeModificationFunction!(
+              _startDateTimeEnglishFormatStr);
         } else {
           // duration must be changed
           if (endDateTime != null) {
@@ -452,9 +454,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       }
     }
 
-    _updateTransferDataMap(
-      saveTransferDataIfModified: widget.startDateTimePickerController != null,
-    ); // must be executed before calling
+    _updateTransferDataMap(); // must be executed before calling
     // the next DurationDateTimeEditor widget
     // setStartDateTimeStr() method in order for the transfer
     // data map to be updated before the last linked third
@@ -501,8 +501,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime =
-          ScreenMixin.englishDateTimeFormat.parse(_startDateTimeStr);
+      startDateTime = ScreenMixin.englishDateTimeFormat
+          .parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
     Duration duration;
@@ -555,20 +555,16 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   /// DurationDateTimeEditor widget _updateTransferDataMap()
   /// method calls the
   /// TransferDataViewModel.updateAndSaveTransferData() method.
-  void _updateTransferDataMap({
-    bool saveTransferDataIfModified = false,
-  }) {
+  void _updateTransferDataMap() {
     _transferDataMap['${_widgetPrefix}DurationIconData'] = _durationIcon;
     _transferDataMap['${_widgetPrefix}DurationIconColor'] = _durationIconColor;
     _transferDataMap['${_widgetPrefix}DurationSign'] = _durationSign;
     _transferDataMap['${_widgetPrefix}DurationTextColor'] = _durationTextColor;
     _transferDataMap['${_widgetPrefix}DurationStr'] = _durationStr;
-    _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeStr;
+    _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeEnglishFormatStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] =
         _editableDateTime.isEndDateTimeFixed;
-
-    _transferDataMap['addDurStartDateTimeStr'] = _startDateTimeStr;
 
     setState(() {});
 
