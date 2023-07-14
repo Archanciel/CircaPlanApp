@@ -410,7 +410,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   void _handleStartDateTimeChange(
     String englishFormatStartDateTimeStr,
-    bool isNowUndoButtonClicked,
+    bool wasNowUndoButtonClicked,
   ) {
     _englishFormatStartDateTimeStr = englishFormatStartDateTimeStr;
 
@@ -420,14 +420,9 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // third DurationDateTimeEditor widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
-    // if (isNowUndoButtonClicked &&
-    //     _firstDurationDateTimeEditorWidget.isEndDateTimeLocked()) {
-    //   return;
-    // }
-
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr,
-        isNowUndoButtonClicked: isNowUndoButtonClicked);
+        wasNowUndoButtonClicked: wasNowUndoButtonClicked);
   }
 
   /// This method is called when the user changes the first duration
