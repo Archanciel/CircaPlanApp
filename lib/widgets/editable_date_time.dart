@@ -132,6 +132,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     }
 
     _updateDateTimePickerValues();
+    
     widget.handleDateTimeModificationFunction(
       englishDateTimeFormatNowStr,
       widget.nowButtonUndo,
