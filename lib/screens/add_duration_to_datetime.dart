@@ -47,7 +47,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   final Map<String, dynamic> _transferDataMap;
   final TransferDataViewModel _transferDataViewModel;
 
-  String _startEnglishFormatDateTimeStr = '';
+  String _englishFormatStartDateTimeStr = '';
 
   late TextEditingController _startDateTimePickerController;
   final TextEditingController _addDurationPreferenceNameController =
@@ -150,12 +150,12 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         _transferDataMap['addDurStartDateTimeStr'] ?? '';
 
     if (startEnglishFormatDateTimeStr == "") {
-      _startEnglishFormatDateTimeStr = nowEnglishFormatDateTimeStr;
+      _englishFormatStartDateTimeStr = nowEnglishFormatDateTimeStr;
       _startDateTimePickerController = TextEditingController(
           text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
               englishFormatDateTimeStr: nowEnglishFormatDateTimeStr)!);
     } else {
-      _startEnglishFormatDateTimeStr = startEnglishFormatDateTimeStr;
+      _englishFormatStartDateTimeStr = startEnglishFormatDateTimeStr;
       _startDateTimePickerController = TextEditingController(
           text: DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
               englishFormatDateTimeStr: startEnglishFormatDateTimeStr));
@@ -178,7 +178,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   }
 
   void _updateTransferDataMap() {
-    _transferDataMap['addDurStartDateTimeStr'] = _startEnglishFormatDateTimeStr;
+    _transferDataMap['addDurStartDateTimeStr'] = _englishFormatStartDateTimeStr;
 
     setState(() {});
   }
@@ -195,7 +195,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       sleepDurationScreenLastDateTimeFrenchFormatStr =
           ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
     }
-    _startEnglishFormatDateTimeStr =
+    _englishFormatStartDateTimeStr =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr:
                 sleepDurationScreenLastDateTimeFrenchFormatStr)!;
@@ -395,7 +395,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
 
-    _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
+    _englishFormatStartDateTimeStr = englishFormatStartDateTimeStr;
     _startDateTimePickerController.text = frenchFormatSelectedDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
@@ -408,14 +408,22 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
   }
 
-  void _handleStartDateTimeChange(String englishFormatStartDateTimeStr) {
-    _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
+  void _handleStartDateTimeChange(
+    String englishFormatStartDateTimeStr,
+    bool isOriginNowButtonUndo,
+  ) {
+    _englishFormatStartDateTimeStr = englishFormatStartDateTimeStr;
 
     _updateTransferDataMap(); // must be executed before calling
     // the DurationDateTimeEditor widget setStartDateTimeStr method in order
     // for the transfer data map to be updated before the last linked
     // third DurationDateTimeEditor widget calls the
     // TransferDataViewModel.updateAndSaveTransferData() method !
+
+    if (isOriginNowButtonUndo &&
+        _firstDurationDateTimeEditorWidget.isEndDateTimeLocked()) {
+      return;
+    }
 
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
@@ -427,7 +435,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
   /// Date Time value.
   void _startDateTimeChangedFromFirstDurationDateTimeWidget(
       String englishFormatStartDateTimeStr) {
-    _startEnglishFormatDateTimeStr = englishFormatStartDateTimeStr;
+    _englishFormatStartDateTimeStr = englishFormatStartDateTimeStr;
     _startDateTimePickerController.text = frenchDateTimeFormat
         .format(DateTime.parse(englishFormatStartDateTimeStr));
 

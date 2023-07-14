@@ -62,11 +62,11 @@ class EditableDateTime extends StatefulWidget {
     return stateInstance;
   }
 
-  bool get isEndDateTimeFixed {
+  bool get isEndDateTimeLocked {
     return stateInstance._twoButtonsWidget.isEndDateTimeFixed;
   }
 
-  set isEndDateTimeFixed(bool value) {
+  set isEndDateTimeLocked(bool value) {
     stateInstance._twoButtonsWidget.isEndDateTimeFixed = value;
     stateInstance._twoButtonsWidget.stateInstance.setState(() {});
   }
@@ -111,25 +111,31 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
   /// passed.
   void handleDateTimeNowButtonPressed({
     required bool isUndo,
-    String? nowStr,
+    String? englishDateTimeFormatNowStr,
   }) {
     if (widget.nowButtonUndo) {
       if (isUndo) {
         _dateTime = _undoDateTime;
 
         // setting nowStr to the value of the _undoDateTime
-        nowStr = ScreenMixin.englishDateTimeFormat.format(_undoDateTime);
+        englishDateTimeFormatNowStr =
+            ScreenMixin.englishDateTimeFormat.format(_undoDateTime);
       } else {
         _undoDateTime = ScreenMixin.frenchDateTimeFormat
             .parse(widget.dateTimePickerController.text);
-        _dateTime = ScreenMixin.englishDateTimeFormat.parse(nowStr!);
+        _dateTime = ScreenMixin.englishDateTimeFormat
+            .parse(englishDateTimeFormatNowStr!);
       }
     } else {
-      _dateTime = ScreenMixin.englishDateTimeFormat.parse(nowStr!);
+      _dateTime =
+          ScreenMixin.englishDateTimeFormat.parse(englishDateTimeFormatNowStr!);
     }
 
     _updateDateTimePickerValues();
-    widget.handleDateTimeModificationFunction(nowStr);
+    widget.handleDateTimeModificationFunction(
+      englishDateTimeFormatNowStr,
+      widget.nowButtonUndo,
+    );
   }
 
   void _updateDateTimePickerValues() {
@@ -330,8 +336,10 @@ class TwoButtonsWidget extends StatefulWidget with ScreenMixin {
   final Map<String, dynamic> transferDataMap;
 
   final double topSelMenuPosition;
-  final void Function({required bool isUndo, String? nowStr})
-      handleDateTimeModification;
+  final void Function({
+    required bool isUndo,
+    String? englishDateTimeFormatNowStr,
+  }) handleDateTimeModification;
   final void Function(String, BuildContext?) handleSelectedDateTimeStr;
 
   final bool displayFixDateTimeCheckbox;
@@ -391,10 +399,11 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
           onPressed: () {
             if (widget.nowButtonUndo) {
               if (_nowButtonTxt == 'Now') {
-                String nowStr = DateTime.now().toString();
+                String englishDateTimeFormatNowStr =
+                    ScreenMixin.englishDateTimeFormat.format(DateTime.now());
                 widget.handleDateTimeModification(
                   isUndo: false,
-                  nowStr: nowStr,
+                  englishDateTimeFormatNowStr: englishDateTimeFormatNowStr,
                 );
                 _nowButtonTxt = 'Undo';
               } else {
@@ -408,7 +417,7 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               String nowStr = DateTime.now().toString();
               widget.handleDateTimeModification(
                 isUndo: false,
-                nowStr: nowStr,
+                englishDateTimeFormatNowStr: nowStr,
               );
             }
           },

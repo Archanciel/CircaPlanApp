@@ -122,6 +122,10 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// For widget test only
   Color get durationTextColorTst => stateInstance._durationTextColor;
 
+  bool isEndDateTimeLocked() {
+    return stateInstance.isEndDateTimeLocked();
+  }
+
   /// Calls the _DurationDateTimeEditorState.reset() method.
   void reset({required String resetDateTimeEnglishFormatStr}) {
     stateInstance.reset(
@@ -241,7 +245,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _dateTimePickerController.text =
         DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
             englishFormatDateTimeStr: _endDateTimeStr)!;
-    _editableDateTime.isEndDateTimeFixed =
+    _editableDateTime.isEndDateTimeLocked =
         _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] ?? false;
 
     setState(() {});
@@ -289,6 +293,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
   String get frenchFormatEndDateTimeStr => _dateTimePickerController.text;
 
+  bool isEndDateTimeLocked() {
+    return _editableDateTime.isEndDateTimeLocked;
+  }
+
   void reset({required String resetDateTimeEnglishFormatStr}) {
     _startDateTimeEnglishFormatStr = resetDateTimeEnglishFormatStr;
     _endDateTimeStr = resetDateTimeEnglishFormatStr;
@@ -302,7 +310,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
     _durationTextFieldController.text = _durationStr;
-    _editableDateTime.isEndDateTimeFixed = false;
+    _editableDateTime.isEndDateTimeLocked = false;
 
     _updateTransferDataMap(); // must be executed before calling
     // the next DurationDateTimeEditor widget reset method in
@@ -402,7 +410,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime endDateTime;
 
     if (duration != null) {
-      if (_editableDateTime.isEndDateTimeFixed) {
+      if (_editableDateTime.isEndDateTimeLocked) {
         DateTime? endDateTime;
 
         try {
@@ -561,10 +569,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _transferDataMap['${_widgetPrefix}DurationSign'] = _durationSign;
     _transferDataMap['${_widgetPrefix}DurationTextColor'] = _durationTextColor;
     _transferDataMap['${_widgetPrefix}DurationStr'] = _durationStr;
-    _transferDataMap['${_widgetPrefix}StartDateTimeStr'] = _startDateTimeEnglishFormatStr;
+    _transferDataMap['${_widgetPrefix}StartDateTimeStr'] =
+        _startDateTimeEnglishFormatStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeStr'] = _endDateTimeStr;
     _transferDataMap['${_widgetPrefix}EndDateTimeCheckbox'] =
-        _editableDateTime.isEndDateTimeFixed;
+        _editableDateTime.isEndDateTimeLocked;
 
     setState(() {});
 
