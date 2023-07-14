@@ -136,9 +136,11 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// Calls the _AddSubtractResultableDurationState.setStartDateTimeStr() method.
   void setStartDateTimeStr({
     required String englishFormatStartDateTimeStr,
+    bool isNowUndoButtonClicked = false,
   }) {
     stateInstance.setStartDateTimeStr(
-        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
+        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr,
+        isNowUndoButtonClicked: isNowUndoButtonClicked);
   }
 
   void setDuration({
@@ -325,12 +327,18 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
   }
 
-  void setStartDateTimeStr({required String englishFormatStartDateTimeStr}) {
+  void setStartDateTimeStr({
+    required String englishFormatStartDateTimeStr,
+    required bool isNowUndoButtonClicked,
+  }) {
     _startDateTimeEnglishFormatStr = englishFormatStartDateTimeStr;
 
     _handleDurationChange(
       _durationStr,
       _durationSign,
+      null,
+      null,
+      isNowUndoButtonClicked,
     );
   }
 
@@ -374,6 +382,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     int? durationSign,
     bool? wasDurationSignButtonPressed,
     bool? mustEndDateTimeBeRounded,
+    bool? isNowUndoButtonClicked,
   ]) {
     if (durationSign != null) {
       _durationSign = durationSign;
@@ -418,7 +427,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
-        if (widget.handleDateTimeModificationFunction != null) {
+        if (widget.handleDateTimeModificationFunction != null &&
+            !(isNowUndoButtonClicked ?? false)) {
           startDateTime = endDateTime!.subtract(duration);
           _startDateTimeEnglishFormatStr =
               ScreenMixin.englishDateTimeFormat.format(startDateTime);
@@ -534,9 +544,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     if (_nextAddSubtractResultableDuration != null) {
       _nextAddSubtractResultableDuration!.setStartDateTimeStr(
-          englishFormatStartDateTimeStr:
-              DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
-                  frenchFormatDateTimeStr: frenchFormatEndDateTimeStr)!);
+        englishFormatStartDateTimeStr:
+            DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
+                frenchFormatDateTimeStr: frenchFormatEndDateTimeStr)!,
+      );
     }
   }
 
