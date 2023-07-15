@@ -495,6 +495,10 @@ Future<void> main() async {
         'Switch to Add Duration To Date page.',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+          Utility.copyFileToDirectorySync(
+              sourceFilePathName:
+                  '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
+              targetDirectoryPath: kCircadianAppDataTestDir);
 
           String nowEnglishDateTimeFormatStr =
               ScreenMixin.englishDateTimeFormat.format(DateTime.now());
@@ -527,11 +531,11 @@ Future<void> main() async {
             "preferredDurationsItemsStr":
                 '{"good":["12:00","3:30","10:30","false","true"]}',
           };
-          
+
           String testPath = kCircadianAppDataTestDir;
 
           String jsonFileNameAddDurationToDateTimeTest =
-              'addDurationToDateTimeTest.json';
+              '${nowEnglishDateTimeFormatStr.replaceAll(':', '.')}.json';
           String jsonFileNameAddDurationToDateTimeTestPathFileName =
               '$testPath${Platform.pathSeparator}$jsonFileNameAddDurationToDateTimeTest';
           TransferDataViewModel transferDataViewModelAddDurationToDateTimeTest =
@@ -555,6 +559,8 @@ Future<void> main() async {
             ),
           );
 
+          await tester.pumpAndSettle();
+
           // Clicking on the third icon in the navigation bar
           await tester.tap(
               find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
@@ -571,7 +577,7 @@ Future<void> main() async {
           // is set to the current date and time.
           expect(
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+              '14-07-2022 13:13');
 
           // Find the preferred duration selection IconButton by the icon.
           final iconButtonFinder = find.byIcon(Icons.favorite);
@@ -581,8 +587,6 @@ Future<void> main() async {
 
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
-
-          int a = 0;
         },
       );
     },
