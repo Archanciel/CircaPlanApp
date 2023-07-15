@@ -45,7 +45,7 @@ Future<void> main() async {
     "thirdStartDateTimeStr": "2022-07-12 14:50",
     "thirdEndDateTimeStr": "2022-07-12 13:50",
     "thirdEndDateTimeCheckbox": false,
-    "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30"]}',
+    "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30","false","true"]}',
     "calcSlDurNewDateTimeStr": '14-07-2022 13:09',
     "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
     "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -130,7 +130,7 @@ Future<void> main() async {
     "thirdStartDateTimeStr": "2022-07-12 14:50",
     "thirdEndDateTimeStr": "2022-07-12 13:50",
     "thirdEndDateTimeCheckbox": false,
-    "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30"]}',
+    "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30","false","true"]}',
     "calcSlDurNewDateTimeStr": '14-07-2022 16:39',
     "calcSlDurPreviousDateTimeStr": '14-07-2022 13:13',
     "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -293,17 +293,64 @@ Future<void> main() async {
     },
   );
   group(
-    'Add Duration To Date Time testing',
+    'Add Duration To Date Time 3rd screen testing',
     () {
       testWidgets(
-        'Switch to Wake Up Duration page.',
+        'Switch to Add Duration To Date page.',
         (tester) async {
+          Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
+
+          String nowEnglishDateTimeFormatStr =
+              ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+          Map<String, dynamic> transferDataMapAddDurationToDateTimeTest = {
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstDurationStr": "00:00",
+            "firstStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstEndDateTimeCheckbox": false,
+            "secondDurationIconData": Icons.add,
+            "secondDurationIconColor": Colors.red.shade200,
+            "secondDurationSign": 1,
+            "secondDurationTextColor": Colors.green.shade200,
+            "secondDurationStr": "00:00",
+            "secondStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "secondEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "secondEndDateTimeCheckbox": false,
+            "thirdDurationIconData": Icons.add,
+            "thirdDurationIconColor": Colors.green.shade200,
+            "thirdDurationSign": 1,
+            "thirdDurationTextColor": Colors.green.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "thirdEndDateTimeCheckbox": false,
+            "preferredDurationsItemsStr": '{"good":["12:00","3:30","10:30","false","true"]}',
+          };
+
+          String jsonFileNameAddDurationToDateTimeTest =
+              'addDurationToDateTimeTest.json';
+          String jsonFileNameAddDurationToDateTimeTestPathFileName =
+              '$testPath${Platform.pathSeparator}$jsonFileNameAddDurationToDateTimeTest';
+          TransferDataViewModel transferDataViewModelAddDurationToDateTimeTest =
+              TransferDataViewModel(
+                  transferDataJsonFilePathName:
+                      jsonFileNameAddDurationToDateTimeTestPathFileName);
+          transferDataViewModelAddDurationToDateTimeTest.transferDataMap =
+              transferDataMapAddDurationToDateTimeTest;
+          await transferDataViewModelAddDurationToDateTimeTest
+              .updateAndSaveTransferData();
+
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: MainApp(
                   key: const Key('mainAppKey'),
-                  transferDataViewModel: transferDataViewModelOne,
+                  transferDataViewModel:
+                      transferDataViewModelAddDurationToDateTimeTest,
                 ),
               ),
             ),
@@ -314,12 +361,29 @@ Future<void> main() async {
               find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
           await tester.pumpAndSettle();
 
+          // clicking on Reset button
+          await tester.tap(find.byKey(const Key('resetButton')));
+          await tester.pumpAndSettle();
+
           EditableDateTime startDateTimeEditableDateTimeWidget = tester
               .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
-          // Confirming that the Add Duration To Date Time page is displayed
+
+          // Confirming the Add Duration To Date Time page Start Date Time
+          // is set to the current date and time. 
           expect(
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
-              '12-07-2022 16:00');
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+
+          // Find the preferred duration selection IconButton by the icon.
+          final iconButtonFinder = find.byIcon(Icons.favorite);
+
+          // Tap the IconButton.
+          await tester.tap(iconButtonFinder);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          int a = 0;
         },
       );
     },
