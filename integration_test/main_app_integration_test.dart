@@ -547,6 +547,17 @@ Future<void> main() async {
           await transferDataViewModelAddDurationToDateTimeTest
               .updateAndSaveTransferData();
 
+          String jsonFileNameCircadian = 'circadian.json';
+          String transferDataJsonFilePathNameCircadian =
+              '$testPath${Platform.pathSeparator}$jsonFileNameCircadian';
+          TransferDataViewModel transferDataViewModelCircadian =
+              TransferDataViewModel(
+                  transferDataJsonFilePathName:
+                      transferDataJsonFilePathNameCircadian);
+          transferDataViewModelCircadian.transferDataMap =
+              transferDataMapAddDurationToDateTimeTest;
+          await transferDataViewModelCircadian.updateAndSaveTransferData();
+
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
@@ -577,8 +588,7 @@ Future<void> main() async {
           // is set to the current date and time.
           expect(
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
-              '14-07-2022 13:13');
-
+             ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
           // Find the preferred duration selection IconButton by the icon.
           final iconButtonFinder = find.byIcon(Icons.favorite);
 
