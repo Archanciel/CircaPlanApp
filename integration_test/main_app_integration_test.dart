@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -588,15 +590,32 @@ Future<void> main() async {
           // is set to the current date and time.
           expect(
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
-             ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+
           // Find the preferred duration selection IconButton by the icon.
           final iconButtonFinder = find.byIcon(Icons.favorite);
 
+          // Find the preferred duration selection IconButton by widget
+          // predicate.
+          final iconButtonFinderByPredicate = find.byWidgetPredicate((widget) =>
+              widget is IconButton &&
+              (widget.icon as Icon).icon == Icons.favorite &&
+              (widget.icon as Icon).color ==
+                  ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR);
+          
           // Tap the IconButton.
           await tester.tap(iconButtonFinder);
+          await tester.tap(iconButtonFinderByPredicate);
 
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
+
+          // Tap the menu item.
+          await tester.tap(find.text('good 12:00, 3:30, 10:30'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
         },
       );
     },
