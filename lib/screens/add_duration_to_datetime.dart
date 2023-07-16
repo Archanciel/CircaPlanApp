@@ -337,12 +337,8 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     }
 
     RegExp exp = RegExp(r'(\d+:\d+)');
-    Iterable<Match> matches = exp.allMatches(selectedDurationItem);
-    List<String> durationStrLst = [];
-
-    for (final Match m in matches) {
-      durationStrLst.add(m[0]!);
-    }
+    List<String> durationStrLst =
+        exp.allMatches(selectedDurationItem).map((m) => m[0]!).toList();
 
     // temporarily setting last DurationDateTimeEditor widget
     // saveTransferDataIfModified to false avoids saving transfer
@@ -371,7 +367,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       durationStr: durationStrLst[0],
       durationSign: 1,
       roundEndDateTime: bool.parse(
-          selectedDurationItemData[4]), // will be definable in durationStrLst !
+          selectedDurationItemData[4]),
     );
     _secondDurationDateTimeEditorWidget.setDuration(
       durationStr: durationStrLst[1],
