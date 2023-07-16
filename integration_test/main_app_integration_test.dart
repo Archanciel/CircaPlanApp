@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -531,7 +532,7 @@ Future<void> main() async {
             "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
             "thirdEndDateTimeCheckbox": false,
             "preferredDurationsItemsStr":
-                '{"good":["12:00","3:30","10:30","false","true"]}',
+                '{"good":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
           };
 
           String testPath = kCircadianAppDataTestDir;
@@ -588,8 +589,9 @@ Future<void> main() async {
 
           // Confirming the Add Duration To Date Time page Start Date Time
           // is set to the current date and time.
+          String startDateTimeFrenchFormatStr = startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
           expect(
-              startDateTimeEditableDateTimeWidget.dateTimePickerController.text,
+              startDateTimeFrenchFormatStr,
               ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
 
           // Find the preferred duration selection IconButton by the icon.
@@ -602,7 +604,7 @@ Future<void> main() async {
               (widget.icon as Icon).icon == Icons.favorite &&
               (widget.icon as Icon).color ==
                   ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR);
-          
+
           // Tap the IconButton.
           await tester.tap(iconButtonFinder);
           await tester.tap(iconButtonFinderByPredicate);
@@ -616,6 +618,11 @@ Future<void> main() async {
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
 
+          DateTime startDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(startDateTimeFrenchFormatStr);
+          DateTime firstEndDateTime = startDateTime.add(const Duration(
+              hours: 12, minutes: 0, seconds: 0, milliseconds: 0));
+          DateTime firstEndDateTimeRounded = DateTimeParser.roundDateTimeToHour(firstEndDateTime);
         },
       );
     },
