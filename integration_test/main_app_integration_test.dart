@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -12,6 +10,7 @@ import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
+import 'package:circa_plan/utils/date_time_parser.dart';
 
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -605,7 +604,7 @@ Future<void> main() async {
               (widget.icon as Icon).color ==
                   ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR);
 
-          // Tap the IconButton.
+          // Tap the yellow heart IconButton.
           await tester.tap(iconButtonFinder);
           await tester.tap(iconButtonFinderByPredicate);
 
@@ -618,6 +617,8 @@ Future<void> main() async {
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
 
+          // Checking first end date time
+
           DateTime startDateTime = ScreenMixin.frenchDateTimeFormat
               .parse(startDateTimeFrenchFormatStr);
           DateTime firstEndDateTime = startDateTime.add(const Duration(
@@ -628,6 +629,25 @@ Future<void> main() async {
               ScreenMixin.frenchDateTimeFormat.format(firstEndDateTimeRounded);
 
           expect(find.text(firstEndDateTimeRoundedStr), findsOneWidget);
+
+          // Checking second end date time
+
+          DateTime secondEndDateTime = firstEndDateTimeRounded.add(
+              const Duration(
+                  hours: 3, minutes: 30, seconds: 0, milliseconds: 0));
+          String secondEndDateTimeStr =
+              ScreenMixin.frenchDateTimeFormat.format(secondEndDateTime);
+
+          expect(find.text(secondEndDateTimeStr), findsOneWidget);
+
+          // Checking third end date time
+
+          DateTime thirdEndDateTime = secondEndDateTime.add(const Duration(
+              hours: 10, minutes: 30, seconds: 0, milliseconds: 0));
+          String thirdEndDateTimeStr =
+              ScreenMixin.frenchDateTimeFormat.format(thirdEndDateTime);
+
+          expect(find.text(thirdEndDateTimeStr), findsOneWidget);
         },
       );
     },
