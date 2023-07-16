@@ -589,9 +589,9 @@ Future<void> main() async {
 
           // Confirming the Add Duration To Date Time page Start Date Time
           // is set to the current date and time.
-          String startDateTimeFrenchFormatStr = startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-          expect(
-              startDateTimeFrenchFormatStr,
+          String startDateTimeFrenchFormatStr =
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+          expect(startDateTimeFrenchFormatStr,
               ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
 
           // Find the preferred duration selection IconButton by the icon.
@@ -622,7 +622,12 @@ Future<void> main() async {
               .parse(startDateTimeFrenchFormatStr);
           DateTime firstEndDateTime = startDateTime.add(const Duration(
               hours: 12, minutes: 0, seconds: 0, milliseconds: 0));
-          DateTime firstEndDateTimeRounded = DateTimeParser.roundDateTimeToHour(firstEndDateTime);
+          DateTime firstEndDateTimeRounded =
+              DateTimeParser.roundDateTimeToHour(firstEndDateTime);
+          String firstEndDateTimeRoundedStr =
+              ScreenMixin.frenchDateTimeFormat.format(firstEndDateTimeRounded);
+
+          expect(find.text(firstEndDateTimeRoundedStr), findsOneWidget);
         },
       );
     },
