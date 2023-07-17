@@ -1335,6 +1335,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         width: 6,
                       ),
                       ElevatedButton(
+                        key: const Key('addNewDateTimeButton'),
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
