@@ -624,6 +624,9 @@ Future<void> main() async {
               transferDataMapCircadian;
           await transferDataViewModelCircadian.updateAndSaveTransferData();
 
+          // updating a second time updates the circadian undo file
+          await transferDataViewModelCircadian.updateAndSaveTransferData();
+
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
@@ -713,6 +716,8 @@ Future<void> main() async {
 
           expect(find.text(thirdEndDateTimeStr), findsOneWidget);
 
+          // Tapping a first time on the Undo menu
+
           // Find the AppBar's PopupMenuButton
           final Finder appBarMenuFinder =
               find.byKey(const Key('appBarPopupMenuButton'));
@@ -728,6 +733,25 @@ Future<void> main() async {
 
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
+
+          expect(find.text(nowFrenchDateTimeFormatStr), findsNWidgets(4));
+          expect(find.text('00:00'), findsNWidgets(3));
+
+          // Tapping a second time on the Undo menu which undoes the
+          // first undo
+          
+          await tester.tap(appBarMenuFinder);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          // Retap the Undo menu item to undo selected preferred durations
+          // application.
+          await tester.tap(find.text('Undo'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
         },
       );
     },

@@ -185,8 +185,11 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
   /// Public method called when clicking on Main screen'Reset' button.
   void resetScreen() {
-    // When resetting the 1dt screen, its Start date time is set
-    // to the last date time value added to the 3rd screen.
+    // When resetting the 3rd screen, its Start date time is set
+    // to the last date time value added to the 1st screen.
+    // This value is stored in the transfer data map using an
+    // entry named 'calcSlDurPreviousDateTimeStr'. This entry
+    // should be renamed to 'calcSlDurLastDateTimeStr' !
     String sleepDurationScreenLastDateTimeFrenchFormatStr =
         _transferDataMap['calcSlDurPreviousDateTimeStr'];
 
