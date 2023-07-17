@@ -503,6 +503,8 @@ Future<void> main() async {
 
           String nowEnglishDateTimeFormatStr =
               ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+          String nowFrenchDateTimeFormatStr =
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
           Map<String, dynamic> transferDataMapAddDurationToDateTimeTest = {
             "firstDurationIconData": Icons.add,
             "firstDurationIconColor": Colors.green.shade200,
@@ -548,6 +550,69 @@ Future<void> main() async {
           await transferDataViewModelAddDurationToDateTimeTest
               .updateAndSaveTransferData();
 
+          Map<String, dynamic> transferDataMapCircadian = {
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstDurationStr": "00:00",
+            "firstStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstEndDateTimeCheckbox": false,
+            "secondDurationIconData": Icons.add,
+            "secondDurationIconColor": Colors.red.shade200,
+            "secondDurationSign": 1,
+            "secondDurationTextColor": Colors.green.shade200,
+            "secondDurationStr": "00:00",
+            "secondStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "secondEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "secondEndDateTimeCheckbox": false,
+            "thirdDurationIconData": Icons.add,
+            "thirdDurationIconColor": Colors.green.shade200,
+            "thirdDurationSign": 1,
+            "thirdDurationTextColor": Colors.green.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "thirdEndDateTimeCheckbox": false,
+            "preferredDurationsItemsStr":
+                '{"good":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
+            "calcSlDurNewDateTimeStr": nowFrenchDateTimeFormatStr,
+            "calcSlDurPreviousDateTimeStr": nowFrenchDateTimeFormatStr,
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+            "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+            "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+            "calcSlDurStatus": Status.wakeUp,
+            "calcSlDurSleepTimeStrHistory": [
+              '10-07-2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35'],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
+          };
+
           String jsonFileNameCircadian = 'circadian.json';
           String transferDataJsonFilePathNameCircadian =
               '$testPath${Platform.pathSeparator}$jsonFileNameCircadian';
@@ -556,7 +621,7 @@ Future<void> main() async {
                   transferDataJsonFilePathName:
                       transferDataJsonFilePathNameCircadian);
           transferDataViewModelCircadian.transferDataMap =
-              transferDataMapAddDurationToDateTimeTest;
+              transferDataMapCircadian;
           await transferDataViewModelCircadian.updateAndSaveTransferData();
 
           await tester.pumpWidget(
