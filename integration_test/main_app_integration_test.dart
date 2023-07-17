@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -648,6 +647,22 @@ Future<void> main() async {
               ScreenMixin.frenchDateTimeFormat.format(thirdEndDateTime);
 
           expect(find.text(thirdEndDateTimeStr), findsOneWidget);
+
+          // Find the AppBar's PopupMenuButton
+          final Finder appBarMenuFinder =
+              find.byKey(const Key('appBarPopupMenuButton'));
+
+          await tester.tap(appBarMenuFinder);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          // Tap the Undo menu item to undo selected preferred durations
+          // application.
+          await tester.tap(find.text('Undo'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
         },
       );
     },
