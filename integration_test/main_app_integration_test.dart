@@ -493,7 +493,7 @@ Future<void> main() async {
     'Add Duration To Date Time 3rd screen testing',
     () {
       testWidgets(
-        'Switch to Add Duration To Date page.',
+        'Reset, select preferred durations, undo, redo.',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
           Utility.copyFileToDirectorySync(
