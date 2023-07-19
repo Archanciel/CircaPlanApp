@@ -508,13 +508,196 @@ Future<void> main() async {
     'Add Duration To Date Time 3rd screen testing',
     () {
       testWidgets(
-        'Reset, select preferred durations, undo.',
+        'Reset, select preferred duration, undo it and redo it',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
-          Utility.copyFileToDirectorySync(
-              sourceFilePathName:
-                  '$kCircadianAppDataTestSaveDir${Platform.pathSeparator}circadian.json',
-              targetDirectoryPath: kCircadianAppDataTestDir);
+
+          String nowEnglishDateTimeFormatStr =
+              ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+          String nowFrenchDateTimeFormatStr =
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+          String testPath = kCircadianAppDataTestDir;
+
+          Map<String, dynamic> transferDataMapCircadian = {
+            "firstDurationIconData": Icons.add,
+            "firstDurationIconColor": Colors.green.shade200,
+            "firstDurationSign": 1,
+            "firstDurationTextColor": Colors.green.shade200,
+            "addDurStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstDurationStr": "00:00",
+            "firstStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "firstEndDateTimeCheckbox": false,
+            "secondDurationIconData": Icons.add,
+            "secondDurationIconColor": Colors.red.shade200,
+            "secondDurationSign": 1,
+            "secondDurationTextColor": Colors.green.shade200,
+            "secondDurationStr": "00:00",
+            "secondStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "secondEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "secondEndDateTimeCheckbox": false,
+            "thirdDurationIconData": Icons.add,
+            "thirdDurationIconColor": Colors.green.shade200,
+            "thirdDurationSign": 1,
+            "thirdDurationTextColor": Colors.green.shade200,
+            "thirdDurationStr": "00:00",
+            "thirdStartDateTimeStr": nowEnglishDateTimeFormatStr,
+            "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
+            "thirdEndDateTimeCheckbox": false,
+            "preferredDurationsItemsStr":
+                '{"good":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
+            "calcSlDurNewDateTimeStr": nowFrenchDateTimeFormatStr,
+            "calcSlDurPreviousDateTimeStr": nowFrenchDateTimeFormatStr,
+            "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
+            "calcSlDurCurrSleepDurationStr": '12:36',
+            "calcSlDurCurrWakeUpDurationStr": '0:02',
+            "calcSlDurCurrTotalDurationStr": '12:38',
+            "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
+            "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
+            "calcSlDurCurrTotalDurationPercentStr": '100 %',
+            "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
+            "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
+            "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
+            "calcSlDurStatus": Status.wakeUp,
+            "calcSlDurSleepTimeStrHistory": [
+              '10-07-2022 00:58',
+              '05:35',
+              '04:00'
+            ],
+            "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35'],
+            "alarmMedicDateTimeStr": '15-12-2022 06:00',
+            "dtDiffStartDateTimeStr": "2022-07-13 16:09",
+            "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
+            "dtDiffDurationStr": "24:00",
+            "dtDiffAddTimeStr": "1:00",
+            "dtDiffFinalDurationStr": "25:00",
+            "dtDurationPercentStr": "70 %",
+            "dtDurationTotalPercentStr": "90 %",
+            "firstTimeStr": "00:10:00",
+            "secondTimeStr": "00:05:00",
+            "resultTimeStr": "00:15:00",
+            "resultPercentStr": "40 %",
+            "resultSecondPercentStr": "90 %",
+            "divideFirstBySecondCheckBox": false,
+          };
+
+          String jsonFileNameCircadian = 'circadian.json';
+          String transferDataJsonFilePathNameCircadian =
+              '$testPath${Platform.pathSeparator}$jsonFileNameCircadian';
+          TransferDataViewModel transferDataViewModelCircadian =
+              TransferDataViewModel(
+                  transferDataJsonFilePathName:
+                      transferDataJsonFilePathNameCircadian);
+          transferDataViewModelCircadian.transferDataMap =
+              transferDataMapCircadian;
+          await transferDataViewModelCircadian.updateAndSaveTransferData();
+
+          // updating a second time updates the circadian undo file
+          await transferDataViewModelCircadian.updateAndSaveTransferData();
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: MainApp(
+                  key: const Key('mainAppKey'),
+                  transferDataViewModel: transferDataViewModelCircadian,
+                ),
+              ),
+            ),
+          );
+
+          await tester.pumpAndSettle();
+
+          // Clicking on the third icon in the navigation bar
+          await tester.tap(
+              find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
+          await tester.pumpAndSettle();
+
+          // clicking on Reset button
+          await tester.tap(find.byKey(const Key('resetButton')));
+          await tester.pumpAndSettle();
+
+          EditableDateTime startDateTimeEditableDateTimeWidget = tester
+              .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
+
+          // Confirming the Add Duration To Date Time page Start Date Time
+          // is set to the current date and time.
+          String startDateTimeFrenchFormatStr =
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+          expect(startDateTimeFrenchFormatStr,
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+
+          // Find the preferred duration selection IconButton by the icon.
+          final iconButtonFinder = find.byIcon(Icons.favorite);
+
+          // Find the preferred duration selection IconButton by widget
+          // predicate.
+          final iconButtonFinderByPredicate = find.byWidgetPredicate((widget) =>
+              widget is IconButton &&
+              (widget.icon as Icon).icon == Icons.favorite &&
+              (widget.icon as Icon).color ==
+                  ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR);
+
+          // Tap the yellow heart IconButton.
+          await tester.tap(iconButtonFinder);
+          await tester.tap(iconButtonFinderByPredicate);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          // Tap the menu item.
+          await tester.tap(find.text('good 12:00, 3:30, 10:30'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          checkFirstSecondAndThirdDateTimeAndDuration(
+              startDateTimeFrenchFormatStr);
+
+          // Tapping a first time on the Undo menu
+
+          // Find the AppBar's PopupMenuButton
+          final Finder appBarMenuFinder =
+              find.byKey(const Key('appBarPopupMenuButton'));
+
+          await tester.tap(appBarMenuFinder);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          // Tap the Undo menu item to undo selected preferred durations
+          // application.
+          await tester.tap(find.text('Undo'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          expect(find.text(nowFrenchDateTimeFormatStr), findsNWidgets(4));
+          expect(find.text('00:00'), findsNWidgets(3));
+
+          // Tapping a second time on the Undo menu which undoes the
+          // first undo
+
+          await tester.tap(appBarMenuFinder);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          // Retap the Undo menu item to undo selected preferred durations
+          // application.
+          await tester.tap(find.text('Undo'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          checkFirstSecondAndThirdDateTimeAndDuration(
+              startDateTimeFrenchFormatStr);
+        },
+      );
+      testWidgets(
+        'Reset, select preferred duration, lock first end date time, change duration, unlock first end date time, rechange duration',
+        (tester) async {
+          Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
           String nowEnglishDateTimeFormatStr =
               ScreenMixin.englishDateTimeFormat.format(DateTime.now());
