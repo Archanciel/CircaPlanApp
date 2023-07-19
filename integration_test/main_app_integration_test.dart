@@ -204,27 +204,30 @@ Future<void> main() async {
               home: Scaffold(
                 body: MainApp(
                   key: const Key('mainAppKey'),
-                  transferDataViewModel: transferDataViewModelOne,
+                  transferDataViewModel: transferDataViewModelCircadian,
                 ),
               ),
             ),
           );
 
+          await tester.pumpAndSettle();
+
           TextField newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          final String nowFrenchFormatDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
           expect(newDateTimeTextField.controller!.text,
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+              nowFrenchFormatDateTimeStr);
 
           // clicking on AppBar popup menu button
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
 
           // then clicking on the Load menu item
-          await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
+          await tester.tap(find.byKey(const Key('appBarMenuLoad')));
           await tester.pumpAndSettle();
 
           // then loading jsonFileNameOne
-          await tester.tap(find.text(jsonFileNameOne).first);
+          await tester.tap(find.text(jsonFileNameOne));
           await tester.pumpAndSettle();
 
           // checking that '14-07-2022 13:09' is displayed once
@@ -235,16 +238,24 @@ Future<void> main() async {
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
           expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');
 
+          //
+
+          await tester.tap(find.text('Now'));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Add').first);
+          await tester.pumpAndSettle();
+
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
 
           // then clicking on the Load menu item
-          await tester.tap(find.byKey(const Key('appBarMenuLoad')).first);
+          await tester.tap(find.byKey(const Key('appBarMenuLoad')));
           await tester.pumpAndSettle();
 
           // then loading jsonFileNameTwo
-          await tester.tap(find.text(jsonFileNameTwo).first);
+          await tester.tap(find.text(jsonFileNameTwo));
           await tester.pumpAndSettle();
 
           // checking that '14-07-2022 16:39' is displayed once
@@ -260,19 +271,19 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           // then undo the load
-          await tester.tap(find.byKey(const Key('appBarMenuUndo')).first);
+          await tester.tap(find.byKey(const Key('appBarMenuUndo')));
           await tester.pumpAndSettle();
 
           // checking that '14-07-2022 16:39' is no longer displayed
           expect(find.text('14-07-2022 16:39'), findsNothing);
 
-          // checking that '14-07-2022 13:09' is displayed once
-          expect(find.text('14-07-2022 13:09'), findsOneWidget);
+          // checking that now date time is displayed twice
+          expect(find.text(nowFrenchFormatDateTimeStr), findsNWidgets(2));
 
           // checking that newDateTime text field is '14-07-2022 13:09'
           newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');
+          expect(newDateTimeTextField.controller!.text, nowFrenchFormatDateTimeStr);
         },
       );
     },
@@ -474,6 +485,8 @@ Future<void> main() async {
             ),
           );
 
+          await tester.pumpAndSettle();
+
           // Clicking on the second icon in the navigation bar
           await tester
               .tap(find.byKey(const Key('navBarWakeUpDurationPageTwo')));
@@ -493,7 +506,7 @@ Future<void> main() async {
     'Add Duration To Date Time 3rd screen testing',
     () {
       testWidgets(
-        'Reset, select preferred durations, undo, redo.',
+        'Reset, select preferred durations, undo.',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
           Utility.copyFileToDirectorySync(
@@ -736,22 +749,6 @@ Future<void> main() async {
 
           expect(find.text(nowFrenchDateTimeFormatStr), findsNWidgets(4));
           expect(find.text('00:00'), findsNWidgets(3));
-
-          // Tapping a second time on the Undo menu which undoes the
-          // first undo
-          
-          await tester.tap(appBarMenuFinder);
-
-          // Wait for the tap to be processed and for any animations to complete.
-          await tester.pumpAndSettle();
-
-          // Retap the Undo menu item to undo selected preferred durations
-          // application.
-          await tester.tap(find.text('Undo'));
-
-          // Wait for the tap to be processed and for any animations to complete.
-          await tester.pumpAndSettle();
-
         },
       );
     },

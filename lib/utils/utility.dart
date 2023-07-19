@@ -30,7 +30,12 @@ class Utility {
     var newPath =
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
-    return file.renameSync(newPath);
+    try {
+      return file.renameSync(newPath);
+    } catch (e) {
+      print('renameFile($filePathNameStr, $newFileNameStr) $e');
+      return null;
+    }
   }
 
   static String extractFileName({required String filePathName}) {
