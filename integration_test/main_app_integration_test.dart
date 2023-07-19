@@ -518,50 +518,7 @@ Future<void> main() async {
               ScreenMixin.englishDateTimeFormat.format(DateTime.now());
           String nowFrenchDateTimeFormatStr =
               ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
-          Map<String, dynamic> transferDataMapAddDurationToDateTimeTest = {
-            "firstDurationIconData": Icons.add,
-            "firstDurationIconColor": Colors.green.shade200,
-            "firstDurationSign": 1,
-            "firstDurationTextColor": Colors.green.shade200,
-            "addDurStartDateTimeStr": nowEnglishDateTimeFormatStr,
-            "firstDurationStr": "00:00",
-            "firstStartDateTimeStr": nowEnglishDateTimeFormatStr,
-            "firstEndDateTimeStr": nowEnglishDateTimeFormatStr,
-            "firstEndDateTimeCheckbox": false,
-            "secondDurationIconData": Icons.add,
-            "secondDurationIconColor": Colors.red.shade200,
-            "secondDurationSign": 1,
-            "secondDurationTextColor": Colors.green.shade200,
-            "secondDurationStr": "00:00",
-            "secondStartDateTimeStr": nowEnglishDateTimeFormatStr,
-            "secondEndDateTimeStr": nowEnglishDateTimeFormatStr,
-            "secondEndDateTimeCheckbox": false,
-            "thirdDurationIconData": Icons.add,
-            "thirdDurationIconColor": Colors.green.shade200,
-            "thirdDurationSign": 1,
-            "thirdDurationTextColor": Colors.green.shade200,
-            "thirdDurationStr": "00:00",
-            "thirdStartDateTimeStr": nowEnglishDateTimeFormatStr,
-            "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
-            "thirdEndDateTimeCheckbox": false,
-            "preferredDurationsItemsStr":
-                '{"good":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
-          };
-
           String testPath = kCircadianAppDataTestDir;
-
-          String jsonFileNameAddDurationToDateTimeTest =
-              '${nowEnglishDateTimeFormatStr.replaceAll(':', '.')}.json';
-          String jsonFileNameAddDurationToDateTimeTestPathFileName =
-              '$testPath${Platform.pathSeparator}$jsonFileNameAddDurationToDateTimeTest';
-          TransferDataViewModel transferDataViewModelAddDurationToDateTimeTest =
-              TransferDataViewModel(
-                  transferDataJsonFilePathName:
-                      jsonFileNameAddDurationToDateTimeTestPathFileName);
-          transferDataViewModelAddDurationToDateTimeTest.transferDataMap =
-              transferDataMapAddDurationToDateTimeTest;
-          await transferDataViewModelAddDurationToDateTimeTest
-              .updateAndSaveTransferData();
 
           Map<String, dynamic> transferDataMapCircadian = {
             "firstDurationIconData": Icons.add,
@@ -646,7 +603,7 @@ Future<void> main() async {
                 body: MainApp(
                   key: const Key('mainAppKey'),
                   transferDataViewModel:
-                      transferDataViewModelAddDurationToDateTimeTest,
+                      transferDataViewModelCircadian,
                 ),
               ),
             ),
