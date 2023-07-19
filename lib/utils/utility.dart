@@ -30,6 +30,8 @@ class Utility {
     var newPath =
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
+    // adding a try/catch block fixes failure of integration tests
+    
     try {
       return file.renameSync(newPath);
     } catch (e) {

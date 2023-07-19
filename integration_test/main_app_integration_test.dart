@@ -214,7 +214,8 @@ Future<void> main() async {
 
           TextField newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          final String nowFrenchFormatDateTimeStr = ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+          final String nowFrenchFormatDateTimeStr =
+              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
           expect(newDateTimeTextField.controller!.text,
               nowFrenchFormatDateTimeStr);
 
@@ -283,7 +284,8 @@ Future<void> main() async {
           // checking that newDateTime text field is '14-07-2022 13:09'
           newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          expect(newDateTimeTextField.controller!.text, nowFrenchFormatDateTimeStr);
+          expect(newDateTimeTextField.controller!.text,
+              nowFrenchFormatDateTimeStr);
         },
       );
     },
@@ -602,8 +604,7 @@ Future<void> main() async {
               home: Scaffold(
                 body: MainApp(
                   key: const Key('mainAppKey'),
-                  transferDataViewModel:
-                      transferDataViewModelCircadian,
+                  transferDataViewModel: transferDataViewModelCircadian,
                 ),
               ),
             ),
@@ -654,37 +655,8 @@ Future<void> main() async {
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
 
-          // Checking first end date time
-
-          DateTime startDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(startDateTimeFrenchFormatStr);
-          DateTime firstEndDateTime = startDateTime.add(const Duration(
-              hours: 12, minutes: 0, seconds: 0, milliseconds: 0));
-          DateTime firstEndDateTimeRounded =
-              DateTimeParser.roundDateTimeToHour(firstEndDateTime);
-          String firstEndDateTimeRoundedStr =
-              ScreenMixin.frenchDateTimeFormat.format(firstEndDateTimeRounded);
-
-          expect(find.text(firstEndDateTimeRoundedStr), findsOneWidget);
-
-          // Checking second end date time
-
-          DateTime secondEndDateTime = firstEndDateTimeRounded.add(
-              const Duration(
-                  hours: 3, minutes: 30, seconds: 0, milliseconds: 0));
-          String secondEndDateTimeStr =
-              ScreenMixin.frenchDateTimeFormat.format(secondEndDateTime);
-
-          expect(find.text(secondEndDateTimeStr), findsOneWidget);
-
-          // Checking third end date time
-
-          DateTime thirdEndDateTime = secondEndDateTime.add(const Duration(
-              hours: 10, minutes: 30, seconds: 0, milliseconds: 0));
-          String thirdEndDateTimeStr =
-              ScreenMixin.frenchDateTimeFormat.format(thirdEndDateTime);
-
-          expect(find.text(thirdEndDateTimeStr), findsOneWidget);
+          checkFirstSecondAndThirdDateTimeAndDuration(
+              startDateTimeFrenchFormatStr);
 
           // Tapping a first time on the Undo menu
 
@@ -706,8 +678,60 @@ Future<void> main() async {
 
           expect(find.text(nowFrenchDateTimeFormatStr), findsNWidgets(4));
           expect(find.text('00:00'), findsNWidgets(3));
+
+          // Tapping a second time on the Undo menu which undoes the
+          // first undo
+
+          await tester.tap(appBarMenuFinder);
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          // Retap the Undo menu item to undo selected preferred durations
+          // application.
+          await tester.tap(find.text('Undo'));
+
+          // Wait for the tap to be processed and for any animations to complete.
+          await tester.pumpAndSettle();
+
+          checkFirstSecondAndThirdDateTimeAndDuration(
+              startDateTimeFrenchFormatStr);
         },
       );
     },
   );
+}
+
+void checkFirstSecondAndThirdDateTimeAndDuration(
+    String startDateTimeFrenchFormatStr) {
+  // Checking first end date time
+
+  DateTime startDateTime =
+      ScreenMixin.frenchDateTimeFormat.parse(startDateTimeFrenchFormatStr);
+  DateTime firstEndDateTime = startDateTime
+      .add(const Duration(hours: 12, minutes: 0, seconds: 0, milliseconds: 0));
+  DateTime firstEndDateTimeRounded =
+      DateTimeParser.roundDateTimeToHour(firstEndDateTime);
+  String firstEndDateTimeRoundedStr =
+      ScreenMixin.frenchDateTimeFormat.format(firstEndDateTimeRounded);
+
+  expect(find.text(firstEndDateTimeRoundedStr), findsOneWidget);
+
+  // Checking second end date time
+
+  DateTime secondEndDateTime = firstEndDateTimeRounded
+      .add(const Duration(hours: 3, minutes: 30, seconds: 0, milliseconds: 0));
+  String secondEndDateTimeStr =
+      ScreenMixin.frenchDateTimeFormat.format(secondEndDateTime);
+
+  expect(find.text(secondEndDateTimeStr), findsOneWidget);
+
+  // Checking third end date time
+
+  DateTime thirdEndDateTime = secondEndDateTime
+      .add(const Duration(hours: 10, minutes: 30, seconds: 0, milliseconds: 0));
+  String thirdEndDateTimeStr =
+      ScreenMixin.frenchDateTimeFormat.format(thirdEndDateTime);
+
+  expect(find.text(thirdEndDateTimeStr), findsOneWidget);
 }
