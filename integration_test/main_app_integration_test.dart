@@ -624,23 +624,13 @@ Future<void> main() async {
           // is set to the current date and time.
           String startDateTimeFrenchFormatStr =
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-          expect(startDateTimeFrenchFormatStr,
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+          expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
 
           // Find the preferred duration selection IconButton by the icon.
           final iconButtonFinder = find.byIcon(Icons.favorite);
 
-          // Find the preferred duration selection IconButton by widget
-          // predicate.
-          final iconButtonFinderByPredicate = find.byWidgetPredicate((widget) =>
-              widget is IconButton &&
-              (widget.icon as Icon).icon == Icons.favorite &&
-              (widget.icon as Icon).color ==
-                  ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR);
-
           // Tap the yellow heart IconButton.
           await tester.tap(iconButtonFinder);
-          await tester.tap(iconButtonFinderByPredicate);
 
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
@@ -811,23 +801,13 @@ Future<void> main() async {
           // is set to the current date and time.
           String startDateTimeFrenchFormatStr =
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-          expect(startDateTimeFrenchFormatStr,
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now()));
+          expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
 
           // Find the preferred duration selection IconButton by the icon.
           final iconButtonFinder = find.byIcon(Icons.favorite);
 
-          // Find the preferred duration selection IconButton by widget
-          // predicate.
-          final iconButtonFinderByPredicate = find.byWidgetPredicate((widget) =>
-              widget is IconButton &&
-              (widget.icon as Icon).icon == Icons.favorite &&
-              (widget.icon as Icon).color ==
-                  ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR);
-
           // Tap the yellow heart IconButton.
           await tester.tap(iconButtonFinder);
-          await tester.tap(iconButtonFinderByPredicate);
 
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
@@ -838,54 +818,24 @@ Future<void> main() async {
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
 
-          checkFirstSecondAndThirdDateTimeAndDuration(
+          String firstDurationStr = checkFirstSecondAndThirdDateTimeAndDuration(
               startDateTimeFrenchFormatStr);
 
-          // Tapping a first time on the Undo menu
-
-          // Find the AppBar's PopupMenuButton
-          final Finder appBarMenuFinder =
-              find.byKey(const Key('appBarPopupMenuButton'));
-
-          await tester.tap(appBarMenuFinder);
-
-          // Wait for the tap to be processed and for any animations to complete.
+          // Tapping on the first end date time checkbox
+          await tester.tap(find.byType(Checkbox).first);
           await tester.pumpAndSettle();
 
-          // Tap the Undo menu item to undo selected preferred durations
-          // application.
-          await tester.tap(find.text('Undo'));
-
-          // Wait for the tap to be processed and for any animations to complete.
-          await tester.pumpAndSettle();
-
-          expect(find.text(nowFrenchDateTimeFormatStr), findsNWidgets(4));
-          expect(find.text('00:00'), findsNWidgets(3));
-
-          // Tapping a second time on the Undo menu which undoes the
-          // first undo
-
-          await tester.tap(appBarMenuFinder);
-
-          // Wait for the tap to be processed and for any animations to complete.
-          await tester.pumpAndSettle();
-
-          // Retap the Undo menu item to undo selected preferred durations
-          // application.
-          await tester.tap(find.text('Undo'));
-
-          // Wait for the tap to be processed and for any animations to complete.
-          await tester.pumpAndSettle();
-
-          checkFirstSecondAndThirdDateTimeAndDuration(
-              startDateTimeFrenchFormatStr);
+          // Setting the first duration to 10 hours
+          EditableText firstDurationTextField = tester.widget(find.text(firstDurationStr));
+          firstDurationTextField.controller.text = '10:00';
         },
       );
     },
   );
 }
 
-void checkFirstSecondAndThirdDateTimeAndDuration(
+/// Returns the first duration string
+String checkFirstSecondAndThirdDateTimeAndDuration(
     String startDateTimeFrenchFormatStr) {
   // Checking first end date time
 
@@ -899,6 +849,11 @@ void checkFirstSecondAndThirdDateTimeAndDuration(
       ScreenMixin.frenchDateTimeFormat.format(firstEndDateTimeRounded);
 
   expect(find.text(firstEndDateTimeRoundedStr), findsOneWidget);
+
+  Duration firstDuration = firstEndDateTimeRounded.difference(startDateTime);
+  String firstDurationStr = firstDuration.HHmm();
+
+  expect(find.text(firstDurationStr), findsOneWidget);
 
   // Checking second end date time
 
@@ -917,4 +872,6 @@ void checkFirstSecondAndThirdDateTimeAndDuration(
       ScreenMixin.frenchDateTimeFormat.format(thirdEndDateTime);
 
   expect(find.text(thirdEndDateTimeStr), findsOneWidget);
+
+  return firstDurationStr;
 }
