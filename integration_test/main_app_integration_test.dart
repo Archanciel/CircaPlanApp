@@ -826,6 +826,7 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Setting the first duration to 10 hours
+        // DOES NOT UPDATES START DATE TIME !
         await tester.enterText(find.text(firstDurationStr), '10:00');
         await tester.pumpAndSettle();
       });
