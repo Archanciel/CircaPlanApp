@@ -842,7 +842,7 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Setting the first duration to 10 hours
-        final String changedFirstDurationStr = '10:00';
+        const String changedFirstDurationStr = '10:00';
 
         await tester.enterText(
             find.text(firstDurationStr), changedFirstDurationStr);
@@ -872,7 +872,7 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Setting the first duration to 13 hours
-        final String newDurationStr = '13:00';
+        const String newDurationStr = '13:00';
         await tester.enterText(find.text(changedFirstDurationStr), newDurationStr);
 
         // Tapping on on DONE keyboard button or Enter key in order
