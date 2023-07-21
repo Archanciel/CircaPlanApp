@@ -177,8 +177,8 @@ class DateTimeParser {
     return parsedDayHourMinuteStr;
   }
 
-  /// Parses the passed hourMinuteStr and returns a Duration instanciated
-  /// with the parsed hour and minute values.
+  /// Parses the passed HH:mm (12:35) hourMinuteStr and returns a Duration
+  /// instanciated with the parsed hour and minute values.
   static Duration? parseHHMMDuration(String hourMinuteStr) {
     final String? parsedHourMinuteStr =
         DateTimeParser.parseHHMMTimeStr(hourMinuteStr);
