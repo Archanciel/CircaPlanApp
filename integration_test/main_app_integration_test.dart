@@ -644,7 +644,7 @@ Future<void> main() async {
           checkFirstSecondAndThirdEndDateTimeAndDuration(
             startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
             firstDurationStr: '12:00',
-          isRoundingSetForPreferredDuration: true,
+            isRoundingSetForPreferredDuration: true,
           );
 
           // Tapping a first time on the Undo menu
@@ -686,7 +686,7 @@ Future<void> main() async {
           checkFirstSecondAndThirdEndDateTimeAndDuration(
             startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
             firstDurationStr: '12:00',
-          isRoundingSetForPreferredDuration: true,
+            isRoundingSetForPreferredDuration: true,
           );
         },
       );
@@ -838,8 +838,15 @@ Future<void> main() async {
         // date time is changed.
 
         // Tapping on the first end date time checkbox to lock it
-        await tester.tap(find.byType(Checkbox).first);
+
+        Finder checkboxFinder = find.byType(Checkbox).first;
+
+        await tester.tap(checkboxFinder);
         await tester.pumpAndSettle();
+
+        expect((tester.firstWidget(checkboxFinder) as Checkbox).value, true);
+
+        // THIS WORKS
 
         // Setting the first duration to 10 hours
         const String changedFirstDurationStr = '10:00';
@@ -868,12 +875,21 @@ Future<void> main() async {
         // changed.
 
         // Tapping on the first end date time checkbox to unlock it
-        await tester.tap(find.byType(Checkbox).first);
+        
+        checkboxFinder = find.byType(Checkbox).first;
+
+        await tester.tap(checkboxFinder);
         await tester.pumpAndSettle();
+
+        expect((tester.firstWidget(checkboxFinder) as Checkbox).value, false);
+
+        // RESETTING THE FIRST DURATION TO 13:00 DOES NOT WORK. WHY,
+        // SINCE FIRST SETTING IT TO 10:00 WORKED ?
 
         // Setting the first duration to 13 hours
         const String newDurationStr = '13:00';
-        await tester.enterText(find.text(changedFirstDurationStr), newDurationStr);
+        await tester.enterText(
+            find.text(changedFirstDurationStr), newDurationStr);
 
         // Tapping on on DONE keyboard button or Enter key in order
         // to apply changing the first duration which, since the first
@@ -952,19 +968,4 @@ Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
     'firstDurationStr': firstDurationStr,
     'firstEndDateTime': firstEndDateTime,
   };
-}
-
-void test() {
-  DateTime actual = DateTime.now();
-  
-  // This could be any DateTime, I'm using now for this example
-  DateTime expected = DateTime.now();
-
-  // Create a range from 1 minute before to 1 minute after
-  DateTime oneMinuteBefore = expected.subtract(const Duration(minutes: 1));
-  DateTime oneMinuteAfter = expected.add(const Duration(minutes: 1));
-
-  // Check if the actual time is within that range
-  expect(actual.isAfter(oneMinuteBefore), isTrue);
-  expect(actual.isBefore(oneMinuteAfter), isTrue);
 }
