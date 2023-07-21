@@ -508,7 +508,7 @@ Future<void> main() async {
     'Add Duration To Date Time 3rd screen testing',
     () {
       testWidgets(
-        'Reset, select preferred duration, undo it and redo it',
+        'Reset, select rounding preferred duration, undo it and redo it',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
@@ -545,7 +545,7 @@ Future<void> main() async {
             "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
             "thirdEndDateTimeCheckbox": false,
             "preferredDurationsItemsStr":
-                '{"good":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
+                '{"good rounding":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
             "calcSlDurNewDateTimeStr": nowFrenchDateTimeFormatStr,
             "calcSlDurPreviousDateTimeStr": nowFrenchDateTimeFormatStr,
             "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -636,13 +636,16 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           // Tap the menu item.
-          await tester.tap(find.text('good 12:00, 3:30, 10:30'));
+          await tester.tap(find.text('good rounding 12:00, 3:30, 10:30'));
 
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
 
-          checkFirstSecondAndThirdDateTimeAndDuration(
-              startDateTimeFrenchFormatStr);
+          checkFirstSecondAndThirdEndDateTimeAndDuration(
+            startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
+            firstDurationStr: '12:00',
+          isRoundingSetForPreferredDuration: true,
+          );
 
           // Tapping a first time on the Undo menu
 
@@ -680,12 +683,15 @@ Future<void> main() async {
           // Wait for the tap to be processed and for any animations to complete.
           await tester.pumpAndSettle();
 
-          checkFirstSecondAndThirdDateTimeAndDuration(
-              startDateTimeFrenchFormatStr);
+          checkFirstSecondAndThirdEndDateTimeAndDuration(
+            startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
+            firstDurationStr: '12:00',
+          isRoundingSetForPreferredDuration: true,
+          );
         },
       );
       testWidgets(
-          'Reset, select preferred duration, lock first end date time, change duration, unlock first end date time, rechange duration',
+          'Reset, select rounding preferred duration, lock first end date time, change duration, unlock first end date time, rechange duration',
           (tester) async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
@@ -722,7 +728,7 @@ Future<void> main() async {
           "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
           "thirdEndDateTimeCheckbox": false,
           "preferredDurationsItemsStr":
-              '{"good":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
+              '{"good rounding":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
           "calcSlDurNewDateTimeStr": nowFrenchDateTimeFormatStr,
           "calcSlDurPreviousDateTimeStr": nowFrenchDateTimeFormatStr,
           "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
@@ -813,23 +819,33 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Tap the menu item.
-        await tester.tap(find.text('good 12:00, 3:30, 10:30'));
+        await tester.tap(find.text('good rounding 12:00, 3:30, 10:30'));
 
         // Wait for the tap to be processed and for any animations to complete.
         await tester.pumpAndSettle();
 
-        Map<String, dynamic> mapResults =
-            checkFirstSecondAndThirdDateTimeAndDuration(
-                startDateTimeFrenchFormatStr);
-        String firstDurationStr = mapResults['firstDurationStr'];
-        DateTime firstEndDateTime = mapResults['firstEndDateTime'];
+        final Map<String, dynamic> mapResults =
+            checkFirstSecondAndThirdEndDateTimeAndDuration(
+          startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
+          firstDurationStr: '12:00',
+          isRoundingSetForPreferredDuration: true,
+        );
+        final String firstDurationStr = mapResults['firstDurationStr'];
+        final DateTime firstEndDateTime = mapResults['firstEndDateTime'];
 
-        // Tapping on the first end date time checkbox
+        // Now verifying that when you change the first duration in the
+        // case the first end date time checkbox is checked, the start
+        // date time is changed.
+
+        // Tapping on the first end date time checkbox to lock it
         await tester.tap(find.byType(Checkbox).first);
         await tester.pumpAndSettle();
 
         // Setting the first duration to 10 hours
-        await tester.enterText(find.text(firstDurationStr), '10:00');
+        final String changedFirstDurationStr = '10:00';
+
+        await tester.enterText(
+            find.text(firstDurationStr), changedFirstDurationStr);
 
         // Tapping on on DONE keyboard button or Enter key in order
         // to apply changing the first duration which, since the first
@@ -838,43 +854,85 @@ Future<void> main() async {
         await tester.testTextInput.receiveAction(TextInputAction.done);
         await tester.pumpAndSettle();
 
-        DateTime newStartDateTime = firstEndDateTime
-            .subtract(const Duration(hours: 10, minutes: 0, seconds: 0));
+        expect(find.text(changedFirstDurationStr), findsOneWidget);
 
-        expect(
-            find.text(
-                ScreenMixin.frenchDateTimeFormat.format(newStartDateTime)),
-            findsOneWidget);
+        DateTime newStartDateTime = firstEndDateTime.subtract(
+            DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
+        final String newStartDateTimeFrenchFormatStr =
+            ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
+
+        expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
+
+        // Now verifying that after you unlocked the first end date time,
+        // when you change the first duration all end date time widgets are
+        // changed.
+
+        // Tapping on the first end date time checkbox to unlock it
+        await tester.tap(find.byType(Checkbox).first);
+        await tester.pumpAndSettle();
+
+        // Setting the first duration to 13 hours
+        final String newDurationStr = '13:00';
+        await tester.enterText(find.text(changedFirstDurationStr), newDurationStr);
+
+        // Tapping on on DONE keyboard button or Enter key in order
+        // to apply changing the first duration which, since the first
+        // end date time checkbox is unchecked, will impact all end date
+        // time widgets.
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await tester.pumpAndSettle();
+
+        expect(find.text(newDurationStr), findsOneWidget);
+
+        checkFirstSecondAndThirdEndDateTimeAndDuration(
+          startDateTimeFrenchFormatStr: newStartDateTimeFrenchFormatStr,
+          firstDurationStr: newDurationStr,
+          isRoundingSetForPreferredDuration: true,
+        );
       });
     },
   );
 }
 
+/// Verify the end date time and duration of the first, second and third
+/// DurationDateTimeEditor widgets
+///
 /// Returns a Map containing the first duration string and the first
 /// end date time.
-Map<String, dynamic> checkFirstSecondAndThirdDateTimeAndDuration(
-    String startDateTimeFrenchFormatStr) {
+///
+/// {isRoundingSetForPreferredDuration} this indicates that the selected
+/// preferred duration were defined with rounding set to true or false,
+/// which mens that the end date time will be rounded to the nearest hour
+/// or not after adding the duration.
+Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
+  required String startDateTimeFrenchFormatStr,
+  required String firstDurationStr,
+  required bool isRoundingSetForPreferredDuration,
+}) {
   // Checking first end date time
 
   DateTime startDateTime =
       ScreenMixin.frenchDateTimeFormat.parse(startDateTimeFrenchFormatStr);
-  DateTime firstEndDateTime = startDateTime
-      .add(const Duration(hours: 12, minutes: 0, seconds: 0, milliseconds: 0));
-  DateTime firstEndDateTimeRounded =
-      DateTimeParser.roundDateTimeToHour(firstEndDateTime);
-  String firstEndDateTimeRoundedStr =
-      ScreenMixin.frenchDateTimeFormat.format(firstEndDateTimeRounded);
+  DateTime firstEndDateTime =
+      startDateTime.add(DateTimeParser.parseHHMMDuration(firstDurationStr)!);
 
-  expect(find.text(firstEndDateTimeRoundedStr), findsOneWidget);
+  if (isRoundingSetForPreferredDuration) {
+    DateTime firstEndDateTimeRounded =
+        DateTimeParser.roundDateTimeToHour(firstEndDateTime);
+    firstEndDateTime = firstEndDateTimeRounded;
+    Duration firstDuration = firstEndDateTimeRounded.difference(startDateTime);
+    firstDurationStr = firstDuration.HHmm();
+  }
 
-  Duration firstDuration = firstEndDateTimeRounded.difference(startDateTime);
-  String firstDurationStr = firstDuration.HHmm();
+  String firstEndDateTimeStr =
+      ScreenMixin.frenchDateTimeFormat.format(firstEndDateTime);
 
+  expect(find.text(firstEndDateTimeStr), findsOneWidget);
   expect(find.text(firstDurationStr), findsOneWidget);
 
   // Checking second end date time
 
-  DateTime secondEndDateTime = firstEndDateTimeRounded
+  DateTime secondEndDateTime = firstEndDateTime
       .add(const Duration(hours: 3, minutes: 30, seconds: 0, milliseconds: 0));
   String secondEndDateTimeStr =
       ScreenMixin.frenchDateTimeFormat.format(secondEndDateTime);
@@ -892,6 +950,21 @@ Map<String, dynamic> checkFirstSecondAndThirdDateTimeAndDuration(
 
   return {
     'firstDurationStr': firstDurationStr,
-    'firstEndDateTime': firstEndDateTimeRounded,
+    'firstEndDateTime': firstEndDateTime,
   };
+}
+
+void test() {
+  DateTime actual = DateTime.now();
+  
+  // This could be any DateTime, I'm using now for this example
+  DateTime expected = DateTime.now();
+
+  // Create a range from 1 minute before to 1 minute after
+  DateTime oneMinuteBefore = expected.subtract(const Duration(minutes: 1));
+  DateTime oneMinuteAfter = expected.add(const Duration(minutes: 1));
+
+  // Check if the actual time is within that range
+  expect(actual.isAfter(oneMinuteBefore), isTrue);
+  expect(actual.isBefore(oneMinuteAfter), isTrue);
 }
