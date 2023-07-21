@@ -818,8 +818,11 @@ Future<void> main() async {
         // Wait for the tap to be processed and for any animations to complete.
         await tester.pumpAndSettle();
 
-        String firstDurationStr = checkFirstSecondAndThirdDateTimeAndDuration(
-            startDateTimeFrenchFormatStr);
+        Map<String, dynamic> mapResults =
+            checkFirstSecondAndThirdDateTimeAndDuration(
+                startDateTimeFrenchFormatStr);
+        String firstDurationStr = mapResults['firstDurationStr'];
+        DateTime firstEndDateTime = mapResults['firstEndDateTime'];
 
         // Tapping on the first end date time checkbox
         await tester.tap(find.byType(Checkbox).first);
@@ -834,13 +837,22 @@ Future<void> main() async {
         // time.
         await tester.testTextInput.receiveAction(TextInputAction.done);
         await tester.pumpAndSettle();
+
+        DateTime newStartDateTime = firstEndDateTime
+            .subtract(const Duration(hours: 10, minutes: 0, seconds: 0));
+
+        expect(
+            find.text(
+                ScreenMixin.frenchDateTimeFormat.format(newStartDateTime)),
+            findsOneWidget);
       });
     },
   );
 }
 
-/// Returns the first duration string
-String checkFirstSecondAndThirdDateTimeAndDuration(
+/// Returns a Map containing the first duration string and the first
+/// end date time.
+Map<String, dynamic> checkFirstSecondAndThirdDateTimeAndDuration(
     String startDateTimeFrenchFormatStr) {
   // Checking first end date time
 
@@ -878,5 +890,8 @@ String checkFirstSecondAndThirdDateTimeAndDuration(
 
   expect(find.text(thirdEndDateTimeStr), findsOneWidget);
 
-  return firstDurationStr;
+  return {
+    'firstDurationStr': firstDurationStr,
+    'firstEndDateTime': firstEndDateTimeRounded,
+  };
 }
