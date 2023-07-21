@@ -826,8 +826,13 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Setting the first duration to 10 hours
-        // DOES NOT UPDATES START DATE TIME !
         await tester.enterText(find.text(firstDurationStr), '10:00');
+
+        // Tapping on on DONE keyboard button or Enter key in order
+        // to apply changing the first duration which, since the first
+        // end date time checkbox is checked, will change the start date time
+        // time.
+        await tester.testTextInput.receiveAction(TextInputAction.done);
         await tester.pumpAndSettle();
       });
     },
