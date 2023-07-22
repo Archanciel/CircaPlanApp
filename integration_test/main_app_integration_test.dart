@@ -830,12 +830,11 @@ Future<void> main() async {
           firstDurationStr: '12:00',
           isRoundingSetForPreferredDuration: true,
         );
-        final String firstDurationStr = mapResults['firstDurationStr'];
         final DateTime firstEndDateTime = mapResults['firstEndDateTime'];
 
         // Now verifying that when you change the first duration in the
-        // case the first end date time checkbox is checked, the start
-        // date time is changed.
+        // situation in which the first end date time checkbox is checked,
+        // the start date time is changed.
 
         // Tapping on the first end date time checkbox to lock it
 
@@ -847,15 +846,15 @@ Future<void> main() async {
         expect((tester.firstWidget(checkboxFinder) as Checkbox).value, true);
 
         // Setting the first duration to 10 hours
-        
+
         const String changedFirstDurationStr = '10:00';
 
         // Findingvthe first duration text field
-        Finder firstDurationWidget =
-            find.byType(EditableText).at(1);
-        // Finder firstDurationWidget = find.text(firstDurationStr);
+        Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
+        // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
 
-        await tester.enterText(firstDurationWidget, changedFirstDurationStr);
+        await tester.enterText(
+            firstDurationWidgetFinder, changedFirstDurationStr);
 
         // Tapping on on DONE keyboard button or Enter key in order
         // to apply changing the first duration which, since the first
@@ -1017,28 +1016,19 @@ Future<void> main() async {
         final DateTime firstEndDateTime = mapResults['firstEndDateTime'];
 
         // Now verifying that when you change the first duration in the
-        // case the first end date time checkbox is checked, the start
-        // date time is changed.
-
-        // Tapping on the first end date time checkbox to lock it
-
-        Finder checkboxFinder = find.byType(Checkbox).first;
-
-        await tester.tap(checkboxFinder);
-        await tester.pumpAndSettle();
-
-        expect((tester.firstWidget(checkboxFinder) as Checkbox).value, true);
+        // situation in which the first end date time checkbox is not
+        // checked, the start date time is not changed. Instead, the
+        // end date time widgets are updated.
 
         // Setting the first duration to 10 hours
-        
+
         const String changedFirstDurationStr = '10:00';
 
-        // Findingvthe first duration text field
-        Finder firstDurationWidget =
-            find.byType(EditableText).at(1);
-        // Finder firstDurationWidget = find.text(firstDurationStr);
+        // Finding the first duration text field
+        Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
 
-        await tester.enterText(firstDurationWidget, changedFirstDurationStr);
+        await tester.enterText(
+            firstDurationWidgetFinder, changedFirstDurationStr);
 
         // Tapping on on DONE keyboard button or Enter key in order
         // to apply changing the first duration which, since the first
@@ -1048,13 +1038,12 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         expect(find.text(changedFirstDurationStr), findsOneWidget);
+        // DateTime newStartDateTime = firstEndDateTime.subtract(
+        //     DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
+        // final String newStartDateTimeFrenchFormatStr =
+        //     ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
 
-        DateTime newStartDateTime = firstEndDateTime.subtract(
-            DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
-        final String newStartDateTimeFrenchFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
-
-        expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
+        expect(find.text(startDateTimeFrenchFormatStr), findsOneWidget);
       });
     },
   );
