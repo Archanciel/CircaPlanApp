@@ -132,11 +132,11 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// Calls the _AddSubtractResultableDurationState.setStartDateTimeStr() method.
   void setStartDateTimeStr({
     required String englishFormatStartDateTimeStr,
-    bool wasNowUndoButtonClicked = false,
+    bool wasStartDateTimeButtonClicked = false,
   }) {
     stateInstance.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr,
-        isNowUndoButtonClicked: wasNowUndoButtonClicked);
+        wasStartDateTimeButtonClicked: wasStartDateTimeButtonClicked);
   }
 
   void setDuration({
@@ -321,7 +321,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
   void setStartDateTimeStr({
     required String englishFormatStartDateTimeStr,
-    required bool isNowUndoButtonClicked,
+    required bool wasStartDateTimeButtonClicked,
   }) {
     _startDateTimeEnglishFormatStr = englishFormatStartDateTimeStr;
 
@@ -330,7 +330,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       _durationSign,
       null,
       null,
-      isNowUndoButtonClicked,
+      wasStartDateTimeButtonClicked,
     );
   }
 
@@ -374,7 +374,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     int? durationSign,
     bool? wasDurationSignButtonPressed,
     bool? mustEndDateTimeBeRounded,
-    bool? wasNowUndoButtonClicked,
+    bool? wasStartDateTimeButtonClicked,
   ]) {
     if (durationSign != null) {
       _durationSign = durationSign;
@@ -419,7 +419,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
-        if ((wasNowUndoButtonClicked ?? false) ||
+        if ((wasStartDateTimeButtonClicked ?? false) ||
             widget.handleDateTimeModificationFunction == null) {
           // duration must be changed
           if (endDateTime != null) {

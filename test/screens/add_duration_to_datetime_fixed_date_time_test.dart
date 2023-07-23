@@ -185,11 +185,24 @@ Future<void> main() async {
 
           // Now updating Start date time 3 hours later
 
-          editableStartDateTime.dateTimePickerController.text =
-              "12-07-2022 13:00";
-          firstDurationDateTimeEditorWidget.setStartDateTimeStr(
-              englishFormatStartDateTimeStr: "2022-07-12 13:00");
+          // editableStartDateTime.dateTimePickerController.text =
+          //     "12-07-2022 13:00";
+          // firstDurationDateTimeEditorWidget.setStartDateTimeStr(
+          //     englishFormatStartDateTimeStr: "2022-07-12 13:00");
+
+          // Finder firstDurationWidgetFinder = find.byType(EditableText).at(0);
+          Finder startDateTimeWidgetFinder = find.text("12-07-2022 10:00");
+
+          await tester.enterText(
+              startDateTimeWidgetFinder, "12-07-2022 13:00");
+
+          // Tapping on on DONE keyboard button or Enter key in order
+          // to apply changing the first duration which, since the first
+          // end date time checkbox is checked, will change the start date time
+          // time.
+          await tester.testTextInput.receiveAction(TextInputAction.done);
           await tester.pumpAndSettle();
+
           expect(
             firstDurationDateTimeEditorWidget.durationStrTst,
             '6:30', // duration 9:30 - 3:00 = 6:30 hours

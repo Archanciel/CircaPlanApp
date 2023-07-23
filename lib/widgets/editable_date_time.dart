@@ -22,7 +22,7 @@ class EditableDateTime extends StatefulWidget {
     this.displayFixDateTimeCheckbox = false,
     this.widgetPrefix = '',
     this.position = ToastGravity.CENTER,
-    this.nowButtonUndo = false,
+    this.isStartDateTimeButton = false,
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
       dateTimePickerController.text =
@@ -39,13 +39,13 @@ class EditableDateTime extends StatefulWidget {
   final double topSelMenuPosition;
   final TextEditingController dateTimePickerController;
   final Function handleDateTimeModificationFunction;
-  final Function(String) handleSelectedDateTimeStrFunction;
+  final Function handleSelectedDateTimeStrFunction;
 
   final bool displayFixDateTimeCheckbox;
   final String widgetPrefix;
   final ToastGravity position;
 
-  final bool nowButtonUndo;
+  final bool isStartDateTimeButton;
   String undoDateTimeStr = '';
 
   /// This variable enables the EditableDurationPercent
@@ -93,7 +93,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
       handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
       displayFixDateTimeCheckbox: widget.displayFixDateTimeCheckbox,
       widgetPrefix: widget.widgetPrefix,
-      nowButtonUndo: widget.nowButtonUndo,
+      nowButtonUndo: widget.isStartDateTimeButton,
     );
   }
 
@@ -103,7 +103,10 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
         ScreenMixin.frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     _updateDateTimePickerValues();
 
-    widget.handleSelectedDateTimeStrFunction(frenchFormatSelectedDateTimeStr);
+    widget.handleSelectedDateTimeStrFunction(
+      frenchFormatSelectedDateTimeStr,
+      widget.isStartDateTimeButton,
+    );
   }
 
   /// If {isUndo} is true, then {nowStr} does not need to be
@@ -113,7 +116,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     required bool isUndo,
     String? englishDateTimeFormatNowStr,
   }) {
-    if (widget.nowButtonUndo) {
+    if (widget.isStartDateTimeButton) {
       if (isUndo) {
         _dateTime = _undoDateTime;
 
@@ -132,10 +135,10 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     }
 
     _updateDateTimePickerValues();
-    
+
     widget.handleDateTimeModificationFunction(
       englishDateTimeFormatNowStr,
-      widget.nowButtonUndo,
+      widget.isStartDateTimeButton,
     );
   }
 
@@ -399,6 +402,8 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               shape: widget.appElevatedButtonRoundedShape),
           onPressed: () {
             if (widget.nowButtonUndo) {
+              // Tapping the Now or Undo button of the Start date time
+              // EditableDateTime widget.
               if (_nowButtonTxt == 'Now') {
                 String englishDateTimeFormatNowStr =
                     ScreenMixin.englishDateTimeFormat.format(DateTime.now());
@@ -415,6 +420,8 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               }
               setState(() {});
             } else {
+              // Tapping the Now button of the first, second or third End
+              // date time EditableDateTime widget.
               String nowStr = DateTime.now().toString();
               widget.handleDateTimeModification(
                 isUndo: false,
