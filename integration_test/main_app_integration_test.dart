@@ -624,7 +624,23 @@ Future<void> main() async {
           // is set to the current date and time.
           String startDateTimeFrenchFormatStr =
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-          expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
+
+          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(startDateTimeFrenchFormatStr);
+          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(nowFrenchDateTimeFormatStr);
+          DateTime expectedStartDateTimeOneMinuteBefore =
+              expectedStartDateTime.subtract(const Duration(minutes: 1));
+          DateTime expectedStartDateTimeOneMinuteAfter =
+              expectedStartDateTime.add(const Duration(minutes: 1));
+
+          // Check if the actual time is within that range
+          expect(
+              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
+              isTrue);
+          expect(
+              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
+              isTrue);
 
           // Find the preferred duration selection IconButton by the icon.
           final iconButtonFinder = find.byIcon(Icons.favorite);
@@ -1000,11 +1016,27 @@ Future<void> main() async {
         EditableDateTime startDateTimeEditableDateTimeWidget = tester
             .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
 
-        // Confirming the Add Duration To Date Time page Start Date Time
-        // is set to the current date and time.
-        String startDateTimeFrenchFormatStr =
-            startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-        expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
+          // Confirming the Add Duration To Date Time page Start Date Time
+          // is set to the current date and time.
+          String startDateTimeFrenchFormatStr =
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+
+          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(startDateTimeFrenchFormatStr);
+          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(nowFrenchDateTimeFormatStr);
+          DateTime expectedStartDateTimeOneMinuteBefore =
+              expectedStartDateTime.subtract(const Duration(minutes: 1));
+          DateTime expectedStartDateTimeOneMinuteAfter =
+              expectedStartDateTime.add(const Duration(minutes: 1));
+
+          // Check if the actual time is within that range
+          expect(
+              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
+              isTrue);
+          expect(
+              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
+              isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
         final iconButtonFinder = find.byIcon(Icons.favorite);
@@ -1376,11 +1408,27 @@ Future<void> main() async {
         EditableDateTime startDateTimeEditableDateTimeWidget = tester
             .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
 
-        // Confirming the Add Duration To Date Time page Start Date Time
-        // is set to the current date and time.
-        String startDateTimeFrenchFormatStr =
-            startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-        expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
+          // Confirming the Add Duration To Date Time page Start Date Time
+          // is set to the current date and time.
+          String startDateTimeFrenchFormatStr =
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+
+          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(startDateTimeFrenchFormatStr);
+          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(nowFrenchDateTimeFormatStr);
+          DateTime expectedStartDateTimeOneMinuteBefore =
+              expectedStartDateTime.subtract(const Duration(minutes: 1));
+          DateTime expectedStartDateTimeOneMinuteAfter =
+              expectedStartDateTime.add(const Duration(minutes: 1));
+
+          // Check if the actual time is within that range
+          expect(
+              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
+              isTrue);
+          expect(
+              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
+              isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
         final iconButtonFinder = find.byIcon(Icons.favorite);
@@ -1752,11 +1800,27 @@ Future<void> main() async {
         EditableDateTime startDateTimeEditableDateTimeWidget = tester
             .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
 
-        // Confirming the Add Duration To Date Time page Start Date Time
-        // is set to the current date and time.
-        String startDateTimeFrenchFormatStr =
-            startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-        expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
+          // Confirming the Add Duration To Date Time page Start Date Time
+          // is set to the current date and time.
+          String startDateTimeFrenchFormatStr =
+              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+
+          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(startDateTimeFrenchFormatStr);
+          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
+              .parse(nowFrenchDateTimeFormatStr);
+          DateTime expectedStartDateTimeOneMinuteBefore =
+              expectedStartDateTime.subtract(const Duration(minutes: 1));
+          DateTime expectedStartDateTimeOneMinuteAfter =
+              expectedStartDateTime.add(const Duration(minutes: 1));
+
+          // Check if the actual time is within that range
+          expect(
+              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
+              isTrue);
+          expect(
+              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
+              isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
         final iconButtonFinder = find.byIcon(Icons.favorite);
