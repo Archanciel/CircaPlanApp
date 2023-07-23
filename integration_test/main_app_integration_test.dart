@@ -627,7 +627,7 @@ Future<void> main() async {
           expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
 
           // Find the preferred duration selection IconButton by the icon.
-          final iconButtonFinder = find.byIcon(Icons.favorite);
+          final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
           // Tap the yellow heart IconButton.
           await tester.tap(iconButtonFinder);
@@ -825,7 +825,7 @@ Future<void> main() async {
             isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
-        final iconButtonFinder = find.byIcon(Icons.favorite);
+        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
         // Tap the yellow heart IconButton.
         await tester.tap(iconButtonFinder);
@@ -864,7 +864,7 @@ Future<void> main() async {
 
         const String changedFirstDurationStr = '10:00';
 
-        // Findingvthe first duration text field
+        // Finding the first duration text field
         Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
         // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
 
@@ -1007,7 +1007,7 @@ Future<void> main() async {
         expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
 
         // Find the preferred duration selection IconButton by the icon.
-        final iconButtonFinder = find.byIcon(Icons.favorite);
+        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
         // Tap the yellow heart IconButton.
         await tester.tap(iconButtonFinder);
@@ -1201,7 +1201,7 @@ Future<void> main() async {
             isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
-        final iconButtonFinder = find.byIcon(Icons.favorite);
+        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
         // Tap the yellow heart IconButton.
         await tester.tap(iconButtonFinder);
@@ -1240,7 +1240,7 @@ Future<void> main() async {
 
         const String changedFirstDurationStr = '10:00';
 
-        // Findingvthe first duration text field
+        // Finding the first duration text field
         Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
         // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
 
@@ -1383,7 +1383,7 @@ Future<void> main() async {
         expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
 
         // Find the preferred duration selection IconButton by the icon.
-        final iconButtonFinder = find.byIcon(Icons.favorite);
+        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
         // Tap the yellow heart IconButton.
         await tester.tap(iconButtonFinder);
@@ -1577,7 +1577,7 @@ Future<void> main() async {
             isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
-        final iconButtonFinder = find.byIcon(Icons.favorite);
+        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
         // Tap the yellow heart IconButton.
         await tester.tap(iconButtonFinder);
@@ -1616,7 +1616,7 @@ Future<void> main() async {
 
         const String changedFirstDurationStr = '10:00';
 
-        // Findingvthe first duration text field
+        // Finding the first duration text field
         Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
         // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
 
@@ -1638,9 +1638,42 @@ Future<void> main() async {
             ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
 
         expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
+
+        // Find the preferred duration selection IconButton by the icon.
+        final Finder firstSelButtonFinder = find.text('Sel').first;
+
+        // Tap the yellow heart IconButton.
+        await tester.tap(firstSelButtonFinder);
+
+        // Wait for the tap to be processed and for any animations to complete.
+        await tester.pumpAndSettle();
+
+        Finder secondEndDateTimeWidgetFinder = find.byType(EditableText).at(4);
+        final EditableText secondEndDateTimeEditableTextWidget =
+            tester.widget<EditableText>(secondEndDateTimeWidgetFinder);
+        final String currentSecondEndDateTimeStr =
+            secondEndDateTimeEditableTextWidget.controller.text;
+
+        // Tap the menu item (the menu item with the date time value
+        // of the second end date time widget is the second EditableText
+        // widget with this value, while index is 1 and not 0 !).
+        await tester.tap(find.text(currentSecondEndDateTimeStr).at(1));
+
+        // Wait for the tap to be processed and for any animations to complete.
+        await tester.pumpAndSettle();
+
+        firstDurationWidgetFinder = find.byType(EditableText).at(1);
+        final EditableText firstDurationEditableTextWidget =
+            tester.widget<EditableText>(firstDurationWidgetFinder);
+        final String firstDurationStr =
+            firstDurationEditableTextWidget.controller.text;
+
+        expect(firstDurationStr, '3:30');
+
+        // TODO: check icon type and color
       });
       testWidgets(
-          'Reset, select not rounding preferred duration, change duration without locking first end date time',
+          'Reset, select not rounding preferred duration, change duration without locking first end date time, select a start date time value',
           (tester) async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
@@ -1759,7 +1792,7 @@ Future<void> main() async {
         expect(startDateTimeFrenchFormatStr, nowFrenchDateTimeFormatStr);
 
         // Find the preferred duration selection IconButton by the icon.
-        final iconButtonFinder = find.byIcon(Icons.favorite);
+        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
 
         // Tap the yellow heart IconButton.
         await tester.tap(iconButtonFinder);
