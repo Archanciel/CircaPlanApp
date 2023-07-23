@@ -1210,7 +1210,7 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Tap the menu item.
-        await tester.tap(find.text('good rounding 12:00, 3:30, 10:30'));
+        await tester.tap(find.text('good not round 12:00, 3:30, 10:30'));
 
         // Wait for the tap to be processed and for any animations to complete.
         await tester.pumpAndSettle();
@@ -1219,7 +1219,7 @@ Future<void> main() async {
             checkFirstSecondAndThirdEndDateTimeAndDuration(
           startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
           firstDurationStr: '12:00',
-          isRoundingSetForPreferredDuration: true,
+          isRoundingSetForPreferredDuration: false,
         );
         final DateTime firstEndDateTime = mapResults['firstEndDateTime'];
 
@@ -1392,7 +1392,7 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         // Tap the menu item.
-        await tester.tap(find.text('good rounding 12:00, 3:30, 10:30'));
+        await tester.tap(find.text('good not round 12:00, 3:30, 10:30'));
 
         // Wait for the tap to be processed and for any animations to complete.
         await tester.pumpAndSettle();
@@ -1400,7 +1400,7 @@ Future<void> main() async {
         checkFirstSecondAndThirdEndDateTimeAndDuration(
           startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
           firstDurationStr: '12:00',
-          isRoundingSetForPreferredDuration: true,
+          isRoundingSetForPreferredDuration: false,
         );
 
         // Now verifying that when you change the first duration in the
