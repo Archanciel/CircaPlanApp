@@ -807,17 +807,22 @@ Future<void> main() async {
         // is set to the current date and time.
         String startDateTimeFrenchFormatStr =
             startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat.parse(
-            startDateTimeFrenchFormatStr);
-            DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat.parse(
-            nowFrenchDateTimeFormatStr);
+        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+            .parse(startDateTimeFrenchFormatStr);
+        DateTime expectedStartDateTime =
+            ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
             expectedStartDateTime.subtract(const Duration(minutes: 1));
-        DateTime expectedStartDateTimeOneMinuteAfter = expectedStartDateTime.add(const Duration(minutes: 1));
+        DateTime expectedStartDateTimeOneMinuteAfter =
+            expectedStartDateTime.add(const Duration(minutes: 1));
 
         // Check if the actual time is within that range
-        expect(actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore), isTrue);
-        expect(actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter), isTrue);
+        expect(
+            actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
+            isTrue);
+        expect(
+            actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
+            isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
         final iconButtonFinder = find.byIcon(Icons.favorite);
@@ -1016,14 +1021,11 @@ Future<void> main() async {
         // Wait for the tap to be processed and for any animations to complete.
         await tester.pumpAndSettle();
 
-        final Map<String, dynamic> mapResults =
-            checkFirstSecondAndThirdEndDateTimeAndDuration(
+        checkFirstSecondAndThirdEndDateTimeAndDuration(
           startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
           firstDurationStr: '12:00',
           isRoundingSetForPreferredDuration: true,
         );
-        final String firstDurationStr = mapResults['firstDurationStr'];
-        final DateTime firstEndDateTime = mapResults['firstEndDateTime'];
 
         // Now verifying that when you change the first duration in the
         // situation in which the first end date time checkbox is not
@@ -1048,12 +1050,16 @@ Future<void> main() async {
         await tester.pumpAndSettle();
 
         expect(find.text(changedFirstDurationStr), findsOneWidget);
-        // DateTime newStartDateTime = firstEndDateTime.subtract(
-        //     DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
-        // final String newStartDateTimeFrenchFormatStr =
-        //     ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
 
+        // Verifying the Start Date Time was not changed since the first
+        // end date time checkbox which locks it is not checked.
         expect(find.text(startDateTimeFrenchFormatStr), findsOneWidget);
+
+        checkFirstSecondAndThirdEndDateTimeAndDuration(
+          startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
+          firstDurationStr: changedFirstDurationStr,
+          isRoundingSetForPreferredDuration: false,
+        );
       });
     },
   );
@@ -1062,8 +1068,8 @@ Future<void> main() async {
 /// Verify the end date time and duration of the first, second and third
 /// DurationDateTimeEditor widgets
 ///
-/// Returns a Map containing the first duration string and the first
-/// end date time.
+/// Returns a Map containing the first duration string (10:00 for example)
+/// and the first DateTime end date time.
 ///
 /// {isRoundingSetForPreferredDuration} this indicates that the selected
 /// preferred duration were defined with rounding set to true or false,
