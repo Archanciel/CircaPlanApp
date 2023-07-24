@@ -882,7 +882,6 @@ Future<void> main() async {
 
         // Finding the first duration text field
         Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
-        // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
 
         await tester.enterText(
             firstDurationWidgetFinder, changedFirstDurationStr);
@@ -896,6 +895,8 @@ Future<void> main() async {
 
         expect(find.text(changedFirstDurationStr), findsOneWidget);
 
+        // Calculating the new start date time value which is modified
+        // since the first end date time is locked.
         DateTime newStartDateTime = firstEndDateTime.subtract(
             DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
         final String newStartDateTimeFrenchFormatStr =
@@ -1016,27 +1017,29 @@ Future<void> main() async {
         EditableDateTime startDateTimeEditableDateTimeWidget = tester
             .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
 
-          // Confirming the Add Duration To Date Time page Start Date Time
-          // is set to the current date and time.
-          String startDateTimeFrenchFormatStr =
-              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+        // Confirming the Add Duration To Date Time page Start Date Time
+        // is set to the current date and time.
+        String startDateTimeFrenchFormatStr =
+            startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
 
-          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(startDateTimeFrenchFormatStr);
-          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(nowFrenchDateTimeFormatStr);
-          DateTime expectedStartDateTimeOneMinuteBefore =
-              expectedStartDateTime.subtract(const Duration(minutes: 1));
-          DateTime expectedStartDateTimeOneMinuteAfter =
-              expectedStartDateTime.add(const Duration(minutes: 1));
+        // Confirming the Add Duration To Date Time page Start Date Time
+        // is set to the current date and time.
+        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+            .parse(startDateTimeFrenchFormatStr);
+        DateTime expectedStartDateTime =
+            ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
+        DateTime expectedStartDateTimeOneMinuteBefore =
+            expectedStartDateTime.subtract(const Duration(minutes: 1));
+        DateTime expectedStartDateTimeOneMinuteAfter =
+            expectedStartDateTime.add(const Duration(minutes: 1));
 
-          // Check if the actual time is within that range
-          expect(
-              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
-              isTrue);
-          expect(
-              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
-              isTrue);
+        // Check if the actual time is within that range
+        expect(
+            actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
+            isTrue);
+        expect(
+            actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
+            isTrue);
 
         // Find the preferred duration selection IconButton by the icon.
         final Finder iconButtonFinder = find.byIcon(Icons.favorite);
@@ -1099,7 +1102,7 @@ Future<void> main() async {
     "Add not rounding preferred durations to 3rd screen DateTime's",
     () {
       testWidgets(
-          'Reset, select not rounding preferred duration, lock first end date time, change duration',
+          'Reset, select not rounding preferred duration, lock first end date time, change duration, finally, select a start date time value',
           (tester) async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
@@ -1274,7 +1277,6 @@ Future<void> main() async {
 
         // Finding the first duration text field
         Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
-        // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
 
         await tester.enterText(
             firstDurationWidgetFinder, changedFirstDurationStr);
@@ -1288,12 +1290,50 @@ Future<void> main() async {
 
         expect(find.text(changedFirstDurationStr), findsOneWidget);
 
+        // Calculating the new start date time value which is modified
+        // since the first end date time is locked.
         DateTime newStartDateTime = firstEndDateTime.subtract(
             DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
         final String newStartDateTimeFrenchFormatStr =
             ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
 
         expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
+
+        // Now, find the first Sel button by its text.
+        final Finder firstSelButtonFinder = find.text('Sel').first;
+
+        // Tap on the first Sel button.
+        await tester.tap(firstSelButtonFinder);
+
+        // Wait for the tap to be processed and for any animations to complete.
+        await tester.pumpAndSettle();
+
+        // Determine which Sel menu item to tap on by finding the
+        // second end date time widget and getting its value.
+        Finder secondEndDateTimeWidgetFinder = find.byType(EditableText).at(4);
+        final EditableText secondEndDateTimeEditableTextWidget =
+            tester.widget<EditableText>(secondEndDateTimeWidgetFinder);
+        final String currentSecondEndDateTimeStr =
+            secondEndDateTimeEditableTextWidget.controller.text;
+
+        // Tap the menu item (the menu item with the date time value
+        // of the second end date time widget is the second EditableText
+        // widget with this value, while index is 1 and not 0 !).
+        await tester.tap(find.text(currentSecondEndDateTimeStr).at(1));
+
+        // Wait for the tap to be processed and for any animations to complete.
+        await tester.pumpAndSettle();
+
+        // Now, verify the value and sign + color of the first duration
+        firstDurationWidgetFinder = find.byType(EditableText).at(1);
+        final EditableText firstDurationEditableTextWidget =
+            tester.widget<EditableText>(firstDurationWidgetFinder);
+        final String firstDurationStr =
+            firstDurationEditableTextWidget.controller.text;
+
+        expect(firstDurationStr, '3:30');
+
+        // TODO: check icon type and color
       });
       testWidgets(
           'Reset, select not rounding preferred duration, change duration without locking first end date time',
@@ -1408,205 +1448,11 @@ Future<void> main() async {
         EditableDateTime startDateTimeEditableDateTimeWidget = tester
             .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
 
-          // Confirming the Add Duration To Date Time page Start Date Time
-          // is set to the current date and time.
-          String startDateTimeFrenchFormatStr =
-              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-
-          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(startDateTimeFrenchFormatStr);
-          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(nowFrenchDateTimeFormatStr);
-          DateTime expectedStartDateTimeOneMinuteBefore =
-              expectedStartDateTime.subtract(const Duration(minutes: 1));
-          DateTime expectedStartDateTimeOneMinuteAfter =
-              expectedStartDateTime.add(const Duration(minutes: 1));
-
-          // Check if the actual time is within that range
-          expect(
-              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
-              isTrue);
-          expect(
-              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
-              isTrue);
-
-        // Find the preferred duration selection IconButton by the icon.
-        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
-
-        // Tap the yellow heart IconButton.
-        await tester.tap(iconButtonFinder);
-
-        // Wait for the tap to be processed and for any animations to complete.
-        await tester.pumpAndSettle();
-
-        // Tap the menu item.
-        await tester.tap(find.text('good not round 12:00, 3:30, 10:30'));
-
-        // Wait for the tap to be processed and for any animations to complete.
-        await tester.pumpAndSettle();
-
-        checkFirstSecondAndThirdEndDateTimeAndDuration(
-          startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
-          firstDurationStr: '12:00',
-          isRoundingSetForPreferredDuration: false,
-        );
-
-        // Now verifying that when you change the first duration in the
-        // situation in which the first end date time checkbox is not
-        // checked, the start date time is not changed. Instead, the
-        // end date time widgets are updated.
-
-        // Setting the first duration to 10 hours
-
-        const String changedFirstDurationStr = '10:00';
-
-        // Finding the first duration text field
-        Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
-
-        await tester.enterText(
-            firstDurationWidgetFinder, changedFirstDurationStr);
-
-        // Tapping on DONE keyboard button or Enter key in order
-        // to apply changing the first duration which, since the first
-        // end date time checkbox is checked, will change the start date time
-        // time.
-        await tester.testTextInput.receiveAction(TextInputAction.done);
-        await tester.pumpAndSettle();
-
-        expect(find.text(changedFirstDurationStr), findsOneWidget);
-
-        // Verifying the Start Date Time was not changed since the first
-        // end date time checkbox which locks it is not checked.
-        expect(find.text(startDateTimeFrenchFormatStr), findsOneWidget);
-
-        checkFirstSecondAndThirdEndDateTimeAndDuration(
-          startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
-          firstDurationStr: changedFirstDurationStr,
-          isRoundingSetForPreferredDuration: false,
-        );
-      });
-    },
-  );
-  group(
-    "Select Start date time value on 3rd screen",
-    () {
-      testWidgets(
-          'Reset, select not rounding preferred duration, lock first end date time, select a start date time value',
-          (tester) async {
-        Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
-
-        String nowEnglishDateTimeFormatStr =
-            ScreenMixin.englishDateTimeFormat.format(DateTime.now());
-        String nowFrenchDateTimeFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
-        String testPath = kCircadianAppDataTestDir;
-
-        Map<String, dynamic> transferDataMapCircadian = {
-          "firstDurationIconData": Icons.add,
-          "firstDurationIconColor": Colors.green.shade200,
-          "firstDurationSign": 1,
-          "firstDurationTextColor": Colors.green.shade200,
-          "addDurStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "firstDurationStr": "00:00",
-          "firstStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "firstEndDateTimeStr": nowEnglishDateTimeFormatStr,
-          "firstEndDateTimeCheckbox": false,
-          "secondDurationIconData": Icons.add,
-          "secondDurationIconColor": Colors.red.shade200,
-          "secondDurationSign": 1,
-          "secondDurationTextColor": Colors.green.shade200,
-          "secondDurationStr": "00:00",
-          "secondStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "secondEndDateTimeStr": nowEnglishDateTimeFormatStr,
-          "secondEndDateTimeCheckbox": false,
-          "thirdDurationIconData": Icons.add,
-          "thirdDurationIconColor": Colors.green.shade200,
-          "thirdDurationSign": 1,
-          "thirdDurationTextColor": Colors.green.shade200,
-          "thirdDurationStr": "00:00",
-          "thirdStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
-          "thirdEndDateTimeCheckbox": false,
-          "preferredDurationsItemsStr":
-              '{"good rounding":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
-          "calcSlDurNewDateTimeStr": nowFrenchDateTimeFormatStr,
-          "calcSlDurPreviousDateTimeStr": nowFrenchDateTimeFormatStr,
-          "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
-          "calcSlDurCurrSleepDurationStr": '12:36',
-          "calcSlDurCurrWakeUpDurationStr": '0:02',
-          "calcSlDurCurrTotalDurationStr": '12:38',
-          "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
-          "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
-          "calcSlDurCurrTotalDurationPercentStr": '100 %',
-          "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
-          "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
-          "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
-          "calcSlDurStatus": Status.wakeUp,
-          "calcSlDurSleepTimeStrHistory": [
-            '10-07-2022 00:58',
-            '05:35',
-            '04:00'
-          ],
-          "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35'],
-          "alarmMedicDateTimeStr": '15-12-2022 06:00',
-          "dtDiffStartDateTimeStr": "2022-07-13 16:09",
-          "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
-          "dtDiffDurationStr": "24:00",
-          "dtDiffAddTimeStr": "1:00",
-          "dtDiffFinalDurationStr": "25:00",
-          "dtDurationPercentStr": "70 %",
-          "dtDurationTotalPercentStr": "90 %",
-          "firstTimeStr": "00:10:00",
-          "secondTimeStr": "00:05:00",
-          "resultTimeStr": "00:15:00",
-          "resultPercentStr": "40 %",
-          "resultSecondPercentStr": "90 %",
-          "divideFirstBySecondCheckBox": false,
-        };
-
-        String jsonFileNameCircadian = 'circadian.json';
-        String transferDataJsonFilePathNameCircadian =
-            '$testPath${Platform.pathSeparator}$jsonFileNameCircadian';
-        TransferDataViewModel transferDataViewModelCircadian =
-            TransferDataViewModel(
-                transferDataJsonFilePathName:
-                    transferDataJsonFilePathNameCircadian);
-        transferDataViewModelCircadian.transferDataMap =
-            transferDataMapCircadian;
-        await transferDataViewModelCircadian.updateAndSaveTransferData();
-
-        // updating a second time updates the circadian undo file
-        await transferDataViewModelCircadian.updateAndSaveTransferData();
-
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: MainApp(
-                key: const Key('mainAppKey'),
-                transferDataViewModel: transferDataViewModelCircadian,
-              ),
-            ),
-          ),
-        );
-
-        await tester.pumpAndSettle();
-
-        // Clicking on the third icon in the navigation bar
-        await tester
-            .tap(find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
-        await tester.pumpAndSettle();
-
-        // clicking on Reset button
-        await tester.tap(find.byKey(const Key('resetButton')));
-        await tester.pumpAndSettle();
-
-        EditableDateTime startDateTimeEditableDateTimeWidget = tester
-            .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
-
         // Confirming the Add Duration To Date Time page Start Date Time
         // is set to the current date and time.
         String startDateTimeFrenchFormatStr =
             startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
+
         DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
             .parse(startDateTimeFrenchFormatStr);
         DateTime expectedStartDateTime =
@@ -1639,237 +1485,6 @@ Future<void> main() async {
         // Wait for the tap to be processed and for any animations to complete.
         await tester.pumpAndSettle();
 
-        final Map<String, dynamic> mapResults =
-            checkFirstSecondAndThirdEndDateTimeAndDuration(
-          startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
-          firstDurationStr: '12:00',
-          isRoundingSetForPreferredDuration: false,
-        );
-        final DateTime firstEndDateTime = mapResults['firstEndDateTime'];
-
-        // Now verifying that when you change the first duration in the
-        // situation in which the first end date time checkbox is checked,
-        // the start date time is changed.
-
-        // Tapping on the first end date time checkbox to lock it
-
-        Finder checkboxFinder = find.byType(Checkbox).first;
-
-        await tester.tap(checkboxFinder);
-        await tester.pumpAndSettle();
-
-        expect((tester.firstWidget(checkboxFinder) as Checkbox).value, true);
-
-        // Setting the first duration to 10 hours
-
-        const String changedFirstDurationStr = '10:00';
-
-        // Finding the first duration text field
-        Finder firstDurationWidgetFinder = find.byType(EditableText).at(1);
-        // Finder firstDurationWidgetFinder = find.text(firstDurationStr);
-
-        await tester.enterText(
-            firstDurationWidgetFinder, changedFirstDurationStr);
-
-        // Tapping on DONE keyboard button or Enter key in order
-        // to apply changing the first duration which, since the first
-        // end date time checkbox is checked, will change the start date time
-        // time.
-        await tester.testTextInput.receiveAction(TextInputAction.done);
-        await tester.pumpAndSettle();
-
-        expect(find.text(changedFirstDurationStr), findsOneWidget);
-
-        DateTime newStartDateTime = firstEndDateTime.subtract(
-            DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
-        final String newStartDateTimeFrenchFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
-
-        expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
-
-        // Find the preferred duration selection IconButton by the icon.
-        final Finder firstSelButtonFinder = find.text('Sel').first;
-
-        // Tap the yellow heart IconButton.
-        await tester.tap(firstSelButtonFinder);
-
-        // Wait for the tap to be processed and for any animations to complete.
-        await tester.pumpAndSettle();
-
-        Finder secondEndDateTimeWidgetFinder = find.byType(EditableText).at(4);
-        final EditableText secondEndDateTimeEditableTextWidget =
-            tester.widget<EditableText>(secondEndDateTimeWidgetFinder);
-        final String currentSecondEndDateTimeStr =
-            secondEndDateTimeEditableTextWidget.controller.text;
-
-        // Tap the menu item (the menu item with the date time value
-        // of the second end date time widget is the second EditableText
-        // widget with this value, while index is 1 and not 0 !).
-        await tester.tap(find.text(currentSecondEndDateTimeStr).at(1));
-
-        // Wait for the tap to be processed and for any animations to complete.
-        await tester.pumpAndSettle();
-
-        firstDurationWidgetFinder = find.byType(EditableText).at(1);
-        final EditableText firstDurationEditableTextWidget =
-            tester.widget<EditableText>(firstDurationWidgetFinder);
-        final String firstDurationStr =
-            firstDurationEditableTextWidget.controller.text;
-
-        expect(firstDurationStr, '3:30');
-
-        // TODO: check icon type and color
-      });
-      testWidgets(
-          'Reset, select not rounding preferred duration, change duration without locking first end date time, select a start date time value',
-          (tester) async {
-        Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
-
-        String nowEnglishDateTimeFormatStr =
-            ScreenMixin.englishDateTimeFormat.format(DateTime.now());
-        String nowFrenchDateTimeFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
-        String testPath = kCircadianAppDataTestDir;
-
-        Map<String, dynamic> transferDataMapCircadian = {
-          "firstDurationIconData": Icons.add,
-          "firstDurationIconColor": Colors.green.shade200,
-          "firstDurationSign": 1,
-          "firstDurationTextColor": Colors.green.shade200,
-          "addDurStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "firstDurationStr": "00:00",
-          "firstStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "firstEndDateTimeStr": nowEnglishDateTimeFormatStr,
-          "firstEndDateTimeCheckbox": false,
-          "secondDurationIconData": Icons.add,
-          "secondDurationIconColor": Colors.red.shade200,
-          "secondDurationSign": 1,
-          "secondDurationTextColor": Colors.green.shade200,
-          "secondDurationStr": "00:00",
-          "secondStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "secondEndDateTimeStr": nowEnglishDateTimeFormatStr,
-          "secondEndDateTimeCheckbox": false,
-          "thirdDurationIconData": Icons.add,
-          "thirdDurationIconColor": Colors.green.shade200,
-          "thirdDurationSign": 1,
-          "thirdDurationTextColor": Colors.green.shade200,
-          "thirdDurationStr": "00:00",
-          "thirdStartDateTimeStr": nowEnglishDateTimeFormatStr,
-          "thirdEndDateTimeStr": nowEnglishDateTimeFormatStr,
-          "thirdEndDateTimeCheckbox": false,
-          "preferredDurationsItemsStr":
-              '{"good rounding":["12:00","3:30","10:30","false","true"], "good not round":["12:00","3:30","10:30","false","false"], "bad":["18:00","5:30","15:30","false","true"]}',
-          "calcSlDurNewDateTimeStr": nowFrenchDateTimeFormatStr,
-          "calcSlDurPreviousDateTimeStr": nowFrenchDateTimeFormatStr,
-          "calcSlDurBeforePreviousDateTimeStr": '14-07-2022 13:12',
-          "calcSlDurCurrSleepDurationStr": '12:36',
-          "calcSlDurCurrWakeUpDurationStr": '0:02',
-          "calcSlDurCurrTotalDurationStr": '12:38',
-          "calcSlDurCurrSleepDurationPercentStr": '99.74 %',
-          "calcSlDurCurrWakeUpDurationPercentStr": '0.26 %',
-          "calcSlDurCurrTotalDurationPercentStr": '100 %',
-          "calcSlDurCurrSleepPrevDayTotalPercentStr": '79.74 %',
-          "calcSlDurCurrWakeUpPrevDayTotalPercentStr": '1.26 %',
-          "calcSlDurCurrTotalPrevDayTotalPercentStr": '81 %',
-          "calcSlDurStatus": Status.wakeUp,
-          "calcSlDurSleepTimeStrHistory": [
-            '10-07-2022 00:58',
-            '05:35',
-            '04:00'
-          ],
-          "calcSlDurWakeUpTimeStrHistory": ['10-07-2022 05:58', '00:35'],
-          "alarmMedicDateTimeStr": '15-12-2022 06:00',
-          "dtDiffStartDateTimeStr": "2022-07-13 16:09",
-          "dtDiffEndDateTimeStr": "2022-07-14 16:09:42.390753",
-          "dtDiffDurationStr": "24:00",
-          "dtDiffAddTimeStr": "1:00",
-          "dtDiffFinalDurationStr": "25:00",
-          "dtDurationPercentStr": "70 %",
-          "dtDurationTotalPercentStr": "90 %",
-          "firstTimeStr": "00:10:00",
-          "secondTimeStr": "00:05:00",
-          "resultTimeStr": "00:15:00",
-          "resultPercentStr": "40 %",
-          "resultSecondPercentStr": "90 %",
-          "divideFirstBySecondCheckBox": false,
-        };
-
-        String jsonFileNameCircadian = 'circadian.json';
-        String transferDataJsonFilePathNameCircadian =
-            '$testPath${Platform.pathSeparator}$jsonFileNameCircadian';
-        TransferDataViewModel transferDataViewModelCircadian =
-            TransferDataViewModel(
-                transferDataJsonFilePathName:
-                    transferDataJsonFilePathNameCircadian);
-        transferDataViewModelCircadian.transferDataMap =
-            transferDataMapCircadian;
-        await transferDataViewModelCircadian.updateAndSaveTransferData();
-
-        // updating a second time updates the circadian undo file
-        await transferDataViewModelCircadian.updateAndSaveTransferData();
-
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: MainApp(
-                key: const Key('mainAppKey'),
-                transferDataViewModel: transferDataViewModelCircadian,
-              ),
-            ),
-          ),
-        );
-
-        await tester.pumpAndSettle();
-
-        // Clicking on the third icon in the navigation bar
-        await tester
-            .tap(find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
-        await tester.pumpAndSettle();
-
-        // clicking on Reset button
-        await tester.tap(find.byKey(const Key('resetButton')));
-        await tester.pumpAndSettle();
-
-        EditableDateTime startDateTimeEditableDateTimeWidget = tester
-            .widget(find.byKey(const Key('addDurToDateTimeStartDateTime')));
-
-          // Confirming the Add Duration To Date Time page Start Date Time
-          // is set to the current date and time.
-          String startDateTimeFrenchFormatStr =
-              startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-
-          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(startDateTimeFrenchFormatStr);
-          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
-              .parse(nowFrenchDateTimeFormatStr);
-          DateTime expectedStartDateTimeOneMinuteBefore =
-              expectedStartDateTime.subtract(const Duration(minutes: 1));
-          DateTime expectedStartDateTimeOneMinuteAfter =
-              expectedStartDateTime.add(const Duration(minutes: 1));
-
-          // Check if the actual time is within that range
-          expect(
-              actualStartDateTime.isAfter(expectedStartDateTimeOneMinuteBefore),
-              isTrue);
-          expect(
-              actualStartDateTime.isBefore(expectedStartDateTimeOneMinuteAfter),
-              isTrue);
-
-        // Find the preferred duration selection IconButton by the icon.
-        final Finder iconButtonFinder = find.byIcon(Icons.favorite);
-
-        // Tap the yellow heart IconButton.
-        await tester.tap(iconButtonFinder);
-
-        // Wait for the tap to be processed and for any animations to complete.
-        await tester.pumpAndSettle();
-
-        // Tap the menu item.
-        await tester.tap(find.text('good not round 12:00, 3:30, 10:30'));
-
-        // Wait for the tap to be processed and for any animations to complete.
-        await tester.pumpAndSettle();
-
         checkFirstSecondAndThirdEndDateTimeAndDuration(
           startDateTimeFrenchFormatStr: startDateTimeFrenchFormatStr,
           firstDurationStr: '12:00',
@@ -1909,6 +1524,8 @@ Future<void> main() async {
           firstDurationStr: changedFirstDurationStr,
           isRoundingSetForPreferredDuration: false,
         );
+
+        // TODO: add Sel button usage
       });
     },
   );
