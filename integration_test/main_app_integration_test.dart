@@ -630,9 +630,9 @@ Future<void> main() async {
           DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
               .parse(nowFrenchDateTimeFormatStr);
           DateTime expectedStartDateTimeOneMinuteBefore =
-              expectedStartDateTime.subtract(const Duration(minutes: 1));
+              expectedStartDateTime.subtract(const Duration(seconds: 61));
           DateTime expectedStartDateTimeOneMinuteAfter =
-              expectedStartDateTime.add(const Duration(minutes: 1));
+              expectedStartDateTime.add(const Duration(seconds: 61));
 
           // Check if the actual time is within that range
           expect(
@@ -828,9 +828,9 @@ Future<void> main() async {
         DateTime expectedStartDateTime =
             ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
-            expectedStartDateTime.subtract(const Duration(minutes: 1));
+            expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
-            expectedStartDateTime.add(const Duration(minutes: 1));
+            expectedStartDateTime.add(const Duration(seconds: 61));
 
         // Check if the actual time is within that range
         expect(
@@ -1029,9 +1029,9 @@ Future<void> main() async {
         DateTime expectedStartDateTime =
             ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
-            expectedStartDateTime.subtract(const Duration(minutes: 1));
+            expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
-            expectedStartDateTime.add(const Duration(minutes: 1));
+            expectedStartDateTime.add(const Duration(seconds: 61));
 
         // Check if the actual time is within that range
         expect(
@@ -1223,9 +1223,9 @@ Future<void> main() async {
         DateTime expectedStartDateTime =
             ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
-            expectedStartDateTime.subtract(const Duration(minutes: 1));
+            expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
-            expectedStartDateTime.add(const Duration(minutes: 1));
+            expectedStartDateTime.add(const Duration(seconds: 61));
 
         // Check if the actual time is within that range
         expect(
@@ -1458,9 +1458,9 @@ Future<void> main() async {
         DateTime expectedStartDateTime =
             ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
-            expectedStartDateTime.subtract(const Duration(minutes: 1));
+            expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
-            expectedStartDateTime.add(const Duration(minutes: 1));
+            expectedStartDateTime.add(const Duration(seconds: 61));
 
         // Check if the actual time is within that range
         expect(
