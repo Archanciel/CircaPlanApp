@@ -7,9 +7,9 @@ extension FormattedDayHourMinute on Duration {
   static final NumberFormat numberFormatTwoInt = NumberFormat('00');
 
   // ignore: non_constant_identifier_names
-  
+
   /// Returns the Duration formatted as HH:mm.
-  /// 
+  ///
   /// This method is added to the Duration class by the extension
   /// FormattedDayHourMinute class located in date_time_parser.dart.
   String HHmm() {
@@ -24,7 +24,7 @@ extension FormattedDayHourMinute on Duration {
   }
 
   /// Returns the Duration formatted as dd:HH:mm
-  /// 
+  ///
   /// This method is added to the Duration class by the extension
   /// FormattedDayHourMinute class located in date_time_parser.dart.
   String ddHHmm() {
@@ -51,6 +51,8 @@ class DateTimeParser {
   static final RegExp regExpAllHHMMTime = RegExp(r'([-]?\d+:\d{2})');
   static final RegExp regExpDDHHMMTime = RegExp(r'(^[-]?\d+:\d+:\d{2})');
   static final RegExp regExpDDHHAnyMMTime = RegExp(r'(^[-]?\d+:\d+:\d+)');
+  static final DateFormat englishDateTimeFormat =
+      DateFormat("yyyy-MM-dd HH:mm");
 
   /// Parses the passed ddMMDateTimeStr formatted as dd-mm hh:mm or d-m h:mm
   static List<String?> parseDDMMDateTime(String ddMMDateTimrStr) {
@@ -367,5 +369,14 @@ class DateTimeParser {
       return DateTime(dateTime.year, dateTime.month, dateTime.day,
           dateTime.hour, 0, 0, 0, 0);
     }
+  }
+
+  /// This method takes a DateTime object as input and returns a new DateTime
+  /// object with the same year, month, day, hour, and minute as the input,
+  /// but with seconds and milliseconds set to zero. Essentially, it rounds
+  /// the input DateTime object down to the nearest minute.
+  static DateTime truncateDateTimeToMinute(DateTime dateTime) {
+    return DateTimeParser.englishDateTimeFormat
+        .parse(DateTimeParser.englishDateTimeFormat.format(dateTime));
   }
 }
