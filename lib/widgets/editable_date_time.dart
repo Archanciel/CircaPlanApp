@@ -279,7 +279,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     // prevents displaying copy paste menu !
                     contextMenuBuilder: null,
                   ),
-                  onTap: () {
+                  onDoubleTap: () {
                     // initializing the date and time dialogs with the
                     // currently displayed date time value ...
                     String frenchFormatDateTimeStr =
@@ -293,7 +293,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     // displaying the date and time dialogs ...
                     _selectDatePickerDateTime(context);
                   },
-                  onDoubleTap: () async {
+                  onTap: () async {
                     await copyToClipboard(
                       context: context,
                       controller: widget.dateTimePickerController,
