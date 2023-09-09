@@ -36,7 +36,6 @@ class Utility {
     try {
       return file.renameSync(newPath);
     } catch (e) {
-      print('renameFile($filePathNameStr, $newFileNameStr) $e');
       return null;
     }
   }
