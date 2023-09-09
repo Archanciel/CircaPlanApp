@@ -5,7 +5,7 @@ void main() {
     "09-09-2023 17:17",
     "0:22",
     "0:08",
-    "0:10",
+    "0:15",
   ];
 
   List<String> wakeTimeHistoryLst = [
@@ -15,12 +15,16 @@ void main() {
   ];
 
   List<String> sleepTimeDateTime = [
-    // adding the first sleep date time to the sleepTimeDateTime
+    // adding the first sleep date time to the sleepDateTime
     // list
     "${sleepTimeHistoryLst[0]}, ${sleepTimeHistoryLst[1]}"
   ];
-  
-  List<String> wakeTimeDateTime = [];
+
+  List<String> wakeTimeDateTime = [
+    // adding the first wake date time to the wakeDateTime
+    // list
+    "${wakeTimeHistoryLst[0]}, ${wakeTimeHistoryLst[1]}"
+  ];
 
   for (int i = 1; i < sleepTimeHistoryLst.length - 1; i++) {
     if (i == 1) {
@@ -41,18 +45,29 @@ void main() {
       sleepTimeDateTime.add(
           "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${sleepTimeHistoryLst[i + 1]}");
     }
-
-    // DateTime wakeTime = sleepTime
-    //     .subtract(Duration(minutes: _getMinutes(wakeTimeHistoryLst[i])));
-
-    // sleepTimeDateTime.add(DateFormat('dd-MM-yyyy HH:mm').format(sleepTime));
-    // wakeTimeDateTime.add(DateFormat('dd-MM-yyyy HH:mm').format(wakeTime));
   }
 
+  print("Sleep date time list");
   for (String sleepDateTimeStr in sleepTimeDateTime) {
     print(sleepDateTimeStr);
   }
-  // print('wakeTimeDateTime: $wakeTimeDateTime');
+
+  int i = 2;
+
+  for (String sleepDateTimeStr in sleepTimeDateTime.sublist(1)) {
+    if (i < wakeTimeHistoryLst.length) {
+      DateTime wakeDateTime = DateFormat('dd-MM-yyyy HH:mm')
+          .parse(sleepDateTimeStr.split(',')[0])
+          .add(Duration(minutes: _getMinutes(sleepDateTimeStr.split(',')[1])));
+      wakeTimeDateTime.add(
+          "${DateFormat('dd-MM-yyyy HH:mm').format(wakeDateTime)}, ${wakeTimeHistoryLst[i++]}");
+    }
+  }
+
+  print("\nWake date time list");
+  for (String wakeDateTimeStr in wakeTimeDateTime) {
+    print(wakeDateTimeStr);
+  }
 }
 
 int _getMinutes(String timeStr) {
