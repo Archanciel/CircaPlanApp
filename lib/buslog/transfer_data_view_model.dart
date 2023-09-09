@@ -323,9 +323,9 @@ class TransferDataViewModel {
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr =
         _transferDataMap!['dtDiffDurationStr'];
     dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr =
-        _transferDataMap!['dtDiffAddTimeStr'];
+        _transferDataMap!['dtDiffAddTimeStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
-        _transferDataMap!['dtDiffFinalDurationStr'];
+        _transferDataMap!['dtDiffFinalDurationStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
         _transferDataMap!['dtDurationPercentStr'];
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr =
