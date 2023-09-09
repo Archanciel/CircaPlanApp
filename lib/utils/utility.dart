@@ -31,7 +31,8 @@ class Utility {
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
     // adding a try/catch block fixes failure of integration tests
-    
+    // which is run on Windows 10. This failure doesn't happen on
+    // Android smartphone or Android emulator.
     try {
       return file.renameSync(newPath);
     } catch (e) {
