@@ -2,16 +2,18 @@ import 'package:intl/intl.dart';
 
 void main() {
   List<String> sleepTimeHistoryLst = [
-    "09-09-2023 17:17",
-    "0:22",
-    "0:08",
-    "0:15",
+    "09-09-2023 02:57",
+    "3:48",
+    "4:02",
+    "5:50"
   ];
-
   List<String> wakeTimeHistoryLst = [
-    "09-09-2023 17:39",
-    "0:10",
-    "0:12",
+    "09-09-2023 06:45",
+    "0:38",
+    "0:40",
+    // "0:19" // in case the Sleep Duration is finished not in
+              // wake but in sleep mode, which doesn't normally
+              // happens !
   ];
 
   List<String> sleepTimeDateTime = [
