@@ -11,11 +11,16 @@ class HistoryComputerService {
       "${sleepTimeHistoryLst[0]}, ${sleepTimeHistoryLst[1]}"
     ];
 
-    List<String> wakeTimeDateTime = [
-      // adding the first wake date time to the wakeDateTime
-      // list
-      "${wakeTimeHistoryLst[0]}, ${wakeTimeHistoryLst[1]}"
-    ];
+    List<String> wakeTimeDateTime;
+    if (wakeTimeHistoryLst.isNotEmpty) {
+      wakeTimeDateTime = [
+        // adding the first wake date time to the wakeDateTime
+        // list
+        "${wakeTimeHistoryLst[0]}, ${wakeTimeHistoryLst[1]}"
+      ];
+    } else {
+      wakeTimeDateTime = [];
+    }
 
     for (int i = 1; i < sleepTimeHistoryLst.length - 1; i++) {
       if (i == 1) {

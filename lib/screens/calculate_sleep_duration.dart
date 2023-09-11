@@ -10,6 +10,7 @@ import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
+import '../services/history_computer_service.dart';
 import '../utils/date_time_computer.dart';
 import '../constants.dart';
 import '../widgets/circadian_flutter_toast.dart';
@@ -1085,12 +1086,107 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         _currentTotalPrevDayTotalPercentController,
                     prevDayTotalController: _prevDayEmptyTotalController,
                   ),
-                  Tooltip(
-                    message: 'Simple click copies HH:mm to clipboard',
-                    child: Text(
-                      'Sleep and wake up history',
-                      style: labelTextStyle,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Tooltip(
+                        message: 'Simple click copies HH:mm to clipboard',
+                        child: Text(
+                          'Sleep and wake up history',
+                          style: labelTextStyle,
+                        ),
+                      ),
+                      IconButton(
+                        constraints: const BoxConstraints(
+                          minHeight: 0,
+                          minWidth: 0,
+                        ),
+                        padding: const EdgeInsets.all(0),
+                        onPressed: () {
+                          List<String>? sleepTimeHistoryLst =
+                              _transferDataMap['calcSlDurSleepTimeStrHistory'];
+                          List<String> wakeTimeHistoryLst =
+                              _transferDataMap['calcSlDurWakeUpTimeStrHistory'] ??= [];
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              if (sleepTimeHistoryLst == null || sleepTimeHistoryLst.isEmpty) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content: Text(
+                                      'Sleep and wake up history are empty.'),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      child: Text('Close'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }
+
+                              // Ici, je suppose que computeSleepWakeHi
+                              HistoryComputerService historyComputerService =
+                                  HistoryComputerService();
+                              Map<String, List<String>> history =
+                                  historyComputerService
+                                      .computeSleepWakeHistoryLst(
+                                sleepTimeHistoryLst: sleepTimeHistoryLst,
+                                wakeTimeHistoryLst: wakeTimeHistoryLst,
+                              );
+                              List<String> sleepHistory =
+                                  history['sleepTimeDateTime']!;
+                              List<String> wakeHistory =
+                                  history['wakeTimeDateTime']!;
+
+                              return AlertDialog(
+                                title: Text('Sleep and Wake History'),
+                                content: Container(
+                                  width: double.maxFinite,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: sleepHistory.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        padding: EdgeInsets.all(0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                                'Sleep: ${sleepHistory[index]}'),
+                                            if (index < wakeHistory.length)
+                                              Text(
+                                                  'Wake: ${wakeHistory[index]}'),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    child: Text('Close'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        icon: Icon(
+                          Icons.history,
+                          // color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                          color:
+                              ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                          size: 27,
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
