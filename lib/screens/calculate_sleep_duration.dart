@@ -1157,10 +1157,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 );
                               }
 
-                              HistoryComputerService historyComputerService =
-                                  HistoryComputerService();
                               Map<String, List<String>> history =
-                                  historyComputerService
+                                  HistoryComputerService
                                       .computeSleepWakeHistoryLst(
                                 sleepTimeHistoryLst: sleepTimeHistoryLst,
                                 wakeTimeHistoryLst: wakeTimeHistoryLst,

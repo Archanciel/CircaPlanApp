@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class HistoryComputerService {
-  Map<String, List<String>> computeSleepWakeHistoryLst({
+  static Map<String, List<String>> computeSleepWakeHistoryLst({
     required List<String> sleepTimeHistoryLst,
     required List<String> wakeTimeHistoryLst,
   }) {
@@ -74,7 +74,7 @@ class HistoryComputerService {
     return sleepWakeHistoryLstMap;
   }
 
-  int _getMinutes(String timeStr) {
+  static int _getMinutes(String timeStr) {
     List<String> parts = timeStr.split(':');
     if (parts.length == 2) {
       return int.parse(parts[0]) * 60 + int.parse(parts[1]);
@@ -82,7 +82,7 @@ class HistoryComputerService {
     return int.parse(timeStr);
   }
 
-  String _formatDuration(Duration d) {
+  static String _formatDuration(Duration d) {
     String twoDigits(int n) {
       if (n >= 10) return "$n";
       return "0$n";
@@ -110,10 +110,8 @@ void main() {
     // happens !
   ];
 
-  HistoryComputerService historyComputerService = HistoryComputerService();
-
   Map<String, List<String>> sleepWakeHistoryLstMap =
-      historyComputerService.computeSleepWakeHistoryLst(
+      HistoryComputerService.computeSleepWakeHistoryLst(
           sleepTimeHistoryLst: sleepTimeHistoryLst,
           wakeTimeHistoryLst: wakeTimeHistoryLst);
 
