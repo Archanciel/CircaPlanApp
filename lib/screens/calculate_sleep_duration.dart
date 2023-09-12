@@ -1112,12 +1112,12 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             builder: (BuildContext context) {
                               if (sleepTimeHistoryLst == null || sleepTimeHistoryLst.isEmpty) {
                                 return AlertDialog(
-                                  title: Text('Error'),
-                                  content: Text(
+                                  title: const Text('Error'),
+                                  content: const Text(
                                       'Sleep and wake up history are empty.'),
                                   actions: <Widget>[
                                     ElevatedButton(
-                                      child: Text('Close'),
+                                      child: const Text('Close'),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -1141,8 +1141,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                   history['wakeTimeDateTime']!;
 
                               return AlertDialog(
-                                title: Text('Sleep and Wake History'),
-                                content: Container(
+                                title: const Text('Sleep and Wake History'),
+                                content: SizedBox(
                                   width: double.maxFinite,
                                   child: ListView.builder(
                                     shrinkWrap: true,
@@ -1150,7 +1150,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Container(
-                                        padding: EdgeInsets.all(0),
+                                        padding: const EdgeInsets.all(0),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -1168,7 +1168,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 ),
                                 actions: <Widget>[
                                   ElevatedButton(
-                                    child: Text('Close'),
+                                    child: const Text('Close'),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
