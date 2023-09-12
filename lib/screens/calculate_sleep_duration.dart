@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/services/wifi_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -703,7 +704,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _prevDayTotalController.text = _prevDayTotalWakeUpStr;
         _prevDayEmptyTotalController = TextEditingController(text: '');
 
-        _status = Status.sleep;
+        _setStatusToSleep();
       } else {
         DateTime? previousDateTime;
 
@@ -754,7 +755,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeController.text = _previousDateTimeStr;
         _lastFrenchFormatDateTimeStr = _newFrenchFormatDateTimeStr;
         _lastDateTimeController.text = _lastFrenchFormatDateTimeStr;
-        _status = Status.sleep;
+        _setStatusToSleep();
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       }
@@ -806,6 +807,35 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _updateTransferDataMap();
     setState(() {});
+  }
+
+  /// Private method called when clicking on 'Add' button
+  /// located at right of current sleep duration TextField.
+  /// 
+  /// In case the smartphone wifi is on, a warning dialog
+  /// is displayed since wifi causes difficulty to fall
+  /// asleep
+  Future<void> _setStatusToSleep() async {
+    bool isWifiOn = await WifiService.isWifiEnabled();
+
+    if (isWifiOn) {
+      String okButtonStr = 'Ok';
+      Widget okButton = TextButton(
+        child: Text(okButtonStr),
+        onPressed: () => Navigator.pop(context),
+      );
+
+      showAlertDialog(
+        buttonList: [okButton],
+        dialogTitle: 'WARNING - WIFI is on !!!!',
+        dialogContent: 'Disable WIFI in order to avoid difficulty to fall asleep !',
+        okValueStr: okButtonStr,
+        okFunction: () {},
+        context: context,
+      );
+    }
+
+    _status = Status.sleep;
   }
 
   bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
@@ -1105,12 +1135,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         onPressed: () {
                           List<String>? sleepTimeHistoryLst =
                               _transferDataMap['calcSlDurSleepTimeStrHistory'];
-                          List<String> wakeTimeHistoryLst =
-                              _transferDataMap['calcSlDurWakeUpTimeStrHistory'] ??= [];
+                          List<String> wakeTimeHistoryLst = _transferDataMap[
+                              'calcSlDurWakeUpTimeStrHistory'] ??= [];
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              if (sleepTimeHistoryLst == null || sleepTimeHistoryLst.isEmpty) {
+                              if (sleepTimeHistoryLst == null ||
+                                  sleepTimeHistoryLst.isEmpty) {
                                 return AlertDialog(
                                   title: const Text('Error'),
                                   content: const Text(
@@ -1126,7 +1157,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 );
                               }
 
-                              // Ici, je suppose que computeSleepWakeHi
                               HistoryComputerService historyComputerService =
                                   HistoryComputerService();
                               Map<String, List<String>> history =

@@ -236,13 +236,14 @@ mixin ScreenMixin {
     }
   }
 
-  void showAlertDialog(
-      {required List<Widget> buttonList,
-      required String dialogTitle,
-      String dialogContent = '',
-      required String okValueStr,
-      required Function okFunction,
-      required BuildContext context}) {
+  void showAlertDialog({
+    required List<Widget> buttonList,
+    required String dialogTitle,
+    String dialogContent = '',
+    required String okValueStr,
+    required Function okFunction,
+    required BuildContext context,
+  }) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -271,8 +272,7 @@ mixin ScreenMixin {
       //                BuildContext. This argument is not always
       //                required, reason why it is positiponal
       //                optional !
-    )
-        handleSelectedItemFunction,
+    ) handleSelectedItemFunction,
   }) {
     List<String> selectableStrItemLst = selMenuDateTimeItemData.itemDataStrLst;
 
@@ -492,8 +492,7 @@ mixin ScreenMixin {
     required void Function(
       BuildContext context,
       String dialogTimeStr,
-    )
-        handleDataChangeFunction, // the unique difference with
+    ) handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
     ToastGravity position = ToastGravity.CENTER,

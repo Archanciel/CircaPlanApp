@@ -19,7 +19,7 @@ enum ClipboardLastAction {
 }
 
 const String kApplicationName = "Circadian Calculator";
-const String kApplicationVersion = '0.4.1';
+const String kApplicationVersion = '0.4.2';
 const String kCircadianAppDir = '/storage/emulated/0/Download/CircadianData';
 const String kCircadianAppDirWindows =
     "C:\\Users\\Jean-Pierre\\Downloads\\Circadian";
