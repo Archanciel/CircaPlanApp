@@ -339,6 +339,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       return;
     }
 
+    // extracting the duration values from the selectedDurationItem
     RegExp exp = RegExp(r'(\d+:\d+)');
     List<String> durationStrLst =
         exp.allMatches(selectedDurationItem).map((m) => m[0]!).toList();
