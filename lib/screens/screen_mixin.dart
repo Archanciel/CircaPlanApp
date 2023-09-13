@@ -560,7 +560,7 @@ mixin ScreenMixin {
     );
   }
 
-  /// Mmethod returning the Save as file name string.
+  /// Method returning the Save as file name string.
   String getSaveAsFileName({
     required Map<String, dynamic> transferDataMap,
     required TransferDataViewModel transferDataViewModel,

@@ -269,6 +269,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   @override
+  /// Called each time the CalculateSleepDuration screen
+  /// is selected or the app showing the 
+  /// CalculateSleepDuration screen resumes.
   void initState() {
     super.initState();
 
@@ -277,7 +280,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // the current screen is displayed and the app status is resumed.
     WidgetsBinding.instance.addObserver(this);
 
-    _handleMedics();
+    _handleMedicAlarm();
 
     // The reference to the stateful widget State instance stored in
     // the transfer data map is used in the
@@ -295,16 +298,20 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (state == AppLifecycleState.resumed) {
       // the case if the screen is active and the app is reselected
-      _handleMedics();
+      _handleMedicAlarm();
     }
   }
 
-  /// Called each time the CalculateSleepDuration screen is selected or the
-  /// app showing the CalculateSleepDuration screen resumes.
-  void _handleMedics() {
+  /// Called each time the CalculateSleepDuration screen
+  /// is selected or the app showing the
+  /// CalculateSleepDuration screen resumes.
+  void _handleMedicAlarm() {
     String? medicFrenchDateTimeStr = _transferDataMap['alarmMedicDateTimeStr'];
 
-    if (_isAlarmToDisplay(medicFrenchDateTimeStr)) {
+    // in case true is returned, the _medicAlarmController.text was
+    // set to the alarm message and so setState() is called to display
+    // the alarm message.
+    if (_isMedicAlarmToDisplay(medicFrenchDateTimeStr)) {
       setState(() {}); // not working on S8, i.e alarm medic code
       //                  not applied, I don't know why ! But once
       //                  I click on Now button, the alarm is displayed.
@@ -314,22 +321,24 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
-  bool _isAlarmToDisplay(String? medicFrenchDateTimeStr) {
+  /// Called each time the CalculateSleepDuration screen is selected or the
+  /// app showing the CalculateSleepDuration screen resumes.
+  /// 
+  /// Returns true if the medic alarm is to be displayed.
+  bool _isMedicAlarmToDisplay(String? medicFrenchDateTimeStr) {
     if (medicFrenchDateTimeStr == null || medicFrenchDateTimeStr == '') {
       // the case if the transferDataMap does not contain
       // the 'alarmMedicDateTimeStr' entry.
       return false;
     }
 
-    String savedJsonFileName = getSaveAsFileName(
-      transferDataMap: _transferDataMap,
-      transferDataViewModel: _transferDataViewModel,
-    );
+    // if true, this means either we loaded a previous day
+    // json file or we are visualising the current day
+    // json file and so displaying the alarm doesn't make
+    // sense. 
+    bool wereCurrentDataSaved = wasFileWithCurrenrNewDateTimeSaved();
 
-    String transferDataJsonFilePathName =
-        '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
-
-    if (Utility.fileExist(transferDataJsonFilePathName)) {
+    if (wereCurrentDataSaved) {
       // the case if loading the previous day json file at
       // a time which would cause the alarm to be displayed,
       // for example before 10:00 if the alarm time is 6:00.
@@ -352,15 +361,30 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     DateTime now = DateTime.now();
 
-    bool result = now.isAfter(alarmDateTimeMinusOneHour) &&
+    bool isMedicAlarmToDisplay = now.isAfter(alarmDateTimeMinusOneHour) &&
         now.isBefore(alarmDateTimePlusFourHour);
 
-    if (result) {
+    if (isMedicAlarmToDisplay) {
       _medicAlarmController.text =
           "MEDICS AT ${medicFrenchDateTimeStr.split(' ').last} ?";
     }
 
-    return result;
+    return isMedicAlarmToDisplay;
+  }
+
+  /// Returns true if the file with the current new
+  /// date time was saved.
+  bool wasFileWithCurrenrNewDateTimeSaved() {
+    String savedJsonFileName = getSaveAsFileName(
+      transferDataMap: _transferDataMap,
+      transferDataViewModel: _transferDataViewModel,
+    );
+    
+    String transferDataJsonFilePathName =
+        '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
+    
+    bool isFileExisting = File(transferDataJsonFilePathName).existsSync();
+    return isFileExisting;
   }
 
   void _updateWidgets({bool isAfterLoading = false}) {
@@ -1252,7 +1276,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isAlarmToDisplay(_transferDataMap['alarmMedicDateTimeStr'])
+            _isMedicAlarmToDisplay(_transferDataMap['alarmMedicDateTimeStr'])
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
