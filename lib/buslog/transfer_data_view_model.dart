@@ -319,17 +319,17 @@ class TransferDataViewModel {
     dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr =
         dateTimeDifferenceStartDateTimeStr;
     dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr =
-        _transferDataMap!['dtDiffEndDateTimeStr'];
+        _transferDataMap!['dtDiffEndDateTimeStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr =
-        _transferDataMap!['dtDiffDurationStr'];
+        _transferDataMap!['dtDiffDurationStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr =
         _transferDataMap!['dtDiffAddTimeStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
         _transferDataMap!['dtDiffFinalDurationStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
-        _transferDataMap!['dtDurationPercentStr'];
+        _transferDataMap!['dtDurationPercentStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr =
-        _transferDataMap!['dtDurationTotalPercentStr'];
+        _transferDataMap!['dtDurationTotalPercentStr'] ?? '';
   }
 
   void updateTimeCalculatorData() {
