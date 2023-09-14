@@ -699,6 +699,9 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     );
   }
 
+  /// The user clicked on the Reset button on the screen
+  /// whose instance is stored in the ScreenNavigTransData
+  /// transferDataMap.
   void _resetScreen() {
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']
         .resetScreen();
