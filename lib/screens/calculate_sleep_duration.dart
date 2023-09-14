@@ -269,8 +269,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   }
 
   @override
+
   /// Called each time the CalculateSleepDuration screen
-  /// is selected or the app showing the 
+  /// is selected or the app showing the
   /// CalculateSleepDuration screen resumes.
   void initState() {
     super.initState();
@@ -323,7 +324,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Called each time the CalculateSleepDuration screen is selected or the
   /// app showing the CalculateSleepDuration screen resumes.
-  /// 
+  ///
   /// Returns true if the medic alarm is to be displayed.
   bool _isMedicAlarmToDisplay(String? medicFrenchDateTimeStr) {
     if (medicFrenchDateTimeStr == null || medicFrenchDateTimeStr == '') {
@@ -335,7 +336,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // if true, this means either we loaded a previous day
     // json file or we are visualising the current day
     // json file and so displaying the alarm doesn't make
-    // sense. 
+    // sense.
     bool wereCurrentDataSaved = wasFileWithCurrenrNewDateTimeSaved();
 
     if (wereCurrentDataSaved) {
@@ -379,10 +380,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       transferDataMap: _transferDataMap,
       transferDataViewModel: _transferDataViewModel,
     );
-    
+
     String transferDataJsonFilePathName =
         '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
-    
+
     bool isFileExisting = File(transferDataJsonFilePathName).existsSync();
     return isFileExisting;
   }
@@ -665,7 +666,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Private method called when clicking on 'Add' button located at right of
   /// new date time TextField.
-  void _handleAddNewDateTimeButton(BuildContext context) {
+  Future<void> _handleAddNewDateTimeButton(BuildContext context) async {
     DateTime? newDateTime;
 
     _newFrenchFormatDateTimeStr = _newDateTimeController.text;
@@ -728,7 +729,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _prevDayTotalController.text = _prevDayTotalWakeUpStr;
         _prevDayEmptyTotalController = TextEditingController(text: '');
 
-        _setStatusToSleep();
+        await _setStatusToSleep();
       } else {
         DateTime? previousDateTime;
 
@@ -779,7 +780,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeController.text = _previousDateTimeStr;
         _lastFrenchFormatDateTimeStr = _newFrenchFormatDateTimeStr;
         _lastDateTimeController.text = _lastFrenchFormatDateTimeStr;
-        _setStatusToSleep();
+        await _setStatusToSleep();
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       }
@@ -835,7 +836,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Private method called when clicking on 'Add' button
   /// located at right of current sleep duration TextField.
-  /// 
+  ///
   /// In case the smartphone wifi is on, a warning dialog
   /// is displayed since wifi causes difficulty to fall
   /// asleep
@@ -852,7 +853,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       showAlertDialog(
         buttonList: [okButton],
         dialogTitle: 'WARNING - WIFI is on !!!!',
-        dialogContent: 'Disable WIFI in order to avoid difficulty to fall asleep !',
+        dialogContent:
+            'Disable WIFI in order to avoid difficulty to fall asleep !',
         okValueStr: okButtonStr,
         okFunction: () {},
         context: context,
@@ -1487,7 +1489,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
-                        onPressed: () => _handleAddNewDateTimeButton(context),
+                        onPressed: () async {
+                          await _handleAddNewDateTimeButton(context);
+                        },
                         child: const Text(
                           'Add',
                           style: TextStyle(
