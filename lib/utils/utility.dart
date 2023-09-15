@@ -373,8 +373,8 @@ class Utility {
   /// If [targetFileName] is not provided, the moved file will
   /// have the same name than the source file name.
   ///
-  /// Returns true if the file has been moved, false
-  /// otherwise in case the moved file already exist in
+  /// Returns true if the file has been copied, false
+  /// otherwise in case the copied file already exist in
   /// the target dir.
   static bool copyFileToDirectorySync({
     required String sourceFilePathName,
