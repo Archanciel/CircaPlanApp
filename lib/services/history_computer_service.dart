@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+/// Provides methods for computing sleep and wake-up history
+/// displayed in an AlertDialog.
 class HistoryComputerService {
   static Map<String, List<String>> computeSleepWakeHistoryLst({
     required List<String> sleepTimeHistoryLst,
