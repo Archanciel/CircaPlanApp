@@ -297,7 +297,7 @@ Future<void> main() async {
     'Switch to other pages testing',
     () {
       testWidgets(
-        'Switch to Wake Up Duration page.',
+        'Switch to Wake-Up Duration page.',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
           Utility.copyFileToDirectorySync(
@@ -496,7 +496,7 @@ Future<void> main() async {
               .tap(find.byKey(const Key('navBarWakeUpDurationPageTwo')));
           await tester.pumpAndSettle();
 
-          // Confirming that the Wake Up Duration page is displayed
+          // Confirming that the Wake-Up Duration page is displayed
           EditableDateTime startDateTimeEditableDateTimeWidget = tester
               .widget(find.byKey(const Key('wakeUpDurationStartDateTimeKey')));
           expect(
@@ -1671,7 +1671,7 @@ Future<void> main() async {
           Map<String, dynamic> circadianMap =
               await readJsonFile(transferDataJsonFilePathNameCircadian);
 
-          // checking that the status is Wake up after ressetting
+          // checking that the status is Wake-up after ressetting
           // the Sleep Duration screen
           expect(circadianMap['calculateSleepDurationData']['status'], 0);
 

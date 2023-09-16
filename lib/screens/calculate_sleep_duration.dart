@@ -147,7 +147,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     if (wakeUpTimeHistoryLst != null) {
       if (wakeUpTimeHistoryLst.length == 1) {
         // the case if the add siesta button with negative value was pressed
-        // before adding any wake up time
+        // before adding any wake-up time
       } else if (wakeUpTimeHistoryLst.length >= 2) {
         wakeUpTimeHistoryStr =
             'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}: ${wakeUpTimeHistoryLst.sublist(1).join(', ')}';
@@ -610,7 +610,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Private method called when 'Reset' is confirmed.
   void _applyReset(BuildContext _, String __) {
     // before resetting the current New date time string, its
-    // value, which is the last wake up time, is copied to the
+    // value, which is the last wake-up time, is copied to the
     // 2nd screen start date time map entry.
     //
     // Since when adding a date time for the first time also sets
@@ -742,8 +742,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         if (_wakeUpTimeStrHistory.isEmpty ||
             !isDateTimeStrValid(_wakeUpTimeStrHistory.first)) {
-          // here, registering the first wake up time duration and ensuring
-          // that the wake up time history list first item is the date time
+          // here, registering the first wake-up time duration and ensuring
+          // that the wake-up time history list first item is the date time
           // when I waked up, i.e the _previousDateTimeStr
           _addFirstDateTimeStrToHistorylst(
               _wakeUpTimeStrHistory, _lastFrenchFormatDateTimeStr);
@@ -975,7 +975,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   String _statusStr(Status enumStatus) {
     if (enumStatus == Status.wakeUp) {
-      return 'Wake Up';
+      return 'Wake-Up';
     } else if (enumStatus == Status.sleep) {
       return 'Sleep';
     } else {
@@ -1123,7 +1123,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     position: ToastGravity.TOP,
                   ),
                   ResultDuration(
-                    resultDurationTitle: 'Wake up duration',
+                    resultDurationTitle: 'Wake-up duration',
                     transferDataMap: _transferDataMap,
                     resultDurationController: _currentWakeUpDurationController,
                     resultDurationPercentController:
@@ -1148,7 +1148,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                       Tooltip(
                         message: 'Simple click copies HH:mm to clipboard',
                         child: Text(
-                          'Sleep and wake up history',
+                          'Sleep and wake-up history',
                           style: labelTextStyle,
                         ),
                       ),
@@ -1171,7 +1171,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                 return AlertDialog(
                                   title: const Text('Error'),
                                   content: const Text(
-                                      'Sleep and wake up history are empty.'),
+                                      'Sleep and wake-up history are empty.'),
                                   actions: <Widget>[
                                     ElevatedButton(
                                       child: const Text('Close'),

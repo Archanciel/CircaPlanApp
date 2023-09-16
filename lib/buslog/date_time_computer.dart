@@ -1,10 +1,9 @@
 import 'package:intl/intl.dart';
 
-
 class DateTimeComputer {
   static final NumberFormat _minuteFormatter = NumberFormat('00');
 
-  /// According to the passed wake up date/time string and the
+  /// According to the passed wake-up date/time string and the
   /// passed awakening hour:minute duration, returns the
   /// DateTime object which is the addition of the two passed
   /// parameters.

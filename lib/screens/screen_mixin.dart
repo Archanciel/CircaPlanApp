@@ -51,7 +51,7 @@ mixin ScreenMixin {
   static const double APP_VERTICAL_TOP_MARGIN_PROPORTION = 0.03;
   static const String APP_DURATION_TO_DATE_TIME_TITLE =
       'Add Duration To Date Time';
-  static const String DATE_TIME_DIFF_DURATION_TITLE = 'Wake Up Duration';
+  static const String DATE_TIME_DIFF_DURATION_TITLE = 'Wake-Up Duration';
   static const String CALCULATR_SLEEP_DURATION_TITLE = 'Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
   static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
