@@ -1,5 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 
+/// Checks if the wifi connection is enabled. In this case, when
+/// the user starts sleeping, a warning will be displayed since
+/// wifi perturbates sleep quality.
 class WifiService {
   static Future<bool> isWifiEnabled() async {
     ConnectivityResult connectivityResult;
