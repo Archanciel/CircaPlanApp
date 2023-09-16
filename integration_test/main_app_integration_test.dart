@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -1664,22 +1666,14 @@ Future<void> main() async {
           await tester.tap(find.text('Ok').first);
           await tester.pumpAndSettle();
 
-          TransferDataViewModel reloadedTransferDataViewModelCircadian =
-              TransferDataViewModel(
-                  transferDataJsonFilePathName:
-                      transferDataJsonFilePathNameCircadian);
+          // loading the circadian.json file after clicking
+          // on Reset in the Sleep Duration screen
+          Map<String, dynamic> circadianMap =
+              await readJsonFile(transferDataJsonFilePathNameCircadian);
 
-          // reloading the circadian.json file after ressetting
-          // the Sleep Duration screen
-          reloadedTransferDataViewModelCircadian.loadTransferData();
-
-          int i = 0;
           // checking that the status is Wake up after ressetting
           // the Sleep Duration screen
-          expect(
-              reloadedTransferDataViewModelCircadian
-                  .getTransferDataMap()!['calcSlDurStatus'],
-              Status.wakeUp);
+          expect(circadianMap['calculateSleepDurationData']['status'], 0);
 
           // clicking on Add date time button
           await tester.tap(find.byKey(const Key('addNewDateTimeButton')));
@@ -1697,15 +1691,13 @@ Future<void> main() async {
           // reloading the circadian.json file after first
           // New date time addition in the Sleep Duration
           // screen
-          reloadedTransferDataViewModelCircadian.loadTransferData();
+          circadianMap =
+              await readJsonFile(transferDataJsonFilePathNameCircadian);
 
           // checking that the status is Sleep after first
           // New date time addition in the Sleep Duration
           // screen
-          expect(
-              reloadedTransferDataViewModelCircadian
-                  .getTransferDataMap()!['calcSlDurStatus'],
-              Status.sleep);
+          expect(circadianMap['calculateSleepDurationData']['status'], 1);
         },
       );
     },
@@ -1770,4 +1762,18 @@ Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
     'firstDurationStr': firstDurationStr,
     'firstEndDateTime': firstEndDateTime,
   };
+}
+
+Future<Map<String, dynamic>> readJsonFile(String filePath) async {
+  try {
+    final file = File(filePath);
+    final contents = await file.readAsString();
+    final data = json.decode(contents) as Map<String, dynamic>;
+
+    return data;
+  } catch (e) {
+    print('Error reading JSON file: $e');
+
+    return {};
+  }
 }
