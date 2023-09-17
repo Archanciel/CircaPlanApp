@@ -783,9 +783,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        double settingsFieldWidth = 235;
+        double settingsFieldWidth = 230;
         return AlertDialog(
-          title: const Text('Set medics time'),
+          title: Text(
+            'Set medic time',
+            style: alertDialogTextStyle,
+          ),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -86,6 +86,9 @@ mixin ScreenMixin {
     fontSize: 14,
     fontWeight: FontWeight.bold,
   );
+  final alertDialogTextStyle = const TextStyle(
+    fontSize: 19,
+  );
 
   static void setAppVerticalTopMargin(double screenHeight) {
     app_computed_vertical_top_margin =

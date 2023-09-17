@@ -1217,7 +1217,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                   history['wakeTimeDateTime']!;
 
                               return AlertDialog(
-                                title: const Text('Sleep and Wake-Up History'),
+                                title: Text(
+                                  'Sleep and Wake-Up History',
+                                  style: alertDialogTextStyle,
+                                ),
                                 content: SizedBox(
                                   width: double.maxFinite,
                                   child: ListView.builder(
