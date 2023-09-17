@@ -131,7 +131,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     String sleepTimeHistoryStr = '';
 
-    if (sleepTimeHistoryLst != null) {
+    if (sleepTimeHistoryLst != null && 
+      sleepTimeHistoryLst.isNotEmpty) { // added this condition to
+                                        // avoid integr tests exceptions
       String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
 
       if (!isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
