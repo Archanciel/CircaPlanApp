@@ -8,27 +8,31 @@ class HistoryComputerService {
     required List<String> wakeTimeHistoryLst,
   }) {
     List<String> sleepTimeDateTime = [];
+
     if (sleepTimeHistoryLst.length >= 2) {
+      // adding the first sleep date time and first sleep
+      // date time duration to the sleepDateTime list
       sleepTimeDateTime = [
-        // adding the first sleep date time to the sleepDateTime
-        // list
         "${sleepTimeHistoryLst[0]}, ${sleepTimeHistoryLst[1]}"
       ];
     } else if (sleepTimeHistoryLst.length == 1) {
+      // adding the first sleep date time with no duration
+      // to the sleepDateTime list
       sleepTimeDateTime = [
-        // adding the first sleep date time to the sleepDateTime
-        // list
         sleepTimeHistoryLst[0],
       ];
     }
 
     List<String> wakeTimeDateTime = [];
-    if (wakeTimeHistoryLst.isNotEmpty) {
-      wakeTimeDateTime = [
-        // adding the first wake date time to the wakeDateTime
-        // list
-        "${wakeTimeHistoryLst[0]}, ${wakeTimeHistoryLst[1]}"
-      ];
+
+    if (wakeTimeHistoryLst.length >= 2) {
+      // adding the first wake date time and first wake
+      // date time duration to the wakeDateTime list
+      wakeTimeDateTime = ["${wakeTimeHistoryLst[0]}, ${wakeTimeHistoryLst[1]}"];
+    } else if (wakeTimeHistoryLst.length == 1) {
+      // adding the first wake date time with no duration
+      // to the wakeDateTime list
+      wakeTimeDateTime = [wakeTimeHistoryLst[0]];
     }
 
     for (int i = 1; i < sleepTimeHistoryLst.length - 1; i++) {

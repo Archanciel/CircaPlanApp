@@ -132,25 +132,34 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     String sleepTimeHistoryStr = '';
 
     if (sleepTimeHistoryLst != null) {
-      if (sleepTimeHistoryLst.length >= 2) {
-        String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
+      String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
 
-        if (isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
-          sleepTimeHistoryStr =
-              'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}: ${sleepTimeHistoryLst.sublist(1).join(', ')}';
-        }
+      if (!isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
+        return '';
+      }
+
+      if (sleepTimeHistoryLst.length >= 2) {
+        sleepTimeHistoryStr =
+            'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}: ${sleepTimeHistoryLst.sublist(1).join(', ')}';
+      } else {
+        sleepTimeHistoryStr =
+            'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}';
       }
     }
 
     String wakeUpTimeHistoryStr = '';
 
     if (wakeUpTimeHistoryLst != null) {
-      if (wakeUpTimeHistoryLst.length == 1) {
-        // the case if the add siesta button with negative value was pressed
-        // before adding any wake-up time
-      } else if (wakeUpTimeHistoryLst.length >= 2) {
+      // if (wakeUpTimeHistoryLst.length == 1) {
+      // the case if the add siesta button with negative value was pressed
+      // before adding any wake-up time
+      // } else
+      if (wakeUpTimeHistoryLst.length >= 2) {
         wakeUpTimeHistoryStr =
             'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}: ${wakeUpTimeHistoryLst.sublist(1).join(', ')}';
+      } else if (wakeUpTimeHistoryLst.length == 1) {
+        wakeUpTimeHistoryStr =
+            'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}';
       }
     }
 
@@ -730,7 +739,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _prevDayEmptyTotalController = TextEditingController(text: '');
 
         await _setStatusToSleep();
+
+        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       } else {
+        // not first click on Add button
         DateTime? previousDateTime;
 
         previousDateTime = ScreenMixin.frenchDateTimeFormat
@@ -813,6 +825,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         currentTotalDuration = currentSleepDuration;
       } else {
         currentTotalDuration += sleepDuration;
+      }
+
+      if (_wakeUpTimeStrHistory.isEmpty ||
+          !isDateTimeStrValid(_wakeUpTimeStrHistory.first)) {
+        // here, registering the first wake-up date time without
+        // wake-up duration and ensuring that the wake-up time
+        // history list first item is the date time when I waked
+        // up, i.e the newDateTime
+        _addFirstDateTimeStrToHistorylst(_wakeUpTimeStrHistory,
+            ScreenMixin.frenchDateTimeFormat.format(newDateTime));
       }
 
       _currentSleepDurationStr = currentSleepDuration.HHmm();
