@@ -250,7 +250,10 @@ mixin ScreenMixin {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(dialogTitle),
+        title: Text(
+          dialogTitle,
+          style: alertDialogTextStyle,
+        ),
         content: Text(dialogContent),
         actions: buttonList,
       ),
