@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:circa_plan/services/netwoek_state_service.dart';
+import 'package:circa_plan/services/network_state_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -865,11 +865,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// is displayed since wifi causes difficulty to fall
   /// asleep
   Future<void> _setStatusToSleep() async {
+    bool isSmartphoneConnected =
+        await NetworkStateService.isCellularConnectionActive();
 
-    bool isSmartphoneInAirplaneMode =
-        await NetworkStateService.checkAirplaneMode();
-
-    if (!isSmartphoneInAirplaneMode) {
+    if (isSmartphoneConnected) {
       String okButtonStr = 'Ok';
       Widget okButton = TextButton(
         child: Text(okButtonStr),

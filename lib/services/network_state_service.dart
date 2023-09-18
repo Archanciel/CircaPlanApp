@@ -1,4 +1,5 @@
-import 'package:connectivity/connectivity.dart';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 /// Checks if the wifi connection is enabled. In this case, when
 /// the user starts sleeping, a warning will be displayed since
@@ -24,12 +25,11 @@ class NetworkStateService {
   }
 
   /// Checks the connectivity status to determine if the
-  /// phone is possibly in airplane mode.
+  /// phone is connected.
   ///
-  /// Returns [true] if the phone is in airplane mode
-  /// or not connected to any network, and [false]
-  /// otherwise.
-  static Future<bool> checkAirplaneMode() async {
+  /// Returns [true] if the phone is in connected
+  /// to cellular network, and [false] otherwise.
+  static Future<bool> isCellularConnectionActive() async {
     ConnectivityResult connectivityResult;
     try {
       connectivityResult = await Connectivity().checkConnectivity();
@@ -38,6 +38,6 @@ class NetworkStateService {
       return false;
     }
 
-    return connectivityResult == ConnectivityResult.none;
+    return connectivityResult == ConnectivityResult.mobile;
   }
 }

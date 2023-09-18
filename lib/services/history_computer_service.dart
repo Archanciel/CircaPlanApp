@@ -11,63 +11,69 @@ class HistoryComputerService {
     required Status status,
     required String newDateTimeStr,
   }) {
+    // creating copies of passed screen histiry lists since
+    // we may have to modify them
+    List<String> screenSleepHistoryLstCopy = List.from(screenSleepHistoryLst);
+    List<String> screenWakeUpHistoryLstCopy = List.from(screenWakeUpHistoryLst);
+
+
     List<String> dialogSleepHistoryLst = [];
 
     // handling the first sleep situation ...
 
-    if (screenSleepHistoryLst.length >= 2) {
+    if (screenSleepHistoryLstCopy.length >= 2) {
       // adding the first sleep date time and first sleep
       // duration to the dialogSleepHistoryLst
       dialogSleepHistoryLst = [
-        "${screenSleepHistoryLst[0]}, ${screenSleepHistoryLst[1]}"
+        "${screenSleepHistoryLstCopy[0]}, ${screenSleepHistoryLstCopy[1]}"
       ];
-    } else if (screenSleepHistoryLst.length == 1) {
+    } else if (screenSleepHistoryLstCopy.length == 1) {
       // adding the first sleep date time with no duration
       // to the dialogSleepHistoryLst
       dialogSleepHistoryLst = [
-        screenSleepHistoryLst[0],
+        screenSleepHistoryLstCopy[0],
       ];
     }
 
     List<String> dialogWakeUpHistoryLst = [];
 
-    if (screenWakeUpHistoryLst.length >= 2) {
+    if (screenWakeUpHistoryLstCopy.length >= 2) {
       // adding the first wake-up date time and first
       // wake-up duration to the dialogWakeUpHistoryLst
       dialogWakeUpHistoryLst = [
-        "${screenWakeUpHistoryLst[0]}, ${screenWakeUpHistoryLst[1]}"
+        "${screenWakeUpHistoryLstCopy[0]}, ${screenWakeUpHistoryLstCopy[1]}"
       ];
-    } else if (screenWakeUpHistoryLst.length == 1) {
+    } else if (screenWakeUpHistoryLstCopy.length == 1) {
       // adding the first wake-up date time with no duration
       // to the dialogWakeUpHistoryLst
-      dialogWakeUpHistoryLst = [screenWakeUpHistoryLst[0]];
+      dialogWakeUpHistoryLst = [screenWakeUpHistoryLstCopy[0]];
     }
 
-    for (int i = 1; i < screenSleepHistoryLst.length - 1; i++) {
+    for (int i = 1; i < screenSleepHistoryLstCopy.length - 1; i++) {
       if (i == 1) {
         // computing the second sleep date time
         DateTime sleepTime = DateFormat('dd-MM-yyyy HH:mm')
-            .parse(screenSleepHistoryLst[i - 1])
-            .add(Duration(minutes: _getMinutes(screenSleepHistoryLst[i])))
-            .add(Duration(minutes: _getMinutes(screenWakeUpHistoryLst[i])));
+            .parse(screenSleepHistoryLstCopy[i - 1])
+            .add(Duration(minutes: _getMinutes(screenSleepHistoryLstCopy[i])))
+            .add(Duration(minutes: _getMinutes(screenWakeUpHistoryLstCopy[i])));
 
         dialogSleepHistoryLst.add(
-            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${screenSleepHistoryLst[i + 1]}");
+            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${screenSleepHistoryLstCopy[i + 1]}");
       } else {
         DateTime sleepTime = DateFormat('dd-MM-yyyy HH:mm')
             .parse(dialogSleepHistoryLst[i - 1])
-            .add(Duration(minutes: _getMinutes(screenSleepHistoryLst[i])))
-            .add(Duration(minutes: _getMinutes(screenWakeUpHistoryLst[i])));
+            .add(Duration(minutes: _getMinutes(screenSleepHistoryLstCopy[i])))
+            .add(Duration(minutes: _getMinutes(screenWakeUpHistoryLstCopy[i])));
 
         dialogSleepHistoryLst.add(
-            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${screenSleepHistoryLst[i + 1]}");
+            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${screenSleepHistoryLstCopy[i + 1]}");
       }
     }
 
     int i = 2;
 
     for (String sleepDateTimeStr in dialogSleepHistoryLst.sublist(1)) {
-      if (i < screenWakeUpHistoryLst.length) {
+      if (i < screenWakeUpHistoryLstCopy.length) {
         // in case the wake-up date time is followed by a
         // sleep date time, we calculate the last wake-up
         // date time and add it with the calculated wake-up
@@ -77,7 +83,7 @@ class HistoryComputerService {
             .add(
                 Duration(minutes: _getMinutes(sleepDateTimeStr.split(',')[1])));
         dialogWakeUpHistoryLst.add(
-            "${DateFormat('dd-MM-yyyy HH:mm').format(wakeDateTime)}, ${screenWakeUpHistoryLst[i++]}");
+            "${DateFormat('dd-MM-yyyy HH:mm').format(wakeDateTime)}, ${screenWakeUpHistoryLstCopy[i++]}");
       } else {
         // in case the last wake-up date time is not followed
         // by a sleep date time, we add the last wake-up date
