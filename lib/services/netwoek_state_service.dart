@@ -3,13 +3,14 @@ import 'package:connectivity/connectivity.dart';
 /// Checks if the wifi connection is enabled. In this case, when
 /// the user starts sleeping, a warning will be displayed since
 /// wifi perturbates sleep quality.
-class WifiService {
+class NetworkStateService {
   static Future<bool> isWifiEnabled() async {
     ConnectivityResult connectivityResult;
 
     try {
       connectivityResult = await (Connectivity().checkConnectivity());
-    } catch (_) { // catching any exeption type
+    } catch (_) {
+      // catching any exeption type
       // the case when running the app on Windows where
       // Connectivity().checkConnectivity() is not supported.
       return false;
@@ -20,5 +21,23 @@ class WifiService {
     } else {
       return false;
     }
+  }
+
+  /// Checks the connectivity status to determine if the
+  /// phone is possibly in airplane mode.
+  ///
+  /// Returns [true] if the phone is in airplane mode
+  /// or not connected to any network, and [false]
+  /// otherwise.
+  static Future<bool> checkAirplaneMode() async {
+    ConnectivityResult connectivityResult;
+    try {
+      connectivityResult = await Connectivity().checkConnectivity();
+    } catch (e) {
+      // Handle any potential errors here
+      return false;
+    }
+
+    return connectivityResult == ConnectivityResult.none;
   }
 }

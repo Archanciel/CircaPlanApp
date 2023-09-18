@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:circa_plan/services/wifi_service.dart';
+import 'package:circa_plan/services/netwoek_state_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -865,7 +865,29 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// is displayed since wifi causes difficulty to fall
   /// asleep
   Future<void> _setStatusToSleep() async {
-    bool isWifiOn = await WifiService.isWifiEnabled();
+
+    bool isSmartphoneInAirplaneMode =
+        await NetworkStateService.checkAirplaneMode();
+
+    if (!isSmartphoneInAirplaneMode) {
+      String okButtonStr = 'Ok';
+      Widget okButton = TextButton(
+        child: Text(okButtonStr),
+        onPressed: () => Navigator.pop(context),
+      );
+
+      showAlertDialog(
+        buttonList: [okButton],
+        dialogTitle: 'WARNING - Smartphone is not in airplane mode !!!!',
+        dialogContent:
+            'Set airplane mode in order to avoid difficulty to fall asleep !',
+        okValueStr: okButtonStr,
+        okFunction: () {},
+        context: context,
+      );
+    }
+
+    bool isWifiOn = await NetworkStateService.isWifiEnabled();
 
     if (isWifiOn) {
       String okButtonStr = 'Ok';
