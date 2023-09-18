@@ -1,88 +1,110 @@
 import 'package:intl/intl.dart';
 
-/// Provides methods for computing sleep and wake-up history
-/// displayed in an AlertDialog.
+import '../constants.dart';
+
+/// Provides methods for computing sleep and wake-up
+/// history data displayed in an AlertDialog.
 class HistoryComputerService {
   static Map<String, List<String>> computeSleepWakeHistoryLst({
-    required List<String> sleepTimeHistoryLst,
-    required List<String> wakeTimeHistoryLst,
+    required List<String> screenSleepHistoryLst,
+    required List<String> screenWakeUpHistoryLst,
+    required Status status,
+    required String newDateTimeStr,
   }) {
-    List<String> sleepTimeDateTime = [];
+    List<String> dialogSleepHistoryLst = [];
 
-    if (sleepTimeHistoryLst.length >= 2) {
+    // handling the first sleep situation ...
+
+    if (screenSleepHistoryLst.length >= 2) {
       // adding the first sleep date time and first sleep
-      // date time duration to the sleepDateTime list
-      sleepTimeDateTime = [
-        "${sleepTimeHistoryLst[0]}, ${sleepTimeHistoryLst[1]}"
+      // duration to the dialogSleepHistoryLst
+      dialogSleepHistoryLst = [
+        "${screenSleepHistoryLst[0]}, ${screenSleepHistoryLst[1]}"
       ];
-    } else if (sleepTimeHistoryLst.length == 1) {
+    } else if (screenSleepHistoryLst.length == 1) {
       // adding the first sleep date time with no duration
-      // to the sleepDateTime list
-      sleepTimeDateTime = [
-        sleepTimeHistoryLst[0],
+      // to the dialogSleepHistoryLst
+      dialogSleepHistoryLst = [
+        screenSleepHistoryLst[0],
       ];
     }
 
-    List<String> wakeTimeDateTime = [];
+    List<String> dialogWakeUpHistoryLst = [];
 
-    if (wakeTimeHistoryLst.length >= 2) {
-      // adding the first wake date time and first wake
-      // date time duration to the wakeDateTime list
-      wakeTimeDateTime = ["${wakeTimeHistoryLst[0]}, ${wakeTimeHistoryLst[1]}"];
-    } else if (wakeTimeHistoryLst.length == 1) {
-      // adding the first wake date time with no duration
-      // to the wakeDateTime list
-      wakeTimeDateTime = [wakeTimeHistoryLst[0]];
+    if (screenWakeUpHistoryLst.length >= 2) {
+      // adding the first wake-up date time and first
+      // wake-up duration to the dialogWakeUpHistoryLst
+      dialogWakeUpHistoryLst = [
+        "${screenWakeUpHistoryLst[0]}, ${screenWakeUpHistoryLst[1]}"
+      ];
+    } else if (screenWakeUpHistoryLst.length == 1) {
+      // adding the first wake-up date time with no duration
+      // to the dialogWakeUpHistoryLst
+      dialogWakeUpHistoryLst = [screenWakeUpHistoryLst[0]];
     }
 
-    for (int i = 1; i < sleepTimeHistoryLst.length - 1; i++) {
+    for (int i = 1; i < screenSleepHistoryLst.length - 1; i++) {
       if (i == 1) {
         // computing the second sleep date time
         DateTime sleepTime = DateFormat('dd-MM-yyyy HH:mm')
-            .parse(sleepTimeHistoryLst[i - 1])
-            .add(Duration(minutes: _getMinutes(sleepTimeHistoryLst[i])))
-            .add(Duration(minutes: _getMinutes(wakeTimeHistoryLst[i])));
+            .parse(screenSleepHistoryLst[i - 1])
+            .add(Duration(minutes: _getMinutes(screenSleepHistoryLst[i])))
+            .add(Duration(minutes: _getMinutes(screenWakeUpHistoryLst[i])));
 
-        sleepTimeDateTime.add(
-            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${sleepTimeHistoryLst[i + 1]}");
+        dialogSleepHistoryLst.add(
+            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${screenSleepHistoryLst[i + 1]}");
       } else {
         DateTime sleepTime = DateFormat('dd-MM-yyyy HH:mm')
-            .parse(sleepTimeDateTime[i - 1])
-            .add(Duration(minutes: _getMinutes(sleepTimeHistoryLst[i])))
-            .add(Duration(minutes: _getMinutes(wakeTimeHistoryLst[i])));
+            .parse(dialogSleepHistoryLst[i - 1])
+            .add(Duration(minutes: _getMinutes(screenSleepHistoryLst[i])))
+            .add(Duration(minutes: _getMinutes(screenWakeUpHistoryLst[i])));
 
-        sleepTimeDateTime.add(
-            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${sleepTimeHistoryLst[i + 1]}");
+        dialogSleepHistoryLst.add(
+            "${DateFormat('dd-MM-yyyy HH:mm').format(sleepTime)}, ${screenSleepHistoryLst[i + 1]}");
       }
     }
 
     int i = 2;
 
-    for (String sleepDateTimeStr in sleepTimeDateTime.sublist(1)) {
-      if (i < wakeTimeHistoryLst.length) {
+    for (String sleepDateTimeStr in dialogSleepHistoryLst.sublist(1)) {
+      if (i < screenWakeUpHistoryLst.length) {
+        // in case the wake-up date time is followed by a
+        // sleep date time, we calculate the last wake-up
+        // date time and add it with the calculated wake-up
+        // duration to the dialogWakeUpHistoryLst
         DateTime wakeDateTime = DateFormat('dd-MM-yyyy HH:mm')
             .parse(sleepDateTimeStr.split(',')[0])
             .add(
                 Duration(minutes: _getMinutes(sleepDateTimeStr.split(',')[1])));
-        wakeTimeDateTime.add(
-            "${DateFormat('dd-MM-yyyy HH:mm').format(wakeDateTime)}, ${wakeTimeHistoryLst[i++]}");
+        dialogWakeUpHistoryLst.add(
+            "${DateFormat('dd-MM-yyyy HH:mm').format(wakeDateTime)}, ${screenWakeUpHistoryLst[i++]}");
       } else {
-        // in case the last wake date time is not followed
-        // by a sleep date time, we add the last wake date
-        // time to the wake date time list
+        // in case the last wake-up date time is not followed
+        // by a sleep date time, we add the last wake-up date
+        // time without wake-up duration to the
+        // dialogWakeUpHistoryLst
         DateTime wakeDateTime = DateFormat('dd-MM-yyyy HH:mm')
             .parse(sleepDateTimeStr.split(',')[0])
             .add(
                 Duration(minutes: _getMinutes(sleepDateTimeStr.split(',')[1])));
-        wakeTimeDateTime
+        dialogWakeUpHistoryLst
             .add(DateFormat("dd-MM-yyyy HH:mm").format(wakeDateTime));
       }
     }
 
+    if (dialogWakeUpHistoryLst.length >= 1 && status == Status.sleep) {
+      // if we are not in the first sleep situation, which
+      // is handled at the begining of this method,
+      // and if the current status is sleep, the new date
+      // which is the sleep start date time is added with
+      // no duration to the dialogSleepHistoryLst
+      dialogSleepHistoryLst.add(newDateTimeStr);
+    }
+
     Map<String, List<String>> sleepWakeHistoryLstMap = {};
 
-    sleepWakeHistoryLstMap['sleepTimeDateTime'] = sleepTimeDateTime;
-    sleepWakeHistoryLstMap['wakeTimeDateTime'] = wakeTimeDateTime;
+    sleepWakeHistoryLstMap['sleepTimeDateTime'] = dialogSleepHistoryLst;
+    sleepWakeHistoryLstMap['wakeTimeDateTime'] = dialogWakeUpHistoryLst;
 
     return sleepWakeHistoryLstMap;
   }
@@ -125,8 +147,10 @@ void main() {
 
   Map<String, List<String>> sleepWakeHistoryLstMap =
       HistoryComputerService.computeSleepWakeHistoryLst(
-          sleepTimeHistoryLst: sleepTimeHistoryLst,
-          wakeTimeHistoryLst: wakeTimeHistoryLst);
+          screenSleepHistoryLst: sleepTimeHistoryLst,
+          screenWakeUpHistoryLst: wakeTimeHistoryLst,
+          status: Status.sleep,
+          newDateTimeStr: "09-09-2023 02:57");
 
   print("\nSLEEP DATE TIME LIST ...");
   for (String sleepDateTimeStr

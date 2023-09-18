@@ -131,9 +131,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     String sleepTimeHistoryStr = '';
 
-    if (sleepTimeHistoryLst != null && 
-      sleepTimeHistoryLst.isNotEmpty) { // added this condition to
-                                        // avoid integr tests exceptions
+    if (sleepTimeHistoryLst != null && sleepTimeHistoryLst.isNotEmpty) {
+      // added this condition to
+      // avoid integr tests exceptions
       String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
 
       if (!isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
@@ -1210,8 +1210,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                               Map<String, List<String>> history =
                                   HistoryComputerService
                                       .computeSleepWakeHistoryLst(
-                                sleepTimeHistoryLst: sleepTimeHistoryLst,
-                                wakeTimeHistoryLst: wakeTimeHistoryLst,
+                                screenSleepHistoryLst: sleepTimeHistoryLst,
+                                screenWakeUpHistoryLst: wakeTimeHistoryLst,
+                                status: _transferDataMap['calcSlDurStatus'],
+                                newDateTimeStr:
+                                    _transferDataMap['calcSlDurNewDateTimeStr'],
                               );
                               List<String> sleepHistory =
                                   history['sleepTimeDateTime']!;
