@@ -249,6 +249,12 @@ Future<void> main() async {
           await tester.tap(find.text('Add').first);
           await tester.pumpAndSettle();
 
+          // since the AlertDialog warning that WIFI is on is
+          // displayed, we need to tap on the Ok button to close
+          // it.
+          await tester.tap(find.text('Ok').first);
+          await tester.pumpAndSettle();
+
           // re-clicking on AppBar popup menu button.
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
           await tester.pumpAndSettle();
