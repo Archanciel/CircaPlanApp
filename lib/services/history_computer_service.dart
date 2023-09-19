@@ -16,12 +16,23 @@ class HistoryComputerService {
     List<String> screenSleepHistoryLstCopy = List.from(screenSleepHistoryLst);
     List<String> screenWakeUpHistoryLstCopy = List.from(screenWakeUpHistoryLst);
 
-    int negativeSleepDurationIndex = screenSleepHistoryLstCopy
-        .indexWhere((element) => element.contains(RegExp(r'^-[0-9:]*')));
+    List<int> indexesOfNegativeDurations = [];
 
-    if (negativeSleepDurationIndex != -1) {
       screenSleepHistoryLstCopy.removeAt(negativeSleepDurationIndex);
-      screenWakeUpHistoryLstCopy.removeAt(negativeSleepDurationIndex - 1);
+    // finding the indexes of negative durations in the
+    // screenSleepHistoryLstCopy
+    for (int i = 0; i < screenSleepHistoryLstCopy.length; i++) {
+      if (screenSleepHistoryLstCopy[i].contains(RegExp(r'^-[0-9:]*'))) {
+        indexesOfNegativeDurations.add(i);
+      }
+    }
+
+    // removing the negative durations from the
+    // screenSleepHistoryLstCopy and their corresponding
+    // wake-up entry in the screenWakeUpHistoryLstCopy
+    for (int i = indexesOfNegativeDurations.length - 1; i >= 0; i--) {
+      screenSleepHistoryLstCopy.removeAt(indexesOfNegativeDurations[i]);
+      screenWakeUpHistoryLstCopy.removeAt(indexesOfNegativeDurations[i] - 1);
     }
 
     List<String> dialogSleepHistoryLst = [];
