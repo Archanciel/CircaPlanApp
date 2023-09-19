@@ -11,11 +11,18 @@ class HistoryComputerService {
     required Status status,
     required String newDateTimeStr,
   }) {
-    // creating copies of passed screen histiry lists since
+    // creating copies of passed screen history lists since
     // we may have to modify them
     List<String> screenSleepHistoryLstCopy = List.from(screenSleepHistoryLst);
     List<String> screenWakeUpHistoryLstCopy = List.from(screenWakeUpHistoryLst);
 
+    int negativeSleepDurationIndex = screenSleepHistoryLstCopy
+        .indexWhere((element) => element.contains(RegExp(r'^-[0-9:]*')));
+
+    if (negativeSleepDurationIndex != -1) {
+      screenSleepHistoryLstCopy.removeAt(negativeSleepDurationIndex);
+      screenWakeUpHistoryLstCopy.removeAt(negativeSleepDurationIndex - 1);
+    }
 
     List<String> dialogSleepHistoryLst = [];
 
