@@ -18,7 +18,6 @@ class HistoryComputerService {
 
     List<int> indexesOfNegativeDurations = [];
 
-      screenSleepHistoryLstCopy.removeAt(negativeSleepDurationIndex);
     // finding the indexes of negative durations in the
     // screenSleepHistoryLstCopy
     for (int i = 0; i < screenSleepHistoryLstCopy.length; i++) {
