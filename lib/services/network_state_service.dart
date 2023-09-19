@@ -1,4 +1,3 @@
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 /// Checks if the wifi connection is enabled. In this case, when
