@@ -98,7 +98,7 @@ class HistoryComputerService {
       }
     }
 
-    if (dialogWakeUpHistoryLst.length >= 1 && status == Status.sleep) {
+    if (dialogWakeUpHistoryLst.isNotEmpty && status == Status.sleep) {
       // if we are not in the first sleep situation, which
       // is handled at the begining of this method,
       // and if the current status is sleep, the new date
