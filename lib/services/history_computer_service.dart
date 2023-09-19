@@ -28,7 +28,9 @@ class HistoryComputerService {
 
     // removing the negative durations from the
     // screenSleepHistoryLstCopy and their corresponding
-    // wake-up entry in the screenWakeUpHistoryLstCopy
+    // wake-up entry in the screenWakeUpHistoryLstCopy.
+    //
+    // Removing last lines of the lists first.
     for (int i = indexesOfNegativeDurations.length - 1; i >= 0; i--) {
       screenSleepHistoryLstCopy.removeAt(indexesOfNegativeDurations[i]);
       screenWakeUpHistoryLstCopy.removeAt(indexesOfNegativeDurations[i] - 1);
