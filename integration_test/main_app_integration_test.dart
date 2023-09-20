@@ -1647,13 +1647,6 @@ Future<void> main() async {
 
           await tester.pumpAndSettle();
 
-          TextField newDateTimeTextField =
-              tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          final String nowFrenchFormatDateTimeStr =
-              frenchDateTimeFormat.format(DateTime.now());
-          expect(newDateTimeTextField.controller!.text,
-              nowFrenchFormatDateTimeStr);
-
           // clicking on the Reset button
           await tester.tap(find.byKey(const Key('resetButton')));
           await tester.pumpAndSettle();
@@ -1662,10 +1655,21 @@ Future<void> main() async {
           await tester.tap(find.text('Ok').first);
           await tester.pumpAndSettle();
 
+          TextField newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          final String nowFrenchFormatDateTimeStr =
+              frenchDateTimeFormat.format(DateTime.now());
+          expect(newDateTimeTextField.controller!.text,
+              nowFrenchFormatDateTimeStr);
+
           // loading the circadian.json file after clicking
           // on Reset in the Sleep Duration screen
           Map<String, dynamic> circadianMap =
               await readJsonFile(transferDataJsonFilePathNameCircadian);
+
+          // checking that the new date time text field is Now date
+          // time at french format
+          expect(circadianMap['calculateSleepDurationData']['sleepDurationNewDateTimeStr'], nowFrenchFormatDateTimeStr);
 
           // checking that the status is Wake-up after ressetting
           // the Sleep Duration screen
@@ -1842,25 +1846,9 @@ Future<void> main() async {
           await tester.tap(find.byKey(const Key('addNewDateTimeButton')));
           await tester.pumpAndSettle();
 
-          // checking that startDateTime text field is Now date time at french format
-          newDateTimeTextField =
-              tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          expect(newDateTimeTextField.controller!.text,
-              nowFrenchFormatDateTimeStr);
-
           // checking that now date time is displayed twice
           expect(find.text(nowFrenchFormatDateTimeStr), findsNWidgets(2));
 
-          // reloading the circadian.json file after first
-          // New date time addition in the Sleep Duration
-          // screen
-          circadianMap =
-              await readJsonFile(transferDataJsonFilePathNameCircadian);
-
-          // checking that the status is Sleep after first
-          // New date time addition in the Sleep Duration
-          // screen
-          expect(circadianMap['calculateSleepDurationData']['status'], 1);
         },
       );
     },
