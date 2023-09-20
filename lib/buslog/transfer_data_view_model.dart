@@ -88,7 +88,7 @@ class TransferDataViewModel {
           calculateSleepDurationData.sleepDurationNewDateTimeStr;
 
       final String englishDateTimeStr =
-          reformatDateTimeStrToAndroidFileNameEnglishDateTimeComponentStr(
+          reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
               sleepDurationNewDateTimeStr);
 
       final String saveAsTransferDataJsonFilePathName =
@@ -131,7 +131,7 @@ class TransferDataViewModel {
 
   /// This method converts the french formatted date time string to
   /// an english formatted date time string with '.' in place of ':'.
-  String reformatDateTimeStrToAndroidFileNameEnglishDateTimeComponentStr(
+  String reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
       String frenchFormattedDateTimeStr) {
     // on Android, file name can not contain ':' !
     final DateFormat androidFileNameEnglishDateTimeComponentFormat =

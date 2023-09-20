@@ -576,7 +576,7 @@ mixin ScreenMixin {
 
     if (calcSlDurNewDateTimeStr != null) {
       String jsonFileName = transferDataViewModel
-          .reformatDateTimeStrToAndroidFileNameEnglishDateTimeComponentStr(
+          .reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
               calcSlDurNewDateTimeStr);
       return '$jsonFileName.json';
     } else {
