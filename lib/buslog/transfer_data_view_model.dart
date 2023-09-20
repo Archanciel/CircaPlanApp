@@ -96,7 +96,8 @@ class TransferDataViewModel {
 
       transferDataJsonFileCreated =
           !await File(saveAsTransferDataJsonFilePathName).exists();
-      _transferData.saveTransferDataToFile(
+          
+      await _transferData.saveTransferDataToFile(
           jsonFilePathName: saveAsTransferDataJsonFilePathName);
     }
 
