@@ -1634,16 +1634,6 @@ Future<void> main() async {
               transferDataMapCircadian;
           await transferDataViewModelCircadian.updateAndSaveTransferData();
 
-          String jsonFileNameOne = '2022-07-14 13.09.json';
-          String transferDataJsonFilePathNameOne =
-              '$testPath${Platform.pathSeparator}$jsonFileNameOne';
-          TransferDataViewModel transferDataViewModelOne =
-              TransferDataViewModel(
-                  transferDataJsonFilePathName:
-                      transferDataJsonFilePathNameOne);
-          transferDataViewModelOne.transferDataMap = transferDataMapCircadian;
-          await transferDataViewModelOne.updateAndSaveTransferData();
-
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
@@ -1804,16 +1794,6 @@ Future<void> main() async {
           transferDataViewModelCircadian.transferDataMap =
               transferDataMapCircadian;
           await transferDataViewModelCircadian.updateAndSaveTransferData();
-
-          String jsonFileNameOne = '2022-07-14 13.09.json';
-          String transferDataJsonFilePathNameOne =
-              '$testPath${Platform.pathSeparator}$jsonFileNameOne';
-          TransferDataViewModel transferDataViewModelOne =
-              TransferDataViewModel(
-                  transferDataJsonFilePathName:
-                      transferDataJsonFilePathNameOne);
-          transferDataViewModelOne.transferDataMap = transferDataMapCircadian;
-          await transferDataViewModelOne.updateAndSaveTransferData();
 
           await tester.pumpWidget(
             MaterialApp(
