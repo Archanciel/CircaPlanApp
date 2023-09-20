@@ -485,7 +485,6 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
       child: Container(
@@ -533,7 +532,7 @@ class _TimeCalculatorState extends State<TimeCalculator> with ScreenMixin {
                               shape: appElevatedButtonRoundedShape),
                           onPressed: () {
                             String dateTimeStr =
-                                ScreenMixin.HHmmDateTimeFormat.format(
+                                HHmmDateTimeFormat.format(
                                     DateTime.now());
                             _handleFirstTimeTextFieldChange(dateTimeStr);
                           },

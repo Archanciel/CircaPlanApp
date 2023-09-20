@@ -196,7 +196,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     if (sleepDurationScreenLastDateTimeFrenchFormatStr == '') {
       // String value used to initialize DateTimePicker field
       sleepDurationScreenLastDateTimeFrenchFormatStr =
-          ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+          frenchDateTimeFormat.format(DateTime.now());
     }
     _englishFormatStartDateTimeStr =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(

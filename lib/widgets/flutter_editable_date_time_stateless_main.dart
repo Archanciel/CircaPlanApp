@@ -71,7 +71,7 @@ class _FlutterEditableDateTimeScreenState
       nextAddSubtractResultableDuration: null,
     );
 
-    String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+    String nowStr = englishDateTimeFormat.format(DateTime.now());
     widget.transferDataMap["addDurStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstEndDateTimeStr"] = nowStr;

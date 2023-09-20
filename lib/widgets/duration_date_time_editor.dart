@@ -383,7 +383,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = ScreenMixin.englishDateTimeFormat
+      startDateTime = englishDateTimeFormat
           .parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
@@ -416,7 +416,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
         try {
           endDateTime =
-              ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
+              englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
         if ((wasStartDateTimeButtonClicked ?? false) ||
@@ -434,7 +434,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         } else {
           startDateTime = endDateTime!.subtract(duration);
           _startDateTimeEnglishFormatStr =
-              ScreenMixin.englishDateTimeFormat.format(startDateTime);
+              englishDateTimeFormat.format(startDateTime);
           widget.handleDateTimeModificationFunction!(
               _startDateTimeEnglishFormatStr);
         }
@@ -458,9 +458,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
         }
 
-        _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);
+        _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
         _dateTimePickerController.text =
-            ScreenMixin.frenchDateTimeFormat.format(endDateTime);
+            frenchDateTimeFormat.format(endDateTime);
       }
     }
 
@@ -484,11 +484,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     try {
       endDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
+          frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
-      _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
       processEndDateTimeChange(endDateTime);
     }
   }
@@ -499,7 +499,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
     try {
       endDateTime =
-          ScreenMixin.englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
+          englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -511,7 +511,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = ScreenMixin.englishDateTimeFormat
+      startDateTime = englishDateTimeFormat
           .parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 

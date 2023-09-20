@@ -51,7 +51,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataViewModel = transferDataViewModel,
         _newFrenchFormatDateTimeStr =
             transferDataMap['calcSlDurNewDateTimeStr'] ??
-                ScreenMixin.frenchDateTimeFormat.format(DateTime.now()),
+                frenchDateTimeFormat.format(DateTime.now()),
         _lastFrenchFormatDateTimeStr =
             transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
@@ -324,9 +324,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // set to the alarm message and so setState() is called to display
     // the alarm message.
     if (_isMedicAlarmToDisplay(medicFrenchDateTimeStr)) {
-      setState(() {}); // not working on S8, i.e alarm medic code
-      //                  not applied, I don't know why ! But once
-      //                  I click on Now button, the alarm is displayed.
+      setState(() {}); // not working on Android smartphones, i.e
+      //                  alarm medic code not applied, I don't know
+      //                  why ! But once I click on Add button, the
+      //                  alarm is displayed !
       // CircadianFlutterToast.showToast(
       //     message: "MEDICS AT $medicHHmmTimeStr O'CLOCK ?",
       //     backgroundColor: ScreenMixin.APP_WARNING_COLOR);
@@ -402,7 +403,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
     String nowFrenchDateTimeStr =
-        ScreenMixin.frenchDateTimeFormat.format(dateTimeNow);
+        frenchDateTimeFormat.format(dateTimeNow);
 
     _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newFrenchFormatDateTimeStr =
@@ -587,7 +588,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
 
     _newFrenchFormatDateTimeStr =
-        ScreenMixin.frenchDateTimeFormat.format(newDateTime);
+        frenchDateTimeFormat.format(newDateTime);
 
     _newDateTimeController.text = _newFrenchFormatDateTimeStr;
 
@@ -632,7 +633,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
             frenchFormatDateTimeStr: _newFrenchFormatDateTimeStr);
 
     _newFrenchFormatDateTimeStr =
-        ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+        frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newFrenchFormatDateTimeStr;
     _lastFrenchFormatDateTimeStr = '';
     _lastDateTimeController.text = _lastFrenchFormatDateTimeStr;
@@ -695,7 +696,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // first click on 'Add' button after reinitializing
         // or restarting the app
         String newDateTimeStr =
-            ScreenMixin.frenchDateTimeFormat.format(newDateTime);
+            frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
         _lastFrenchFormatDateTimeStr = newDateTimeStr;
@@ -727,9 +728,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         //                     is null in the case the app is started with the
         //                     circadian dir containing no circadian.json file
 
-        DateTime secondScreenStartDateTime = ScreenMixin.englishDateTimeFormat
+        DateTime secondScreenStartDateTime = englishDateTimeFormat
             .parse(secondScreenEnglishFormatStartDateTimeStr);
-        DateTime secondScreenEndDateTime = ScreenMixin.englishDateTimeFormat
+        DateTime secondScreenEndDateTime = englishDateTimeFormat
             .parse(secondScreenEnglishFormatEndDateTimeStr);
         Duration diffDuration =
             secondScreenEndDateTime.difference(secondScreenStartDateTime);
@@ -747,7 +748,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // not first click on Add button
         DateTime? previousDateTime;
 
-        previousDateTime = ScreenMixin.frenchDateTimeFormat
+        previousDateTime = frenchDateTimeFormat
             .parse(_lastFrenchFormatDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
@@ -803,7 +804,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       DateTime? previousDateTime;
 
       previousDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(_lastFrenchFormatDateTimeStr);
+          frenchDateTimeFormat.parse(_lastFrenchFormatDateTimeStr);
 
       if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
@@ -836,7 +837,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // history list first item is the date time when I waked
         // up, i.e the newDateTime
         _addFirstDateTimeStrToHistorylst(_wakeUpTimeStrHistory,
-            ScreenMixin.frenchDateTimeFormat.format(newDateTime));
+            frenchDateTimeFormat.format(newDateTime));
       }
 
       _currentSleepDurationStr = currentSleepDuration.HHmm();
@@ -1477,7 +1478,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          String dateTimeStr = ScreenMixin.frenchDateTimeFormat
+                          String dateTimeStr = frenchDateTimeFormat
                               .format(DateTime.now());
                           _newDateTimeController.text = dateTimeStr;
                           _newFrenchFormatDateTimeStr = dateTimeStr;

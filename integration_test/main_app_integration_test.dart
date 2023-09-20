@@ -217,7 +217,7 @@ Future<void> main() async {
           TextField newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
           final String nowFrenchFormatDateTimeStr =
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+              frenchDateTimeFormat.format(DateTime.now());
           expect(newDateTimeTextField.controller!.text,
               nowFrenchFormatDateTimeStr);
 
@@ -521,9 +521,9 @@ Future<void> main() async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
           String nowEnglishDateTimeFormatStr =
-              ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+              englishDateTimeFormat.format(DateTime.now());
           String nowFrenchDateTimeFormatStr =
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+              frenchDateTimeFormat.format(DateTime.now());
           String testPath = kCircadianAppDataTestDir;
 
           Map<String, dynamic> transferDataMapCircadian = {
@@ -633,9 +633,9 @@ Future<void> main() async {
           String startDateTimeFrenchFormatStr =
               startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
 
-          DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+          DateTime actualStartDateTime = frenchDateTimeFormat
               .parse(startDateTimeFrenchFormatStr);
-          DateTime expectedStartDateTime = ScreenMixin.frenchDateTimeFormat
+          DateTime expectedStartDateTime = frenchDateTimeFormat
               .parse(nowFrenchDateTimeFormatStr);
           DateTime expectedStartDateTimeOneMinuteBefore =
               expectedStartDateTime.subtract(const Duration(seconds: 61));
@@ -720,9 +720,9 @@ Future<void> main() async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
         String nowEnglishDateTimeFormatStr =
-            ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+            englishDateTimeFormat.format(DateTime.now());
         String nowFrenchDateTimeFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+            frenchDateTimeFormat.format(DateTime.now());
         String testPath = kCircadianAppDataTestDir;
 
         Map<String, dynamic> transferDataMapCircadian = {
@@ -831,10 +831,10 @@ Future<void> main() async {
         // is set to the current date and time.
         String startDateTimeFrenchFormatStr =
             startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+        DateTime actualStartDateTime = frenchDateTimeFormat
             .parse(startDateTimeFrenchFormatStr);
         DateTime expectedStartDateTime =
-            ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
+            frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
             expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
@@ -908,7 +908,7 @@ Future<void> main() async {
         DateTime newStartDateTime = firstEndDateTime.subtract(
             DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
         final String newStartDateTimeFrenchFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
+            frenchDateTimeFormat.format(newStartDateTime);
 
         expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
       });
@@ -918,9 +918,9 @@ Future<void> main() async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
         String nowEnglishDateTimeFormatStr =
-            ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+            englishDateTimeFormat.format(DateTime.now());
         String nowFrenchDateTimeFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+            frenchDateTimeFormat.format(DateTime.now());
         String testPath = kCircadianAppDataTestDir;
 
         Map<String, dynamic> transferDataMapCircadian = {
@@ -1032,10 +1032,10 @@ Future<void> main() async {
 
         // Confirming the Add Duration To Date Time page Start Date Time
         // is set to the current date and time.
-        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+        DateTime actualStartDateTime = frenchDateTimeFormat
             .parse(startDateTimeFrenchFormatStr);
         DateTime expectedStartDateTime =
-            ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
+            frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
             expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
@@ -1115,9 +1115,9 @@ Future<void> main() async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
         String nowEnglishDateTimeFormatStr =
-            ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+            englishDateTimeFormat.format(DateTime.now());
         String nowFrenchDateTimeFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+            frenchDateTimeFormat.format(DateTime.now());
         String testPath = kCircadianAppDataTestDir;
 
         Map<String, dynamic> transferDataMapCircadian = {
@@ -1226,10 +1226,10 @@ Future<void> main() async {
         // is set to the current date and time.
         String startDateTimeFrenchFormatStr =
             startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
-        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+        DateTime actualStartDateTime = frenchDateTimeFormat
             .parse(startDateTimeFrenchFormatStr);
         DateTime expectedStartDateTime =
-            ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
+            frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
             expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
@@ -1303,7 +1303,7 @@ Future<void> main() async {
         DateTime newStartDateTime = firstEndDateTime.subtract(
             DateTimeParser.parseHHMMDuration(changedFirstDurationStr)!);
         final String newStartDateTimeFrenchFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(newStartDateTime);
+            frenchDateTimeFormat.format(newStartDateTime);
 
         expect(find.text(newStartDateTimeFrenchFormatStr), findsOneWidget);
 
@@ -1349,9 +1349,9 @@ Future<void> main() async {
         Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
 
         String nowEnglishDateTimeFormatStr =
-            ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+            englishDateTimeFormat.format(DateTime.now());
         String nowFrenchDateTimeFormatStr =
-            ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+            frenchDateTimeFormat.format(DateTime.now());
         String testPath = kCircadianAppDataTestDir;
 
         Map<String, dynamic> transferDataMapCircadian = {
@@ -1461,10 +1461,10 @@ Future<void> main() async {
         String startDateTimeFrenchFormatStr =
             startDateTimeEditableDateTimeWidget.dateTimePickerController.text;
 
-        DateTime actualStartDateTime = ScreenMixin.frenchDateTimeFormat
+        DateTime actualStartDateTime = frenchDateTimeFormat
             .parse(startDateTimeFrenchFormatStr);
         DateTime expectedStartDateTime =
-            ScreenMixin.frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
+            frenchDateTimeFormat.parse(nowFrenchDateTimeFormatStr);
         DateTime expectedStartDateTimeOneMinuteBefore =
             expectedStartDateTime.subtract(const Duration(seconds: 61));
         DateTime expectedStartDateTimeOneMinuteAfter =
@@ -1660,7 +1660,7 @@ Future<void> main() async {
           TextField newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
           final String nowFrenchFormatDateTimeStr =
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+              frenchDateTimeFormat.format(DateTime.now());
           expect(newDateTimeTextField.controller!.text,
               nowFrenchFormatDateTimeStr);
 
@@ -1728,7 +1728,7 @@ Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
   // Checking first end date time
 
   DateTime startDateTime =
-      ScreenMixin.frenchDateTimeFormat.parse(startDateTimeFrenchFormatStr);
+      frenchDateTimeFormat.parse(startDateTimeFrenchFormatStr);
   DateTime firstEndDateTime =
       startDateTime.add(DateTimeParser.parseHHMMDuration(firstDurationStr)!);
 
@@ -1741,7 +1741,7 @@ Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
   }
 
   String firstEndDateTimeStr =
-      ScreenMixin.frenchDateTimeFormat.format(firstEndDateTime);
+      frenchDateTimeFormat.format(firstEndDateTime);
 
   expect(find.text(firstEndDateTimeStr), findsOneWidget);
   expect(find.text(firstDurationStr), findsOneWidget);
@@ -1751,7 +1751,7 @@ Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
   DateTime secondEndDateTime = firstEndDateTime
       .add(const Duration(hours: 3, minutes: 30, seconds: 0, milliseconds: 0));
   String secondEndDateTimeStr =
-      ScreenMixin.frenchDateTimeFormat.format(secondEndDateTime);
+      frenchDateTimeFormat.format(secondEndDateTime);
 
   expect(find.text(secondEndDateTimeStr), findsOneWidget);
 
@@ -1760,7 +1760,7 @@ Map<String, dynamic> checkFirstSecondAndThirdEndDateTimeAndDuration({
   DateTime thirdEndDateTime = secondEndDateTime
       .add(const Duration(hours: 10, minutes: 30, seconds: 0, milliseconds: 0));
   String thirdEndDateTimeStr =
-      ScreenMixin.frenchDateTimeFormat.format(thirdEndDateTime);
+      frenchDateTimeFormat.format(thirdEndDateTime);
 
   expect(find.text(thirdEndDateTimeStr), findsOneWidget);
 

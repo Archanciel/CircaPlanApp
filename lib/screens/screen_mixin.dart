@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
@@ -56,9 +55,6 @@ mixin ScreenMixin {
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
   static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
 
-  static DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-  static DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-  static DateFormat HHmmDateTimeFormat = DateFormat("HH:mm");
   static const double APP_ROUNDED_BOARDER_RADIUS = 18.0;
   static const double BUTTON_SEP_WIDTH = 10.0;
   static const double CHECKBOX_WIDTH_HEIGHT = 35.0;
@@ -580,7 +576,7 @@ mixin ScreenMixin {
 
     if (calcSlDurNewDateTimeStr != null) {
       String jsonFileName = transferDataViewModel
-          .reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+          .reformatDateTimeStrToAndroidFileNameEnglishDateTimeComponentStr(
               calcSlDurNewDateTimeStr);
       return '$jsonFileName.json';
     } else {

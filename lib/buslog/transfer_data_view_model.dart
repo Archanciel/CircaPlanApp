@@ -88,7 +88,7 @@ class TransferDataViewModel {
           calculateSleepDurationData.sleepDurationNewDateTimeStr;
 
       final String englishDateTimeStr =
-          reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+          reformatDateTimeStrToAndroidFileNameEnglishDateTimeComponentStr(
               sleepDurationNewDateTimeStr);
 
       final String saveAsTransferDataJsonFilePathName =
@@ -125,27 +125,27 @@ class TransferDataViewModel {
 
   static void deleteFile(String filePathName) {
     final File fileToDelete = File(filePathName);
-    
+
     fileToDelete.deleteSync();
   }
 
   /// This method converts the french formatted date time string to
   /// an english formatted date time string with '.' in place of ':'.
-  String reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+  String reformatDateTimeStrToAndroidFileNameEnglishDateTimeComponentStr(
       String frenchFormattedDateTimeStr) {
-    final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-
     // on Android, file name can not contain ':' !
-    final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH.mm");
+    final DateFormat androidFileNameEnglishDateTimeComponentFormat =
+        DateFormat("yyyy-MM-dd HH.mm");
     DateTime dateTime;
-    String englishDateTimeStr = '';
+    String androidFileNameEnglishDateTimeComponentStr = '';
 
     try {
       dateTime = frenchDateTimeFormat.parse(frenchFormattedDateTimeStr);
-      englishDateTimeStr = englishDateTimeFormat.format(dateTime);
+      androidFileNameEnglishDateTimeComponentStr =
+          androidFileNameEnglishDateTimeComponentFormat.format(dateTime);
     } on FormatException catch (_) {}
 
-    return englishDateTimeStr;
+    return androidFileNameEnglishDateTimeComponentStr;
   }
 
   /// This method converts the english formatted date time string to
