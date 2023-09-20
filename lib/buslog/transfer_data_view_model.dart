@@ -71,12 +71,12 @@ class TransferDataViewModel {
         jsonUndoFileName: jsonUndoFileNameOne);
   }
 
-  /// Saves the screens app transfer data to a json file and return
-  /// true if the json filr was created, false if it was updated.
+  /// Saves the screens app transfer data to a json file and returns
+  /// true if the json file was created, false if it was updated.
   ///
-  /// If nothing is passed transferDataJsonFileName, the json file name
-  /// is the current CalculateSleepDuration screen new date time
-  /// reformatted.
+  /// If nothing is passed as transferDataJsonFileName, the json file
+  /// name is the current CalculateSleepDuration screen new date time
+  /// string reformatted so it is ok on Android.
   Future<bool> saveAsTransferData({String? transferDataJsonFileName}) async {
     final String transferDataJsonPath = getTransferDataJsonPath();
     bool transferDataJsonFileCreated = false;
@@ -87,12 +87,12 @@ class TransferDataViewModel {
       final String sleepDurationNewDateTimeStr =
           calculateSleepDurationData.sleepDurationNewDateTimeStr;
 
-      final String englishDateTimeStr =
+      final String androidCompatibleEnglishFormatStr =
           reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
               sleepDurationNewDateTimeStr);
 
       final String saveAsTransferDataJsonFilePathName =
-          '$transferDataJsonPath${Platform.pathSeparator}$englishDateTimeStr.json';
+          '$transferDataJsonPath${Platform.pathSeparator}$androidCompatibleEnglishFormatStr.json';
 
       transferDataJsonFileCreated =
           !await File(saveAsTransferDataJsonFilePathName).exists();
@@ -130,8 +130,9 @@ class TransferDataViewModel {
     fileToDelete.deleteSync();
   }
 
-  /// This method converts the french formatted date time string to
-  /// an english formatted date time string with '.' in place of ':'.
+  /// This method converts the french formatted date time
+  /// string to an english formatted date time string with
+  /// '.' in place of ':'.
   String reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
       String frenchFormattedDateTimeStr) {
     // on Android, file name can not contain ':' !
