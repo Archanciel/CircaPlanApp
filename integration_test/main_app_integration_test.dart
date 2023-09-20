@@ -1808,13 +1808,6 @@ Future<void> main() async {
 
           await tester.pumpAndSettle();
 
-          TextField newDateTimeTextField =
-              tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          final String nowFrenchFormatDateTimeStr =
-              frenchDateTimeFormat.format(DateTime.now());
-          expect(newDateTimeTextField.controller!.text,
-              nowFrenchFormatDateTimeStr);
-
           // clicking on the Reset button
           await tester.tap(find.byKey(const Key('resetButton')));
           await tester.pumpAndSettle();
@@ -1823,10 +1816,23 @@ Future<void> main() async {
           await tester.tap(find.text('Ok').first);
           await tester.pumpAndSettle();
 
+          // checking that the new date time text field is Now date
+          // time at french format
+          TextField newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
+          final String nowFrenchFormatDateTimeStr =
+              frenchDateTimeFormat.format(DateTime.now());
+          expect(newDateTimeTextField.controller!.text,
+              nowFrenchFormatDateTimeStr);
+
           // loading the circadian.json file after clicking
           // on Reset in the Sleep Duration screen
           Map<String, dynamic> circadianMap =
               await readJsonFile(transferDataJsonFilePathNameCircadian);
+
+          // checking that the new date time text field is Now date
+          // time at french format
+          expect(circadianMap['calculateSleepDurationData']['sleepDurationNewDateTimeStr'], nowFrenchFormatDateTimeStr);
 
           // checking that the status is Wake-up after ressetting
           // the Sleep Duration screen
