@@ -6,7 +6,6 @@ import 'package:integration_test/integration_test.dart';
 import 'dart:io';
 
 import 'package:circa_plan/main.dart';
-import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/constants.dart';
