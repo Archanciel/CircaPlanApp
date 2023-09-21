@@ -74,7 +74,7 @@ class DateTimeComputer {
   /// alarm time is 6:00 !).
   static String computeTodayOrTomorrowAlarmFrenchDateTimeStr({
     required String alarmHHmmTimeStr,
-    bool setToTomorrow = false,
+    bool setAlarmTimeToNextTime = false,
   }) {
     // solving the problem caused by 1 digit hour and/or minute
     // alarmHHmmTimeStr
@@ -94,7 +94,7 @@ class DateTimeComputer {
 
     String alarmFrenchDateTimeStr;
 
-    if (setToTomorrow) {
+    if (setAlarmTimeToNextTime) {
       alarmFrenchDateTimeStr =
           setAlarmToTomorrow(now, alarmHHmmTimeDurationInMinutes);
     } else {

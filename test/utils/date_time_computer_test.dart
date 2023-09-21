@@ -150,8 +150,7 @@ void main() {
                   ),
               throwsA(predicate((e) =>
                   e is FormatException &&
-                  e.message ==
-                      'Trying to read : from 23-4-2022 1a:00 at 12')));
+                  e.message == 'Trying to read : from 23-4-2022 1a:00 at 12')));
         },
       );
 
@@ -290,7 +289,8 @@ void main() {
           // define an alarm for today which will never be triggered, so we
           // it for tomorrow. If it is after now, then we define it for today.
           if (dateTime_2_23.isBefore(now)) {
-            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 2, 23);
+            expectedDateTime =
+                DateTime(now.year, now.month, now.day + 1, 2, 23);
           } else {
             expectedDateTime = DateTime(now.year, now.month, now.day, 2, 23);
           }
@@ -352,7 +352,8 @@ void main() {
           // define an alarm for today which will never be triggered, so we
           // it for tomorrow. If it is after now, then we define it for today.
           if (dateTime_2_30.isBefore(now)) {
-            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 2, 30);
+            expectedDateTime =
+                DateTime(now.year, now.month, now.day + 1, 2, 30);
           } else {
             expectedDateTime = DateTime(now.year, now.month, now.day, 2, 30);
           }
@@ -405,8 +406,7 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTime_2_3 =
-              DateTime(now.year, now.month, now.day, 2, 3);
+          DateTime dateTime_2_3 = DateTime(now.year, now.month, now.day, 2, 3);
 
           DateTime expectedDateTime;
 
@@ -476,7 +476,8 @@ void main() {
           // define an alarm for today which will never be triggered, so we
           // it for tomorrow. If it is after now, then we define it for today.
           if (dateTime_10_30.isBefore(now)) {
-            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 10, 30);
+            expectedDateTime =
+                DateTime(now.year, now.month, now.day + 1, 10, 30);
           } else {
             expectedDateTime = DateTime(now.year, now.month, now.day, 10, 30);
           }
@@ -585,7 +586,11 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeTomorrowOneHourLater = DateTime(
-              now.year, now.month, now.day + 1, (now.hour > 0) ? now.hour : now.hour + 1, now.minute);
+              now.year,
+              now.month,
+              now.day + 1,
+              (now.hour > 0) ? now.hour : now.hour + 1,
+              now.minute);
 
           int minuteInt = dateTimeTomorrowOneHourLater.minute;
           String minuteStr;
@@ -627,7 +632,7 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr:
                     '${dateTimeTomorrowOneHourLater.hour}:$minuteStr',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowOneHourLater.year} $hourStr:$minuteStr');
         },
@@ -638,7 +643,11 @@ void main() {
           DateTime now = DateTime.now();
 
           DateTime dateTimeTomorrowOneHourBefore = DateTime(
-              now.year, now.month, now.day + 1, (now.hour > 0) ? now.hour - 1 : now.hour, now.minute);
+              now.year,
+              now.month,
+              now.day + 1,
+              (now.hour > 0) ? now.hour - 1 : now.hour,
+              now.minute);
 
           int minuteInt = dateTimeTomorrowOneHourBefore.minute;
           String minuteStr;
@@ -680,7 +689,7 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr:
                     '${dateTimeTomorrowOneHourBefore.hour}:$minuteStr',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowOneHourBefore.year} $hourStr:$minuteStr');
         },
@@ -732,7 +741,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '2:23',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowTimeBefore.year} $hourStr:$minuteStr');
         },
@@ -784,7 +793,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '02:30',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowTimeBefore.year} $hourStr:$minuteStr');
         },
@@ -836,7 +845,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '02:3',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowTimeBefore.year} $hourStr:$minuteStr');
         },
@@ -888,7 +897,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '10:3',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeTomorrowTimeBefore.year} $hourStr:$minuteStr');
         },
@@ -937,7 +946,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '$hourStr:$minuteStr',
-                setToTomorrow: true,
+                setAlarmTimeToNextTime: true,
               ),
               '$dayStr-$monthStr-${dateTimeNow.year} $hourStr:$minuteStr');
         },

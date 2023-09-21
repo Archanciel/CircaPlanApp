@@ -323,7 +323,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // in case true is returned, the _medicAlarmController.text was
     // set to the alarm message and so setState() is called to display
     // the alarm message.
-    if (_isMedicAlarmToDisplay(medicFrenchDateTimeStr)) {
+    if (_isMedicAlarmToDisplay(
+      medicFrenchDateTimeStr: medicFrenchDateTimeStr,
+    )) {
       setState(() {}); // not working on Android smartphones, i.e
       //                  alarm medic code not applied, I don't know
       //                  why ! But once I click on Add button, the
@@ -338,15 +340,19 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// app showing the CalculateSleepDuration screen resumes.
   ///
   /// Returns true if the medic alarm is to be displayed.
-  bool _isMedicAlarmToDisplay(String? medicFrenchDateTimeStr) {
+  bool _isMedicAlarmToDisplay({
+    String? medicFrenchDateTimeStr,
+    DateTime? dateTimeNow, // enables to test the method with a given
+    // date time
+  }) {
     if (medicFrenchDateTimeStr == null || medicFrenchDateTimeStr == '') {
       // the case if the transferDataMap does not contain
       // the 'alarmMedicDateTimeStr' entry.
       return false;
     }
 
-    // if true, this means either we loaded a previous day
-    // json file or we are visualising the current day
+    // if true, this means either that we loaded a previous day
+    // json file or that we are visualising the current day
     // json file and so displaying the alarm doesn't make
     // sense.
     bool wereCurrentDataSaved = wasFileWithCurrenrNewDateTimeSaved();
@@ -372,10 +378,14 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         alarmDateTime.hour,
         alarmDateTime.minute + 240);
 
-    DateTime now = DateTime.now();
+    dateTimeNow ??= DateTime.now(); // if dateTimeNow is null, this
+    // means the method is called from
+    // CalculateSleepDuration screen
+    // and not from a unit test.
 
-    bool isMedicAlarmToDisplay = now.isAfter(alarmDateTimeMinusOneHour) &&
-        now.isBefore(alarmDateTimePlusFourHour);
+    bool isMedicAlarmToDisplay =
+        dateTimeNow.isAfter(alarmDateTimeMinusOneHour) &&
+            dateTimeNow.isBefore(alarmDateTimePlusFourHour);
 
     if (isMedicAlarmToDisplay) {
       _medicAlarmController.text =
@@ -397,13 +407,13 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
 
     bool isFileExisting = File(transferDataJsonFilePathName).existsSync();
+
     return isFileExisting;
   }
 
   void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
-    String nowFrenchDateTimeStr =
-        frenchDateTimeFormat.format(dateTimeNow);
+    String nowFrenchDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
     _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newFrenchFormatDateTimeStr =
@@ -587,8 +597,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       newDateTime = newDateTime.add(Duration(minutes: minuteNb));
     }
 
-    _newFrenchFormatDateTimeStr =
-        frenchDateTimeFormat.format(newDateTime);
+    _newFrenchFormatDateTimeStr = frenchDateTimeFormat.format(newDateTime);
 
     _newDateTimeController.text = _newFrenchFormatDateTimeStr;
 
@@ -632,8 +641,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr: _newFrenchFormatDateTimeStr);
 
-    _newFrenchFormatDateTimeStr =
-        frenchDateTimeFormat.format(DateTime.now());
+    _newFrenchFormatDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newFrenchFormatDateTimeStr;
     _lastFrenchFormatDateTimeStr = '';
     _lastDateTimeController.text = _lastFrenchFormatDateTimeStr;
@@ -695,8 +703,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (_lastFrenchFormatDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
-        String newDateTimeStr =
-            frenchDateTimeFormat.format(newDateTime);
+        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
         _lastFrenchFormatDateTimeStr = newDateTimeStr;
@@ -748,8 +755,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // not first click on Add button
         DateTime? previousDateTime;
 
-        previousDateTime = frenchDateTimeFormat
-            .parse(_lastFrenchFormatDateTimeStr);
+        previousDateTime =
+            frenchDateTimeFormat.parse(_lastFrenchFormatDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
@@ -836,8 +843,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         // wake-up duration and ensuring that the wake-up time
         // history list first item is the date time when I waked
         // up, i.e the newDateTime
-        _addFirstDateTimeStrToHistorylst(_wakeUpTimeStrHistory,
-            frenchDateTimeFormat.format(newDateTime));
+        _addFirstDateTimeStrToHistorylst(
+            _wakeUpTimeStrHistory, frenchDateTimeFormat.format(newDateTime));
       }
 
       _currentSleepDurationStr = currentSleepDuration.HHmm();
@@ -1330,7 +1337,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isMedicAlarmToDisplay(_transferDataMap['alarmMedicDateTimeStr'])
+            _isMedicAlarmToDisplay(
+              medicFrenchDateTimeStr: _transferDataMap['alarmMedicDateTimeStr'],
+            )
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1390,7 +1399,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                       .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
                                     alarmHHmmTimeStr:
                                         alarmMedicDateTimeStr.split(' ').last,
-                                    setToTomorrow: true,
+                                    setAlarmTimeToNextTime: true,
                                   );
 
                                   CircadianFlutterToast.showToast(
@@ -1478,8 +1487,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          String dateTimeStr = frenchDateTimeFormat
-                              .format(DateTime.now());
+                          String dateTimeStr =
+                              frenchDateTimeFormat.format(DateTime.now());
                           _newDateTimeController.text = dateTimeStr;
                           _newFrenchFormatDateTimeStr = dateTimeStr;
 

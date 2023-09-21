@@ -387,7 +387,7 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           String nowDdHhMmStr =
-              '00:${ScreenMixin.HHmmDateTimeFormat.format(DateTime.now())}';
+              '00:${HHmmDateTimeFormat.format(DateTime.now())}';
 
           firstTimeTextField = tester.firstWidget(firstTimeTextFieldFinder)
               as ManuallySelectableTextField;

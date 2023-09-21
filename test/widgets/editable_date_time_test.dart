@@ -89,7 +89,7 @@ Future<void> main() async {
           await tester.pumpAndSettle();
 
           String nowStr =
-              ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+              frenchDateTimeFormat.format(DateTime.now());
           TextField text =
               tester.widget(find.byKey(const Key('editableDateTimeTextField')));
           expect(text.controller!.text, nowStr);
