@@ -578,7 +578,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItemFunction: _applySettibgsMenuItem,
+                          handleSelectedItemFunction: _applySettingsMenuItem,
                         );
 
                         break;
@@ -711,7 +711,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     return MenuItemData(itemDataStrLst: ['Set medic time']);
   }
 
-  Future<void> _applySettibgsMenuItem(
+  Future<void> _applySettingsMenuItem(
       String menuItemStr, BuildContext? context) async {
     if (context == null) {
       return;
@@ -736,7 +736,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           }
 
           String medicAlarmDateTimeStr =
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+              DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: alarmTimeStr,
           );
 

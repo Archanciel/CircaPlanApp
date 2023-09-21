@@ -330,9 +330,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       //                  alarm medic code not applied, I don't know
       //                  why ! But once I click on Add button, the
       //                  alarm is displayed !
-      // CircadianFlutterToast.showToast(
-      //     message: "MEDICS AT $medicHHmmTimeStr O'CLOCK ?",
-      //     backgroundColor: ScreenMixin.APP_WARNING_COLOR);
     }
   }
 
@@ -378,18 +375,32 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         alarmDateTime.hour,
         alarmDateTime.minute + 240);
 
-    dateTimeNow ??= DateTime.now(); // if dateTimeNow is null, this
-    // means the method is called from
-    // CalculateSleepDuration screen
-    // and not from a unit test.
+    // if dateTimeNow is null, this means the method is
+    // called from CalculateSleepDuration screen and not
+    // from a unit test.
+    dateTimeNow ??= DateTime.now();
+
+    while (dateTimeNow.isAfter(alarmDateTimeMinusOneHour) &&
+        !dateTimeNow.isBefore(alarmDateTimePlusFourHour)) {
+      alarmDateTimeMinusOneHour =
+          alarmDateTimeMinusOneHour.add(fiveHoursDuration);
+      alarmDateTimePlusFourHour =
+          alarmDateTimePlusFourHour.add(fiveHoursDuration);
+      alarmDateTime = alarmDateTime.add(fiveHoursDuration);
+    }
 
     bool isMedicAlarmToDisplay =
         dateTimeNow.isAfter(alarmDateTimeMinusOneHour) &&
             dateTimeNow.isBefore(alarmDateTimePlusFourHour);
 
+    String alarmDateTimeStr = frenchDateTimeFormat.format(alarmDateTime);
+
+    _transferDataMap['alarmMedicDateTimeStr'] = alarmDateTimeStr;
+    _updateTransferDataMap();
+
     if (isMedicAlarmToDisplay) {
       _medicAlarmController.text =
-          "MEDICS AT ${medicFrenchDateTimeStr.split(' ').last} ?";
+          "MEDICS AT ${alarmDateTimeStr.split(' ').last} ?";
     }
 
     return isMedicAlarmToDisplay;
@@ -552,7 +563,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
 
-    // addfing a new line improves Comment last line display
+    // fixing the bug which happens when switching to another screen,
+    // loading a json file and back to this screen !
+    try {
+      _sleepDurationCommentController.text;
+    } catch (_) {
+      // the case if the screen is not displayed
+      _sleepDurationCommentController = TextEditingController(
+          text: _transferDataMap['sleepDurationCommentStr'] ?? '');
+    }
+
+    // adding a new line improves Comment last line display
     String sleepDurationCommentStr =
         '${_sleepDurationCommentController.text.trim()}\n';
     map['sleepDurationCommentStr'] = sleepDurationCommentStr;
@@ -1395,21 +1416,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     return;
                                   }
 
-                                  String alarmFrenchDateTimeStr = DateTimeComputer
-                                      .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                                  String nextAlarmFrenchDateTimeStr =
+                                      DateTimeComputer
+                                          .computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                                     alarmHHmmTimeStr:
                                         alarmMedicDateTimeStr.split(' ').last,
+                                        alarmFrenchDateTimeStr: alarmMedicDateTimeStr,
                                     setAlarmTimeToNextTime: true,
                                   );
 
                                   CircadianFlutterToast.showToast(
-                                    message: alarmFrenchDateTimeStr,
+                                    message: nextAlarmFrenchDateTimeStr,
                                     positionWorkingOnOldAndroid:
                                         ToastGravity.BOTTOM,
                                   );
 
                                   _transferDataMap['alarmMedicDateTimeStr'] =
-                                      alarmFrenchDateTimeStr;
+                                      nextAlarmFrenchDateTimeStr;
                                   _transferDataViewModel
                                       .updateAndSaveTransferData();
                                   setState(() {});

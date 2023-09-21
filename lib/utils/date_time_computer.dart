@@ -72,42 +72,40 @@ class DateTimeComputer {
   /// sense if you click on the alarm yes button when the alarm was
   /// diaplayed before the alarm time (for example at 5:30 when the
   /// alarm time is 6:00 !).
-  static String computeTodayOrTomorrowAlarmFrenchDateTimeStr({
+  static String computeTodayOrTomorrowNextAlarmFrenchDateTimeStr({
     required String alarmHHmmTimeStr,
+    String alarmFrenchDateTimeStr = '',
     bool setAlarmTimeToNextTime = false,
   }) {
-    // solving the problem caused by 1 digit hour and/or minute
-    // alarmHHmmTimeStr
-    String formattedAlarmHHmmTimeStr =
-        Utility.formatStringDuration(durationStr: alarmHHmmTimeStr);
-    Duration? alarmHHmmTimeDuration =
-        DateTimeParser.parseHHMMDuration(formattedAlarmHHmmTimeStr);
+    DateTime nextAlarmDateTime;
 
-    if (alarmHHmmTimeDuration == null) {
-      return '';
-    }
-
-    DateTime now = DateTime.now();
-    int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
-    DateTime todayAlarmDateTime = DateTime(
-        now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
-
-    String alarmFrenchDateTimeStr;
-
-    if (setAlarmTimeToNextTime) {
-      alarmFrenchDateTimeStr =
-          setAlarmToTomorrow(now, alarmHHmmTimeDurationInMinutes);
+    if (alarmFrenchDateTimeStr.isNotEmpty) {
+      nextAlarmDateTime = frenchDateTimeFormat.parse(alarmFrenchDateTimeStr);
+      nextAlarmDateTime = nextAlarmDateTime.add(fiveHoursDuration);
     } else {
-      if (todayAlarmDateTime.isAfter(now)) {
-        alarmFrenchDateTimeStr =
-            frenchDateTimeFormat.format(todayAlarmDateTime);
-      } else {
-        alarmFrenchDateTimeStr =
-            setAlarmToTomorrow(now, alarmHHmmTimeDurationInMinutes);
+      // solving the problem caused by 1 digit hour and/or minute
+      // alarmHHmmTimeStr
+      String formattedAlarmHHmmTimeStr =
+          Utility.formatStringDuration(durationStr: alarmHHmmTimeStr);
+      Duration? alarmHHmmTimeDuration =
+          DateTimeParser.parseHHMMDuration(formattedAlarmHHmmTimeStr);
+
+      if (alarmHHmmTimeDuration == null) {
+        return '';
+      }
+
+      DateTime now = DateTime.now();
+      int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
+      DateTime todayAlarmDateTime = DateTime(
+          now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
+      nextAlarmDateTime = todayAlarmDateTime;
+
+      if (todayAlarmDateTime.isBefore(now)) {
+        nextAlarmDateTime = todayAlarmDateTime.add(fiveHoursDuration);
       }
     }
 
-    return alarmFrenchDateTimeStr;
+    return frenchDateTimeFormat.format(nextAlarmDateTime);
   }
 
   static String setAlarmToTomorrow(
