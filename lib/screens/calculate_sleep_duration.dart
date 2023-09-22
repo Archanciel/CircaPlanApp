@@ -396,7 +396,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     String alarmDateTimeStr = frenchDateTimeFormat.format(alarmDateTime);
 
     _transferDataMap['alarmMedicDateTimeStr'] = alarmDateTimeStr;
-    _updateTransferDataMap();
+
+    // setting optional parameter isAfterLoading to true is
+    // necessary so that Undo works. In case of executing
+    // _updateTransferDataMap() after a json file was loaded,
+    // calling _updateTransferDataMap() would update the
+    // circadian.json-1 undo file with the data loaded. Then
+    // clicking on Undo menu item would not undo the load
+    // action.
+    _updateTransferDataMap(
+      isAfterLoading: true, // required, otherwise Undo not working
+    );
 
     if (isMedicAlarmToDisplay) {
       _medicAlarmController.text =
@@ -581,8 +591,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
-      // _updateTransferDataMap() after a json file was loaded, the
-      // calling _updateTransferDataMap() is not useful.
+      // _updateTransferDataMap() after a json file was loaded,
+      // calling _updateTransferDataMap() would update the
+      // circadian.json-1 undo file with the data loaded. Then
+      // clicking on Undo menu item would not undo the load
+      // action.
       _transferDataViewModel.updateAndSaveTransferData();
     }
 
@@ -1421,7 +1434,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                           .computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                                     alarmHHmmTimeStr:
                                         alarmMedicDateTimeStr.split(' ').last,
-                                        alarmFrenchDateTimeStr: alarmMedicDateTimeStr,
+                                    alarmFrenchDateTimeStr:
+                                        alarmMedicDateTimeStr,
                                     setAlarmTimeToNextTime: true,
                                   );
 
