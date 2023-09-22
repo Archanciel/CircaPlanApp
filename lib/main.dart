@@ -708,7 +708,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   }
 
   MenuItemData _buildSettingsMenuItemLst() {
-    return MenuItemData(itemDataStrLst: ['Set medic time']);
+    return MenuItemData(itemDataStrLst: ['Medicaments ...']);
   }
 
   Future<void> _applySettingsMenuItem(
@@ -718,7 +718,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     }
 
     switch (menuItemStr) {
-      case 'Set medic time':
+      case 'Medicaments ...':
         {
           String alarmMedicDateTimeStr =
               _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ??
