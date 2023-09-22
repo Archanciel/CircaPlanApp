@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
-import 'package:circa_plan/screens/screen_mixin.dart';
 
 Future<void> main() async {
   // files in this local test dir are stored in
