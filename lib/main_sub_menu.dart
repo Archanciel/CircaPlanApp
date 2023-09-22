@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Nested PopupMenuButton Example'),
+          title: const Text('Nested PopupMenuButton Example'),
           actions: <Widget>[
             PopupMenuButton<String>(
               onSelected: (String value) {
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        body: Center(
+        body: const Center(
           child: Text('Nested PopupMenuButton Example'),
         ),
       ),
