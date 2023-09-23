@@ -119,7 +119,7 @@ class CalculateSleepDurationData extends ScreenData {
     if (status == null) {
       return '';
     } else {
-      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst\nmedicaments: $medicaments\n';
+      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst\n';
     }
   }
 }

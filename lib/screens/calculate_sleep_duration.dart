@@ -589,6 +589,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['sleepDurationCommentStr'] = sleepDurationCommentStr;
     _sleepDurationCommentController.text = sleepDurationCommentStr;
 
+    // TODO: to remove !
+    // 
+    // temporary code to test save and load of CalulateSleepDuration
+    // screen data
     map['medicaments'] = {
       'Sirdalud': {'frequency': 'hour', 'duration': '05:00'},
       'Lioresal': {'frequency': 'hour', 'duration': '08:00'},
