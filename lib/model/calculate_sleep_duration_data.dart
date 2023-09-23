@@ -11,10 +11,18 @@ class CalculateSleepDurationData extends ScreenData {
   CalculateSleepDurationData() {
     transformers['status'] =
         (value) => value is Status ? value.index : Status.values[value];
+    transformers['medicaments'] = (value) {
+      if (value is Map<String, Map<String, String>>) {
+        return value;
+      } else {
+        return value.cast<String, Map<String, String>>();
+      }
+    };
     objectCreators['sleepHistoryDateTimeStrLst'] = (map) => <String>[];
     objectCreators['wakeUpHistoryDateTimeStrLst'] = (map) => <String>[];
     screenDataType = ScreenDataType.calculateSleepDurationData;
     objectCreators['medicaments'] = (map) => <String, Map<String, String>>{};
+    objectCreators['medicaments.value'] = (map) => <String, String>{};
   }
 
   /// Alternative to dart getter since testing if null is returned by
