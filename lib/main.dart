@@ -501,6 +501,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           selMenuDateTimeItemData: MenuItemData(
                             itemDataStrLst: nonNullablefileNameLst,
+                            // the lastCreatedJsonFileNameStr be bold
                             stylableItemValueStr: lastCreatedJsonFileNameStr,
                           ),
                           posRectangleLTRB: const RelativeRect.fromLTRB(
@@ -553,6 +554,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           selMenuDateTimeItemData: MenuItemData(
                             itemDataStrLst: nonNullablefileNameLst,
+                            // the lastCreatedJsonFileNameStr be bold
                             stylableItemValueStr: lastCreatedJsonFileNameStr,
                           ),
                           posRectangleLTRB: const RelativeRect.fromLTRB(
@@ -711,6 +713,10 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     return MenuItemData(itemDataStrLst: ['Medicaments ...']);
   }
 
+  MenuItemData _buildMedicamentsMenuItemLst() {
+    return MenuItemData(itemDataStrLst: ['Sirdalud', 'Lioresal']);
+  }
+
   Future<void> _applySettingsMenuItem(
       String menuItemStr, BuildContext? context) async {
     if (context == null) {
@@ -719,6 +725,84 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
     switch (menuItemStr) {
       case 'Medicaments ...':
+        {
+          // String alarmMedicDateTimeStr =
+          //     _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ??
+          //         '';
+          // _medicAlarmTimeController.text =
+          //     alarmMedicDateTimeStr.split(' ').last;
+          // _medicAlarmDateTimeController.text = alarmMedicDateTimeStr;
+          // await _openSetMedicTimeDialog(context: context);
+          // String alarmTimeStr = _medicAlarmTimeController.text;
+
+          // if (alarmTimeStr == '') {
+          //   // the case if Cancel button was pressed or if Clear
+          //   // button was pressed and no time was entered
+          //   return;
+          // }
+
+          // String medicAlarmDateTimeStr =
+          //     DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
+          //   alarmHHmmTimeStr: alarmTimeStr,
+          // );
+
+          // if (medicAlarmDateTimeStr == '') {
+          //   // the case if the entered alarmTimeStr is invalid
+          //   CircadianFlutterToast.showToast(
+          //     message: "Invalid alarm time $alarmTimeStr ignored !",
+          //     positionWorkingOnOldAndroid: ToastGravity.TOP,
+          //     isError: true,
+          //   );
+
+          //   return;
+          // }
+
+          // CircadianFlutterToast.showToast(
+          //   message: medicAlarmDateTimeStr,
+          //   positionWorkingOnOldAndroid: ToastGravity.TOP,
+          // );
+
+          // _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
+          //     medicAlarmDateTimeStr;
+          // widget.transferDataViewModel.updateAndSaveTransferData();
+
+          // var currentScreenInstance = _screenNavigTransData
+          //     .transferDataMap['currentScreenStateInstance'];
+
+          // if (currentScreenInstance.widget is CalculateSleepDuration) {
+          //   currentScreenInstance?.callSetState();
+          // }
+
+          // break;
+
+          displayPopupMenu(
+            context: context,
+            selMenuDateTimeItemData: _buildMedicamentsMenuItemLst(),
+            posRectangleLTRB: const RelativeRect.fromLTRB(
+              1.0,
+              130.0,
+              0.0,
+              0.0,
+            ),
+            handleSelectedItemFunction: _applyMedicamentsMenuItem,
+          );
+
+          break;
+        }
+      default:
+        break;
+    }
+  }
+
+  Future<void> _applyMedicamentsMenuItem(
+      String menuItemStr, BuildContext? context) async {
+    if (context == null) {
+      return;
+    }
+
+    switch (menuItemStr) {
+      case 'Sirdalud':
+      case 'Lioresal':
         {
           String alarmMedicDateTimeStr =
               _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ??
