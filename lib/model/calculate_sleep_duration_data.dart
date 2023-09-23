@@ -14,6 +14,7 @@ class CalculateSleepDurationData extends ScreenData {
     objectCreators['sleepHistoryDateTimeStrLst'] = (map) => <String>[];
     objectCreators['wakeUpHistoryDateTimeStrLst'] = (map) => <String>[];
     screenDataType = ScreenDataType.calculateSleepDurationData;
+    objectCreators['medicaments'] = (map) => <String, Map<String, String>>{};
   }
 
   /// Alternative to dart getter since testing if null is returned by
@@ -65,15 +66,18 @@ class CalculateSleepDurationData extends ScreenData {
   set totalDurationPercentStr(String value) =>
       attributes['totalDurationPercentStr'] = value;
 
-  String get sleepPrevDayTotalPercentStr => attributes['sleepPrevDayTotalPercentStr'];
+  String get sleepPrevDayTotalPercentStr =>
+      attributes['sleepPrevDayTotalPercentStr'];
   set sleepPrevDayTotalPercentStr(String value) =>
       attributes['sleepPrevDayTotalPercentStr'] = value;
 
-  String get wakeUpPrevDayTotalPercentStr => attributes['wakeUpPrevDayTotalPercentStr'];
+  String get wakeUpPrevDayTotalPercentStr =>
+      attributes['wakeUpPrevDayTotalPercentStr'];
   set wakeUpPrevDayTotalPercentStr(String value) =>
       attributes['wakeUpPrevDayTotalPercentStr'] = value;
 
-  String get totalPrevDayTotalPercentStr => attributes['totalPrevDayTotalPercentStr'];
+  String get totalPrevDayTotalPercentStr =>
+      attributes['totalPrevDayTotalPercentStr'];
   set totalPrevDayTotalPercentStr(String value) =>
       attributes['totalPrevDayTotalPercentStr'] = value;
 
@@ -87,13 +91,18 @@ class CalculateSleepDurationData extends ScreenData {
   set wakeUpHistoryDateTimeStrLst(List<String> value) =>
       attributes['wakeUpHistoryDateTimeStrLst'] = value;
 
-  String get alarmMedicDateTimeStr => attributes['alarmMedicDateTimeStr'];
-  set alarmMedicDateTimeStr(String value) =>
-      attributes['alarmMedicDateTimeStr'] = value;
-
   String get sleepDurationCommentStr => attributes['sleepDurationCommentStr'];
   set sleepDurationCommentStr(String value) =>
       attributes['sleepDurationCommentStr'] = value;
+
+  Map<String, Map<String, String>> get medicaments => attributes['medicaments'];
+  set medicaments(Map<String, Map<String, String>> value) =>
+      attributes['medicaments'] = value;
+
+  // TODO: remove this attribute
+  String get alarmMedicDateTimeStr => attributes['alarmMedicDateTimeStr'];
+  set alarmMedicDateTimeStr(String value) =>
+      attributes['alarmMedicDateTimeStr'] = value;
 
   @override
   String toString() {
@@ -102,7 +111,7 @@ class CalculateSleepDurationData extends ScreenData {
     if (status == null) {
       return '';
     } else {
-      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst\nalarmMedicDateTimeStr: $alarmMedicDateTimeStr';
+      return 'status: $status\nsleepDurationNewDateTimeStr: $sleepDurationNewDateTimeStr\nsleepDurationPreviousDateTimeStr: $sleepDurationPreviousDateTimeStr\nsleepDurationBeforePreviousDateTimeStr: $sleepDurationBeforePreviousDateTimeStr\nsleepDurationStr: $sleepDurationStr\nwakeUpDurationStr: $wakeUpDurationStr\ntotalDurationStr: $totalDurationStr\nsleepDurationPercentStr: $sleepDurationPercentStr\nwakeUpDurationPercentStr: $wakeUpDurationPercentStr\ntotalDurationPercentStr: $totalDurationPercentStr\nsleepHistoryDateTimeStr: $sleepHistoryDateTimeStrLst\nwakeUpHistoryDateTimeStr: $wakeUpHistoryDateTimeStrLst\nmedicaments: $medicaments\n';
     }
   }
 }

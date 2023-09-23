@@ -589,6 +589,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['sleepDurationCommentStr'] = sleepDurationCommentStr;
     _sleepDurationCommentController.text = sleepDurationCommentStr;
 
+    map['medicaments'] = {
+      'Sirdalud': {'frequency': 'hour', 'duration': '05:00'},
+      'Lioresal': {'frequency': 'hour', 'duration': '08:00'},
+    };
+
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
       // _updateTransferDataMap() after a json file was loaded,

@@ -96,7 +96,7 @@ class TransferDataViewModel {
 
       transferDataJsonFileCreated =
           !await File(saveAsTransferDataJsonFilePathName).exists();
-          
+
       await _transferData.saveTransferDataToFile(
           jsonFilePathName: saveAsTransferDataJsonFilePathName);
     }
@@ -301,6 +301,8 @@ class TransferDataViewModel {
         _transferDataMap!['alarmMedicDateTimeStr'] ?? '';
     calculateSleepDurationData.sleepDurationCommentStr =
         _transferDataMap!['sleepDurationCommentStr'] ?? '';
+    calculateSleepDurationData.medicaments =
+        _transferDataMap!['medicaments'] ?? {};
   }
 
   void updateDateTimeDifferenceDurationData() {
@@ -502,6 +504,7 @@ class TransferDataViewModel {
         calculateSleepDurationData.alarmMedicDateTimeStr;
     _transferDataMap!["sleepDurationCommentStr"] =
         calculateSleepDurationData.sleepDurationCommentStr;
+    _transferDataMap!["medicaments"] = calculateSleepDurationData.medicaments;
 
     DateTimeDifferenceDurationData dateTimeDifferenceDurationData =
         _transferData.dateTimeDifferenceDurationData;
@@ -509,6 +512,8 @@ class TransferDataViewModel {
     String? dateTimeDifferenceStartDateTimeStr =
         dateTimeDifferenceDurationData.getDateTimeDifferenceStartDateTimeStr();
 
+    print(calculateSleepDurationData);
+    
     if (dateTimeDifferenceStartDateTimeStr != null) {
       _transferDataMap!["dtDiffStartDateTimeStr"] =
           dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr;
