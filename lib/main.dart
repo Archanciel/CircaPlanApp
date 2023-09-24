@@ -67,7 +67,7 @@ Future<void> main(List<String> args) async {
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool isAppDirToBeDeleted = false,
 }) async {
-  String path = Utility.getPlaylistDownloadHomePath();
+  String path = Utility.getApplicationDataPath();
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -241,7 +241,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       filePathName: dialogContentEndingWithDeletedFileName,
     );
     String filePathName =
-        '${Utility.getPlaylistDownloadHomePath()}${Platform.pathSeparator}$fileName';
+        '${Utility.getApplicationDataPath()}${Platform.pathSeparator}$fileName';
     TransferDataViewModel.deleteFile(filePathName);
 
     final CircadianSnackBar snackBar =

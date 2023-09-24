@@ -343,7 +343,7 @@ class Utility {
     return extractedHHmmStr;
   }
 
-  static String getPlaylistDownloadHomePath({bool isTest = false}) {
+  static String getApplicationDataPath({bool isTest = false}) {
     if (Platform.isWindows) {
       if (isTest) {
         return kCircadianAppTestDirWindows;
