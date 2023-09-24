@@ -35,6 +35,7 @@ const String kCircadianAppDataTestSaveDir =
     'c:\\temp\\test\\CircadianDataSaved';
 
 const String kDefaultJsonFileName = 'circadian.json';
+const String kSettingsFileName = 'settings.json';
 const double kVerticalFieldDistance = 23.0;
 const double kVerticalFieldDistanceAddSubScreen = 1.0;
 const double kResetButtonBottomDistance = 5.0;
