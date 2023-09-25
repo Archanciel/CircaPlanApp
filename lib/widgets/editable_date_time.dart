@@ -184,8 +184,16 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     widget.dateTimePickerController.text =
         frenchDateTimeFormat.format(_dateTime);
 
-    widget.handleDateTimeModificationFunction(
-        englishDateTimeFormat.format(_dateTime));
+    // Bug fix: now, changing start date time with
+    // fixed end date time checkbox set to true updates
+    // the duration
+
+    // widget.handleDateTimeModificationFunction(
+    //     englishDateTimeFormat.format(_dateTime));
+      widget.handleSelectedDateTimeStrFunction(
+        frenchDateTimeFormat.format(_dateTime),
+        widget.isStartDateTimeButton,
+      );
   }
 
   /// The _selectDatePickerTime method displays a Date Picker dialog
