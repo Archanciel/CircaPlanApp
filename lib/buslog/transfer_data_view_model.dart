@@ -204,7 +204,10 @@ class TransferDataViewModel {
         _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.addDurationStartDateTimeStr =
-        _transferDataMap!['addDurStartDateTimeStr'];
+        // ?? _transferDataMap!['calcSlDurNewDateTimeStr'] avoid
+        // null not String exception thrown if data are entered
+        // without first pressing on Reset button
+        _transferDataMap!['addDurStartDateTimeStr'] ?? _transferDataMap!['calcSlDurNewDateTimeStr'];
 
     addDurationToDateTimeData.firstDurationIconType = (firstDurationSign > 0)
         ? DurationIconType.add
