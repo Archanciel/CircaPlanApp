@@ -153,7 +153,10 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
 
   /// For widget test only
   void handleEndDateTimeChangeTst(String endDateTimeEnglishFormatStr) {
-    stateInstance.handleEndDateTimeChange(endDateTimeEnglishFormatStr);
+    stateInstance.handleEndDateTimeChange(
+      endDateTimeEnglishFormatStr,
+      false, // parm value not used, but required by method signature
+    );
   }
 }
 
@@ -383,8 +386,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = englishDateTimeFormat
-          .parse(_startDateTimeEnglishFormatStr);
+      startDateTime =
+          englishDateTimeFormat.parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (startDateTime == null) {
@@ -415,8 +418,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         DateTime? endDateTime;
 
         try {
-          endDateTime =
-              englishDateTimeFormat.parse(_endDateTimeStr);
+          endDateTime = englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
         if ((wasStartDateTimeButtonClicked ?? false) ||
@@ -483,8 +485,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? endDateTime;
 
     try {
-      endDateTime =
-          frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
+      endDateTime = frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -493,13 +494,16 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
   }
 
-  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+  void handleEndDateTimeChange(
+    String endDateTimeEnglishFormatStr,
+    bool notUsed, // parm required since the method is passed
+    //               to the EditableDateTime widget constructor
+  ) {
     _endDateTimeStr = endDateTimeEnglishFormatStr;
     DateTime? endDateTime;
 
     try {
-      endDateTime =
-          englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
+      endDateTime = englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -511,8 +515,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = englishDateTimeFormat
-          .parse(_startDateTimeEnglishFormatStr);
+      startDateTime =
+          englishDateTimeFormat.parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
     Duration duration;
