@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -1963,20 +1964,60 @@ Future<void> main() async {
 
           await tester.pumpAndSettle();
 
-          // clicking on the Reset button
-          await tester.tap(find.byKey(const Key('resetButton')));
+          // Clicking on the third icon in the navigation bar
+          await tester.tap(
+              find.byKey(const Key('navBarAddDurationToDateTimePageThree')));
           await tester.pumpAndSettle();
 
-          // clicking on the Confirm reset dialog Ok button
-          await tester.tap(find.text('Ok').first);
-          await tester.pumpAndSettle();
+          // Confirming that the Add Duration To Date Time page
+          // is displayed
+          expect(find.text('12-07-2022 16:00'), findsOneWidget);
 
-          TextField newDateTimeTextField =
-              tester.widget(find.byKey(const Key('newDateTimeTextField')));
           final String nowFrenchFormatDateTimeStr =
               frenchDateTimeFormat.format(DateTime.now());
-          expect(newDateTimeTextField.controller!.text,
-              nowFrenchFormatDateTimeStr);
+
+          final DurationDateTimeEditor firstDurationDateTimeEditorWidget =
+              tester.firstWidget(find
+                      .byKey(const Key('firstAddSubtractResultableDuration')))
+                  as DurationDateTimeEditor;
+          final DurationDateTimeEditor secondDurationDateTimeEditorWidget =
+              tester.firstWidget(find
+                      .byKey(const Key('secondAddSubtractResultableDuration')))
+                  as DurationDateTimeEditor;
+          final DurationDateTimeEditor thirdDurationDateTimeEditorWidget =
+              tester.firstWidget(find
+                      .byKey(const Key('thirdAddSubtractResultableDuration')))
+                  as DurationDateTimeEditor;
+
+          confirmDurationDisplayedValuesUsingTransferDataMap(
+            firstDurationDateTimeEditorWidget,
+            transferDataMapCircadian,
+          );
+          confirmDurationDisplayedValuesUsingTransferDataMap(
+            secondDurationDateTimeEditorWidget,
+            transferDataMapCircadian,
+          );
+          confirmDurationDisplayedValuesUsingTransferDataMap(
+            thirdDurationDateTimeEditorWidget,
+            transferDataMapCircadian,
+          );
+
+          // Now setting firstDateTimeCheckBox to true
+
+          final Finder firstDateTimeCheckboxFinder =
+              find.byKey(const Key('firstFixedDateTimeCheckbox'));
+          Checkbox firstDateTimeCheckBox =
+              tester.firstWidget(firstDateTimeCheckboxFinder) as Checkbox;
+          expect(firstDateTimeCheckBox.value, false);
+
+          // typing on firstDateTimeCheckBox
+          await tester.tap(firstDateTimeCheckboxFinder);
+          await tester.pumpAndSettle();
+          firstDateTimeCheckBox = // checkbox must be obtained again !
+              tester.firstWidget(firstDateTimeCheckboxFinder) as Checkbox;
+          expect(firstDateTimeCheckBox.value, true);
+
+          int a = 1;
 
           // loading the circadian.json file after clicking
           // on Reset in the Sleep Duration screen
@@ -1990,10 +2031,6 @@ Future<void> main() async {
                   ['sleepDurationNewDateTimeStr'],
               nowFrenchFormatDateTimeStr);
 
-          // checking that the status is Wake-up after ressetting
-          // the Sleep Duration screen
-          expect(circadianMap['calculateSleepDurationData']['status'], 0);
-
           // clicking on Add date time button
           await tester.tap(find.byKey(const Key('addNewDateTimeButton')));
           await tester.pumpAndSettle();
@@ -2003,6 +2040,9 @@ Future<void> main() async {
           // it.
           await tester.tap(find.text('Ok').first);
           await tester.pumpAndSettle();
+
+          TextField newDateTimeTextField =
+              tester.widget(find.byKey(const Key('newDateTimeTextField')));
 
           // checking that startDateTime text field is Now date time at french format
           newDateTimeTextField =
@@ -2029,6 +2069,38 @@ Future<void> main() async {
         },
       );
     },
+  );
+}
+
+void confirmDurationDisplayedValuesUsingTransferDataMap(
+  DurationDateTimeEditor durationDateTimeEditorWidget,
+  Map<String, dynamic> transferDataMapCircadian,
+) {
+  final String widgetPrefix = durationDateTimeEditorWidget.widgetPrefix;
+
+  expect(
+    durationDateTimeEditorWidget.durationStrTst,
+    transferDataMapCircadian['${widgetPrefix}DurationStr'],
+  );
+
+  expect(
+    durationDateTimeEditorWidget.durationSignTst,
+    transferDataMapCircadian['${widgetPrefix}DurationSign'],
+  );
+
+  expect(
+    durationDateTimeEditorWidget.durationIconTst,
+    transferDataMapCircadian['${widgetPrefix}DurationIconData'],
+  );
+
+  expect(
+    durationDateTimeEditorWidget.durationIconColorTst,
+    transferDataMapCircadian['${widgetPrefix}DurationIconColor'],
+  );
+
+  expect(
+    durationDateTimeEditorWidget.durationTextColorTst,
+    transferDataMapCircadian['${widgetPrefix}DurationTextColor'],
   );
 }
 

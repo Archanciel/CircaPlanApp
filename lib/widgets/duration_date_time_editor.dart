@@ -29,6 +29,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   // instance variables used to pass values to the
   // _DurationDateTimeEditorState constructor
   final String _widgetPrefix;
+  String get widgetPrefix => _widgetPrefix;
+  
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
