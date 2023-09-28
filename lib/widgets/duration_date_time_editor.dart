@@ -30,7 +30,7 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   // _DurationDateTimeEditorState constructor
   final String _widgetPrefix;
   String get widgetPrefix => _widgetPrefix;
-  
+
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
@@ -110,19 +110,19 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
       stateInstance._dateTimePickerController;
 
   /// For widget test only
-  String get durationStrTst => stateInstance._durationStr;
+  String get durationStr => stateInstance._durationStr;
 
   /// For widget test only
-  int get durationSignTst => stateInstance._durationSign;
+  int get durationSign => stateInstance._durationSign;
 
   /// For widget test only
-  IconData get durationIconTst => stateInstance._durationIcon;
+  IconData get durationIcon => stateInstance._durationIcon;
 
   /// For widget test only
-  Color get durationIconColorTst => stateInstance._durationIconColor;
+  Color get durationIconColor => stateInstance._durationIconColor;
 
   /// For widget test only
-  Color get durationTextColorTst => stateInstance._durationTextColor;
+  Color get durationTextColor => stateInstance._durationTextColor;
 
   /// Calls the _DurationDateTimeEditorState.reset() method.
   void reset({required String resetDateTimeEnglishFormatStr}) {

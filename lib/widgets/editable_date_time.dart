@@ -270,7 +270,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                 ),
                 child: GestureDetector(
                   child: TextField(
-                    key: const Key('editableDateTimeTextField'),
+                    key: Key('${widget.widgetPrefix}EditableDateTimeTextField'),
                     decoration: const InputDecoration.collapsed(hintText: ''),
                     style: const TextStyle(
                         color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,

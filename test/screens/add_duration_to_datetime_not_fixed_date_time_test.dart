@@ -138,7 +138,7 @@ Future<void> main() async {
               ));
 
           expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
+            firstDurationDateTimeEditorWidget.durationStr,
             transferDataMap['firstDurationStr'], // 9:30
           );
 
@@ -151,7 +151,7 @@ Future<void> main() async {
               ));
 
           expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
+            secondDurationDateTimeEditorWidget.durationStr,
             transferDataMap['secondDurationStr'], // 3:30
           );
 
@@ -164,7 +164,7 @@ Future<void> main() async {
               ));
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
+            thirdDurationDateTimeEditorWidget.durationStr,
             transferDataMap['thirdDurationStr'], // 11:00
           );
 
@@ -202,28 +202,28 @@ Future<void> main() async {
               englishFormatFirstNewEndDateTimeStr);
 
           expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
+            firstDurationDateTimeEditorWidget.durationStr,
             '11:30', // duration 9:30 + 2:00 = 11:30 hours
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationSignTst,
+            firstDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationIconTst,
+            firstDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            firstDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            firstDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -247,28 +247,28 @@ Future<void> main() async {
               englishFormatSecondNewEndDateTimeStr);
 
           expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
+            secondDurationDateTimeEditorWidget.durationStr,
             '03:30', // duration not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationSignTst,
+            secondDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationIconTst,
+            secondDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            secondDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            secondDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -291,28 +291,28 @@ Future<void> main() async {
               englishFormatThirdNewEndDateTimeStr);
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
+            thirdDurationDateTimeEditorWidget.durationStr,
             '11:00', // duration not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationSignTst,
+            thirdDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationIconTst,
+            thirdDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            thirdDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            thirdDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -364,7 +364,7 @@ Future<void> main() async {
               ));
 
           expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
+            firstDurationDateTimeEditorWidget.durationStr,
             transferDataMap['firstDurationStr'], // 9:30
           );
 
@@ -377,7 +377,7 @@ Future<void> main() async {
               ));
 
           expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
+            secondDurationDateTimeEditorWidget.durationStr,
             transferDataMap['secondDurationStr'], // 3:30
           );
 
@@ -390,7 +390,7 @@ Future<void> main() async {
               ));
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
+            thirdDurationDateTimeEditorWidget.durationStr,
             transferDataMap['thirdDurationStr'], // 11:00
           );
 
@@ -428,28 +428,28 @@ Future<void> main() async {
               englishFormatFirstNewEndDateTimeStr);
 
           expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
+            firstDurationDateTimeEditorWidget.durationStr,
             '4:00', // duration 9:30 - 5:30 = 4 hours
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationSignTst,
+            firstDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationIconTst,
+            firstDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            firstDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            firstDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -473,28 +473,28 @@ Future<void> main() async {
               englishFormatSecondNewEndDateTimeStr);
 
           expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
+            secondDurationDateTimeEditorWidget.durationStr,
             '03:30', // duration not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationSignTst,
+            secondDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationIconTst,
+            secondDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            secondDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            secondDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -517,28 +517,28 @@ Future<void> main() async {
               englishFormatThirdNewEndDateTimeStr);
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
+            thirdDurationDateTimeEditorWidget.durationStr,
             '11:00', // duration not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationSignTst,
+            thirdDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationIconTst,
+            thirdDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            thirdDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            thirdDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -590,7 +590,7 @@ Future<void> main() async {
               ));
 
           expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
+            firstDurationDateTimeEditorWidget.durationStr,
             transferDataMap['firstDurationStr'], // 9:30
           );
 
@@ -603,7 +603,7 @@ Future<void> main() async {
               ));
 
           expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
+            secondDurationDateTimeEditorWidget.durationStr,
             transferDataMap['secondDurationStr'], // 3:30
           );
 
@@ -616,7 +616,7 @@ Future<void> main() async {
               ));
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
+            thirdDurationDateTimeEditorWidget.durationStr,
             transferDataMap['thirdDurationStr'], // 11:00
           );
 
@@ -654,28 +654,28 @@ Future<void> main() async {
               englishFormatFirstNewEndDateTimeStr);
 
           expect(
-            firstDurationDateTimeEditorWidget.durationStrTst,
+            firstDurationDateTimeEditorWidget.durationStr,
             '0:30', // duration 9:30 - 10:00 = 0:30 hours
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationSignTst,
+            firstDurationDateTimeEditorWidget.durationSign,
             -1, // duration sign not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationIconTst,
+            firstDurationDateTimeEditorWidget.durationIcon,
             Icons.remove, // duration icon not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationIconColorTst,
+            firstDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationNegativeColor, // duration icon color not changed
           );
 
           expect(
-            firstDurationDateTimeEditorWidget.durationTextColorTst,
+            firstDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationNegativeColor, // duration text color not changed
           );
@@ -699,28 +699,28 @@ Future<void> main() async {
               englishFormatSecondNewEndDateTimeStr);
 
           expect(
-            secondDurationDateTimeEditorWidget.durationStrTst,
+            secondDurationDateTimeEditorWidget.durationStr,
             '03:30', // duration not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationSignTst,
+            secondDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationIconTst,
+            secondDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationIconColorTst,
+            secondDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            secondDurationDateTimeEditorWidget.durationTextColorTst,
+            secondDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );
@@ -743,28 +743,28 @@ Future<void> main() async {
               englishFormatThirdNewEndDateTimeStr);
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationStrTst,
+            thirdDurationDateTimeEditorWidget.durationStr,
             '11:00', // duration not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationSignTst,
+            thirdDurationDateTimeEditorWidget.durationSign,
             1, // duration sign not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationIconTst,
+            thirdDurationDateTimeEditorWidget.durationIcon,
             Icons.add, // duration icon not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationIconColorTst,
+            thirdDurationDateTimeEditorWidget.durationIconColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
-            thirdDurationDateTimeEditorWidget.durationTextColorTst,
+            thirdDurationDateTimeEditorWidget.durationTextColor,
             DurationDateTimeEditor
                 .durationPositiveColor, // duration text color not changed
           );

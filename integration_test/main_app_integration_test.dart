@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -2008,6 +2010,8 @@ Future<void> main() async {
               find.byKey(const Key('firstFixedDateTimeCheckbox'));
           Checkbox firstDateTimeCheckBox =
               tester.firstWidget(firstDateTimeCheckboxFinder) as Checkbox;
+
+          // checking that firstDateTimeCheckBox is not checked
           expect(firstDateTimeCheckBox.value, false);
 
           // typing on firstDateTimeCheckBox
@@ -2015,7 +2019,28 @@ Future<void> main() async {
           await tester.pumpAndSettle();
           firstDateTimeCheckBox = // checkbox must be obtained again !
               tester.firstWidget(firstDateTimeCheckboxFinder) as Checkbox;
+
+          // checking that firstDateTimeCheckBox is checked
           expect(firstDateTimeCheckBox.value, true);
+
+          // Now change the first date time to 12-07-2022 12:00
+
+          Finder startDateTimeTextFieldFinder = find.byKey(const Key('startEditableDateTimeTextField'));
+          final TextField startDateTimeTextField =
+              tester.widget(startDateTimeTextFieldFinder);
+
+          // checking that startDateTime initial text field
+          // value is 12-07-2022 16:00
+          expect(startDateTimeTextField.controller!.text,
+              '12-07-2022 16:00');
+
+          // double tapping on startDateTime text field
+          // in order to open the date time picker
+          await tester.tap(startDateTimeTextFieldFinder);
+          await tester.pump(kDoubleTapMinTime);
+          await tester.tap(startDateTimeTextFieldFinder);
+          await tester.pumpAndSettle();
+
 
           int a = 1;
 
@@ -2079,27 +2104,27 @@ void confirmDurationDisplayedValuesUsingTransferDataMap(
   final String widgetPrefix = durationDateTimeEditorWidget.widgetPrefix;
 
   expect(
-    durationDateTimeEditorWidget.durationStrTst,
+    durationDateTimeEditorWidget.durationStr,
     transferDataMapCircadian['${widgetPrefix}DurationStr'],
   );
 
   expect(
-    durationDateTimeEditorWidget.durationSignTst,
+    durationDateTimeEditorWidget.durationSign,
     transferDataMapCircadian['${widgetPrefix}DurationSign'],
   );
 
   expect(
-    durationDateTimeEditorWidget.durationIconTst,
+    durationDateTimeEditorWidget.durationIcon,
     transferDataMapCircadian['${widgetPrefix}DurationIconData'],
   );
 
   expect(
-    durationDateTimeEditorWidget.durationIconColorTst,
+    durationDateTimeEditorWidget.durationIconColor,
     transferDataMapCircadian['${widgetPrefix}DurationIconColor'],
   );
 
   expect(
-    durationDateTimeEditorWidget.durationTextColorTst,
+    durationDateTimeEditorWidget.durationTextColor,
     transferDataMapCircadian['${widgetPrefix}DurationTextColor'],
   );
 }
