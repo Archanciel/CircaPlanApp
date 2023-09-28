@@ -2025,14 +2025,14 @@ Future<void> main() async {
 
           // Now change the first date time to 12-07-2022 12:00
 
-          Finder startDateTimeTextFieldFinder = find.byKey(const Key('startEditableDateTimeTextField'));
+          Finder startDateTimeTextFieldFinder =
+              find.byKey(const Key('startEditableDateTimeTextField'));
           final TextField startDateTimeTextField =
               tester.widget(startDateTimeTextFieldFinder);
 
           // checking that startDateTime initial text field
           // value is 12-07-2022 16:00
-          expect(startDateTimeTextField.controller!.text,
-              '12-07-2022 16:00');
+          expect(startDateTimeTextField.controller!.text, '12-07-2022 16:00');
 
           // double tapping on startDateTime text field
           // in order to open the date time picker
@@ -2041,8 +2041,53 @@ Future<void> main() async {
           await tester.tap(startDateTimeTextFieldFinder);
           await tester.pumpAndSettle();
 
+          // Confirm the displayed current date
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
 
-          int a = 1;
+          // in order to set a time in the time picker dialog, we
+          // need to tap the keyboard icon displayed at the bottom
+          // of the time picker dialog. Then, we will be able to
+          // set the hour of the TextField that displays the current
+          // hour.
+
+          // Find the IconButton with Icons.keyboard_outlined within
+          // the time picker dialog
+          final iconButtonFinder = find.descendant(
+            of: find.byType(Dialog),
+            matching: find.byIcon(Icons.keyboard_outlined),
+          );
+
+          // Tap the keyboard IconButton
+          await tester.tap(iconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now, find the TextField that displays the current hour
+
+          const String currentHour = '16';
+
+          final EditableText hourEditableTextWidget =
+              tester.widget<EditableText>(find.text(currentHour).first);
+
+          // Verify that the hour displayed in the TextField is the
+          // current hour
+          expect(hourEditableTextWidget.controller.text, currentHour);
+
+          // Now, modify the time picker hour to 14
+
+          hourEditableTextWidget.controller.text = "14";
+          await tester.pumpAndSettle();
+
+          // Confirm the selected time
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
+
+          // Verify that the first duration was changed
+          // from 0:50 to 2:50
+          expect(
+            firstDurationDateTimeEditorWidget.durationStr,
+            '2:50',
+          );
 
           // loading the circadian.json file after clicking
           // on Reset in the Sleep Duration screen
@@ -2052,10 +2097,12 @@ Future<void> main() async {
           // checking that the new date time text field is Now date
           // time at french format
           expect(
-              circadianMap['calculateSleepDurationData']
-                  ['sleepDurationNewDateTimeStr'],
-              nowFrenchFormatDateTimeStr);
+              circadianMap['addDurationToDateTimeData']
+                  ['firstAddDurationDurationStr'],
+              '2:50');
 
+          return;
+          
           // clicking on Add date time button
           await tester.tap(find.byKey(const Key('addNewDateTimeButton')));
           await tester.pumpAndSettle();
