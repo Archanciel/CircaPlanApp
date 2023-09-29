@@ -1857,7 +1857,7 @@ Future<void> main() async {
     'Add Duration To Date Time screen testing',
     () {
       testWidgets(
-        'Test that the first New date time addition updates status to Sleep, confirming bug fix',
+        'With first end date time fix checkbox checked, testing various changes to the start date time and first duration value',
         (tester) async {
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
           Utility.copyFileToDirectorySync(
@@ -2108,23 +2108,21 @@ Future<void> main() async {
             firstDurationTextFieldFinder,
           );
 
-          // Change the first duration to 3:50
-          // firstDurationEditableTextWidget.controller!.text = "3:50";
-          // await tester.pumpAndSettle();
+          // Now changing the first duration to 3:50
 
-          // Simuler un long appui pour sélectionner tout le texte
+          // Simulate a long press to select all the text
           await tester.longPress(firstDurationTextFieldFinder);
           await tester.pumpAndSettle();
 
-          // Entrer du nouveau texte
-          await tester.enterText(firstDurationTextFieldFinder, '3:50');
+          // Enter new duration value os 3:50
+          await tester.enterText(firstDurationTextFieldFinder, '3:50',);
           await tester.pumpAndSettle();
 
-          // Simuler l'appui sur la touche ENTER
-          await tester.testTextInput.receiveAction(TextInputAction.done);
+          // Simulate pressing the ENTER key
+          await tester.testTextInput.receiveAction(TextInputAction.done,);
           await tester.pumpAndSettle();
 
-          // Vérifier que le nouveau texte est bien dans le TextField
+          // Verify that the new text is in the TextField
           expect(find.text('3:50'), findsOneWidget);
 
           // checking that startDateTime text field value is now
