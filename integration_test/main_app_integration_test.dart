@@ -2072,7 +2072,7 @@ Future<void> main() async {
           // current hour
           expect(hourEditableTextWidget.controller.text, currentHour);
 
-          // Now, modify the time picker hour to 14
+          // Now, modify the time picker hour from 16 to 14
 
           hourEditableTextWidget.controller.text = "14";
           await tester.pumpAndSettle();
@@ -2088,20 +2088,52 @@ Future<void> main() async {
             '2:50',
           );
 
-          // loading the circadian.json file after clicking
-          // on Reset in the Sleep Duration screen
+          // loading the circadian.json file after modifying
+          // the start date time hour
           Map<String, dynamic> circadianMap =
               await readJsonFile(transferDataJsonFilePathNameCircadian);
 
-          // checking that the new date time text field is Now date
-          // time at french format
+          // Verify that the first duration was changed
+          // stored in the app json file is 2:50
           expect(
               circadianMap['addDurationToDateTimeData']
                   ['firstAddDurationDurationStr'],
               '2:50');
 
+          // Now, change the first duration to 3:50
+
+          Finder firstDurationTextFieldFinder =
+              find.byKey(const Key('firstManuallySelectableTextField'));
+          final TextField firstDurationTextField = tester.widget<TextField>(
+            firstDurationTextFieldFinder,
+          );
+
+          // Change the first duration to 3:50
+          // firstDurationEditableTextWidget.controller!.text = "3:50";
+          // await tester.pumpAndSettle();
+
+          // Simuler un long appui pour sélectionner tout le texte
+          await tester.longPress(firstDurationTextFieldFinder);
+          await tester.pumpAndSettle();
+
+          // Entrer du nouveau texte
+          await tester.enterText(firstDurationTextFieldFinder, '3:50');
+          await tester.pumpAndSettle();
+
+          // Simuler l'appui sur la touche ENTER
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+          await tester.pumpAndSettle();
+
+          // Vérifier que le nouveau texte est bien dans le TextField
+          expect(find.text('3:50'), findsOneWidget);
+
+          // checking that startDateTime text field value is now
+          // 12-07-2022 13:00, i.e. 1 hour before 14:00 due to
+          // the first duration change from 2:50 to 3:50
+          expect(startDateTimeTextField.controller!.text, '12-07-2022 13:00');
+
           return;
-          
+
           // clicking on Add date time button
           await tester.tap(find.byKey(const Key('addNewDateTimeButton')));
           await tester.pumpAndSettle();

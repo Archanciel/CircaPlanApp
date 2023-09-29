@@ -142,7 +142,7 @@ class _ManuallySelectableTextFieldState
         // TextField.
         // Required for onLongPress selection to work
         child: TextField(
-          key: const Key('manuallySelectableTextField'),
+          key: Key('${widget.widgetPrefixOrName}ManuallySelectableTextField'),
           // Required, otherwise, field not focusable due to
           // IgnorePointer wrapping
           focusNode: _textfieldFocusNode,
