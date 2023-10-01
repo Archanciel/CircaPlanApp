@@ -18,8 +18,13 @@ enum ClipboardLastAction {
   paste,
 }
 
+// this global variable is used to prevent the
+// CalculateSleepDuration screen which is the app default
+// screen from reloading data
+bool isAppStarting = true;
+
 const String kApplicationName = "Circadian Calculator";
-const String kApplicationVersion = '0.4.9';
+const String kApplicationVersion = '0.5.0';
 const String kCircadianAppDir = '/storage/emulated/0/Download/CircadianData';
 const String kCircadianAppDirWindows =
     "C:\\Users\\Jean-Pierre\\Downloads\\Circadian";

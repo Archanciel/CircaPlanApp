@@ -395,6 +395,8 @@ class TransferDataViewModel {
     DurationIconType? durationIconType =
         addDurationToDateTimeData.getFirstDurationIconType();
 
+    _transferDataMap ??= {};
+
     if (durationIconType != null) {
       _transferDataMap!["addDurStartDateTimeStr"] =
           addDurationToDateTimeData.addDurationStartDateTimeStr;

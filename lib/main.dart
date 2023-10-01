@@ -89,7 +89,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
 
   if (jsonFileExists) {
-    transferDataViewModel.loadTransferData();
+    await transferDataViewModel.loadTransferData();
   }
 
   return transferDataViewModel;
@@ -340,7 +340,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ),
     ];
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       // Adds a call back function called after the _MainAppState
       // build() method has been executed. This solves the problem
       // of the first screen not displaying the values contained in
@@ -348,7 +348,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       //
       // This anonymous function is called only once, when the app
       // is launched (or restarted).
-      loadFileNameNoMsg('circadian.json');
+      await loadFileNameNoMsg('circadian.json');
     });
   }
 

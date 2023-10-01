@@ -279,11 +279,10 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     setState(() {});
   }
 
-  @override
-
   /// Called each time the CalculateSleepDuration screen
   /// is selected or the app showing the
   /// CalculateSleepDuration screen resumes.
+  @override
   void initState() {
     super.initState();
 
@@ -301,7 +300,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
 
-    _updateWidgets();
+    if (isAppStarting) {
+      // if the global variable isAppStarting is true, this means
+      // the app is starting and so the CalculateSleepDuration
+      // screen is displayed
+      isAppStarting = false;
+      _updateWidgets(isAfterLoading: true);
+    } else {
+      _updateWidgets();
+    }
   }
 
   @override
