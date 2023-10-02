@@ -202,6 +202,9 @@ Future<void> main() async {
           transferDataViewModelTwo.transferDataMap = transferDataMapTwo;
           await transferDataViewModelTwo.updateAndSaveTransferData();
 
+          final String nowFrenchFormatDateTimeStr =
+              frenchDateTimeFormat.format(DateTime.now());
+
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
@@ -217,10 +220,8 @@ Future<void> main() async {
 
           TextField newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          final String nowFrenchFormatDateTimeStr =
-              frenchDateTimeFormat.format(DateTime.now());
           expect(newDateTimeTextField.controller!.text,
-              nowFrenchFormatDateTimeStr);
+              '14-07-2022 13:09');
 
           // clicking on AppBar popup menu button
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
