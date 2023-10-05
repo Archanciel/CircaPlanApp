@@ -340,8 +340,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     }
   }
 
-  /// Called each time the CalculateSleepDuration screen is selected or the
-  /// app showing the CalculateSleepDuration screen resumes.
+  /// Called each time the CalculateSleepDuration screen is selected
+  /// or the app showing the CalculateSleepDuration screen resumes.
   ///
   /// Returns true if the medic alarm is to be displayed.
   bool _isMedicAlarmToDisplay({
@@ -412,7 +412,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // clicking on Undo menu item would not undo the load
     // action.
     _updateTransferDataMap(
-      isAfterLoading: true, // required, otherwise Undo not working
+      // avoiding passing true to isAfterLoading parameter
+      // in order to verify if this solves the difficulty
+      // reproductable bug
+      //
+      // isAfterLoading: true, // required, otherwise Undo not working
     );
 
     if (isMedicAlarmToDisplay) {
