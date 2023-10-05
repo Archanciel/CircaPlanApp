@@ -75,7 +75,6 @@ class DateTimeComputer {
   static String computeTodayOrTomorrowNextAlarmFrenchDateTimeStr({
     required String alarmHHmmTimeStr,
     String alarmFrenchDateTimeStr = '',
-    bool setAlarmTimeToNextTime = false,
   }) {
     DateTime nextAlarmDateTime;
 
@@ -100,7 +99,7 @@ class DateTimeComputer {
           now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
       nextAlarmDateTime = todayAlarmDateTime;
 
-      if (todayAlarmDateTime.isBefore(now)) {
+      if (todayAlarmDateTime.isBefore(now) || todayAlarmDateTime == now) {
         nextAlarmDateTime = todayAlarmDateTime.add(fiveHoursDuration);
       }
     }

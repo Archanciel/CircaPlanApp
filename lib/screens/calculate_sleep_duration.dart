@@ -1447,7 +1447,6 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                         alarmMedicDateTimeStr.split(' ').last,
                                     alarmFrenchDateTimeStr:
                                         alarmMedicDateTimeStr,
-                                    setAlarmTimeToNextTime: true,
                                   );
 
                                   CircadianFlutterToast.showToast(
