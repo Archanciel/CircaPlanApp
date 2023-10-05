@@ -436,7 +436,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     );
 
     String transferDataJsonFilePathName =
-        '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
+        '${Utility.getApplicationDataPath()}${Platform.pathSeparator}$savedJsonFileName';
 
     bool isFileExisting = File(transferDataJsonFilePathName).existsSync();
 
