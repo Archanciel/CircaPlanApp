@@ -610,7 +610,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               left: -18,
               top: -10,
               child: TextButton.icon(
-                key: const Key('durationSignButton'),
+                key: Key('${_widgetPrefix}DurationSignButton'),
                 icon: Icon(
                   _durationIcon,
                   size: 30,
