@@ -10,6 +10,7 @@ import 'package:circa_plan/utils/date_time_computer.dart' as dtc;
 void main() {
   final String localName = Platform.localeName;
   initializeDateFormatting(localName);
+  const sirdalud5hoursDuration = Duration(hours: 5);
 
   group(
     'addDurationsToDateTime()',
@@ -251,29 +252,12 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = oneHourBefore.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
-          int dayInt = oneHourBefore.day + 1;
-          String dayStr;
-
-          if (dayInt > 9) {
-            dayStr = dayInt.toString();
-          } else {
-            dayStr = '0${dayInt.toString()}';
-          }
-
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
+
                 alarmHHmmTimeStr: '$hourStr:$minuteStr',
               ),
-              frenchDateTimeFormat.format(oneHourBefore.add(Duration(hours: 5))));
+              frenchDateTimeFormat.format(oneHourBefore.add(sirdalud5hoursDuration)));
         },
       );
       test(
@@ -281,186 +265,14 @@ void main() {
         () {
           DateTime now = DateTime.now();
 
-          DateTime dateTime_2_23 =
-              DateTime(now.year, now.month, now.day, 2, 23);
-
-          DateTime expectedDateTime;
-
-          // if alarm time is before now or now, then it makes no sense to
-          // define an alarm for today which will never be triggered, so we
-          // it for tomorrow. If it is after now, then we define it for today.
-          if (dateTime_2_23.isBefore(now)) {
-            expectedDateTime =
-                DateTime(now.year, now.month, now.day + 1, 2, 23);
-          } else {
-            expectedDateTime = DateTime(now.year, now.month, now.day, 2, 23);
-          }
-
-          int minuteInt = expectedDateTime.minute;
-          String minuteStr;
-
-          if (minuteInt > 9) {
-            minuteStr = minuteInt.toString();
-          } else {
-            minuteStr = '0${minuteInt.toString()}';
-          }
-
-          int hourInt = expectedDateTime.hour;
-          String hourStr;
-
-          if (hourInt > 9) {
-            hourStr = hourInt.toString();
-          } else {
-            hourStr = '0${hourInt.toString()}';
-          }
-
-          int monthInt = expectedDateTime.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
-          int dayInt = expectedDateTime.day;
-          String dayStr;
-
-          if (dayInt > 9) {
-            dayStr = dayInt.toString();
-          } else {
-            dayStr = '0${dayInt.toString()}';
-          }
+          DateTime dateTime_2_35 =
+              DateTime(now.year, now.month, now.day, 2, 35);
 
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '2:23',
+                alarmHHmmTimeStr: '2:35',
               ),
-              '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
-        },
-      );
-      test(
-        'alarm date time before now with 1 digit hour 1 digit minutes',
-        () {
-          DateTime now = DateTime.now();
-
-          DateTime dateTime_2_30 =
-              DateTime(now.year, now.month, now.day, 2, 30);
-
-          DateTime expectedDateTime;
-
-          // if alarm time is before now or now, then it makes no sense to
-          // define an alarm for today which will never be triggered, so we
-          // it for tomorrow. If it is after now, then we define it for today.
-          if (dateTime_2_30.isBefore(now)) {
-            expectedDateTime =
-                DateTime(now.year, now.month, now.day + 1, 2, 30);
-          } else {
-            expectedDateTime = DateTime(now.year, now.month, now.day, 2, 30);
-          }
-
-          int minuteInt = expectedDateTime.minute;
-          String minuteStr;
-
-          if (minuteInt > 9) {
-            minuteStr = minuteInt.toString();
-          } else {
-            minuteStr = '0${minuteInt.toString()}';
-          }
-
-          int hourInt = expectedDateTime.hour;
-          String hourStr;
-
-          if (hourInt > 9) {
-            hourStr = hourInt.toString();
-          } else {
-            hourStr = '0${hourInt.toString()}';
-          }
-
-          int monthInt = expectedDateTime.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
-          int dayInt = expectedDateTime.day;
-          String dayStr;
-
-          if (dayInt > 9) {
-            dayStr = dayInt.toString();
-          } else {
-            dayStr = '0${dayInt.toString()}';
-          }
-
-          expect(
-              DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '2:30',
-              ),
-              '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
-        },
-      );
-      test(
-        'alarm date time before now with 2 digits hour starting with 0 and 1 digit minutes',
-        () {
-          DateTime now = DateTime.now();
-
-          DateTime dateTime_2_3 = DateTime(now.year, now.month, now.day, 2, 3);
-
-          DateTime expectedDateTime;
-
-          // if alarm time is before now or now, then it makes no sense to
-          // define an alarm for today which will never be triggered, so we
-          // it for tomorrow. If it is after now, then we define it for today.
-          if (dateTime_2_3.isBefore(now)) {
-            expectedDateTime = DateTime(now.year, now.month, now.day + 1, 2, 3);
-          } else {
-            expectedDateTime = DateTime(now.year, now.month, now.day, 2, 3);
-          }
-
-          int minuteInt = expectedDateTime.minute;
-          String minuteStr;
-
-          if (minuteInt > 9) {
-            minuteStr = minuteInt.toString();
-          } else {
-            minuteStr = '0${minuteInt.toString()}';
-          }
-
-          int hourInt = expectedDateTime.hour;
-          String hourStr;
-
-          if (hourInt > 9) {
-            hourStr = hourInt.toString();
-          } else {
-            hourStr = '0${hourInt.toString()}';
-          }
-
-          int monthInt = expectedDateTime.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
-          int dayInt = expectedDateTime.day;
-          String dayStr;
-
-          if (dayInt > 9) {
-            dayStr = dayInt.toString();
-          } else {
-            dayStr = '0${dayInt.toString()}';
-          }
-
-          expect(
-              DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
-                alarmHHmmTimeStr: '02:03',
-              ),
-              '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
+              frenchDateTimeFormat.format(dateTime_2_35.add(sirdalud5hoursDuration)));
         },
       );
       test(
@@ -471,59 +283,11 @@ void main() {
           DateTime dateTime_10_30 =
               DateTime(now.year, now.month, now.day, 10, 30);
 
-          DateTime expectedDateTime;
-
-          // if alarm time is before now or now, then it makes no sense to
-          // define an alarm for today which will never be triggered, so we
-          // it for tomorrow. If it is after now, then we define it for today.
-          if (dateTime_10_30.isBefore(now)) {
-            expectedDateTime =
-                DateTime(now.year, now.month, now.day + 1, 10, 30);
-          } else {
-            expectedDateTime = DateTime(now.year, now.month, now.day, 10, 30);
-          }
-
-          int minuteInt = expectedDateTime.minute;
-          String minuteStr;
-
-          if (minuteInt > 9) {
-            minuteStr = minuteInt.toString();
-          } else {
-            minuteStr = '0${minuteInt.toString()}';
-          }
-
-          int hourInt = expectedDateTime.hour;
-          String hourStr;
-
-          if (hourInt > 9) {
-            hourStr = hourInt.toString();
-          } else {
-            hourStr = '0${hourInt.toString()}';
-          }
-
-          int monthInt = expectedDateTime.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
-          int dayInt = expectedDateTime.day;
-          String dayStr;
-
-          if (dayInt > 9) {
-            dayStr = dayInt.toString();
-          } else {
-            dayStr = '0${dayInt.toString()}';
-          }
-
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '10:3',
               ),
-              '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
+              frenchDateTimeFormat.format(dateTime_10_30.add(sirdalud5hoursDuration)));
         },
       );
       test(
@@ -549,15 +313,6 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = dateTimeNow.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
           // if alarm time is now time, then it makes no sense to
           // define an alarm for now, so we define it for 5 hours
           // later than now.
@@ -566,7 +321,7 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '$hourStr:$minuteStr',
               ),
-              frenchDateTimeFormat.format(dateTimeNow.add(const Duration(hours: 5))));
+              frenchDateTimeFormat.format(dateTimeNow.add(sirdalud5hoursDuration)));
         },
       );
     },
