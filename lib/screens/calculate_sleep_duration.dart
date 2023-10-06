@@ -414,9 +414,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     _updateTransferDataMap(
       // avoiding passing true to isAfterLoading parameter
       // in order to verify if this solves the difficulty
-      // reproductable bug
+      // reproductable bug. DOES NOT SOLVE THE BUG !
       //
-      // isAfterLoading: true, // required, otherwise Undo not working
+      isAfterLoading: true, // required, otherwise Undo not working
     );
 
     if (isMedicAlarmToDisplay) {
