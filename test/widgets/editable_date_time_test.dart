@@ -62,8 +62,7 @@ Future<void> main() async {
       testWidgets(
         'Clicking on Now button',
         (tester) async {
-          final edtNowButton =
-              find.byKey(const Key('editableDateTimeNowButton'));
+          String widgetPrefixOne = 'first';
 
           await tester.pumpWidget(
             MaterialApp(
@@ -76,29 +75,30 @@ Future<void> main() async {
                   handleDateTimeModificationFunction: handleEndDateTimeChange,
                   handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                   dateTimePickerController: dateTimePickerController,
+                  widgetPrefix: widgetPrefixOne,
                 ),
               ),
             ),
           );
 
-          String selectedDateTimeStr = '12-08-2022 16:00';
+          final edtNowButton =
+              find.byKey(const Key('editableDateTimeNowButton'));
+          const String selectedDateTimeStr = '12-08-2022 16:00';
           dateTimePickerController.text = selectedDateTimeStr;
 
           await tester.tap(edtNowButton);
           await tester.pumpAndSettle();
 
-          String nowStr =
-              frenchDateTimeFormat.format(DateTime.now());
-          TextField text =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          String nowStr = frenchDateTimeFormat.format(DateTime.now());
+          TextField text = tester.widget(
+              find.byKey(Key('${widgetPrefixOne}EditableDateTimeTextField')));
           expect(text.controller!.text, nowStr);
         },
       );
       testWidgets(
         'Clicking on Sel button',
         (tester) async {
-          final edtSelButton =
-              find.byKey(const Key('editableDateTimeSelButton'));
+          String widgetPrefixOne = 'first';
 
           await tester.pumpWidget(
             MaterialApp(
@@ -111,20 +111,24 @@ Future<void> main() async {
                   handleDateTimeModificationFunction: handleEndDateTimeChange,
                   handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                   dateTimePickerController: dateTimePickerController,
+                  widgetPrefix: widgetPrefixOne,
                 ),
               ),
             ),
           );
 
+          final edtSelButton =
+              find.byKey(const Key('editableDateTimeSelButton'));
+
           await tester.tap(edtSelButton);
           await tester.pumpAndSettle();
 
-          String selectedDateTimeStr = '12-07-2022 16:00';
+          const String selectedDateTimeStr = '12-07-2022 16:00';
           await tester.tap(find.text(selectedDateTimeStr));
           await tester.pumpAndSettle();
 
-          TextField textField =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          TextField textField = tester.widget(
+              find.byKey(Key('${widgetPrefixOne}EditableDateTimeTextField')));
           expect(textField.controller!.text, selectedDateTimeStr);
         },
       );
@@ -132,10 +136,18 @@ Future<void> main() async {
   );
 }
 
-void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+void handleEndDateTimeChange(
+  String endDateTimeEnglishFormatStr,
+  bool notUsed, // parm required since this function
+  //               is passed as a callback parm)
+) {
   // print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
 }
 
-void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
+void handleEndDateTimeSelected(
+  String endDateTimeFrenchFormatStr,
+  bool notUsed, // parm required since this function
+  //               is passed as a callback parm)
+) {
   // print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
 }
