@@ -50,10 +50,7 @@ Future<void> main() async {
         'Clicking on Sel, then Now button', // fails if located in
         //              flutter_editable_date_time_test.dart file !
         (tester) async {
-          final edtNowButton =
-              find.byKey(const Key('editableDateTimeNowButton'));
-          final edtSelButton =
-              find.byKey(const Key('editableDateTimeSelButton'));
+          String widgetPrefixOne = 'first';
 
           await tester.pumpWidget(
             MaterialApp(
@@ -66,10 +63,16 @@ Future<void> main() async {
                   handleDateTimeModificationFunction: handleEndDateTimeChange,
                   handleSelectedDateTimeStrFunction: handleEndDateTimeSelected,
                   dateTimePickerController: dateTimePickerController,
+                  widgetPrefix: widgetPrefixOne,
                 ),
               ),
             ),
           );
+
+          final edtNowButton =
+              find.byKey(const Key('editableDateTimeNowButton'));
+          final edtSelButton =
+              find.byKey(const Key('editableDateTimeSelButton'));
 
           await tester.tap(edtSelButton);
           await tester.pumpAndSettle();
@@ -78,8 +81,8 @@ Future<void> main() async {
           await tester.tap(find.text(selectedDateTimeStr));
           await tester.pumpAndSettle();
 
-          TextField textField =
-              tester.widget(find.byKey(const Key('editableDateTimeTextField')));
+          TextField textField = tester.widget(
+              find.byKey(Key('${widgetPrefixOne}EditableDateTimeTextField')));
           expect(textField.controller!.text, selectedDateTimeStr);
 
           await tester.tap(edtNowButton);
@@ -93,10 +96,18 @@ Future<void> main() async {
   );
 }
 
-void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+void handleEndDateTimeChange(
+  String endDateTimeEnglishFormatStr,
+  bool notUsed, // parm required since this function
+  //               is passed as a callback parm
+) {
   // print('handleEndDateTimeChange() $endDateTimeEnglishFormatStr');
 }
 
-void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {
+void handleEndDateTimeSelected(
+  String endDateTimeFrenchFormatStr,
+  bool notUsed, // parm required since this function
+  //               is passed as a callback parm
+) {
   // print('handleEndDateTimeSelected() $endDateTimeFrenchFormatStr');
 }

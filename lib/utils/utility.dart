@@ -31,11 +31,11 @@ class Utility {
         filePathNameStr.substring(0, lastSeparator + 1) + newFileNameStr;
 
     // adding a try/catch block fixes failure of integration tests
-    
+    // which is run on Windows 10. This failure doesn't happen on
+    // Android smartphone or Android emulator.
     try {
       return file.renameSync(newPath);
     } catch (e) {
-      print('renameFile($filePathNameStr, $newFileNameStr) $e');
       return null;
     }
   }
@@ -343,7 +343,7 @@ class Utility {
     return extractedHHmmStr;
   }
 
-  static String getPlaylistDownloadHomePath({bool isTest = false}) {
+  static String getApplicationDataPath({bool isTest = false}) {
     if (Platform.isWindows) {
       if (isTest) {
         return kCircadianAppTestDirWindows;
@@ -373,8 +373,8 @@ class Utility {
   /// If [targetFileName] is not provided, the moved file will
   /// have the same name than the source file name.
   ///
-  /// Returns true if the file has been moved, false
-  /// otherwise in case the moved file already exist in
+  /// Returns true if the file has been copied, false
+  /// otherwise in case the copied file already exist in
   /// the target dir.
   static bool copyFileToDirectorySync({
     required String sourceFilePathName,

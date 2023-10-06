@@ -1,15 +1,16 @@
 // adding method HHmm which returns the Duration formatted as HH:mm
-import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/utils/utility.dart';
 import 'package:intl/intl.dart';
+
+import '../constants.dart';
 
 extension FormattedDayHourMinute on Duration {
   static final NumberFormat numberFormatTwoInt = NumberFormat('00');
 
   // ignore: non_constant_identifier_names
-  
+
   /// Returns the Duration formatted as HH:mm.
-  /// 
+  ///
   /// This method is added to the Duration class by the extension
   /// FormattedDayHourMinute class located in date_time_parser.dart.
   String HHmm() {
@@ -24,7 +25,7 @@ extension FormattedDayHourMinute on Duration {
   }
 
   /// Returns the Duration formatted as dd:HH:mm
-  /// 
+  ///
   /// This method is added to the Duration class by the extension
   /// FormattedDayHourMinute class located in date_time_parser.dart.
   String ddHHmm() {
@@ -216,8 +217,6 @@ class DateTimeParser {
           .map((element) => int.parse(element))
           .toList(growable: false);
 
-      int setNegative = 1;
-
       final int dayInt = hourMinuteIntLst[0];
       final int hourInt = hourMinuteIntLst[1];
       final int minuteInt = hourMinuteIntLst[2];
@@ -324,13 +323,11 @@ class DateTimeParser {
     String? englishFormatDateTimeStr;
 
     try {
-      endDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
+      endDateTime = frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
     } on FormatException {}
 
     if (endDateTime != null) {
-      englishFormatDateTimeStr =
-          ScreenMixin.englishDateTimeFormat.format(endDateTime);
+      englishFormatDateTimeStr = englishDateTimeFormat.format(endDateTime);
     }
 
     return englishFormatDateTimeStr;
@@ -345,13 +342,11 @@ class DateTimeParser {
     String? frenchFormatDateTimeStr;
 
     try {
-      endDateTime =
-          ScreenMixin.englishDateTimeFormat.parse(englishFormatDateTimeStr);
+      endDateTime = englishDateTimeFormat.parse(englishFormatDateTimeStr);
     } on FormatException {}
 
     if (endDateTime != null) {
-      frenchFormatDateTimeStr =
-          ScreenMixin.frenchDateTimeFormat.format(endDateTime);
+      frenchFormatDateTimeStr = frenchDateTimeFormat.format(endDateTime);
     }
 
     return frenchFormatDateTimeStr;
@@ -367,5 +362,13 @@ class DateTimeParser {
       return DateTime(dateTime.year, dateTime.month, dateTime.day,
           dateTime.hour, 0, 0, 0, 0);
     }
+  }
+
+  /// This method takes a DateTime object as input and returns a new DateTime
+  /// object with the same year, month, day, hour, and minute as the input,
+  /// but with seconds and milliseconds set to zero. Essentially, it rounds
+  /// the input DateTime object down to the nearest minute.
+  static DateTime truncateDateTimeToMinute(DateTime dateTime) {
+    return englishDateTimeFormat.parse(englishDateTimeFormat.format(dateTime));
   }
 }

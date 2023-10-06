@@ -899,6 +899,33 @@ void main() {
           expect(roundedDateTime, DateTime(2021, 1, 1, 13, 0));
         },
       );
+      test(
+        'truncating date time + 30 seconds to minute',
+        () {
+          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25, 30);
+          final DateTime truncatedDateTime =
+              DateTimeParser.truncateDateTimeToMinute(dateTime);
+          expect(truncatedDateTime, DateTime(2021, 1, 1, 13, 25));
+        },
+      );
+      test(
+        'truncating date time + 59 seconds to minute',
+        () {
+          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25, 59);
+          final DateTime truncatedDateTime =
+              DateTimeParser.truncateDateTimeToMinute(dateTime);
+          expect(truncatedDateTime, DateTime(2021, 1, 1, 13, 25));
+        },
+      );
+      test(
+        'truncating date time + 1 seconds to minute',
+        () {
+          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25, 1);
+          final DateTime truncatedDateTime =
+              DateTimeParser.truncateDateTimeToMinute(dateTime);
+          expect(truncatedDateTime, DateTime(2021, 1, 1, 13, 25));
+        },
+      );
     },
   );
 }

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
@@ -51,14 +50,11 @@ mixin ScreenMixin {
   static const double APP_VERTICAL_TOP_MARGIN_PROPORTION = 0.03;
   static const String APP_DURATION_TO_DATE_TIME_TITLE =
       'Add Duration To Date Time';
-  static const String DATE_TIME_DIFF_DURATION_TITLE = 'Wake Up Duration';
+  static const String DATE_TIME_DIFF_DURATION_TITLE = 'Wake-Up Duration';
   static const String CALCULATR_SLEEP_DURATION_TITLE = 'Sleep Duration';
   static const String TIME_CALCULATOR_TITLE = 'Time Calculator';
   static const double APP_VERTICAL_TOP_RESET_BUTTON_MARGIN_PROPORTION = 0.755;
 
-  static DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-  static DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-  static DateFormat HHmmDateTimeFormat = DateFormat("HH:mm");
   static const double APP_ROUNDED_BOARDER_RADIUS = 18.0;
   static const double BUTTON_SEP_WIDTH = 10.0;
   static const double CHECKBOX_WIDTH_HEIGHT = 35.0;
@@ -85,6 +81,9 @@ mixin ScreenMixin {
     color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
     fontSize: 14,
     fontWeight: FontWeight.bold,
+  );
+  final alertDialogTextStyle = const TextStyle(
+    fontSize: 19,
   );
 
   static void setAppVerticalTopMargin(double screenHeight) {
@@ -236,17 +235,21 @@ mixin ScreenMixin {
     }
   }
 
-  void showAlertDialog(
-      {required List<Widget> buttonList,
-      required String dialogTitle,
-      String dialogContent = '',
-      required String okValueStr,
-      required Function okFunction,
-      required BuildContext context}) {
+  void showAlertDialog({
+    required List<Widget> buttonList,
+    required String dialogTitle,
+    String dialogContent = '',
+    required String okValueStr,
+    required Function okFunction,
+    required BuildContext context,
+  }) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(dialogTitle),
+        title: Text(
+          dialogTitle,
+          style: alertDialogTextStyle,
+        ),
         content: Text(dialogContent),
         actions: buttonList,
       ),
@@ -271,8 +274,7 @@ mixin ScreenMixin {
       //                BuildContext. This argument is not always
       //                required, reason why it is positiponal
       //                optional !
-    )
-        handleSelectedItemFunction,
+    ) handleSelectedItemFunction,
   }) {
     List<String> selectableStrItemLst = selMenuDateTimeItemData.itemDataStrLst;
 
@@ -324,6 +326,7 @@ mixin ScreenMixin {
         if (itemSelected == null) {
           return;
         }
+        
         String selectedItemStr = selectableStrItemLst[int.parse(itemSelected)];
 
         handleSelectedItemFunction(
@@ -492,8 +495,7 @@ mixin ScreenMixin {
     required void Function(
       BuildContext context,
       String dialogTimeStr,
-    )
-        handleDataChangeFunction, // the unique difference with
+    ) handleDataChangeFunction, // the unique difference with
     //                               the other handleClipboardData
     //                               method
     ToastGravity position = ToastGravity.CENTER,
@@ -561,7 +563,7 @@ mixin ScreenMixin {
     );
   }
 
-  /// Mmethod returning the Save as file name string.
+  /// Method returning the Save as file name string.
   String getSaveAsFileName({
     required Map<String, dynamic> transferDataMap,
     required TransferDataViewModel transferDataViewModel,
@@ -575,7 +577,7 @@ mixin ScreenMixin {
 
     if (calcSlDurNewDateTimeStr != null) {
       String jsonFileName = transferDataViewModel
-          .reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+          .reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
               calcSlDurNewDateTimeStr);
       return '$jsonFileName.json';
     } else {

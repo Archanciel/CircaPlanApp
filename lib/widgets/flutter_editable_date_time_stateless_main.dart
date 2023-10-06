@@ -44,7 +44,10 @@ class FlutterEditableDateTimeScreen extends StatefulWidget with ScreenMixin {
   State<FlutterEditableDateTimeScreen> createState() =>
       _FlutterEditableDateTimeScreenState();
 
-  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {}
+  void handleEndDateTimeChange(
+    String endDateTimeEnglishFormatStr,
+    bool notUsed,
+  ) {}
 
   void handleEndDateTimeSelected(String endDateTimeFrenchFormatStr) {}
 }
@@ -71,7 +74,7 @@ class _FlutterEditableDateTimeScreenState
       nextAddSubtractResultableDuration: null,
     );
 
-    String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+    String nowStr = englishDateTimeFormat.format(DateTime.now());
     widget.transferDataMap["addDurStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstStartDateTimeStr"] = nowStr;
     widget.transferDataMap["firstEndDateTimeStr"] = nowStr;

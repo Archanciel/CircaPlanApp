@@ -67,7 +67,7 @@ Future<void> main(List<String> args) async {
 Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool isAppDirToBeDeleted = false,
 }) async {
-  String path = Utility.getPlaylistDownloadHomePath();
+  String path = Utility.getApplicationDataPath();
   final Directory directory = Directory(path);
   bool directoryExists = await directory.exists();
 
@@ -89,7 +89,7 @@ Future<TransferDataViewModel> instanciateTransferDataViewModel({
   bool jsonFileExists = await File(transferDataJsonFilePathName).exists();
 
   if (jsonFileExists) {
-    transferDataViewModel.loadTransferData();
+    await transferDataViewModel.loadTransferData();
   }
 
   return transferDataViewModel;
@@ -241,7 +241,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       filePathName: dialogContentEndingWithDeletedFileName,
     );
     String filePathName =
-        '${Utility.getPlaylistDownloadHomePath()}${Platform.pathSeparator}$fileName';
+        '${Utility.getApplicationDataPath()}${Platform.pathSeparator}$fileName';
     TransferDataViewModel.deleteFile(filePathName);
 
     final CircadianSnackBar snackBar =
@@ -340,7 +340,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       ),
     ];
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       // Adds a call back function called after the _MainAppState
       // build() method has been executed. This solves the problem
       // of the first screen not displaying the values contained in
@@ -348,7 +348,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       //
       // This anonymous function is called only once, when the app
       // is launched (or restarted).
-      loadFileNameNoMsg('circadian.json');
+      await loadFileNameNoMsg('circadian.json');
     });
   }
 
@@ -501,6 +501,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           selMenuDateTimeItemData: MenuItemData(
                             itemDataStrLst: nonNullablefileNameLst,
+                            // the lastCreatedJsonFileNameStr be bold
                             stylableItemValueStr: lastCreatedJsonFileNameStr,
                           ),
                           posRectangleLTRB: const RelativeRect.fromLTRB(
@@ -553,6 +554,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                           context: context,
                           selMenuDateTimeItemData: MenuItemData(
                             itemDataStrLst: nonNullablefileNameLst,
+                            // the lastCreatedJsonFileNameStr be bold
                             stylableItemValueStr: lastCreatedJsonFileNameStr,
                           ),
                           posRectangleLTRB: const RelativeRect.fromLTRB(
@@ -578,7 +580,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                             0.0,
                             0.0,
                           ),
-                          handleSelectedItemFunction: _applySettibgsMenuItem,
+                          handleSelectedItemFunction: _applySettingsMenuItem,
                         );
 
                         break;
@@ -699,23 +701,108 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
     );
   }
 
+  /// The user clicked on the Reset button on the screen
+  /// whose instance is stored in the ScreenNavigTransData
+  /// transferDataMap.
   void _resetScreen() {
     _screenNavigTransData.transferDataMap['currentScreenStateInstance']
         .resetScreen();
   }
 
   MenuItemData _buildSettingsMenuItemLst() {
-    return MenuItemData(itemDataStrLst: ['Set medic time']);
+    return MenuItemData(itemDataStrLst: ['Medicaments ...']);
   }
 
-  Future<void> _applySettibgsMenuItem(
+  MenuItemData _buildMedicamentsMenuItemLst() {
+    return MenuItemData(itemDataStrLst: ['Sirdalud', 'Lioresal']);
+  }
+
+  Future<void> _applySettingsMenuItem(
       String menuItemStr, BuildContext? context) async {
     if (context == null) {
       return;
     }
 
     switch (menuItemStr) {
-      case 'Set medic time':
+      case 'Medicaments ...':
+        {
+          // String alarmMedicDateTimeStr =
+          //     _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ??
+          //         '';
+          // _medicAlarmTimeController.text =
+          //     alarmMedicDateTimeStr.split(' ').last;
+          // _medicAlarmDateTimeController.text = alarmMedicDateTimeStr;
+          // await _openSetMedicTimeDialog(context: context);
+          // String alarmTimeStr = _medicAlarmTimeController.text;
+
+          // if (alarmTimeStr == '') {
+          //   // the case if Cancel button was pressed or if Clear
+          //   // button was pressed and no time was entered
+          //   return;
+          // }
+
+          // String medicAlarmDateTimeStr =
+          //     DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
+          //   alarmHHmmTimeStr: alarmTimeStr,
+          // );
+
+          // if (medicAlarmDateTimeStr == '') {
+          //   // the case if the entered alarmTimeStr is invalid
+          //   CircadianFlutterToast.showToast(
+          //     message: "Invalid alarm time $alarmTimeStr ignored !",
+          //     positionWorkingOnOldAndroid: ToastGravity.TOP,
+          //     isError: true,
+          //   );
+
+          //   return;
+          // }
+
+          // CircadianFlutterToast.showToast(
+          //   message: medicAlarmDateTimeStr,
+          //   positionWorkingOnOldAndroid: ToastGravity.TOP,
+          // );
+
+          // _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] =
+          //     medicAlarmDateTimeStr;
+          // widget.transferDataViewModel.updateAndSaveTransferData();
+
+          // var currentScreenInstance = _screenNavigTransData
+          //     .transferDataMap['currentScreenStateInstance'];
+
+          // if (currentScreenInstance.widget is CalculateSleepDuration) {
+          //   currentScreenInstance?.callSetState();
+          // }
+
+          // break;
+
+          displayPopupMenu(
+            context: context,
+            selMenuDateTimeItemData: _buildMedicamentsMenuItemLst(),
+            posRectangleLTRB: const RelativeRect.fromLTRB(
+              1.0,
+              130.0,
+              0.0,
+              0.0,
+            ),
+            handleSelectedItemFunction: _applyMedicamentsMenuItem,
+          );
+
+          break;
+        }
+      default:
+        break;
+    }
+  }
+
+  Future<void> _applyMedicamentsMenuItem(
+      String menuItemStr, BuildContext? context) async {
+    if (context == null) {
+      return;
+    }
+
+    switch (menuItemStr) {
+      case 'Sirdalud':
+      case 'Lioresal':
         {
           String alarmMedicDateTimeStr =
               _screenNavigTransData.transferDataMap['alarmMedicDateTimeStr'] ??
@@ -733,7 +820,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
           }
 
           String medicAlarmDateTimeStr =
-              DateTimeComputer.computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+              DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
             alarmHHmmTimeStr: alarmTimeStr,
           );
 
@@ -780,9 +867,12 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        double settingsFieldWidth = 235;
+        double settingsFieldWidth = 230;
         return AlertDialog(
-          title: const Text('Set medics time'),
+          title: Text(
+            'Set medic time',
+            style: alertDialogTextStyle,
+          ),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

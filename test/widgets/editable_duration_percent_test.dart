@@ -39,19 +39,14 @@ Future<void> main() async {
       testWidgets(
         'Clicking on Del button',
         (tester) async {
-          final Finder edpDelButtonFinder =
-              find.byKey(const Key('edpDelButton'));
-          final Finder edpDurationPercentComputedValueTextFieldFinder =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
-                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  transferDataMapPercentKey: widgetPrefixOrName,
                   durationStr: '24:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -61,6 +56,17 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder edpDelButtonFinder =
+              find.byKey(const Key('edpDelButton'));
+          final Finder edpDurationPercentComputedValueTextFieldFinder =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           await tester.enterText(
               edpDurationPercentComputedValueTextFieldFinder, '12:00');
@@ -86,15 +92,12 @@ Future<void> main() async {
       testWidgets(
         'Computing % duration',
         (tester) async {
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           final EditableDurationPercent editableDurationPercentWidget =
               EditableDurationPercent(
             dateTimeTitle: 'Duration %',
-            transferDataMapPercentKey: 'dtDurationPercentStr',
+            transferDataMapPercentKey: widgetPrefixOrName,
             durationStr: '13:00',
             topSelMenuPosition: 343.0,
             transferDataViewModel: transferDataViewModel,
@@ -109,6 +112,15 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           editableDurationPercentWidget.stateInstance
               .handleSelectedPercentStrFunction('70 %');
@@ -132,15 +144,12 @@ Future<void> main() async {
       testWidgets(
         'Change duration',
         (tester) async {
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           final EditableDurationPercent editableDurationPercentWidget =
               EditableDurationPercent(
             dateTimeTitle: 'Duration %',
-            transferDataMapPercentKey: 'dtDurationPercentStr',
+            transferDataMapPercentKey: widgetPrefixOrName,
             durationStr: '13:00',
             topSelMenuPosition: 343.0,
             transferDataViewModel: transferDataViewModel,
@@ -155,6 +164,15 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           editableDurationPercentWidget.stateInstance
               .handleSelectedPercentStrFunction('70 %');
@@ -182,18 +200,14 @@ Future<void> main() async {
       testWidgets(
         'Clicking on Sel button',
         (tester) async {
-          final edpSelButton = find.byKey(const Key('edpSelButton'));
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
-                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  transferDataMapPercentKey: widgetPrefixOrName,
                   durationStr: '15:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -203,6 +217,17 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final edpSelButton = find.byKey(const Key('edpSelButton'));
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           await tester.tap(edpSelButton);
           await tester.pumpAndSettle();
@@ -234,17 +259,14 @@ Future<void> main() async {
       testWidgets(
         'Entering double percent value',
         (tester) async {
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
-                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  transferDataMapPercentKey: widgetPrefixOrName,
                   durationStr: '15:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -254,8 +276,15 @@ Future<void> main() async {
               ),
             ),
           );
-          // await tester.enterText(
-          //     tester.firstWidget(manuallySelectableTextFieldFinder), '73.2');
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           await tester.enterText(manuallySelectableTextFieldFinder, '73.2');
 
@@ -281,17 +310,14 @@ Future<void> main() async {
       testWidgets(
         'Entering empty percent value',
         (tester) async {
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
-                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  transferDataMapPercentKey: widgetPrefixOrName,
                   durationStr: '15:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -301,6 +327,15 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           await tester.enterText(manuallySelectableTextFieldFinder, '');
 
@@ -326,17 +361,14 @@ Future<void> main() async {
       testWidgets(
         'Entering invalid percent value no % symbol',
         (tester) async {
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
-                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  transferDataMapPercentKey: widgetPrefixOrName,
                   durationStr: '15:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -346,8 +378,15 @@ Future<void> main() async {
               ),
             ),
           );
-          // await tester.enterText(
-          //     tester.firstWidget(manuallySelectableTextFieldFinder), '73.2');
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           await tester.enterText(manuallySelectableTextFieldFinder, 'iiii');
 
@@ -373,17 +412,14 @@ Future<void> main() async {
       testWidgets(
         'Entering invalid percent value with % symbol',
         (tester) async {
-          final Finder edpDurationPercentComputedValueTextField =
-              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
-          final Finder manuallySelectableTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOrName = 'dtDurationPercentStr';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: EditableDurationPercent(
                   dateTimeTitle: 'Duration %',
-                  transferDataMapPercentKey: 'dtDurationPercentStr',
+                  transferDataMapPercentKey: widgetPrefixOrName,
                   durationStr: '15:00',
                   topSelMenuPosition: 343.0,
                   transferDataViewModel: transferDataViewModel,
@@ -393,8 +429,15 @@ Future<void> main() async {
               ),
             ),
           );
-          // await tester.enterText(
-          //     tester.firstWidget(manuallySelectableTextFieldFinder), '73.2');
+
+          final Finder edpDurationPercentComputedValueTextField =
+              find.byKey(const Key('edpDurationPercentComputedValueTextField'));
+
+          // in ManuallySelectableTextField widget, the key of
+          // the ManuallySelectableTextField is
+          // Key('${widget.widgetPrefixOrName}ManuallySelectableTextField')
+          final Finder manuallySelectableTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOrName}ManuallySelectableTextField'));
 
           await tester.enterText(manuallySelectableTextFieldFinder, 'iiii %');
 

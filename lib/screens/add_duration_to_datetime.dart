@@ -196,7 +196,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     if (sleepDurationScreenLastDateTimeFrenchFormatStr == '') {
       // String value used to initialize DateTimePicker field
       sleepDurationScreenLastDateTimeFrenchFormatStr =
-          ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+          frenchDateTimeFormat.format(DateTime.now());
     }
     _englishFormatStartDateTimeStr =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
@@ -339,6 +339,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
       return;
     }
 
+    // extracting the duration values from the selectedDurationItem
     RegExp exp = RegExp(r'(\d+:\d+)');
     List<String> durationStrLst =
         exp.allMatches(selectedDurationItem).map((m) => m[0]!).toList();
@@ -369,8 +370,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     _firstDurationDateTimeEditorWidget.setDuration(
       durationStr: durationStrLst[0],
       durationSign: 1,
-      roundEndDateTime: bool.parse(
-          selectedDurationItemData[4]),
+      roundEndDateTime: bool.parse(selectedDurationItemData[4]),
     );
     _secondDurationDateTimeEditorWidget.setDuration(
       durationStr: durationStrLst[1],
@@ -389,7 +389,10 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     );
   }
 
-  void _handleSelectedStartDateTimeStr(String frenchFormatSelectedDateTimeStr) {
+  void _handleSelectedStartDateTimeStr(
+    String frenchFormatSelectedDateTimeStr,
+    bool wasStartDateTimeButtonClicked,
+  ) {
     DateTime selectedDateTime =
         frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     String englishFormatStartDateTimeStr = selectedDateTime.toString();
@@ -404,12 +407,13 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
     // TransferDataViewModel.updateAndSaveTransferData() method !
 
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
-        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr);
+        englishFormatStartDateTimeStr: englishFormatStartDateTimeStr,
+        wasStartDateTimeButtonClicked: wasStartDateTimeButtonClicked);
   }
 
   void _handleStartDateTimeChange(
     String englishFormatStartDateTimeStr,
-    bool wasNowUndoButtonClicked,
+    bool wasStartDateTimeButtonClicked,
   ) {
     _englishFormatStartDateTimeStr = englishFormatStartDateTimeStr;
 
@@ -421,7 +425,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
 
     _firstDurationDateTimeEditorWidget.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr,
-        wasNowUndoButtonClicked: wasNowUndoButtonClicked);
+        wasStartDateTimeButtonClicked: wasStartDateTimeButtonClicked);
   }
 
   /// This method is called when the user changes the first duration
@@ -553,6 +557,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                   ),
                   EditableDateTime(
                     key: const Key('addDurToDateTimeStartDateTime'),
+                    widgetPrefix: 'start',
                     dateTimeTitle: 'Start date time',
                     dateTimePickerController: _startDateTimePickerController,
                     handleDateTimeModificationFunction:
@@ -563,7 +568,7 @@ class _AddDurationToDateTimeState extends State<AddDurationToDateTime>
                     topSelMenuPosition: 135.0,
                     transferDataViewModel: _transferDataViewModel,
                     position: ToastGravity.TOP,
-                    nowButtonUndo: true,
+                    isStartDateTimeButton: true,
                   ),
                   // First duration addition/subtraction
                   _firstDurationDateTimeEditorWidget,

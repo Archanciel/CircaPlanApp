@@ -29,6 +29,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   // instance variables used to pass values to the
   // _DurationDateTimeEditorState constructor
   final String _widgetPrefix;
+  String get widgetPrefix => _widgetPrefix;
+
   final String _nowDateTimeEnglishFormatStr;
   final Map<String, dynamic> _transferDataMap;
   final DurationDateTimeEditor? _nextAddSubtractResultableDuration;
@@ -108,19 +110,19 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
       stateInstance._dateTimePickerController;
 
   /// For widget test only
-  String get durationStrTst => stateInstance._durationStr;
+  String get durationStr => stateInstance._durationStr;
 
   /// For widget test only
-  int get durationSignTst => stateInstance._durationSign;
+  int get durationSign => stateInstance._durationSign;
 
   /// For widget test only
-  IconData get durationIconTst => stateInstance._durationIcon;
+  IconData get durationIcon => stateInstance._durationIcon;
 
   /// For widget test only
-  Color get durationIconColorTst => stateInstance._durationIconColor;
+  Color get durationIconColor => stateInstance._durationIconColor;
 
   /// For widget test only
-  Color get durationTextColorTst => stateInstance._durationTextColor;
+  Color get durationTextColor => stateInstance._durationTextColor;
 
   /// Calls the _DurationDateTimeEditorState.reset() method.
   void reset({required String resetDateTimeEnglishFormatStr}) {
@@ -132,11 +134,11 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// Calls the _AddSubtractResultableDurationState.setStartDateTimeStr() method.
   void setStartDateTimeStr({
     required String englishFormatStartDateTimeStr,
-    bool wasNowUndoButtonClicked = false,
+    bool wasStartDateTimeButtonClicked = false,
   }) {
     stateInstance.setStartDateTimeStr(
         englishFormatStartDateTimeStr: englishFormatStartDateTimeStr,
-        isNowUndoButtonClicked: wasNowUndoButtonClicked);
+        wasStartDateTimeButtonClicked: wasStartDateTimeButtonClicked);
   }
 
   void setDuration({
@@ -153,7 +155,10 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
 
   /// For widget test only
   void handleEndDateTimeChangeTst(String endDateTimeEnglishFormatStr) {
-    stateInstance.handleEndDateTimeChange(endDateTimeEnglishFormatStr);
+    stateInstance.handleEndDateTimeChange(
+      endDateTimeEnglishFormatStr,
+      false, // parm value not used, but required by method signature
+    );
   }
 }
 
@@ -321,7 +326,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
 
   void setStartDateTimeStr({
     required String englishFormatStartDateTimeStr,
-    required bool isNowUndoButtonClicked,
+    required bool wasStartDateTimeButtonClicked,
   }) {
     _startDateTimeEnglishFormatStr = englishFormatStartDateTimeStr;
 
@@ -330,7 +335,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       _durationSign,
       null,
       null,
-      isNowUndoButtonClicked,
+      wasStartDateTimeButtonClicked,
     );
   }
 
@@ -374,7 +379,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     int? durationSign,
     bool? wasDurationSignButtonPressed,
     bool? mustEndDateTimeBeRounded,
-    bool? wasNowUndoButtonClicked,
+    bool? wasStartDateTimeButtonClicked,
   ]) {
     if (durationSign != null) {
       _durationSign = durationSign;
@@ -383,8 +388,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = ScreenMixin.englishDateTimeFormat
-          .parse(_startDateTimeEnglishFormatStr);
+      startDateTime =
+          englishDateTimeFormat.parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (startDateTime == null) {
@@ -415,11 +420,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         DateTime? endDateTime;
 
         try {
-          endDateTime =
-              ScreenMixin.englishDateTimeFormat.parse(_endDateTimeStr);
+          endDateTime = englishDateTimeFormat.parse(_endDateTimeStr);
         } on FormatException {}
 
-        if ((wasNowUndoButtonClicked ?? false) ||
+        if ((wasStartDateTimeButtonClicked ?? false) ||
             widget.handleDateTimeModificationFunction == null) {
           // duration must be changed
           if (endDateTime != null) {
@@ -434,7 +438,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         } else {
           startDateTime = endDateTime!.subtract(duration);
           _startDateTimeEnglishFormatStr =
-              ScreenMixin.englishDateTimeFormat.format(startDateTime);
+              englishDateTimeFormat.format(startDateTime);
           widget.handleDateTimeModificationFunction!(
               _startDateTimeEnglishFormatStr);
         }
@@ -458,9 +462,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
         }
 
-        _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);
+        _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
         _dateTimePickerController.text =
-            ScreenMixin.frenchDateTimeFormat.format(endDateTime);
+            frenchDateTimeFormat.format(endDateTime);
       }
     }
 
@@ -483,23 +487,25 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? endDateTime;
 
     try {
-      endDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
+      endDateTime = frenchDateTimeFormat.parse(endDateTimeFrenchFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
-      _endDateTimeStr = ScreenMixin.englishDateTimeFormat.format(endDateTime);
+      _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
       processEndDateTimeChange(endDateTime);
     }
   }
 
-  void handleEndDateTimeChange(String endDateTimeEnglishFormatStr) {
+  void handleEndDateTimeChange(
+    String endDateTimeEnglishFormatStr,
+    bool notUsed, // parm required since the method is passed
+    //               to the EditableDateTime widget constructor
+  ) {
     _endDateTimeStr = endDateTimeEnglishFormatStr;
     DateTime? endDateTime;
 
     try {
-      endDateTime =
-          ScreenMixin.englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
+      endDateTime = englishDateTimeFormat.parse(endDateTimeEnglishFormatStr);
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -511,8 +517,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     DateTime? startDateTime;
 
     try {
-      startDateTime = ScreenMixin.englishDateTimeFormat
-          .parse(_startDateTimeEnglishFormatStr);
+      startDateTime =
+          englishDateTimeFormat.parse(_startDateTimeEnglishFormatStr);
     } on FormatException {}
 
     Duration duration;
@@ -604,7 +610,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               left: -18,
               top: -10,
               child: TextButton.icon(
-                key: const Key('durationSignButton'),
+                key: Key('${_widgetPrefix}DurationSignButton'),
                 icon: Icon(
                   _durationIcon,
                   size: 30,

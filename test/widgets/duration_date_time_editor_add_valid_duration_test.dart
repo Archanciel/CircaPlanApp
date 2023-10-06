@@ -36,16 +36,13 @@ Future<void> main() async {
     testWidgets(
       'Adding valid duration',
       (tester) async {
-        final Finder durationTextFieldFinder =
-            find.byKey(const Key('manuallySelectableTextField'));
-        final Finder editableDateTimeTextFieldFinder =
-            find.byKey(const Key('editableDateTimeTextField'));
+        const String widgetPrefixOne = 'one';
 
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
               body: DurationDateTimeEditor(
-                widgetPrefix: 'one',
+                widgetPrefix: widgetPrefixOne,
                 dateTimeTitle: 'End date time',
                 topSelMenuPosition: 210.0,
                 nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -56,6 +53,11 @@ Future<void> main() async {
             ),
           ),
         );
+
+        final Finder durationTextFieldFinder = find
+            .byKey(const Key('${widgetPrefixOne}ManuallySelectableTextField'));
+        final Finder editableDateTimeTextFieldFinder = find
+            .byKey(const Key('${widgetPrefixOne}EditableDateTimeTextField'));
 
         await tester.enterText(durationTextFieldFinder, '02:30');
 
@@ -70,8 +72,8 @@ Future<void> main() async {
         expect(editableDateTimeTextField.controller!.text, '11-08-2022 12:30');
 
         // testing the duration text field color
-        final TextField durationTextField =
-            tester.widget(find.byKey(const Key('manuallySelectableTextField')));
+        final TextField durationTextField = tester.widget(find
+            .byKey(const Key('${widgetPrefixOne}ManuallySelectableTextField')));
         expect(durationTextField.style!.color,
             DurationDateTimeEditor.durationPositiveColor);
 

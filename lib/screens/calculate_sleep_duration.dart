@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/services/network_state_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +11,7 @@ import 'package:circa_plan/widgets/result_duration.dart';
 import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/screens/screen_navig_trans_data.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
+import '../services/history_computer_service.dart';
 import '../utils/date_time_computer.dart';
 import '../constants.dart';
 import '../widgets/circadian_flutter_toast.dart';
@@ -49,7 +51,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _transferDataViewModel = transferDataViewModel,
         _newFrenchFormatDateTimeStr =
             transferDataMap['calcSlDurNewDateTimeStr'] ??
-                ScreenMixin.frenchDateTimeFormat.format(DateTime.now()),
+                frenchDateTimeFormat.format(DateTime.now()),
         _lastFrenchFormatDateTimeStr =
             transferDataMap['calcSlDurPreviousDateTimeStr'] ?? '',
         _currentSleepDurationStr =
@@ -129,26 +131,37 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     String sleepTimeHistoryStr = '';
 
-    if (sleepTimeHistoryLst != null) {
-      if (sleepTimeHistoryLst.length >= 2) {
-        String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
+    if (sleepTimeHistoryLst != null && sleepTimeHistoryLst.isNotEmpty) {
+      // added this condition to
+      // avoid integr tests exceptions
+      String firstSleepTimeHistoryLstItem = sleepTimeHistoryLst.first;
 
-        if (isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
-          sleepTimeHistoryStr =
-              'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}: ${sleepTimeHistoryLst.sublist(1).join(', ')}';
-        }
+      if (!isDateTimeStrValid(firstSleepTimeHistoryLstItem)) {
+        return '';
+      }
+
+      if (sleepTimeHistoryLst.length >= 2) {
+        sleepTimeHistoryStr =
+            'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}: ${sleepTimeHistoryLst.sublist(1).join(', ')}';
+      } else {
+        sleepTimeHistoryStr =
+            'Sleep ${_removeYear(firstSleepTimeHistoryLstItem)}';
       }
     }
 
     String wakeUpTimeHistoryStr = '';
 
     if (wakeUpTimeHistoryLst != null) {
-      if (wakeUpTimeHistoryLst.length == 1) {
-        // the case if the add siesta button with negative value was pressed
-        // before adding any wake up time
-      } else if (wakeUpTimeHistoryLst.length >= 2) {
+      // if (wakeUpTimeHistoryLst.length == 1) {
+      // the case if the add siesta button with negative value was pressed
+      // before adding any wake-up time
+      // } else
+      if (wakeUpTimeHistoryLst.length >= 2) {
         wakeUpTimeHistoryStr =
             'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}: ${wakeUpTimeHistoryLst.sublist(1).join(', ')}';
+      } else if (wakeUpTimeHistoryLst.length == 1) {
+        wakeUpTimeHistoryStr =
+            'Wake ${_removeYear(wakeUpTimeHistoryLst.first)}';
       }
     }
 
@@ -266,6 +279,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     setState(() {});
   }
 
+  /// Called each time the CalculateSleepDuration screen
+  /// is selected or the app showing the
+  /// CalculateSleepDuration screen resumes.
   @override
   void initState() {
     super.initState();
@@ -275,7 +291,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // the current screen is displayed and the app status is resumed.
     WidgetsBinding.instance.addObserver(this);
 
-    _handleMedics();
+    _handleMedicAlarm();
 
     // The reference to the stateful widget State instance stored in
     // the transfer data map is used in the
@@ -284,7 +300,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     // in order to call the current instance callSetState() method.
     _transferDataMap['currentScreenStateInstance'] = this;
 
-    _updateWidgets();
+    if (isAppStarting) {
+      // if the global variable isAppStarting is true, this means
+      // the app is starting and so the CalculateSleepDuration
+      // screen is displayed
+      isAppStarting = false;
+      _updateWidgets(isAfterLoading: true);
+    } else {
+      _updateWidgets();
+    }
   }
 
   @override
@@ -293,41 +317,51 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (state == AppLifecycleState.resumed) {
       // the case if the screen is active and the app is reselected
-      _handleMedics();
+      _handleMedicAlarm();
     }
   }
 
-  /// Called each time the CalculateSleepDuration screen is selected or the
-  /// app showing the CalculateSleepDuration screen resumes.
-  void _handleMedics() {
+  /// Called each time the CalculateSleepDuration screen
+  /// is selected or the app showing the
+  /// CalculateSleepDuration screen resumes.
+  void _handleMedicAlarm() {
     String? medicFrenchDateTimeStr = _transferDataMap['alarmMedicDateTimeStr'];
 
-    if (_isAlarmToDisplay(medicFrenchDateTimeStr)) {
-      setState(() {}); // not working on S8, i.e alarm medic code
-      //                  not applied, I don't know why ! But once
-      //                  I click on Now button, the alarm is displayed.
-      // CircadianFlutterToast.showToast(
-      //     message: "MEDICS AT $medicHHmmTimeStr O'CLOCK ?",
-      //     backgroundColor: ScreenMixin.APP_WARNING_COLOR);
+    // in case true is returned, the _medicAlarmController.text was
+    // set to the alarm message and so setState() is called to display
+    // the alarm message.
+    if (_isMedicAlarmToDisplay(
+      medicFrenchDateTimeStr: medicFrenchDateTimeStr,
+    )) {
+      setState(() {}); // not working on Android smartphones, i.e
+      //                  alarm medic code not applied, I don't know
+      //                  why ! But once I click on Add button, the
+      //                  alarm is displayed !
     }
   }
 
-  bool _isAlarmToDisplay(String? medicFrenchDateTimeStr) {
+  /// Called each time the CalculateSleepDuration screen is selected
+  /// or the app showing the CalculateSleepDuration screen resumes.
+  ///
+  /// Returns true if the medic alarm is to be displayed.
+  bool _isMedicAlarmToDisplay({
+    String? medicFrenchDateTimeStr,
+    DateTime? dateTimeNow, // enables to test the method with a given
+    // date time
+  }) {
     if (medicFrenchDateTimeStr == null || medicFrenchDateTimeStr == '') {
       // the case if the transferDataMap does not contain
       // the 'alarmMedicDateTimeStr' entry.
       return false;
     }
 
-    String savedJsonFileName = getSaveAsFileName(
-      transferDataMap: _transferDataMap,
-      transferDataViewModel: _transferDataViewModel,
-    );
+    // if true, this means either that we loaded a previous day
+    // json file or that we are visualising the current day
+    // json file and so displaying the alarm doesn't make
+    // sense.
+    bool wereCurrentDataSaved = wasFileWithCurrenrNewDateTimeSaved();
 
-    String transferDataJsonFilePathName =
-        '$kCircadianAppDir${Platform.pathSeparator}$savedJsonFileName';
-
-    if (Utility.fileExist(transferDataJsonFilePathName)) {
+    if (wereCurrentDataSaved) {
       // the case if loading the previous day json file at
       // a time which would cause the alarm to be displayed,
       // for example before 10:00 if the alarm time is 6:00.
@@ -348,23 +382,70 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         alarmDateTime.hour,
         alarmDateTime.minute + 240);
 
-    DateTime now = DateTime.now();
+    // if dateTimeNow is null, this means the method is
+    // called from CalculateSleepDuration screen and not
+    // from a unit test.
+    dateTimeNow ??= DateTime.now();
 
-    bool result = now.isAfter(alarmDateTimeMinusOneHour) &&
-        now.isBefore(alarmDateTimePlusFourHour);
-
-    if (result) {
-      _medicAlarmController.text =
-          "MEDICS AT ${medicFrenchDateTimeStr.split(' ').last} ?";
+    while (dateTimeNow.isAfter(alarmDateTimeMinusOneHour) &&
+        !dateTimeNow.isBefore(alarmDateTimePlusFourHour)) {
+      alarmDateTimeMinusOneHour =
+          alarmDateTimeMinusOneHour.add(fiveHoursDuration);
+      alarmDateTimePlusFourHour =
+          alarmDateTimePlusFourHour.add(fiveHoursDuration);
+      alarmDateTime = alarmDateTime.add(fiveHoursDuration);
     }
 
-    return result;
+    bool isMedicAlarmToDisplay =
+        dateTimeNow.isAfter(alarmDateTimeMinusOneHour) &&
+            dateTimeNow.isBefore(alarmDateTimePlusFourHour);
+
+    String alarmDateTimeStr = frenchDateTimeFormat.format(alarmDateTime);
+
+    _transferDataMap['alarmMedicDateTimeStr'] = alarmDateTimeStr;
+
+    // setting optional parameter isAfterLoading to true is
+    // necessary so that Undo works. In case of executing
+    // _updateTransferDataMap() after a json file was loaded,
+    // calling _updateTransferDataMap() would update the
+    // circadian.json-1 undo file with the data loaded. Then
+    // clicking on Undo menu item would not undo the load
+    // action.
+    _updateTransferDataMap(
+      // avoiding passing true to isAfterLoading parameter
+      // in order to verify if this solves the difficulty
+      // reproductable bug. DOES NOT SOLVE THE BUG !
+      //
+      isAfterLoading: true, // required, otherwise Undo not working
+    );
+
+    if (isMedicAlarmToDisplay) {
+      _medicAlarmController.text =
+          "MEDICS AT ${alarmDateTimeStr.split(' ').last} ?";
+    }
+
+    return isMedicAlarmToDisplay;
+  }
+
+  /// Returns true if the file with the current new
+  /// date time was saved.
+  bool wasFileWithCurrenrNewDateTimeSaved() {
+    String savedJsonFileName = getSaveAsFileName(
+      transferDataMap: _transferDataMap,
+      transferDataViewModel: _transferDataViewModel,
+    );
+
+    String transferDataJsonFilePathName =
+        '${Utility.getApplicationDataPath()}${Platform.pathSeparator}$savedJsonFileName';
+
+    bool isFileExisting = File(transferDataJsonFilePathName).existsSync();
+
+    return isFileExisting;
   }
 
   void _updateWidgets({bool isAfterLoading = false}) {
     final DateTime dateTimeNow = DateTime.now();
-    String nowFrenchDateTimeStr =
-        ScreenMixin.frenchDateTimeFormat.format(dateTimeNow);
+    String nowFrenchDateTimeStr = frenchDateTimeFormat.format(dateTimeNow);
 
     _status = _transferDataMap['calcSlDurStatus'] ?? Status.wakeUp;
     _newFrenchFormatDateTimeStr =
@@ -503,7 +584,17 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
     map['calcSlDurCurrTotalPrevDayTotalPercentStr'] =
         _currentTotalPrevDayTotalPercentStr;
 
-    // addfing a new line improves Comment last line display
+    // fixing the bug which happens when switching to another screen,
+    // loading a json file and back to this screen !
+    try {
+      _sleepDurationCommentController.text;
+    } catch (_) {
+      // the case if the screen is not displayed
+      _sleepDurationCommentController = TextEditingController(
+          text: _transferDataMap['sleepDurationCommentStr'] ?? '');
+    }
+
+    // adding a new line improves Comment last line display
     String sleepDurationCommentStr =
         '${_sleepDurationCommentController.text.trim()}\n';
     map['sleepDurationCommentStr'] = sleepDurationCommentStr;
@@ -511,8 +602,11 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     if (!isAfterLoading) {
       // necessary so that Undo works. In case of executing
-      // _updateTransferDataMap() after a json file was loaded, the
-      // calling _updateTransferDataMap() is not useful.
+      // _updateTransferDataMap() after a json file was loaded,
+      // calling _updateTransferDataMap() would update the
+      // circadian.json-1 undo file with the data loaded. Then
+      // clicking on Undo menu item would not undo the load
+      // action.
       _transferDataViewModel.updateAndSaveTransferData();
     }
 
@@ -548,8 +642,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       newDateTime = newDateTime.add(Duration(minutes: minuteNb));
     }
 
-    _newFrenchFormatDateTimeStr =
-        ScreenMixin.frenchDateTimeFormat.format(newDateTime);
+    _newFrenchFormatDateTimeStr = frenchDateTimeFormat.format(newDateTime);
 
     _newDateTimeController.text = _newFrenchFormatDateTimeStr;
 
@@ -583,7 +676,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
   /// Private method called when 'Reset' is confirmed.
   void _applyReset(BuildContext _, String __) {
     // before resetting the current New date time string, its
-    // value, which is the last wake up time, is copied to the
+    // value, which is the last wake-up time, is copied to the
     // 2nd screen start date time map entry.
     //
     // Since when adding a date time for the first time also sets
@@ -593,8 +686,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
             frenchFormatDateTimeStr: _newFrenchFormatDateTimeStr);
 
-    _newFrenchFormatDateTimeStr =
-        ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+    _newFrenchFormatDateTimeStr = frenchDateTimeFormat.format(DateTime.now());
     _newDateTimeController.text = _newFrenchFormatDateTimeStr;
     _lastFrenchFormatDateTimeStr = '';
     _lastDateTimeController.text = _lastFrenchFormatDateTimeStr;
@@ -639,7 +731,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   /// Private method called when clicking on 'Add' button located at right of
   /// new date time TextField.
-  void _handleAddNewDateTimeButton(BuildContext context) {
+  Future<void> _handleAddNewDateTimeButton(BuildContext context) async {
     DateTime? newDateTime;
 
     _newFrenchFormatDateTimeStr = _newDateTimeController.text;
@@ -656,8 +748,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       if (_lastFrenchFormatDateTimeStr == '') {
         // first click on 'Add' button after reinitializing
         // or restarting the app
-        String newDateTimeStr =
-            ScreenMixin.frenchDateTimeFormat.format(newDateTime);
+        String newDateTimeStr = frenchDateTimeFormat.format(newDateTime);
         _addFirstDateTimeStrToHistorylst(_sleepTimeStrHistory, newDateTimeStr);
 
         _lastFrenchFormatDateTimeStr = newDateTimeStr;
@@ -689,9 +780,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         //                     is null in the case the app is started with the
         //                     circadian dir containing no circadian.json file
 
-        DateTime secondScreenStartDateTime = ScreenMixin.englishDateTimeFormat
+        DateTime secondScreenStartDateTime = englishDateTimeFormat
             .parse(secondScreenEnglishFormatStartDateTimeStr);
-        DateTime secondScreenEndDateTime = ScreenMixin.englishDateTimeFormat
+        DateTime secondScreenEndDateTime = englishDateTimeFormat
             .parse(secondScreenEnglishFormatEndDateTimeStr);
         Duration diffDuration =
             secondScreenEndDateTime.difference(secondScreenStartDateTime);
@@ -702,12 +793,15 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _prevDayTotalController.text = _prevDayTotalWakeUpStr;
         _prevDayEmptyTotalController = TextEditingController(text: '');
 
-        _status = Status.sleep;
+        await _setStatusToSleep();
+
+        _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       } else {
+        // not first click on Add button
         DateTime? previousDateTime;
 
-        previousDateTime = ScreenMixin.frenchDateTimeFormat
-            .parse(_lastFrenchFormatDateTimeStr);
+        previousDateTime =
+            frenchDateTimeFormat.parse(_lastFrenchFormatDateTimeStr);
 
         if (!_validateNewDateTime(newDateTime, previousDateTime)) {
           return;
@@ -715,8 +809,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
         if (_wakeUpTimeStrHistory.isEmpty ||
             !isDateTimeStrValid(_wakeUpTimeStrHistory.first)) {
-          // here, registering the first wake up time duration and ensuring
-          // that the wake up time history list first item is the date time
+          // here, registering the first wake-up time duration and ensuring
+          // that the wake-up time history list first item is the date time
           // when I waked up, i.e the _previousDateTimeStr
           _addFirstDateTimeStrToHistorylst(
               _wakeUpTimeStrHistory, _lastFrenchFormatDateTimeStr);
@@ -753,7 +847,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         _previousDateTimeController.text = _previousDateTimeStr;
         _lastFrenchFormatDateTimeStr = _newFrenchFormatDateTimeStr;
         _lastDateTimeController.text = _lastFrenchFormatDateTimeStr;
-        _status = Status.sleep;
+        await _setStatusToSleep();
         _wakeUpTimeStrHistory.add(wakeUpDuration.HHmm());
         _sleepWakeUpHistoryController.text = _buildSleepWakeUpHistoryStr();
       }
@@ -762,7 +856,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
       DateTime? previousDateTime;
 
       previousDateTime =
-          ScreenMixin.frenchDateTimeFormat.parse(_lastFrenchFormatDateTimeStr);
+          frenchDateTimeFormat.parse(_lastFrenchFormatDateTimeStr);
 
       if (!_validateNewDateTime(newDateTime, previousDateTime)) {
         return;
@@ -788,6 +882,16 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
         currentTotalDuration += sleepDuration;
       }
 
+      if (_wakeUpTimeStrHistory.isEmpty ||
+          !isDateTimeStrValid(_wakeUpTimeStrHistory.first)) {
+        // here, registering the first wake-up date time without
+        // wake-up duration and ensuring that the wake-up time
+        // history list first item is the date time when I waked
+        // up, i.e the newDateTime
+        _addFirstDateTimeStrToHistorylst(
+            _wakeUpTimeStrHistory, frenchDateTimeFormat.format(newDateTime));
+      }
+
       _currentSleepDurationStr = currentSleepDuration.HHmm();
       _currentSleepDurationController.text = _currentSleepDurationStr;
       _currentTotalDurationStr = currentTotalDuration.HHmm();
@@ -805,6 +909,57 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
     _updateTransferDataMap();
     setState(() {});
+  }
+
+  /// Private method called when clicking on 'Add' button
+  /// located at right of current sleep duration TextField.
+  ///
+  /// In case the smartphone wifi is on, a warning dialog
+  /// is displayed since wifi causes difficulty to fall
+  /// asleep
+  Future<void> _setStatusToSleep() async {
+    bool isSmartphoneConnected =
+        await NetworkStateService.isCellularConnectionActive();
+
+    if (isSmartphoneConnected) {
+      String okButtonStr = 'Ok';
+      Widget okButton = TextButton(
+        child: Text(okButtonStr),
+        onPressed: () => Navigator.pop(context),
+      );
+
+      showAlertDialog(
+        buttonList: [okButton],
+        dialogTitle: 'WARNING - Smartphone is not in airplane mode !!!!',
+        dialogContent:
+            'Set airplane mode in order to avoid difficulty to fall asleep !',
+        okValueStr: okButtonStr,
+        okFunction: () {},
+        context: context,
+      );
+    }
+
+    bool isWifiOn = await NetworkStateService.isWifiEnabled();
+
+    if (isWifiOn) {
+      String okButtonStr = 'Ok';
+      Widget okButton = TextButton(
+        child: Text(okButtonStr),
+        onPressed: () => Navigator.pop(context),
+      );
+
+      showAlertDialog(
+        buttonList: [okButton],
+        dialogTitle: 'WARNING - WIFI is on !!!!',
+        dialogContent:
+            'Disable WIFI in order to avoid difficulty to fall asleep !',
+        okValueStr: okButtonStr,
+        okFunction: () {},
+        context: context,
+      );
+    }
+
+    _status = Status.sleep;
   }
 
   bool _validateNewDateTime(DateTime newDateTime, DateTime previousDateTime) {
@@ -918,7 +1073,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
 
   String _statusStr(Status enumStatus) {
     if (enumStatus == Status.wakeUp) {
-      return 'Wake Up';
+      return 'Wake-Up';
     } else if (enumStatus == Status.sleep) {
       return 'Sleep';
     } else {
@@ -1066,7 +1221,7 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                     position: ToastGravity.TOP,
                   ),
                   ResultDuration(
-                    resultDurationTitle: 'Wake up duration',
+                    resultDurationTitle: 'Wake-up duration',
                     transferDataMap: _transferDataMap,
                     resultDurationController: _currentWakeUpDurationController,
                     resultDurationPercentController:
@@ -1085,12 +1240,111 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         _currentTotalPrevDayTotalPercentController,
                     prevDayTotalController: _prevDayEmptyTotalController,
                   ),
-                  Tooltip(
-                    message: 'Simple click copies HH:mm to clipboard',
-                    child: Text(
-                      'Sleep and wake up history',
-                      style: labelTextStyle,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Tooltip(
+                        message: 'Simple click copies HH:mm to clipboard',
+                        child: Text(
+                          'Sleep and wake-up history',
+                          style: labelTextStyle,
+                        ),
+                      ),
+                      IconButton(
+                        constraints: const BoxConstraints(
+                          minHeight: 0,
+                          minWidth: 0,
+                        ),
+                        padding: const EdgeInsets.all(0),
+                        onPressed: () {
+                          List<String>? sleepTimeHistoryLst =
+                              _transferDataMap['calcSlDurSleepTimeStrHistory'];
+                          List<String> wakeTimeHistoryLst = _transferDataMap[
+                              'calcSlDurWakeUpTimeStrHistory'] ??= [];
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              if (sleepTimeHistoryLst == null ||
+                                  sleepTimeHistoryLst.isEmpty) {
+                                return AlertDialog(
+                                  title: const Text('Error'),
+                                  content: const Text(
+                                      'Sleep and wake-up history are empty.'),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      child: const Text('Close'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }
+
+                              Map<String, List<String>> history =
+                                  HistoryComputerService
+                                      .computeSleepWakeHistoryLst(
+                                screenSleepHistoryLst: sleepTimeHistoryLst,
+                                screenWakeUpHistoryLst: wakeTimeHistoryLst,
+                                status: _transferDataMap['calcSlDurStatus'],
+                                newDateTimeStr:
+                                    _transferDataMap['calcSlDurNewDateTimeStr'],
+                              );
+                              List<String> sleepHistory =
+                                  history['sleepTimeDateTime']!;
+                              List<String> wakeHistory =
+                                  history['wakeTimeDateTime']!;
+
+                              return AlertDialog(
+                                title: Text(
+                                  'Sleep and Wake-Up History',
+                                  style: alertDialogTextStyle,
+                                ),
+                                content: SizedBox(
+                                  width: double.maxFinite,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: sleepHistory.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        padding: const EdgeInsets.all(0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                                'Sleep: ${sleepHistory[index]}'),
+                                            if (index < wakeHistory.length)
+                                              Text(
+                                                  'Wake: ${wakeHistory[index]}'),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    child: const Text('Close'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        icon: Icon(
+                          Icons.history,
+                          // color: ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                          color:
+                              ScreenMixin.APP_MATERIAL_APP_LIGHTER_YELLOW_COLOR,
+                          size: 27,
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0), // val 5 is
@@ -1128,7 +1382,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                 ],
               ),
             ),
-            _isAlarmToDisplay(_transferDataMap['alarmMedicDateTimeStr'])
+            _isMedicAlarmToDisplay(
+              medicFrenchDateTimeStr: _transferDataMap['alarmMedicDateTimeStr'],
+            )
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1184,21 +1440,23 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                                     return;
                                   }
 
-                                  String alarmFrenchDateTimeStr = DateTimeComputer
-                                      .computeTodayOrTomorrowAlarmFrenchDateTimeStr(
+                                  String nextAlarmFrenchDateTimeStr =
+                                      DateTimeComputer
+                                          .computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                                     alarmHHmmTimeStr:
                                         alarmMedicDateTimeStr.split(' ').last,
-                                    setToTomorrow: true,
+                                    alarmFrenchDateTimeStr:
+                                        alarmMedicDateTimeStr,
                                   );
 
                                   CircadianFlutterToast.showToast(
-                                    message: alarmFrenchDateTimeStr,
+                                    message: nextAlarmFrenchDateTimeStr,
                                     positionWorkingOnOldAndroid:
                                         ToastGravity.BOTTOM,
                                   );
 
                                   _transferDataMap['alarmMedicDateTimeStr'] =
-                                      alarmFrenchDateTimeStr;
+                                      nextAlarmFrenchDateTimeStr;
                                   _transferDataViewModel
                                       .updateAndSaveTransferData();
                                   setState(() {});
@@ -1276,8 +1534,8 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
                         onPressed: () {
-                          String dateTimeStr = ScreenMixin.frenchDateTimeFormat
-                              .format(DateTime.now());
+                          String dateTimeStr =
+                              frenchDateTimeFormat.format(DateTime.now());
                           _newDateTimeController.text = dateTimeStr;
                           _newFrenchFormatDateTimeStr = dateTimeStr;
 
@@ -1339,7 +1597,9 @@ class _CalculateSleepDurationState extends State<CalculateSleepDuration>
                         style: ButtonStyle(
                             backgroundColor: appElevatedButtonBackgroundColor,
                             shape: appElevatedButtonRoundedShape),
-                        onPressed: () => _handleAddNewDateTimeButton(context),
+                        onPressed: () async {
+                          await _handleAddNewDateTimeButton(context);
+                        },
                         child: const Text(
                           'Add',
                           style: TextStyle(

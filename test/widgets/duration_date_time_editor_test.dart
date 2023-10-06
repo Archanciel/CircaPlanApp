@@ -39,14 +39,13 @@ Future<void> main() async {
       testWidgets(
         'Adding one digit duration',
         (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOne = 'one';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetPrefix: 'one',
+                  widgetPrefix: widgetPrefixOne,
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -57,6 +56,9 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder durationTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField'));
 
           await tester.enterText(durationTextFieldFinder, '2');
 
@@ -69,8 +71,8 @@ Future<void> main() async {
           expect(find.text('11-08-2022 12:00'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField = tester
-              .widget(find.byKey(const Key('manuallySelectableTextField')));
+          final TextField durationTextField = tester.widget(find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -86,14 +88,13 @@ Future<void> main() async {
       testWidgets(
         'Adding two digits duration',
         (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOne = 'one';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetPrefix: 'one',
+                  widgetPrefix: widgetPrefixOne,
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -104,6 +105,9 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder durationTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField'));
 
           await tester.enterText(durationTextFieldFinder, '24');
 
@@ -116,8 +120,8 @@ Future<void> main() async {
           expect(find.text('12-08-2022 10:00'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField = tester
-              .widget(find.byKey(const Key('manuallySelectableTextField')));
+          final TextField durationTextField = tester.widget(find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationPositiveColor);
 
@@ -133,14 +137,13 @@ Future<void> main() async {
       testWidgets(
         'Adding one digit with - sign duration',
         (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOne = 'one';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetPrefix: 'one',
+                  widgetPrefix: widgetPrefixOne,
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -151,6 +154,9 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder durationTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField'));
 
           await tester.enterText(durationTextFieldFinder, '-2');
 
@@ -163,8 +169,8 @@ Future<void> main() async {
           expect(find.text('11-08-2022 08:00'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField = tester
-              .widget(find.byKey(const Key('manuallySelectableTextField')));
+          final TextField durationTextField = tester.widget(find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -180,14 +186,13 @@ Future<void> main() async {
       testWidgets(
         'Adding two digits with - signs duration',
         (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOne = 'one';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetPrefix: 'one',
+                  widgetPrefix: widgetPrefixOne,
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -199,6 +204,9 @@ Future<void> main() async {
             ),
           );
 
+          final Finder durationTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField'));
+
           await tester.enterText(durationTextFieldFinder, '-24');
 
           // typing on Done button
@@ -209,8 +217,8 @@ Future<void> main() async {
           expect(find.text('10-08-2022 10:00'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField = tester
-              .widget(find.byKey(const Key('manuallySelectableTextField')));
+          final TextField durationTextField = tester.widget(find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 
@@ -226,14 +234,13 @@ Future<void> main() async {
       testWidgets(
         'Subtracting valid duration',
         (tester) async {
-          final Finder durationTextFieldFinder =
-              find.byKey(const Key('manuallySelectableTextField'));
+          const String widgetPrefixOne = 'one';
 
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: DurationDateTimeEditor(
-                  widgetPrefix: 'one',
+                  widgetPrefix: widgetPrefixOne,
                   dateTimeTitle: 'End date time',
                   topSelMenuPosition: 210.0,
                   nowDateTimeEnglishFormatStr: '2022-08-11 10:00',
@@ -244,6 +251,9 @@ Future<void> main() async {
               ),
             ),
           );
+
+          final Finder durationTextFieldFinder = find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField'));
 
           await tester.enterText(durationTextFieldFinder, '-2:30');
 
@@ -256,8 +266,8 @@ Future<void> main() async {
           expect(find.text('11-08-2022 07:30'), findsOneWidget);
 
           // testing the duration text field color
-          final TextField durationTextField = tester
-              .widget(find.byKey(const Key('manuallySelectableTextField')));
+          final TextField durationTextField = tester.widget(find.byKey(
+              const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
               DurationDateTimeEditor.durationNegativeColor);
 

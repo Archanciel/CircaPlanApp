@@ -139,7 +139,7 @@ class _ManuallySelectableTextFieldScreenState
   void initState() {
     super.initState();
 
-    String nowStr = ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+    String nowStr = englishDateTimeFormat.format(DateTime.now());
     _transferDataMap["addDurStartDateTimeStr"] = nowStr;
     _transferDataMap["firstStartDateTimeStr"] = nowStr;
     _transferDataMap["firstEndDateTimeStr"] = nowStr;

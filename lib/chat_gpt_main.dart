@@ -33,7 +33,7 @@ Future<void> main(List<String> args) async {
   //_MainAppState.build() method.
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName:
-          '${Utility.getPlaylistDownloadHomePath()}${Platform.pathSeparator}$kDefaultJsonFileName');
+          '${Utility.getApplicationDataPath()}${Platform.pathSeparator}$kDefaultJsonFileName');
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }

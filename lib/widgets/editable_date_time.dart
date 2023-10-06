@@ -22,11 +22,11 @@ class EditableDateTime extends StatefulWidget {
     this.displayFixDateTimeCheckbox = false,
     this.widgetPrefix = '',
     this.position = ToastGravity.CENTER,
-    this.nowButtonUndo = false,
+    this.isStartDateTimeButton = false,
   }) : super(key: key) {
     if (dateTimePickerController.text == '') {
       dateTimePickerController.text =
-          ScreenMixin.frenchDateTimeFormat.format(DateTime.now());
+          frenchDateTimeFormat.format(DateTime.now());
     }
   }
 
@@ -39,13 +39,13 @@ class EditableDateTime extends StatefulWidget {
   final double topSelMenuPosition;
   final TextEditingController dateTimePickerController;
   final Function handleDateTimeModificationFunction;
-  final Function(String) handleSelectedDateTimeStrFunction;
+  final Function handleSelectedDateTimeStrFunction;
 
   final bool displayFixDateTimeCheckbox;
   final String widgetPrefix;
   final ToastGravity position;
 
-  final bool nowButtonUndo;
+  final bool isStartDateTimeButton;
   String undoDateTimeStr = '';
 
   /// This variable enables the EditableDurationPercent
@@ -93,17 +93,19 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
       handleSelectedDateTimeStr: handleSelectDateTimeButtonPressed,
       displayFixDateTimeCheckbox: widget.displayFixDateTimeCheckbox,
       widgetPrefix: widget.widgetPrefix,
-      nowButtonUndo: widget.nowButtonUndo,
+      nowButtonUndo: widget.isStartDateTimeButton,
     );
   }
 
   void handleSelectDateTimeButtonPressed(String frenchFormatSelectedDateTimeStr,
       [BuildContext? context]) {
-    _dateTime =
-        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
+    _dateTime = frenchDateTimeFormat.parse(frenchFormatSelectedDateTimeStr);
     _updateDateTimePickerValues();
 
-    widget.handleSelectedDateTimeStrFunction(frenchFormatSelectedDateTimeStr);
+    widget.handleSelectedDateTimeStrFunction(
+      frenchFormatSelectedDateTimeStr,
+      widget.isStartDateTimeButton,
+    );
   }
 
   /// If {isUndo} is true, then {nowStr} does not need to be
@@ -113,29 +115,27 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     required bool isUndo,
     String? englishDateTimeFormatNowStr,
   }) {
-    if (widget.nowButtonUndo) {
+    if (widget.isStartDateTimeButton) {
       if (isUndo) {
         _dateTime = _undoDateTime;
 
         // setting nowStr to the value of the _undoDateTime
         englishDateTimeFormatNowStr =
-            ScreenMixin.englishDateTimeFormat.format(_undoDateTime);
+            englishDateTimeFormat.format(_undoDateTime);
       } else {
-        _undoDateTime = ScreenMixin.frenchDateTimeFormat
-            .parse(widget.dateTimePickerController.text);
-        _dateTime = ScreenMixin.englishDateTimeFormat
-            .parse(englishDateTimeFormatNowStr!);
+        _undoDateTime =
+            frenchDateTimeFormat.parse(widget.dateTimePickerController.text);
+        _dateTime = englishDateTimeFormat.parse(englishDateTimeFormatNowStr!);
       }
     } else {
-      _dateTime =
-          ScreenMixin.englishDateTimeFormat.parse(englishDateTimeFormatNowStr!);
+      _dateTime = englishDateTimeFormat.parse(englishDateTimeFormatNowStr!);
     }
 
     _updateDateTimePickerValues();
-    
+
     widget.handleDateTimeModificationFunction(
       englishDateTimeFormatNowStr,
-      widget.nowButtonUndo,
+      widget.isStartDateTimeButton,
     );
   }
 
@@ -143,7 +143,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     _selectedDate = _dateTime;
     _selectedTime = TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
     widget.dateTimePickerController.text =
-        ScreenMixin.frenchDateTimeFormat.format(_dateTime);
+        frenchDateTimeFormat.format(_dateTime);
   }
 
   /// The _selectDatePickerDateTime method is an asynchronous method
@@ -179,10 +179,15 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
     );
 
     widget.dateTimePickerController.text =
-        ScreenMixin.frenchDateTimeFormat.format(_dateTime);
+        frenchDateTimeFormat.format(_dateTime);
 
+    // Bug fix: now, changing start date time with
+    // fixed end date time checkbox set to true updates
+    // the duration
     widget.handleDateTimeModificationFunction(
-        ScreenMixin.englishDateTimeFormat.format(_dateTime));
+      englishDateTimeFormat.format(_dateTime),
+      widget.isStartDateTimeButton, // must be true to fix the bug
+    );
   }
 
   /// The _selectDatePickerTime method displays a Date Picker dialog
@@ -265,7 +270,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                 ),
                 child: GestureDetector(
                   child: TextField(
-                    key: const Key('editableDateTimeTextField'),
+                    key: Key('${widget.widgetPrefix}EditableDateTimeTextField'),
                     decoration: const InputDecoration.collapsed(hintText: ''),
                     style: const TextStyle(
                         color: ScreenMixin.APP_TEXT_AND_ICON_COLOR,
@@ -276,13 +281,13 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     // prevents displaying copy paste menu !
                     contextMenuBuilder: null,
                   ),
-                  onTap: () {
+                  onDoubleTap: () {
                     // initializing the date and time dialogs with the
                     // currently displayed date time value ...
                     String frenchFormatDateTimeStr =
                         widget.dateTimePickerController.text;
-                    DateTime dateTime = ScreenMixin.frenchDateTimeFormat
-                        .parse(frenchFormatDateTimeStr);
+                    DateTime dateTime =
+                        frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
                     _selectedTime =
                         TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
                     _selectedDate = dateTime;
@@ -290,7 +295,7 @@ class _EditableDateTimeState extends State<EditableDateTime> with ScreenMixin {
                     // displaying the date and time dialogs ...
                     _selectDatePickerDateTime(context);
                   },
-                  onDoubleTap: () async {
+                  onTap: () async {
                     await copyToClipboard(
                       context: context,
                       controller: widget.dateTimePickerController,
@@ -399,9 +404,11 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               shape: widget.appElevatedButtonRoundedShape),
           onPressed: () {
             if (widget.nowButtonUndo) {
+              // Tapping the Now or Undo button of the Start date time
+              // EditableDateTime widget.
               if (_nowButtonTxt == 'Now') {
                 String englishDateTimeFormatNowStr =
-                    ScreenMixin.englishDateTimeFormat.format(DateTime.now());
+                    englishDateTimeFormat.format(DateTime.now());
                 widget.handleDateTimeModification(
                   isUndo: false,
                   englishDateTimeFormatNowStr: englishDateTimeFormatNowStr,
@@ -415,6 +422,8 @@ class _TwoButtonsWidgetState extends State<TwoButtonsWidget> {
               }
               setState(() {});
             } else {
+              // Tapping the Now button of the first, second or third End
+              // date time EditableDateTime widget.
               String nowStr = DateTime.now().toString();
               widget.handleDateTimeModification(
                 isUndo: false,

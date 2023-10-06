@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../constants.dart';
 import '../widgets/editable_duration_percent.dart';
 import '../widgets/non_editable_date_time.dart';
 
@@ -248,14 +249,14 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
                 frenchFormatDateTimeStr: frenchFormatStartDateTimeStr) ??
             '';
     DateTime startDateTime =
-        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatStartDateTimeStr);
+        frenchDateTimeFormat.parse(frenchFormatStartDateTimeStr);
     String frenchFormatEndDateTimeStr = _endDateTimeController.text;
     _endDateTimeStr =
         DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
                 frenchFormatDateTimeStr: frenchFormatEndDateTimeStr) ??
             '';
     DateTime endDateTime =
-        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
+        frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
     Duration diffDuration;
 
     if (endDateTime.isAfter(startDateTime)) {
@@ -370,7 +371,7 @@ class _DateTimeDifferenceDurationState extends State<DateTimeDifferenceDuration>
   void handleChangeDurationFunction(String durationStr) {
     String frenchFormatEndDateTimeStr = _endDateTimeController.text;
     DateTime endDateTime =
-        ScreenMixin.frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
+        frenchDateTimeFormat.parse(frenchFormatEndDateTimeStr);
     Duration? durationToAdd = DateTimeParser.parseHHMMDuration(durationStr);
 
     if (durationToAdd != null) {

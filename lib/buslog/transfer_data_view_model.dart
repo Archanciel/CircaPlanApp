@@ -71,12 +71,12 @@ class TransferDataViewModel {
         jsonUndoFileName: jsonUndoFileNameOne);
   }
 
-  /// Saves the screens app transfer data to a json file and return
-  /// true if the json filr was created, false if it was updated.
+  /// Saves the screens app transfer data to a json file and returns
+  /// true if the json file was created, false if it was updated.
   ///
-  /// If nothing is passed transferDataJsonFileName, the json file name
-  /// is the current CalculateSleepDuration screen new date time
-  /// reformatted.
+  /// If nothing is passed as transferDataJsonFileName, the json file
+  /// name is the current CalculateSleepDuration screen new date time
+  /// string reformatted so it is ok on Android.
   Future<bool> saveAsTransferData({String? transferDataJsonFileName}) async {
     final String transferDataJsonPath = getTransferDataJsonPath();
     bool transferDataJsonFileCreated = false;
@@ -87,16 +87,17 @@ class TransferDataViewModel {
       final String sleepDurationNewDateTimeStr =
           calculateSleepDurationData.sleepDurationNewDateTimeStr;
 
-      final String englishDateTimeStr =
-          reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+      final String androidCompatibleEnglishFormatStr =
+          reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
               sleepDurationNewDateTimeStr);
 
       final String saveAsTransferDataJsonFilePathName =
-          '$transferDataJsonPath${Platform.pathSeparator}$englishDateTimeStr.json';
+          '$transferDataJsonPath${Platform.pathSeparator}$androidCompatibleEnglishFormatStr.json';
 
       transferDataJsonFileCreated =
           !await File(saveAsTransferDataJsonFilePathName).exists();
-      _transferData.saveTransferDataToFile(
+          
+      await _transferData.saveTransferDataToFile(
           jsonFilePathName: saveAsTransferDataJsonFilePathName);
     }
 
@@ -125,27 +126,28 @@ class TransferDataViewModel {
 
   static void deleteFile(String filePathName) {
     final File fileToDelete = File(filePathName);
-    
+
     fileToDelete.deleteSync();
   }
 
-  /// This method converts the french formatted date time string to
-  /// an english formatted date time string with '.' in place of ':'.
-  String reformatDateTimeStrToCompatibleEnglishFormattedFileName(
+  /// This method converts the french formatted date time
+  /// string to an english formatted date time string with
+  /// '.' in place of ':'.
+  String reformatDateTimeStrToAndroidCompatibleEnglishFormatStr(
       String frenchFormattedDateTimeStr) {
-    final DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-
     // on Android, file name can not contain ':' !
-    final DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH.mm");
+    final DateFormat androidFileNameEnglishDateTimeComponentFormat =
+        DateFormat("yyyy-MM-dd HH.mm");
     DateTime dateTime;
-    String englishDateTimeStr = '';
+    String androidFileNameEnglishDateTimeComponentStr = '';
 
     try {
       dateTime = frenchDateTimeFormat.parse(frenchFormattedDateTimeStr);
-      englishDateTimeStr = englishDateTimeFormat.format(dateTime);
+      androidFileNameEnglishDateTimeComponentStr =
+          androidFileNameEnglishDateTimeComponentFormat.format(dateTime);
     } on FormatException catch (_) {}
 
-    return englishDateTimeStr;
+    return androidFileNameEnglishDateTimeComponentStr;
   }
 
   /// This method converts the english formatted date time string to
@@ -202,7 +204,10 @@ class TransferDataViewModel {
         _transferData.addDurationToDateTimeData;
 
     addDurationToDateTimeData.addDurationStartDateTimeStr =
-        _transferDataMap!['addDurStartDateTimeStr'];
+        // ?? _transferDataMap!['calcSlDurNewDateTimeStr'] avoid
+        // null not String exception thrown if data are entered
+        // without first pressing on Reset button
+        _transferDataMap!['addDurStartDateTimeStr'] ?? _transferDataMap!['calcSlDurNewDateTimeStr'];
 
     addDurationToDateTimeData.firstDurationIconType = (firstDurationSign > 0)
         ? DurationIconType.add
@@ -319,17 +324,17 @@ class TransferDataViewModel {
     dateTimeDifferenceDurationData.dateTimeDifferenceStartDateTimeStr =
         dateTimeDifferenceStartDateTimeStr;
     dateTimeDifferenceDurationData.dateTimeDifferenceEndDateTimeStr =
-        _transferDataMap!['dtDiffEndDateTimeStr'];
+        _transferDataMap!['dtDiffEndDateTimeStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationStr =
-        _transferDataMap!['dtDiffDurationStr'];
+        _transferDataMap!['dtDiffDurationStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceAddTimeStr =
-        _transferDataMap!['dtDiffAddTimeStr'];
+        _transferDataMap!['dtDiffAddTimeStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceFinalDurationStr =
-        _transferDataMap!['dtDiffFinalDurationStr'];
+        _transferDataMap!['dtDiffFinalDurationStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationPercentStr =
-        _transferDataMap!['dtDurationPercentStr'];
+        _transferDataMap!['dtDurationPercentStr'] ?? '';
     dateTimeDifferenceDurationData.dateTimeDifferenceDurationTotalPercentStr =
-        _transferDataMap!['dtDurationTotalPercentStr'];
+        _transferDataMap!['dtDurationTotalPercentStr'] ?? '';
   }
 
   void updateTimeCalculatorData() {
@@ -389,6 +394,8 @@ class TransferDataViewModel {
 
     DurationIconType? durationIconType =
         addDurationToDateTimeData.getFirstDurationIconType();
+
+    _transferDataMap ??= {};
 
     if (durationIconType != null) {
       _transferDataMap!["addDurStartDateTimeStr"] =
