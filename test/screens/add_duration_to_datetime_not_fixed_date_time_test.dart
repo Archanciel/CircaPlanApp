@@ -319,7 +319,7 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'less 5:30 hours',
+        'minus 5:30 hours',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
@@ -545,7 +545,7 @@ Future<void> main() async {
         },
       );
       testWidgets(
-        'less 10:00 hours',
+        'minus 10:00 hours',
         (tester) async {
           await tester.pumpWidget(
             MaterialApp(
