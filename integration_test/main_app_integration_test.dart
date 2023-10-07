@@ -2061,13 +2061,13 @@ Future<void> main() async {
 
           // Find the IconButton with Icons.keyboard_outlined within
           // the time picker dialog
-          final iconButtonFinder = find.descendant(
+          final keyboardIconButtonFinder = find.descendant(
             of: find.byType(Dialog),
             matching: find.byIcon(Icons.keyboard_outlined),
           );
 
           // Tap the keyboard IconButton
-          await tester.tap(iconButtonFinder);
+          await tester.tap(keyboardIconButtonFinder);
           await tester.pumpAndSettle();
 
           // Now, find the TextField that displays the current hour
@@ -2148,6 +2148,19 @@ Future<void> main() async {
           // 12-07-2022 13:00, i.e. 1 hour before 14:00 due to
           // the first duration change from 2:50 to 3:50
           expect(startDateTimeTextField.controller!.text, '12-07-2022 13:00');
+
+          // now clicking on the first duration sign icon to
+          // change the first duration from 3:50 to -3:50
+          // Find the preferred duration selection IconButton by the icon.
+          final Finder addIconButtonFinder = find.byIcon(Icons.add);
+
+          await tester.tap(addIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Verify that the start date time is now 12-07-2022 20:40,
+          // i.e. 12-07-2022 16:50 + 3:50 since the first end date time
+          // is fixed      
+          expect(startDateTimeTextField.controller!.text, '12-07-2022 20:40');
 
           return;
 
