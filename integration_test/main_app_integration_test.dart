@@ -1975,9 +1975,6 @@ Future<void> main() async {
           // is displayed
           expect(find.text('12-07-2022 16:00'), findsOneWidget);
 
-          final String nowFrenchFormatDateTimeStr =
-              frenchDateTimeFormat.format(DateTime.now());
-
           final DurationDateTimeEditor firstDurationDateTimeEditorWidget =
               tester.firstWidget(find
                       .byKey(const Key('firstAddSubtractResultableDuration')))
@@ -2023,16 +2020,27 @@ Future<void> main() async {
           // checking that firstDateTimeCheckBox is checked
           expect(firstDateTimeCheckBox.value, true);
 
-          // Now change the first date time to 12-07-2022 12:00
+          // Now change the first date time to 12-07-2022 14:00
 
           Finder startDateTimeTextFieldFinder =
               find.byKey(const Key('startEditableDateTimeTextField'));
           final TextField startDateTimeTextField =
               tester.widget(startDateTimeTextFieldFinder);
 
-          // checking that startDateTime initial text field
-          // value is 12-07-2022 16:00
+          // before changing the first date time to
+          // 12-07-2022 14:00, re-checking that startDateTime
+          // initial text field value is 12-07-2022 16:00
           expect(startDateTimeTextField.controller!.text, '12-07-2022 16:00');
+
+          Finder firstEndDateTimeTextFieldFinder =
+              find.byKey(Key('firstEditableDateTimeTextField'));
+          TextField firstEndDateTimeTextField =
+              tester.widget(firstEndDateTimeTextFieldFinder);
+
+          // before changing the first date time to
+          // 12-07-2022 14:00, checking that first end DateTime
+          // text field value is 12-07-2022 16:50
+          expect(firstEndDateTimeTextField.controller!.text, '12-07-2022 16:50');
 
           // double tapping on startDateTime text field
           // in order to open the date time picker
@@ -2069,8 +2077,8 @@ Future<void> main() async {
           final EditableText hourEditableTextWidget =
               tester.widget<EditableText>(find.text(currentHour).first);
 
-          // Verify that the hour displayed in the TextField is the
-          // current hour
+          // Verify that the hour displayed in the TextField is
+          // the current hour of 16
           expect(hourEditableTextWidget.controller.text, currentHour);
 
           // Now, modify the time picker hour from 16 to 14
@@ -2089,13 +2097,22 @@ Future<void> main() async {
             '2:50',
           );
 
+          // Verify that the first end date time was not changed
+          // and is still 12-07-2022 16:50
+          firstEndDateTimeTextFieldFinder =
+              find.byKey(Key('firstEditableDateTimeTextField'));
+          firstEndDateTimeTextField =
+              tester.widget(firstEndDateTimeTextFieldFinder);
+
+          expect(firstEndDateTimeTextField.controller!.text, '12-07-2022 16:50');
+
           // loading the circadian.json file after modifying
           // the start date time hour
           Map<String, dynamic> circadianMap =
               await readJsonFile(transferDataJsonFilePathNameCircadian);
 
-          // Verify that the first duration was changed
-          // stored in the app json file is 2:50
+          // Verify that the first duration stored in the app
+          // json file is 2:50
           expect(
               circadianMap['addDurationToDateTimeData']
                   ['firstAddDurationDurationStr'],
@@ -2125,6 +2142,7 @@ Future<void> main() async {
 
           // Verify that the new text is in the TextField
           expect(find.text('3:50'), findsOneWidget);
+          expect(firstDurationTextField.controller!.text, '3:50');
 
           // checking that startDateTime text field value is now
           // 12-07-2022 13:00, i.e. 1 hour before 14:00 due to
@@ -2134,39 +2152,6 @@ Future<void> main() async {
           return;
 
           // add undo testing !
-
-          // clicking on Add date time button
-          await tester.tap(find.byKey(const Key('addNewDateTimeButton')));
-          await tester.pumpAndSettle();
-
-          // since the AlertDialog warning that WIFI is on is
-          // displayed, we need to tap on the Ok button to close
-          // it.
-          await tester.tap(find.text('Ok').first);
-          await tester.pumpAndSettle();
-
-          TextField newDateTimeTextField =
-              tester.widget(find.byKey(const Key('newDateTimeTextField')));
-
-          // checking that startDateTime text field is Now date time at french format
-          newDateTimeTextField =
-              tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          expect(newDateTimeTextField.controller!.text,
-              nowFrenchFormatDateTimeStr);
-
-          // checking that now date time is displayed twice
-          expect(find.text(nowFrenchFormatDateTimeStr), findsNWidgets(2));
-
-          // reloading the circadian.json file after first
-          // New date time addition in the Sleep Duration
-          // screen
-          circadianMap =
-              await readJsonFile(transferDataJsonFilePathNameCircadian);
-
-          // checking that the status is Sleep after first
-          // New date time addition in the Sleep Duration
-          // screen
-          expect(circadianMap['calculateSleepDurationData']['status'], 1);
 
           // to avoid loading file on GitHub
           Utility.deleteFilesInDirAndSubDirs(kCircadianAppDataTestDir);
