@@ -220,8 +220,7 @@ Future<void> main() async {
 
           TextField newDateTimeTextField =
               tester.widget(find.byKey(const Key('newDateTimeTextField')));
-          expect(newDateTimeTextField.controller!.text,
-              '14-07-2022 13:09');
+          expect(newDateTimeTextField.controller!.text, '14-07-2022 13:09');
 
           // clicking on AppBar popup menu button
           await tester.tap(find.byKey(const Key('appBarPopupMenuButton')));
@@ -2040,7 +2039,8 @@ Future<void> main() async {
           // before changing the first date time to
           // 12-07-2022 14:00, checking that first end DateTime
           // text field value is 12-07-2022 16:50
-          expect(firstEndDateTimeTextField.controller!.text, '12-07-2022 16:50');
+          expect(
+              firstEndDateTimeTextField.controller!.text, '12-07-2022 16:50');
 
           // double tapping on startDateTime text field
           // in order to open the date time picker
@@ -2104,7 +2104,8 @@ Future<void> main() async {
           firstEndDateTimeTextField =
               tester.widget(firstEndDateTimeTextFieldFinder);
 
-          expect(firstEndDateTimeTextField.controller!.text, '12-07-2022 16:50');
+          expect(
+              firstEndDateTimeTextField.controller!.text, '12-07-2022 16:50');
 
           // loading the circadian.json file after modifying
           // the start date time hour
@@ -2132,12 +2133,17 @@ Future<void> main() async {
           await tester.longPress(firstDurationTextFieldFinder);
           await tester.pumpAndSettle();
 
-          // Enter new duration value os 3:50
-          await tester.enterText(firstDurationTextFieldFinder, '3:50',);
+          // Enter new duration value as 3:50
+          await tester.enterText(
+            firstDurationTextFieldFinder,
+            '3:50',
+          );
           await tester.pumpAndSettle();
 
           // Simulate pressing the ENTER key
-          await tester.testTextInput.receiveAction(TextInputAction.done,);
+          await tester.testTextInput.receiveAction(
+            TextInputAction.done,
+          );
           await tester.pumpAndSettle();
 
           // Verify that the new text is in the TextField
@@ -2159,10 +2165,38 @@ Future<void> main() async {
 
           // Verify that the start date time is now 12-07-2022 20:40,
           // i.e. 12-07-2022 16:50 + 3:50 since the first end date time
-          // is fixed      
+          // is fixed: 12-07-2022 20:40 - 3:50 = 12-07-2022 16:50.
           expect(startDateTimeTextField.controller!.text, '12-07-2022 20:40');
 
-          return;
+          // and now changing the negative duration from -3:50 to
+          // -10:00 which sets the start date time to
+          // 13-07-2022 02:50
+
+          // Enter new duration value as - 10
+          await tester.longPress(firstDurationTextFieldFinder);
+          await tester.pumpAndSettle();
+
+          // Enter new duration value as 10:00
+          await tester.enterText(
+            firstDurationTextFieldFinder,
+            '10:00',
+          );
+          await tester.pumpAndSettle();
+
+          // Simulate pressing the ENTER key
+          await tester.testTextInput.receiveAction(
+            TextInputAction.done,
+          );
+          await tester.pumpAndSettle();
+
+          // Verify that the new text is in the TextField
+          expect(find.text('10:00'), findsOneWidget);
+          expect(firstDurationTextField.controller!.text, '10:00');
+
+          // Verify that the start date time is now 13-07-2022 02:50,
+          // i.e. 12-07-2022 16:50 + 10:00 since the first end date time
+          // is fixed: 13-07-2022 02:50 - 10:00 = 12-07-2022 16:50.
+          expect(startDateTimeTextField.controller!.text, '13-07-2022 02:50');
 
           // add undo testing !
 

@@ -628,15 +628,15 @@ void main() {
               loadedTransferDataViewModel.getTransferDataMap()!;
 
           expect(loadedTransferDataMap['firstDurationIconColor'],
-              DurationDateTimeEditor.durationPositiveColor);
+              ScreenMixin.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationTextColor'],
-              DurationDateTimeEditor.durationPositiveColor);
+              ScreenMixin.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationSign'], 1);
 
           expect(loadedTransferDataMap['secondDurationIconColor'],
-              DurationDateTimeEditor.durationNegativeColor);
+              ScreenMixin.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationTextColor'],
-              DurationDateTimeEditor.durationNegativeColor);
+              ScreenMixin.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
@@ -881,15 +881,15 @@ void main() {
               loadedTransferDataViewModel.getTransferDataMap()!;
 
           expect(loadedTransferDataMap['firstDurationIconColor'],
-              DurationDateTimeEditor.durationPositiveColor);
+              ScreenMixin.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationTextColor'],
-              DurationDateTimeEditor.durationPositiveColor);
+              ScreenMixin.durationPositiveColor);
           expect(loadedTransferDataMap['firstDurationSign'], 1);
 
           expect(loadedTransferDataMap['secondDurationIconColor'],
-              DurationDateTimeEditor.durationNegativeColor);
+              ScreenMixin.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationTextColor'],
-              DurationDateTimeEditor.durationNegativeColor);
+              ScreenMixin.durationNegativeColor);
           expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =

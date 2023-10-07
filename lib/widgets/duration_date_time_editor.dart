@@ -19,9 +19,6 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
   /// Function passed to this DurationResultDateTime widget.
   //final Function _durationChangeFunction;
 
-  static Color durationPositiveColor = Colors.green.shade200;
-  static Color durationNegativeColor = Colors.red.shade200;
-
   final String dateTimeTitle;
   final double topSelMenuPosition;
   final TransferDataViewModel transferDataViewModel;
@@ -164,8 +161,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
 
 class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   IconData _durationIcon = Icons.add;
-  Color _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
-  Color _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
+  Color _durationIconColor = ScreenMixin.durationPositiveColor;
+  Color _durationTextColor = ScreenMixin.durationPositiveColor;
 
   final String _widgetPrefix;
   final Map<String, dynamic> _transferDataMap;
@@ -197,11 +194,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
             transferDataMap['${widgetPrefix}DurationIconData'] ?? Icons.add,
         _durationIconColor =
             transferDataMap['${widgetPrefix}DurationIconColor'] ??
-                DurationDateTimeEditor.durationPositiveColor,
+                ScreenMixin.durationPositiveColor,
         _durationSign = transferDataMap['${widgetPrefix}DurationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['${widgetPrefix}DurationTextColor'] ??
-                DurationDateTimeEditor.durationPositiveColor,
+                ScreenMixin.durationPositiveColor,
         _durationStr = transferDataMap['${widgetPrefix}DurationStr'] ?? '00:00',
         _startDateTimeEnglishFormatStr =
             transferDataMap['${widgetPrefix}StartDateTimeStr'] ??
@@ -230,11 +227,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         _transferDataMap['${_widgetPrefix}DurationIconData'] ?? Icons.add;
     _durationIconColor =
         _transferDataMap['${_widgetPrefix}DurationIconColor'] ??
-            DurationDateTimeEditor.durationPositiveColor;
+            ScreenMixin.durationPositiveColor;
     _durationSign = _transferDataMap['${_widgetPrefix}DurationSign'] ?? 1;
     _durationTextColor =
         _transferDataMap['${_widgetPrefix}DurationTextColor'] ??
-            DurationDateTimeEditor.durationPositiveColor;
+            ScreenMixin.durationPositiveColor;
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
 
@@ -305,8 +302,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
-    _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
-    _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
+    _durationIconColor = ScreenMixin.durationPositiveColor;
+    _durationTextColor = ScreenMixin.durationPositiveColor;
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
     _durationTextFieldController.text = _durationStr;
     _editableDateTime.isEndDateTimeLocked = false;
@@ -333,8 +330,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _handleDurationChange(
       _durationStr,
       _durationSign,
-      null,
-      null,
+      null, // optional wasDurationSignButtonPressed
+      null, // optional mustEndDateTimeBeRounded
       wasStartDateTimeButtonClicked,
     );
   }
@@ -351,7 +348,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _handleDurationChange(
       durationStr,
       _durationSign,
-      null,
+      null, // optional wasDurationSignButtonPressed
       roundEndDateTime,
     );
   }
@@ -361,19 +358,20 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   /// {wasDurationSignButtonPressed} is null.
   ///
   /// This method is also called when the user presses the
-  /// duration sign button. In this case, the {wasDurationSignButtonPressed}
-  /// is true.
+  /// duration sign button. In this case, the
+  /// {wasDurationSignButtonPressed} is true.
   ///
-  /// This method is passed as a parameter to the ManuallySelectableTextField
-  /// widget. It is called when the user changes the duration in the
-  /// ManuallySelectableTextField widget.
+  /// This method is passed as a parameter to the
+  /// ManuallySelectableTextField widget. It is called when the
+  /// user changes the duration in the ManuallySelectableTextField
+  /// widget.
   ///
   /// Since the ManuallySelectableTextField widget is also used in
   /// the TimeCalculator screen, the {wasDurationSignButtonPressed}
-  /// and the {durationSign} parameters of the TimeCalculator screen
-  /// method passed to the ManuallySelectableTextField widget are
-  /// not used and so are null. This the reason why these parameters
-  /// are optional.
+  /// and the {durationSign} parameters of the TimeCalculator
+  /// screen method passed to the ManuallySelectableTextField
+  /// widget are not used and so are null. Those are the reasons
+  /// why these parameters are optional.
   void _handleDurationChange([
     String? durationStr,
     int? durationSign,
@@ -400,16 +398,15 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         (wasDurationSignButtonPressed == null ||
             !wasDurationSignButtonPressed)) {
       bool durationIsNegative =
-          _durationIconColor == DurationDateTimeEditor.durationNegativeColor ||
+          _durationIconColor == ScreenMixin.durationNegativeColor ||
               _durationTextFieldController.text.contains('-');
       setDurationSignIconAndColor(durationIsNegative: durationIsNegative);
     }
 
+    // useful in case the _durationStr was set to an
+    // int value, like 2 instead of 2:00 !
     _durationStr = Utility.formatStringDuration(
         durationStr: _durationTextFieldController.text);
-
-    // necessary in case the _durationStr was set to an
-    // int value, like 2 instead of 2:00 !
     _durationTextFieldController.text = _durationStr;
 
     Duration? duration = DateTimeParser.parseHHMMDuration(_durationStr);
@@ -436,7 +433,21 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                 durationIsNegative: duration.isNegative);
           }
         } else {
-          startDateTime = endDateTime!.subtract(duration);
+          // computing start date time according to the new 
+          // duration sign. As the duration value was modified
+          // in the situation were the end date time is locked,
+          // the start date time must be changed. If the duration
+          // sign is positive, the duration must be subtracted
+          // from the start date time so that start date time
+          // + duration = end date time. If the duration sign is
+          // negative, the duration must be added to the start
+          // date time so that start date time - duration =
+          // end date time.
+          if (durationSign == null || durationSign > 0) {
+            startDateTime = endDateTime!.subtract(duration);
+          } else {
+            startDateTime = endDateTime!.add(duration);
+          }
           _startDateTimeEnglishFormatStr =
               englishDateTimeFormat.format(startDateTime);
           widget.handleDateTimeModificationFunction!(
@@ -553,13 +564,13 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     if (durationIsNegative) {
       _durationSign = -1;
       _durationIcon = Icons.remove;
-      _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
-      _durationTextColor = DurationDateTimeEditor.durationNegativeColor;
+      _durationIconColor = ScreenMixin.durationNegativeColor;
+      _durationTextColor = ScreenMixin.durationNegativeColor;
     } else {
       _durationSign = 1;
       _durationIcon = Icons.add;
-      _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
-      _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
+      _durationIconColor = ScreenMixin.durationPositiveColor;
+      _durationTextColor = ScreenMixin.durationPositiveColor;
     }
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
@@ -623,9 +634,9 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                   _applyDurationSign(_durationSign);
 
                   _handleDurationChange(
-                    null,
+                    null, // optional durationStr
                     _durationSign,
-                    true,
+                    true, // optional wasDurationSignButtonPressed
                   );
                 },
               ),
@@ -658,12 +669,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   void _applyDurationSign(int durationSign) {
     if (durationSign < 0) {
       _durationIcon = Icons.remove;
-      _durationIconColor = DurationDateTimeEditor.durationNegativeColor;
-      _durationTextColor = DurationDateTimeEditor.durationNegativeColor;
+      _durationIconColor = ScreenMixin.durationNegativeColor;
+      _durationTextColor = ScreenMixin.durationNegativeColor;
     } else {
       _durationIcon = Icons.add;
-      _durationIconColor = DurationDateTimeEditor.durationPositiveColor;
-      _durationTextColor = DurationDateTimeEditor.durationPositiveColor;
+      _durationIconColor = ScreenMixin.durationPositiveColor;
+      _durationTextColor = ScreenMixin.durationPositiveColor;
     }
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);

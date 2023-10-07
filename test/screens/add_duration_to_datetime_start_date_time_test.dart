@@ -1,3 +1,4 @@
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:circa_plan/utils/date_time_parser.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 import 'package:circa_plan/widgets/editable_date_time.dart';
@@ -209,13 +210,13 @@ Future<void> main() async {
 
           expect(
             firstDurationDateTimeEditorWidget.durationIconColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationTextColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationPositiveColor, // duration text color not changed
           );
 
@@ -249,13 +250,13 @@ Future<void> main() async {
 
           expect(
             secondDurationDateTimeEditorWidget.durationIconColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration icon color not changed
           );
 
           expect(
             secondDurationDateTimeEditorWidget.durationTextColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration text color not changed
           );
 
@@ -290,13 +291,13 @@ Future<void> main() async {
 
           expect(
             thirdDurationDateTimeEditorWidget.durationIconColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration icon color not changed
           );
 
           expect(
             thirdDurationDateTimeEditorWidget.durationTextColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration text color not changed
           );
         },
@@ -418,13 +419,13 @@ Future<void> main() async {
 
           expect(
             firstDurationDateTimeEditorWidget.durationIconColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationPositiveColor, // duration icon color not changed
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationTextColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationPositiveColor, // duration text color not changed
           );
 
@@ -458,13 +459,13 @@ Future<void> main() async {
 
           expect(
             secondDurationDateTimeEditorWidget.durationIconColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration icon color not changed
           );
 
           expect(
             secondDurationDateTimeEditorWidget.durationTextColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration text color not changed
           );
 
@@ -499,13 +500,13 @@ Future<void> main() async {
 
           expect(
             thirdDurationDateTimeEditorWidget.durationIconColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration icon color not changed
           );
 
           expect(
             thirdDurationDateTimeEditorWidget.durationTextColor,
-            DurationDateTimeEditor
+            ScreenMixin
                 .durationNegativeColor, // duration text color not changed
           );
         },

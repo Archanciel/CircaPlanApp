@@ -85,6 +85,10 @@ mixin ScreenMixin {
   final alertDialogTextStyle = const TextStyle(
     fontSize: 19,
   );
+  
+  static Color durationPositiveColor = Colors.green.shade200;
+  static Color durationNegativeColor = Colors.red.shade200;
+
 
   static void setAppVerticalTopMargin(double screenHeight) {
     app_computed_vertical_top_margin =

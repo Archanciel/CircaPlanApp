@@ -16,7 +16,6 @@ class ManuallySelectableTextField extends StatefulWidget {
     int durationSign,
     bool wasDurationSignButtonPressed,
     bool mustEndDateTimeBeRounded,
-
   ]) handleTextFieldChangeFunction;
 
   final String widgetPrefixOrName;
@@ -154,9 +153,16 @@ class _ManuallySelectableTextFieldState
           keyboardType: TextInputType.datetime,
           controller: textFieldController,
           onSubmitted: (val) {
+            int durationSign =
+                (_durationTextColor == ScreenMixin.durationPositiveColor)
+                    ? 1
+                    : -1;
             // solve the unsolvable problem of onChange()
             // which set cursor at TextField start position !
-            handleTextFieldChangeFunction(val);
+            handleTextFieldChangeFunction(
+              val,
+              durationSign,
+            );
           },
         ),
       ),
