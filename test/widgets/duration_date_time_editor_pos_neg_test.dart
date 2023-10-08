@@ -92,11 +92,14 @@ Future<void> main() async {
 
           // Adding negative one digit duration
 
-          await tester.enterText(durationTextFieldFinder, '-2');
+          // typing on duration sign button
+          await tester.tap(durationSignButtonFinder);
+          await tester.pumpAndSettle();
+
+          await tester.enterText(durationTextFieldFinder, '2');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
-
           await tester.pumpAndSettle();
 
           expect(find.text('2:00'), findsOneWidget);

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circa_plan/screens/screen_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -75,7 +76,7 @@ Future<void> main() async {
         final TextField durationTextField = tester.widget(find
             .byKey(const Key('${widgetPrefixOne}ManuallySelectableTextField')));
         expect(durationTextField.style!.color,
-            DurationDateTimeEditor.durationPositiveColor);
+            ScreenMixin.durationPositiveColor);
 
         // testing the duration sign button icon and color
         final dynamic textButtonWithIconWidget = tester.widget(
@@ -83,7 +84,7 @@ Future<void> main() async {
                 '${widget.runtimeType}' == '_TextButtonWithIconChild'));
         expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
         expect(textButtonWithIconWidget.icon.color,
-            DurationDateTimeEditor.durationPositiveColor);
+            ScreenMixin.durationPositiveColor);
       },
     );
   });

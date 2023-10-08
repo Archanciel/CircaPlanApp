@@ -8,6 +8,9 @@ import 'package:circa_plan/constants.dart';
 import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/duration_date_time_editor.dart';
 
+const IconData positiveDurationIcon = Icons.add;
+const IconData negativeDurationIcon = Icons.remove;
+
 /// This DurationDateTimeEditor widget unit test tests
 /// specifically handling integer duration setting in place of
 /// defining HH:mm durations.
@@ -30,9 +33,6 @@ Future<void> main() async {
   TransferDataViewModel transferDataViewModel = TransferDataViewModel(
       transferDataJsonFilePathName: transferDataJsonFilePathName);
   transferDataViewModel.transferDataMap = transferDataMap;
-
-  const IconData positiveDurationIcon = Icons.add;
-  const IconData negativeDurationIcon = Icons.remove;
 
   group(
     'DurationDateTimeEditor adding one int duration',
@@ -159,7 +159,16 @@ Future<void> main() async {
           final Finder durationTextFieldFinder = find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField'));
 
-          await tester.enterText(durationTextFieldFinder, '-2');
+          // typing on duration sign button
+          Finder durationSignButtonFinder = find.byWidgetPredicate(
+              (Widget widget) =>
+                  '${widget.runtimeType}' == '_TextButtonWithIconChild');
+          dynamic textButtonWithIconWidget =
+              tester.widget(durationSignButtonFinder);
+          await tester.tap(durationSignButtonFinder);
+          await tester.pumpAndSettle();
+
+          await tester.enterText(durationTextFieldFinder, '2');
 
           // typing on Done button
           await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -175,10 +184,14 @@ Future<void> main() async {
           expect(durationTextField.style!.color,
               ScreenMixin.durationNegativeColor);
 
+          // finding again the duration sign button finder is
+          // necessary because the widget has changed. Otherwise,
+          // the test will fail.
+          durationSignButtonFinder = find.byWidgetPredicate((Widget widget) =>
+              '${widget.runtimeType}' == '_TextButtonWithIconChild');
+          textButtonWithIconWidget = tester.widget(durationSignButtonFinder);
+
           // testing the duration sign button icon and color
-          final dynamic textButtonWithIconWidget = tester.widget(
-              find.byWidgetPredicate((Widget widget) =>
-                  '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
               ScreenMixin.durationNegativeColor);
@@ -227,7 +240,7 @@ Future<void> main() async {
           final dynamic textButtonWithIconWidget = tester.widget(
               find.byWidgetPredicate((Widget widget) =>
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
-          expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
+          expect(textButtonWithIconWidget.icon.icon, Icons.remove);
           expect(textButtonWithIconWidget.icon.color,
               ScreenMixin.durationNegativeColor);
         },

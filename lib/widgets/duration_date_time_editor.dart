@@ -400,7 +400,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       bool durationIsNegative =
           _durationIconColor == ScreenMixin.durationNegativeColor ||
               _durationTextFieldController.text.contains('-');
-      setDurationSignIconAndColor(durationIsNegative: durationIsNegative);
+      setDurationSignIconAndColors(durationIsNegative: durationIsNegative);
     }
 
     // useful in case the _durationStr was set to an
@@ -429,11 +429,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
                 duration.HHmm().replaceAll('-', ''); // removing minus sign
             //                                          if duration is negative;
             _durationTextFieldController.text = _durationStr;
-            setDurationSignIconAndColor(
+            setDurationSignIconAndColors(
                 durationIsNegative: duration.isNegative);
           }
         } else {
-          // computing start date time according to the new 
+          // computing start date time according to the new
           // duration sign. As the duration value was modified
           // in the situation were the end date time is locked,
           // the start date time must be changed. If the duration
@@ -445,8 +445,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
           // end date time.
           if (durationSign == null || durationSign > 0) {
             startDateTime = endDateTime!.subtract(duration);
+            setDurationSignIconAndColors(durationIsNegative: false);
           } else {
             startDateTime = endDateTime!.add(duration);
+            setDurationSignIconAndColors(durationIsNegative: true);
           }
           _startDateTimeEnglishFormatStr =
               englishDateTimeFormat.format(startDateTime);
@@ -457,8 +459,10 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         // end date time must be changed
         if (_durationSign > 0) {
           endDateTime = startDateTime.add(duration);
+          setDurationSignIconAndColors(durationIsNegative: false);
         } else {
           endDateTime = startDateTime.subtract(duration);
+          setDurationSignIconAndColors(durationIsNegative: true);
         }
 
         if (mustEndDateTimeBeRounded != null && mustEndDateTimeBeRounded) {
@@ -470,7 +474,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
               duration.HHmm().replaceAll('-', ''); // removing minus sign
           //                                          if duration is negative;
           _durationTextFieldController.text = _durationStr;
-          setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
+          setDurationSignIconAndColors(durationIsNegative: duration.isNegative);
         }
 
         _endDateTimeStr = englishDateTimeFormat.format(endDateTime);
@@ -540,7 +544,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
       //                                                 if duration is negative
       _durationTextFieldController.text = _durationStr;
 
-      setDurationSignIconAndColor(durationIsNegative: duration.isNegative);
+      setDurationSignIconAndColors(durationIsNegative: duration.isNegative);
     }
 
     _updateTransferDataMap(); // must be executed before calling
@@ -560,7 +564,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     }
   }
 
-  void setDurationSignIconAndColor({required bool durationIsNegative}) {
+  void setDurationSignIconAndColors({required bool durationIsNegative}) {
     if (durationIsNegative) {
       _durationSign = -1;
       _durationIcon = Icons.remove;

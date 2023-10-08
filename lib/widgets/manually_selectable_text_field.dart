@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:circa_plan/screens/screen_mixin.dart';
@@ -12,10 +14,10 @@ class ManuallySelectableTextField extends StatefulWidget {
   late final TextEditingController textFieldController;
 
   final void Function([
-    String textFieldStr,
-    int durationSign,
-    bool wasDurationSignButtonPressed,
-    bool mustEndDateTimeBeRounded,
+    String? textFieldStr,
+    int? durationSign,
+    bool? wasDurationSignButtonPressed,
+    bool? mustEndDateTimeBeRounded,
   ]) handleTextFieldChangeFunction;
 
   final String widgetPrefixOrName;
@@ -64,9 +66,9 @@ class _ManuallySelectableTextFieldState
   late final TextEditingController textFieldController;
 
   final void Function([
-    String textFieldStr,
-    int durationSign,
-    bool wasDurationSignButtonPressed,
+    String? textFieldStr,
+    int? durationSign,
+    bool? wasDurationSignButtonPressed,
   ]) handleTextFieldChangeFunction;
 
   _ManuallySelectableTextFieldState({
@@ -153,10 +155,15 @@ class _ManuallySelectableTextFieldState
           keyboardType: TextInputType.datetime,
           controller: textFieldController,
           onSubmitted: (val) {
-            int durationSign =
-                (_durationTextColor == ScreenMixin.durationPositiveColor)
-                    ? 1
-                    : -1;
+            int? durationSign;
+
+            if (_durationTextColor == ScreenMixin.durationPositiveColor) {
+              durationSign = 1;
+            } else if (_durationTextColor ==
+                ScreenMixin.durationNegativeColor) {
+              durationSign = -1;
+            } // else durationSign == null
+
             // solve the unsolvable problem of onChange()
             // which set cursor at TextField start position !
             handleTextFieldChangeFunction(
