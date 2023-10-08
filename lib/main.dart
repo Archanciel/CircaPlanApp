@@ -159,6 +159,10 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> with ScreenMixin {
   final _navigationKey = GlobalKey<CurvedNavigationBarState>();
+
+// Added PageController for swipe navigation
+  final PageController _pageController = PageController(initialPage: 0);
+
   int _currentIndex = 0; // initial selected screen
   final ScreenNavigTransData _screenNavigTransData =
       ScreenNavigTransData(transferDataMap: {});
@@ -181,6 +185,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
 
     _medicAlarmTimeController.dispose();
     _medicAlarmDateTimeController.dispose();
+    _pageController.dispose();
   }
 
   /// Method called after choosing a file to load in the load
@@ -623,72 +628,91 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
                   },
                   child: Stack(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
-                        ),
-                        child: SizedBox(
-                            height: screenHeight - 80, // ok on S8
-                            child: _screensLst[_currentIndex]),
-                      ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        top: screenHeight - 193, // ok on S8
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            iconTheme: IconThemeData(
-                              color: ScreenMixin.APP_DARK_BLUE_COLOR,
+                      PageView(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: ScreenMixin.APP_LIGHT_BLUE_COLOR,
                             ),
+                            child: SizedBox(
+                                height: screenHeight - 80, // ok on S8
+                                child: _screensLst[_currentIndex]),
                           ),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            top: screenHeight - 193, // ok on S8
+                            child: Theme(
+                              data: Theme.of(context).copyWith(
+                                iconTheme: IconThemeData(
+                                  color: ScreenMixin.APP_DARK_BLUE_COLOR,
+                                ),
+                              ),
+                              child: Column(
                                 children: [
-                                  ElevatedButton(
-                                    key: const Key('resetButton'),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            appElevatedButtonBackgroundColor,
-                                        shape: appElevatedButtonRoundedShape),
-                                    onPressed: _resetScreen,
-                                    child: const Text(
-                                      'Reset',
-                                      style: TextStyle(
-                                        fontSize:
-                                            ScreenMixin.APP_TEXT_FONT_SIZE,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                        key: const Key('resetButton'),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                appElevatedButtonBackgroundColor,
+                                            shape:
+                                                appElevatedButtonRoundedShape),
+                                        onPressed: _resetScreen,
+                                        child: const Text(
+                                          'Reset',
+                                          style: TextStyle(
+                                            fontSize:
+                                                ScreenMixin.APP_TEXT_FONT_SIZE,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        width: 15,
+                                      )
+                                    ],
                                   ),
                                   const SizedBox(
-                                    width: 15,
-                                  )
+                                    height: 20,
+                                  ),
+                                  CurvedNavigationBar(
+                                    key: _navigationKey,
+                                    color: Colors.white,
+                                    buttonBackgroundColor:
+                                        ScreenMixin.APP_LIGHT_YELLOW_COLOR,
+                                    backgroundColor: Colors.transparent,
+                                    height: 55,
+                                    animationCurve: Curves.easeInOut,
+                                    animationDuration:
+                                        const Duration(milliseconds: 500),
+                                    index: _currentIndex,
+                                    items: _curvedNavigationBarItemIconsLst,
+                                    onTap: (index) {
+                                      setState(() {
+                                        _currentIndex = index;
+                                      });
+                                      // Navigate to the page when an item is tapped
+                                      _pageController.animateToPage(
+                                        index,
+                                        duration: Duration(milliseconds: 400),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
+                                  ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              CurvedNavigationBar(
-                                key: _navigationKey,
-                                color: Colors.white,
-                                buttonBackgroundColor:
-                                    ScreenMixin.APP_LIGHT_YELLOW_COLOR,
-                                backgroundColor: Colors.transparent,
-                                height: 55,
-                                animationCurve: Curves.easeInOut,
-                                animationDuration:
-                                    const Duration(milliseconds: 500),
-                                index: _currentIndex,
-                                items: _curvedNavigationBarItemIconsLst,
-                                onTap: (index) => setState(() {
-                                  _currentIndex = index;
-                                }),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
