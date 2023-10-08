@@ -157,10 +157,10 @@ class _ManuallySelectableTextFieldState
           onSubmitted: (val) {
             int? durationSign;
 
-            if (_durationTextColor == ScreenMixin.durationPositiveColor) {
+            if (_durationTextColor == ScreenMixin.DURATION_POSITIVE_COLOR) {
               durationSign = 1;
             } else if (_durationTextColor ==
-                ScreenMixin.durationNegativeColor) {
+                ScreenMixin.DURATION_NEGATIVE_COLOR) {
               durationSign = -1;
             } // else durationSign == null
 

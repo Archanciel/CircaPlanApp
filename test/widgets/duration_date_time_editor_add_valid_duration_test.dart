@@ -76,7 +76,7 @@ Future<void> main() async {
         final TextField durationTextField = tester.widget(find
             .byKey(const Key('${widgetPrefixOne}ManuallySelectableTextField')));
         expect(durationTextField.style!.color,
-            ScreenMixin.durationPositiveColor);
+            ScreenMixin.DURATION_POSITIVE_COLOR);
 
         // testing the duration sign button icon and color
         final dynamic textButtonWithIconWidget = tester.widget(
@@ -84,7 +84,7 @@ Future<void> main() async {
                 '${widget.runtimeType}' == '_TextButtonWithIconChild'));
         expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
         expect(textButtonWithIconWidget.icon.color,
-            ScreenMixin.durationPositiveColor);
+            ScreenMixin.DURATION_POSITIVE_COLOR);
       },
     );
   });

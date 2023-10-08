@@ -161,8 +161,8 @@ class DurationDateTimeEditor extends StatefulWidget with ScreenMixin {
 
 class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   IconData _durationIcon = Icons.add;
-  Color _durationIconColor = ScreenMixin.durationPositiveColor;
-  Color _durationTextColor = ScreenMixin.durationPositiveColor;
+  Color _durationIconColor = ScreenMixin.DURATION_POSITIVE_COLOR;
+  Color _durationTextColor = ScreenMixin.DURATION_POSITIVE_COLOR;
 
   final String _widgetPrefix;
   final Map<String, dynamic> _transferDataMap;
@@ -194,11 +194,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
             transferDataMap['${widgetPrefix}DurationIconData'] ?? Icons.add,
         _durationIconColor =
             transferDataMap['${widgetPrefix}DurationIconColor'] ??
-                ScreenMixin.durationPositiveColor,
+                ScreenMixin.DURATION_POSITIVE_COLOR,
         _durationSign = transferDataMap['${widgetPrefix}DurationSign'] ?? 1,
         _durationTextColor =
             transferDataMap['${widgetPrefix}DurationTextColor'] ??
-                ScreenMixin.durationPositiveColor,
+                ScreenMixin.DURATION_POSITIVE_COLOR,
         _durationStr = transferDataMap['${widgetPrefix}DurationStr'] ?? '00:00',
         _startDateTimeEnglishFormatStr =
             transferDataMap['${widgetPrefix}StartDateTimeStr'] ??
@@ -227,11 +227,11 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         _transferDataMap['${_widgetPrefix}DurationIconData'] ?? Icons.add;
     _durationIconColor =
         _transferDataMap['${_widgetPrefix}DurationIconColor'] ??
-            ScreenMixin.durationPositiveColor;
+            ScreenMixin.DURATION_POSITIVE_COLOR;
     _durationSign = _transferDataMap['${_widgetPrefix}DurationSign'] ?? 1;
     _durationTextColor =
         _transferDataMap['${_widgetPrefix}DurationTextColor'] ??
-            ScreenMixin.durationPositiveColor;
+            ScreenMixin.DURATION_POSITIVE_COLOR;
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
 
@@ -302,8 +302,8 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     _durationStr = '00:00';
     _durationSign = 1;
     _durationIcon = Icons.add;
-    _durationIconColor = ScreenMixin.durationPositiveColor;
-    _durationTextColor = ScreenMixin.durationPositiveColor;
+    _durationIconColor = ScreenMixin.DURATION_POSITIVE_COLOR;
+    _durationTextColor = ScreenMixin.DURATION_POSITIVE_COLOR;
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
     _durationTextFieldController.text = _durationStr;
     _editableDateTime.isEndDateTimeLocked = false;
@@ -398,7 +398,7 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
         (wasDurationSignButtonPressed == null ||
             !wasDurationSignButtonPressed)) {
       bool durationIsNegative =
-          _durationIconColor == ScreenMixin.durationNegativeColor ||
+          _durationIconColor == ScreenMixin.DURATION_NEGATIVE_COLOR ||
               _durationTextFieldController.text.contains('-');
       setDurationSignIconAndColors(durationIsNegative: durationIsNegative);
     }
@@ -568,13 +568,13 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
     if (durationIsNegative) {
       _durationSign = -1;
       _durationIcon = Icons.remove;
-      _durationIconColor = ScreenMixin.durationNegativeColor;
-      _durationTextColor = ScreenMixin.durationNegativeColor;
+      _durationIconColor = ScreenMixin.DURATION_NEGATIVE_COLOR;
+      _durationTextColor = ScreenMixin.DURATION_NEGATIVE_COLOR;
     } else {
       _durationSign = 1;
       _durationIcon = Icons.add;
-      _durationIconColor = ScreenMixin.durationPositiveColor;
-      _durationTextColor = ScreenMixin.durationPositiveColor;
+      _durationIconColor = ScreenMixin.DURATION_POSITIVE_COLOR;
+      _durationTextColor = ScreenMixin.DURATION_POSITIVE_COLOR;
     }
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);
@@ -673,12 +673,12 @@ class _DurationDateTimeEditorState extends State<DurationDateTimeEditor> {
   void _applyDurationSign(int durationSign) {
     if (durationSign < 0) {
       _durationIcon = Icons.remove;
-      _durationIconColor = ScreenMixin.durationNegativeColor;
-      _durationTextColor = ScreenMixin.durationNegativeColor;
+      _durationIconColor = ScreenMixin.DURATION_NEGATIVE_COLOR;
+      _durationTextColor = ScreenMixin.DURATION_NEGATIVE_COLOR;
     } else {
       _durationIcon = Icons.add;
-      _durationIconColor = ScreenMixin.durationPositiveColor;
-      _durationTextColor = ScreenMixin.durationPositiveColor;
+      _durationIconColor = ScreenMixin.DURATION_POSITIVE_COLOR;
+      _durationTextColor = ScreenMixin.DURATION_POSITIVE_COLOR;
     }
 
     _manuallySelectableDurationTextField.setTextColor(_durationTextColor);

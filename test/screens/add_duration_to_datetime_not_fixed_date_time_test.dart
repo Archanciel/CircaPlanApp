@@ -220,13 +220,13 @@ Future<void> main() async {
           expect(
             firstDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
 
           // 2:00 hours after 2022-07-12 23:00 or new second start date
@@ -265,13 +265,13 @@ Future<void> main() async {
           expect(
             secondDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             secondDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
 
           // 2 hours after than 2022-07-13 10:00 or new third start date
@@ -309,13 +309,13 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             thirdDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
         },
       );
@@ -446,13 +446,13 @@ Future<void> main() async {
           expect(
             firstDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
 
           // 5:30 hours sooner than 2022-07-12 23:00 or new second start date
@@ -491,13 +491,13 @@ Future<void> main() async {
           expect(
             secondDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             secondDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
 
           // 5:30 hours sooner than 2022-07-13 10:00 or new third start date
@@ -535,13 +535,13 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             thirdDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
         },
       );
@@ -672,13 +672,13 @@ Future<void> main() async {
           expect(
             firstDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationNegativeColor, // duration icon color not changed
+                .DURATION_NEGATIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             firstDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationNegativeColor, // duration text color not changed
+                .DURATION_NEGATIVE_COLOR, // duration text color not changed
           );
 
           // 10:00 hours sooner than 2022-07-12 23:00 or new second start date
@@ -717,13 +717,13 @@ Future<void> main() async {
           expect(
             secondDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             secondDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
 
           // 10:00 hours sooner than 2022-07-13 10:00 or new third start date
@@ -761,13 +761,13 @@ Future<void> main() async {
           expect(
             thirdDurationDateTimeEditorWidget.durationIconColor,
             ScreenMixin
-                .durationPositiveColor, // duration icon color not changed
+                .DURATION_POSITIVE_COLOR, // duration icon color not changed
           );
 
           expect(
             thirdDurationDateTimeEditorWidget.durationTextColor,
             ScreenMixin
-                .durationPositiveColor, // duration text color not changed
+                .DURATION_POSITIVE_COLOR, // duration text color not changed
           );
         },
       );

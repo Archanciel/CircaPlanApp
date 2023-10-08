@@ -80,7 +80,7 @@ Future<void> main() async {
           TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // testing the duration sign button icon and color
           dynamic textButtonWithIconWidget = tester.widget(
@@ -88,7 +88,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // Adding negative one digit duration
 
@@ -109,7 +109,7 @@ Future<void> main() async {
           durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
@@ -117,7 +117,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // Typing once on negative duration sign button
 
@@ -128,7 +128,7 @@ Future<void> main() async {
           durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // testing the duration sign button icon and color
           textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
@@ -136,7 +136,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // Typing again on now positive duration sign button
 
@@ -147,7 +147,7 @@ Future<void> main() async {
           durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
@@ -155,7 +155,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
         },
       );
       testWidgets(
@@ -205,7 +205,7 @@ Future<void> main() async {
           TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           dynamic textButtonWithIconWidget = tester.widget(
@@ -213,7 +213,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // Adding positive one digit duration. Since the current duration
           // icon is negative and same for the color (negative), entering
@@ -244,7 +244,7 @@ Future<void> main() async {
           durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
@@ -252,7 +252,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // Typing once on negative duration sign button
 
@@ -263,7 +263,7 @@ Future<void> main() async {
           durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // testing the duration sign button icon and color
           textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
@@ -271,7 +271,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // Typing again on now positive duration sign button
 
@@ -282,7 +282,7 @@ Future<void> main() async {
           durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           textButtonWithIconWidget = tester.widget(find.byWidgetPredicate(
@@ -290,7 +290,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
         },
       );
     },

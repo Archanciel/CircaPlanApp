@@ -75,7 +75,7 @@ Future<void> main() async {
           final TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // testing the duration sign button icon and color
           final dynamic textButtonWithIconWidget = tester.widget(
@@ -83,7 +83,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
         },
       );
       testWidgets(
@@ -124,7 +124,7 @@ Future<void> main() async {
           final TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
 
           // testing the duration sign button icon and color
           final dynamic textButtonWithIconWidget = tester.widget(
@@ -132,7 +132,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, positiveDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
         },
       );
       testWidgets(
@@ -182,7 +182,7 @@ Future<void> main() async {
           final TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // finding again the duration sign button finder is
           // necessary because the widget has changed. Otherwise,
@@ -194,7 +194,7 @@ Future<void> main() async {
           // testing the duration sign button icon and color
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
         },
       );
       testWidgets(
@@ -234,7 +234,7 @@ Future<void> main() async {
           final TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           final dynamic textButtonWithIconWidget = tester.widget(
@@ -242,7 +242,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, Icons.remove);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
         },
       );
       testWidgets(
@@ -283,7 +283,7 @@ Future<void> main() async {
           final TextField durationTextField = tester.widget(find.byKey(
               const Key('${widgetPrefixOne}ManuallySelectableTextField')));
           expect(durationTextField.style!.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
 
           // testing the duration sign button icon and color
           final dynamic textButtonWithIconWidget = tester.widget(
@@ -291,7 +291,7 @@ Future<void> main() async {
                   '${widget.runtimeType}' == '_TextButtonWithIconChild'));
           expect(textButtonWithIconWidget.icon.icon, negativeDurationIcon);
           expect(textButtonWithIconWidget.icon.color,
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
         },
       );
     },

@@ -85,10 +85,9 @@ mixin ScreenMixin {
   final alertDialogTextStyle = const TextStyle(
     fontSize: 19,
   );
-  
-  static Color durationPositiveColor = Colors.green.shade200;
-  static Color durationNegativeColor = Colors.red.shade200;
 
+  static Color DURATION_POSITIVE_COLOR = Colors.green.shade200;
+  static Color DURATION_NEGATIVE_COLOR = Colors.red.shade200;
 
   static void setAppVerticalTopMargin(double screenHeight) {
     app_computed_vertical_top_margin =
@@ -330,7 +329,7 @@ mixin ScreenMixin {
         if (itemSelected == null) {
           return;
         }
-        
+
         String selectedItemStr = selectableStrItemLst[int.parse(itemSelected)];
 
         handleSelectedItemFunction(

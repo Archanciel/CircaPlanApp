@@ -628,15 +628,15 @@ void main() {
               loadedTransferDataViewModel.getTransferDataMap()!;
 
           expect(loadedTransferDataMap['firstDurationIconColor'],
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
           expect(loadedTransferDataMap['firstDurationTextColor'],
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
           expect(loadedTransferDataMap['firstDurationSign'], 1);
 
           expect(loadedTransferDataMap['secondDurationIconColor'],
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
           expect(loadedTransferDataMap['secondDurationTextColor'],
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
           expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
@@ -881,15 +881,15 @@ void main() {
               loadedTransferDataViewModel.getTransferDataMap()!;
 
           expect(loadedTransferDataMap['firstDurationIconColor'],
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
           expect(loadedTransferDataMap['firstDurationTextColor'],
-              ScreenMixin.durationPositiveColor);
+              ScreenMixin.DURATION_POSITIVE_COLOR);
           expect(loadedTransferDataMap['firstDurationSign'], 1);
 
           expect(loadedTransferDataMap['secondDurationIconColor'],
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
           expect(loadedTransferDataMap['secondDurationTextColor'],
-              ScreenMixin.durationNegativeColor);
+              ScreenMixin.DURATION_NEGATIVE_COLOR);
           expect(loadedTransferDataMap['secondDurationSign'], -1);
 
           CalculateSleepDurationData loadedCalculateSleepDurationData =
