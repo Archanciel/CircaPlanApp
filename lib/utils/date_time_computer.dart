@@ -93,13 +93,13 @@ class DateTimeComputer {
         return '';
       }
 
-      DateTime now = DateTime.now();
+      DateTime nowTruncatedToMinute = DateTimeParser.truncateDateTimeToMinute(DateTime.now());
       int alarmHHmmTimeDurationInMinutes = alarmHHmmTimeDuration.inMinutes;
       DateTime todayAlarmDateTime = DateTime(
-          now.year, now.month, now.day, 0, alarmHHmmTimeDurationInMinutes, 0);
+          nowTruncatedToMinute.year, nowTruncatedToMinute.month, nowTruncatedToMinute.day, 0, alarmHHmmTimeDurationInMinutes, 0);
       nextAlarmDateTime = todayAlarmDateTime;
 
-      if (todayAlarmDateTime.isBefore(now) || todayAlarmDateTime == now) {
+      if (todayAlarmDateTime.isBefore(nowTruncatedToMinute) || todayAlarmDateTime == nowTruncatedToMinute) {
         nextAlarmDateTime = todayAlarmDateTime.add(fiveHoursDuration);
       }
     }

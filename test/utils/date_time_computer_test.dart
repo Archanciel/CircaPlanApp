@@ -201,29 +201,13 @@ void main() {
             hourStr = '0${hourInt.toString()}';
           }
 
-          int monthInt = oneHourLater.month;
-          String monthStr;
-
-          if (monthInt > 9) {
-            monthStr = monthInt.toString();
-          } else {
-            monthStr = '0${monthInt.toString()}';
-          }
-
-          int dayInt = oneHourLater.day;
-          String dayStr;
-
-          if (dayInt > 9) {
-            dayStr = dayInt.toString();
-          } else {
-            dayStr = '0${dayInt.toString()}';
-          }
-
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '$hourStr:$minuteStr',
+                alarmFrenchDateTimeStr: frenchDateTimeFormat.format(oneHourLater),
               ),
-              '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
+              // '$dayStr-$monthStr-${now.year} $hourStr:$minuteStr');
+              frenchDateTimeFormat.format(oneHourLater.add(sirdalud5hoursDuration)));
         },
       );
       test(
@@ -256,6 +240,7 @@ void main() {
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
 
                 alarmHHmmTimeStr: '$hourStr:$minuteStr',
+                alarmFrenchDateTimeStr: frenchDateTimeFormat.format(oneHourBefore),
               ),
               frenchDateTimeFormat.format(oneHourBefore.add(sirdalud5hoursDuration)));
         },
@@ -271,6 +256,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '2:35',
+                alarmFrenchDateTimeStr: frenchDateTimeFormat.format(dateTime_2_35),
               ),
               frenchDateTimeFormat.format(dateTime_2_35.add(sirdalud5hoursDuration)));
         },
@@ -286,6 +272,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '10:3',
+                alarmFrenchDateTimeStr: frenchDateTimeFormat.format(dateTime_10_30),
               ),
               frenchDateTimeFormat.format(dateTime_10_30.add(sirdalud5hoursDuration)));
         },
@@ -320,6 +307,7 @@ void main() {
           expect(
               DateTimeComputer.computeTodayOrTomorrowNextAlarmFrenchDateTimeStr(
                 alarmHHmmTimeStr: '$hourStr:$minuteStr',
+                alarmFrenchDateTimeStr: frenchDateTimeFormat.format(dateTimeNow),
               ),
               frenchDateTimeFormat.format(dateTimeNow.add(sirdalud5hoursDuration)));
         },
