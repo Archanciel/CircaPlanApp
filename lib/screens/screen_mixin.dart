@@ -141,7 +141,10 @@ mixin ScreenMixin {
           dateTime = englishDateTimeFormat.parse(value);
         }
 
-        addDateTimeIfNotExist(appDateTimeLst, dateTime);
+        addDateTimeIfNotExist(
+          appDateTimeLst,
+          dateTime,
+        );
       } else if (value is List<String> &&
           value.isNotEmpty &&
           isDateTimeStrValid(value.first)) {
@@ -153,7 +156,10 @@ mixin ScreenMixin {
           continue;
         }
 
-        addDateTimeIfNotExist(appDateTimeLst, dateTime);
+        addDateTimeIfNotExist(
+          appDateTimeLst,
+          dateTime,
+        );
       }
     }
 
@@ -231,7 +237,9 @@ mixin ScreenMixin {
   }
 
   void addDateTimeIfNotExist(
-      List<DateTime> appDateTimeList, DateTime dateTime,) {
+    List<DateTime> appDateTimeList,
+    DateTime dateTime,
+  ) {
     if (!appDateTimeList.contains(dateTime)) {
       // avoid inserting several same DateTime values
       appDateTimeList.add(dateTime);
