@@ -116,9 +116,9 @@ mixin ScreenMixin {
     );
   }
 
-  /// Extract date time string's from the passed transfer data map and return
-  /// them in a list sorted with most recent first or last according to the
-  /// mostRecentFirst bool paraneter.
+  /// Extract date time string's from the passed transfer data
+  /// map and return them in a list sorted with most recent first
+  /// or last according to the mostRecentFirst bool paraneter.
   MenuItemData buildSortedAppDateTimeStrList({
     required Map<String, dynamic> transferDataMap,
     required bool mostRecentFirst,
@@ -136,8 +136,8 @@ mixin ScreenMixin {
         }
 
         if (dateTime.isBefore(twoThousandDateTime)) {
-          // the case is the parsed date time string was obtained from a
-          // DatePickerField
+          // the case if the parsed date time string was obtained
+          // from a DatePickerField
           dateTime = englishDateTimeFormat.parse(value);
         }
 
@@ -231,7 +231,7 @@ mixin ScreenMixin {
   }
 
   void addDateTimeIfNotExist(
-      List<DateTime> appDateTimeList, DateTime dateTime) {
+      List<DateTime> appDateTimeList, DateTime dateTime,) {
     if (!appDateTimeList.contains(dateTime)) {
       // avoid inserting several same DateTime values
       appDateTimeList.add(dateTime);
