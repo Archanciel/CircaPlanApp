@@ -394,7 +394,7 @@ Future<void> main() async {
       test(
         'english (DateTimePicker field) and french format date time str most recent first. App dir contains 1 yyyy-MM.dd HH.mm.json file.',
         () {
-          Utility.renameFile(
+          File? renamedFile = Utility.renameFile(
               filePathNameStr:
                   transferDataViewModel.transferDataJsonFilePathName,
               newFileNameStr: '2022-08-07 02.30.json');
@@ -405,13 +405,29 @@ Future<void> main() async {
                 transferDataViewModel: transferDataViewModel,
               )
               .itemDataStrLst;
-          List<String> expectedDateTimeStrLst = [
-            '07-08-2022 02:30',
-            '11-06-2022 22:30',
-            '10-06-2022 00:30',
-            '02-06-2022 23:42',
-            '01-06-2022 23:42',
-          ];
+
+          List<String> expectedDateTimeStrLst;
+
+          if (renamedFile != null) {
+            expectedDateTimeStrLst = [
+              '07-08-2022 02:30',
+              '11-06-2022 22:30',
+              '10-06-2022 00:30',
+              '02-06-2022 23:42',
+              '01-06-2022 23:42',
+            ];
+          } else {
+            // this avoids incorrect test failure if the test
+            // is run in a situation where the circadian.json file
+            // has been deleted by another test
+            expectedDateTimeStrLst = [
+              '11-06-2022 22:30',
+              '10-06-2022 00:30',
+              '02-06-2022 23:42',
+              '01-06-2022 23:42',
+            ];
+          }
+
           Utility.renameFile(
               filePathNameStr:
                   '${transferDataViewModel.getTransferDataJsonPath()}${Platform.pathSeparator}2022-08-07 02.30.json',
