@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:circa_plan/services/permission_requester_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -22,6 +21,7 @@ import 'package:circa_plan/buslog/transfer_data_view_model.dart';
 import 'package:circa_plan/widgets/circadian_snackbar.dart';
 import 'model/menu_item_data.dart';
 import 'package:circa_plan/widgets/circadian_flutter_toast.dart';
+import 'package:circa_plan/services/permission_requester_service.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
