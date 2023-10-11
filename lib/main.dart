@@ -2,12 +2,12 @@
 
 import 'dart:io';
 
+import 'package:circa_plan/services/permission_requester_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'utils/date_time_computer.dart';
 import 'package:circa_plan/utils/utility.dart';
@@ -54,8 +54,9 @@ Future<void> main(List<String> args) async {
 
   // if not called here as well as in the
   // _MainAppState.initState(), the app crashes on emulator
-  // since the app directory is not accessible
-  requestMultiplePermissions();
+  // since the app directory is not accessible due to the fact
+  // the corresponding permission was not asked to the user !
+  PermissionRequesterService.requestMultiplePermissions();
 
   // It was necessary to place here the asynchronous
   // TransferDataViewModel instanciation instead of locating it
@@ -67,41 +68,6 @@ Future<void> main(List<String> args) async {
 
   runApp(MyApp(transferDataViewModel: transferDataViewModel));
 }
-
-  /// Requires adding the lines below to the main and debug AndroidManifest.xml
-  /// files in order to work on S20 - Android 13 !
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-  void requestMultiplePermissions() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-      Permission
-          .manageExternalStorage, // Android 11 (API level 30) or higher only
-      Permission.microphone,
-      Permission.mediaLibrary,
-      Permission.speech,
-      Permission.audio,
-      Permission.videos,
-      Permission.notification
-    ].request();
-
-    // Vous pouvez maintenant vérifier l'état de chaque permission
-    if (!statuses[Permission.storage]!.isGranted ||
-        !statuses[Permission.manageExternalStorage]!.isGranted ||
-        !statuses[Permission.microphone]!.isGranted ||
-        !statuses[Permission.mediaLibrary]!.isGranted ||
-        !statuses[Permission.speech]!.isGranted ||
-        !statuses[Permission.audio]!.isGranted ||
-        !statuses[Permission.videos]!.isGranted ||
-        !statuses[Permission.notification]!.isGranted) {
-      // Une ou plusieurs permissions n'ont pas été accordées.
-      // Vous pouvez désactiver les fonctionnalités correspondantes dans
-      // votre application ou montrer une alerte à l'utilisateur.
-    } else {
-      // Toutes les permissions ont été accordées, vous pouvez continuer avec vos fonctionnalités.
-    }
-  }
 
 /// Async main method which instanciates and loads the
 /// TransferDataViewModel.
@@ -315,7 +281,7 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
   void initState() {
     super.initState();
 
-    requestMultiplePermissions();
+    PermissionRequesterService.requestMultiplePermissions();
 
     // data for CurvedNavigationBar
 
@@ -393,41 +359,6 @@ class _MainAppState extends State<MainApp> with ScreenMixin {
       // is launched (or restarted).
       await loadFileNameNoMsg('circadian.json');
     });
-  }
-
-  /// Requires adding the lines below to the main and debug AndroidManifest.xml
-  /// files in order to work on S20 - Android 13 !
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-  void requestMultiplePermissions() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-      Permission
-          .manageExternalStorage, // Android 11 (API level 30) or higher only
-      Permission.microphone,
-      Permission.mediaLibrary,
-      Permission.speech,
-      Permission.audio,
-      Permission.videos,
-      Permission.notification
-    ].request();
-
-    // Vous pouvez maintenant vérifier l'état de chaque permission
-    if (!statuses[Permission.storage]!.isGranted ||
-        !statuses[Permission.manageExternalStorage]!.isGranted ||
-        !statuses[Permission.microphone]!.isGranted ||
-        !statuses[Permission.mediaLibrary]!.isGranted ||
-        !statuses[Permission.speech]!.isGranted ||
-        !statuses[Permission.audio]!.isGranted ||
-        !statuses[Permission.videos]!.isGranted ||
-        !statuses[Permission.notification]!.isGranted) {
-      // Une ou plusieurs permissions n'ont pas été accordées.
-      // Vous pouvez désactiver les fonctionnalités correspondantes dans
-      // votre application ou montrer une alerte à l'utilisateur.
-    } else {
-      // Toutes les permissions ont été accordées, vous pouvez continuer avec vos fonctionnalités.
-    }
   }
 
   @override
