@@ -368,6 +368,11 @@ class DateTimeParser {
   /// object with the same year, month, day, hour, and minute as the input,
   /// but with seconds and milliseconds set to zero. Essentially, it rounds
   /// the input DateTime object down to the nearest minute.
+  /// 
+  /// englishDateTimeFormat.format(dateTime) returns a String formatted as
+  /// yyyy-MM-dd HH:mm. Then this String is parsed by englishDateTimeFormat
+  /// and returns a DateTime object with the same year, month, day, hour, and
+  /// minute as the input, but with seconds and milliseconds set to zero.
   static DateTime truncateDateTimeToMinute(DateTime dateTime) {
     return englishDateTimeFormat.parse(englishDateTimeFormat.format(dateTime));
   }
